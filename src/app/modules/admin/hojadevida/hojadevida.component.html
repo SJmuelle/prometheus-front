@@ -1,0 +1,117 @@
+<div class="container-fluid" style="width: inherit;">
+    <form [formGroup]="formHv">
+        <div class="row">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Buscar por:</mat-label>
+                <mat-select formControlName="search">
+                    <mat-option>Cedula</mat-option>
+                    <mat-option>NIT</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Número de identificación</mat-label>
+                <input type="number" matInput formControlName="cedula" placeholder="Primer nombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Número de negocio</mat-label>
+                <input type="number" matInput formControlName="cod_negocio" placeholder="Primer nombre">
+            </mat-form-field>
+        </div>
+
+        <mat-divider class="mb-4"></mat-divider>
+
+
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Primer Nombre</mat-label>
+                <input type="text" matInput formControlName="primer_nombre" placeholder="Primer nombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Segundo Nombre</mat-label>
+                <input type="text" matInput formControlName="segundo_nombre" placeholder="Primer nombre">
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Primer Apellido</mat-label>
+                <input type="text" matInput formControlName="primer_apellido" placeholder="Primer nombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Segundo Apellido</mat-label>
+                <input type="text" matInput formControlName="segundo_apellido" placeholder="Primer nombre">
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Departamento</mat-label>
+                <mat-select formControlName="departamento">
+                    <mat-option>Cedula</mat-option>
+                    <mat-option>NIT</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Ciudad / Municipio</mat-label>
+                <mat-select formControlName="ciudad">
+                    <mat-option>Cedula</mat-option>
+                    <mat-option>NIT</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Barrio</mat-label>
+                <mat-select formControlName="barrio">
+                    <mat-option>Cedula</mat-option>
+                    <mat-option>NIT</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <input type="text" matInput formControlName="direccion" placeholder="Primer nombre">
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Telefono</mat-label>
+                <input type="number" matInput formControlName="telefono" placeholder="Primer nombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Celular</mat-label>
+                <input type="number" matInput formControlName="celular" placeholder="Primer nombre">
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Correo electrónico</mat-label>
+                <input type="email" matInput formControlName="primer_nombre" placeholder="Primer nombre">
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Segmentación</mat-label>
+                <mat-select formControlName="segmento">
+                    <mat-option>Cedula</mat-option>
+                    <mat-option>NIT</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Tipo negociación cartera</mat-label>
+                <mat-select formControlName="negocicacion">
+                    <mat-option>Cedula</mat-option>
+                    <mat-option>NIT</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Fecha negociación</mat-label>
+                <input matInput [matDatepicker]="datepicker" formControlName="fecha_negociacion">
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                    <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+    </form>
+</div>

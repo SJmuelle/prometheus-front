@@ -7,7 +7,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         title: 'Hoja de vida cliente',
         type : 'basic',
         icon : 'heroicons_outline:chart-square-bar',
-        link : '/dashboard'
+        link : '/dashboard/hoja-vida'
     }
 ];
 export const compactNavigation: FuseNavigationItem[] = [

@@ -5,12 +5,15 @@ import { ExampleComponent } from 'app/modules/admin/example/example.component';
 const exampleRoutes: Route[] = [
     {
         path: '',
-        component: ExampleComponent
+        component: ExampleComponent,
+        children: [
+            { path: 'hoja-vida', loadChildren: () => import('../hojadevida/hojadevida.module').then(m => m.HojadevidaModule) }
+        ]
     },
     {
         path: '',
         component: ExampleComponent
-    }
+    },
 ];
 
 @NgModule({
