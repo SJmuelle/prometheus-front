@@ -2,3 +2,19 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
+@import './variables.scss';
+
+body.light.theme-default,
+body.light.theme-brand,
+body.light.theme-indigo,
+body.light.theme-rose,
+body.light.theme-purple,
+body.light.theme-amber {
+    fuse-vertical-navigation.dark {
+        background-color: $fintra-800 !important;
+
+        .mat-icon {
+            color: #fff;
+        }
+    }
+}

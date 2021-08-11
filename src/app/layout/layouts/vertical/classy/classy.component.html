@@ -1,6 +1,6 @@
 <!-- Navigation -->
 <fuse-vertical-navigation
-    class="dark bg-gray-900 print:hidden"
+    class="dark print:hidden"
     [mode]="isScreenSmall ? 'over' : 'side'"
     [name]="'mainNavigation'"
     [navigation]="data.navigation.default"
@@ -37,7 +37,7 @@
                 <div class="w-full whitespace-nowrap overflow-ellipsis overflow-hidden text-center leading-normal font-medium">
                     {{data.user.name}}
                 </div>
-                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium text-secondary">
+                <div class="w-full mt-0.5 whitespace-nowrap overflow-ellipsis overflow-hidden text-center text-md leading-normal font-medium">
                     {{data.user.email}}
                 </div>
             </div>
@@ -45,10 +45,13 @@
     </ng-container>
     <!-- Navigation footer hook -->
     <ng-container fuseVerticalNavigationContentFooter>
-        <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4 opacity-12">
+        <div class="flex flex-0 items-center justify-center h-16 pr-6 pl-2 mt-2 mb-4">
+            <!-- <img
+                class="max-w-36"
+                src="assets/images/logo/logo-text-on-dark.svg"> -->
             <img
                 class="max-w-36"
-                src="assets/images/logo/logo-text-on-dark.svg">
+                src="assets/images/logo/Logo-Fintra.png">
         </div>
     </ng-container>
 </fuse-vertical-navigation>
