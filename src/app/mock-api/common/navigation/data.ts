@@ -3,37 +3,39 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 export const defaultNavigation: FuseNavigationItem[] = [
     {
-        id   : 'inversiones',
-        title: 'Hoja de vida cliente',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-square-bar',
-        link : '/dashboard/hoja-vida'
+        id: 'inversiones',
+        title: 'Hoja de vida',
+        type: 'basic',
+        icon: 'heroicons_outline:chart-square-bar',
+        link: '/dashboard/hoja-vida'
+
     }
 ];
+
 export const compactNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
+        id: 'example',
         title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/dashboard'
+        type: 'basic',
+        icon: 'heroicons_outline:chart-pie',
+        link: '/dashboard'
     }
 ];
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
+        id: 'example',
         title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/dashboard'
+        type: 'basic',
+        icon: 'heroicons_outline:chart-pie',
+        link: '/dashboard'
     }
 ];
 export const horizontalNavigation: FuseNavigationItem[] = [
     {
-        id   : 'example',
+        id: 'example',
         title: 'Example',
-        type : 'basic',
-        icon : 'heroicons_outline:chart-pie',
-        link : '/dashboard'
+        type: 'basic',
+        icon: 'heroicons_outline:chart-pie',
+        link: '/dashboard'
     }
 ];
