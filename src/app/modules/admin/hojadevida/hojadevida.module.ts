@@ -5,6 +5,9 @@ import { HojadevidaComponent } from './hojadevida.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'app/shared/shared.module';
 import { CreditoComponent } from '../../../components/credito/credito.component';
+import { ModalcreditoComponent } from '../../../components/modalcredito/modalcredito.component';
+import { CarteraComponent } from '../../../components/cartera/cartera.component';
+import { ModalcarteraComponent } from '../../../components/modalcartera/modalcartera.component';
 
 
 const routes: Routes = [
@@ -14,7 +17,10 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     HojadevidaComponent,
-    CreditoComponent
+    CreditoComponent,
+    ModalcreditoComponent,
+    CarteraComponent,
+    ModalcarteraComponent
   ],
   imports: [
     SharedModule,

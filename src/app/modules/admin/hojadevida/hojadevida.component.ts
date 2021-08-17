@@ -16,20 +16,20 @@ export class HojadevidaComponent implements OnInit {
       search: ['', Validators.required]
     });
     this.datosCliente = this.fb.group({
-      primer_nombre: ['Cesar', Validators.required],
-      segundo_nombre: ['Augusto', Validators.required],
-      primer_apellido: ['Ariza', Validators.required],
-      segundo_apellido: ['Lafaurie', Validators.required],
-      departamento: ['ATL', Validators.required],
-      ciudad: ['BQ', Validators.required],
-      barrio: ['Robles', Validators.required],
-      direccion: ['Calle  64b # 15 - 26', Validators.required],
-      telefono: [3182294783, Validators.required],
-      celular: [3182294783, Validators.required],
-      email: ['cesariza2014@gmail.com', Validators.required],
-      segmento: ['', Validators.required],
-      tipo_negociacion: ['', Validators.required],
-      fecha_negociacion: ['', Validators.required]
+      primer_nombre: [{ value: 'Cesar', disabled: true }, Validators.required],
+      segundo_nombre: [{ value: 'Augusto', disabled: true }, Validators.required],
+      primer_apellido: [{ value: 'Ariza', disabled: true }, Validators.required],
+      segundo_apellido: [{ value: 'Lafaurie', disabled: true }, Validators.required],
+      departamento: [{ value: 'ATL', disabled: true }, Validators.required],
+      ciudad: [{ value: 'BQ', disabled: true }, Validators.required],
+      barrio: [{ value: 'Robles', disabled: true }, Validators.required],
+      direccion: [{ value: 'Calle  64b # 15 - 26', disabled: true }, Validators.required],
+      telefono: [{ value: 3182294783, disabled: true }, Validators.required],
+      celular: [{ value: 3182294783, disabled: true }, Validators.required],
+      email: [{ value: 'cesariza2014@gmail.com', disabled: true }, Validators.required],
+      segmento: [{ value: '', disabled: true }, Validators.required],
+      tipo_negociacion: [{ value: '', disabled: true }, Validators.required],
+      fecha_negociacion: [{ value: '', disabled: true }, Validators.required]
     });
   }
 
