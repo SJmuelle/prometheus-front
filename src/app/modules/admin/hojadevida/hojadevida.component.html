@@ -19,8 +19,9 @@
                 <mat-form-field class="col-lg-4" appearance="fill">
                     <mat-label>Número de negocio</mat-label>
                     <mat-select formControlName="cod_negocio" [compareWith]="compareObjects">
-                        <mat-option value="1">Cedula</mat-option>
-                        <mat-option value="2">NIT</mat-option>
+                        <mat-option value="1">MC065812</mat-option>
+                        <mat-option value="2">LB067512</mat-option>
+                        <mat-option value="3">FE047512</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <button [disabled]="formHv.invalid" class="col-lg-1" mat-flat-button color="primary">Buscar</button>
@@ -140,23 +141,23 @@
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>Historial de gestión</ng-template>
-            Contenido Historial de gestión
+            <app-datatable></app-datatable>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>Negociaciones</ng-template>
-            Contenido Negociaciones
+            <app-datatable></app-datatable>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>Extractos</ng-template>
-            Contenido Extractos
+            <app-datatable></app-datatable>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>Reportes a centrales</ng-template>
-            Contenido Reportes a centrales
+            <app-datatable></app-datatable>
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label disabled>PQRS</ng-template>
-            Contenido PQRS
+            <app-datatable></app-datatable>
         </mat-tab>
     </mat-tab-group>
 </div>

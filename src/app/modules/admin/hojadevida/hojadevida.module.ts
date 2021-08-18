@@ -8,6 +8,7 @@ import { CreditoComponent } from '../../../components/credito/credito.component'
 import { ModalcreditoComponent } from '../../../components/modalcredito/modalcredito.component';
 import { CarteraComponent } from '../../../components/cartera/cartera.component';
 import { ModalcarteraComponent } from '../../../components/modalcartera/modalcartera.component';
+import { DatatableComponent } from '../../../components/datatable/datatable.component';
 
 
 const routes: Routes = [
@@ -20,7 +21,8 @@ const routes: Routes = [
     CreditoComponent,
     ModalcreditoComponent,
     CarteraComponent,
-    ModalcarteraComponent
+    ModalcarteraComponent,
+    DatatableComponent
   ],
   imports: [
     SharedModule,
