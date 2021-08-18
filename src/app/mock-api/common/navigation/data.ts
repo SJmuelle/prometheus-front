@@ -27,7 +27,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Días no habiles',
                 type: 'basic',
                 link: '/dashboard/hoja-vida/dias-no-habiles'
-
+            },
+            {
+                id: 'dashboard.causales',
+                title: 'Causales',
+                type: 'basic',
+                link: '/dashboard/hoja-vida/causales'
             }
         ]
 

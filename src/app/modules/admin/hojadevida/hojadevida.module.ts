@@ -11,12 +11,15 @@ import { TipoPqrsComponent } from '../../../components/tipo-pqrs/tipo-pqrs.compo
 import { ModalTipoPqrsComponent } from '../../../components/modal-tipo-pqrs/modal-tipo-pqrs.component';
 import { DiasnohabilesComponent } from '../../../components/diasnohabiles/diasnohabiles.component';
 import { ModaldiasnohabilesComponent } from '../../../components/modaldiasnohabiles/modaldiasnohabiles.component';
+import { CausalespqrsComponent } from '../../../components/causalespqrs/causalespqrs.component';
+import { ModalescausalespqrsComponent } from '../../../components/modalescausalespqrs/modalescausalespqrs.component';
 
 
 const routes: Routes = [
   { path: 'hv', component: HojadevidaComponent },
   { path: 'pqrs', component: TipoPqrsComponent },
-  { path: 'dias-no-habiles', component: DiasnohabilesComponent }
+  { path: 'dias-no-habiles', component: DiasnohabilesComponent },
+  { path: 'causales', component: CausalespqrsComponent },
 ];
 
 @NgModule({
@@ -30,7 +33,9 @@ const routes: Routes = [
     TipoPqrsComponent,
     ModalTipoPqrsComponent,
     DiasnohabilesComponent,
-    ModaldiasnohabilesComponent
+    ModaldiasnohabilesComponent,
+    CausalespqrsComponent,
+    ModalescausalespqrsComponent
   ],
   imports: [
     SharedModule,

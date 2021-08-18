@@ -2,21 +2,33 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ModaldiasnohabilesComponent } from '../modaldiasnohabiles/modaldiasnohabiles.component';
+import { ModalescausalespqrsComponent } from '../modalescausalespqrs/modalescausalespqrs.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
-  selector: 'app-diasnohabiles',
-  templateUrl: './diasnohabiles.component.html',
-  styleUrls: ['./diasnohabiles.component.scss']
+  selector: 'app-causalespqrs',
+  templateUrl: './causalespqrs.component.html',
+  styleUrls: ['./causalespqrs.component.scss']
 })
-export class DiasnohabilesComponent implements OnInit, AfterViewInit {
+export class CausalespqrsComponent implements OnInit, AfterViewInit {
+
+  formFiltros: FormGroup;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = ['created', 'state', 'number', 'title'];
 
-  constructor(private dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder
+  ) {
+    this.formFiltros = this.fb.group({
+      tipo: [''],
+      causal: [''],
+      estado: ['']
+    });
+  }
 
   ngAfterViewInit(): void {
     // this.exampleDatabase = new ExampleHttpDatabase(this._httpClient);
@@ -55,10 +67,10 @@ export class DiasnohabilesComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(data?): void {
-    const dialogRef = this.dialog.open(ModaldiasnohabilesComponent, {
+    const dialogRef = this.dialog.open(ModalescausalespqrsComponent, {
       width: '500px',
       maxHeight: '550px',
-      data: { descripcion: 'Cualquiera', fecha: '2021-08-10', estado: 2 }
+      data: { tipo_pqrs: '1', fecha: 'cualquiera', area: '1', estado: 2 }
       // data: data
     });
 
@@ -67,5 +79,11 @@ export class DiasnohabilesComponent implements OnInit, AfterViewInit {
       console.log(result);
     });
   }
-
+  compareObjects(o1: any, o2: any) {
+    if (o1 === o2) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
