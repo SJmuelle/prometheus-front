@@ -81,8 +81,7 @@
             <!-- detalle Column -->
             <ng-container matColumnDef="detalle">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-                    Icon 
-                    <mat-icon svgIcon="heroicons_solid:document-text"></mat-icon>
+                    Icon
                 </th>
                 <td mat-cell *matCellDef="let row">
                     <mat-icon svgIcon="heroicons_solid:document-text"></mat-icon>
@@ -96,6 +95,4 @@
 
     <mat-paginator [length]="15" [pageSize]="30" aria-label="Select page of GitHub search results">
     </mat-paginator>
-
-    <button (click)="openDialog()">abrir</button>
 </div>
