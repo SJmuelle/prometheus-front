@@ -30,9 +30,15 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'dashboard.causales',
-                title: 'Causales',
+                title: 'Causales de PQRS',
                 type: 'basic',
                 link: '/dashboard/hoja-vida/causales'
+            },
+            {
+                id: 'dashboard.responsables',
+                title: 'Responsables de PQRS',
+                type: 'basic',
+                link: '/dashboard/hoja-vida/responsables'
             }
         ]
 

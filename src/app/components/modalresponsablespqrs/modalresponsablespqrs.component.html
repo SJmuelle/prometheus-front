@@ -1,26 +1,24 @@
 <h1 mat-dialog-title>
     <span *ngIf="editar">Editar</span> <span *ngIf="!editar">Crear</span> 
-    causales de PQRS
+    responsables de PQRS
 </h1>
 <div mat-dialog-content>
     <form [formGroup]="formTipoPqrs" class="row">
-        <mat-form-field class="col-lg-12"  appearance="fill">
-            <mat-label>Tipo PQRS</mat-label>
-            <mat-select formControlName="tipo_pqrs" [compareWith]="compareObjects">
-                <mat-option value="1">uno</mat-option>
-                <mat-option value="2">dos</mat-option>
-            </mat-select>
+        <mat-form-field class="col-lg-12" appearance="fill">
+            <mat-label>Responsable</mat-label>
+            <input type="text" matInput placeholder="Tipo de PQRS" formControlName="responsable">
         </mat-form-field>
         <mat-form-field class="col-lg-12" appearance="fill">
-            <mat-label>Causal de PQRS</mat-label>
-            <input type="text" matInput placeholder="Tipo de PQRS" formControlName="causal">
+            <mat-label>Correo electrónico</mat-label>
+            <input type="text" matInput placeholder="Tipo de PQRS" formControlName="emailr">
         </mat-form-field>
-        <mat-form-field class="col-lg-12"  appearance="fill">
-            <mat-label>Area</mat-label>
-            <mat-select formControlName="area" [compareWith]="compareObjects">
-                <mat-option value="1">unos</mat-option>
-                <mat-option value="2">dos</mat-option>
-            </mat-select>
+        <mat-form-field class="col-lg-12" appearance="fill">
+            <mat-label>Escalar a</mat-label>
+            <input type="text" matInput placeholder="Tipo de PQRS" formControlName="escalara">
+        </mat-form-field>
+        <mat-form-field class="col-lg-12" appearance="fill">
+            <mat-label>Correo electrónico</mat-label>
+            <input type="text" matInput placeholder="Tipo de PQRS" formControlName="emaile">
         </mat-form-field>
         <mat-form-field class="col-lg-12"  appearance="fill">
             <mat-label>Estado</mat-label>
