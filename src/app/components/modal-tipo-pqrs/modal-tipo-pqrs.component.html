@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>
+    <span *ngIf="editar">Editar</span> <span *ngIf="!editar">Crear</span> 
+    tipo PQRS
+</h1>
+<div mat-dialog-content>
+    <form [formGroup]="formTipoPqrs" class="row">
+        <mat-form-field class="col-lg-12" appearance="fill">
+            <mat-label>Tipo PQRS</mat-label>
+            <input type="text" matInput placeholder="Tipo de PQRS" formControlName="tipo_pqrs">
+        </mat-form-field>
+        <mat-form-field class="col-lg-12"  appearance="fill">
+            <mat-label>Legal</mat-label>
+            <mat-select formControlName="legal" [compareWith]="compareObjects">
+                <mat-option value="1">Si</mat-option>
+                <mat-option value="2">No</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="col-lg-12" appearance="fill">
+            <mat-label>Tiempo de solución</mat-label>
+            <input type="text" matInput placeholder="Tiempo de solución" formControlName="tiempo_Solucion">
+        </mat-form-field>
+        <mat-form-field class="col-lg-12"  appearance="fill">
+            <mat-label>Estado</mat-label>
+            <mat-select formControlName="estado" [compareWith]="compareObjects">
+                <mat-option value="1">Activo</mat-option>
+                <mat-option value="2">Inactivo</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button>No Thanks</button>
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>Guardar</button>
+</div>
