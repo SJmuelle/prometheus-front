@@ -39,6 +39,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 title: 'Responsables de PQRS',
                 type: 'basic',
                 link: '/dashboard/hoja-vida/responsables'
+            },
+            {
+                id: 'dashboard.solucion',
+                title: 'Solución de PQRS',
+                type: 'basic',
+                link: '/dashboard/hoja-vida/solucion'
             }
         ]
 

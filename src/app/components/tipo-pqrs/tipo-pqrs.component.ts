@@ -14,7 +14,7 @@ export class TipoPqrsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  displayedColumns: string[] = ['tipo_pqrs', 'legal', 'tiempo_Solucion', 'estado'];
 
   constructor(private dialog: MatDialog) { }
 

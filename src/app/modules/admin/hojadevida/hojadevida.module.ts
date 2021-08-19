@@ -15,6 +15,8 @@ import { CausalespqrsComponent } from '../../../components/causalespqrs/causales
 import { ModalescausalespqrsComponent } from '../../../components/modalescausalespqrs/modalescausalespqrs.component';
 import { ResponsablespqrsComponent } from '../../../components/responsablespqrs/responsablespqrs.component';
 import { ModalresponsablespqrsComponent } from '../../../components/modalresponsablespqrs/modalresponsablespqrs.component';
+import { SolucionpqrsComponent } from '../../../components/solucionpqrs/solucionpqrs.component';
+import { ModalsolucionpqrsComponent } from '../../../components/modalsolucionpqrs/modalsolucionpqrs.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,7 @@ const routes: Routes = [
   { path: 'dias-no-habiles', component: DiasnohabilesComponent },
   { path: 'causales', component: CausalespqrsComponent },
   { path: 'responsables', component: ResponsablespqrsComponent },
+  { path: 'solucion', component: SolucionpqrsComponent }
 ];
 
 @NgModule({
@@ -40,7 +43,9 @@ const routes: Routes = [
     CausalespqrsComponent,
     ModalescausalespqrsComponent,
     ResponsablespqrsComponent,
-    ModalresponsablespqrsComponent
+    ModalresponsablespqrsComponent,
+    SolucionpqrsComponent,
+    ModalsolucionpqrsComponent
   ],
   imports: [
     SharedModule,

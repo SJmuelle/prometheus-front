@@ -12,12 +12,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class CausalespqrsComponent implements OnInit, AfterViewInit {
 
-  formFiltros: FormGroup;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  formFiltros: FormGroup;
+  displayedColumns: string[] = ['tipo_pqrs', 'fecha', 'area', 'estado'];
 
   constructor(
     private dialog: MatDialog,

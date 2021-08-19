@@ -8,7 +8,7 @@
             <mat-label>Descripción</mat-label>
             <input type="text" matInput placeholder="descripcion" formControlName="tipo_pqrs">
         </mat-form-field>
-        <mat-form-field class="col-lg-6" appearance="fill">
+        <mat-form-field class="col-lg-12" appearance="fill">
             <mat-label>Fecha</mat-label>
             <input matInput [matDatepicker]="datepicker" formControlName="fecha">
             <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
@@ -27,9 +27,8 @@
             </mat-select>
         </mat-form-field>
     </form>
-    {{formDiasNoHabiles.value | json}}
 </div>
 <div mat-dialog-actions>
-    <button mat-button>No Thanks</button>
+    <button mat-button>Cancelar</button>
     <button mat-button [mat-dialog-close]="false" cdkFocusInitial>Guardar</button>
 </div>

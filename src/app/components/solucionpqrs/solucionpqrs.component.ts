@@ -1,22 +1,33 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ModaldiasnohabilesComponent } from '../modaldiasnohabiles/modaldiasnohabiles.component';
+import { ModalsolucionpqrsComponent } from '../modalsolucionpqrs/modalsolucionpqrs.component';
 
 @Component({
-  selector: 'app-diasnohabiles',
-  templateUrl: './diasnohabiles.component.html',
-  styleUrls: ['./diasnohabiles.component.scss']
+  selector: 'app-solucionpqrs',
+  templateUrl: './solucionpqrs.component.html',
+  styleUrls: ['./solucionpqrs.component.scss']
 })
-export class DiasnohabilesComponent implements OnInit, AfterViewInit {
+export class SolucionpqrsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  formFiltros: FormGroup;
 
-  displayedColumns: string[] = ['descripcion', 'fecha', 'estado'];
 
-  constructor(private dialog: MatDialog) { }
+  displayedColumns: string[] = ['causal', 'solucion', 'descripcion', 'responsable', 'tiempo', 'estado'];
+
+  constructor(
+    private dialog: MatDialog,
+    private fb: FormBuilder
+  ) {
+    this.formFiltros = this.fb.group({
+      causal: [''],
+      estado: [''],
+    });
+  }
 
   ngAfterViewInit(): void {
     // this.exampleDatabase = new ExampleHttpDatabase(this._httpClient);
@@ -55,10 +66,17 @@ export class DiasnohabilesComponent implements OnInit, AfterViewInit {
   }
 
   openDialog(data?): void {
-    const dialogRef = this.dialog.open(ModaldiasnohabilesComponent, {
+    const dialogRef = this.dialog.open(ModalsolucionpqrsComponent, {
       width: '500px',
-      maxHeight: '550px',
-      data: { descripcion: 'Cualquiera', fecha: '2021-08-10', estado: 2 }
+      maxHeight: '650px',
+      data: {
+        causal: '1',
+        solucion: '321312',
+        descripcion: 'cualquiera',
+        responsable: '1',
+        tiempo: '10',
+        estado: '1'
+      }
       // data: data
     });
 
@@ -66,6 +84,13 @@ export class DiasnohabilesComponent implements OnInit, AfterViewInit {
       console.log('The dialog was closed');
       console.log(result);
     });
+  }
+  compareObjects(o1: any, o2: any) {
+    if (o1 === o2) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

@@ -12,12 +12,12 @@ import { ModalresponsablespqrsComponent } from '../modalresponsablespqrs/modalre
 })
 export class ResponsablespqrsComponent implements OnInit, AfterViewInit {
 
-  formFiltros: FormGroup;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  formFiltros: FormGroup;
+  displayedColumns: string[] = ['responsable', 'emailr', 'escalara', 'emaile', 'estado'];
 
   constructor(
     private dialog: MatDialog,
