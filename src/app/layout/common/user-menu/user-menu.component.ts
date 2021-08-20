@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 
@@ -46,7 +46,9 @@ export class UserMenuComponent implements OnInit, OnDestroy
     {
         // Subscribe to user changes
         this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
+            .pipe(
+                takeUntil(this._unsubscribeAll)
+            )
             .subscribe((user: User) => {
                 this.user = user;
 

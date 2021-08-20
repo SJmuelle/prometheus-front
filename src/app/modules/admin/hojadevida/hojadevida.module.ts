@@ -17,6 +17,7 @@ import { ResponsablespqrsComponent } from '../../../components/responsablespqrs/
 import { ModalresponsablespqrsComponent } from '../../../components/modalresponsablespqrs/modalresponsablespqrs.component';
 import { SolucionpqrsComponent } from '../../../components/solucionpqrs/solucionpqrs.component';
 import { ModalsolucionpqrsComponent } from '../../../components/modalsolucionpqrs/modalsolucionpqrs.component';
+import { HojadevidaService } from 'app/services/hojadevida/hojadevida.service';
 
 
 const routes: Routes = [
@@ -50,6 +51,7 @@ const routes: Routes = [
   imports: [
     SharedModule,
     RouterModule.forChild(routes),
-  ]
+  ],
+  providers: [HojadevidaService]
 })
 export class HojadevidaModule { }

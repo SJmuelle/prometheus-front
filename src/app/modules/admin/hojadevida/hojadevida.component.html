@@ -16,15 +16,20 @@
                     <input type="number" matInput formControlName="cedula"
                         placeholder="Escribir número de identificación">
                 </mat-form-field>
-                <mat-form-field class="col-lg-4" appearance="fill">
+                <mat-form-field class="col-lg-4" appearance="fill" *ngIf="negocios">
                     <mat-label>Número de negocio</mat-label>
-                    <mat-select formControlName="cod_negocio" [compareWith]="compareObjects">
-                        <mat-option value="1">MC065812</mat-option>
-                        <mat-option value="2">LB067512</mat-option>
-                        <mat-option value="3">FE047512</mat-option>
+                    <mat-select formControlName="cod_negocio" [compareWith]="compareObjects" (selectionChange)="buscarInfo(formHv.value)">
+                        <mat-option *ngFor="let negocio of negocios" [value]="negocio.codigoNegocio">{{negocio.codigoNegocio}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <button [disabled]="formHv.invalid" class="col-lg-1" mat-flat-button color="primary">Buscar</button>
+                <button type="submit" (click)="buscarClientes(formHv.value)" [disabled]="formHv.invalid"
+                    class="col-lg-1" mat-flat-button color="primary">
+                    <span *ngIf="!formHv.disabled">
+                        Buscar
+                    </span>
+                    <mat-progress-spinner *ngIf="formHv.disabled" [diameter]="24" [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
             </div>
             <div class="row align-items-baseline" *ngIf="formHv.controls.search.value === '2'">
                 <mat-form-field class="col-lg-4" appearance="fill">

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { HojadevidaService } from 'app/services/hojadevida/hojadevida.service';
 
 @Component({
   selector: 'app-hojadevida',
@@ -10,8 +11,12 @@ export class HojadevidaComponent implements OnInit {
 
   formHv: FormGroup;
   datosCliente: FormGroup;
+  negocios: any[];
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private _hojadevidaService: HojadevidaService
+  ) {
     this.formHv = this.fb.group({
       search: ['', Validators.required]
     });
@@ -41,14 +46,37 @@ export class HojadevidaComponent implements OnInit {
     }
   }
 
+  buscarClientes(formS: any) {
+    if (this.formHv.invalid) {
+      return;
+    }
+
+    // Disable the form
+    console.log(formS.cedula);
+    this.formHv.disable();
+    this._hojadevidaService.getNegocios(formS.cedula).subscribe((response: any) => {
+      this.negocios = response.data;
+      this.formHv.enable();
+    });
+  }
+
   ngOnInit(): void {
     this.formHv.get('search').valueChanges.subscribe((value) => {
-      if (value == 1) {
-        this.addControls(this.formHv, ['cedula', 'cod_negocio']);
+      if (value === '1') {
+        this.formHv.addControl('cedula', new FormControl('8565112', Validators.required));
+        this.formHv.addControl('cod_negocio', new FormControl(''));
       } else {
         this.addControls(this.formHv, ['cod_negocio']);
         this.removeControl(this.formHv, ['cedula']);
       }
+    });
+
+  }
+
+  buscarInfo(form: any) {
+    console.log('ejecutó');
+    this._hojadevidaService.getInfoCliente(form.cod_negocio).subscribe((response: any) => {
+      console.log(response.data);
     });
   }
 
