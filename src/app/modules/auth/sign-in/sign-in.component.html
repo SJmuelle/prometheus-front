@@ -37,15 +37,15 @@
                 <mat-form-field class="w-full">
                     <mat-label>Usuario</mat-label>
                     <input
-                        id="email"
+                        id="userName"
                         matInput
-                        [formControlName]="'email'">
-                    <mat-error *ngIf="signInForm.get('email').hasError('required')">
+                        [formControlName]="'userName'">
+                    <mat-error *ngIf="signInForm.get('userName').hasError('required')">
                         Email address is required
                     </mat-error>
-                    <mat-error *ngIf="signInForm.get('email').hasError('email')">
+                    <!-- <mat-error *ngIf="signInForm.get('email').hasError('email')">
                         Please enter a valid email address
-                    </mat-error>
+                    </mat-error> -->
                 </mat-form-field>
 
                 <!-- Password field -->

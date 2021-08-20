@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false
+    production: false,
+    urlApi: 'http://192.168.190.237:8010/api-fintra/api'
 };
 
 /*
