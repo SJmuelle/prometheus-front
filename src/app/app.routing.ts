@@ -3,6 +3,7 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -78,6 +79,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'dashboard',
                 loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)
+            },
+            {
+                path: 'calendar',
+                loadChildren: () => CalendarModule
             },
         ]
     }

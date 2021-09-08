@@ -7,85 +7,103 @@
     </div> -->
 
     <div class="example-table-container">
-
-        <table mat-table [dataSource]="[]" class="example-table" matSort matSortActive="created" matSortDisableClear
-            matSortDirection="desc">
+        <table
+            mat-table
+            [dataSource]="[iCartera]"
+            class="example-table"
+            matSort
+            matSortActive="created"
+            matSortDisableClear
+            matSortDirection="desc"
+        >
             <!-- tipo_cliente Column -->
-            <ng-container matColumnDef="tipo">
+            <ng-container matColumnDef="tipoCliente">
                 <th mat-header-cell *matHeaderCellDef>Tipo</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.tipoCliente }}</td>
             </ng-container>
 
             <!-- Unidad de negocio Column -->
-            <ng-container matColumnDef="unidad">
+            <ng-container matColumnDef="unidadNegocio">
                 <th mat-header-cell *matHeaderCellDef>Unidad de negocio</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.unidadNegocio }}</td>
             </ng-container>
 
             <!-- Código de negocio Column -->
-            <ng-container matColumnDef="negocio">
+            <ng-container matColumnDef="codigoNegocio">
                 <th mat-header-cell *matHeaderCellDef>Código de negocio</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.codigoNegocio }}</td>
             </ng-container>
 
             <!-- Estado Column -->
             <ng-container matColumnDef="estado">
                 <th mat-header-cell *matHeaderCellDef>Estado</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.estado }}</td>
             </ng-container>
 
             <!-- negocio Column -->
-            <ng-container matColumnDef="edad_mora">
+            <ng-container matColumnDef="edadMora">
                 <th mat-header-cell *matHeaderCellDef>Edad de mora</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.edadMora }}</td>
             </ng-container>
 
             <!-- Edad de mora Column -->
-            <ng-container matColumnDef="tipo_cuenta">
+            <ng-container matColumnDef="tipoCuenta">
                 <th mat-header-cell *matHeaderCellDef>Tipo de cuenta</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.tipoCuenta }}</td>
             </ng-container>
 
             <!-- Valor cuota mes Column -->
-            <ng-container matColumnDef="valor_cuota">
+            <ng-container matColumnDef="valorCuotaMes">
                 <th mat-header-cell *matHeaderCellDef>Valor cuota mes</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.valorCuotaMes }}</td>
             </ng-container>
 
             <!-- Cuotas pendientes Column -->
-            <ng-container matColumnDef="cuotas_pendientes">
+            <ng-container matColumnDef="cuotasPendientes">
                 <th mat-header-cell *matHeaderCellDef>Cuotas pendientes</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">
+                    {{ row.cuotasPendientes }}
+                </td>
             </ng-container>
 
             <!-- Cuotas vencidas Column -->
-            <ng-container matColumnDef="cuotas_vencidas">
+            <ng-container matColumnDef="cuotasVencidas">
                 <th mat-header-cell *matHeaderCellDef>Cuotas vencidas</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">{{ row.cuotasVencidas }}</td>
             </ng-container>
 
             <!-- Saldo vencido Column -->
-            <ng-container matColumnDef="saldo_vencido">
+            <ng-container matColumnDef="saldoVencido">
                 <th mat-header-cell *matHeaderCellDef>Saldo vencido</th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">${{ row.saldoVencido | number }}</td>
             </ng-container>
 
             <!-- saldo de la obligación Column -->
-            <ng-container matColumnDef="saldo_obligacion">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
+            <ng-container matColumnDef="saldoObligacion">
+                <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    mat-sort-header
+                    disableClear
+                >
                     saldo de la obligación
                 </th>
-                <td mat-cell *matCellDef="let row">Lorem</td>
+                <td mat-cell *matCellDef="let row">
+                    ${{ row.saldoObligacion | number }}
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
     </div>
 
-    <mat-paginator [length]="15" [pageSize]="30" aria-label="Select page of GitHub search results">
+    <mat-paginator
+        [length]="15"
+        [pageSize]="30"
+        aria-label="Select page of GitHub search results"
+    >
     </mat-paginator>
 
-    
     <button (click)="openDialog()">Modal</button>
 </div>

@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     imports: [
@@ -30,7 +30,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatProgressSpinnerModule,
         MatPaginatorModule,
         MatIconModule,
-        MatDialogModule
+        MatDialogModule,
     ],
     exports: [
         CommonModule,
@@ -47,8 +47,7 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatProgressSpinnerModule,
         MatPaginatorModule,
         MatIconModule,
-        MatDialogModule
-    ]
+        MatDialogModule,
+    ],
 })
-export class SharedModule {
-}
+export class SharedModule {}

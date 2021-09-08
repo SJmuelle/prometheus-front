@@ -7,22 +7,23 @@ const exampleRoutes: Route[] = [
         path: '',
         component: ExampleComponent,
         children: [
-            { path: 'hoja-vida', loadChildren: () => import('../hojadevida/hojadevida.module').then(m => m.HojadevidaModule) }
-        ]
+            {
+                path: 'hoja-vida',
+                loadChildren: () =>
+                    import('../hojadevida/hojadevida.module').then(
+                        (m) => m.HojadevidaModule
+                    ),
+            },
+        ],
     },
     {
         path: '',
-        component: ExampleComponent
+        component: ExampleComponent,
     },
 ];
 
 @NgModule({
-    declarations: [
-        ExampleComponent
-    ],
-    imports: [
-        RouterModule.forChild(exampleRoutes)
-    ]
+    declarations: [ExampleComponent],
+    imports: [RouterModule.forChild(exampleRoutes)],
 })
-export class ExampleModule {
-}
+export class ExampleModule {}

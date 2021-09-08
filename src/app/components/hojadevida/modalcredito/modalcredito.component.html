@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Detalle del credito</h2>
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="onTabChanged($event)">
     <!-- <mat-tab *ngFor="let tab of asyncTabs | async">
         <ng-template mat-tab-label>{{tab.label}}</ng-template>
         {{tab.content}}
@@ -10,68 +10,108 @@
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Afiliado</mat-label>
-                    <input formControlName="afiliado" type="text" matInput>
+                    <input formControlName="afiliado" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Asesor de colocación</mat-label>
-                    <input formControlName="asesor_de_colocacion" type="text" matInput>
+                    <input
+                        formControlName="asesorColocacion"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Valor cuota</mat-label>
-                    <input formControlName="valor_cuota" type="text" matInput>
+                    <input
+                        formControlName="cuotaMensual"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Plazo</mat-label>
-                    <input formControlName="plazo" type="text" matInput>
+                    <input formControlName="plazo" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Ocupación</mat-label>
-                    <input formControlName="ocupacion" type="text" matInput>
+                    <input formControlName="ocupacion" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Actividad económica</mat-label>
-                    <input formControlName="actividad_economica" type="text" matInput>
+                    <input
+                        formControlName="actividadEconomica"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
             </div>
         </form>
     </mat-tab>
+
     <mat-tab>
         <ng-template mat-tab-label>Referencias</ng-template>
         <form [formGroup]="infoRefePer">
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Primer nombre</mat-label>
-                    <input formControlName="primer_nombre" type="text" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Primer Apellido</mat-label>
-                    <input formControlName="primer_apellido" type="text" matInput>
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Celular</mat-label>
-                    <input formControlName="celular" type="text" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Departamento</mat-label>
-                    <input formControlName="departamento" type="text" matInput>
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Ciudad</mat-label>
-                    <input formControlName="ciudad" type="text" matInput>
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Dirección</mat-label>
-                    <input formControlName="direccion" type="text" matInput>
-                </mat-form-field>
-            </div>
+            <ng-container
+                formArrayName="dataRefPers"
+                *ngFor="
+                    let item of infoRefePer.get('dataRefPers');
+                    let index = index
+                "
+            >
+                <p>{{ item[index] }}</p>
+                <div class="row justify-content-center">
+                    <mat-form-field class="col-lg-6" appearance="fill">
+                        <mat-label>Primer nombre</mat-label>
+                        <input
+                            formControlName="primerNombre"
+                            type="text"
+                            matInput
+                        />
+                    </mat-form-field>
+                    <mat-form-field class="col-lg-6" appearance="fill">
+                        <mat-label>Primer Apellido</mat-label>
+                        <input
+                            formControlName="primerApellido"
+                            type="text"
+                            matInput
+                        />
+                    </mat-form-field>
+                </div>
+
+                <div class="row justify-content-center">
+                    <mat-form-field class="col-lg-6" appearance="fill">
+                        <mat-label>Celular</mat-label>
+                        <input formControlName="celular" type="text" matInput />
+                    </mat-form-field>
+                    <mat-form-field class="col-lg-6" appearance="fill">
+                        <mat-label>Departamento</mat-label>
+                        <input
+                            formControlName="departamento"
+                            type="text"
+                            matInput
+                        />
+                    </mat-form-field>
+                </div>
+
+                <div class="row justify-content-center">
+                    <mat-form-field class="col-lg-6" appearance="fill">
+                        <mat-label>Ciudad</mat-label>
+                        <input formControlName="ciudad" type="text" matInput />
+                    </mat-form-field>
+                    <mat-form-field class="col-lg-6" appearance="fill">
+                        <mat-label>Dirección</mat-label>
+                        <input
+                            formControlName="direccion"
+                            type="text"
+                            matInput
+                        />
+                    </mat-form-field>
+                </div>
+            </ng-container>
         </form>
 
         <mat-divider class="mb-4"></mat-divider>
@@ -80,162 +120,205 @@
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Primer nombre</mat-label>
-                    <input formControlName="primer_nombre" type="text" matInput>
+                    <input
+                        formControlName="primerNombre"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Primer Apellido</mat-label>
-                    <input formControlName="primer_apellido" type="text" matInput>
+                    <input
+                        formControlName="primerApellido"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Parentesco</mat-label>
-                    <input formControlName="celular" type="text" matInput>
+                    <input formControlName="celular" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Celular</mat-label>
-                    <input formControlName="celular" type="text" matInput>
+                    <input formControlName="celular" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Departamento</mat-label>
-                    <input formControlName="departamento" type="text" matInput>
+                    <input
+                        formControlName="departamento"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Ciudad</mat-label>
-                    <input formControlName="ciudad" type="text" matInput>
+                    <input formControlName="ciudad" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Dirección</mat-label>
-                    <input formControlName="direccion" type="text" matInput>
+                    <input formControlName="direccion" type="text" matInput />
                 </mat-form-field>
             </div>
         </form>
     </mat-tab>
+
     <mat-tab>
         <ng-template mat-tab-label>Información codeudor</ng-template>
         <form [formGroup]="infoCodeu">
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Primer nombre</mat-label>
-                    <input formControlName="primer_nombre" type="text" matInput>
+                    <input
+                        formControlName="primerNombre"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Primer Apellido</mat-label>
-                    <input formControlName="primer_apellido" type="text" matInput>
+                    <input
+                        formControlName="primerApellido"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Identificación</mat-label>
-                    <input formControlName="identificacion" type="text" matInput>
+                    <input
+                        formControlName="identificacion"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Profesión</mat-label>
-                    <input formControlName="identificacion" type="text" matInput>
+                    <input formControlName="profesion" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Departamento</mat-label>
-                    <input formControlName="departamento" type="text" matInput>
+                    <input
+                        formControlName="departamento"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Ciudad</mat-label>
-                    <input formControlName="ciudad" type="text" matInput>
+                    <input formControlName="ciudad" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Dirección</mat-label>
-                    <input formControlName="direccion" type="text" matInput>
+                    <input formControlName="direccion" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Barrio</mat-label>
-                    <input formControlName="barrio" type="text" matInput>
+                    <input formControlName="barrio" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input formControlName="direccion" type="text" matInput>
+                    <input formControlName="email" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Celular</mat-label>
-                    <input formControlName="email" type="text" matInput>
+                    <input formControlName="celular" type="text" matInput />
                 </mat-form-field>
             </div>
         </form>
     </mat-tab>
+
     <mat-tab>
         <ng-template mat-tab-label>Información del negocio</ng-template>
         <form [formGroup]="infoNegocio">
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Empresa</mat-label>
-                    <input formControlName="empresa" type="text" matInput>
+                    <input formControlName="empresa" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Nit / Rut</mat-label>
-                    <input formControlName="nit_rut" type="text" matInput>
+                    <input formControlName="nit" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Celular / Teléfono</mat-label>
-                    <input formControlName="celular" type="text" matInput>
+                    <input formControlName="celular" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Correo</mat-label>
-                    <input formControlName="email" type="text" matInput>
+                    <input formControlName="email" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Departamento</mat-label>
-                    <input formControlName="departamento" type="text" matInput>
+                    <input
+                        formControlName="departamento"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Ciudad</mat-label>
-                    <input formControlName="ciudad" type="text" matInput>
+                    <input formControlName="ciudad" type="text" matInput />
                 </mat-form-field>
             </div>
             <div class="row">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Barrio</mat-label>
-                    <input formControlName="barrio" type="text" matInput>
+                    <input formControlName="barrio" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Dirección</mat-label>
-                    <input formControlName="direccion" type="text" matInput>
+                    <input formControlName="direccion" type="text" matInput />
                 </mat-form-field>
             </div>
         </form>
     </mat-tab>
+
     <mat-tab>
-        <ng-template mat-tab-label>Información del conyugue</ng-template>
-        <form [formGroup]="infoNegocio">
+        <ng-template mat-tab-label>Información del conyuge</ng-template>
+        <form [formGroup]="infoConyugue">
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Primer nombre</mat-label>
-                    <input formControlName="primer_nombre" type="text" matInput>
+                    <input
+                        formControlName="primerNombreCony"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Primer Apellido</mat-label>
-                    <input formControlName="primer_apellido" type="text" matInput>
+                    <input
+                        formControlName="primerApellidoCony"
+                        type="text"
+                        matInput
+                    />
                 </mat-form-field>
             </div>
             <div class="row justify-content-center">
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Celular</mat-label>
-                    <input formControlName="celular" type="text" matInput>
+                    <input formControlName="celularCony" type="text" matInput />
                 </mat-form-field>
                 <mat-form-field class="col-lg-6" appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input formControlName="email" type="text" matInput>
+                    <input formControlName="emailCony" type="text" matInput />
                 </mat-form-field>
             </div>
         </form>
