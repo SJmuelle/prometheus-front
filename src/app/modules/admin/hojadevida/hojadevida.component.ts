@@ -5,6 +5,8 @@ import {
     Validators,
     FormControl,
 } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ICredito } from 'app/resources/interfaces/hojadevida/credito/icredito';
 import { ITableData } from 'app/resources/interfaces/itable-data';
 import { CreditoService } from 'app/resources/services/hojadevida/credito/credito.service';
@@ -40,8 +42,11 @@ export class HojadevidaComponent implements OnInit {
 
     // INTERFACES DE PESTAÑAS
     @Input() iCredito: List<ICredito>;
+    cedulaCliente: any;
+    clienteID: any;
 
     constructor(
+        public dialog: MatDialog,
         private fb: FormBuilder,
         private _hojadevidaService: HojadevidaService,
         private _creditoService: CreditoService,
@@ -93,21 +98,26 @@ export class HojadevidaComponent implements OnInit {
     }
 
     buscarClientes(formS: any) {
-        if (this.formHv.invalid) {
-            return;
-        }
-
+        // if (this.formHv.invalid) {
+        //     return;
+        // }
+      
         // Disable the form
+       
+        const busqueda=formS.search;
+        this.clienteID=busqueda==1?formS.cedula:formS.codigoNegocio;
         this.formHv.disable();
         this._hojadevidaService
-            .getNegocios(formS.cedula)
+            .getNegocios(this.clienteID)
             .subscribe((response: any) => {
                 this.negocios = response.data;
                 this.formHv.enable();
+                this.buscarInfo('');
             });
     }
 
     ngOnInit(): void {
+       
         this.formHv.get('search').valueChanges.subscribe((value) => {
             if (value === '1') {
                 this.formHv.addControl(
@@ -123,13 +133,16 @@ export class HojadevidaComponent implements OnInit {
     }
 
     buscarInfo(form: any) {
+      
+        this.codNegocio=form==""?this.clienteID:form.codigoNegocio;
+       
         this._hojadevidaService
-            .getInfoCliente(form.codigoNegocio)
+            .getInfoCliente(this.codNegocio)
             .subscribe((response: any) => {
                 this.datosClientesVal = true;
                 this.datosCliente.patchValue(response.data);
-                this.getCreditoData(form.codigoNegocio);
-                this.codNegocio = form.codigoNegocio;
+                this.getCreditoData(this.codNegocio);
+              
             });
     }
 

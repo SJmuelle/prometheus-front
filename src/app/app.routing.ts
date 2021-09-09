@@ -85,5 +85,6 @@ export const appRoutes: Route[] = [
                 loadChildren: () => CalendarModule
             },
         ]
-    }
+    },
+    {path: '**', redirectTo: 'sign-in'}
 ];

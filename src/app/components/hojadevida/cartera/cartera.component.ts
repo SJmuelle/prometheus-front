@@ -39,6 +39,7 @@ export class CarteraComponent implements OnInit, OnChanges {
         'cuotasVencidas',
         'saldoVencido',
         'saldoObligacion',
+        'detalle',
     ];
 
     constructor(
@@ -55,11 +56,11 @@ export class CarteraComponent implements OnInit, OnChanges {
         this.onCartera(this.codNegocio);
     }
 
-    openDialog(): void {
+    openDialog(codigoNegocio): void {
         const dialogRef = this.dialog.open(ModalcarteraComponent, {
             width: '1080px',
             maxHeight: '550px',
-            data: { name: 'this.name', animal: 'this.animal' },
+            data: { codigoNegocio: codigoNegocio },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -81,4 +82,5 @@ export class CarteraComponent implements OnInit, OnChanges {
                 }
             });
     }
+
 }

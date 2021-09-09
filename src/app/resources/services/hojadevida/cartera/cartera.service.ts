@@ -13,4 +13,11 @@ export class CarteraService {
             environment.urlApi2 + `/informacion-cartera/${codigoNegocio}`
         );
     }
+    
+    getDetalleCartera(codigoNegocio: string) {
+        // /informacion-detalle-cartera/202009/1/MC18825
+        return this._httpClient.get(
+            environment.urlApi2 + `/informacion-detalle-cartera/202009/1/${codigoNegocio}`
+        );
+    }
 }

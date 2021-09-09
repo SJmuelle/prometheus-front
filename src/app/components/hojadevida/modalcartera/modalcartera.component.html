@@ -1,1 +1,37 @@
-<app-datatable></app-datatable>
+<section class="container mx-auto p-6">
+  <h2 mat-dialog-title>Detalle de Cartera</h2>
+  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+    <div class="w-full overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+            <th class="px-4 py-3">Cuota</th>
+            <th class="px-4 py-3">Fecha de vencimiento </th>
+            <th class="px-4 py-3">Días vencidos Foto </th>
+            <th class="px-4 py-3">Días vencidos actual</th>
+            <th class="px-4 py-3">Saldo Foto</th>
+            <th class="px-4 py-3">Saldo actual</th>
+            <th class="px-4 py-3">Interes X mora</th>
+            <th class="px-4 py-3">Gastos de cobranza</th>
+            <th class="px-4 py-3">Totales parciales</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white" >
+          <tr class="text-gray-700" *ngFor="let item of datos;let indice=index">
+            <td class="px-4 py-3 text-sm border">{{ item.cuota}}</td>
+            <td class="px-4 py-3 text-sm border">{{ item.fechaVencimiento}}</td>
+            <td class="px-4 py-3 text-sm border">{{ item.diasVencidosFoto}}</td>
+            <td class="px-4 py-3 text-sm border">{{ item.diasVencidoHoy}}</td>
+            <td class="px-4 py-3 text-sm border">{{ item.saldoFoto | currency:'$':'symbol':'4.0-0'  }}</td>
+            <td class="px-4 py-3 text-sm border">{{ item.saldoActual | currency:'$':'symbol':'4.0-0' }}</td>
+            <!-- <td class="px-4 py-3 text-sm border">{{ item.estado}}</td> -->
+            <td class="px-4 py-3 text-sm border">{{ item.interesMora | currency:'$':'symbol':'4.0-0' }}</td> 
+            <td class="px-4 py-3 text-sm border">{{ item.gastoCobranza | currency:'$':'symbol':'4.0-0' }}</td>
+            <!-- <td class="px-4 py-3 text-sm border">{{ item.negocio}}</td> -->
+            <td class="px-4 py-3 text-sm border">{{ item.totalParciales | currency:'$':'symbol':'4.0-0' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

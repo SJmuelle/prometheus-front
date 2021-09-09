@@ -1,4 +1,5 @@
 <div class="example-container mat-elevation-z8">
+    
     <!-- <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
         <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
@@ -7,15 +8,8 @@
     </div> -->
 
     <div class="example-table-container">
-        <table
-            mat-table
-            [dataSource]="[iCartera]"
-            class="example-table"
-            matSort
-            matSortActive="created"
-            matSortDisableClear
-            matSortDirection="desc"
-        >
+        <table mat-table [dataSource]="[iCartera]" class="example-table" matSort matSortActive="created"
+            matSortDisableClear matSortDirection="desc">
             <!-- tipo_cliente Column -->
             <ng-container matColumnDef="tipoCliente">
                 <th mat-header-cell *matHeaderCellDef>Tipo</th>
@@ -80,16 +74,22 @@
 
             <!-- saldo de la obligación Column -->
             <ng-container matColumnDef="saldoObligacion">
-                <th
-                    mat-header-cell
-                    *matHeaderCellDef
-                    mat-sort-header
-                    disableClear
-                >
+                <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
                     saldo de la obligación
                 </th>
                 <td mat-cell *matCellDef="let row">
                     ${{ row.saldoObligacion | number }}
+                </td>
+            </ng-container>
+            <!-- detalle -->
+
+            <!-- detalle Column -->
+            <ng-container matColumnDef="detalle">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Icon</th>
+                <td mat-cell *matCellDef="let row" (click)="openDialog(row.codigoNegocio)">
+                    <button>
+                        <mat-icon class="material-icons-two-tone">description</mat-icon>
+                    </button>
                 </td>
             </ng-container>
 
@@ -98,12 +98,8 @@
         </table>
     </div>
 
-    <mat-paginator
-        [length]="15"
-        [pageSize]="30"
-        aria-label="Select page of GitHub search results"
-    >
+    <mat-paginator [length]="15" [pageSize]="30" aria-label="Select page of GitHub search results">
     </mat-paginator>
 
-    <button (click)="openDialog()">Modal</button>
+    <!-- <button (click)="openDialog()">Modal</button> -->
 </div>

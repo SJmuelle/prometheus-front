@@ -174,9 +174,7 @@ export class ModalcreditoComponent implements OnInit {
                 console.log(response);
                 if (response.data) {
                     // this.infore.patchValue(response.data);
-                    this.infoRefePer = this.fb.group({
-                        dataRefPers: this.fb.array(response.data),
-                    });
+                    this.infoRefePer = response.data
                 }
             });
     }

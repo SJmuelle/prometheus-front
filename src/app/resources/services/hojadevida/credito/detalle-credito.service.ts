@@ -18,7 +18,7 @@ export class DetalleCreditoService {
     getInformacionReferencias(codigoNegocio: string) {
         return this._httpClient.get(
             environment.urlApi2 +
-                `/informacion-detalle-referencias-personales/${codigoNegocio}`
+                `/informacion-detalle-referencias/${codigoNegocio}`
         );
     }
 
