@@ -282,10 +282,10 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Get the view's current start and end dates, add/subtract
         // 60 days to create a ~150 days period to fetch the mock-api for
-        console.log(this._fullCalendarApi.getDate());
+        // console.log(this._fullCalendarApi.getDate());
         const viewStart = moment(this._fullCalendarApi.view.currentStart).subtract(60, 'days');
         const viewEnd = moment(this._fullCalendarApi.view.currentEnd).add(60, 'days');
-
+        console.log(this._fullCalendarApi.view.currentStart);
         // Get events
         this._calendarService.getEvents(viewStart, viewEnd, true).subscribe();
     }
