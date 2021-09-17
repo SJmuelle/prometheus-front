@@ -1,37 +1,207 @@
-<section class="container mx-auto p-6">
-  <h2 mat-dialog-title>Detalle de Cartera</h2>
-  <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-    <div class="w-full overflow-x-auto">
-      <table class="w-full">
-        <thead>
-          <tr class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
-            <th class="px-4 py-3">Cuota</th>
-            <th class="px-4 py-3">Fecha de vencimiento </th>
-            <th class="px-4 py-3">Días vencidos Foto </th>
-            <th class="px-4 py-3">Días vencidos actual</th>
-            <th class="px-4 py-3">Saldo Foto</th>
-            <th class="px-4 py-3">Saldo actual</th>
-            <th class="px-4 py-3">Interes X mora</th>
-            <th class="px-4 py-3">Gastos de cobranza</th>
-            <th class="px-4 py-3">Totales parciales</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white" >
-          <tr class="text-gray-700" *ngFor="let item of datos;let indice=index">
-            <td class="px-4 py-3 text-sm border">{{ item.cuota}}</td>
-            <td class="px-4 py-3 text-sm border">{{ item.fechaVencimiento}}</td>
-            <td class="px-4 py-3 text-sm border">{{ item.diasVencidosFoto}}</td>
-            <td class="px-4 py-3 text-sm border">{{ item.diasVencidoHoy}}</td>
-            <td class="px-4 py-3 text-sm border">{{ item.saldoFoto | currency:'$':'symbol':'4.0-0'  }}</td>
-            <td class="px-4 py-3 text-sm border">{{ item.saldoActual | currency:'$':'symbol':'4.0-0' }}</td>
-            <!-- <td class="px-4 py-3 text-sm border">{{ item.estado}}</td> -->
-            <td class="px-4 py-3 text-sm border">{{ item.interesMora | currency:'$':'symbol':'4.0-0' }}</td> 
-            <td class="px-4 py-3 text-sm border">{{ item.gastoCobranza | currency:'$':'symbol':'4.0-0' }}</td>
-            <!-- <td class="px-4 py-3 text-sm border">{{ item.negocio}}</td> -->
-            <td class="px-4 py-3 text-sm border">{{ item.totalParciales | currency:'$':'symbol':'4.0-0' }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<section class="container">
+    <h2 mat-dialog-title>Detalle de Cartera</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="w-full mb-8 ">
+            <div class="w-full">
+                <!-- heard -->
+                <div class="row">
+                    <div class="col-lg-12 text-end pr-5">
+                        <div class="text-sm font-medium text-secondary font-bold" style="  margin: 1em;  color: #7b8c14 !important;"> Totales seleccionados   {{ totalSeleccionado  | currency:'$':'symbol':'0.0-0'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style=" width: 68em; overflow-x: hidden;overflow-x: auto; background: #F9FAFB; ">
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Cuota
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Fecha venc.
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Días vencidos Foto
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Días vencidos actual
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Saldo foto
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Saldo actual
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Interes x mora
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">Gastos cobranza
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="text-sm font-medium text-secondary font-bold">Totales parciales
+                        </div>
+                    </div>
+                </div>
+                <div style="overflow-y: auto; overflow-x: hidden;  height: 10em; width: 68em;   ">
+                    <div class="row" style="overflow: auto;  border: 1px solid #f9fafb;" *ngFor="let item of listadoDetalleCartera;let indexE=index;" >
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px; text-align: center;" ><input type="checkbox" id="cbox2" [(ngModel)]="item[indexE]"  (change)="sumar(item.totalParciales,item[indexE])" >
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">{{ item.cuota}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">{{ item.fechaVencimiento}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">{{ item.diasVencidosFoto}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">{{ item.diasVencidoHoy}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">
+                                {{ item.saldoFoto  | currency:'$':'symbol':'0.0-0' }}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">
+                                {{ item.saldoActual  | currency:'$':'symbol':'0.0-0'}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">
+                                {{ item.interesMora  | currency:'$':'symbol':'0.0-0'}}
+                            </div>
+                        </div>
+                        <div class="col-1">
+                            <div class="capitalize" style="font-size: 10px;">
+                                {{ item.gastoCobranza  | currency:'$':'symbol':'0.0-0' }}
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="capitalize" style="font-size: 10px;">
+                                {{ item.totalParciales  | currency:'$':'symbol':'0.0-0'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style=" width: 68em; overflow-x: hidden;overflow-x: auto; background: #F9FAFB;"  >
+                    <div class="col-1">
+                        
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="text-sm font-medium text-secondary font-bold">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">{{ totales.saldoFoto  | currency:'$':'symbol':'0.0-0' }}
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">{{ totales.saldoActual  | currency:'$':'symbol':'0.0-0'}}
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold">{{ totales.interesMora  | currency:'$':'symbol':'0.0-0'}}
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="text-sm font-medium text-secondary font-bold"> {{ totales.gastoCobranza  | currency:'$':'symbol':'0.0-0' }}
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="text-sm font-medium text-secondary font-bold"> {{ totales.totalParciales  | currency:'$':'symbol':'0.0-0'}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <table class="w-full" *ngIf="listadoDetalleCartera.length!=0">
+                    <thead>
+                        <tr
+                            class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                            <th class="px-4 py-3">Cuota</th>
+                            <th class="px-4 py-3">Fecha de vencimiento </th>
+                            <th class="px-4 py-3">Días vencidos Foto </th>
+                            <th class="px-4 py-3">Días vencidos actual</th>
+                            <th class="px-4 py-3">Saldo Foto</th>
+                            <th class="px-4 py-3">Saldo actual</th>
+                            <th class="px-4 py-3">Interes X mora</th>
+                            <th class="px-4 py-3">Gastos de cobranza</th>
+                            <th class="px-4 py-3">Totales parciales</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr class="text-gray-700" *ngFor="let item of listadoDetalleCartera">
+                            <td class="px-4 py-3 text-sm border">{{ item.cuota}}</td>
+                            <td class="px-4 py-3 text-sm border">{{ item.fechaVencimiento}}</td>
+                            <td class="px-4 py-3 text-sm border">{{ item.diasVencidosFoto}}</td>
+                            <td class="px-4 py-3 text-sm border">{{ item.diasVencidoHoy}}</td>
+                            <td class="px-4 py-3 text-sm border">{{ item.saldoFoto  | currency:'$':'symbol':'0.0-0' }}
+                            </td>
+                            <td class="px-4 py-3 text-sm border">{{ item.saldoActual  | currency:'$':'symbol':'0.0-0'}}
+                            </td>
+                            <td class="px-4 py-3 text-sm border">{{ item.interesMora  | currency:'$':'symbol':'0.0-0'}}
+                            </td>
+                            <td class="px-4 py-3 text-sm border">
+                                {{ item.gastoCobranza  | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-3 text-sm border">
+                                {{ item.totalParciales  | currency:'$':'symbol':'0.0-0'}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-white font-titulo">
+                        <tr class="text-gray-700" >
+                            <td class="px-4 py-3 text-sm border"></td>
+                            <td class="px-4 py-3 text-sm border"></td>
+                            <td class="px-4 py-3 text-sm border"></td>
+                            <td class="px-4 py-3 text-sm border"></td>
+                            <td class="px-4 py-3 text-sm border">{{ totales.saldoFoto  | currency:'$':'symbol':'0.0-0' }}
+                            </td>
+                            <td class="px-4 py-3 text-sm border">{{ totales.saldoActual  | currency:'$':'symbol':'0.0-0'}}
+                            </td>
+                            <td class="px-4 py-3 text-sm border">{{ totales.interesMora  | currency:'$':'symbol':'0.0-0'}}
+                            </td>
+                            <td class="px-4 py-3 text-sm border">
+                                {{ totales.gastoCobranza  | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-3 text-sm border">
+                                {{ totales.totalParciales  | currency:'$':'symbol':'0.0-0'}}</td>
+                        </tr>
+                    </tfoot>
+                </table> -->
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <!-- <button mat-button mat-dialog-close>Cerrar</button> -->
+        <button mat-dialog-close class="btn bg-accent text-white">
+            Cerrar
+        </button>
+    </mat-dialog-actions>
 </section>

@@ -2,3 +2,53 @@
 /*  @ Main Tailwind file for injecting utilities.
 /* ----------------------------------------------------------------------------------------------------- */
 @tailwind utilities;
+
+/* width */
+*::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.fuse-mat-rounded .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label.mat-tab-label-active {
+    background: #4dbceb !important;
+    color: #fff !important;
+}
+
+::div.mat-tab-label-content{
+color:#fff !important;
+}
+
+.w-27px {
+    width: 27px !important;
+}
+.border-redondo-salmon {
+    border-radius: 7px 0px 0px 7px !important;
+}
+.border-card {
+border-radius: 7px !important;
+}
+.mat-tab-label-container{
+    padding-left: 0.25rem !important;
+}
+
+.mat-tab-body-content{
+    padding-left: 0.5rem !important;
+}
+a.ng-star-inserted {
+  
+    text-decoration: none !important;
+}

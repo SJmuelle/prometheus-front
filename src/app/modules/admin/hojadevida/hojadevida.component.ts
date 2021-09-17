@@ -112,7 +112,7 @@ export class HojadevidaComponent implements OnInit {
             .subscribe((response: any) => {
                 this.negocios = response.data;
                 this.formHv.enable();
-                this.buscarInfo('');
+                this.buscarInfo('0');
             });
     }
 
@@ -133,9 +133,9 @@ export class HojadevidaComponent implements OnInit {
     }
 
     buscarInfo(form: any) {
-      
-        this.codNegocio=form==""?this.clienteID:form.codigoNegocio;
-       
+    
+        this.codNegocio=form=="0"?this.clienteID:form.codigoNegocio;
+        this.codNegocio=this.codNegocio=="0"?this.clienteID:this.codNegocio;
         this._hojadevidaService
             .getInfoCliente(this.codNegocio)
             .subscribe((response: any) => {

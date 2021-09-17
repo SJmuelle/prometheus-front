@@ -4,6 +4,7 @@ import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
+import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -84,8 +85,13 @@ export const appRoutes: Route[] = [
                 path: 'calendar',
                 loadChildren: () => CalendarModule
             },
+            {
+                path: 'pqr',
+                loadChildren: () => PqrModule
+            },
         ]
     },
+    // {path: '**', redirectTo: '/sign-in'}
     // {path: '**', redirectTo: 'sign-in'},
     // {path: '*', redirectTo: 'sign-in'}
 ];

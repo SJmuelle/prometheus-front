@@ -1,51 +1,277 @@
-<h2 mat-dialog-title>Detalle del credito</h2>
-<mat-tab-group (selectedTabChange)="onTabChanged($event)">
+<h2 mat-dialog-title>Detalle del crédito</h2>
+<mat-tab-group (selectedTabChange)="onTabChangedCredito($event.index)">
     <!-- <mat-tab *ngFor="let tab of asyncTabs | async">
         <ng-template mat-tab-label>{{tab.label}}</ng-template>
         {{tab.content}}
     </mat-tab> -->
+
+
+
+
     <mat-tab>
-        <ng-template mat-tab-label>Información personal y laboral </ng-template>
-        <form [formGroup]="infoInfoPerLab">
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Afiliado</mat-label>
-                    <input formControlName="afiliado" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Asesor de colocación</mat-label>
-                    <input formControlName="asesorColocacion" type="text" matInput />
-                </mat-form-field>
+        <ng-template mat-tab-label> Información del negocio y codeudor</ng-template>
+        <div class="row m-1">
+            <div class="col-lg-4 col-sm-12">
+                <h6>Información del negocio </h6>
+                <fuse-card class="card p-3 shadow capitalize row mr-3 "  *ngIf="infoNegocio">
+                    <div class="text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                        {{infoNegocio.empresa}}
+                    </div>
+                    <div class="font-titulo col-lg-12 col-sm-12  m-0 p-0 font-normal">
+                        NIT: {{infoNegocio.nit}}
+                    </div>
+                    <hr class="w-full border-t col-lg-12 col-sm-12">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 m-0 p-0 col-sm-2">
+                                <mat-icon svgIcon="iconsmind:network_window"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
+                                Negocio
+                            </div>
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                Código negocio: {{infoNegocio.codigoNegocio}}
+                                <br>
+                                Número Solicitud: {{infoNegocio.numeroSolicitud}}
+                            </span>
+                        </div>
+
+                        <div class="row items-center  mt-3 mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 m-0 p-0 col-sm-2">
+                                <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 col-sm-12  m-0 font-bold">
+                                Ubicación
+                            </div>
+                          
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{infoNegocio.direccion}} <br>
+                                {{infoNegocio.barrio}}{{infoNegocio.barrio==""?'':','}} {{infoNegocio.ciudad}} -
+                                {{infoNegocio.departamento}}
+                            </span>
+                        </div>
+                        <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 col-sm-2 m-0 p-0">
+                                <mat-icon svgIcon="iconsmind:phone"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 col-sm-12 m-0 font-bold">
+                                Contacto
+                            </div>
+                          
+    
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{infoNegocio.celular}} {{infoNegocio.telefono==0?'':'-'}}
+                                {{infoNegocio.telefono==0?'':infoNegocio.telefono}} <br>
+                                {{infoNegocio.email}}
+                            </span>
+                        </div>
+                        
+                    </div>
+                </fuse-card>
             </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Valor cuota</mat-label>
-                    <input formControlName="cuotaMensual" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Plazo</mat-label>
-                    <input formControlName="plazo" type="text" matInput />
-                </mat-form-field>
+        
+            <div class="col-lg-8 col-sm-12">
+                <h6>Información de codeudores</h6>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row border-card shadow mb-4" style="
+                            font-size: 13px;
+                            border: 2px solid #eaeaea;
+                            padding: 1em; "
+                            *ngFor="let data of infoCodeu">
+
+                            
+                            <div class="col-lg-12  border-card">
+                                <div class="row border-card">
+                                    <div class="col-sm-12 col-lg-4">
+                                        <div class="text-sm font-medium text-secondary font-bold">Nombre 
+                                        </div>
+                                        <div class="capitalize">{{data.primerNombre}} {{data.primerApellido}}</div>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <div class="text-sm font-medium text-secondary font-bold pl-0" >Identificación</div>
+                                        <div class="">{{data.identificacion }}</div>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-4">
+                                        <div class="text-sm font-medium text-secondary font-bold">Número solicítud</div>
+                                        <div class="">{{data.numeroSolicitud}}</div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-8">
+                                        <div class="text-sm font-medium text-secondary font-bold">Ubicación</div>
+                                        <div class="capitalize">{{data.direccion}}  {{data.barrio}}  {{data.ciudad}}  {{data.departamento}} </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="text-sm font-medium text-secondary font-bold">Celular
+                                        </div>
+                                        <div class="">{{data.celular}}</div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-8">
+                                        <div class="text-sm font-medium text-secondary font-bold">Correo Electrónico
+                                        </div>
+                                        <div class="capitalize">{{data.email}}</div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-4">
+                                        <div class="text-sm font-medium text-secondary font-bold">Profesión
+                                        </div>
+                                        <div class="capitalize">{{data.profesion}}</div>
+                                    </div>
+                                    <!-- <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Detalle</div>
+                                        <div class=""> <button>
+                                                <mat-icon class="material-icons-two-tone" style="color:#fff;     align-self: center; height: 100%;">description</mat-icon>
+                                            </button></div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Ocupación</mat-label>
-                    <input formControlName="ocupacion" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Actividad económica</mat-label>
-                    <input formControlName="actividadEconomica" type="text" matInput />
-                </mat-form-field>
+        </div>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>Información personal, laboral y conyugue</ng-template>
+        <div class="row m-1">
+            <div class="col-lg-6 col-sm-12"  >
+                <h6>Información personal y laboral  </h6>
+                <fuse-card class="card p-3 shadow capitalize row mr-3 "  *ngIf="infoInfoPerLab.length==0">
+                    <div class="text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                        {{infoInfoPerLab.empresa}}
+                    </div>
+                    <div class="font-titulo col-lg-12 col-sm-12  m-0 p-0 font-normal">
+                        NIT: {{infoInfoPerLab.nit}}
+                    </div>
+                    <hr class="w-full border-t col-lg-12 col-sm-12">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 m-0 p-0 col-sm-2">
+                                <mat-icon svgIcon="iconsmind:network_window"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
+                                Negocio
+                            </div>
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                Código negocio: {{infoInfoPerLab.codigoNegocio}}
+                                <br>
+                                Número Solicitud: {{infoInfoPerLab.numeroSolicitud}}
+                            </span>
+                        </div>
+    
+                        <div class="row items-center  mt-3 mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 m-0 p-0 col-sm-2">
+                                <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 col-sm-12  m-0 font-bold">
+                                Ubicación
+                            </div>
+                          
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{infoInfoPerLab.direccion}} <br>
+                                {{infoInfoPerLab.barrio}}{{infoInfoPerLab.barrio==""?'':','}} {{infoInfoPerLab.ciudad}} -
+                                {{infoInfoPerLab.departamento}}
+                            </span>
+                        </div>
+                        <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 col-sm-2 m-0 p-0">
+                                <mat-icon svgIcon="iconsmind:phone"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 col-sm-12 m-0 font-bold">
+                                Contacto
+                            </div>
+                          
+    
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{infoInfoPerLab.celular}} {{infoInfoPerLab.telefono==0?'':'-'}}
+                                {{infoInfoPerLab.telefono==0?'':infoInfoPerLab.telefono}} <br>
+                                {{infoInfoPerLab.email}}
+                            </span>
+                        </div>
+                        
+                    </div>
+                </fuse-card>
+                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"  *ngIf="infoInfoPerLab.length!=0">
+                    <div  class="w-3/4">
+                        <img src="assets/images/animaciones/nodata.gif">
+                    </div>
+                </fuse-card>
             </div>
-        </form>
+            <div class="col-lg-6 col-sm-12">
+                <h6>Información conyugue </h6>
+                <fuse-card class="card p-3 shadow capitalize row mr-3 "  *ngIf="infoConyugue.length==0">
+                    <div class="text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                        {{infoConyugue.empresa}}
+                    </div>
+                    <div class="font-titulo col-lg-12 col-sm-12  m-0 p-0 font-normal">
+                        NIT: {{infoConyugue.nit}}
+                    </div>
+                    <hr class="w-full border-t col-lg-12 col-sm-12">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 m-0 p-0 col-sm-2">
+                                <mat-icon svgIcon="iconsmind:network_window"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
+                                Negocio
+                            </div>
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                Código negocio: {{infoConyugue.codigoNegocio}}
+                                <br>
+                                Número Solicitud: {{infoConyugue.numeroSolicitud}}
+                            </span>
+                        </div>
+    
+                        <div class="row items-center  mt-3 mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 m-0 p-0 col-sm-2">
+                                <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 col-sm-12  m-0 font-bold">
+                                Ubicación
+                            </div>
+                          
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{infoConyugue.direccion}} <br>
+                                {{infoConyugue.barrio}}{{infoConyugue.barrio==""?'':','}} {{infoConyugue.ciudad}} -
+                                {{infoConyugue.departamento}}
+                            </span>
+                        </div>
+                        <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                            <!-- <div class="col-lg-1 col-sm-2 m-0 p-0">
+                                <mat-icon svgIcon="iconsmind:phone"></mat-icon>
+                            </div> -->
+                            <div class="font-titulo col-lg-12 col-sm-12 m-0 font-bold">
+                                Contacto
+                            </div>
+                          
+    
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{infoConyugue.celular}} {{infoConyugue.telefono==0?'':'-'}}
+                                {{infoConyugue.telefono==0?'':infoConyugue.telefono}} <br>
+                                {{infoConyugue.email}}
+                            </span>
+                        </div>
+                        
+                    </div>
+                </fuse-card>
+                <fuse-card class="card p-3 shadow capitalize row mr-3  align-content-around"  *ngIf="infoConyugue.length!=0">
+                    <div class="w-3/4">
+                        <img src="assets/images/animaciones/nodata.gif">
+                    </div>
+                </fuse-card>
+            </div>
+        </div>
+      
+
     </mat-tab>
 
     <mat-tab>
         <ng-template mat-tab-label>Referencias</ng-template>
-        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-            <div class="w-full overflow-x-auto">
+        <div class="w-full mb-8  shadow">
+            <div class="w-full">
                 <table class="w-full">
-                    <thead>
+                    <thead style="background-color: #F9FAFB;">
                         <tr
                             class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
                             <th class="px-4 py-3">Nombre Completo</th>
@@ -77,135 +303,7 @@
             </div>
         </div>
     </mat-tab>
-
-    <mat-tab>
-        <ng-template mat-tab-label>Información codeudor</ng-template>
-        <form [formGroup]="infoCodeu">
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Primer nombre</mat-label>
-                    <input formControlName="primerNombre" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Primer Apellido</mat-label>
-                    <input formControlName="primerApellido" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Identificación</mat-label>
-                    <input formControlName="identificacion" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Profesión</mat-label>
-                    <input formControlName="profesion" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Departamento</mat-label>
-                    <input formControlName="departamento" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Ciudad</mat-label>
-                    <input formControlName="ciudad" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Dirección</mat-label>
-                    <input formControlName="direccion" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Barrio</mat-label>
-                    <input formControlName="barrio" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Email</mat-label>
-                    <input formControlName="email" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Celular</mat-label>
-                    <input formControlName="celular" type="text" matInput />
-                </mat-form-field>
-            </div>
-        </form>
-    </mat-tab>
-
-    <mat-tab>
-        <ng-template mat-tab-label>Información del negocio</ng-template>
-        <form [formGroup]="infoNegocio">
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Empresa</mat-label>
-                    <input formControlName="empresa" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Nit / Rut</mat-label>
-                    <input formControlName="nit" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Celular / Teléfono</mat-label>
-                    <input formControlName="celular" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Correo</mat-label>
-                    <input formControlName="email" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Departamento</mat-label>
-                    <input formControlName="departamento" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Ciudad</mat-label>
-                    <input formControlName="ciudad" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Barrio</mat-label>
-                    <input formControlName="barrio" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Dirección</mat-label>
-                    <input formControlName="direccion" type="text" matInput />
-                </mat-form-field>
-            </div>
-        </form>
-    </mat-tab>
-
-    <mat-tab>
-        <ng-template mat-tab-label>Información del conyuge</ng-template>
-        <form [formGroup]="infoConyugue">
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Primer nombre</mat-label>
-                    <input formControlName="primerNombreCony" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Primer Apellido</mat-label>
-                    <input formControlName="primerApellidoCony" type="text" matInput />
-                </mat-form-field>
-            </div>
-            <div class="row justify-content-center">
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Celular</mat-label>
-                    <input formControlName="celularCony" type="text" matInput />
-                </mat-form-field>
-                <mat-form-field class="col-lg-6" appearance="fill">
-                    <mat-label>Email</mat-label>
-                    <input formControlName="emailCony" type="text" matInput />
-                </mat-form-field>
-            </div>
-        </form>
-    </mat-tab>
 </mat-tab-group>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button mat-dialog-close>Cerrar </button>
 </mat-dialog-actions>

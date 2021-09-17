@@ -141,7 +141,7 @@
                             <!-- Description -->
                             <div class="flex mt-6" *ngIf="event.description">
                                 <mat-icon [svgIcon]="'heroicons_outline:menu-alt-2'"></mat-icon>
-                                <div class="flex-auto ml-6">{{event.description}}</div>
+                                <div class="flex-auto ml-6 capitalize">{{event.description}}</div>
                             </div>
 
                         
@@ -153,7 +153,7 @@
                         <form class="flex flex-col w-full p-6 pt-8 sm:pt-10 sm:pr-8" [formGroup]="eventForm">
 
                             <header class="flex items-center justify-between">
-                                <h2 class="text-lg leading-6 font-medium text-black">Actualizar Dia </h2>
+                                <h2 class="text-lg leading-6 font-medium text-black">Actualizar Día </h2>
                                
                             </header>
 
@@ -180,13 +180,13 @@
                                             <mat-option [value]="1">
                                                 <div class="inline-flex items-center">
                                                     <span class="w-3 h-3 rounded-full bg-teal-500"></span>
-                                                    <span class="ml-3">DIA NO HABIL</span>
+                                                    <span class="ml-3">Día no hábil</span>
                                                 </div>
                                             </mat-option>
                                             <mat-option [value]="2">
                                                 <div class="inline-flex items-center">
                                                     <span class="w-3 h-3 rounded-full bg-indigo-500"></span>
-                                                    <span class="ml-3">DIA FESTIVO</span>
+                                                    <span class="ml-3">Día festivo</span>
                                                 </div>
                                             </mat-option>
                                         </ng-container>

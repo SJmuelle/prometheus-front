@@ -20,7 +20,7 @@
                     <mat-label>Número de negocio</mat-label>
                     <mat-select formControlName="codigoNegocio" [compareWith]="compareObjects"
                         (selectionChange)="buscarInfo(formHv.value)">
-                        <mat-option [value]="">Todos</mat-option>
+                        <mat-option [value]="0">Todos</mat-option>
                         <mat-option *ngFor="let negocio of negocios" [value]="negocio.codigoNegocio">
                             {{ negocio.codigoNegocio }}</mat-option>
 

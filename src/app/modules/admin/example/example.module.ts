@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 import { ExampleComponent } from 'app/modules/admin/example/example.component';
+import { HojavidaModule } from '../apps/hojavida/hojavida.module';
 
 const exampleRoutes: Route[] = [
     {
@@ -10,8 +11,7 @@ const exampleRoutes: Route[] = [
             {
                 path: 'hoja-vida',
                 loadChildren: () =>
-                    import('../hojadevida/hojadevida.module').then(
-                        (m) => m.HojadevidaModule
+                   ( HojavidaModule
                     ),
             },
         ],

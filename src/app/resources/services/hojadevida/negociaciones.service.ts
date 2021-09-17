@@ -32,4 +32,16 @@ export class NegociacionesService {
                 `/informacion-historial-negociaciones/${codigoNegocio}`
         );
     }
+    getInformacionExtractos(codigoNegocio: string = '') {
+        return this._httpClient.get(
+            environment.urlApi2 +
+                `/informacion-extractos/${codigoNegocio}`
+        );
+    }
+    getReporteCentrales(codigoNegocio: string = '') {
+        return this._httpClient.get(
+            environment.urlApi2 +
+                `/informacion-reporte-centrales/${codigoNegocio}`
+        );
+    }
 }

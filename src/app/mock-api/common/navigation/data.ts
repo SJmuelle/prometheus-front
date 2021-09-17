@@ -20,31 +20,44 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'dashboard.pqrs',
                 title: 'PQRS',
                 type: 'collapsable',
-                icon    : 'heroicons_outline:check-circle',
+                icon: 'heroicons_outline:check-circle',
                 children: [
                     {
-                        id: 'dashboard.diasnohabiles',
-                        title: 'Días no habiles',
+                        id: 'dashboard.pqr.lista',
+                        title: 'Lista',
                         type: 'basic',
-                        link: '/dashboard/hoja-vida/dias-no-habiles'
+                        link: '/list'
                     },
                     {
-                        id: 'dashboard.causales',
-                        title: 'Causales de PQRS',
-                        type: 'basic',
-                        link: '/dashboard/hoja-vida/causales'
+                        id: 'dashboard.pqr.configuracion',
+                        title: 'Configuración',
+                        type: 'collapsable',
+                        children: [
+                            {
+                                id: 'dashboard.pqr.configuracion.tipo',
+                                title: 'tipo de PQRS',
+                                type: 'basic',
+                                link: '/configuracion/tipo'
+                            },
+                            {
+                                id: 'dashboard.pqr.configuracion.causales',
+                                title: 'Causales de PQRS',
+                                type: 'basic',
+                                link: '/configuracion/causales'
+                            },
+                            {
+                                id: 'dashboard.pqr.configuracion.responsables',
+                                title: 'Responsables de PQRS',
+                                type: 'basic',
+                                link: '/configuracion/responsables'
+                            },
+                        ]
                     },
                     {
-                        id: 'dashboard.responsables',
-                        title: 'Responsables de PQRS',
-                        type: 'basic',
-                        link: '/dashboard/hoja-vida/responsables'
-                    },
-                    {
-                        id: 'dashboard.solucion',
+                        id: 'dashboard.pqr.gestion',
                         title: 'Solución de PQRS',
                         type: 'basic',
-                        link: '/dashboard/hoja-vida/solucion'
+                        link: '/gestion'
                     }
                 ]
             }
@@ -80,31 +93,31 @@ export const compactNavigation: FuseNavigationItem[] = [
                 id: 'dashboard.pqrs',
                 title: 'PQRS',
                 type: 'group',
-                icon    : 'heroicons_outline:check-circle',
+                icon: 'heroicons_outline:check-circle',
                 children: [
                     {
-                        id: 'dashboard.diasnohabiles',
-                        title: 'Días no habiles',
+                        id: 'dashboard.pqrs.list',
+                        title: 'Lista',
                         type: 'basic',
-                        link: '/dashboard/hoja-vida/dias-no-habiles'
+                        link: '/pqr/list'
                     },
                     {
-                        id: 'dashboard.causales',
+                        id: 'dashboard.pqr.causales',
                         title: 'Causales de PQRS',
                         type: 'basic',
-                        link: '/dashboard/hoja-vida/causales'
+                        link: '/pqr/hoja-vida/causales'
                     },
                     {
-                        id: 'dashboard.responsables',
+                        id: 'dashboard.pqr.responsables',
                         title: 'Responsables de PQRS',
                         type: 'basic',
-                        link: '/dashboard/hoja-vida/responsables'
+                        link: '/pqr/hoja-vida/responsables'
                     },
                     {
-                        id: 'dashboard.solucion',
+                        id: 'dashboard.pqr.solucion',
                         title: 'Solución de PQRS',
                         type: 'basic',
-                        link: '/dashboard/hoja-vida/solucion'
+                        link: '/pqr/hoja-vida/solucion'
                     }
                 ]
             }

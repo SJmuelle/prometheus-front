@@ -10,8 +10,11 @@ import { DetalleCreditoService } from 'app/resources/services/hojadevida/credito
   styleUrls: ['./modalcartera.component.scss']
 })
 export class ModalcarteraComponent implements OnInit {
-  datos: any;
-
+  // datos: any;
+  listadoDetalleCartera: any;
+  totales: any;
+  totalSeleccionado:any=0;
+  item:any[];
   constructor(public dialogRef: MatDialogRef<ModalcarteraComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
     private fb: FormBuilder,
@@ -23,6 +26,7 @@ export class ModalcarteraComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data.codigoNegocio);
     this.getDetalle(this.data.codigoNegocio);
+    this.listadoDetalleCartera=[];
   }
 
   getDetalle(data: string) {
@@ -30,11 +34,33 @@ export class ModalcarteraComponent implements OnInit {
       .getDetalleCartera(data)
       .subscribe((response: any) => {
         if (response.data) {
-          this.datos=response.data;
-          console.log(this.datos);
+          this.listadoDetalleCartera=response.data;
+          console.log(this.listadoDetalleCartera);
+          this.getTotal(data);
         }
       });
   }
 
+
+  getTotal(data: string) {
+    return this._cartera_service
+      .getDetalleCarteraTotal(data)
+      .subscribe((response: any) => {
+        if (response.data) {
+          this.totales=response.data;
+          console.log(this.totales);
+        }
+      });
+  }
+  sumar(valor:any,estado:boolean){
+
+    if(estado==true){
+      this.totalSeleccionado=this.totalSeleccionado+valor;
+    }else{
+      this.totalSeleccionado=this.totalSeleccionado-valor;
+    }
+    
+  }
+  
 
 }

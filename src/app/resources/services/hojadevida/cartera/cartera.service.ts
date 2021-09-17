@@ -15,9 +15,22 @@ export class CarteraService {
     }
     
     getDetalleCartera(codigoNegocio: string) {
-        // /informacion-detalle-cartera/202009/1/MC18825
+        let today = new Date();
+        let year = today.getFullYear();
+        let mesActual = (today.getMonth() + 1); 
+        let mes = mesActual>9?'':'0'+mesActual; 
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-detalle-cartera/202009/1/${codigoNegocio}`
+            environment.urlApi2 + `/informacion-detalle-cartera/${year}${mes}/1/${codigoNegocio}`
+        );
+    }
+    getDetalleCarteraTotal(codigoNegocio: string) {
+        // /informacion-detalle-cartera/202009/1/MC18825
+        let today = new Date();
+        let year = today.getFullYear();
+        let mesActual = (today.getMonth() + 1); 
+        let mes = mesActual>9?'':'0'+mesActual; 
+        return this._httpClient.get(
+            environment.urlApi2 + `/informacion-detalle-cartera-sum/${year}${mes}/1/${codigoNegocio}`
         );
     }
 }
