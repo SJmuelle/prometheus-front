@@ -46,7 +46,7 @@
                     </mat-form-field>
                 </div>
                 <div class="col-sm-12 col-lg-1 mb-3 justify-content-center flex" *ngIf="busqueda=='1'|| busqueda=='2' ">
-                    <button mat-button class="mt-7 bg-accent text-white" (click)="buscarClientes()">
+                    <button mat-button class="mt-7 bg-accent text-white" (click)="buscarClientes()" [disabled]="btnBuscar==true" >
                         Buscar
                     </button>
                 </div>
@@ -56,15 +56,15 @@
     <div class="row pl-3" *ngIf="mostrarDatoCliente==true">
         <div class="col-sm-12 col-lg-3 pb-3">
             <fuse-card class="card p-3 shadow capitalize row mr-3 ">
-                <div class="text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                <div class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
                     {{info_cliente.primerNombre}}
                     {{info_cliente.segundoNombre}}
                     {{info_cliente.primerApellido}}
                     {{info_cliente.segundoApellido}}
                 </div>
-                <div class="font-titulo col-lg-12 col-sm-12  m-0 p-0 font-normal" style="padding-left: 0px !important">
+                <span class="leading-none p-0" style="line-height: 1.3em !important;font-size: 13px;">
                     Identificación: {{info_cliente.identificacion}}
-                </div>
+                </span>
                 <hr class="w-full border-t col-lg-12 col-sm-12">
                 <div class="col-lg-12 col-sm-12">
                     <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
@@ -234,9 +234,9 @@
                                                 <div class="capitalize" style="font-size: 16px;">{{data.valorDisponible  | currency:'$':'symbol':'0.0-0'}}
                                                 </div>
                                             </div>
-                                            <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Plan de pagos</div>
-                                                <div class="capitalize" style="font-size: 16px;">
+                                            <div class="col-sm-6 col-lg-2 ">
+                                                <div class="text-sm font-medium text-secondary font-bold ">Plan pagos</div>
+                                                <div class="capitalize" style="font-size: 16px; margin-left: 20px;">
                                                     <mat-icon class="material-icons-two-tone cursor-pointer"
                                                     (click)="buscar_url(data.fechaSolicitud)"
                                                     style="align-self: center; height: 100%;">description
@@ -321,19 +321,19 @@
                                                 <div class="" style="font-size: 16px;">{{data.tipoCuenta}}</div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1">
-                                                <div class="text-sm font-medium text-secondary font-bold">Detalle
+                                                <div class="text-sm font-medium text-secondary font-bold text-center">Detalle
                                                 </div>
-                                                <div class="">
-                                                    <mat-icon class="material-icons-two-tone cursor-pointer"
+                                                <div class="text-center">
+                                                    <mat-icon class="material-icons-two-tone cursor-pointer text-center"
                                                         (click)="openDialogCartera(data.codigoNegocio)"
                                                         style="align-self: center; height: 100%;">description
                                                     </mat-icon>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1">
-                                                <div class="text-sm font-medium text-secondary font-bold">Ingreso
+                                                <div class="text-sm font-medium text-secondary font-bold text-center">Ingreso
                                                 </div>
-                                                <div class="">
+                                                <div class="text-center">
                                                     <mat-icon class="material-icons-two-tone cursor-pointer"
                                                         (click)="openDialogCartera(data.codigoNegocio)"
                                                         style="align-self: center; height: 100%;">description
@@ -357,7 +357,7 @@
                                                             <div class="col-lg-12 col-sm-12  my-3">
                                                                 <div
                                                                     class="text-sm font-medium leading-none text-secondary text-center">
-                                                                    Saldo</div>
+                                                                    Valor</div>
                                                                 <div
                                                                     class="mt-2 font-medium text-3xl leading-none text-center">
                                                                     {{data.valorCuotaMes | currency:'$':'symbol':'0.0-0'}}
@@ -417,7 +417,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="row ">
-                                                            <div class="col-lg-8 col-sm-12  my-3">
+                                                            <div class="col-lg-7 col-sm-12  my-3">
                                                                 <div
                                                                     class="text-sm font-medium leading-none text-secondary text-center">
                                                                     Saldo</div>
@@ -426,11 +426,11 @@
                                                                     {{data.saldoObligacio | currency:'$':'symbol':'0.0-0'}}
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-4 col-sm-12  my-3">
+                                                            <div class="col-lg-5 col-sm-12  my-3">
                                                                 <div [className]="data.color+'_border'">
                                                                     <div
                                                                         class="text-sm font-medium leading-none text-secondary text-center">
-                                                                        Cuota</div>
+                                                                        Cuotas pendiente</div>
                                                                     <div
                                                                         class="mt-2 font-medium text-3xl leading-none text-center">
                                                                         {{data.cuotasPendientes}}</div>
@@ -457,15 +457,13 @@
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs"> Historial Gestión</div>
                             </span>
-                            <div class="leading-tight col-lg-6 col-sm-12 text-end">
-                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px;" type="text"
+                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"
                                     autocomplete="off" name="filtrarTablaHG" [(ngModel)]="filtrarTablaHG"
                                     placeholder="Filtrar...">
-                            </div>
-                            <div class="leading-tight col-lg-2 col-sm-12 text-end"
-                                style="font-size: 10px; color: #9aa8bc;">
-                                <select name="tamanoTablaHG" id="tamanoTablaHG" class="border rounded p-2 bg-gray-100"
-                                    [(ngModel)]="tamanoTablaHG">
+
+                                <select name="tamanoTablaHG" id="tamanoTablaHG" class="border rounded  bg-gray-100" (change)="pageHG=1"
+                                    [(ngModel)]="tamanoTablaHG"  style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                                     <option value="5"> 5</option>
                                     <option value="10"> 10</option>
                                     <option value="20"> 20</option>
@@ -508,6 +506,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <!-- <div class="col-lg-12 col-sm-12 text-end">
+                                        <pagination-controls (pageChange)="pageHG=$event" previousLabel="Anterior"
+                                            nextLabel="Siguiente"></pagination-controls>
+                                    </div> -->
                                     <div class="col-lg-12 col-sm-12 text-end">
                                         <pagination-controls (pageChange)="pageHG = $event" previousLabel="Anterior"
                                             nextLabel="Siguiente"></pagination-controls>
@@ -538,12 +540,18 @@
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Negociaciones</div>
                             </span>
-                            <div class="leading-tight col-lg-6 col-sm-12 text-end">
-                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px;" type="text"
+                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"
                                     autocomplete="off" name="filtrarTablaNeg" [(ngModel)]="filtrarTablaNeg"
                                     placeholder="Filtrar...">
+                                    <select name="tamanoTablaNeg" id="tamanoTablaNeg" class="border rounded  bg-gray-100" (change)="pageNeg=1"
+                                    [(ngModel)]="tamanoTablaNeg"  style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                    <option value="5"> 5</option>
+                                    <option value="10"> 10</option>
+                                    <option value="20"> 20</option>
+                                </select>
                             </div>
-                            <div class="leading-tight col-lg-2 col-sm-12 text-end"
+                            <!-- <div class="leading-tight col-lg-2 col-sm-12 text-end"
                                 style="font-size: 10px; color: #9aa8bc;">
                                 <select name="tamanoTablaNeg" id="tamanoTablaNeg" class="border rounded p-2 bg-gray-100"
                                     [(ngModel)]="tamanoTablaNeg">
@@ -551,11 +559,11 @@
                                     <option value="10"> 10</option>
                                     <option value="20"> 20</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" *ngIf="listadoNegociaciones.length!=0">
                                 <div class="row">
                                     <div class="col-lg-12 ">
                                         <table class="w-full shadow p-1">
@@ -587,7 +595,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"  *ngIf="listadoNegociaciones.length==0">
+                                    <div  class="w-3/12">
+                                        <img src="assets/images/animaciones/nodata.gif">
+                                    </div>
+                                </fuse-card>
+                            </div>
                         </div>
+                        
                         <div class="m-5">
 
                         </div>
@@ -610,12 +626,18 @@
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Extractos</div>
                             </span>
-                            <div class="leading-tight col-lg-6 col-sm-12 text-end">
-                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px;" type="text"
+                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"
                                     autocomplete="off" name="filtrarTablaExt" [(ngModel)]="filtrarTablaExt"
                                     placeholder="Filtrar...">
+                                <select name="tamanoTablaExt" id="tamanoTablaExt" class="border rounded  bg-gray-100" (change)="pageEXT=1"
+                                    [(ngModel)]="tamanoTablaExt"  style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                    <option value="5"> 5</option>
+                                    <option value="10"> 10</option>
+                                    <option value="20"> 20</option>
+                                </select>
                             </div>
-                            <div class="leading-tight col-lg-2 col-sm-12 text-end"
+                            <!-- <div class="leading-tight col-lg-2 col-sm-12 text-end"
                                 style="font-size: 10px; color: #9aa8bc;">
                                 <select name="tamanoTablaExt" id="tamanoTablaExt" class="border rounded p-2 bg-gray-100"
                                     [(ngModel)]="tamanoTablaExt">
@@ -623,11 +645,11 @@
                                     <option value="10"> 10</option>
                                     <option value="20"> 20</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" *ngIf="listadoExtractos.length!=0">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table class="w-full shadow">
@@ -670,6 +692,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"  *ngIf="listadoExtractos.length==0">
+                                    <div  class="w-3/12">
+                                        <img src="assets/images/animaciones/nodata.gif">
+                                    </div>
+                                </fuse-card>
+                            </div>
                         </div>
                         <div class="m-5">
 
@@ -693,15 +722,12 @@
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Reporte de las Centrales</div>
                             </span>
-                            <div class="leading-tight col-lg-6 col-sm-12 text-end">
-                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px;" type="text"
+                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"
                                     autocomplete="off" name="filtrarReporteC" [(ngModel)]="filtrarReporteC"
                                     placeholder="Filtrar...">
-                            </div>
-                            <div class="leading-tight col-lg-2 col-sm-12 text-end"
-                                style="font-size: 10px; color: #9aa8bc;">
-                                <select name="tamanoTablaRC" id="tamanoTablaRC" class="border rounded p-2 bg-gray-100"
-                                    [(ngModel)]="tamanoTablaRC">
+                                    <select name="tamanoTablaRC" id="tamanoTablaRC" class="border rounded  bg-gray-100" (change)="pageRC=1"
+                                    [(ngModel)]="tamanoTablaRC"  style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                                     <option value="5"> 5</option>
                                     <option value="10"> 10</option>
                                     <option value="20"> 20</option>
@@ -710,10 +736,10 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" *ngIf="listadoReporteCentrales.length!=0">
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <table class="w-full shadow">
+                                        <table class="w-full shadow" >
                                             <thead>
                                                 <tr
                                                     class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
@@ -736,10 +762,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-12 col-sm-12 text-end">
+                            <div class="col-lg-12 col-sm-12 text-end"  *ngIf="listadoReporteCentrales.length!=0">
                                 <pagination-controls (pageChange)="pageRC = $event" previousLabel="Anterior"
                                     nextLabel="Siguiente"></pagination-controls>
                             </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"  *ngIf="listadoReporteCentrales.length==0">
+                                <div  class="w-3/12">
+                                    <img src="assets/images/animaciones/nodata.gif">
+                                </div>
+                            </fuse-card>
                         </div>
                         <div class="m-5">
 
@@ -788,6 +821,13 @@
                                         </table> -->
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"  >
+                                    <div  class="w-3/12">
+                                        <img src="assets/images/animaciones/nodata.gif">
+                                    </div>
+                                </fuse-card>
                             </div>
                         </div>
                         <div class="m-5">

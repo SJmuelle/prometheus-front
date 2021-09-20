@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Ingreso</h2>
+
+
+<!-- banco: "efecty"
+cliente: "romero arnedo mirley isabel"
+codigoCliente: "CL48025"
+cuenta: "10000003"
+dstrct: "FINV"
+fechaConsignacion: "2021-08-05"
+numeroIngreso: "IC511588"
+sucursal: "efecty"
+tipoDocumento: "ING"
+valorConsignacion: 342993 -->
+
+
+<div class="w-full mb-8  shadow">
+    <div class="w-full">
+        <table class="w-full">
+            <thead style="background-color: #F9FAFB;">
+                <tr
+                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                    <th class="px-4 py-3">Número Ingreso</th>
+                    <th class="px-4 py-3">Codigo del Cliente</th>
+                    <th class="px-4 py-3">Cliente</th>
+                    <th class="px-4 py-3">Tipo Documento</th>
+                    <th class="px-4 py-3">dstrct</th>
+                    <th class="px-4 py-3">Cuenta</th>
+             
+                    <th class="px-4 py-3">Fecha Consignación</th>
+                    <th class="px-4 py-3">Sucursal</th>
+                    <th class="px-4 py-3">Valor Consignación</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700" *ngFor="let item of listadoIngreso;let indice=index">
+                    <td class="px-2 text-sm border">{{item.numeroIngreso}}</td>
+                    <td class="px-2 text-sm border">{{ item.codigoCliente}}</td>
+                    <td class="px-2 text-sm border capitalize">{{ item.cliente}}</td>
+                    <td class="px-2 text-sm border">{{ item.tipoDocumento}}</td>
+                    <td class="px-2 text-sm border">{{ item.dstrct}}</td>
+                    <td class="px-2 text-sm border">{{ item.cuenta}}</td>
+                  
+                    <td class="px-2 text-sm border">{{ item.fechaConsignacion}}</td>
+                    <td class="px-2 text-sm border">{{ item.sucursal}}</td>
+                    <td class="px-2 text-sm border">{{ item.valorConsignacion}}</td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar </button>
+</mat-dialog-actions>

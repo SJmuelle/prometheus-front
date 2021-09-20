@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/modal-ingreso.component';
 import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ModalcreditoComponent } from 'app/components/hojadevida/modalcredito/modalcredito.component';
 import { CarteraService } from 'app/resources/services/hojadevida/cartera/cartera.service';
@@ -22,12 +23,12 @@ export class HojavidaComponent implements OnInit {
   filtrarTabla: string;
   filtrarTablaCartera: any;
   filtrarTablaHN: any;
-  ListadoCartera: any[];
-  listadoNegociaciones: any;
-  listaHistoria: any[];
-  listadoExtractos: any[];
+  ListadoCartera: any=[];
+  listadoNegociaciones: any=[];
+  listaHistoria: any=[];
+  listadoExtractos: any=[];
   tab: any;
-  listadoReporteCentrales: any;
+  listadoReporteCentrales: any=[];
   codigoNegocio2: any;
   tamanoTablaHG: number;
   filtrarTablaHG: string;
@@ -37,6 +38,7 @@ export class HojavidaComponent implements OnInit {
   tamanoTablaExt: number;
   filtrarReporteC: string;
   tamanoTablaRC: number;
+  btnBuscar: boolean;
 
 
   constructor(private _hojadevidaService: HojadevidaService,
@@ -47,12 +49,23 @@ export class HojavidaComponent implements OnInit {
     private _negociacionesService: NegociacionesService) { }
 
   busqueda: string;
-  clienteID: number = 1075656710;
+  clienteID: number=1002128733;
   codigoNegocio: string;
   ngOnInit(): void {
     this.mostrarDatoCliente = false;
     this.filtrarTabla = "";
     this.tab = 0;
+    this.btnBuscar=false;
+    // const dialogRef = this.dialog.open(ModalIngresoComponent, {
+    //   // width: '1080px',
+    //   // maxHeight: '550px',
+    //   data: { codigoNegocio: '64695384' },
+    // });
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    //   console.log(result);
+    // });
   }
 
   getListadoCredito() {
@@ -65,6 +78,7 @@ export class HojavidaComponent implements OnInit {
   }
 
   buscarClientes() {
+    this.btnBuscar=true;
     if (this.busqueda == "1") {
       if (this.clienteID == null || this.clienteID == undefined || this.clienteID == 0) {
         Swal.fire(
@@ -79,6 +93,7 @@ export class HojavidaComponent implements OnInit {
       } else {
         this.codigoNegocio = this.codigoNegocio2
       }
+      Swal.fire({ title: 'Cargando!', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._hojadevidaService
         .getInfoCliente(this.codigoNegocio)
         .subscribe((res2: any) => {
@@ -129,7 +144,7 @@ export class HojavidaComponent implements OnInit {
   }
 
   onTabChanged(index): void {
-
+    this.btnBuscar=false;
     this.tab = index;
     switch (index) {
       case 0:
@@ -150,7 +165,7 @@ export class HojavidaComponent implements OnInit {
       case 1:
         Swal.fire({ title: 'Cargando!', html: 'Buscando información de Cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._carteraService
-          .getCartera(this.info_cliente.identificacion)
+          .getCartera(this.info_cliente.identificacion,this.codigoNegocio)
           .subscribe((respCartera: any) => {
             console.log(respCartera);
             if (respCartera.data) {

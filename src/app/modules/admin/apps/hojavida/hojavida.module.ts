@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { HojavidaComponent } from './hojavida.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'app/shared/shared.module';
-// import { FormControl } from '@angular/forms';
+
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ModalcreditoComponent } from 'app/components/hojadevida/modalcredito/modalcredito.component';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/modal-ingreso.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 const routes: Routes = [
   { path: 'hv', component: HojavidaComponent },
   // { path: 'pqrs', component: TipoPqrsComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
     HojavidaComponent,
     ModalcarteraComponent,
     ModalcreditoComponent,
+    ModalIngresoComponent
   ],
   imports: [
     CommonModule,

@@ -11,9 +11,9 @@
     <mat-tab>
         <ng-template mat-tab-label> Información del negocio y codeudor</ng-template>
         <div class="row m-1">
-            <div class="col-lg-4 col-sm-12">
+            <div class="col-lg-4 col-sm-12" >
                 <h6>Información del negocio </h6>
-                <fuse-card class="card p-3 shadow capitalize row mr-3 "  *ngIf="infoNegocio">
+                <fuse-card class="card p-3 shadow capitalize row mr-3 "  *ngIf="infoNegocio.codigoNegocio==0">
                     <div class="text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
                         {{infoNegocio.empresa}}
                     </div>
@@ -68,6 +68,11 @@
                         
                     </div>
                 </fuse-card>
+                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"  *ngIf="infoNegocio.codigoNegocio!=0">
+                    <div  class="w-3/4">
+                        <img src="assets/images/animaciones/nodata.gif">
+                    </div>
+                </fuse-card>
             </div>
         
             <div class="col-lg-8 col-sm-12">
@@ -86,36 +91,36 @@
                                     <div class="col-sm-12 col-lg-4">
                                         <div class="text-sm font-medium text-secondary font-bold">Nombre 
                                         </div>
-                                        <div class="capitalize">{{data.primerNombre}} {{data.primerApellido}}</div>
+                                        <div class="capitalize tamaño_texto">{{data.primerNombre}} {{data.primerApellido}}</div>
                                     </div>
                                     <div class="col-sm-12 col-lg-4">
                                         <div class="text-sm font-medium text-secondary font-bold pl-0" >Identificación</div>
-                                        <div class="">{{data.identificacion }}</div>
+                                        <div class="tamaño_texto">{{data.identificacion }}</div>
                                     </div>
                                     <div class="col-sm-12 col-lg-4">
                                         <div class="text-sm font-medium text-secondary font-bold">Número solicítud</div>
-                                        <div class="">{{data.numeroSolicitud}}</div>
+                                        <div class="tamaño_texto">{{data.numeroSolicitud}}</div>
                                     </div>
 
-                                    <div class="col-sm-6 col-lg-8">
+                                    <div class="col-sm-6 col-lg-12">
                                         <div class="text-sm font-medium text-secondary font-bold">Ubicación</div>
-                                        <div class="capitalize">{{data.direccion}}  {{data.barrio}}  {{data.ciudad}}  {{data.departamento}} </div>
+                                        <div class="capitalize tamaño_texto">{{data.direccion}}  {{data.barrio}}  {{data.ciudad}}  {{data.departamento}} </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold">Celular
+                                        <div class="text-sm font-medium text-secondary font-bold ">Celular
                                         </div>
-                                        <div class="">{{data.celular}}</div>
+                                        <div class="tamaño_texto">{{data.celular}}</div>
                                     </div>
-                                    <div class="col-sm-6 col-lg-8">
+                                    <div class="col-sm-6 col-lg-4">
                                         <div class="text-sm font-medium text-secondary font-bold">Correo Electrónico
                                         </div>
-                                        <div class="capitalize">{{data.email}}</div>
+                                        <div class="tamaño_texto">{{data.email}}</div>
                                     </div>
 
                                     <div class="col-sm-6 col-lg-4">
                                         <div class="text-sm font-medium text-secondary font-bold">Profesión
                                         </div>
-                                        <div class="capitalize">{{data.profesion}}</div>
+                                        <div class="capitalize tamaño_texto">{{data.profesion}}</div>
                                     </div>
                                     <!-- <div class="col-sm-6 col-lg-2">
                                         <div class="text-sm font-medium text-secondary font-bold">Detalle</div>
@@ -275,27 +280,30 @@
                         <tr
                             class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
                             <th class="px-4 py-3">Nombre Completo</th>
-                            <th class="px-4 py-3">departamento</th>
-                            <th class="px-4 py-3">ciudad</th>               
-                            <th class="px-4 py-3">direccion</th>
-                            <th class="px-4 py-3">celular</th>
-                            <th class="px-4 py-3">parentesco</th>
-                            <th class="px-4 py-3">tipo Referencia</th>
+                            <th class="px-4 py-3">Departamento</th>
+                            <th class="px-4 py-3">Ciudad</th>               
+                            <th class="px-4 py-3">Dirección</th>
+                            <th class="px-4 py-3">Celular</th>
+                            <th class="px-4 py-3">Parentesco</th>
+                            <th class="px-4 py-3">Referencia</th> 
                         </tr>
                     </thead>
                     <tbody class="bg-white">
                         <tr class="text-gray-700" *ngFor="let item of infoRefePer;let indice=index">
-                            <td class="px-4 py-3 text-sm border">{{item.primerNombre}} {{ item.primerApellido}}</td>
-                            <td class="px-4 py-3 text-sm border">{{ item.departamento}}</td>
-                            <td class="px-4 py-3 text-sm border">{{ item.ciudad}}</td>
-                            <td class="px-4 py-3 text-sm border">{{ item.direccion}}</td>
-                            <td class="px-4 py-3 text-sm border">{{ item.celular}}</td>
-                            <td class="px-4 py-3 text-sm border">{{ item.parentesco}}</td>
-                            <!-- <td class="px-4 py-3 text-sm border">{{ item.tipoReferencia}}</td> -->
-                            <td class="px-4 py-3 border text-xs">
-                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm"
-                                [ngClass]="item.tipoReferencia=='PERSONAL'?'bg-pink-300':'bg-green-300'"
-                                > {{ item.tipoReferencia}} </span>
+                            <td class="px-2 text-sm border capitalize">{{item.primerNombre}} {{ item.primerApellido}}</td>
+                            <td class="px-2 text-sm border capitalize">{{ item.departamento}}</td>
+                            <td class="px-2 text-sm border capitalize">{{ item.ciudad}}</td>
+                            <td class="px-2 text-sm border capitalize">{{ item.direccion}}</td>
+                            <td class="px-2 text-sm border">{{ item.celular}}</td>
+                            <td class="px-2 text-sm border text-center capitalize">{{ item.parentesco}}</td>
+                            <!-- <td class="px-2 text-sm border">{{ item.tipoReferencia}}</td> -->
+                            <td class="px-2  border text-xs text-center">
+                                <div style="width: 77px;    margin-left: 1em;"  [ngClass]="item.tipoReferencia=='PERSONAL'?'bg-pink-300':'bg-green-300'">
+                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm"
+                                   
+                                    > {{ item.tipoReferencia}} </span>
+                                </div>
+                             
                             </td>
                         </tr>
                     </tbody>

@@ -8,10 +8,14 @@ import { environment } from 'environments/environment';
 export class CarteraService {
     constructor(private _httpClient: HttpClient) {}
 
-    getCartera(codigoNegocio: string) {
-        return this._httpClient.get(
-            environment.urlApi2 + `/informacion-cartera/${codigoNegocio}`
-        );
+    getCartera(cedula: string,codigoNegocio: string) {
+        let url;
+        if(cedula==codigoNegocio){
+            url=environment.urlApi2 + `/informacion-cartera/${cedula}`;
+        }else{
+            environment.urlApi2 + `/informacion-cartera-negocio/${cedula}/${codigoNegocio}`
+        }
+        return this._httpClient.get(url);
     }
     
     getDetalleCartera(codigoNegocio: string) {
@@ -31,6 +35,13 @@ export class CarteraService {
         let mes = mesActual>9?'':'0'+mesActual; 
         return this._httpClient.get(
             environment.urlApi2 + `/informacion-detalle-cartera-sum/${year}${mes}/1/${codigoNegocio}`
+        );
+    }
+    getIngreso(codigo: string) {
+        // /informacion-detalle-cartera/202009/1/MC18825
+       
+        return this._httpClient.get(
+            environment.urlApi2 + `/informacion-ingresos/${codigo}`
         );
     }
 }
