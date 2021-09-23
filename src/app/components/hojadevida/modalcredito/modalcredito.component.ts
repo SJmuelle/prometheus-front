@@ -41,11 +41,11 @@ export class ModalcreditoComponent implements OnInit {
 
     onTabChangedCredito(index): void {
         switch (index) {
-            case 0:
+            case 1:
                 this.getInformacionCodeudor(this.data.codigoNegocio);
                 this.getInformacionNegocio(this.data.codigoNegocio);
                 break;
-            case 1:
+            case 0:
                 this.getInformacionConyuge(this.data.codigoNegocio);
                 this.getInformacionPersonal(this.data.codigoNegocio);
                 break;

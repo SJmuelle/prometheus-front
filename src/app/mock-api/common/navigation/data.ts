@@ -26,36 +26,49 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         id: 'dashboard.pqr.lista',
                         title: 'Lista',
                         type: 'basic',
+                        icon: 'heroicons_outline:clipboard-list',
                         link: '/list'
                     },
                     {
                         id: 'dashboard.pqr.configuracion',
                         title: 'Configuración',
+                        icon: 'heroicons_outline:cog',
                         type: 'collapsable',
                         children: [
                             {
                                 id: 'dashboard.pqr.configuracion.tipo',
-                                title: 'tipo de PQRS',
+                                title: 'Tipo de PQRS',
+                                icon: 'heroicons_outline:minus-sm',
                                 type: 'basic',
-                                link: '/configuracion/tipo'
+                                link: '/pqr/configuracion/tipoPQRS'
                             },
                             {
                                 id: 'dashboard.pqr.configuracion.causales',
                                 title: 'Causales de PQRS',
                                 type: 'basic',
-                                link: '/configuracion/causales'
+                                icon: 'heroicons_outline:minus-sm',
+                                link: '/pqr/configuracion/causalesPQRS'
                             },
                             {
                                 id: 'dashboard.pqr.configuracion.responsables',
                                 title: 'Responsables de PQRS',
                                 type: 'basic',
-                                link: '/configuracion/responsables'
+                                icon: 'heroicons_outline:minus-sm',
+                                link: '/pqr/configuracion/responsablesPQRS'
+                            },
+                            {
+                                id: 'dashboard.pqr.configuracion.soluciones',
+                                title: 'Soluciones de PQRS',
+                                type: 'basic',
+                                icon: 'heroicons_outline:minus-sm',
+                                link: '/pqr/configuracion/solucionesPQRS'
                             },
                         ]
                     },
                     {
                         id: 'dashboard.pqr.gestion',
                         title: 'Solución de PQRS',
+                        icon: 'heroicons_outline:check-circle',
                         type: 'basic',
                         link: '/gestion'
                     }

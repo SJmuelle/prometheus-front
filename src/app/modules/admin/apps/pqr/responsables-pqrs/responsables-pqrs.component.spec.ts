@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TipopqrComponent } from './tipopqr.component';
+import { ResponsablesPQRSComponent } from './responsables-pqrs.component';
 
-describe('TipopqrComponent', () => {
-  let component: TipopqrComponent;
-  let fixture: ComponentFixture<TipopqrComponent>;
+describe('ResponsablesPQRSComponent', () => {
+  let component: ResponsablesPQRSComponent;
+  let fixture: ComponentFixture<ResponsablesPQRSComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TipopqrComponent ]
+      declarations: [ ResponsablesPQRSComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TipopqrComponent);
+    fixture = TestBed.createComponent(ResponsablesPQRSComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,15 +5,38 @@ import { ListComponent } from './list/list.component';
 import { SharedModule } from 'app/shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { TipopqrComponent } from './tipopqr/tipopqr.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { FormComponent } from './tipopqr/form/form.component';
+import { CausalesPQRSComponent } from './causales-pqrs/causales-pqrs.component';
+import { ResponsablesPQRSComponent } from './responsables-pqrs/responsables-pqrs.component';
+import { SolucionesPQRSComponent } from './soluciones-pqrs/soluciones-pqrs.component';
+// import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
 const routes: Routes = [
   {
     path: 'list',
     component: PqrComponent,
+  },
+  {
+    path: 'configuracion',
+    component: PqrComponent,
     children: [
       {
-        path: '',
-        component: ListComponent,
+        path: 'tipoPQRS',
+        component: TipopqrComponent,
+      },
+      {
+        path: 'causalesPQRS',
+        component: CausalesPQRSComponent,
+      },
+      {
+        path: 'responsablesPQRS',
+        component: ResponsablesPQRSComponent,
+      },
+      {
+        path: 'solucionesPQRS',
+        component: SolucionesPQRSComponent,
       }
     ]
   },
@@ -30,12 +53,18 @@ const routes: Routes = [
   declarations: [
     PqrComponent,
     ListComponent,
-    TipopqrComponent
+    TipopqrComponent,
+    FormComponent,
+    CausalesPQRSComponent,
+    ResponsablesPQRSComponent,
+    SolucionesPQRSComponent
   ],
   imports: [
     SharedModule,
+    Ng2SearchPipeModule,
     RouterModule.forChild(routes),
-    CommonModule
+    CommonModule,
+    NgxPaginationModule
   ]
 })
 export class PqrModule { }

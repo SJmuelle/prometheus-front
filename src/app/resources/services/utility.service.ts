@@ -115,7 +115,7 @@ export class UtilityService {
   }
 
   postFile(query:string, data:any){
-    const URL = this.server + query;
+    const URL = this.server2 + query;
     let optiones = {
       'Authentication': `${this.readToken()}`,
     };

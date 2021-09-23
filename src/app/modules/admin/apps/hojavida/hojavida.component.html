@@ -175,7 +175,7 @@
                                     margin: 15px 0px; "
                                     *ngFor="let data of listadoCredito | filter:filtrarTablaCredito">
 
-                                    <div class="sm::w-100 lg:w-7 col-sm-12 p-0.5 col-lg-1 color_salmon border-redondo-salmon "
+                                    <div class="sm::w-100 lg:w-7 col-sm-12 p-0.5 col-lg-1 border-redondo-salmon {{data.color}}"
                                         (click)="openDialogCredito(data.codigoNegocio)">
                                         <mat-icon class="material-icons-two-tone cursor-pointer"
                                             style="color:#fff;     align-self: center; height: 100%;">description
@@ -238,7 +238,7 @@
                                                 <div class="text-sm font-medium text-secondary font-bold ">Plan pagos</div>
                                                 <div class="capitalize" style="font-size: 16px; margin-left: 20px;">
                                                     <mat-icon class="material-icons-two-tone cursor-pointer"
-                                                    (click)="buscar_url(data.fechaSolicitud)"
+                                                    (click)="buscar_url(data.numeroSolicitud)"
                                                     style="align-self: center; height: 100%;">description
                                                 </mat-icon>
                                                 </div>
@@ -325,7 +325,7 @@
                                                 </div>
                                                 <div class="text-center">
                                                     <mat-icon class="material-icons-two-tone cursor-pointer text-center"
-                                                        (click)="openDialogCartera(data.codigoNegocio)"
+                                                        (click)="openDialogCartera(data.codigoNegocio,data.saldoObligacio,data.idUnidadNegocio)"
                                                         style="align-self: center; height: 100%;">description
                                                     </mat-icon>
                                                 </div>
@@ -335,7 +335,7 @@
                                                 </div>
                                                 <div class="text-center">
                                                     <mat-icon class="material-icons-two-tone cursor-pointer"
-                                                        (click)="openDialogCartera(data.codigoNegocio)"
+                                                        (click)="openDialogIngreso(data.codigoNegocio)"
                                                         style="align-self: center; height: 100%;">description
                                                     </mat-icon>
                                                 </div>
@@ -474,8 +474,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="col-lg-12 col-sm-12">
-                                        <table class="w-full shadow">
+                                    <div class="col-lg-12 col-sm-12 p-0">
+                                        <table class="w-full shadow p-0">
                                             <thead style="background-color: #F9FAFB;">
                                                 <tr
                                                     class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
@@ -675,10 +675,10 @@
                                                                 description</mat-icon>
                                                         </a></td> -->
                                                     <td class="px-2 text-sm border text-center">
-                                                        <a href="{{item.extracto}}" class="sindec"><mat-icon
+                                                        <a  class="sindec"><mat-icon
                                                             class="material-icons-two-tone cursor-pointer"
                                                             style="    color: #f7ae0c; "
-                                                            (click)="mostrar_mensaje( item.tipoGestion,item.detalleGestion)">description
+                                                            (click)="busacar_url2( item.extracto)">description
                                                             </mat-icon>
                                                         </a>
                                                     </td>
@@ -744,18 +744,25 @@
                                                 <tr
                                                     class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
                                                     <th class="px-4 py-3">Negocio</th>
-                                                    <th class="px-4 py-3">Fecha novedad</th>
-                                                    <th class="px-4 py-3">Periodo</th>
+                                                    <th class="px-4 py-3">Período</th>
                                                     <th class="px-4 py-3">Novedad</th>
+                                                    <th class="px-4 py-3">Dìas en mora</th>
+                                                    <!-- <th class="px-4 py-3">Estado de cuenta</th> -->
+                                                    <th class="px-4 py-3">valor cuenta</th>
+                                                    <th class="px-4 py-3">Saldo en mora</th>
+                                                
+                                               
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
                                                 <tr class="text-gray-700"
                                                     *ngFor="let item of listadoReporteCentrales | filter: filtrarReporteC  | paginate: { itemsPerPage: tamanoTablaRC, currentPage: pageRC}">
                                                     <td class="px-4 py-1 text-sm border">{{ item.negocio}}</td>
-                                                    <td class="px-4 py-1 text-sm border">{{ item.fechaNovedad}}</td>
                                                     <td class="px-4 py-1 text-sm border">{{ item.periodoLote}}</td>
-                                                    <td class="px-4 py-1 text-sm border">{{ item.novedad}}</td>
+                                                    <td class="px-4 py-1 text-sm border capitalize">{{ item.novedad}}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.cuotasMora}}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.saldoDeuda}}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.saldoMora}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -779,16 +786,23 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="PQRS">
-                        <div class="flex items-center">
-                          
-                            <span class="leading-none w-75">
-                                <div class="leading-tight">PQRS</div>
+                        <div class="row items-center">
+
+                            <span class="leading-none col-lg-4 col-sm-12">
+                                <div class="leading-tight titulo_tabs">PQRS</div>
                             </span>
-                            <div class="leading-tight">
-                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px;" type="text"
-                                    autocomplete="off" name="filtrarTablaHN" [(ngModel)]="filtrarTablaHN"
-                                    placeholder="Filtrar">
-                            </div>
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"
+                                    autocomplete="off" name="filtrarTablaHG" [(ngModel)]="filtrarTablaHG"
+                                    placeholder="Filtrar...">
+
+                                <select name="tamanoTablaHG" id="tamanoTablaHG" class="border rounded  bg-gray-100" (change)="pageHG=1"
+                                    [(ngModel)]="tamanoTablaHG"  style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                    <option value="5"> 5</option>
+                                    <option value="10"> 10</option>
+                                    <option value="20"> 20</option>
+                                </select>
+                            </div> -->
                         </div>
                         <hr>
                         <div class="row">

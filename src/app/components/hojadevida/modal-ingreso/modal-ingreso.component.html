@@ -1,54 +1,269 @@
 <h2 mat-dialog-title>Ingreso</h2>
 
-
-<!-- banco: "efecty"
-cliente: "romero arnedo mirley isabel"
-codigoCliente: "CL48025"
-cuenta: "10000003"
-dstrct: "FINV"
-fechaConsignacion: "2021-08-05"
-numeroIngreso: "IC511588"
-sucursal: "efecty"
-tipoDocumento: "ING"
-valorConsignacion: 342993 -->
-
-
-<div class="w-full mb-8  shadow">
+<div class="w-full mb-8  shadow" [hidden]="mostrar_infor==true">
     <div class="w-full">
-        <table class="w-full">
-            <thead style="background-color: #F9FAFB;">
-                <tr
-                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
-                    <th class="px-4 py-3">Número Ingreso</th>
-                    <th class="px-4 py-3">Codigo del Cliente</th>
-                    <th class="px-4 py-3">Cliente</th>
-                    <th class="px-4 py-3">Tipo Documento</th>
-                    <th class="px-4 py-3">dstrct</th>
-                    <th class="px-4 py-3">Cuenta</th>
-             
-                    <th class="px-4 py-3">Fecha Consignación</th>
-                    <th class="px-4 py-3">Sucursal</th>
-                    <th class="px-4 py-3">Valor Consignación</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <tr class="text-gray-700" *ngFor="let item of listadoIngreso;let indice=index">
-                    <td class="px-2 text-sm border">{{item.numeroIngreso}}</td>
-                    <td class="px-2 text-sm border">{{ item.codigoCliente}}</td>
-                    <td class="px-2 text-sm border capitalize">{{ item.cliente}}</td>
-                    <td class="px-2 text-sm border">{{ item.tipoDocumento}}</td>
-                    <td class="px-2 text-sm border">{{ item.dstrct}}</td>
-                    <td class="px-2 text-sm border">{{ item.cuenta}}</td>
-                  
-                    <td class="px-2 text-sm border">{{ item.fechaConsignacion}}</td>
-                    <td class="px-2 text-sm border">{{ item.sucursal}}</td>
-                    <td class="px-2 text-sm border">{{ item.valorConsignacion}}</td>    
-                </tr>
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row ml-4">
+                    <div
+                        class=" col-lg-8 col-sm-12 mb-2 leading-tight titulo_tabs  font-semibold leading-tight  pl-0 capitalize">
+                        Cliente: {{data.NombreCliente}} <br>
+                        Codigo Negocio: {{data.codigoNegocio}}
+
+                    </div>
+                    <div class="leading-tight col-lg-4 col-sm-12 text-end">
+                        <input class="border rounded p-2 bg-gray-100" style="font-size: 10px;" type="text"
+                            autocomplete="off" name="filtrar" [(ngModel)]="filtrar" placeholder="Filtrar...">
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="listadoIngreso.length!=0">
+                    <div class="col-lg-12 col-sm-12">
+                        <table class="w-full">
+                            <thead style="background-color: #F9FAFB;">
+                                <tr
+                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                    <th class="px-4 py-3 text-center">Número</th>
+                                    <th class="px-4 py-3">Banco</th>
+                                    <th class="px-4 py-3">Sucursal</th>
+                                    <th class="px-4 py-3">Cuenta</th>
+                                    <th class="px-4 py-3">Fecha</th>
+                                    <th class="px-4 py-3">Valor</th>
+                                    <th class="px-4 py-3">Periodo</th>
+                                    <th class="px-4 py-3">Estado</th>
+                                    <th class="px-4 py-3">Detalle</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="text-gray-700"
+                                    *ngFor="let item of listadoIngreso  | filter: filtrar | paginate: { itemsPerPage: 5, currentPage: page } ">
+                                    <td class="px-2 text-sm border text-center">{{item.numeroIngreso}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.banco}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.sucursal}}</td>
+                                    <td class="px-2 text-sm border">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border">{{ item.fechaConsignacion}}</td>
+                                    <td class="px-2 text-sm border">{{ item.valorConsignacion}}</td>
+                                    <td class="px-2 text-sm border">{{ item.periodo}}</td>
+                                    <td class="px-2 text-sm border">{{ item.estado}}</td>   
+                                    <td class="px-2 text-sm border text-center">
+                                        <mat-icon class="material-icons-two-tone cursor-pointer"
+                                            style="    color: #f7ae0c;" (click)="mostrarDetalleIngreso( item)">
+                                            description
+                                        </mat-icon>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="col-lg-12 col-sm-12 text-end">
+                        <pagination-controls (pageChange)="pageHG=$event" previousLabel="Anterior"
+                            nextLabel="Siguiente"></pagination-controls>
+                    </div> -->
+                    <div class="col-lg-12 col-sm-12 text-end">
+                        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                            nextLabel="Siguiente"></pagination-controls>
+                    </div>
+                </div>
+                <div class="row" *ngIf="listadoIngreso.length==0">
+                    <div class="col-12">
+                        <fuse-card class="row w-60">
+                            <div>
+                                <img src="assets/images/animaciones/nodata.gif">
+                            </div>
+                        </fuse-card>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 
+<div class="w-full border-1" *ngIf="mostrar_infor==true">
+    <div class="w-full">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row ml-4">
+                    <div
+                        class=" col-lg-8 col-sm-12 mb-2 leading-tight titulo_tabs  font-semibold leading-tight  pl-0 capitalize">
+                        Cliente: {{data.NombreCliente}} <br>
+                        Código Negocio: {{data.codigoNegocio}}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12">
+                        <table class="w-full">
+                            <thead style="background-color: #F9FAFB;">
+                                <tr
+                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                    <th class="px-4 py-3 text-center">Número</th>
+                                    <th class="px-4 py-3">Banco</th>
+                                    <th class="px-4 py-3">Sucursal</th>
+                                    <th class="px-4 py-3">Cuenta</th>
+                                    <th class="px-4 py-3">Fecha</th>
+                                    <th class="px-4 py-3">Valor</th>
+                                    <th class="px-4 py-3">Periodo</th>
+                                    <th class="px-4 py-3">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="text-gray-700"
+                                    *ngFor="let item of listadoIngreso  | filter: elegido.numeroIngreso">
+                                    <td class="px-2 text-sm border text-center">{{item.numeroIngreso}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.banco}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.sucursal}}</td>
+                                    <td class="px-2 text-sm border">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border">{{ item.fechaConsignacion}}</td>
+                                    <td class="px-2 text-sm border">{{ item.valorConsignacion}}</td>
+                                    <td class="px-2 text-sm border">{{ item.periodo}}</td>
+                                    <td class="px-2 text-sm border">{{ item.estado}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <fuse-card class="border-2 m-1 mt-3 row">
+
+                    <div
+                        class=" col-lg-8 col-sm-11  leading-tight titulo_tabs  font-semibold leading-tight  capitalize">
+                        Detalle de Ingreso
+                    </div>
+                    <div class=" col-lg-4 col-sm-1 text-end cerrar_detalle" (click)="cerrar_detalle()">
+                        <mat-icon svgIcon="mat_outline:cancel"></mat-icon>
+
+                    </div>
+
+                    <div class="row border-card shadow mb-4 ml-0 p-0" style="
+                    font-size: 13px;
+                    border: 2px solid #eaeaea;
+                    padding: 1em; "
+                        *ngFor="let item of listadoDetalleIngreso | paginate: { itemsPerPage: 1, currentPage: pageDetalle }">
+
+
+                        <div class="col-lg-12  border-card">
+                            <div class="row border-card">
+                               
+
+                                <table class="w-full">
+                                    <thead style="background-color: #F9FAFB;">
+                                        <tr
+                                            class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                            <th class="px-4 text-center">Item</th>
+                                            <th class="px-4">Nro Factura</th>
+                                            <th class="px-4">Nro Cuenta</th>
+                                            <th class="px-4">Fecha</th>
+                                            <th class="px-4">Descripcion</th>
+                                           
+                                        </tr>
+                                    </thead> 
+                                    <tbody class="bg-white">
+                                        <tr class="text-gray-700">
+                                            <td class="px-2 text-sm border text-center">{{item.item}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{ item.factura}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{ item.fechaFactura}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{ item.descripcion}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="w-full">
+                                    <thead style="background-color: #F9FAFB;">
+                                        <tr
+                                            class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                            <th class="px-4 text-center">Cod. rica</th>
+                                            <th class="px-4">Vlr. rica</th>
+                                            <th class="px-4">Cod. rfte</th>
+                                            <th class="px-4">Vlr. rfte</th>
+                                            <th class="px-4">Saldo factura</th>
+                                            <th class="px-4">Vlr saldo</th>
+                                            <th class="px-4">Vlr ingreso</th>
+                                            <th class="px-4">Vlr saldo</th>
+                                           
+                                        </tr>
+                                    </thead> 
+                                    <tbody class="bg-white">
+                                        <tr class="text-gray-700" >
+                                            <td class="px-2 text-sm border text-center">{{item.item.codigoReteica}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{item.valorReteica | currency:'$':'symbol':'0.0-0'}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{ item.codigoRetefuente}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{item.valorRetefuente | currency:'$':'symbol':'0.0-0'}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{item.saldoFactura | currency:'$':'symbol':'0.0-0'}}</td>
+                                            <td class="px-2 text-sm border capitalize"> {{item.valorFactura | currency:'$':'symbol':'0.0-0'}}</td>
+                                            <td class="px-2 text-sm border capitalize">  {{item.valorIngreso | currency:'$':'symbol':'0.0-0'}}</td>
+                                            <td class="px-2 text-sm border capitalize">{{item.valorSaldo | currency:'$':'symbol':'0.0-0'}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 text-end">
+                        <pagination-controls (pageChange)="pageDetalle = $event" previousLabel="Anterior"
+                            nextLabel="Siguiente">
+                        </pagination-controls>
+                    </div>
+                    <!-- <div class="col-lg-12 col-sm-12 p-0" *ngIf="listadoIngreso.length!=0">
+                        <table class="w-full">
+                            <thead style="background-color: #F9FAFB;">
+                                <tr
+                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                    <th class="px-4 py-3 text-center">Item</th>
+                                    <th class="px-4 py-3">Nro Factura</th>
+                                    <th class="px-4 py-3">Nro Cuenta</th>
+                                    <th class="px-4 py-3">Descripcion</th>
+                                    <th class="px-4 py-3">Fecha</th>
+                                    <th class="px-4 py-3">Vlr factura MF</th>
+                                    <th class="px-4 py-3">Vlr saldo MF</th>
+                                    <th class="px-4 py-3">Vlr saldo MI</th>
+                                    <th class="px-4 py-3">Cod rfte</th>
+                                    <th class="px-4 py-3">Vlr rfte</th>
+                                    <th class="px-4 py-3">Cod rica</th>
+                                    <th class="px-4 py-3">Valor rica</th>
+                                    <th class="px-4 py-3">Vlr abono</th>
+                                    <th class="px-4 py-3">Nuevo Saldo</th>
+                                </tr>
+                            </thead> 
+                            <tbody class="bg-white">
+                                <tr class="text-gray-700" *ngFor="let item of listadoDetalleIngreso ">
+                                    <td class="px-2 text-sm border text-center">{{item.item}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.factura}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.descripcion}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.descripcion}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                    <td class="px-2 text-sm border capitalize">{{ item.cuenta}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> -->
+
+
+                    <div class="col-12 p-0" *ngIf="listadoIngreso.length==0">
+                        <fuse-card class="row  p-2 m-0 shadow-2xl ">
+                            <div>
+                                <img src="assets/images/animaciones/nodata.gif">
+                            </div>
+                        </fuse-card>
+                    </div>
+
+                </fuse-card>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar </button>

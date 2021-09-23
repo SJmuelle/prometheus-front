@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
-// import { FormComponent } from '../form/form.component';
-import { MatDialog } from '@angular/material/dialog';
-import { FormComponent } from './form/form.component';
-
 
 @Component({
-  selector: 'app-tipopqr',
-  templateUrl: './tipopqr.component.html',
-  styleUrls: ['./tipopqr.component.scss']
+  selector: 'app-causales-pqrs',
+  templateUrl: './causales-pqrs.component.html',
+  styleUrls: ['./causales-pqrs.component.scss']
 })
-export class TipopqrComponent implements OnInit {
+export class CausalesPQRSComponent implements OnInit {
+
   listado: any=[];
   page:number=1;
   tamanoTabl:number=5;
@@ -28,9 +26,9 @@ export class TipopqrComponent implements OnInit {
     this.consulta();
   }
   consulta(){
-    Swal.fire({ title: 'Cargando!', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando!', html: 'Buscando informacion Causales de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
-          .setTipo()
+          .setCausales()
           .subscribe((response: any) => {
             Swal.close();
             if (response) {
@@ -59,18 +57,17 @@ export class TipopqrComponent implements OnInit {
       }
     }
 
-    const dialogRef = this.dialog.open(FormComponent, {
-      // width: '1080px',
-      // maxHeight: '550px',
-      data: this.datos,
-    });
+    // const dialogRef = this.dialog.open(FormComponent, {
+    //   // width: '1080px',
+    //   // maxHeight: '550px',
+    //   data: this.datos,
+    // });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
-      this.consulta();
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    //   console.log(result);
+    //   this.consulta();
+    // });
    
   }
-
 }

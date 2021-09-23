@@ -23,12 +23,12 @@ export class HojavidaComponent implements OnInit {
   filtrarTabla: string;
   filtrarTablaCartera: any;
   filtrarTablaHN: any;
-  ListadoCartera: any=[];
-  listadoNegociaciones: any=[];
-  listaHistoria: any=[];
-  listadoExtractos: any=[];
+  ListadoCartera: any = [];
+  listadoNegociaciones: any = [];
+  listaHistoria: any = [];
+  listadoExtractos: any = [];
   tab: any;
-  listadoReporteCentrales: any=[];
+  listadoReporteCentrales: any = [];
   codigoNegocio2: any;
   tamanoTablaHG: number;
   filtrarTablaHG: string;
@@ -49,13 +49,13 @@ export class HojavidaComponent implements OnInit {
     private _negociacionesService: NegociacionesService) { }
 
   busqueda: string;
-  clienteID: number=1002128733;
+  clienteID: number;
   codigoNegocio: string;
   ngOnInit(): void {
     this.mostrarDatoCliente = false;
     this.filtrarTabla = "";
     this.tab = 0;
-    this.btnBuscar=false;
+    this.btnBuscar = false;
     // const dialogRef = this.dialog.open(ModalIngresoComponent, {
     //   // width: '1080px',
     //   // maxHeight: '550px',
@@ -78,7 +78,7 @@ export class HojavidaComponent implements OnInit {
   }
 
   buscarClientes() {
-    this.btnBuscar=true;
+  
     if (this.busqueda == "1") {
       if (this.clienteID == null || this.clienteID == undefined || this.clienteID == 0) {
         Swal.fire(
@@ -88,6 +88,7 @@ export class HojavidaComponent implements OnInit {
         );
         return;
       }
+      this.btnBuscar = true;
       if (this.codigoNegocio2 == null || this.codigoNegocio2 == undefined || this.codigoNegocio2.length == 0) {
         this.codigoNegocio = this.clienteID + '';
       } else {
@@ -143,8 +144,10 @@ export class HojavidaComponent implements OnInit {
 
   }
 
+
+
   onTabChanged(index): void {
-    this.btnBuscar=false;
+    this.btnBuscar = false;
     this.tab = index;
     switch (index) {
       case 0:
@@ -154,8 +157,8 @@ export class HojavidaComponent implements OnInit {
         this._creditoService
           .getCredito(this.codigoNegocio)
           .subscribe((respCredito: any) => {
+            Swal.close();
             if (respCredito.data) {
-              Swal.close();
               this.listadoCredito = respCredito.data;
             } else {
               this.listadoCredito = [];
@@ -165,11 +168,11 @@ export class HojavidaComponent implements OnInit {
       case 1:
         Swal.fire({ title: 'Cargando!', html: 'Buscando información de Cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._carteraService
-          .getCartera(this.info_cliente.identificacion,this.codigoNegocio)
+          .getCartera(this.info_cliente.identificacion, this.codigoNegocio)
           .subscribe((respCartera: any) => {
             console.log(respCartera);
+            Swal.close();
             if (respCartera.data) {
-              Swal.close();
               this.ListadoCartera = respCartera.data;
             } else {
               this.ListadoCartera = [];
@@ -177,14 +180,14 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 2:
-        this.filtrarTablaHG="";
-        this.tamanoTablaHG=5;
+        this.filtrarTablaHG = "";
+        this.tamanoTablaHG = 5;
         Swal.fire({ title: 'Cargando!', html: 'Buscando información de Historial de Gestión', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._historialService
           .getHistorialGestion(this.codigoNegocio)
           .subscribe((response: any) => {
+            Swal.close();
             if (response.data) {
-              Swal.close();
               this.listaHistoria = response.data;
             } else {
               this.listaHistoria = [];
@@ -192,15 +195,16 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 3:
-        this.filtrarTablaNeg="";
-        this.tamanoTablaNeg=5;
+        this.filtrarTablaNeg = "";
+        this.tamanoTablaNeg = 5;
         Swal.fire({ title: 'Cargando!', html: 'Buscando información de negociaciones', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._negociacionesService
           .getNegociaciones(this.codigoNegocio)
           .subscribe((response: any) => {
             // this.listadoNegociaciones = response.data;
+            Swal.close();
             if (response.data) {
-              Swal.close();
+            
               this.listadoNegociaciones = response.data;
             } else {
               this.listadoNegociaciones = [];
@@ -208,15 +212,16 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 4:
-        this.filtrarTablaExt="";
-        this.tamanoTablaExt=5;
+        this.filtrarTablaExt = "";
+        this.tamanoTablaExt = 5;
         Swal.fire({ title: 'Cargando!', html: 'Buscando Historial de extractos', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._negociacionesService
           .getInformacionExtractos(this.codigoNegocio)
           .subscribe((response: any) => {
             // this.listadoExtractos = response.data;
+            Swal.close();
             if (response.data) {
-              Swal.close();
+           
               this.listadoExtractos = response.data;
             } else {
               this.listadoExtractos = [];
@@ -224,15 +229,16 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 5:
-        this.filtrarReporteC="";
-        this.tamanoTablaRC=5;
+        this.filtrarReporteC = "";
+        this.tamanoTablaRC = 5;
         Swal.fire({ title: 'Cargando!', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._negociacionesService
           .getReporteCentrales(this.codigoNegocio)
           .subscribe((response: any) => {
             // this.listadoReporteCentrales = response.data;
+            Swal.close();
             if (response.data) {
-              Swal.close();
+              
               this.listadoReporteCentrales = response.data;
             } else {
               this.listadoReporteCentrales = [];
@@ -245,10 +251,30 @@ export class HojavidaComponent implements OnInit {
   }
 
   openDialogCredito(codigoNegocio): void {
+    
     const dialogRef = this.dialog.open(ModalcreditoComponent, {
       // mixWidth: '480px',
       // mixHeight: '550px',
       data: { codigoNegocio },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+    });
+  }
+  openDialogCartera(index, saldo,id): void {
+    if(saldo==0){
+      Swal.fire(
+        '¡Información!',
+        `El credito no tienen detalle`,
+        'success'
+      );
+      return;
+    }
+    const dialogRef = this.dialog.open(ModalcarteraComponent, {
+      // width: '1080px',
+      // maxHeight: '550px',
+      data: { codigoNegocio: index, ideNegocio:id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -256,11 +282,12 @@ export class HojavidaComponent implements OnInit {
       console.log(result);
     });
   }
-  openDialogCartera(index): void {
-    const dialogRef = this.dialog.open(ModalcarteraComponent, {
+
+  openDialogIngreso(index): void {
+    const dialogRef = this.dialog.open(ModalIngresoComponent, {
       // width: '1080px',
       // maxHeight: '550px',
-      data: { codigoNegocio: index },
+      data: { codigoNegocio: index, NombreCliente: `${this.info_cliente.primerNombre} ${this.info_cliente.segundoNombre} ${this.info_cliente.primerApellido} ${this.info_cliente.segundoApellido}` },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -279,6 +306,31 @@ export class HojavidaComponent implements OnInit {
       titulo,
       mensaje,
     );
+  }
+  buscar_url(codigo) {
+    Swal.fire({ title: 'Cargando!', html: 'Buscando plan de pago', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._carteraService
+      .getPlanPago(codigo)
+      .subscribe((respuesta: any) => {
+        console.log(respuesta);
+        Swal.close();
+        if (respuesta.data) {
+          respuesta.data="http://prometheus.fintra.co:8094/fintra/exportar/migracion/119236/f_plan_de_pagos.pdf";
+          window.open(respuesta.data, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
+        } else {
+          Swal.fire(
+            '¡Advertencia!',
+            'Este crédito no tiene plan de pago',
+            'error'
+          );
+        }
+      });
+  }
+  busacar_url2(url) {
+
+    
+    window.open(url, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
+
   }
 
 }

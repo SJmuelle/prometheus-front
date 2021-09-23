@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 
@@ -6,42 +6,65 @@ import { environment } from 'environments/environment';
     providedIn: 'root',
 })
 export class CarteraService {
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) { }
 
-    getCartera(cedula: string,codigoNegocio: string) {
+    getCartera(cedula: string, codigoNegocio: string) {
         let url;
-        if(cedula==codigoNegocio){
-            url=environment.urlApi2 + `/informacion-cartera/${cedula}`;
-        }else{
-            environment.urlApi2 + `/informacion-cartera-negocio/${cedula}/${codigoNegocio}`
+        if (cedula == codigoNegocio) {
+            url = environment.urlApi2 + `/informacion-cartera/${cedula}`;
+        } else {
+            url =  environment.urlApi2 + `/informacion-cartera-negocio/${cedula}/${codigoNegocio}`
         }
         return this._httpClient.get(url);
     }
-    
+
     getDetalleCartera(codigoNegocio: string) {
         let today = new Date();
         let year = today.getFullYear();
-        let mesActual = (today.getMonth() + 1); 
-        let mes = mesActual>9?'':'0'+mesActual; 
+        let mesActual = (today.getMonth() + 1);
+        let mes = mesActual > 9 ? '' : '0' + mesActual;
         return this._httpClient.get(
             environment.urlApi2 + `/informacion-detalle-cartera/${year}${mes}/1/${codigoNegocio}`
         );
     }
-    getDetalleCarteraTotal(codigoNegocio: string) {
+    getDetalleCarteraTotal(codigoNegocio: string,id) {
         // /informacion-detalle-cartera/202009/1/MC18825
         let today = new Date();
         let year = today.getFullYear();
-        let mesActual = (today.getMonth() + 1); 
-        let mes = mesActual>9?'':'0'+mesActual; 
+        let mesActual = (today.getMonth() + 1);
+        let mes = mesActual > 9 ? '' : '0' + mesActual;
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-detalle-cartera-sum/${year}${mes}/1/${codigoNegocio}`
+            environment.urlApi2 + `/informacion-detalle-cartera-sum/${year}${mes}/${id}/${codigoNegocio}`
         );
     }
     getIngreso(codigo: string) {
         // /informacion-detalle-cartera/202009/1/MC18825
-       
+
         return this._httpClient.get(
             environment.urlApi2 + `/informacion-ingresos/${codigo}`
         );
+    }
+    getDetalleIngreso(codigo: any,tipo:any, dstrct:any) {
+        // {{generic}}/informacion-detalle-ingresos/IA590985/ICA/FINV
+        return this._httpClient.get(
+            environment.urlApi2 + `/informacion-detalle-ingresos/${codigo}/${tipo}/${dstrct}`
+        );
+    }
+    getPlanPago(codigo) {
+
+        // console.log(this.readToken());
+        const URL = `http://prometheus.fintra.co:8094/fintra/EndPointCoreServlet?option=5&user=${codigo}&numsolc=${codigo}`
+        const headers = new HttpHeaders({
+            'Authentication': `${localStorage.getItem('accessToken')}`,
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        console.log(headers);
+        return this._httpClient.get(URL, { headers }).pipe();
+
+
+        // return this._httpClient.get(
+        //     `http://piloto.fintra.co:8094/fintra/EndPointCoreServlet?option=5&user=${codigo}&numsolc=${codigo}`
+        // );
+        // http://piloto.fintra.co:8094/fintra/EndPointCoreServlet?option=5&user=184992&numsolc=184992
     }
 }
