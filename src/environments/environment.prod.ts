@@ -1,4 +1,8 @@
 export const environment = {
     production: true,
-    urlApi: 'http://192.168.190.237:8010/api-fintra/api'
+    urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
+    urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry',
+    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
+
+    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet'
 };

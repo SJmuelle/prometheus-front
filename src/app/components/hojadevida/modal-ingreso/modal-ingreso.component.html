@@ -42,7 +42,7 @@
                                     <td class="px-2 text-sm border capitalize">{{ item.sucursal}}</td>
                                     <td class="px-2 text-sm border">{{ item.cuenta}}</td>
                                     <td class="px-2 text-sm border">{{ item.fechaConsignacion}}</td>
-                                    <td class="px-2 text-sm border">{{ item.valorConsignacion}}</td>
+                                    <td class="px-2 text-sm border text-left">{{ item.valorConsignacion  | currency:'$':'symbol':'0.0-0'}}</td>
                                     <td class="px-2 text-sm border">{{ item.periodo}}</td>
                                     <td class="px-2 text-sm border">{{ item.estado}}</td>   
                                     <td class="px-2 text-sm border text-center">
@@ -116,7 +116,7 @@
                                     <td class="px-2 text-sm border capitalize">{{ item.sucursal}}</td>
                                     <td class="px-2 text-sm border">{{ item.cuenta}}</td>
                                     <td class="px-2 text-sm border">{{ item.fechaConsignacion}}</td>
-                                    <td class="px-2 text-sm border">{{ item.valorConsignacion}}</td>
+                                    <td class="px-2 text-sm border text-left">{{ item.valorConsignacion  | currency:'$':'symbol':'0.0-0'}}</td>
                                     <td class="px-2 text-sm border">{{ item.periodo}}</td>
                                     <td class="px-2 text-sm border">{{ item.estado}}</td>
                                 </tr>
@@ -154,7 +154,7 @@
                                             <th class="px-4">Nro Factura</th>
                                             <th class="px-4">Nro Cuenta</th>
                                             <th class="px-4">Fecha</th>
-                                            <th class="px-4">Descripcion</th>
+                                            <th class="px-4">Descripción</th>
                                            
                                         </tr>
                                     </thead> 
@@ -266,5 +266,5 @@
 </div>
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar </button>
+    <button  mat-dialog-close class="btn bg-accent text-white">Cerrar </button>
 </mat-dialog-actions>

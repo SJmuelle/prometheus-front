@@ -26,12 +26,12 @@
     #userActions="matMenu">
     <button mat-menu-item>
         <span class="flex flex-col leading-none">
-            <span>Signed in as</span>
+            <span>Usuario</span>
             <span class="mt-1.5 text-md font-medium">{{user?.email}}</span>
         </span>
     </button>
     <mat-divider class="my-2"></mat-divider>
-    <button mat-menu-item>
+    <!-- <button mat-menu-item>
         <mat-icon [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
         <span>Profile</span>
     </button>
@@ -44,13 +44,13 @@
         [matMenuTriggerFor]="userStatus">
         <mat-icon [svgIcon]="'heroicons_outline:dots-circle-horizontal'"></mat-icon>
         <span>Status</span>
-    </button>
-    <mat-divider class="my-2"></mat-divider>
+    </button> -->
+  
     <button
         mat-menu-item
         (click)="signOut()">
         <mat-icon [svgIcon]="'heroicons_outline:logout'"></mat-icon>
-        <span>Sign out</span>
+        <span>Cerrar sesión</span>
     </button>
 </mat-menu>
 

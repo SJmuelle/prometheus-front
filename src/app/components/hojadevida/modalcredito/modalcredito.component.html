@@ -15,7 +15,7 @@
                     <div class="col-lg-12 col-sm-12">
                         <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
                             <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
-                                Datos Credito
+                                Datos credito
                              </div>
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                                 <strong class="text-sm font-medium text-secondary font-bold">Afiliado: </strong> {{infoInfoPerLab.afiliado}}
@@ -34,7 +34,7 @@
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                                 <strong class="text-sm font-medium text-secondary font-bold">Ocupación:</strong> {{infoInfoPerLab.ocupacion}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold">Actividad Economica:</strong> {{infoInfoPerLab.actividadEconomica}}
+                                <strong class="text-sm font-medium text-secondary font-bold lowercase"> <text class="capitalize">Actividad</text>  económica:</strong> {{infoInfoPerLab.actividadEconomica}}
                             </span>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                                 <strong class="text-sm font-medium text-secondary font-bold">Celular:</strong> {{infoConyugue.celularCony}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold">Email:</strong> {{infoConyugue.emailCony}}
+                                <strong class="text-sm font-medium text-secondary font-bold">Correo electrónico:</strong> {{infoConyugue.emailCony}}
                             </span>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                                 Código negocio: {{infoNegocio.codigoNegocio}}
                                 <br>
-                                Número Solicitud: {{infoNegocio.numeroSolicitud}}
+                                Número solicitud: {{infoNegocio.numeroSolicitud}}
                             </span>
                         </div>
 
@@ -198,7 +198,7 @@
                                         <div class="tamaño_texto">{{data.celular}}</div>
                                     </div>
                                     <div class="col-sm-6 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold">Correo Electrónico
+                                        <div class="text-sm font-medium text-secondary font-bold">Correo electrónico
                                         </div>
                                         <div class="tamaño_texto">{{data.email}}</div>
                                     </div>
@@ -268,5 +268,5 @@
     </mat-tab>
 </mat-tab-group>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar </button>
+    <button  mat-dialog-close class=" btn bg-accent text-white">Cerrar </button>
 </mat-dialog-actions>

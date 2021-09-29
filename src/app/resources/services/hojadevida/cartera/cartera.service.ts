@@ -53,10 +53,9 @@ export class CarteraService {
     getPlanPago(codigo) {
 
         // console.log(this.readToken());
-        const URL = `http://prometheus.fintra.co:8094/fintra/EndPointCoreServlet?option=5&user=${codigo}&numsolc=${codigo}`
+        const URL = `${environment.urlprometheus}?option=5&user=${codigo}&numsolc=${codigo}`
         const headers = new HttpHeaders({
-            'Authentication': `${localStorage.getItem('accessToken')}`,
-            'Content-Type': 'application/json; charset=utf-8'
+            'Content-Type': 'application/json;'
         });
         console.log(headers);
         return this._httpClient.get(URL, { headers }).pipe();

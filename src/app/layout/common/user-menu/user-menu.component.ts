@@ -47,10 +47,18 @@ export class UserMenuComponent implements OnInit, OnDestroy {
                 takeUntil(this._unsubscribeAll)
             )
             .subscribe((user: User) => {
+                if(user==undefined){
+                    user=JSON.parse(sessionStorage.getItem("usuario"));
+                }
+                if(user==undefined){
+                    localStorage.clear();
+                    this._router.navigate(['sign-in']);
+                }
+                console.log(user);
                 this.user = {
-                    id: '1',
-                    name: 'Sergio Gonzalez',
-                    email: 'sgonzales.fintra.co',
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
                     avatar: 'assets/images/avatars/male-01.jpg',
                     status: 'online',
                 };

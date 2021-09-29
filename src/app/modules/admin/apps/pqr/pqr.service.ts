@@ -13,7 +13,7 @@ export class PqrService {
   }
 
   setTipo() {
-    let url: string = `/informacion-tipo-pqrs`;
+    let url: string = `/tk/informacion-tipo-pqrs`;
     return this._utility.getQuery(url, true)
       .pipe(map((res: any) => {
         return res.data;
@@ -27,14 +27,14 @@ export class PqrService {
       }));
   }
   setSoluciones() {
-    let url: string = `/informacion-pqrs-soluciones`;
+    let url: string = `/tk/informacion-pqrs-soluciones`;
     return this._utility.getQuery(url, true)
       .pipe(map((res: any) => {
         return res.data;
       }));
   }
   setResponsables() {
-    let url: string = `/agregar-pqrs-tipo`;
+    let url: string = `/tk/informacion-responsables-pqrs`;
     return this._utility.getQuery(url, true)
       .pipe(map((res: any) => {
         return res.data;

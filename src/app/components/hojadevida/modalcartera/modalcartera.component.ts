@@ -31,7 +31,7 @@ export class ModalcarteraComponent implements OnInit {
   }
 
   getDetalle(data: string,id) {
-    Swal.fire({ title: 'Cargando!', html: 'Buscando información de detalles de la cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de detalles de la cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     return this._cartera_service
       .getDetalleCartera(data)
       .subscribe((response: any) => {

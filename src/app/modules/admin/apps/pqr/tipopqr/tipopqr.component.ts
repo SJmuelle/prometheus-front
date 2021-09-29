@@ -17,7 +17,7 @@ export class TipopqrComponent implements OnInit {
   tamanoTabl:number=5;
   filtrarTabla:string='';
   mostrar_form:boolean=true;
-  datos: { tipo: any; tiempo: any; legal: string; estado: string; titulo: any; };
+  datos: { id:number; tipo: any; tiempo: any; legal: string; estado: string; titulo: any; };
 
 
   constructor(
@@ -28,7 +28,7 @@ export class TipopqrComponent implements OnInit {
     this.consulta();
   }
   consulta(){
-    Swal.fire({ title: 'Cargando!', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
           .setTipo()
           .subscribe((response: any) => {
@@ -43,6 +43,7 @@ export class TipopqrComponent implements OnInit {
   abrirModal(datos,titulo){
     if(titulo=='N'){
       this.datos={
+        id:null,
         tipo:'',
         tiempo:'',
         legal:'',
@@ -51,6 +52,7 @@ export class TipopqrComponent implements OnInit {
       }
     }else{
       this.datos={
+        id:datos.id,
         tipo:datos.tipoPqrs,
         tiempo:datos.diasSolucion,
         legal:datos.legal=='SI'?'S':"N",
@@ -68,7 +70,10 @@ export class TipopqrComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
-      this.consulta();
+      setTimeout(() => {
+        this.consulta();
+      }, 1000);
+      
     });
    
   }

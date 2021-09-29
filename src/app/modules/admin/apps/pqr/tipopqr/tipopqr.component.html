@@ -50,7 +50,7 @@
                                 </thead>
                                 <tbody class="bg-white">
                                     <tr class="text-gray-700"
-                                        *ngFor="let item of listado  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+                                        *ngFor="let item of listado  | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.legal}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.diasSolucion}}</td>

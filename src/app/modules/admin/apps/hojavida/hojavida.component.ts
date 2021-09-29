@@ -94,10 +94,11 @@ export class HojavidaComponent implements OnInit {
       } else {
         this.codigoNegocio = this.codigoNegocio2
       }
-      Swal.fire({ title: 'Cargando!', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._hojadevidaService
         .getInfoCliente(this.codigoNegocio)
         .subscribe((res2: any) => {
+          this.btnBuscar = false;
           if (res2.status == 202) {
             Swal.fire(
               '¡Advertencia!',
@@ -151,7 +152,7 @@ export class HojavidaComponent implements OnInit {
     this.tab = index;
     switch (index) {
       case 0:
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de Credito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de Credito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this.listadoCredito = [];
         // SERVICIO DE LA PESTAÑA DEL CREDITO
         this._creditoService
@@ -166,7 +167,7 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 1:
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de Cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de Cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._carteraService
           .getCartera(this.info_cliente.identificacion, this.codigoNegocio)
           .subscribe((respCartera: any) => {
@@ -182,7 +183,7 @@ export class HojavidaComponent implements OnInit {
       case 2:
         this.filtrarTablaHG = "";
         this.tamanoTablaHG = 5;
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de Historial de Gestión', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de historial de gestión', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._historialService
           .getHistorialGestion(this.codigoNegocio)
           .subscribe((response: any) => {
@@ -197,7 +198,7 @@ export class HojavidaComponent implements OnInit {
       case 3:
         this.filtrarTablaNeg = "";
         this.tamanoTablaNeg = 5;
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de negociaciones', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de negociaciones', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._negociacionesService
           .getNegociaciones(this.codigoNegocio)
           .subscribe((response: any) => {
@@ -214,7 +215,7 @@ export class HojavidaComponent implements OnInit {
       case 4:
         this.filtrarTablaExt = "";
         this.tamanoTablaExt = 5;
-        Swal.fire({ title: 'Cargando!', html: 'Buscando Historial de extractos', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando Historial de extractos', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._negociacionesService
           .getInformacionExtractos(this.codigoNegocio)
           .subscribe((response: any) => {
@@ -231,7 +232,7 @@ export class HojavidaComponent implements OnInit {
       case 5:
         this.filtrarReporteC = "";
         this.tamanoTablaRC = 5;
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._negociacionesService
           .getReporteCentrales(this.codigoNegocio)
           .subscribe((response: any) => {
@@ -308,14 +309,14 @@ export class HojavidaComponent implements OnInit {
     );
   }
   buscar_url(codigo) {
-    Swal.fire({ title: 'Cargando!', html: 'Buscando plan de pago', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando plan de pago', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._carteraService
       .getPlanPago(codigo)
       .subscribe((respuesta: any) => {
         console.log(respuesta);
         Swal.close();
         if (respuesta.data) {
-          respuesta.data="http://prometheus.fintra.co:8094/fintra/exportar/migracion/119236/f_plan_de_pagos.pdf";
+          // respuesta.data="http://prometheus.fintra.co:8094/fintra/exportar/migracion/119236/f_plan_de_pagos.pdf";
           window.open(respuesta.data, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
         } else {
           Swal.fire(

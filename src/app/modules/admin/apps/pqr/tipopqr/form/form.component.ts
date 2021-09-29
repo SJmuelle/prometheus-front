@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../../pqr.service';
 
@@ -9,9 +9,11 @@ import { PqrService } from '../../pqr.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  datos: { tipo: string; tiempo: number; legal: string; estado: string; titulo: string };
+  datos: { id:number, tipo: string; tiempo: number; legal: string; estado: string; titulo: string ,clase:string};
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data, private _pqrService: PqrService) { }
+  constructor(
+    public matDialogRef: MatDialogRef<FormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data, private _pqrService: PqrService) { }
 
   ngOnInit(): void {
     this.datos = this.data
@@ -22,30 +24,52 @@ export class FormComponent implements OnInit {
       //post
       url="/agregar-pqrs-tipo";
       data = {
-        "estado": "A",
+        "estado": "",
         "descripcion": this.datos.tipo,
         "legal": this.datos.legal=='S'?true:false,
         "diasSolucion": this.datos.tiempo,
-        "clase": "PETICION"
+        "clase": this.datos.clase,
       }
 
     } else {
-      url="/agregar-pqrs-tipo";
+      url="/actualizar-pqrs-tipo";
       data = {
-        "id": 18,
-        "estado":this.datos.estado=='A'?'a':'i',
+        "id": this.datos.id,
+        "estado":this.datos.estado=='A'?'':'A',
         "legal": this.datos.legal=='S'?true:false,
         "diasSolucion":this.datos.tiempo,
       }
     }
-    Swal.fire({ title: 'Cargando', html: 'Guardando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._pqrService
       .Create(url,data)
       .subscribe((response: any) => {
         Swal.close();
         if (response) {
-         console.log(response);
+          if(response.status==200){
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con exito`,
+              'success'
+            );
+            setTimeout(() => {
+              this.matDialogRef.close();
+            }, 1000);
+          }else{
+            Swal.fire(
+              '¡Información!',
+              `Hubo un error en los datos enviados, favor evaluar`,
+              'success'
+            );
+          }
+        }else{
+          Swal.fire(
+            '¡Advertencia!',
+            'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+            'error'
+          );
         }
+       
       });
   }
 

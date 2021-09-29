@@ -29,7 +29,7 @@ export class ModalIngresoComponent implements OnInit {
   }
 
   getIngreso(data: string) {
-    Swal.fire({ title: 'Cargando!', html: 'Buscando información de Credito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de ingreso', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     return this._cartera_service
       .getIngreso(data)
       .subscribe((response: any) => {
@@ -43,7 +43,7 @@ export class ModalIngresoComponent implements OnInit {
   mostrarDetalleIngreso(data){
     // .numeroIngreso,  item.tipoDocumento,  item.dstrct
 
-    Swal.fire({ title: 'Cargando!', html: 'Buscando información de Credito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle de ingreso', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     return this._cartera_service
       .getDetalleIngreso(data.numeroIngreso,data.tipoDocumento,data.dstrct)
       .subscribe((response: any) => {

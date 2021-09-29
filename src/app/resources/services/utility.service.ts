@@ -6,7 +6,7 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders } from '@angular/common/http';
-import Swal from 'sweetalert2/dist/sweetalert2.js'
+import Swal from 'sweetalert2';
 
 // declare var Swal:any;
 // declare var $:any;
@@ -16,6 +16,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js'
 export class UtilityService {
   server:string = environment.urlApi;
   server2:string = environment.urlApi2;
+  server3:string = environment.urlApi3;
   // homelogin:string = environment.login;
   notoken:string = 'notoken';
   constructor(private _httpClient: HttpClient) { }
@@ -60,7 +61,7 @@ export class UtilityService {
   }
 
   getFile(query:string){
-    const URL = this.server + query;
+    const URL = this.server+ query;
     const headers = new HttpHeaders({
         'Authentication' : `${this.readToken()}`,
         'Content-Type': 'application/json; charset=utf-8',
@@ -85,7 +86,7 @@ export class UtilityService {
   }
 
   postQuery(query:string, data:any, typeHeaders:string='data'){
-    const URL = this.server + query;
+    const URL = this.server3 + query;
     let optiones:any;
     if(typeHeaders == 'data'){
       optiones = {
@@ -115,7 +116,7 @@ export class UtilityService {
   }
 
   postFile(query:string, data:any){
-    const URL = this.server2 + query;
+    const URL = this.server + query;
     let optiones = {
       'Authentication': `${this.readToken()}`,
     };
@@ -152,14 +153,15 @@ export class UtilityService {
 
 
   //Funcion para el Manejo de errores
-  handleError = (err: HttpErrorResponse): Observable<HttpEvent<any>> =>{
-    let errorMessage = 'Unknown error!';
+  handleError = (err: any): Observable<HttpEvent<any>> =>{
+    // debugger;
+    let errorMessage = 'No hay respuesta, favor intente nuevamente';
     let icon:string = 'question';
     console.log("Algo se daño");
     let res:any = {}
     if (err.error instanceof ErrorEvent) {
       icon = "question";
-      errorMessage = `Error: ${err.error.message}`;
+      errorMessage = `Error: ${err.error.msg}`;
     } else {
       switch (err.status) {
         case 401:
@@ -181,7 +183,7 @@ export class UtilityService {
             errorMessage = `No tiene permiso para ejecutar esta acción`;
           break;
         case 400:
-            if(err.error == 'La session ha expirado'){
+            if(err.error.msg == 'La session ha expirado'){
               localStorage.clear();
               localStorage.clear();
               setTimeout(() => {
@@ -189,30 +191,41 @@ export class UtilityService {
 
               }, 100);
             }
-            if(err.error !== undefined && typeof err.error == 'string'){
-              errorMessage = `${err.error}`;
+            if(err.error.msg !== undefined && typeof err.error.msg == 'string'){
+              errorMessage = `${err.error.msg}`;
             }
         break;
         case 404:
-            errorMessage = `${err.error}`
+            errorMessage = `${err.error.msg}`
         break;
         case 500:
-            errorMessage = `${err.error.msj}`;
+            errorMessage = `${err.error.msg}`;
             break;
         default:
-          errorMessage = `${err.statusText}`;
+          errorMessage = `${err.statusText.msg}`;
           break;
       }
     }
-    if(errorMessage !== undefined && errorMessage !== 'undefined' && err.status !== 401 && err.error !== 'La session ha expirado'){
-      
+    if( err.status !== 401 && err.error !== 'La session ha expirado'){
+
+    
+    if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
+      Swal.fire({
+        title: 'Error',
+        text: errorMessage,
+        icon: 'error',
+        confirmButtonText: 'Cerrar'
+      })
+
+    }else{
+      Swal.fire({
+        title: 'Error',
+        text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
+        icon: 'error',
+        confirmButtonText: 'Cerrar'
+      })
     }
-    // Swal.fire({
-    //   title: 'Error!',
-    //   text: 'Do you want to continue',
-    //   icon: 'error',
-    //   confirmButtonText: 'Cool'
-    // })
+  }
     return throwError( errorMessage );
   }
 

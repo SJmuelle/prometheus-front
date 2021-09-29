@@ -92,7 +92,13 @@ export class AuthService
                     email: response.data.email,
                     status: 'online'
                 };
-
+                let user=JSON.stringify({
+                    id: response.data.nit,
+                    name: response.data.nombre,
+                    email: response.data.email,
+                    status: 'online'
+                });
+                sessionStorage.setItem("usuario", user );
                 // Return a new observable with the response
                 return of(response);
             })
@@ -113,6 +119,9 @@ export class AuthService
             ),
             switchMap((response: any) => {
 
+                if(response.data==undefined){
+                    return of(false);
+                }
                 // Store the access token in the local storage
                 this.accessToken = response.data.token;
 

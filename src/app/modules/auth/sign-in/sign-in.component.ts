@@ -88,6 +88,7 @@ export class AuthSignInComponent implements OnInit
 
                 },
                 (response) => {
+                    
 
                     // Re-enable the form
                     this.signInForm.enable();
@@ -98,7 +99,7 @@ export class AuthSignInComponent implements OnInit
                     // Set the alert
                     this.alert = {
                         type   : 'error',
-                        message: 'Wrong email or password'
+                        message: 'Usuario o contraseña equivocada'
                     };
 
                     // Show the alert

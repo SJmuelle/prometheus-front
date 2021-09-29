@@ -11,7 +11,7 @@ import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/m
 
 import { NgxPaginationModule } from 'ngx-pagination';
 const routes: Routes = [
-  { path: 'hv', component: HojavidaComponent },
+  { path: '', component: HojavidaComponent },
   // { path: 'pqrs', component: TipoPqrsComponent },
   // { path: 'dias-no-habiles', component: DiasnohabilesComponent },
   // { path: 'causales', component: CausalespqrsComponent },

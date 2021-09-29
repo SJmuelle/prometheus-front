@@ -59,7 +59,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     getInformacionPersonal(data: string) {
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         return this._detalleCredito
             .getInformacionPersonal(data)
             .subscribe((response: any) => {
@@ -74,7 +74,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     getRefencias(data: string) {
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         return this._detalleCredito
             .getInformacionReferencias(data)
             .subscribe((response: any) => {
@@ -92,7 +92,7 @@ export class ModalcreditoComponent implements OnInit {
 
 
     getInformacionCodeudor(data: string) {
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         return this._detalleCredito
             .getInformacionCodeudor(data)
             .subscribe((response: any) => {
@@ -107,7 +107,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     getInformacionNegocio(data: string) {
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         return this._detalleCredito
             .getInformacionNegocio(data)
             .subscribe((response: any) => {
@@ -122,7 +122,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     getInformacionConyuge(data: string) {
-        Swal.fire({ title: 'Cargando!', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         return this._detalleCredito
             .getInformacionConyuge(data)
             .subscribe((response: any) => {

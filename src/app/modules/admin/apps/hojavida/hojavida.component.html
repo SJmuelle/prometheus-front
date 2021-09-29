@@ -112,10 +112,10 @@
                             <hr style="    background: #bccf13 !important;">
                         </div>
 
-                        <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
-                            Última negociación: {{info_cliente.tipoNegociacion}}
+                        <span class="leading-none lowercase" style="line-height: 1.3em !important;font-size: 13px;">
+                            <text class="capitalize">Última</text>  negociación: {{info_cliente.tipoNegociacion}}
                             <br>
-                            Fecha negociación: {{info_cliente.fechaNegociacion}}
+                            <text class="capitalize">Fecha</text> negociación: {{info_cliente.fechaNegociacion}}
                         </span>
                     </div>
                 </div>
@@ -455,7 +455,7 @@
                         <div class="row items-center">
 
                             <span class="leading-none col-lg-4 col-sm-12">
-                                <div class="leading-tight titulo_tabs"> Historial Gestión</div>
+                                <div class="leading-tight titulo_tabs"> Historial gestión</div>
                             </span>
                             <div class="leading-tight col-lg-8 col-sm-12 text-end">
                                 <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"
@@ -478,12 +478,12 @@
                                         <table class="w-full shadow p-0">
                                             <thead style="background-color: #F9FAFB;">
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b border-gray-600">
                                                     <th class="px-4 py-3">Fecha gestión</th>
                                                     <th class="px-4 py-3">Gestor</th>
                                                     <th class="px-4 py-3">Tipo gestión</th>
                                                     <th class="px-4 py-3">Proxima acción</th>
-                                                    <th class="px-4 py-3">Fecha prox Accion</th>
+                                                    <th class="px-4 py-3">Fecha prox acción</th>
                                                     <th class="px-4 py-3">Detalle</th>
                                                 </tr>
                                             </thead>
@@ -569,7 +569,7 @@
                                         <table class="w-full shadow p-1">
                                             <thead style="background-color: #F9FAFB;">
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">Código negocio</th>
                                                     <th class="px-4 py-3">Fecha creación</th>
                                                     <th class="px-4 py-3">Usuario creación</th>
@@ -655,7 +655,7 @@
                                         <table class="w-full shadow">
                                             <thead>
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">Consecutivo</th>
                                                     <th class="px-4 py-3">Fecha envio</th>
                                                     <th class="px-4 py-3">Método envio</th>
@@ -704,7 +704,7 @@
 
                         </div>
                     </mat-tab>
-                    <mat-tab label="Reporte Centrales">
+                    <mat-tab label="Reporte centrales">
                         <!-- <div class="flex items-center">
                             <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:briefcase'"> </mat-icon>
                             <span class="leading-none w-75">
@@ -742,13 +742,13 @@
                                         <table class="w-full shadow" >
                                             <thead>
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">Negocio</th>
-                                                    <th class="px-4 py-3">Período</th>
+                                                    <th class="px-4 py-3">Periodo</th>
                                                     <th class="px-4 py-3">Novedad</th>
                                                     <th class="px-4 py-3">Dìas en mora</th>
                                                     <!-- <th class="px-4 py-3">Estado de cuenta</th> -->
-                                                    <th class="px-4 py-3">valor cuenta</th>
+                                                    <th class="px-4 py-3">Valor</th>
                                                     <th class="px-4 py-3">Saldo en mora</th>
                                                 
                                                
@@ -759,9 +759,9 @@
                                                     *ngFor="let item of listadoReporteCentrales | filter: filtrarReporteC  | paginate: { itemsPerPage: tamanoTablaRC, currentPage: pageRC}">
                                                     <td class="px-4 py-1 text-sm border">{{ item.negocio}}</td>
                                                     <td class="px-4 py-1 text-sm border">{{ item.periodoLote}}</td>
-                                                    <td class="px-4 py-1 text-sm border capitalize">{{ item.novedad}}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.novedad}}</td>
                                                     <td class="px-4 py-1 text-sm border">{{ item.cuotasMora}}</td>
-                                                    <td class="px-4 py-1 text-sm border">{{ item.saldoDeuda}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-left">{{ item.saldoDeuda  | currency:'$':'symbol':'0.0-0'}}</td>
                                                     <td class="px-4 py-1 text-sm border">{{ item.saldoMora}}</td>
                                                 </tr>
                                             </tbody>

@@ -5,6 +5,7 @@ import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
 import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
 import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
+import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -36,7 +37,8 @@ export const appRoutes: Route[] = [
             {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule)},
             {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)},
             {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)},
-            {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)}
+            {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)},
+            {path: 'hv', loadChildren: () => HojavidaModule}
         ]
     },
 
@@ -66,6 +68,17 @@ export const appRoutes: Route[] = [
             {path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)},
         ]
     },
+     // Landing routes
+     {
+        path: '',
+        component  : LayoutComponent,
+        data: {
+            layout: 'empty'
+        },
+        children   : [
+            {path: 'home', loadChildren: () => HojavidaModule},
+        ]
+    },
 
     // Admin routes
     {
@@ -79,7 +92,7 @@ export const appRoutes: Route[] = [
         children   : [
             {
                 path: 'dashboard',
-                loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)
+                loadChildren: () => HojavidaModule
             },
             {
                 path: 'calendar',
@@ -91,7 +104,7 @@ export const appRoutes: Route[] = [
             },
         ]
     },
-    // {path: '**', redirectTo: '/sign-in'}
+    {path: '**', redirectTo: 'dashboard'}
     // {path: '**', redirectTo: 'sign-in'},
     // {path: '*', redirectTo: 'sign-in'}
 ];
