@@ -11,6 +11,9 @@ import { FormComponent } from './tipopqr/form/form.component';
 import { CausalesPQRSComponent } from './causales-pqrs/causales-pqrs.component';
 import { ResponsablesPQRSComponent } from './responsables-pqrs/responsables-pqrs.component';
 import { SolucionesPQRSComponent } from './soluciones-pqrs/soluciones-pqrs.component';
+import { FormCausalesComponent } from './causales-pqrs/form-causales/form-causales.component';
+import { FormResponsablesComponent } from './responsables-pqrs/form-responsables/form-responsables.component';
+import { FormSolucionesComponent } from './soluciones-pqrs/form-soluciones/form-soluciones.component';
 // import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
 const routes: Routes = [
@@ -57,7 +60,10 @@ const routes: Routes = [
     FormComponent,
     CausalesPQRSComponent,
     ResponsablesPQRSComponent,
-    SolucionesPQRSComponent
+    SolucionesPQRSComponent,
+    FormCausalesComponent,
+    FormResponsablesComponent,
+    FormSolucionesComponent
   ],
   imports: [
     SharedModule,

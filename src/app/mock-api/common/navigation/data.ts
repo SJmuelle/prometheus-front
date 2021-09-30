@@ -16,75 +16,75 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:chart-square-bar',
 
             },
-            // {
-            //     id: 'dashboard.pqrs',
-            //     title: 'PQRS',
-            //     type: 'collapsable',
-            //     icon: 'heroicons_outline:check-circle',
-            //     children: [
-            //         {
-            //             id: 'dashboard.pqr.lista',
-            //             title: 'Lista',
-            //             type: 'basic',
-            //             icon: 'heroicons_outline:clipboard-list',
-            //             link: '/list'
-            //         },
-            //         {
-            //             id: 'dashboard.pqr.configuracion',
-            //             title: 'Configuración',
-            //             icon: 'heroicons_outline:cog',
-            //             type: 'collapsable',
-            //             children: [
-            //                 {
-            //                     id: 'dashboard.pqr.configuracion.tipo',
-            //                     title: 'Tipo de PQRS',
-            //                     icon: 'heroicons_outline:minus-sm',
-            //                     type: 'basic',
-            //                     link: '/pqr/configuracion/tipoPQRS'
-            //                 },
-            //                 {
-            //                     id: 'dashboard.pqr.configuracion.causales',
-            //                     title: 'Causales de PQRS',
-            //                     type: 'basic',
-            //                     icon: 'heroicons_outline:minus-sm',
-            //                     link: '/pqr/configuracion/causalesPQRS'
-            //                 },
-            //                 {
-            //                     id: 'dashboard.pqr.configuracion.responsables',
-            //                     title: 'Responsables de PQRS',
-            //                     type: 'basic',
-            //                     icon: 'heroicons_outline:minus-sm',
-            //                     link: '/pqr/configuracion/responsablesPQRS'
-            //                 },
-            //                 {
-            //                     id: 'dashboard.pqr.configuracion.soluciones',
-            //                     title: 'Soluciones de PQRS',
-            //                     type: 'basic',
-            //                     icon: 'heroicons_outline:minus-sm',
-            //                     link: '/pqr/configuracion/solucionesPQRS'
-            //                 },
-            //             ]
-            //         },
-            //         {
-            //             id: 'dashboard.pqr.gestion',
-            //             title: 'Solución de PQRS',
-            //             icon: 'heroicons_outline:check-circle',
-            //             type: 'basic',
-            //             link: '/gestion'
-            //         }
-            //     ]
-            // }
+            {
+                 title: 'PQRS',
+                type: 'collapsable',
+                icon: 'heroicons_outline:check-circle',
+                children: [
+                    {
+                        id: 'dashboard.pqr.lista',
+                        title: 'Lista',
+                        type: 'basic',
+                        icon: 'heroicons_outline:clipboard-list',
+                        link: '/list'
+                    },
+                    {
+                        id: 'dashboard.pqr.configuracion',
+                        title: 'Configuración',
+                        icon: 'heroicons_outline:cog',
+                        type: 'collapsable',
+                        children: [
+                            {
+                                id: 'dashboard.pqr.configuracion.tipo',
+                                title: 'Tipo de PQRS',
+                                // icon: 'heroicons_outline:minus-sm',
+                                type: 'basic',
+                                link: '/pqr/configuracion/tipoPQRS'
+                            },
+                            {
+                                id: 'calendario',
+                                title: 'Dias hábiles',
+                                type: 'basic',
+                                // icon: 'heroicons_outline:calendar',
+                                link: '/calendar'
+                        
+                            },
+                            {
+                                id: 'dashboard.pqr.configuracion.causales',
+                                title: 'Causales de PQRS',
+                                type: 'basic',
+                                // icon: 'heroicons_outline:minus-sm',
+                                link: '/pqr/configuracion/causalesPQRS'
+                            },
+                            {
+                                id: 'dashboard.pqr.configuracion.responsables',
+                                title: 'Responsables de PQRS',
+                                type: 'basic',
+                                // icon: 'heroicons_outline:minus-sm',
+                                link: '/pqr/configuracion/responsablesPQRS'
+                            },
+                            {
+                                id: 'dashboard.pqr.configuracion.soluciones',
+                                title: 'Soluciones de PQRS',
+                                type: 'basic',
+                                // icon: 'heroicons_outline:minus-sm',
+                                link: '/pqr/configuracion/solucionesPQRS'
+                            },
+                        ]
+                    },
+                    {
+                        id: 'dashboard.pqr.gestion',
+                        title: 'Solución de PQRS',
+                        icon: 'heroicons_outline:check-circle',
+                        type: 'basic',
+                        link: '/gestion'
+                    }
+                ]
+            }
         ]
 
     },
-    // {
-    //     id: 'calendario',
-    //     title: 'Calendario',
-    //     type: 'basic',
-    //     icon: 'heroicons_outline:calendar',
-    //     link: '/calendar'
 
-    // }
 ];
 
 export const compactNavigation: FuseNavigationItem[] = [

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResponsablesPQRSComponent } from './responsables-pqrs.component';
+import { FormResponsablesComponent } from './form-responsables.component';
 
-describe('ResponsablesPQRSComponent', () => {
-  let component: ResponsablesPQRSComponent;
-  let fixture: ComponentFixture<ResponsablesPQRSComponent>;
+describe('FormResponsablesComponent', () => {
+  let component: FormResponsablesComponent;
+  let fixture: ComponentFixture<FormResponsablesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResponsablesPQRSComponent ]
+      declarations: [ FormResponsablesComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResponsablesPQRSComponent);
+    fixture = TestBed.createComponent(FormResponsablesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
+import { FormCausalesComponent } from './form-causales/form-causales.component';
 
 @Component({
   selector: 'app-causales-pqrs',
@@ -57,17 +58,20 @@ export class CausalesPQRSComponent implements OnInit {
       }
     }
 
-    // const dialogRef = this.dialog.open(FormComponent, {
-    //   // width: '1080px',
-    //   // maxHeight: '550px',
-    //   data: this.datos,
-    // });
+    const dialogRef = this.dialog.open(FormCausalesComponent, {
+      // width: '1080px',
+      // maxHeight: '550px',
+      data: this.datos,
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    //   console.log(result);
-    //   this.consulta();
-    // });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+      setTimeout(() => {
+        this.consulta();
+      }, 1000);
+      
+    });
    
   }
 }
