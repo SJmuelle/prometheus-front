@@ -16,8 +16,7 @@ export class CausalesPQRSComponent implements OnInit {
   tamanoTabl:number=5;
   filtrarTabla:string='';
   mostrar_form:boolean=true;
-  datos: { tipo: any; tiempo: any; legal: string; estado: string; titulo: any; };
-
+  datos: { idTipo: any; estado: string; descripcion: any; titulo: string; };
 
   constructor(
     public dialog: MatDialog,
@@ -42,19 +41,17 @@ export class CausalesPQRSComponent implements OnInit {
   abrirModal(datos,titulo){
     if(titulo=='N'){
       this.datos={
-        tipo:'',
-        tiempo:'',
-        legal:'',
-        estado:'A',
-        titulo:titulo
-      }
+        idTipo: null,
+        estado: "",
+        descripcion: "",
+        titulo:"N"
+    }
     }else{
       this.datos={
-        tipo:datos.tipoPqrs,
-        tiempo:datos.diasSolucion,
-        legal:datos.legal=='SI'?'S':"N",
-        estado:datos.estado=='ACTIVO'?'A':"I",
-        titulo:titulo
+        idTipo: datos.tipoPqrs,
+        estado: datos.estado=='ACTIVO'?'A':'I',
+        descripcion: datos.causalPqrs,
+        titulo:"A"
       }
     }
 

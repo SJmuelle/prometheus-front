@@ -38,12 +38,18 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <table class="w-full shadow p-1">
+                                <!-- causal: "Mala Paga"
+codigoSolucion: 1
+descripcion: "NUEVA SOLUCION DE PQRS 1"
+estado: "ACTIVO"
+responsable: "LUIS JACITO CANTILLO GALINDO "
+tiempoSolucion: 15 -->
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
                                         class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
-                                        <th class="px-4 py-3 text-center">Tipos</th>
-                                        <th class="px-4 py-3 text-center">Legal</th>
-                                        <th class="px-4 py-3 text-center">Tiempo Solución</th>
+                                        <th class="px-4 py-3 text-center">Causal</th>
+                                        <th class="px-4 py-3 text-center">Responsable</th>
+                                        <th class="px-4 py-3 text-center">Descripción Solucion</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
                                         <th class="px-4 py-3 text-center">Editar</th>
                                     </tr>
@@ -51,9 +57,9 @@
                                 <tbody class="bg-white">
                                     <tr class="text-gray-700"
                                         *ngFor="let item of listado  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
-                                        <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.legal}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.diasSolucion}}</td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.causal}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.responsable}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
                                         <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
                                     </tr>
@@ -67,7 +73,7 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <!-- <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around">
+                    <!-- <fuse-card>
                         <div class="w-3/12">
                             <img src="assets/images/animaciones/nodatos.gif">
                         </div>

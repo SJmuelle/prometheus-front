@@ -12,6 +12,7 @@ export class PqrService {
 
   }
 
+  // parametrizacion
   setTipo() {
     let url: string = `/tk/informacion-tipo-pqrs`;
     return this._utility.getQuery(url, true)
@@ -48,4 +49,10 @@ export class PqrService {
   }
 
 
+  getListados(url: string){
+    return this._utility.getQuery(url, true)
+      .pipe(map((res: any) => {
+        return res.data;
+      }));
+  }
 }

@@ -1,4 +1,3 @@
-
 <div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4">
     <div class="row justify-between">
         <div class="text-left col l12">
@@ -6,13 +5,13 @@
             <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
         </div>
     </div>
-    <div class="row" >
+    <div class="row">
         <div class="bg-white col-lg-12 col-sm-12">
             <div class="row items-center">
 
-                <span class="leading-none col-lg-4 col-sm-12"  >
+                <span class="leading-none col-lg-4 col-sm-12">
                     <div class="leading-tight titulo_tabs">
-                        <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')"  >
+                        <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')">
                             <!-- <mat-icon svgIcon="heroicons_outline:plus-sm" ></mat-icon> -->
                             <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon>
                             Crear Nuevo
@@ -23,9 +22,8 @@
                     <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
                         type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
                         placeholder="Filtrar...">
-                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100"
-                        (change)="page=1" [(ngModel)]="tamanoTabl"
-                        style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100" (change)="page=1"
+                        [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                         <option value="5"> 5</option>
                         <option value="10"> 10</option>
                         <option value="20"> 20</option>
@@ -38,12 +36,20 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <table class="w-full shadow p-1">
+                                <!-- 
+                                esEmail: "smuelle@fintra.co"
+                                escalado: "smuelle"
+                                estado: "Activo"
+                                id: 2
+                                reEmail: "contacto.grupovision@gmail.com"
+                                responsable: "gllanos" -->
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
                                         class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
-                                        <th class="px-4 py-3 text-center">Tipos</th>
-                                        <th class="px-4 py-3 text-center">Legal</th>
-                                        <th class="px-4 py-3 text-center">Tiempo Solución</th>
+                                        <th class="px-4 py-3 text-center">Responsable</th>
+                                        <th class="px-4 py-3 text-center">Contacto del responsable</th>
+                                        <th class="px-4 py-3 text-center">Ecalado</th>
+                                        <th class="px-4 py-3 text-center">Contacto del Escalado</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
                                         <th class="px-4 py-3 text-center">Editar</th>
                                     </tr>
@@ -51,11 +57,14 @@
                                 <tbody class="bg-white">
                                     <tr class="text-gray-700"
                                         *ngFor="let item of listado  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
-                                        <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.legal}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.diasSolucion}}</td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.escalado}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.reEmail}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.escalado}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.esEmail}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
-                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
+                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')">
+                                            <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

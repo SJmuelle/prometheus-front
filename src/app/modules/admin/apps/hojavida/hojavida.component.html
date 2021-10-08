@@ -789,7 +789,13 @@
                         <div class="row items-center">
 
                             <span class="leading-none col-lg-4 col-sm-12">
-                                <div class="leading-tight titulo_tabs">PQRS</div>
+                                <div class="leading-tight titulo_tabs">
+                                    <button mat-button class="color_fintra text-white" (click)="abrirPQRS()"  >
+                                        <!-- <mat-icon svgIcon="heroicons_outline:plus-sm" ></mat-icon> -->
+                                        <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon>
+                                        Crear PQRS
+                                    </button>
+                                </div>
                             </span>
                             <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
                                 <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;" type="text"

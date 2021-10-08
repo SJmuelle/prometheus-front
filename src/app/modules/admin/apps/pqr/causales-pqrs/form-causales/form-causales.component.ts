@@ -10,9 +10,8 @@ import { PqrService } from '../../pqr.service';
 })
 export class FormCausalesComponent implements OnInit {
 
-  datos: { id:number, tipo: string; tiempo: number; legal: string; estado: string; titulo: string ,clase:string};
   listadoTipo: any;
-
+  datos: { idTipo: any; estado: string; descripcion: any; titulo: string; };
   constructor(
     public matDialogRef: MatDialogRef<FormCausalesComponent>,
     @Inject(MAT_DIALOG_DATA) public data, private _pqrService: PqrService) { }
@@ -38,22 +37,20 @@ export class FormCausalesComponent implements OnInit {
     let data,url;
     if (this.datos.titulo == 'N') {
       //post
-      url="/agregar-pqrs-tipo";
+      url="/agregar-pqrs-causal";
       data = {
-        "estado": "",
-        "descripcion": this.datos.tipo,
-        "legal": this.datos.legal=='S'?true:false,
-        "diasSolucion": this.datos.tiempo,
-        "clase": this.datos.clase,
+        idTipo: parseInt(this.datos.idTipo),
+        estado: '',
+        descripcion: this.datos.descripcion
       }
 
     } else {
       url="/actualizar-pqrs-tipo";
       data = {
-        "id": this.datos.id,
-        "estado":this.datos.estado=='A'?'':'A',
-        "legal": this.datos.legal=='S'?true:false,
-        "diasSolucion":this.datos.tiempo,
+        // "id": this.datos.id,
+        // "estado":this.datos.estado=='A'?'':'A',
+        // "legal": this.datos.legal=='S'?true:false,
+        // "diasSolucion":this.datos.tiempo,
       }
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })

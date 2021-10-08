@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/modal-ingreso.component';
 import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ModalcreditoComponent } from 'app/components/hojadevida/modalcredito/modalcredito.component';
@@ -16,20 +17,20 @@ import Swal from 'sweetalert2';
   styleUrls: ['./hojavida.component.scss']
 })
 export class HojavidaComponent implements OnInit {
-  listCodigoNegocio: any;
-  info_cliente: any;
+  listCodigoNegocio: string;
+  info_cliente: any={};
   mostrarDatoCliente: boolean;
-  listadoCredito: any;
+  listadoCredito: any=[];
   filtrarTabla: string;
-  filtrarTablaCartera: any;
-  filtrarTablaHN: any;
+  filtrarTablaCartera: string;
+  filtrarTablaHN: string;
   ListadoCartera: any = [];
   listadoNegociaciones: any = [];
   listaHistoria: any = [];
   listadoExtractos: any = [];
-  tab: any;
+  tab: number;
   listadoReporteCentrales: any = [];
-  codigoNegocio2: any;
+  codigoNegocio2: string;
   tamanoTablaHG: number;
   filtrarTablaHG: string;
   tamanoTablaNeg: number;
@@ -45,6 +46,7 @@ export class HojavidaComponent implements OnInit {
     private _creditoService: CreditoService,
     public dialog: MatDialog,
     private _carteraService: CarteraService,
+    private route: ActivatedRoute, private router: Router,
     private _historialService: HistorialGestionService,
     private _negociacionesService: NegociacionesService) { }
 
@@ -332,6 +334,10 @@ export class HojavidaComponent implements OnInit {
     
     window.open(url, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
 
+  }
+  abrirPQRS(){
+    let url=`pqr/creacion/${this.info_cliente.identificacion}`;
+    this.router.navigateByUrl(url);
   }
 
 }

@@ -69,16 +69,9 @@ export const appRoutes: Route[] = [
         ]
     },
      // Landing routes
-     {
-        path: '',
-        component  : LayoutComponent,
-        data: {
-            layout: 'empty'
-        },
-        children   : [
-            {path: 'home', loadChildren: () => HojavidaModule},
-        ]
-    },
+    
+            {path: 'hv', loadChildren: () => import('app/modules/admin/apps/hojavida/hojavida.module').then(m => m.HojavidaModule)},
+
 
     // Admin routes
     {
