@@ -65,7 +65,7 @@ export class FormComponent implements OnInit {
         }else{
           Swal.fire(
             '¡Advertencia!',
-            'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+            'Error en la respuesta del servicio, favor intente nuevamente',
             'error'
           );
         }

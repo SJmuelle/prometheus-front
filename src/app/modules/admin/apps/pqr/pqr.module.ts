@@ -36,6 +36,10 @@ const routes: Routes = [
     component: CreacionPQRSComponent,
   },
   {
+    path: 'gestion/:idPQR',
+    component: GestionPQRSComponent,
+  },
+  {
     path: 'configuracion',
     component: PqrComponent,
     children: [

@@ -57,7 +57,7 @@
                                         <td class="px-2 text-sm border text-center">{{ item.tipoPqrs}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.causalPqrs}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
-                                        <td class="px-2 text-sm border text-center" (click)="gestion(item)">
+                                        <td class="px-2 text-sm border text-center" (click)="gestion(item.id)">
                                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                                         </td>
                                         <td class="px-2 text-sm border text-center">{{ item.numeroRechazados}}</td>

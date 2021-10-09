@@ -21,13 +21,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'collapsable',
                 icon: 'heroicons_outline:check-circle',
                 children: [
-                    // {
-                    //     id: 'dashboard.pqr.lista',
-                    //     title: 'Creación PQRS',
-                    //     type: 'basic',
-                    //     icon: 'heroicons_outline:clipboard-list',
-                    //     link: '/pqr/creacion'
-                    // },
+             
                     {
                         id: 'dashboard.pqr.configuracion',
                         title: 'Configuración',
@@ -71,6 +65,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                                 link: '/pqr/configuracion/solucionesPQRS'
                             },
                         ]
+                    },
+                    {
+                        id: 'dashboard.pqr.lista',
+                        title: 'Creación PQRS',
+                        type: 'basic',
+                        icon: 'heroicons_outline:clipboard-list',
+                        link: '/pqr/creacion/0'
                     },
                     {
                         id: 'dashboard.pqr.gestion',

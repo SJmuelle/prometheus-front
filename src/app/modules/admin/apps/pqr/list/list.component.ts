@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 
@@ -17,6 +18,7 @@ export class ListComponent implements OnInit {
 
 
   constructor(
+   private router: Router,
     private _pqrService: PqrService) { }
 
   ngOnInit(): void {
@@ -37,7 +39,8 @@ export class ListComponent implements OnInit {
           });
   }
   gestion(x){
-
+    let url=`pqr/gestion/${x}`;
+    this.router.navigateByUrl(url);
   }
 
 }

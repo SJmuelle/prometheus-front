@@ -10,6 +10,7 @@ import { HistorialGestionService } from 'app/resources/services/hojadevida/histo
 import { HojadevidaService } from 'app/resources/services/hojadevida/hojadevida.service';
 import { NegociacionesService } from 'app/resources/services/hojadevida/negociaciones.service';
 import Swal from 'sweetalert2';
+import { PqrService } from '../pqr/pqr.service';
 
 @Component({
   selector: 'app-hojavida',
@@ -40,10 +41,14 @@ export class HojavidaComponent implements OnInit {
   filtrarReporteC: string;
   tamanoTablaRC: number;
   btnBuscar: boolean;
+  filtrarPQRS: string;
+  tamanoPQRS: number;
+  listadoPQRS: any=[];
 
 
   constructor(private _hojadevidaService: HojadevidaService,
     private _creditoService: CreditoService,
+    private _pqrService: PqrService,
     public dialog: MatDialog,
     private _carteraService: CarteraService,
     private route: ActivatedRoute, private router: Router,
@@ -140,6 +145,7 @@ export class HojavidaComponent implements OnInit {
     this.clienteID = null;
     this.codigoNegocio = null;
     this.listadoExtractos = [];
+    this.listadoPQRS=[];
   }
 
   // SUBSCRIBES
@@ -245,6 +251,25 @@ export class HojavidaComponent implements OnInit {
               this.listadoReporteCentrales = response.data;
             } else {
               this.listadoReporteCentrales = [];
+            }
+          });
+        break;
+        case 6:
+        this.filtrarPQRS = "";
+        this.tamanoPQRS = 5;
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        let url=`/informacion-historial-pqrs/${this.info_cliente.identificacion}`;
+        this._pqrService
+          .getListados(url)
+          .subscribe((response: any) => {
+            // this.listadoReporteCentrales = response.data;
+            Swal.close();
+           
+            if (response) {
+              
+              this.listadoPQRS = response;
+            } else {
+              this.listadoPQRS = [];
             }
           });
         break;
