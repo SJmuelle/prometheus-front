@@ -5,6 +5,8 @@ import {GridAgendaCompletacionComponent} from './grid-agenda-completacion/grid-a
 import {ContenedorFabricaComponent} from './contenedor-fabrica/contenedor-fabrica.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -12,11 +14,13 @@ import {MatDividerModule} from '@angular/material/divider';
       GridAgendaCompletacionComponent,
       ContenedorFabricaComponent
   ],
-  imports: [
-    CommonModule,
-    MatTabsModule,
-    MatDividerModule,
-    AgendaCompletacionRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        MatTabsModule,
+        MatDividerModule,
+        AgendaCompletacionRoutingModule,
+        MatIconModule,
+        MatButtonModule
+    ]
 })
 export class AgendaCompletacionModule { }
