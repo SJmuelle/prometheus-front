@@ -1,0 +1,288 @@
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full y-100" cdkScrollable>
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent mb-3">
+        <div class="flex flex-col">
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-start py-6 px-6 md:px-8 border-b">
+                <h3 class="mb-2 text-gray-900">Fabrica de crédito</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <form [formGroup]="form">
+                <mat-accordion multi>
+                <!--Panel Datos de la solicitud-->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Datos de la solicitud
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                <mat-label>No. de solicitud</mat-label>
+                                <input matInput type="number" placeholder="Ingrese numero"  [formControlName]="'numero_solicitud'">
+                            </mat-form-field>
+                            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                <mat-label>Fecha de solicitud</mat-label>
+                                <input matInput type="text" placeholder="Fecha" [formControlName]="'emision'">
+                            </mat-form-field>
+                            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                <mat-label>Es preaprobado</mat-label>
+                                <input matInput type="text" placeholder="Preaprobado" [formControlName]="'descripcion_estado'">
+                            </mat-form-field>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Estado</mat-label>
+                                <input matInput type="text" placeholder="Estado" [formControlName]="'codigo_estado'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Subestado</mat-label>
+                                <input matInput type="text" placeholder="Subestado" [formControlName]="'codigo_sub_estado'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Cupo aprobado</mat-label>
+                                <input matInput type="text" placeholder="Cupo aprobado" [formControlName]="'cupo_total'">
+                            </mat-form-field>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Cupo reservado</mat-label>
+                                <input matInput type="text" placeholder="Cupo reservado" [formControlName]="'cupo_reservado'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Cupo disponible</mat-label>
+                                <input matInput type="text" placeholder="Cupo disponible" [formControlName]="'cupo_disponible'">
+                            </mat-form-field>
+                        </div>
+                        <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos de riesgos</span>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Score acierta</mat-label>
+                                <input matInput type="text" placeholder="Score acierta" [formControlName]="'score'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Descripción del score</mat-label>
+                                <input matInput type="text" placeholder="Descripción" [formControlName]="'descripcion_score'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Nivel de endeudamiento</mat-label>
+                                <input matInput type="text" placeholder="Nivel de endeudamiento" [formControlName]="'nivel_endeudamiento'">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+                <!--Panel datos de riesgo-->
+                <!--<mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Datos de riesgo
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Score acierta</mat-label>
+                                <input matInput type="text" placeholder="Score acierta" >
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Descripción del score</mat-label>
+                                <input matInput type="text" placeholder="Descripción" >
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Nivel de endeudamiento</mat-label>
+                                <input matInput type="text" placeholder="Nivel de endeudamiento">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    &lt;!&ndash;<mat-form-field appearance="fill">
+                        <mat-label>Date</mat-label>
+                        <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
+                    </mat-form-field>
+                    <mat-datepicker #picker></mat-datepicker>&ndash;&gt;
+                </mat-expansion-panel>-->
+                <!--Panel informacion del titular-->
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Información del titular (Persona Natural / Persona Jurídica / Representante legal)
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-tab-group>
+                        <mat-tab label="Datos del titular">
+                            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                                <div class="-mx-3 md:flex mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Tipo de solicitante</mat-label>
+                                        <input matInput type="text" placeholder="Tipo de solicitante" [formControlName]="'tipo'">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Tipo de documento</mat-label>
+                                        <input matInput type="text" placeholder="Descripción" [formControlName]="'tipo_documento'">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>No. de identificacion</mat-label>
+                                        <input matInput type="text" placeholder="Identificación" [formControlName]="'identificacion'">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mb-2">
+                                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                        <mat-label>Nombre / Razón social</mat-label>
+                                        <input matInput type="text" placeholder="Nombre / Razón de social">
+                                    </mat-form-field>
+                                </div>
+                                <mat-divider></mat-divider>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Primer nombre</mat-label>
+                                        <input matInput type="text" placeholder="Primer nombre">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Segundo nombre</mat-label>
+                                        <input matInput type="text" placeholder="Segundo nombre">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Primer apellido</mat-label>
+                                        <input matInput type="text" placeholder="Primer apellido">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Segundo apellido</mat-label>
+                                        <input matInput type="text" placeholder="Segundo apellido">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Teléfono / Celular </mat-label>
+                                        <input matInput type="text" placeholder="Teléfono / Celular">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput type="text" placeholder="Email">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Género</mat-label>
+                                        <input matInput type="text" placeholder="Genero">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Nacionalidad</mat-label>
+                                        <input matInput type="text" placeholder="Nacionalidad">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Fecha de nacimiento </mat-label>
+                                        <input matInput type="text" placeholder="Fecha de nacimiento">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Departamento de nacimiento</mat-label>
+                                        <input matInput type="text" placeholder="Departamento">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ciudad / Municipio de nacimiento</mat-label>
+                                        <input matInput type="text" placeholder="Ciudad / Municipio de nacimiento">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Tipo de vivienda</mat-label>
+                                        <input matInput type="text" placeholder="Tipo de vivienda">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Departamento de residencia</mat-label>
+                                        <input matInput type="text" placeholder="Departamento de residencia">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ciudad / municipio de residencia</mat-label>
+                                        <input matInput type="text" placeholder="Ciudad / municipio de residencia">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Barrio</mat-label>
+                                        <input matInput type="text" placeholder="Barrio">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Dirección de residencia</mat-label>
+                                        <input matInput type="text" placeholder="Dirección de residencia">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Nivel de estudio</mat-label>
+                                        <input matInput type="text" placeholder="Nivel de estudio">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>¿Vive en el mismo lugar del negocio?</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                </div>
+                                <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información financiera</span>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Compras semanalmente en cemento ($)</mat-label>
+                                        <input matInput type="text" placeholder="Ingrese valor">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Antiguedad compras (meses)</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ventas mensuales ($)</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Activo ($)</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>¿Es declarante?</mat-label>
+                                        <input matInput type="text" placeholder="Ingrese valor">
+                                    </mat-form-field>
+                                </div>
+                                <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del negocio</span>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Departamento del negocio</mat-label>
+                                        <input matInput type="text" placeholder="Ingrese valor">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ciudad / municipio del negocio</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Barrio</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Direccion del negocio</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Teléfono del negocio</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>¿Se encuentra registrado en camára de comercio?</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Nit</mat-label>
+                                        <input matInput type="text" placeholder="">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </mat-expansion-panel>
+            </mat-accordion>
+            </form>
+        </div>
+    </div>
+</div>

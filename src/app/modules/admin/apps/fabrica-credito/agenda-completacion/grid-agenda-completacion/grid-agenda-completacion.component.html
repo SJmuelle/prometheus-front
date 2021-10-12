@@ -40,7 +40,13 @@
                     <ng-container *ngFor="let item of agendas.data">
                         <tr class="text-gray-700" >
                             <td class="px-2 text-sm border">
-                                <button mat-icon-button>
+                                <button mat-icon-button
+                                        [routerLink]="'/credit-factory/credit-management'"
+                                        [queryParams]="{
+                                            pnum: item.numero_solicitud,
+                                            pnumein: item.identificacion
+                                        }"
+                                >
                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                 </button>
                             </td>

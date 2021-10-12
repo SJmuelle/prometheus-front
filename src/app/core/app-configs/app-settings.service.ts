@@ -11,6 +11,17 @@ export class AppSettingsService {
             base: EndPoints.uri('agendas-credito/CO')
         }
     };
+    /**
+     * @description: End-point fabrica de datos
+     */
+    public fabricaDatos = {
+        url: {
+            base: EndPoints.uri('consulta-fabrica')
+        }
+    };
+    /**
+     * @description:
+     */
 
 
 }
