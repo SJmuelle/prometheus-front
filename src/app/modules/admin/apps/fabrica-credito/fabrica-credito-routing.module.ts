@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AgendaCompletacionModule} from './agenda-completacion/agenda-completacion.module';
+import {GestionFabricaCreditoModule} from './gestion-fabrica-credito/gestion-fabrica-credito.module';
 
 
 const routes: Routes = [
@@ -11,6 +12,10 @@ const routes: Routes = [
                 path: 'agenda-completion',
                 loadChildren: () => AgendaCompletacionModule
             },
+            {
+                path: 'credit-management',
+                loadChildren: () => GestionFabricaCreditoModule
+            }
 
         ]
     }
