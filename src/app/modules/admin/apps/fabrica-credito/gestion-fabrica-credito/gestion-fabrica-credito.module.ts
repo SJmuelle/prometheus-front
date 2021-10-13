@@ -14,6 +14,7 @@ import {MatDividerModule} from "@angular/material/divider";
 import {ReactiveFormsModule} from "@angular/forms";
 import { FormRepresentanteLegalComponent } from './form-representante-legal/form-representante-legal.component';
 import {MatButtonModule} from "@angular/material/button";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {MatButtonModule} from "@angular/material/button";
         MatTabsModule,
         MatDividerModule,
         ReactiveFormsModule,
-        MatButtonModule
+        MatButtonModule,
+        MatSelectModule
     ]
 })
 export class GestionFabricaCreditoModule { }

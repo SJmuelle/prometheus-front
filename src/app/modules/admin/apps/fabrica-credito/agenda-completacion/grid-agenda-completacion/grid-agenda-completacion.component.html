@@ -43,21 +43,21 @@
                                 <button mat-icon-button
                                         [routerLink]="'/credit-factory/credit-management'"
                                         [queryParams]="{
-                                            pnum: item.numero_solicitud,
+                                            pnum: item.numeroSolicitud,
                                             pnumein: item.identificacion
                                         }"
                                 >
                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                 </button>
                             </td>
-                            <td class="px-2 text-sm border">{{ item.numero_solicitud}}</td>
-                            <td class="px-2 text-sm border">{{ item.nombre_completo}}</td>
+                            <td class="px-2 text-sm border">{{ item.numeroSolicitud}}</td>
+                            <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
                             <td class="px-2 text-sm border">{{ item.identificacion}}</td>
-                            <td class="px-2 text-sm border">{{ item.fecha_emision | date: 'dd/MM/YYYY hh:mm'}}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaEmision}}</td>
                             <td class="px-2 text-sm border">{{ '' }}</td>
                             <td class="px-2 text-sm border">{{ '' }}</td>
                             <td class="px-2 text-sm border">{{ item.estado }}</td>
-                            <td class="px-2 text-sm border">{{ item.sub_estado }}</td>
+                            <td class="px-2 text-sm border">{{ item.subEstado }}</td>
                         </tr>
                     </ng-container>
                 </ng-container>

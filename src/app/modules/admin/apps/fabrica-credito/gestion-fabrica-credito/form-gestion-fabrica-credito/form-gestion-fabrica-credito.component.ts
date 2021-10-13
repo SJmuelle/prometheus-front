@@ -1,10 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FabricaCreditoService} from "../../../../../../core/services/fabrica-credito.service";
-import {Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {AgendaCompletacionService} from "../../../../../../core/services/agenda-completacion.service";
 import {takeUntil} from "rxjs/operators";
 import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -13,12 +15,16 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public unSubscribe$: Subject<any> = new Subject<any>();
+  public departamentos$: Observable<any>;
+  public ciudades$: Observable<any>;
+  public barrios$: Observable<any>;
   public form: FormGroup;
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
       private route: ActivatedRoute,
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private departamentosCiudadesService: DepartamentosCiudadesService
 
   ) {
     const numeroSolicitud: string =  this.route.snapshot.queryParamMap.get('pnum');
@@ -26,13 +32,14 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     if (!numeroSolicitud) {
         return;
     }else {
+        console.log(numeroSolicitud);
         this.getFabricaCreditoAgenda(numeroSolicitud, identificacion);
     }
   }
 
   ngOnInit(): void {
-      // this.getFabricaCreditoAgenda();
       this.createFormulario();
+      this.getDepartamentos();
 
   }
 
@@ -54,10 +61,41 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           numeroSolicitud: numeroSolicitud,
           identificacion: identificacion
       };
-      this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).subscribe(({data}) => {
+      this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+          .subscribe(({data}) => {
           console.log(data);
           // this.form.patchValue(data);
       });
+  }
+  public seleccionDepartamento(event: MatSelectChange): void {
+       const codigo: string = event.value;
+       this.getCiudades(codigo);
+  }
+  /**
+   * @description: Selecciona el codigo para cargar el api barrios
+   *
+   */
+  public seleccionCiudad(event: MatSelectChange): void {
+      const codigo: string = event.value;
+      this.getBarrios(codigo);
+  }
+  /**
+   * @description: Obtiene el listado de departamento
+  */
+  private getDepartamentos(): void {
+      this.departamentos$ = this.departamentosCiudadesService.getDepartamentos();
+  }
+  /**
+   * @description: Obtiene el listado de ciudades
+   */
+  private getCiudades(codigo: string): void {
+      this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+  /**
+   * @description: Obtiene el listado de barrios
+   */
+  private getBarrios(codigo: string): void {
+      this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
   }
 
   private createFormulario(): void {
@@ -131,7 +169,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       this.unSubscribe$.unsubscribe();
-      this.agendaCompletacionService.resetSeleccionAgenda();
+      // this.agendaCompletacionService.resetSeleccionAgenda();
   }
 
 }

@@ -20,8 +20,31 @@ export class AppSettingsService {
         }
     };
     /**
-     * @description:
+     * @description: End-point departamentos
      */
+    public departamentos =  {
+        url: {
+            base: EndPoints.uri('departamentos')
+        }
+    };
+    /**
+     * @description: End-point ciudades
+     */
+    public ciudades = {
+        url: {
+            base: EndPoints.uri('ciudades')
+        }
+    };
+    /**
+     * @description: End-point Barrios
+     */
+    public barrios = {
+        url: {
+            base: EndPoints.uri('barrios')
+        }
+    };
+
+
 
 
 }
