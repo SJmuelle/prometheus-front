@@ -12,11 +12,14 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatDividerModule} from "@angular/material/divider";
 import {ReactiveFormsModule} from "@angular/forms";
+import { FormRepresentanteLegalComponent } from './form-representante-legal/form-representante-legal.component';
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
   declarations: [
-    FormGestionFabricaCreditoComponent
+    FormGestionFabricaCreditoComponent,
+    FormRepresentanteLegalComponent
   ],
     imports: [
         CommonModule,
@@ -29,7 +32,8 @@ import {ReactiveFormsModule} from "@angular/forms";
         MatDatepickerModule,
         MatTabsModule,
         MatDividerModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatButtonModule
     ]
 })
 export class GestionFabricaCreditoModule { }
