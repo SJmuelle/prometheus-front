@@ -15,6 +15,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { FormRepresentanteLegalComponent } from './form-representante-legal/form-representante-legal.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
+import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
 
 
 @NgModule({
@@ -35,7 +36,9 @@ import {MatSelectModule} from "@angular/material/select";
         MatDividerModule,
         ReactiveFormsModule,
         MatButtonModule,
-        MatSelectModule
+        MatSelectModule,
+        NgxMatDatetimePickerModule,
+        NgxMatNativeDateModule
     ]
 })
 export class GestionFabricaCreditoModule { }

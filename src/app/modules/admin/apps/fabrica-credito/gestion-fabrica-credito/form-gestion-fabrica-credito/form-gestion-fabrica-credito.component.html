@@ -25,9 +25,7 @@
                             </mat-form-field>
                             <mat-form-field class="w-full px-3 fuse-mat-dense">
                                 <mat-label>Fecha de solicitud</mat-label>
-                                <input matInput [matDatepicker]="picker" [formControlName]="'emision'">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
+                                <input matInput type="text" placeholder="Fecha de emisión" [formControlName]="'emision'">
                             </mat-form-field>
                             <mat-form-field class="w-full px-3 fuse-mat-dense">
                                 <mat-label>Es preaprobado</mat-label>

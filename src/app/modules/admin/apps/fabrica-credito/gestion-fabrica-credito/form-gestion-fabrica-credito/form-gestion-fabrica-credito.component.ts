@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FabricaCreditoService} from "../../../../../../core/services/fabrica-credito.service";
 import {Observable, Subject} from "rxjs";
 import {AgendaCompletacionService} from "../../../../../../core/services/agenda-completacion.service";
@@ -101,9 +101,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   private createFormulario(): void {
       this.form = this.fb.group({
           id:                           undefined,
-          numeroSolicitud:                   [''],
+          numeroSolicitud:                   [{value: '', disabled: true}],
           tipo:                              [''],
-          emision:                           [''],
+          emision:                           [{value: '', disabled: true}],
           origen:                            [''],
           codigoEstado:                      [''],
           descripcionEstado:                 [''],
