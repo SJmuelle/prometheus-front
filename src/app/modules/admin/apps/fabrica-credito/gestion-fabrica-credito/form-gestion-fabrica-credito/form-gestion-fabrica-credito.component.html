@@ -21,39 +21,41 @@
                         <div class="-mx-3 md:flex mb-2">
                             <mat-form-field class="w-full px-3 fuse-mat-dense">
                                 <mat-label>No. de solicitud</mat-label>
-                                <input matInput type="number" placeholder="Ingrese numero"  [formControlName]="'numero_solicitud'">
+                                <input matInput type="number" placeholder="Ingrese numero"  [formControlName]="'numeroSolicitud'">
                             </mat-form-field>
                             <mat-form-field class="w-full px-3 fuse-mat-dense">
                                 <mat-label>Fecha de solicitud</mat-label>
-                                <input matInput type="text" placeholder="Fecha" [formControlName]="'emision'">
+                                <input matInput [matDatepicker]="picker" [formControlName]="'emision'">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field class="w-full px-3 fuse-mat-dense">
                                 <mat-label>Es preaprobado</mat-label>
-                                <input matInput type="text" placeholder="Preaprobado" [formControlName]="'descripcion_estado'">
+                                <input matInput type="text" placeholder="Preaprobado" [formControlName]="'descripcionEstado'">
                             </mat-form-field>
                         </div>
                         <div class="-mx-3 md:flex mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Estado</mat-label>
-                                <input matInput type="text" placeholder="Estado" [formControlName]="'codigo_estado'">
+                                <input matInput type="text" placeholder="Estado" [formControlName]="'codigoEstado'">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Subestado</mat-label>
-                                <input matInput type="text" placeholder="Subestado" [formControlName]="'codigo_sub_estado'">
+                                <input matInput type="text" placeholder="Subestado" [formControlName]="'codigoSubEstado'">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cupo aprobado</mat-label>
-                                <input matInput type="text" placeholder="Cupo aprobado" [formControlName]="'cupo_total'">
+                                <input matInput type="text" placeholder="Cupo aprobado" [formControlName]="'cupoTotal'">
                             </mat-form-field>
                         </div>
                         <div class="-mx-3 md:flex mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cupo reservado</mat-label>
-                                <input matInput type="text" placeholder="Cupo reservado" [formControlName]="'cupo_reservado'">
+                                <input matInput type="text" placeholder="Cupo reservado" [formControlName]="'cupoReservado'">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cupo disponible</mat-label>
-                                <input matInput type="text" placeholder="Cupo disponible" [formControlName]="'cupo_disponible'">
+                                <input matInput type="text" placeholder="Cupo disponible" [formControlName]="'cupoDisponible'">
                             </mat-form-field>
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos de riesgos</span>
@@ -64,11 +66,11 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Descripción del score</mat-label>
-                                <input matInput type="text" placeholder="Descripción" [formControlName]="'descripcion_score'">
+                                <input matInput type="text" placeholder="Descripción" [formControlName]="'descripcionScore'">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Nivel de endeudamiento</mat-label>
-                                <input matInput type="text" placeholder="Nivel de endeudamiento" [formControlName]="'nivel_endeudamiento'">
+                                <input matInput type="text" placeholder="Nivel de endeudamiento" [formControlName]="'nivelEndeudamiento'">
                             </mat-form-field>
                         </div>
                     </div>
@@ -117,25 +119,25 @@
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Compras semanalmente en cemento ($)</mat-label>
-                                        <input matInput type="text" placeholder="Ingrese valor">
+                                        <input matInput type="text" placeholder="Ingrese valor" [formControlName]="'comprasSemanales'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Antiguedad compras (meses)</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'antiguedadComprasSemanales'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Ventas mensuales ($)</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'ventasMensuales'">
                                     </mat-form-field>
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Activo ($)</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'activos'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>¿Es declarante?</mat-label>
-                                        <input matInput type="text" placeholder="Ingrese valor">
+                                        <input matInput type="text" placeholder="Ingrese valor" [formControlName]="'declarante'">
                                     </mat-form-field>
                                 </div>
                                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del negocio</span>
@@ -145,6 +147,7 @@
                                             <mat-label>Departamento del negocio</mat-label>
                                                 <mat-select (selectionChange)="seleccionDepartamento($event)"
                                                             [value]="'seleccione'"
+                                                            [formControlName]="'codigoDepartamentoNegocio'"
                                                 >
                                                     <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                                                     <mat-option *ngFor="let departamento of departamentos.data"
@@ -159,6 +162,7 @@
                                             <mat-label>Ciudad / municipio del negocio</mat-label>
                                             <mat-select (selectionChange)="seleccionCiudad($event)"
                                                 [value]="'seleccione'"
+                                                [formControlName]="'codigoCiudadNegocio'"
                                             >
                                                 <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                                                 <mat-option *ngFor="let ciudad of ciudades.data"
@@ -173,6 +177,7 @@
                                             <mat-label>Barrio</mat-label>
                                             <mat-select
                                                         [value]="'seleccione'"
+                                                        [formControlName]="'codigoBarrioNegocio'"
                                             >
                                                 <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                                                 <mat-option *ngFor="let barrio of barrios.data"
@@ -184,30 +189,29 @@
                                     </ng-container>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Direccion del negocio</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'direccionNegocio'">
                                     </mat-form-field>
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Teléfono del negocio</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'telefonoNegocio'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'antiguedadNegocio'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>¿Se encuentra registrado en camára de comercio?</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="text" placeholder="" [formControlName]="'camaraComercio'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Nit</mat-label>
-                                        <input matInput type="text" placeholder="">
+                                        <input matInput type="number" placeholder="" [formControlName]="'nitNegocio'">
                                     </mat-form-field>
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
                                     <button mat-raised-button
-                                            class="rounded-2"
                                             color="primary"
                                             type="button"
                                     >
