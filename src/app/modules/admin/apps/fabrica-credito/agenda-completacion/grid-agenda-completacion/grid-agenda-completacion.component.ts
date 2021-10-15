@@ -20,8 +20,9 @@ export class GridAgendaCompletacionComponent implements OnInit {
       this.getAgendaCompletacion();
   }
   public onGetAgenda(data: any): void {
-      this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-      this.router.navigate(['/credit-factory/credit-management']);
+      //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+      const {numeroSolicitud, identificacion} = data;
+      this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
   }
   /**
    * @description: Obtiene el listado de agenda de completacion

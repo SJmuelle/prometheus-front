@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FabricaCreditoService} from "../../../../../../core/services/fabrica-credito.service";
-import {Observable, Subject} from "rxjs";
-import {AgendaCompletacionService} from "../../../../../../core/services/agenda-completacion.service";
-import {takeUntil} from "rxjs/operators";
-import {ActivatedRoute} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
-import {MatSelectChange} from "@angular/material/select";
+import {FabricaCreditoService} from '../../../../../../core/services/fabrica-credito.service';
+import {Observable, Subject} from 'rxjs';
+import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
+import {takeUntil} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {DepartamentosCiudadesService} from '../../../../../../core/services/departamentos-ciudades.service';
+import {MatSelectChange} from '@angular/material/select';
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -27,12 +27,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private departamentosCiudadesService: DepartamentosCiudadesService
 
   ) {
-    const numeroSolicitud: string =  this.route.snapshot.queryParamMap.get('pnum');
-    const identificacion: string =  this.route.snapshot.queryParamMap.get('pnumein');
+    const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+    const identificacion: string =  this.route.snapshot.paramMap.get('id');
     if (!numeroSolicitud) {
         return;
     }else {
-        console.log(numeroSolicitud);
         this.getFabricaCreditoAgenda(numeroSolicitud, identificacion);
     }
   }
@@ -81,7 +80,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   }
   /**
    * @description: Obtiene el listado de departamento
-  */
+   */
   private getDepartamentos(): void {
       this.departamentos$ = this.departamentosCiudadesService.getDepartamentos();
   }

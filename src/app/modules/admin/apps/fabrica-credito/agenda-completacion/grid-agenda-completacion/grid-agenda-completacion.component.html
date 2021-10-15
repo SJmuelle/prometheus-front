@@ -41,11 +41,7 @@
                         <tr class="text-gray-700" >
                             <td class="px-2 text-sm border">
                                 <button mat-icon-button
-                                        [routerLink]="'/credit-factory/credit-management'"
-                                        [queryParams]="{
-                                            pnum: item.numeroSolicitud,
-                                            pnumein: item.identificacion
-                                        }"
+                                       (click)="onGetAgenda(item)"
                                 >
                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                 </button>

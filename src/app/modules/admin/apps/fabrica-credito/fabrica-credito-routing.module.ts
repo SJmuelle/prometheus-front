@@ -13,7 +13,7 @@ const routes: Routes = [
                 loadChildren: () => AgendaCompletacionModule
             },
             {
-                path: 'credit-management',
+                path: 'credit-management/:num/:id',
                 loadChildren: () => GestionFabricaCreditoModule
             }
 
