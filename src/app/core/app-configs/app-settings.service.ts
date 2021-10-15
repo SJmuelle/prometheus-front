@@ -12,6 +12,14 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point agenda de referenciacion
+     */
+    public agendaReferenciacion = {
+        url: {
+            base: EndPoints.uri('agenda-credito/RE')
+        }
+    };
+    /**
      * @description: End-point fabrica de datos
      */
     public fabricaDatos = {
