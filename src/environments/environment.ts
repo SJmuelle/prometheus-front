@@ -9,7 +9,8 @@ export const environment = {
     urlApi2: 'http://192.168.140.241:8010/api-fintra/api/generic/qry',
     urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic',
 
-    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet'
+    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
 };
 
 /*

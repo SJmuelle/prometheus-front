@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 import { FormResponsablesComponent } from './form-responsables/form-responsables.component';
+import { ListUsuarioComponent } from './list-usuario/list-usuario.component';
 
 @Component({
   selector: 'app-responsables-pqrs',
@@ -16,7 +17,11 @@ export class ResponsablesPQRSComponent implements OnInit {
   tamanoTabl: number = 5;
   filtrarTabla: string = '';
   mostrar_form: boolean = true;
-  datos: { responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; titulo: string; };
+  datos:any= {};
+  ocultarForm: boolean = true;
+  tipo: string;
+  responsable: any;
+  escala: any;
   // datos: { responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; };
 
 
@@ -26,6 +31,13 @@ export class ResponsablesPQRSComponent implements OnInit {
 
   ngOnInit(): void {
     this.consulta();
+    this.datos = {
+      responsable: "",
+      escalado: "",
+      estado: "",
+      cerrarPqrs: '',
+      titulo: 'N'
+    }
   }
   consulta() {
     Swal.fire({ title: 'Cargando', html: 'Buscando información responsables de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -46,21 +58,22 @@ export class ResponsablesPQRSComponent implements OnInit {
         responsable: "",
         escalado: "",
         estado: "",
-        cerrarPqrs: false,
-        titulo:'N'
+        cerrarPqrs: '',
+        titulo: 'N'
       }
     } else {
       this.datos = {
-        responsable: "1043843706",
-        escalado: "22586672",
-        estado: "",
-        cerrarPqrs: false,
-        titulo:'A'
+        id:datos.id,
+        responsable: datos.responsable,
+        escalado: datos.escalado,
+        estado:datos.estado=='Activo'?'A':"I",
+        cerrarPqrs: '',
+        titulo: 'A'
       }
     }
 
     const dialogRef = this.dialog.open(FormResponsablesComponent, {
-      // width: '1080px',
+        width: '60%', 
       // maxHeight: '550px',
       data: this.datos,
     });
@@ -71,5 +84,77 @@ export class ResponsablesPQRSComponent implements OnInit {
       this.consulta();
     });
 
+  }
+  crearNuevo() {
+    this.ocultarForm = false;
+    this.datos = {
+      responsable: "",
+      escalado: "",
+      estado: "",
+      cerrarPqrs: 'S',
+      titulo: 'N'
+    }
+  }
+
+  buscarUsuarios(tipo) {
+    this.tipo=tipo;
+    const dialogRef = this.dialog.open(ListUsuarioComponent, {
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+      if(tipo=='R'){
+        this.responsable=result;
+        this.datos.responsable=` ${result.cedula}  (${result.usuario}) `
+      }else{
+        this.escala=result;
+        this.datos.escalado= ` ${result.cedula}  (${result.usuario}) `
+      }
+
+    });
+  }
+  guardar() {
+    let url, data;
+    url = "/agregar-pqrs-responsable";
+    data = {
+      "responsable":  this.responsable.cedula,
+      "escalado":  this.escala.cedula,
+      "estado": "",
+      "cerrarPqrs":  false
+    }
+    Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._pqrService
+      .Create(url, data )
+      .subscribe((response: any) => {
+        Swal.close();
+        if (response) {
+          if (response.status == 200) {
+            Swal.fire(
+              '¡Información!',
+              `Se guardo el registro con exito`,
+              'success'
+            );
+            setTimeout(() => {
+              this.ocultarForm = true;
+              this.consulta();
+            }, 2000);
+           
+          } else {
+            Swal.fire(
+              '¡Información!',
+              `Hubo un error en los datos enviados, favor evaluar`,
+              'success'
+            );
+          }
+        } else {
+          Swal.fire(
+            '¡Advertencia!',
+            'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+            'error'
+          );
+        }
+
+      });
   }
 }

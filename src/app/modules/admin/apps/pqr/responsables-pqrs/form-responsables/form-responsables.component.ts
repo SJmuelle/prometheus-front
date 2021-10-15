@@ -9,7 +9,7 @@ import { PqrService } from '../../pqr.service';
   styleUrls: ['./form-responsables.component.scss']
 })
 export class FormResponsablesComponent implements OnInit {
-  datos: { responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; titulo: string; };
+  datos: { id: number, responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; titulo: string; };
 
   constructor(
     public matDialogRef: MatDialogRef<FormResponsablesComponent>,
@@ -19,27 +19,28 @@ export class FormResponsablesComponent implements OnInit {
     this.datos = this.data
   }
   guardar() {
-    let data,url;
+    let data, url;
     if (this.datos.titulo == 'N') {
       //post
-      url="/agregar-pqrs-tipo";
+      url = "/agregar-pqrs-tipo";
       data = {
 
       }
 
     } else {
-      url="/actualizar-pqrs-tipo";
+      url = "/actualizar-pqrs-responsable";
       data = {
-
+        id: this.datos.id,
+        estado: this.datos.estado == 'A' ? '' : 'A'
       }
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._pqrService
-      .Create(url,data)
+      .Create(url, data)
       .subscribe((response: any) => {
         Swal.close();
         if (response) {
-          if(response.status==200){
+          if (response.status == 200) {
             Swal.fire(
               '¡Información!',
               `Se guardo el registro con exito`,
@@ -48,21 +49,21 @@ export class FormResponsablesComponent implements OnInit {
             setTimeout(() => {
               this.matDialogRef.close();
             }, 1000);
-          }else{
+          } else {
             Swal.fire(
               '¡Información!',
               `Hubo un error en los datos enviados, favor evaluar`,
               'success'
             );
           }
-        }else{
+        } else {
           Swal.fire(
             '¡Advertencia!',
             'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
             'error'
           );
         }
-       
+
       });
   }
 

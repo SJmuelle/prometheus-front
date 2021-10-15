@@ -11,7 +11,7 @@ import { PqrService } from '../../pqr.service';
 export class FormCausalesComponent implements OnInit {
 
   listadoTipo: any;
-  datos: { idTipo: any; estado: string; descripcion: any; titulo: string; };
+  datos:any= {};
   constructor(
     public matDialogRef: MatDialogRef<FormCausalesComponent>,
     @Inject(MAT_DIALOG_DATA) public data, private _pqrService: PqrService) { }
@@ -45,12 +45,12 @@ export class FormCausalesComponent implements OnInit {
       }
 
     } else {
-      url="/actualizar-pqrs-tipo";
+      url="/actualizar-pqrs-causal";
       data = {
-        // "id": this.datos.id,
-        // "estado":this.datos.estado=='A'?'':'A',
-        // "legal": this.datos.legal=='S'?true:false,
-        // "diasSolucion":this.datos.tiempo,
+        id: parseInt(this.datos.id),
+       
+        estado: this.datos.estado=='A'?'':'A',
+        
       }
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })

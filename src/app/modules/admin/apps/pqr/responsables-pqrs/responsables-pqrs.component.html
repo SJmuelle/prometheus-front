@@ -1,8 +1,8 @@
-<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4">
+<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4"
+    [hidden]="!ocultarForm">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2 text-gray-900">Responsables de PQRS</h2>
-            <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
         </div>
     </div>
     <div class="row">
@@ -11,10 +11,9 @@
 
                 <span class="leading-none col-lg-4 col-sm-12">
                     <div class="leading-tight titulo_tabs">
-                        <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')">
-                            <!-- <mat-icon svgIcon="heroicons_outline:plus-sm" ></mat-icon> -->
-                            <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon>
-                            Crear Nuevo
+                        <button mat-button class="mt-7 color_fintra text-white" (click)="crearNuevo()">
+                          <!-- ç  <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon> -->
+                            Crear nuevo
                         </button>
                     </div>
                 </span>
@@ -36,35 +35,35 @@
                     <div class="row">
                         <div class="col-lg-12 ">
                             <table class="w-full shadow p-1">
-                                <!-- 
-                                esEmail: "smuelle@fintra.co"
-                                escalado: "smuelle"
-                                estado: "Activo"
-                                id: 2
-                                reEmail: "contacto.grupovision@gmail.com"
-                                responsable: "gllanos" -->
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
-                                        class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                        class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                        <th class="px-4 py-3 text-center">Editar</th>
                                         <th class="px-4 py-3 text-center">Responsable</th>
                                         <th class="px-4 py-3 text-center">Contacto del responsable</th>
                                         <th class="px-4 py-3 text-center">Ecalado</th>
-                                        <th class="px-4 py-3 text-center">Contacto del Escalado</th>
+                                        <th class="px-4 py-3 text-center">Contacto del escalado</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
-                                        <th class="px-4 py-3 text-center">Editar</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
                                     <tr class="text-gray-700"
                                         *ngFor="let item of listado  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
-                                        <td class="px-2 text-sm border py-1 text-center">{{ item.escalado}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.reEmail}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.escalado}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.esEmail}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
                                         <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')">
                                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                                         </td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.responsable}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.reEmail}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.escalado}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.esEmail}}</td>
+                                        <td class="px-2 text-sm border text-center w-0">
+                                            <div 
+                                            [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                {{ item.estado}} </span>
+                                        </div>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -82,6 +81,50 @@
                         </div>
                     </fuse-card> -->
                 </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="bg-white  m-4 px-3 py-2 rounded-lg shadow justify-end w-100 h-50" [hidden]="ocultarForm">
+    <div class="row justify-between">
+        <div class="text-left col col-lg-12">
+            <h2 class="mb-2 text-gray-900">Crear responsables de PQRS</h2>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col col-lg-12 ">
+            <div class="row justify-start ">
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100" (click)="buscarUsuarios('R')">
+                        <mat-label>Responsable</mat-label>
+                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.responsable"
+                            disabled>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100" (click)="buscarUsuarios('C')">
+                        <mat-label>Escalado</mat-label>
+                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.escalado"
+                            disabled>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+
+
+
+            </div>
+            <div class="row justify-end">
+                <div class="col-sm-12 col-lg-12 text-end">
+                    <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
+                    <button mat-button class="bg-gray-400 text-white mr-2" (click)="ocultarForm=true"> Cancelar
+                    </button>
+                
+                </div>
+
             </div>
         </div>
 

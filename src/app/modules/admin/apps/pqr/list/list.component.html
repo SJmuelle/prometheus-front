@@ -1,7 +1,7 @@
 <div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4">
     <div class="row justify-between">
         <div class="text-left col l12">
-            <h2 class="mb-2 text-gray-900">Listados de PQRS</h2>
+            <h2 class="mb-2 text-gray-900">Gestión de PQRS</h2>
             <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
         </div>
     </div>
@@ -34,32 +34,33 @@
                             <table class="w-full shadow p-1">
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
-                                        class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                        class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                        <th class="px-4 py-3 text-center"></th>
                                         <th class="px-4 py-3 text-center">Nro</th>
                                         <th class="px-4 py-3 text-center">Identificación</th>
                                         <th class="px-4 py-3 text-center">Nombre completo</th>
-                                        <th class="px-4 py-3 text-center">Linea de negocio</th>
-                                        <th class="px-4 py-3 text-center">Tipo PQRS</th>
-                                        <th class="px-4 py-3 text-center">Causal PQRS</th>
+                                        <th class="px-4 py-3 text-center">Línea de negocio</th>
+                                        <th class="px-4 py-3 text-center">Tipo</th>
+                                        <th class="px-4 py-3 text-center">Causal</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
-                                        <th class="px-4 py-3 text-center">Detalle del PQRS</th>
-                                        <th class="px-4 py-3 text-center">Nro Rechazos</th>
-                                        <th class="px-4 py-3 text-center">Fecha del Ultimo Rechazo</th>
+                                        <th class="px-4 py-3 text-center">Nro rechazos</th>
+                                        <th class="px-4 py-3 text-center">Último rechazo</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
                                     <tr class="text-gray-700"
                                         *ngFor="let item of listado | filter:filtrarTabla  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
-                                        <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.identificacion}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.nombreCliente}} {{ item.apellidosCliente}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.lineaNegocio}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.tipoPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.causalPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
                                         <td class="px-2 text-sm border text-center" (click)="gestion(item.id)">
                                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                                         </td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.identificacion}}</td>
+                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente}} {{ item.apellidosCliente}}</td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.tipoPqrs}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.causalPqrs}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
+                                        
                                         <td class="px-2 text-sm border text-center">{{ item.numeroRechazados}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.fechaRechazo}}</td>
                                        

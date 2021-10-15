@@ -56,7 +56,7 @@ export class TipopqrComponent implements OnInit {
         tipo:datos.tipoPqrs,
         tiempo:datos.diasSolucion,
         legal:datos.legal=='SI'?'S':"N",
-        estado:datos.estado=='ACTIVO'?'A':"I",
+        estado:datos.estado=='Activo'?'A':"I",
         titulo:titulo
       }
     }
@@ -70,9 +70,9 @@ export class TipopqrComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
-      setTimeout(() => {
+      
         this.consulta();
-      }, 1000);
+ 
       
     });
    

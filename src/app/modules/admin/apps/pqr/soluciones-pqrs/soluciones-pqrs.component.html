@@ -1,4 +1,3 @@
-
 <div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4">
     <div class="row justify-between">
         <div class="text-left col l12">
@@ -6,16 +5,14 @@
             <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
         </div>
     </div>
-    <div class="row" >
+    <div class="row"> 
         <div class="bg-white col-lg-12 col-sm-12">
             <div class="row items-center">
 
-                <span class="leading-none col-lg-4 col-sm-12"  >
+                <span class="leading-none col-lg-4 col-sm-12">
                     <div class="leading-tight titulo_tabs">
-                        <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')"  >
-                            <!-- <mat-icon svgIcon="heroicons_outline:plus-sm" ></mat-icon> -->
-                            <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon>
-                            Crear Nuevo
+                        <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')">
+                            Crear nuevo
                         </button>
                     </div>
                 </span>
@@ -23,9 +20,8 @@
                     <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
                         type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
                         placeholder="Filtrar...">
-                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100"
-                        (change)="page=1" [(ngModel)]="tamanoTabl"
-                        style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100" (change)="page=1"
+                        [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                         <option value="5"> 5</option>
                         <option value="10"> 10</option>
                         <option value="20"> 20</option>
@@ -47,21 +43,33 @@ tiempoSolucion: 15 -->
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
                                         class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
+                                        <th class="px-4 py-3 text-center">Editar</th>
                                         <th class="px-4 py-3 text-center">Causal</th>
                                         <th class="px-4 py-3 text-center">Responsable</th>
                                         <th class="px-4 py-3 text-center">Descripción Solucion</th>
+                                        <th class="px-4 py-3 text-center">Tiempo</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
-                                        <th class="px-4 py-3 text-center">Editar</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
                                     <tr class="text-gray-700"
                                         *ngFor="let item of listado  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')">
+                                            <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                        </td>
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.causal}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.responsable}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.responsableNombre}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
-                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
+                                        <td class="px-2 text-sm border text-center">{{ item.tiempoSolucion}}</td>
+                                        <td class="px-2 text-sm border text-center w-0">
+                                            <div 
+                                            [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                {{ item.estado}} </span>
+                                        </div>
+
+                                     
                                     </tr>
                                 </tbody>
                             </table>

@@ -1,1 +1,485 @@
-<p>gestion-pqrs works!</p>
+<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100"  *ngIf="!no_mostrar==true">
+    <div class="row justify-between">
+        <div class="text-left col l12">
+            <h2 class="mb-2  text-gray-900">Gestión de PQRS</h2>
+            <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
+        </div>
+    </div>
+
+    <div class="row pl-3" *ngIf="datos!={}">
+        <div class="col-sm-12 col-lg-3 pb-3">
+            <fuse-card class="card p-3 shadow row mr-3 mb-4 ">
+                <div
+                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                    Datos del cliente
+                </div>
+                <hr class="w-full border-t col-lg-12 col-sm-12">
+
+
+                <div class="col-lg-12 col-sm-12">
+                    <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                        <div class="col-lg-1 m-0 p-0 col-sm-2">
+                            <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                        </div>
+                        <div class="font-titulo col-lg-5 col-sm-10  m-0 p-0">
+                            General
+                        </div>
+                        <div class="col-lg-6 m-0 p-0 col-sm-12">
+                            <hr style="    background: #bccf13 !important;">
+                        </div>
+
+                        <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                            {{datos.nombres}} {{datos.apellidos}} <br>
+                            Identificación: {{datos.identificacion}}
+                        </span>
+                    </div>
+                    <div class="row items-center mt-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                        <div class="col-lg-1 m-0 p-0 col-sm-2">
+                            <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                        </div>
+                        <div class="font-titulo col-lg-5 col-sm-10  m-0 p-0">
+                            Ubicación
+                        </div>
+                        <div class="col-lg-6 m-0 p-0 col-sm-12">
+                            <hr style="    background: #bccf13 !important;">
+                        </div>
+
+                        <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                            {{datos.direccion}} <br>
+                            {{datos.barrio}}{{datos.barrio==""?'':','}} {{datos.ciudad}} -
+                            {{datos.departamento}}
+                        </span>
+                    </div>
+                    <div class="row items-center mt-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                        <div class="col-lg-1 col-sm-2 m-0 p-0">
+                            <mat-icon svgIcon="iconsmind:phone"></mat-icon>
+                        </div>
+                        <div class="font-titulo col-lg-5 col-sm-10 m-0 p-0">
+                            Contacto
+                        </div>
+                        <div class="col-lg-6 m-0 p-0 col-sm-12">
+                            <hr style="    background: #bccf13 !important;">
+                        </div>
+
+                        <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                            {{datos.celular}} {{datos.telefono==0?'':'-'}}
+                            {{datos.telefono==0?'':datos.telefono}} <br>
+                            {{datos.emailCliente}}
+                        </span>
+                    </div>
+                </div>
+            </fuse-card>
+            <fuse-card class="card p-3 shadow row mr-3 ">
+                <div
+                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                    Adjuntos de PQRS
+                </div>
+
+                <hr class="w-full border-t col-lg-12 col-sm-12">
+
+                <div class="col-lg-12 col-sm-12">
+                    <div class="row items-center mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"   *ngFor="let item of listarAdjuntos ">
+                        
+                            <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(item.idComentario)">
+                                <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
+                            </div>
+                            <div class="font-titulo col-lg-10 col-sm-10 m-0 p-0">
+                                {{item.descripcion}}
+                            </div>
+                       
+                    </div>
+                </div>
+
+            </fuse-card>
+        </div>
+        <div class="col-sm-12 col-lg-9">
+            <fuse-card class="card shadow  row mr-3 mb-3">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row border-card">
+                            <div class="col-lg-12  border-card" *ngIf="datos!={}">
+                                <div class="row border-card pt-2 pb-2">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div
+                                            class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                                            Datos de ingreso
+                                        </div>
+                                    </div>
+                                    <hr class="ml-3 w-full border-t col-lg-12 col-sm-12">
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Campaña
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.campanha}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Origen
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.origenPqrs}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Número PQRS
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.numeroPqrs}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Fecha creación
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.fechaCreacion}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="text-sm font-medium text-secondary font-bold">Usuario creación
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.usuarioCreacion}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Tipo Cliente
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.tipoCliente}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Línea negocio
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.lineaNegocio}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Código negocio
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.codigoNegocio}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Sucursal
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.sucursal}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Entidad
+                                        </div>
+                                        <div class="" style="font-size: 16px;">{{datos.entidad}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fuse-card>
+            <fuse-card class="card shadow  row mr-3 mb-3">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row border-card">
+                            <div class="col-lg-12  border-card" *ngIf="datos!={}">
+                                <div class="row border-card pt-2 pb-2">
+                                    <div class="col-sm-12 col-lg-12">
+                                        <div
+                                            class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                                            Detalle del PQRS
+                                        </div>
+                                    </div>
+                                    <hr class="ml-3 w-full border-t col-lg-12 col-sm-12">
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Tipo
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.tipoPqrs}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Causal
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.causalPqrs}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="text-sm font-medium text-secondary font-bold">Solución
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.solucionPqrs}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="text-sm font-medium text-secondary font-bold">Responsable
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.responsable}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Área
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.Area}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Estado
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.estado}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm font-medium text-secondary font-bold">Fecha para solución
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.fechaParaSolucion}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="text-sm font-medium text-secondary font-bold">Fecha de solución
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.fechaSolucion}}
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="text-sm font-medium text-secondary font-bold">Fecha de cierre
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.fechaCierre}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fuse-card>
+            <div class="row pl-3" *ngIf="datos!={}">
+
+                <div class="col-sm-12 col-lg-12 pl-0">
+                    <div>
+                        <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
+                            <mat-tab label="Solución">
+                              
+                                <div class="row">
+                                    <app-solucion  class="tamano20"
+                                    ></app-solucion>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Historial de
+                            seguimiento">
+                                <div class="row items-center">
+                                    <span class="leading-none col-lg-4 col-sm-12">
+                                        <div class="leading-tight titulo_tabs">Historial de
+                                            seguimiento 
+                                        </div>
+                                    </span>
+                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                        <input class="border rounded p-2 bg-gray-100"
+                                            style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                            name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaHistorial"
+                                            placeholder="Filtrar...">
+                                        <select name="tamanoTablaHistorial" id="tamanoTablaHistorial"
+                                            class="border rounded  bg-gray-100" (change)="pageHistorial=1"
+                                            [(ngModel)]="tamanoTablaHistorial"
+                                            style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                            <option value="5"> 5</option>
+                                            <option value="10"> 10</option>
+                                            <option value="20"> 20</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg-12" *ngIf="listadoHistorial.length!=0">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table class="w-full shadow">
+                                                    <thead>
+                                                        <tr
+                                                            class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                            <th class="px-4 py-3">Fecha y hora</th>
+                                                            <th class="px-4 py-3">Usuario</th>
+                                                            <th class="px-4 py-3">Descripción de la solución</th>
+                                                            <th class="px-4 py-3">Estado</th>
+                                                            <th class="px-4 py-3 text-center">Evidencias</th>
+                                                            <th class="px-4 py-3 text-center">Gestion</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="bg-white">
+                                                        <tr class="text-gray-700"
+                                                            *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial  | paginate: { itemsPerPage: tamanoTablaHistorial, currentPage: pageHistorial }">
+                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.usuario}}
+                                                            </td>
+                                                            <td class="px-4 py-1 text-sm border ">
+                                                                <div [innerHTML]=" item.detalle"></div>
+                                                            </td>
+                                                            <td class="px-4 py-1 text-sm border ">{{ item.estado}}</td>
+
+                                                            <td class="px-2 text-sm border text-center" (click)="busacar_url('data:application/pdf;base64,'+item.base64)"  >
+                                                                <mat-icon svgIcon="heroicons_outline:folder-open" [hidden]="item.evidencia==''"></mat-icon>
+                                                            </td>
+                                                            <td class="px-2 text-sm border text-center" [hidden]="aprobarComentario==false"  >
+                                                                <mat-icon svgIcon="heroicons_outline:check" [hidden]="item.estado!='En espera'"  (click)="cambiarEstado(item, true)"></mat-icon>
+                                                                <mat-icon svgIcon="heroicons_outline:x" [hidden]="item.estado!='En espera'" (click)="cambiarEstado(item,false)"></mat-icon>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 text-end">
+                                                <pagination-controls (pageChange)="pageHistorial = $event"
+                                                    previousLabel="Anterior" nextLabel="Siguiente">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                            *ngIf="listadoHistorial.length==0">
+                                            <div class="w-3/12">
+                                                <img src="assets/images/animaciones/nodata.gif">
+                                            </div>
+                                        </fuse-card>
+                                    </div>
+                                </div>
+                                <div class="m-5">
+
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Historial de asignaciones">
+                                <div class="row items-center">
+                                    <span class="leading-none col-lg-4 col-sm-12">
+                                        <div class="leading-tight titulo_tabs">Historial de asignaciones
+                                        </div>
+                                    </span>
+                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                        <input class="border rounded p-2 bg-gray-100"
+                                            style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                            name="filtrarTablaAsignaciones" [(ngModel)]="filtrarTablaAsignaciones"
+                                            placeholder="Filtrar...">
+                                        <select name="tamanoTablaAsignaciones" id="tamanoTablaAsignaciones"
+                                            class="border rounded  bg-gray-100" (change)="pageAsignaciones=1"
+                                            [(ngModel)]="tamanoTablaAsignaciones"
+                                            style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                            <option value="5"> 5</option>
+                                            <option value="10"> 10</option>
+                                            <option value="20"> 20</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg-12" *ngIf="listadoAsignaciones.length!=0">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table class="w-full shadow">
+                                                    <thead>
+                                                        <tr
+                                                            class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                            <th class="px-4 py-3">Fecha y Hora</th>
+                                                            <th class="px-4 py-3">Responsable</th>
+                                                            <th class="px-4 py-3">Escalado</th>
+                                                            <th class="px-4 py-3">Estado</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="bg-white">
+                                                        <tr class="text-gray-700"
+                                                            *ngFor="let item of listadoAsignaciones | filter: filtrarTablaAsignaciones  | paginate: { itemsPerPage: tamanoTablaAsignaciones, currentPage: pageAsignaciones }">
+                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.responsable}}
+                                                            </td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.escalado}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.estado}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 text-end">
+                                                <pagination-controls (pageChange)="pageAsignaciones = $event"
+                                                    previousLabel="Anterior" nextLabel="Siguiente">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                            *ngIf="listadoAsignaciones.length==0">
+                                            <div class="w-3/12">
+                                                <img src="assets/images/animaciones/nodata.gif">
+                                            </div>
+                                        </fuse-card>
+                                    </div>
+                                </div>
+                                <div class="m-5">
+
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Alertas y Notificaciones">
+                                <div class="row items-center">
+                                    <span class="leading-none col-lg-4 col-sm-12">
+                                        <div class="leading-tight titulo_tabs">Alertas y Notificaciones
+                                        </div>
+                                    </span>
+                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                        <input class="border rounded p-2 bg-gray-100"
+                                            style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                            name="filtrarTablaAlertas" [(ngModel)]="filtrarTablaAlertas"
+                                            placeholder="Filtrar...">
+                                        <select name="tamanoTablaAlertas" id="tamanoTablaAlertas"
+                                            class="border rounded  bg-gray-100" (change)="pageAlerta=1"
+                                            [(ngModel)]="tamanoTablaAlertas"
+                                            style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                            <option value="5"> 5</option>
+                                            <option value="10"> 10</option>
+                                            <option value="20"> 20</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg-12" *ngIf="listadoNotificaciones.length!=0">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table class="w-full shadow">
+                                                    <thead>
+                                                        <tr
+                                                            class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                            <th class="px-4 py-3">Fecha y Hora</th>
+                                                            <th class="px-4 py-3">Correo Electronico</th>
+                                                            <th class="px-4 py-3">Detalle</th>
+                                                            <th class="px-4 py-3">Tipo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="bg-white">
+                                                        <tr class="text-gray-700"
+                                                            *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
+                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.email}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion}}
+                                                            </td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.tipo}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12 text-end">
+                                                <pagination-controls (pageChange)="pageAlerta = $event"
+                                                    previousLabel="Anterior" nextLabel="Siguiente">
+                                                </pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                            *ngIf="listadoNotificaciones.length==0">
+                                            <div class="w-3/12">
+                                                <img src="assets/images/animaciones/nodata.gif">
+                                            </div>
+                                        </fuse-card>
+                                    </div>
+                                </div>
+                                <div class="m-5">
+
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

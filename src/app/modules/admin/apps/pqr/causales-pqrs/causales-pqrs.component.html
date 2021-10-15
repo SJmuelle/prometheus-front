@@ -13,9 +13,7 @@
                 <span class="leading-none col-lg-4 col-sm-12"  >
                     <div class="leading-tight titulo_tabs">
                         <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')"  >
-                            <!-- <mat-icon svgIcon="heroicons_outline:plus-sm" ></mat-icon> -->
-                            <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon>
-                            Crear Nuevo
+                            Crear nuevo
                         </button>
                     </div>
                 </span>
@@ -41,19 +39,26 @@
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
                                         class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
-                                        <th class="px-4 py-3 text-center">Tipos</th>
-                                        <th class="px-4 py-3 text-center">Cuasal</th>
-                                        <th class="px-4 py-3 text-center">Estado</th>
                                         <th class="px-4 py-3 text-center">Editar</th>
+                                        <th class="px-4 py-3 text-center">Tipos</th>
+                                        <th class="px-4 py-3 text-center">Causal</th>
+                                        <th class="px-4 py-3 text-center">Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
-                                    <tr class="text-gray-700"
+                                    <tr class="text-gray-700" 
                                         *ngFor="let item of listado | filter:filtrarTabla  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
+
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.causalPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
-                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
+                                        <td class="px-2 text-sm border text-center w-0">
+                                            <div 
+                                            [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
+                                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                {{ item.estado}} </span>
+                                        </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

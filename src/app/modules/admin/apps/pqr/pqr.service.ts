@@ -47,7 +47,12 @@ export class PqrService {
       return result; 
     }));
   }
-
+  postFile(url: string, data: any): Observable<any> {
+    return this._utility.postFile(url, data)
+    .pipe(map((result: any) => { 
+      return result; 
+    }));
+  }
 
   getListados(url: string){
     return this._utility.getQuery(url, true)

@@ -16,7 +16,7 @@ export class CausalesPQRSComponent implements OnInit {
   tamanoTabl:number=5;
   filtrarTabla:string='';
   mostrar_form:boolean=true;
-  datos: { idTipo: any; estado: string; descripcion: any; titulo: string; };
+  datos: any={};
 
   constructor(
     public dialog: MatDialog,
@@ -26,7 +26,7 @@ export class CausalesPQRSComponent implements OnInit {
     this.consulta();
   }
   consulta(){
-    Swal.fire({ title: 'Cargando', html: 'Buscando informacion Causales de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando informacion causales de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
           .setCausales()
           .subscribe((response: any) => {
@@ -49,9 +49,10 @@ export class CausalesPQRSComponent implements OnInit {
     }else{
       this.datos={
         idTipo: datos.tipoPqrs,
-        estado: datos.estado=='ACTIVO'?'A':'I',
+        estado: datos.estado=='Activo'?'A':'I',
         descripcion: datos.causalPqrs,
-        titulo:"A"
+        titulo:"A",
+        id:datos.id
       }
     }
 
@@ -64,10 +65,9 @@ export class CausalesPQRSComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
       console.log(result);
-      setTimeout(() => {
+     
         this.consulta();
-      }, 1000);
-      
+
     });
    
   }

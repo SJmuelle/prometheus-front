@@ -17,6 +17,7 @@ export class UtilityService {
   server:string = environment.urlApi;
   server2:string = environment.urlApi2;
   server3:string = environment.urlApi3;
+  adjunto:string = environment.adjunto;
   // homelogin:string = environment.login;
   notoken:string = 'notoken';
   constructor(private _httpClient: HttpClient) { }
@@ -115,12 +116,41 @@ export class UtilityService {
     return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
   }
 
-  postFile(query:string, data:any){
-    const URL = this.server + query;
-    let optiones = {
-      'Authentication': `${this.readToken()}`,
-    };
+  // postFile(query:string, data:any){
+  //   const URL = this.server + query;
+  //   let optiones = {
+  //     'Authentication': `${this.readToken()}`,
+  //   };
+  //   const headers = new HttpHeaders(optiones);
+  //   return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
+  // }
+  postFile(query:string, data:any, typeHeaders:string='data'){
+    const URL = this.adjunto + query;
+    let optiones:any;
+    if(typeHeaders == 'data'){
+      optiones = {
+        'Authentication': `${this.readToken()}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8'
+      };
+    }else {
+      if(typeHeaders == this.notoken){
+      
+        optiones = {
+          'Authentication': ``,
+          "Accept": "application/json, text/plain, */*",
+          'Content-Type': 'application/json; charset=utf-8'
+        }
+    }else{
+        optiones = {
+          'Authentication': `${this.readToken()}`,
+          "Accept": "application/json",
+        }
+      }
+    }
+
     const headers = new HttpHeaders(optiones);
+    headers.delete('Content-Type');
     return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
   }
 

@@ -30,6 +30,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { GestionPQRSComponent } from './gestion-pqrs/gestion-pqrs.component';
 import { QuillModule } from 'ngx-quill';
+import { SolucionComponent } from './gestion-pqrs/solucion/solucion.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { ListUsuarioComponent } from './responsables-pqrs/list-usuario/list-usuario.component';
+import { InsertarCausalLegalComponent } from './creacion-pqrs/insertar-causal-legal/insertar-causal-legal.component';
+import { InsertarAdjuntosComponent } from './creacion-pqrs/insertar-adjuntos/insertar-adjuntos.component';
+
 const routes: Routes = [
   {
     path: 'creacion/:cliente',
@@ -84,6 +90,10 @@ const routes: Routes = [
     FormSolucionesComponent,
     CreacionPQRSComponent,
     GestionPQRSComponent,
+    SolucionComponent,
+    ListUsuarioComponent,
+    InsertarCausalLegalComponent,
+    InsertarAdjuntosComponent,
     // CreacionComponent
   ],
   imports: [
@@ -104,6 +114,7 @@ const routes: Routes = [
     MatRadioModule,
     MatSelectModule,
     MatStepperModule,
+    MatExpansionModule
 
   ]
 })
