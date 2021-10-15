@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {FabricaCreditoService} from '../../../../../../core/services/fabrica-credito.service';
 import {Observable, Subject} from 'rxjs';
 import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
@@ -11,7 +11,7 @@ import {MatSelectChange} from '@angular/material/select';
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
   templateUrl: './form-gestion-fabrica-credito.component.html',
-  styleUrls: ['./form-gestion-fabrica-credito.component.scss']
+  styleUrls: ['./form-gestion-fabrica-credito.component.scss'],
 })
 export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public unSubscribe$: Subject<any> = new Subject<any>();
@@ -19,6 +19,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public ciudades$: Observable<any>;
   public barrios$: Observable<any>;
   public form: FormGroup;
+  public ciudades: any = [];
+  public departamentos: any = [];
+  public barrios: any = [];
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -40,21 +43,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.createFormulario();
       this.getDepartamentos();
 
+
   }
-
- /* private getFabricaCreditoAgenda(): void {
-      /!*const {selected, show} = this.agendaCompletacionService.seleccionAgenda.getValue();
-      if (show) {
-        this.fabricaCreditoService.getDatosFabricaAgenda(selected).subscribe(console.log);
-      }*!/
-      this.agendaCompletacionService.seleccionAgenda.pipe(takeUntil(this.unSubscribe$))
-          .subscribe(({selected, show}) => {
-          if (show) {
-            console.log(selected);
-          }
-      });
-  }*/
-
+  /**
+   * @description: Obtiene la data para cargar al formulario
+   */
   private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
       const datosSolicitud: any  = {
           numeroSolicitud: numeroSolicitud,
@@ -64,6 +57,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           .subscribe(({data}) => {
           console.log(data);
           this.form.patchValue(data);
+          if (data.codigoDepartamentoNegocio) {
+            this.getCiudades(data.codigoDepartamentoNegocio);
+          }
+          if (data.codigoCiudadNegocio) {
+            this.getBarrios(data.codigoCiudadNegocio);
+          }
       });
   }
   public seleccionDepartamento(event: MatSelectChange): void {
