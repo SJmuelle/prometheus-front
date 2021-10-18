@@ -1,7 +1,7 @@
-<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100"  *ngIf="!no_mostrar==true">
-    <div class="row justify-between">
+<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="!no_mostrar==true">
+    <div class="row justify-between" *ngIf="datos!={}">
         <div class="text-left col l12">
-            <h2 class="mb-2  text-gray-900">Gestión de PQRS</h2>
+            <h2 class="mb-2  text-gray-900">Gestión de PQRS ({{pqrid}})</h2>
             <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
         </div>
     </div>
@@ -21,12 +21,10 @@
                         <div class="col-lg-1 m-0 p-0 col-sm-2">
                             <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
                         </div>
-                        <div class="font-titulo col-lg-5 col-sm-10  m-0 p-0">
+                        <div class="font-titulo col-lg-11 col-sm-10  m-0 p-0">
                             General
                         </div>
-                        <div class="col-lg-6 m-0 p-0 col-sm-12">
-                            <hr style="    background: #bccf13 !important;">
-                        </div>
+
 
                         <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                             {{datos.nombres}} {{datos.apellidos}} <br>
@@ -37,12 +35,10 @@
                         <div class="col-lg-1 m-0 p-0 col-sm-2">
                             <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
                         </div>
-                        <div class="font-titulo col-lg-5 col-sm-10  m-0 p-0">
+                        <div class="font-titulo col-lg-11 col-sm-10  m-0 p-0">
                             Ubicación
                         </div>
-                        <div class="col-lg-6 m-0 p-0 col-sm-12">
-                            <hr style="    background: #bccf13 !important;">
-                        </div>
+
 
                         <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                             {{datos.direccion}} <br>
@@ -54,12 +50,10 @@
                         <div class="col-lg-1 col-sm-2 m-0 p-0">
                             <mat-icon svgIcon="iconsmind:phone"></mat-icon>
                         </div>
-                        <div class="font-titulo col-lg-5 col-sm-10 m-0 p-0">
+                        <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
                             Contacto
                         </div>
-                        <div class="col-lg-6 m-0 p-0 col-sm-12">
-                            <hr style="    background: #bccf13 !important;">
-                        </div>
+
 
                         <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                             {{datos.celular}} {{datos.telefono==0?'':'-'}}
@@ -72,21 +66,22 @@
             <fuse-card class="card p-3 shadow row mr-3 ">
                 <div
                     class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
-                    Adjuntos de PQRS
+                    Adjuntos
                 </div>
 
                 <hr class="w-full border-t col-lg-12 col-sm-12">
 
                 <div class="col-lg-12 col-sm-12">
-                    <div class="row items-center mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"   *ngFor="let item of listarAdjuntos ">
-                        
-                            <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(item.idComentario)">
-                                <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
-                            </div>
-                            <div class="font-titulo col-lg-10 col-sm-10 m-0 p-0">
-                                {{item.descripcion}}
-                            </div>
-                       
+                    <div class="row items-center mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"
+                        *ngFor="let item of listarAdjuntos ">
+
+                        <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(item.idComentario)">
+                            <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
+                        </div>
+                        <div class="font-titulo col-lg-10 col-sm-10 m-0 p-0">
+                            {{item.descripcion}}
+                        </div>
+
                     </div>
                 </div>
 
@@ -233,7 +228,7 @@
                                         <div class="capitalize" style="font-size: 16px;">{{datos.fechaSolucion}}
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-sm-6 col-lg-3">
                                         <div class="text-sm font-medium text-secondary font-bold">Fecha de cierre
                                         </div>
@@ -248,37 +243,49 @@
             </fuse-card>
             <div class="row pl-3" *ngIf="datos!={}">
 
-                <div class="col-sm-12 col-lg-12 pl-0">
+                <div class="col-sm-12 col-lg-12 pl-0" style="margin-bottom: 6em;">
                     <div>
                         <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
-                            <mat-tab label="Solución">
-                              
+                            <mat-tab label="Descripción">
+
                                 <div class="row">
-                                    <app-solucion  class="tamano20"
-                                    ></app-solucion>
+
+                                    <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted"
+                                        style="    overflow: auto;height: 16em;">
+                                        <p><strong>Detalle de la PQRS</strong></p><br>
+                                        <div [innerHTML]=" datos.detalle"></div>
+                                    </div>
+                                </div>
+
+                            </mat-tab>
+
+                            <mat-tab label="Solución">
+
+                                <div class="row">
+                                    <app-solucion class="tamano20"></app-solucion>
                                 </div>
                             </mat-tab>
                             <mat-tab label="Historial de
                             seguimiento">
                                 <div class="row items-center">
-                                    <span class="leading-none col-lg-4 col-sm-12">
+                                    <span class="leading-none col-lg-6 col-sm-12">
                                         <div class="leading-tight titulo_tabs">Historial de
-                                            seguimiento 
+                                            seguimiento
                                         </div>
                                     </span>
-                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                    <div class="leading-tight col-lg-6 col-sm-12 text-end">
                                         <input class="border rounded p-2 bg-gray-100"
                                             style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
                                             name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaHistorial"
                                             placeholder="Filtrar...">
-                                        <select name="tamanoTablaHistorial" id="tamanoTablaHistorial"
+                                        <!-- <select name="tamanoTablaHistorial" id="tamanoTablaHistorial"
                                             class="border rounded  bg-gray-100" (change)="pageHistorial=1"
                                             [(ngModel)]="tamanoTablaHistorial"
                                             style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                                             <option value="5"> 5</option>
                                             <option value="10"> 10</option>
                                             <option value="20"> 20</option>
-                                        </select>
+                                        </select> -->
                                     </div>
                                 </div>
                                 <hr>
@@ -286,7 +293,7 @@
                                     <div class="col-lg-12" *ngIf="listadoHistorial.length!=0">
                                         <div class="row">
                                             <div class="col-lg-12">
-                                                <table class="w-full shadow">
+                                                <!-- <table class="w-full shadow">
                                                     <thead>
                                                         <tr
                                                             class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
@@ -309,26 +316,43 @@
                                                             </td>
                                                             <td class="px-4 py-1 text-sm border ">{{ item.estado}}</td>
 
-                                                            <td class="px-2 text-sm border text-center" (click)="busacar_url('data:application/pdf;base64,'+item.base64)"  >
-                                                                <mat-icon svgIcon="heroicons_outline:folder-open" [hidden]="item.evidencia==''"></mat-icon>
+                                                            <td class="px-2 text-sm border text-center"
+                                                                (click)="busacar_url('data:application/pdf;base64,'+item.base64)">
+                                                                <mat-icon svgIcon="heroicons_outline:folder-open"
+                                                                    [hidden]="item.evidencia==''"></mat-icon>
                                                             </td>
-                                                            <td class="px-2 text-sm border text-center" [hidden]="aprobarComentario==false"  >
-                                                                <mat-icon svgIcon="heroicons_outline:check" [hidden]="item.estado!='En espera'"  (click)="cambiarEstado(item, true)"></mat-icon>
-                                                                <mat-icon svgIcon="heroicons_outline:x" [hidden]="item.estado!='En espera'" (click)="cambiarEstado(item,false)"></mat-icon>
+                                                            <td class="px-2 text-sm border text-center"
+                                                                [hidden]="aprobarComentario==false">
+                                                                <mat-icon svgIcon="heroicons_outline:check"
+                                                                    [hidden]="item.estado!='En espera'"
+                                                                    (click)="cambiarEstado(item, true)"></mat-icon>
+                                                                <mat-icon svgIcon="heroicons_outline:x"
+                                                                    [hidden]="item.estado!='En espera'"
+                                                                    (click)="cambiarEstado(item,false)"></mat-icon>
                                                             </td>
                                                         </tr>
                                                     </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12 text-end">
-                                                <pagination-controls (pageChange)="pageHistorial = $event"
-                                                    previousLabel="Anterior" nextLabel="Siguiente">
-                                                </pagination-controls>
+                                                </table> -->
+                                                <div class="mt-4 py-4 px-5 rounded-lg dark:bg-gray-800 ng-star-inserted"
+                                                    style="    overflow: auto;height: 16em;"
+                                                    *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial">
+                                                    <p><strong>Fecha</strong>{{ item.fecha}}</p><br>
+                                                    <span class="px-2 text-sm border text-center"
+                                                        [hidden]="aprobarComentario==false">
+                                                        <mat-icon svgIcon="heroicons_outline:check"
+                                                            [hidden]="item.estado!='En espera'"
+                                                            (click)="cambiarEstado(item, true)"></mat-icon>
+                                                        <mat-icon svgIcon="heroicons_outline:x"
+                                                            [hidden]="item.estado!='En espera'"
+                                                            (click)="cambiarEstado(item,false)"></mat-icon>
+                                                    </span><br>
+                                                    <div [innerHTML]=" datos.detalle"></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                        <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
                                             *ngIf="listadoHistorial.length==0">
                                             <div class="w-3/12">
                                                 <img src="assets/images/animaciones/nodata.gif">
@@ -342,11 +366,11 @@
                             </mat-tab>
                             <mat-tab label="Historial de asignaciones">
                                 <div class="row items-center">
-                                    <span class="leading-none col-lg-4 col-sm-12">
+                                    <span class="leading-none col-lg-6 col-sm-12">
                                         <div class="leading-tight titulo_tabs">Historial de asignaciones
                                         </div>
                                     </span>
-                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                    <div class="leading-tight col-lg-6 col-sm-12 text-end">
                                         <input class="border rounded p-2 bg-gray-100"
                                             style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
                                             name="filtrarTablaAsignaciones" [(ngModel)]="filtrarTablaAsignaciones"
@@ -396,7 +420,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                        <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
                                             *ngIf="listadoAsignaciones.length==0">
                                             <div class="w-3/12">
                                                 <img src="assets/images/animaciones/nodata.gif">
@@ -464,7 +488,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
-                                        <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                        <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
                                             *ngIf="listadoNotificaciones.length==0">
                                             <div class="w-3/12">
                                                 <img src="assets/images/animaciones/nodata.gif">

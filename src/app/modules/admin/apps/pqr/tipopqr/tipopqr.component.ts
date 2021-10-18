@@ -51,11 +51,12 @@ export class TipopqrComponent implements OnInit {
         titulo:titulo
       }
     }else{
+    
       this.datos={
         id:datos.id,
         tipo:datos.tipoPqrs,
         tiempo:datos.diasSolucion,
-        legal:datos.legal=='SI'?'S':"N",
+        legal:datos.legal=='Si'?'S':"N",
         estado:datos.estado=='Activo'?'A':"I",
         titulo:titulo
       }

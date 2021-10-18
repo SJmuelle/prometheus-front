@@ -381,7 +381,7 @@ export class CalendarService {
      * @param event
      */
     addEvent(data): Observable<any> {
-        let query='/generic/actualizar-dias-no-habiles';
+        let query='/actualizar-dias-no-habiles';
         return this._utility.postQuery(query,data,'token')
         .pipe(map( (res:any) => {
            return true;

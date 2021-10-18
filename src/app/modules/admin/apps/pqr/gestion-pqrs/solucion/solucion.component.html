@@ -18,15 +18,11 @@
             </mat-form-field>
         </div>
         <div class="col-lg-6 col-sm-12">
-            <form class="pb-2">
+            <form class="mt-4">
                 <div>
                     <label for="filep" class="w-100">
-                        <mat-form-field class="flex-auto w-100">
-                            <mat-label>Subir evidencias</mat-label>
-                            <input matInput type="text" autocomplete="off" name="campana" [(ngModel)]="filename"
-                                placeholder="Subir archivo" disabled>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'mat_solid:attach_file'"></mat-icon>
-                        </mat-form-field>
+                        <button mat-button class="color_fintra text-white">Adjuntar </button>
+                        {{filename}}
                     </label>
                     <input type="file" name="filep" id="filep" class="col-12" (change)="onCharge($event.target)"
                         style="display:none" />
@@ -37,7 +33,7 @@
 
     <div class="row">
         <div class="col-lg-12 mt-2 mb-10">
-            <div style="height: 3em;">
+            <div style="height: 7em;">
                 <quill-editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="seguimiento.detalle"
                     [modules]="quillModules"></quill-editor>
             </div>
@@ -46,7 +42,7 @@
     <div class="row mt-3">
         <div class="col-sm-12 text-end">
            
-            <button class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
+            <button mat-button  class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
         </div>
     </div>
 </div>

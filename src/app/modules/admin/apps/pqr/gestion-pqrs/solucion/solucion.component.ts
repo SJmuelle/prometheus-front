@@ -88,10 +88,8 @@ export class SolucionComponent implements OnInit {
       reader.onloadend = () => {
         const file: string | ArrayBuffer = reader.result;
         this.file = file;
-        let nombre = this.filename.split('.');
-        console.log(this.file);
         this.filename = fileToRead.name;
-        this.file = this.file.replace(`data:application/${this.filename};base64,`, '')
+    
       };
     }
   }
@@ -106,10 +104,10 @@ export class SolucionComponent implements OnInit {
         Swal.close();
         if (response) {
           if (response.status == 200) {
-            debugger
+      
             if (response.data.respuesta.includes('Error')) {
               Swal.fire(
-                '¡Información!',
+                'Información',
                 response.data.respuesta,
                 'error'
               );
@@ -126,9 +124,10 @@ export class SolucionComponent implements OnInit {
                 "extension": nombre[1],
                 "fuente": "registro-pqrs",
                 "identificador": "pqrs",
-                "base64": this.file
+                "base64": this.file,
+                "descripcion": 'Solución'
               }
-              url = "/cargar-archivo-pqrs";
+              url = "/file/cargar-archivo-pqrs";
               Swal.fire({ title: 'Cargando', html: 'Guardando documento de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
               this._pqrService
                 .postFile(url, data)
@@ -136,7 +135,7 @@ export class SolucionComponent implements OnInit {
                   Swal.close();
                   if (response) {
                     Swal.fire(
-                      '¡Información!',
+                      'Información',
                       `Se guardo el registro con exito`,
                       'success'
                     );
@@ -145,7 +144,7 @@ export class SolucionComponent implements OnInit {
                 })
             } else {
               Swal.fire(
-                '¡Información!',
+                'Información',
                 `Se guardo el registro con exito`,
                 'success'
               );
@@ -154,14 +153,14 @@ export class SolucionComponent implements OnInit {
 
           } else {
             Swal.fire(
-              '¡Información!',
+              'Información',
               `Hubo un error en los datos enviados, favor evaluar`,
               'success'
             );
           }
         } else {
           Swal.fire(
-            '¡Advertencia!',
+            'Información',
             'Error en la respuesta del servicio, favor intente nuevamente',
             'error'
           );

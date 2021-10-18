@@ -51,7 +51,7 @@
                                         (ngModelChange)="negociosCabeceras(datos.lineaNegocio)">
                                         <mat-option value="" disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoLineaNegocio ">
-                                            {{item.descripcion}}</mat-option>
+                                            {{item.descripcion}}   ({{item.cantidad}})</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -84,7 +84,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-end">
-                                <button class="btn color_fintra text-white" type="submit"
+                                <button mat-button class="btn color_fintra text-white" type="submit"
                                     (click)="validaForm(1)">Siguiente </button>
                             </div>
                         </div>
@@ -176,8 +176,8 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-12 text-end">
-                            <button class="btn bg-accent text-white mr-2" (click)="tabMostrar=1">Anterior </button>
-                            <button class="btn color_fintra text-white" (click)="tabMostrar=3">Siguiente </button>
+                            <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=1">Anterior </button>
+                            <button mat-button class="btn color_fintra text-white" (click)="tabMostrar=3">Siguiente </button>
                         </div>
                     </div>
                 </div>
@@ -309,8 +309,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-end mt-20">
-                                <button class="btn bg-accent text-white mr-2 " (click)="tabMostrar=2;">Anterior </button>
-                                <button class="btn color_fintra text-white"
+                                <button mat-button class="btn bg-gray-400 text-white mr-2 " (click)="tabMostrar=2;">Anterior </button>
+                                <button mat-button class="btn color_fintra text-white"
                                     (click)="validaForm(3);mostrarMensaje()">Siguiente </button>
                             </div>
                         </div>
@@ -387,10 +387,10 @@
                             </tbody>
                         </table>
                    
-                    <div class="row">
+                    <div class="row mt-3">
                         <div class="col-sm-12 text-end">
-                            <button class="btn bg-accent text-white mr-2" (click)="tabMostrar=3">Anterior </button>
-                            <button class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
+                            <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=3">Anterior </button>
+                            <button mat-button class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
                         </div>
                     </div>
                 </div>

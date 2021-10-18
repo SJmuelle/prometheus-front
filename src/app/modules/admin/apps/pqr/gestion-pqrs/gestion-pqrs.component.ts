@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debugMode } from 'highlight.js';
+
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 
@@ -39,11 +39,13 @@ export class GestionPQRSComponent implements OnInit {
     })
   }
   buscarDatos() {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     //datos ingreso
     let url = `/informacion-pqrs/${this.pqrid}`;
     this._pqrService
       .getListados(url)
       .subscribe((response: any) => {
+        Swal.close()
         if (response) {
           this.datos = response[0];
           this.no_mostrar=false
@@ -84,10 +86,10 @@ export class GestionPQRSComponent implements OnInit {
     this.tab = index;
     let url;
     switch (index) {
-      case 1:
+      case 2:
         this.filtrarTablaHistorial = '';
         this.tamanoTablaHistorial = 5;
-        url = `/informacion-historial-seguimiento/${this.pqrid}`;
+        url = `/informacion-historial-seguimiento/${this.pqrid}/0`;
         Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
           .getListados(url)
@@ -96,7 +98,7 @@ export class GestionPQRSComponent implements OnInit {
             Swal.close();
           });
         break;
-      case 2:
+      case 3:
         this.filtrarTablaAsignaciones = '';
         this.tamanoTablaAsignaciones = 5;
         url = `/informacion-historial-asignaciones/${this.pqrid}`;
@@ -108,7 +110,7 @@ export class GestionPQRSComponent implements OnInit {
             this.listadoAsignaciones = data
           });
         break;
-      case 3:
+      case 4:
         this.filtrarTablaAlertas = '';
         this.tamanoTablaAlertas = 5;
         url = `/informacion-historial-notificaciones/${this.pqrid}`;
@@ -125,7 +127,7 @@ export class GestionPQRSComponent implements OnInit {
     }
   }
   busacar_url(url) {
-    debugger;
+  
     // url = url.replace('/', '\\');
     // url = url.replace('/', '\\');
     // window.open(url);
@@ -237,7 +239,7 @@ export class GestionPQRSComponent implements OnInit {
       .postFile(url,data)
       .subscribe((data: any) => {
         // window.open(data.base64, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
-        debugger;
+      
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
         

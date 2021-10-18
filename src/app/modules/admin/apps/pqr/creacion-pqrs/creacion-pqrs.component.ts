@@ -49,6 +49,7 @@ export class CreacionPQRSComponent implements OnInit {
     this._activatedRoute.params.subscribe(param => {
       this.identificaiconCliente = param.cliente
     })
+    // this.insertadjunti();
     this.tabMostrar = 1
     this.buscarListados();
     this.datos = {
@@ -529,4 +530,5 @@ export class CreacionPQRSComponent implements OnInit {
       }
     });
   }
+
 }

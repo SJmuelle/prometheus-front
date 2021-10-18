@@ -116,6 +116,16 @@ export class HojavidaComponent implements OnInit {
             this.mostrarDatoCliente = false;
             return
           } else {
+            if (res2.data.length==0) {
+              Swal.fire(
+                '¡Advertencia!',
+                `${this.busqueda == "2" ? 'El código del negocio ' : 'El documento '} ingresado no corresponde a ningún registro guardado. Favor verificar`,
+                'error'
+              );
+              this.info_cliente = {};
+              this.mostrarDatoCliente = false;
+              return
+            }
             this.info_cliente = res2.data;
             this.mostrarDatoCliente = true;
             this.onTabChanged(this.tab);
@@ -131,9 +141,31 @@ export class HojavidaComponent implements OnInit {
         );
         return;
       }
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._hojadevidaService
         .getInfoCliente(this.codigoNegocio)
         .subscribe((res2: any) => {
+         Swal.close();
+          if (res2.status == 202) {
+            Swal.fire(
+              '¡Advertencia!',
+              `${this.busqueda == "2" ? 'El código del negocio ' : 'El documento '} ingresado no corresponde a ningún registro guardado. Favor verificar`,
+              'error'
+            );
+            this.info_cliente = {};
+            this.mostrarDatoCliente = false;
+            return
+          }
+          if (res2.data.length==0) {
+            Swal.fire(
+              '¡Advertencia!',
+              `${this.busqueda == "2" ? 'El código del negocio ' : 'El documento '} ingresado no corresponde a ningún registro guardado. Favor verificar`,
+              'error'
+            );
+            this.info_cliente = {};
+            this.mostrarDatoCliente = false;
+            return
+          }
           this.info_cliente = res2.data;
           this.mostrarDatoCliente = true;
           this.onTabChanged(this.tab);

@@ -35,6 +35,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { ListUsuarioComponent } from './responsables-pqrs/list-usuario/list-usuario.component';
 import { InsertarCausalLegalComponent } from './creacion-pqrs/insertar-causal-legal/insertar-causal-legal.component';
 import { InsertarAdjuntosComponent } from './creacion-pqrs/insertar-adjuntos/insertar-adjuntos.component';
+import { FuseAlertModule } from '@fuse/components/alert';
 
 const routes: Routes = [
   {
@@ -94,6 +95,7 @@ const routes: Routes = [
     ListUsuarioComponent,
     InsertarCausalLegalComponent,
     InsertarAdjuntosComponent,
+    
     // CreacionComponent
   ],
   imports: [
@@ -114,8 +116,8 @@ const routes: Routes = [
     MatRadioModule,
     MatSelectModule,
     MatStepperModule,
-    MatExpansionModule
-
+    MatExpansionModule,
+    FuseAlertModule 
   ]
 })
 export class PqrModule { }
