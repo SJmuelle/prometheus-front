@@ -4,10 +4,12 @@
 
 export const environment = {
     production: false,
-    urlApi: 'http://192.168.190.237:8010/api-fintra/api',
+    // urlApi: 'http://192.168.190.237:8010/api-fintra/api',
+    urlApi: 'https://ultracem.ngrok.io/api-fintra/api',
     // urlApi: 'http://192.168.140.241:8010/api-fintra/api',
     urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/generic/qry/',
     urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic',
+    urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet'
 };

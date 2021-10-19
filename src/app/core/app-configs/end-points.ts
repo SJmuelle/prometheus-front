@@ -1,4 +1,4 @@
-import {environment} from "../../../environments/environment";
+import {environment} from '../../../environments/environment';
 
 export class EndPoints {
     /**
@@ -6,5 +6,11 @@ export class EndPoints {
      */
     static uri(url: string): string {
         return environment.urlApi2 + url;
+    }
+    /**
+     * @description: Url creditos
+     */
+    static uriCredito(url: string): string {
+        return environment.urlApi4 + url;
     }
 }

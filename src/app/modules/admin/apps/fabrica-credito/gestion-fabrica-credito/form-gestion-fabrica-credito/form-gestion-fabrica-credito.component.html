@@ -135,7 +135,14 @@
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>¿Es declarante?</mat-label>
-                                        <input matInput type="text" placeholder="Ingrese valor" [formControlName]="'declarante'">
+                                        <mat-select
+                                            [formControlName]="'declarante'"
+                                            [value]="'seleccione'"
+                                        >
+                                            <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                            <mat-option [value]="'S'">Si</mat-option>
+                                            <mat-option [value]="'N'">No</mat-option>
+                                        </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del negocio</span>
@@ -212,6 +219,7 @@
                                     <button mat-raised-button
                                             color="primary"
                                             type="button"
+                                            (click)="onPostDatos()"
                                     >
                                         Guardar
                                     </button>

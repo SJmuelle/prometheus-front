@@ -36,7 +36,7 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white">
-                <ng-container *ngIf="agendaCompletacion$ | async as agendas">
+                <ng-container *ngIf="agendaCompletacion$ | async as agendas;">
                     <ng-container *ngFor="let item of agendas.data">
                         <tr class="text-gray-700" >
                             <td class="px-2 text-sm border">

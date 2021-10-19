@@ -1,6 +1,6 @@
 import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {FabricaCreditoService} from '../../../../../../core/services/fabrica-credito.service';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, Subscription} from 'rxjs';
 import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
 import {takeUntil} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
@@ -22,6 +22,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public ciudades: any = [];
   public departamentos: any = [];
   public barrios: any = [];
+  public subscription$: Subscription;
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -42,8 +43,13 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.createFormulario();
       this.getDepartamentos();
-
-
+  }
+  /**
+   * @description:
+   */
+  public onPostDatos(): void {
+      const datos: any = this.form.getRawValue();
+      this.postFormularioFabrica(datos);
   }
   /**
    * @description: Obtiene la data para cargar al formulario
@@ -57,6 +63,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           .subscribe(({data}) => {
           console.log(data);
           this.form.patchValue(data);
+          this.fabricaCreditoService.seleccionDatos.next({data: data, show: true});
           if (data.codigoDepartamentoNegocio) {
             this.getCiudades(data.codigoDepartamentoNegocio);
           }
@@ -95,6 +102,13 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   private getBarrios(codigo: string): void {
       this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
   }
+  /**
+   * @description: Guardado de datos fabrica
+   */
+  private postFormularioFabrica(datos): void {
+      this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).subscribe(console.log);
+  }
+
 
   private createFormulario(): void {
       this.form = this.fb.group({
@@ -113,19 +127,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           score:                             [''],
           descripcionScore:                  [''],
           nivelEndeudamiento:                [''],
-          tipoDocumento:                     [''],
-          identificacion:                    [''],
-          nombreCompleto:                    [''],
-          primerNombre:                      [''],
-          segundoNombre:                     [''],
-          primerApellido:                    [''],
-          segundoApellido:                   [''],
-          telefono:                          [''],
-          celular:                           [''],
-          email:                             [''],
-          genero:                            [''],
-          descripcionGenero:                 [''],
-          nacionalidad:                      [''],
           fechaNacimiento:                   [''],
           codigoDepartamentoNacimiento:      [''],
           descripcionDepartamentoNacimiento: [''],
@@ -144,7 +145,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           descripcionNivelEstudio:           [''],
           viveEnNegocio:                     [''],
           descripcionViveNegocio:            [''],
-          fechaMatricula:                    [''],
           comprasSemanales:                  [''],
           antiguedadComprasSemanales:        [''],
           ventasMensuales:                   [''],
