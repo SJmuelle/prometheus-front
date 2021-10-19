@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="seguimiento!={}">
     <div class="row items-center">
         <span class="leading-none col-lg-4 col-sm-12">
             <div class="leading-tight titulo_tabs">Historial de
@@ -21,7 +21,7 @@
             <form class="mt-4">
                 <div>
                     <label for="filep" class="w-100">
-                        <button mat-button class="color_fintra text-white">Adjuntar </button>
+                        <button mat-button class="bg-gray-100 text-white"><mat-icon svgIcon="attach_file"></mat-icon> </button>
                         {{filename}}
                     </label>
                     <input type="file" name="filep" id="filep" class="col-12" (change)="onCharge($event.target)"

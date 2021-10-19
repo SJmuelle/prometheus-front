@@ -25,7 +25,7 @@ export class InsertarAdjuntosComponent implements OnInit {
     // this.showButtonSave = false;
     // this.showButtonRecord = true;
     // this.nameFile = 'masivo.cvs';
-    debugger;
+
     const files = input.files;
     console.log(files);
     if (files && files.length) {

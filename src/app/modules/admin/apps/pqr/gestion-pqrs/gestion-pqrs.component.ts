@@ -209,6 +209,7 @@ export class GestionPQRSComponent implements OnInit {
                 response.data.respuesta,
                 'success'
               );
+              this.onTabChanged(2)
             }
           } else {
             Swal.fire(

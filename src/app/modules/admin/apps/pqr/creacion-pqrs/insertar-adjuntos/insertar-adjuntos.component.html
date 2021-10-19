@@ -8,13 +8,13 @@
                 <input matInput type="text" autocomplete="off" name="area" [(ngModel)]="evidencia.descripcion">
             </mat-form-field>
 
-        </div>
+        </div> 
         <div class="col-lg-6 col-sm-6 ">
 
             <form class="mt-4">
                 <div>
                     <label for="filep" class="w-100">
-                        <button mat-button class="color_fintra text-white">Adjuntar </button>
+                        <button mat-button class="bg-gray-100 text-white"> <mat-icon svgIcon="attach_file"></mat-icon></button>
                         {{ evidencia.filename}}
                     </label>
                     <input type="file" name="filep" id="filep" class="col-12" (change)="onCharge($event.target,0)"

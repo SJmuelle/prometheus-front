@@ -43,7 +43,6 @@ export class FormSolucionesComponent implements OnInit {
         Swal.close();
         if (response) {
           this.listadoResponsable = response;
-          debugger;
           this.datos.responsables=this.datos.idResponsable
         } else {
           this.listadoResponsable = [];

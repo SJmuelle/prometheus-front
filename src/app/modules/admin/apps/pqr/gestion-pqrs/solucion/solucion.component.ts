@@ -20,7 +20,7 @@ export class SolucionComponent implements OnInit {
     ]
   };
 
-  seguimiento: { idPqrs: any; idPqrsPadre: any; motivoRechazo: string; idTipoComentario: number; detalle: string; };
+  seguimiento: any={};
   pqrid: any;
   datos: any = {};
   solucionArea: boolean = false;
