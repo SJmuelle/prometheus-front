@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UtilityService } from 'app/resources/services/utility.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -42,8 +42,8 @@ export class PqrService {
   }
   Create(url: string, data: any): Observable<any> {
     return this._utility.postQuery(url, data)
-    .pipe(map((result: any) => { 
-      return result; 
+    .pipe(map((result: any) => {
+      return result;
     }));
   }
 

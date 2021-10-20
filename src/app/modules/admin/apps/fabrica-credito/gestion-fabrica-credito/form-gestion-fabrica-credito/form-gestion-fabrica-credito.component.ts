@@ -7,6 +7,7 @@ import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {DepartamentosCiudadesService} from '../../../../../../core/services/departamentos-ciudades.service';
 import {MatSelectChange} from '@angular/material/select';
+import {FormularioDatosTitularInterface} from "../../../../../../core/interfaces/formulario-fabrica-credito.interface";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -48,7 +49,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description:
    */
   public onPostDatos(): void {
-      const datos: any = this.form.getRawValue();
+      const datos: FormularioDatosTitularInterface = this.form.getRawValue();
+      console.log(datos);
       this.postFormularioFabrica(datos);
   }
   /**
@@ -105,64 +107,38 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   /**
    * @description: Guardado de datos fabrica
    */
-  private postFormularioFabrica(datos): void {
+  private postFormularioFabrica(datos: FormularioDatosTitularInterface): void {
       this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).subscribe(console.log);
   }
 
 
   private createFormulario(): void {
       this.form = this.fb.group({
-          id:                           undefined,
-          numeroSolicitud:                   [{value: '', disabled: true}],
-          tipo:                              [''],
-          emision:                           [{value: '', disabled: true}],
-          origen:                            [''],
-          codigoEstado:                      [''],
-          descripcionEstado:                 [''],
-          codigoSubEstado:                   [''],
-          descripcionSubestado:              [''],
-          cupoTotal:                         [''],
-          cupoReservado:                     [''],
-          cupoDisponible:                    [''],
-          score:                             [''],
-          descripcionScore:                  [''],
-          nivelEndeudamiento:                [''],
-          fechaNacimiento:                   [''],
-          codigoDepartamentoNacimiento:      [''],
-          descripcionDepartamentoNacimiento: [''],
-          codigoCiudadNacimiento:            [''],
-          descripcionCiudadNacimiento:       [''],
-          tipoVivienda:                      [''],
-          descripcionTipoVivienda:           [''],
-          codigoDepartamento:                [''],
-          descripcionDepartamento:           [''],
-          codigoCiudad:                      [''],
-          descripcionCiudad:                 [''],
-          codigoBarrio:                      [''],
-          descripcionBarrio:                 [''],
-          direccionResidencial:              [''],
-          nivelEstudio:                      [''],
-          descripcionNivelEstudio:           [''],
-          viveEnNegocio:                     [''],
-          descripcionViveNegocio:            [''],
-          comprasSemanales:                  [''],
-          antiguedadComprasSemanales:        [''],
-          ventasMensuales:                   [''],
-          activos:                           [''],
-          declarante:                        [''],
-          descripcionDeclarante:             [''],
-          codigoDepartamentoNegocio:         [''],
-          descripcionDepartamentoNegocio:    [''],
-          codigoCiudadNegocio:               [''],
-          descripcionCiudadNegocio:          [''],
-          codigoBarrioNegocio:               [''],
-          descripcionBarrioNegocio:          [''],
-          direccionNegocio:                  [''],
-          telefonoNegocio:                   [''],
-          antiguedadNegocio:                 [''],
-          camaraComercio:                    [''],
-          descripcionCamaraComercio:         [''],
-          nitNegocio:                        [''],
+          id:                             undefined,
+          numeroSolicitud:               [{value: '', disabled: true}],
+          emision:                       [{value: '', disabled: true}],
+          descripcionEstado:             [''],
+          codigoEstado:                  [''],
+          codigoSubEstado:               [''],
+          cupoTotal:                     [''],
+          cupoReservado:                 [''],
+          cupoDisponible:                [''],
+          score:                         [''],
+          descripcionScore:              [''],
+          nivelEndeudamiento:            [''],
+          comprasSemanales:              [''],
+          antiguedadComprasSemanales:    [''],
+          ventasMensuales:               [''],
+          activos:                       [''],
+          declarante:                    [''],
+          codigoDepartamentoNegocio:     [''],
+          codigoCiudadNegocio:           [''],
+          codigoBarrioNegocio:           [''],
+          direccionNegocio:              [''],
+          telefonoNegocio:               [''],
+          antiguedadNegocio:             [''],
+          camaraComercio:                [''],
+          nitNegocio:                    [''],
       });
   }
 

@@ -204,11 +204,18 @@
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
-                                        <input matInput type="text" placeholder="" [formControlName]="'antiguedadNegocio'">
+                                        <input matInput type="number" placeholder="" [formControlName]="'antiguedadNegocio'">
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>¿Se encuentra registrado en camára de comercio?</mat-label>
-                                        <input matInput type="text" placeholder="" [formControlName]="'camaraComercio'">
+                                        <mat-select
+                                            [formControlName]="'camaraComercio'"
+                                            [value]="'seleccione'"
+                                        >
+                                            <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                            <mat-option [value]="'S'">Si</mat-option>
+                                            <mat-option [value]="'N'">No</mat-option>
+                                        </mat-select>
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Nit</mat-label>
