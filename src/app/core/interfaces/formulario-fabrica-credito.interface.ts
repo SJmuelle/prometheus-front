@@ -60,6 +60,7 @@ export interface FormularioCreditoInterface {
     camaraComercio:                 string;
     descripcionCamaraComercio:      string;
     nitNegocio:                     string;
+    digitoVerificacion?:            number;
 }
 
 export interface FormularioDatosTitularInterface {
