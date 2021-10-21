@@ -146,10 +146,14 @@
                                         <mat-label>Nombre / Razón social</mat-label>
                                         <input matInput type="text" placeholder="Nombre / Razón de social" [formControlName]="'nombreCompleto'">
                                     </mat-form-field>
-                                    <mat-form-field class="w-full px-3 fuse-mat-dense">
-                                        <mat-label>Fecha de matricula</mat-label>
-                                        <input matInput type="text" placeholder="Nombre / Razón de social" [formControlName]="'fechaMatricula'">
-                                    </mat-form-field>
+                                    <ng-container *ngIf="form.controls['tipoDocumento'].value != 'CC'">
+                                        <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                            <mat-label>Fecha de matricula</mat-label>
+                                            <input matInput [matDatepicker]="picker" [formControlName]="'fechaMatricula'">
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </ng-container>
                                 </div>
                                 <mat-divider></mat-divider>
                                 <div class="-mx-3 md:flex mt-3 mb-2">
@@ -206,7 +210,9 @@
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Fecha de nacimiento </mat-label>
-                                        <input matInput type="text" placeholder="Fecha de nacimiento" [formControlName]="'fechaNacimiento'">
+                                        <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'">
+                                        <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
+                                        <mat-datepicker #fechaNacimiento></mat-datepicker>
                                     </mat-form-field>
                                     <ng-container *ngIf="departamentosNacimiento$ | async as departamentos">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">

@@ -24,7 +24,7 @@ export interface FormularioCreditoInterface {
     genero:                         string;
     descripcionGenero:              string;
     nacionalidad:                   string;
-    fechaNacimiento:                Date;
+    fechaNacimiento:                string;
     codigoDepartamentoNacimiento:   string;
     codigoCiudadNacimiento:         string;
     descripcionCiudadNacimiento:    string;
@@ -41,7 +41,7 @@ export interface FormularioCreditoInterface {
     descripcionNivelEstudio:        string;
     viveEnNegocio:                  string;
     descripcionViveNegocio:         string;
-    fechaMatricula:                 Date;
+    fechaMatricula:                 string;
     comprasSemanales:               number;
     antiguedadComprasSemanales:     number;
     ventasMensuales:                number;
@@ -92,28 +92,27 @@ export interface FormularioDatosTitularInterface {
 }
 
 export interface FormularioRepresentanteInterface {
-    id?:                            number;
-    tipo?:                          string;
-    tipoDocumento?:                 string;
-    identificacion?:                string;
-    nombreCompleto?:                string;
-    fechaMatricula?:                Date;
-    primerNombre?:                  string;
-    segundoNombre?:                 string;
-    primerApellido?:                string;
-    segundoApellido?:               string;
-    celular?:                       string;
-    email?:                         string;
-    genero?:                        string;
-    nacionalidad?:                  string;
-    fechaNacimiento?:               Date;
-    codigoDepartamentoNacimiento?:  string;
-    codigoCiudadNacimiento?:        string;
-    tipoVivienda?:                  string;
-    codigoDepartamento?:            string;
-    codigoCiudad?:                  string;
-    codigoBarrio?:                  number;
-    direccionResidencial:           string;
-    nivelEstudio?:                  string;
-    viveEnNegocio?:                 string;
+    tipoDocumento?:           string;
+    identificacion?:          string;
+    primerNombre?:            string;
+    segundoNombre?:           string;
+    primerApellido?:          string;
+    segundoApellido?:         string;
+    nombreCompleto?:          string;
+    telefono?:                string;
+    celular?:                 string;
+    email?:                   string;
+    genero?:                  string;
+    descripcionGenero?:       string;
+    nacionalidad?:            string;
+    descripcionTipoVivienda?: string;
+    codigoDepartamento?:      string;
+    descripcionDepartamento?: string;
+    codigoCiudad?:            string;
+    descripcionCiudad?:       string;
+    codigoBarrio?:            number;
+    descripcionBarrio?:       string;
+    direccionResidencial?:    string;
+    descripcionNivelEstudio?: string;
+    descripcionViveNegocio?:  string;
 }

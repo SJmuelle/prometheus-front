@@ -12,6 +12,8 @@ import {
 } from '../../../../../../core/interfaces/formulario-fabrica-credito.interface';
 import Swal from 'sweetalert2';
 import {GenericasService} from '../../../../../../core/services/genericas.service';
+import {DateAdapter} from "@angular/material/core";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -44,8 +46,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private fb: FormBuilder,
       private departamentosCiudadesService: DepartamentosCiudadesService,
       private router: Router,
-      private genericaServices: GenericasService
-
+      private genericaServices: GenericasService,
   ) {
     const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
     const identificacion: string =  this.route.snapshot.paramMap.get('id');
@@ -76,6 +77,14 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       if (this.form.valid) {
           const datos: FormularioCreditoInterface = this.form.getRawValue();
           console.log(datos);
+          const {fechaNacimiento, fechaMatricula, ...data} = datos;
+          const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
+          const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
+          const datosFormularios: FormularioCreditoInterface = {
+              fechaNacimiento: fechaNacimientoFormato,
+              fechaMatricula: fechaMatriculaFormato,
+              ...data
+          };
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',
@@ -87,7 +96,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               cancelButtonText: 'Cancelar'
           }).then((result) => {
               if (result.isConfirmed) {
-                  this.postFormularioFabrica(datos);
+                  this.postFormularioFabrica(datosFormularios);
                   Swal.fire(
                       'Completado',
                       'Información guardada con exito',

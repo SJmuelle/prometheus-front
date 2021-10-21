@@ -16,6 +16,7 @@ import { FormRepresentanteLegalComponent } from './form-representante-legal/form
 import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
 import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-mater
         MatSelectModule,
         NgxMatDatetimePickerModule,
         NgxMatNativeDateModule
-    ]
+    ],
+
 })
 export class GestionFabricaCreditoModule { }
