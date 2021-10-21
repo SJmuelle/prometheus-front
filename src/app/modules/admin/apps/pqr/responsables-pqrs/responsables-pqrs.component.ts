@@ -22,6 +22,7 @@ export class ResponsablesPQRSComponent implements OnInit {
   tipo: string;
   responsable: any;
   escala: any;
+  listadoArea: any=[];
   // datos: { responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; };
 
 
@@ -62,10 +63,12 @@ export class ResponsablesPQRSComponent implements OnInit {
         titulo: 'N'
       }
     } else {
-      this.datos = {
+      this.datos = { 
         id:datos.id,
         responsable: datos.responsable,
         escalado: datos.escalado,
+        areaResponsable: datos.areaResponsable,
+        areaEscalado: datos.areaEscalado,
         estado:datos.estado=='Activo'?'A':"I",
         cerrarPqrs: '',
         titulo: 'A'
@@ -86,6 +89,7 @@ export class ResponsablesPQRSComponent implements OnInit {
 
   }
   crearNuevo() {
+    this.consultaListado();
     this.ocultarForm = false;
     this.datos = {
       responsable: "",
@@ -114,12 +118,27 @@ export class ResponsablesPQRSComponent implements OnInit {
 
     });
   }
+  consultaListado(){
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        this._pqrService
+          .getListados(`/tk/select-areas`) 
+          .subscribe((response: any) => {
+            Swal.close();
+            if (response) {
+              this.listadoArea = response;
+            } else {
+              this.listadoArea = [];
+            }
+          });
+  }
   guardar() {
     let url, data;
     url = "/agregar-pqrs-responsable";
     data = {
       "responsable":  this.responsable.cedula,
       "escalado":  this.escala.cedula,
+      "areaRes":  this.datos.areaResponsable,
+      "areaEsc":  this.datos.areaEscalado,
       "estado": "",
       "cerrarPqrs":  false
     }
@@ -130,9 +149,17 @@ export class ResponsablesPQRSComponent implements OnInit {
         Swal.close();
         if (response) {
           if (response.status == 200) {
+            if (!response.data.respuesta.includes('OK')) {
+              Swal.fire(
+                '¡Información!',
+                response.data.respuesta,
+                'error'
+              );
+              return;
+            }
             Swal.fire(
               '¡Información!',
-              `Se guardo el registro con exito`,
+              `Se guardo el registro con éxito`,
               'success'
             );
             setTimeout(() => {

@@ -9,7 +9,7 @@ import { PqrService } from '../../pqr.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  datos: { id:number, tipo: string; tiempo: number; legal: string; estado: string; titulo: string ,clase:string};
+  datos: { id:number, tipo: string; tiempo: any; legal: string; estado: string; titulo: string ,clase:string};
 
   constructor(
     public matDialogRef: MatDialogRef<FormComponent>,
@@ -19,6 +19,7 @@ export class FormComponent implements OnInit {
     this.datos = this.data
   }
   guardar() {
+    debugger
     let data,url;
     if (this.datos.titulo == 'N') {
       //post
@@ -27,7 +28,7 @@ export class FormComponent implements OnInit {
         "estado": "",
         "descripcion": this.datos.tipo,
         "legal": this.datos.legal=='S'?true:false,
-        "diasSolucion": this.datos.tiempo,
+        "diasSolucion":this.datos.legal=='S'?(this.datos.tiempo==''?0:this.datos.tiempo):0,
         "clase": this.datos.clase,
       }
 
@@ -37,7 +38,7 @@ export class FormComponent implements OnInit {
         "id": this.datos.id,
         "estado":this.datos.estado=='A'?'':'A',
         "legal": this.datos.legal=='S'?true:false,
-        "diasSolucion":this.datos.tiempo,
+        "diasSolucion":this.datos.legal=='S'?(this.datos.tiempo==''?0:this.datos.tiempo):0,
       }
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })

@@ -36,6 +36,7 @@ import { ListUsuarioComponent } from './responsables-pqrs/list-usuario/list-usua
 import { InsertarCausalLegalComponent } from './creacion-pqrs/insertar-causal-legal/insertar-causal-legal.component';
 import { InsertarAdjuntosComponent } from './creacion-pqrs/insertar-adjuntos/insertar-adjuntos.component';
 import { FuseAlertModule } from '@fuse/components/alert';
+import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 
 const routes: Routes = [
   {
@@ -95,7 +96,7 @@ const routes: Routes = [
     ListUsuarioComponent,
     InsertarCausalLegalComponent,
     InsertarAdjuntosComponent,
-    
+    DirectionsComponent,
     // CreacionComponent
   ],
   imports: [

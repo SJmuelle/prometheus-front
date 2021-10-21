@@ -13,7 +13,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DirectionsComponent } from './modal/directions/directions.component';
+
 
 @NgModule({
     imports: [
@@ -51,7 +51,7 @@ import { DirectionsComponent } from './modal/directions/directions.component';
         MatDialogModule,
     ],
     declarations: [
-      DirectionsComponent
+
     ],
 })
 export class SharedModule {}

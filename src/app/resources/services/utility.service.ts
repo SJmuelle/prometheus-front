@@ -18,6 +18,7 @@ export class UtilityService {
   server2:string = environment.urlApi2;
   server3:string = environment.urlApi3;
   adjunto:string = environment.adjunto;
+  correo:string = environment.envioCorreo;
   // homelogin:string = environment.login;
   notoken:string = 'notoken';
   constructor(private _httpClient: HttpClient) { }
@@ -88,6 +89,35 @@ export class UtilityService {
 
   postQuery(query:string, data:any, typeHeaders:string='data'){
     const URL = this.server3 + query;
+    let optiones:any;
+    if(typeHeaders == 'data'){
+      optiones = {
+        'Authentication': `${this.readToken()}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8'
+      };
+    }else {
+      if(typeHeaders == this.notoken){
+      
+        optiones = {
+          'Authentication': ``,
+          "Accept": "application/json, text/plain, */*",
+          'Content-Type': 'application/json; charset=utf-8'
+        }
+    }else{
+        optiones = {
+          'Authentication': `${this.readToken()}`,
+          "Accept": "application/json",
+        }
+      }
+    }
+
+    const headers = new HttpHeaders(optiones);
+    headers.delete('Content-Type');
+    return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
+  }
+  postQueryCorreo(query:string, data:any, typeHeaders:string='data'){
+    const URL = this.correo + query;
     let optiones:any;
     if(typeHeaders == 'data'){
       optiones = {

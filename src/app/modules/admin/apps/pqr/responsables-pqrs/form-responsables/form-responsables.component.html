@@ -11,6 +11,14 @@
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
                         </mat-form-field>
                     </div>
+                    
+                    <div class="col-sm-12 col-lg-12" >
+                        <mat-form-field class="flex-auto w-100" >
+                            <mat-label>Área del responsable</mat-label>
+                            <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.areaResponsable" [disabled]="datos.titulo!='N'" >
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                        </mat-form-field>
+                    </div>
 
                     <div class="col-sm-12 col-lg-12" >
                         <mat-form-field class="flex-auto w-100" >
@@ -19,6 +27,17 @@
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
                         </mat-form-field>
                     </div>
+
+                    <div class="col-sm-12 col-lg-12" >
+                        <mat-form-field class="flex-auto w-100" >
+                            <mat-label>Área del escalado</mat-label>
+                            <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.areaEscalado" [disabled]="datos.titulo!='N'" >
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                        </mat-form-field>
+                    </div>
+
+
+                    
                     
                    
                     <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'" >

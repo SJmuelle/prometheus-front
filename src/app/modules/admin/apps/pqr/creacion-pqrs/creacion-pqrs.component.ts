@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { InsertarCausalLegalComponent } from './insertar-causal-legal/insertar-causal-legal.component';
 import { InsertarAdjuntosComponent } from './insertar-adjuntos/insertar-adjuntos.component';
+import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 
 @Component({
   selector: 'app-creacion-pqrs',
@@ -52,24 +53,6 @@ export class CreacionPQRSComponent implements OnInit {
     // this.insertadjunti();
     this.tabMostrar = 1
     this.buscarListados();
-    this.datos = {
-      campana: '',
-      origen: null,
-      tipo: null,
-      codigoNegocio: '',
-      agencia: '',
-      entidad: '',
-      identificacion: '',
-      nombres: '',
-      apellidos: '',
-      departamento: '',
-      ciudad: '',
-      barrio: '',
-      direccion: '',
-      telefono: '',
-      email: '',
-      causal: null,
-    }
 
   }
 
@@ -218,16 +201,20 @@ export class CreacionPQRSComponent implements OnInit {
   }
 
   eliminarCausal(dato) {
-    debugger
+    // debugger
     this.causalesLegales.splice(dato, 1);
   }
 
   //datos basicos
   buscarDatosBasicos() {
+    if(this.identificaiconCliente.length==0){
+      return;
+    }
     let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
     this._pqrService
       .getListados(urlinfoCliente)
       .subscribe((response: any) => {
+        // debugger;
         if (response) {
           Swal.fire(
             '¡Advertencia!',
@@ -237,6 +224,9 @@ export class CreacionPQRSComponent implements OnInit {
           setTimeout(() => {
             this.router.navigateByUrl('dashboard');
           }, 1000);
+        }else{
+          this.datos.identificacion = this.identificaiconCliente;
+          this.datos.tipoPQRS_nombre = 'Nuevo';
         }
       });
   }
@@ -260,6 +250,7 @@ export class CreacionPQRSComponent implements OnInit {
           this[variable] = response;
           if (variable == "listadoResponsablePQRS") {
             this.datos.responsable = this.listadoResponsablePQRS[0].login;
+            this.datos.area = this.listadoResponsablePQRS[0].area;
             let index = this.listadoSolucionPQRS.findIndex(data => data.id == tipo);
             if (index != -1) {
               this.datos.fechaParaSolucion = this.listadoSolucionPQRS[index].diaSolucion;
@@ -289,12 +280,12 @@ export class CreacionPQRSComponent implements OnInit {
 
     let data = {
       "empresa": "FINV",
-      "campanha": this.datos.campana,
+      "campanha": this.datos.campana== undefined ? '' : this.datos.campana,
       "origenPqrs": parseInt(this.datos.origen),
       "tipoCliente": parseInt(this.datos.tipo),
-      "codigoNegocio": this.datos.negocio,
-      "sucursal": this.datos.agencia,
-      "entidad": this.datos.entidad,
+      "codigoNegocio": this.datos.negocio == undefined ? '' : this.datos.negocio,
+      "sucursal": this.datos.agencia == undefined ? '' : this.datos.agencia,
+      "entidad": this.datos.entidad == undefined ? '' : this.datos.entidad,
       "idCliente": this.datos.identificacion,
       "nombres": this.datos.nombres,
       "apellidos": this.datos.apellidos,
@@ -305,7 +296,7 @@ export class CreacionPQRSComponent implements OnInit {
       "celular": this.datos.telefono,
       "email": this.datos.email,
       "idSolucion": parseInt(this.datos.solucion),
-      "detallePqrs": this.datos.descripcion + '',
+      "detallePqrs":  this.datos.descripcion == undefined ? '' : this.datos.descripcion,
       "idPqrspadre": '',
       "fechaSolucion": this.datos.fechaParaSolucion,
     }
@@ -327,7 +318,8 @@ export class CreacionPQRSComponent implements OnInit {
             }
             //contesto bien
             //valida si hay adjunto
-
+            let url = `/notificacion-crear-pqrs/${response.data.idPadre} `;
+            this._pqrService.enviarCorreos(url)
             this.guardHijos(response.data, data, url);
             this.guardarAdjunto(response.data.idSolucion);
 
@@ -394,24 +386,26 @@ export class CreacionPQRSComponent implements OnInit {
           "nombreArchivo": nombre[0],
           "extension": nombre[1],
           "fuente": "registro-pqrs",
-          "identificador": "pqrs",
+          "identificador": "pqrs"+ind,
           "base64": element.file,
           "descripcion": element.descripcion,
-  
+
         }
         let url = "/file/cargar-archivo-pqrs";
         this._pqrService
           .postFile(url, data)
           .subscribe((response: any) => {
-         
+
             if (response) {
-            
+
             }
           })
       }
     });
-    
+
   }
+
+
 
   insertarCausal() {
     const dialogRef = this.dialog.open(InsertarCausalLegalComponent, {
@@ -438,15 +432,16 @@ export class CreacionPQRSComponent implements OnInit {
   }
 
   guardHijos(respuesta, dataPadre, url) {
+    // debugger;
     this.causalesLegales.forEach(element => {
       let dataHijos = {
         "empresa": "FINV",
-        "campanha": this.datos.campana,
+        "campanha": this.datos.campana== undefined ? '' : this.datos.campana,
         "origenPqrs": parseInt(this.datos.origen),
         "tipoCliente": parseInt(this.datos.tipo),
-        "codigoNegocio": this.datos.negocio,
-        "sucursal": this.datos.agencia,
-        "entidad": this.datos.entidad,
+        "codigoNegocio": this.datos.negocio == undefined ? '' : this.datos.negocio,
+        "sucursal": this.datos.agencia == undefined ? '' : this.datos.agencia,
+        "entidad": this.datos.entidad == undefined ? '' : this.datos.entidad,
         "idCliente": this.datos.identificacion,
         "nombres": this.datos.nombres,
         "apellidos": this.datos.apellidos,
@@ -457,8 +452,8 @@ export class CreacionPQRSComponent implements OnInit {
         "celular": this.datos.telefono,
         "email": this.datos.email,
         "idSolucion": parseInt(element.solucion),
-        "detallePqrs": this.datos.descripcion + '',
-        "idPqrspadre": respuesta.idPadre+'',
+        "detallePqrs": this.datos.descripcion == undefined ? '' : this.datos.descripcio,
+        "idPqrspadre": respuesta.idPadre + '',
         "fechaSolucion": element.fechaParaSolucion,
       }
       this._pqrService
@@ -475,9 +470,10 @@ export class CreacionPQRSComponent implements OnInit {
                 );
                 return;
               }
-            
-              this.guardarAdjunto(response.data.idSolucion);
 
+              this.guardarAdjunto(response.data.idSolucion);
+              let url = `/notificacion-crear-pqrs-hijos/${response.data.idPadre} `;
+              this._pqrService.enviarCorreos(url)
             } else {
               Swal.fire(
                 '¡Información!',
@@ -498,18 +494,57 @@ export class CreacionPQRSComponent implements OnInit {
     });
     Swal.fire(
       '¡Información!',
-      `Se guardo el registro con exito`,
+      `Se guardo el registro con éxito`,
       'success'
     );
     setTimeout(() => {
-        let url = `pqr/gestion/${ respuesta.idPadre}`;
-        this.router.navigateByUrl(url);
-      }, 1200);
+      let url = `pqr/gestion/${respuesta.idPadre}`;
+      this.router.navigateByUrl(url);
+    }, 1200);
 
-  
+
+  }
+  mostrarDireccion() {
+    // debugger;
+    const dialogRef = this.dialog.open(DirectionsComponent, {
+      width: '60%',
+      data: {
+        departamento: this.datos.departamento,
+        municipio: this.datos.ciudad,
+        barrio: this.datos.barrio,
+        direccion: this.datos.direccion
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+      // barrio: "san antonio"
+      // callePrincipal: "23"
+      // complemento: "apto 123"
+      // departamento: "ANT"
+      // departamentoNombre: "ANTIOQUIA"
+      // direccion: ""
+      // municipio: "AB"
+      // municipioNombre: "ABEJORRAL"
+      // nada: "#"
+      // numero: "14"
+      // numero2: "11"
+      // tipoVia: "1684"
+      // viaNombre: "Calle"
+      let dataModal = result;
+      if(dataModal.departamentoNombre!=undefined){
+        this.datos.departamento=dataModal.departamentoNombre;
+        this.datos.ciudad=dataModal.municipioNombre;
+        this.datos.barrio=dataModal.barrio;
+        this.datos.direccion=`${dataModal.viaNombre} ${dataModal.numero}#${dataModal.numero2}  ${dataModal.complemento}`;
+      }
+    
+    });
   }
 
-  insertadjunti(){
+
+  insertadjunti() {
     const dialogRef = this.dialog.open(InsertarAdjuntosComponent, {
       width: '60%',
       data: {

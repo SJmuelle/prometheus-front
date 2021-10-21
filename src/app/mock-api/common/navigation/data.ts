@@ -4,13 +4,13 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 export const defaultNavigation: FuseNavigationItem[] = [
     {
         id: 'dashboard',
-        title: 'Hoja de vida',
+        title: 'Servicio al cliente',
         type: 'aside',
         icon: 'heroicons_outline:chart-square-bar',
         children: [
             {
                 id: 'dashboard.hojavida',
-                title: 'Hoja de vida',
+                title: 'Gestión del cliente',
                 type: 'basic',
                 link: '/dashboard',
                 icon: 'heroicons_outline:chart-square-bar',
@@ -91,13 +91,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
 export const compactNavigation: FuseNavigationItem[] = [
     {
         id: 'dashboard',
-        title: 'Hoja de vida',
+        title: 'Servicio al cliente',
         type: 'aside',
         icon: 'heroicons_outline:chart-square-bar',
         children: [
             {
                 id: 'dashboard.hojavida',
-                title: 'Hoja de vida',
+                title: 'Gestión del cliente',
                 type: 'basic',
                 link: '/dashboard/hoja-vida/hv',
                 icon: 'heroicons_outline:chart-square-bar',

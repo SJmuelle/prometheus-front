@@ -262,7 +262,7 @@
                             <mat-tab label="Solución">
 
                                 <div class="row">
-                                    <app-solucion class="tamano20"></app-solucion>
+                                    <app-solucion (cambiarEstado)=cargarDatos($event) class="tamano20"></app-solucion>
                                 </div>
                             </mat-tab>
                             <mat-tab label="Historial de
@@ -354,7 +354,7 @@
 
                                                 <div class="shadow  py-4 px-5 rounded-lg dark:bg-gray-800 ng-star-inserted"
                                                     style="    overflow: auto;height: 16em;">
-                                                    <div [innerHTML]=" datos.detalle"></div>
+                                                    <div [innerHTML]=" item.detalle"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -404,7 +404,7 @@
                                                             class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                             <th class="px-4 py-3">Fecha y Hora</th>
                                                             <th class="px-4 py-3">Responsable</th>
-                                                            <th class="px-4 py-3">Escalado</th>
+                                                            <th class="px-4 py-3">Email</th>
                                                             <th class="px-4 py-3">Estado</th>
                                                         </tr>
                                                     </thead>
@@ -412,9 +412,9 @@
                                                         <tr class="text-gray-700"
                                                             *ngFor="let item of listadoAsignaciones | filter: filtrarTablaAsignaciones  | paginate: { itemsPerPage: tamanoTablaAsignaciones, currentPage: pageAsignaciones }">
                                                             <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.responsable}}
+                                                            <td class="px-4 py-1 text-sm border capitalize">{{ item.usuario}}
                                                             </td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.escalado}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.email}}</td>
                                                             <td class="px-4 py-1 text-sm border">{{ item.estado}}</td>
                                                         </tr>
                                                     </tbody>

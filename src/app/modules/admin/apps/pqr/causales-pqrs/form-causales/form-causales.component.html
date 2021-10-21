@@ -14,10 +14,19 @@
                 </div>
                 <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo=='N'">
                     <mat-form-field class="flex-auto w-100">
-                        <mat-label>Tipo</mat-label>
+                        <mat-label>Tipo de PQRS </mat-label>
                         <mat-select [(ngModel)]="datos.idTipo" name="legal">
                             <mat-option value="{{l.id}}" *ngFor="let l of listadoTipo">{{l.tipoPqrs}}</mat-option>
                         </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Tipo de PQRS </mat-label>
+                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.idTipo"
+                            disabled>
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">
                         </mat-icon>
                     </mat-form-field>

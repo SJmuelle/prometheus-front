@@ -18,7 +18,7 @@ import { PqrService } from '../pqr/pqr.service';
   styleUrls: ['./hojavida.component.scss']
 })
 export class HojavidaComponent implements OnInit {
-  listCodigoNegocio: string;
+  listCodigoNegocio: any=[];
   info_cliente: any={};
   mostrarDatoCliente: boolean;
   listadoCredito: any=[];
@@ -76,11 +76,10 @@ export class HojavidaComponent implements OnInit {
   }
 
   getListadoCredito() {
-
     this._hojadevidaService
       .getNegocios(this.clienteID)
       .subscribe((res1: any) => {
-        this.listCodigoNegocio = res1.data;
+        this.listCodigoNegocio = res1;
       });
   }
 

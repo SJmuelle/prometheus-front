@@ -10,7 +10,7 @@ import { PqrService } from '../../pqr.service';
 })
 export class SolucionComponent implements OnInit {
 
-  // @Output() devolver: EventEmitter<any> = new EventEmitter();
+  @Output() cambiarEstado: EventEmitter<boolean> = new EventEmitter();
   mensaje: any;
   quillModules: any = {
     toolbar: [
@@ -20,7 +20,7 @@ export class SolucionComponent implements OnInit {
     ]
   };
 
-  seguimiento: any={};
+  seguimiento: any = {};
   pqrid: any;
   datos: any = {};
   solucionArea: boolean = false;
@@ -89,7 +89,7 @@ export class SolucionComponent implements OnInit {
         const file: string | ArrayBuffer = reader.result;
         this.file = file;
         this.filename = fileToRead.name;
-    
+
       };
     }
   }
@@ -104,7 +104,7 @@ export class SolucionComponent implements OnInit {
         Swal.close();
         if (response) {
           if (response.status == 200) {
-      
+
             if (response.data.respuesta.includes('Error')) {
               Swal.fire(
                 'Información',
@@ -118,12 +118,12 @@ export class SolucionComponent implements OnInit {
 
               let nombre = this.filename.split('.');
               let data = {
-               
+
                 "idComentario": response.data.respuesta,
-                "nombreArchivo": nombre[0],
+                "nombreArchivo": `pqrs${this.pqrid}_${response.data.respuesta}`,
                 "extension": nombre[1],
                 "fuente": "registro-pqrs",
-                "identificador": "pqrs",
+                "identificador": "pqrs"+this.pqrid,
                 "base64": this.file,
                 "descripcion": 'Solución'
               }
@@ -136,20 +136,29 @@ export class SolucionComponent implements OnInit {
                   if (response) {
                     Swal.fire(
                       'Información',
-                      `Se guardo el registro con exito`,
+                      `Se guardo el registro con éxito`,
                       'success'
                     );
-                    this.limpiar();
+                    setTimeout(() => {
+                      this.limpiar();
+                      this.recargarData()
+                    }, 1000);
+                   
+                    
                   }
                 })
             } else {
               Swal.fire(
                 'Información',
-                `Se guardo el registro con exito`,
+                `Se guardo el registro con éxito`,
                 'success'
               );
               this.limpiar();
+              this.recargarData()
             }
+
+            url = `/notificacion-crear-solucion/${this.pqrid}`;
+            this._pqrService.enviarCorreos(url);
 
           } else {
             Swal.fire(
@@ -179,6 +188,10 @@ export class SolucionComponent implements OnInit {
     }
     this.filename = '';
     this.file = null;
+  }
+
+  recargarData() {
+    this.cambiarEstado.emit(true)
   }
 
 }

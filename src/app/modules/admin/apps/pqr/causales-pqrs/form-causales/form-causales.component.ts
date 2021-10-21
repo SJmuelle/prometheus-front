@@ -23,7 +23,7 @@ export class FormCausalesComponent implements OnInit {
   consultaListadoTipo(){
     Swal.fire({ title: 'Cargando', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
-          .setTipo()
+          .getListados(`/tk/select-tipo-pqrs`) 
           .subscribe((response: any) => {
             Swal.close();
             if (response) {
@@ -62,7 +62,7 @@ export class FormCausalesComponent implements OnInit {
           if(response.status==200){
             Swal.fire(
               '¡Información!',
-              `Se guardo el registro con exito`,
+              `Se guardo el registro con éxito`,
               'success'
             );
             setTimeout(() => {

@@ -26,19 +26,19 @@ export class FormSolucionesComponent implements OnInit {
   consultaListado() {
     Swal.fire({ title: 'Cargando', html: 'Buscando información ...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._pqrService
-      .setCausales()
+    .getListados(`/tk/select-causales-pqrs`) 
       .subscribe((response: any) => {
        
         if (response) {
           this.listadoCausal = response;
         } else {
           this.listadoCausal = [];
-        
+         
         }
       });
 
     this._pqrService
-      .setResponsables()
+    .getListados(`/tk/select-responsables-pqrs`) 
       .subscribe((response: any) => {
         Swal.close();
         if (response) {
@@ -88,7 +88,7 @@ export class FormSolucionesComponent implements OnInit {
             }
             Swal.fire(
               '¡Información!',
-              `Se guardo el registro con exito`,
+              `Se guardo el registro con éxito`,
               'success'
             );
             setTimeout(() => {

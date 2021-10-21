@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DebugElement, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
@@ -85,7 +85,9 @@ export class GestionPQRSComponent implements OnInit {
   onTabChanged(index): void {
     this.tab = index;
     let url;
+  
     switch (index) {
+     
       case 2:
         this.filtrarTablaHistorial = '';
         this.tamanoTablaHistorial = 5;
@@ -140,7 +142,7 @@ export class GestionPQRSComponent implements OnInit {
     "idComentario": parseInt(item.id),
     "idPqrs": parseInt(this.pqrid),
     "respuesta": estado,
-    "comentario":"",
+    "comentario":"A",
     }
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -148,13 +150,14 @@ export class GestionPQRSComponent implements OnInit {
     })
 
     swalWithBootstrapButtons.fire({
-      text: `¿Esta seguro que desea ,${estado==true?'aprobar':'rechazar'} solución?`,
+      text: `¿Esta seguro que desea ${estado==true?'aprobar':'rechazar'} solución?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: `Si, ${estado==true?'aprobar':'rechazar'} solución`,
       cancelButtonText: 'No, cancelar',
       reverseButtons: true
     }).then((result) => {
+
       if (result.isConfirmed) {
         if(!estado){
           Swal.fire({
@@ -200,16 +203,19 @@ export class GestionPQRSComponent implements OnInit {
             if(response.data.respuesta=='OK'){
               Swal.fire(
                 '¡Información!',
-                `Se guardo el registro con exito`,
+                `Se guardo el registro con éxito`,
                 'success'
               );
+              this.onTabChanged(2)
+              let url = `/notificacion-crear-pqrs-respuesta/${data.idPqrs}/${data.estado==true?1:0}/${data.comentario}`;
+              this._pqrService.enviarCorreos(url)
             }else{
               Swal.fire(
                 '¡Información!',
                 response.data.respuesta,
                 'success'
               );
-              this.onTabChanged(2)
+            
             }
           } else {
             Swal.fire(
@@ -252,6 +258,11 @@ export class GestionPQRSComponent implements OnInit {
 
         Swal.close();
       });
+  }
+  cargarDatos(event){
+    if(event==true){
+      this.buscarDatos();
+    }
   }
 
 }

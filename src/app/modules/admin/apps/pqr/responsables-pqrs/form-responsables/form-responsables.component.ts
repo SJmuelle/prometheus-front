@@ -9,7 +9,7 @@ import { PqrService } from '../../pqr.service';
   styleUrls: ['./form-responsables.component.scss']
 })
 export class FormResponsablesComponent implements OnInit {
-  datos: { id: number, responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; titulo: string; };
+  datos:  any={};
 
   constructor(
     public matDialogRef: MatDialogRef<FormResponsablesComponent>,
@@ -41,9 +41,17 @@ export class FormResponsablesComponent implements OnInit {
         Swal.close();
         if (response) {
           if (response.status == 200) {
+            if (!response.data.respuesta.includes('OK')) {
+              Swal.fire(
+                '¡Información!',
+                response.data.respuesta,
+                'error'
+              );
+              return;
+            }
             Swal.fire(
               '¡Información!',
-              `Se guardo el registro con exito`,
+              `Se guardo el registro con éxito`,
               'success'
             );
             setTimeout(() => {
