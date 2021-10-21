@@ -122,14 +122,13 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
           .subscribe(({data}) => {
           Swal.close();
-          console.log(data);
+          // console.log(data);
           this.form.patchValue(data);
           if (data.tipoDocumento === 'NIT') {
               const digitoVerificacion: string = this.calcularDigitoVerificacion(data.identificacion);
               const diitoString: string = digitoVerificacion.toString();
               this.form.controls.digitoVerificacion.setValue(diitoString);
           }
-          // this.fabricaCreditoService.seleccionDatos.next({data: data, show: true});
           if (data.codigoDepartamento) {
               this.getCiudades(data.codigoDepartamento);
           }
