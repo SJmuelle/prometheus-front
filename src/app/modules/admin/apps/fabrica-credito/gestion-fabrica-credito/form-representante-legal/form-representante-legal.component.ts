@@ -4,6 +4,8 @@ import {FabricaCreditoService} from '../../../../../../core/services/fabrica-cre
 import {Observable} from "rxjs";
 import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
 import {MatSelectChange} from "@angular/material/select";
+import {ActivatedRoute} from "@angular/router";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-form-representante-legal',
@@ -18,8 +20,18 @@ export class FormRepresentanteLegalComponent implements OnInit {
   constructor(
       private fb: FormBuilder,
       private fabricaCreditoService: FabricaCreditoService,
-      private departamentosCiudadesService: DepartamentosCiudadesService
-  ) { }
+      private departamentosCiudadesService: DepartamentosCiudadesService,
+      private route: ActivatedRoute,
+  ) {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      console.log(numeroSolicitud);
+      if (numeroSolicitud) {
+          this.fabricaCreditoService.getDatosTitularFabrica(numeroSolicitud).pipe(
+              take(1)
+          )
+          .subscribe(console.log);
+      }
+  }
 
   ngOnInit(): void {
       this.createFormulario();

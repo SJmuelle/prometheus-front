@@ -26,4 +26,11 @@ export class FabricaCreditoService {
     public postDatosFabricaCredita(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
+    /**
+     * @description: Get Datos del titular
+     */
+    public getDatosTitularFabrica(solicitud: string): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.baseRepresentante}/${solicitud}`);
+    }
+
 }

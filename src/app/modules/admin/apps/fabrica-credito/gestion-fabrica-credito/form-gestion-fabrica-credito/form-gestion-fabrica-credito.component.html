@@ -39,7 +39,7 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Subestado</mat-label>
-                                <input matInput type="text" placeholder="Subestado" [formControlName]="'codigoSubEstado'">
+                                <input matInput type="text" placeholder="Subestado" [formControlName]="'descripcionSubestado'">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cupo aprobado</mat-label>
@@ -375,6 +375,7 @@
                                     <button mat-raised-button
                                             color="primary"
                                             type="button"
+                                            [disabled]="!form.valid"
                                             (click)="onPostDatos()"
                                     >
                                         Guardar

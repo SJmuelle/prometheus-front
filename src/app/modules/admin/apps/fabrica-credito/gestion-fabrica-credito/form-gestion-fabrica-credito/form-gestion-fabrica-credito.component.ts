@@ -4,7 +4,7 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
 import {delay, takeUntil} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DepartamentosCiudadesService} from '../../../../../../core/services/departamentos-ciudades.service';
 import {MatSelectChange} from '@angular/material/select';
 import {
@@ -53,28 +53,33 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description:
    */
   public onPostDatos(): void {
-      const datos: FormularioCreditoInterface = this.form.getRawValue();
-      console.log(datos);
-      Swal.fire({
-          title: 'Guardar información',
-          text: '¿Está seguro de guardar información?',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#a3a0a0',
-          confirmButtonText: 'Guardar',
-          cancelButtonText: 'Cancelar'
-      }).then((result) => {
-          if (result.isConfirmed) {
-              this.postFormularioFabrica(datos);
-              Swal.fire(
-                  'Completado',
-                  'Información guardada con exito',
-                  'success'
-              );
-              // console.log(this.form.getRawValue());
-          }
-      });
+      if (this.form.valid) {
+          const datos: FormularioCreditoInterface = this.form.getRawValue();
+          console.log(datos);
+          Swal.fire({
+              title: 'Guardar información',
+              text: '¿Está seguro de guardar información?',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#a3a0a0',
+              confirmButtonText: 'Guardar',
+              cancelButtonText: 'Cancelar'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  this.postFormularioFabrica(datos);
+                  Swal.fire(
+                      'Completado',
+                      'Información guardada con exito',
+                      'success'
+                  );
+                  // console.log(this.form.getRawValue());
+              }
+          });
+      }else {
+          this.form.markAllAsTouched();
+      }
+
   }
   /**
    * @description: Obtiene la data para cargar al formulario
@@ -216,13 +221,14 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           cupoReservado:                 [{value: '', disabled: true}],
           cupoDisponible:                [{value: '', disabled: true}],
           score:                         [''],
+          descripcionSubestado:          [{value: '', disabled: true}],
           descripcionScore:              [''],
           nivelEndeudamiento:            [''],
           comprasSemanales:              [''],
           antiguedadComprasSemanales:    [''],
           ventasMensuales:               [''],
           activos:                       [''],
-          declarante:                    [''],
+          declarante:                    ['', [Validators.required]],
           codigoDepartamentoNegocio:     [''],
           codigoCiudadNegocio:           [''],
           codigoBarrioNegocio:           [''],
@@ -234,14 +240,14 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           nitNegocio:                    [''],
           tipo:                          [''],
           tipoDocumento:                 [''],
-          identificacion:                [''],
+          identificacion:                ['', [Validators.required]],
           digitoVerificacion:            [''],
-          nombreCompleto:                [''],
+          nombreCompleto:                ['', [Validators.required]],
           fechaMatricula:                [''],
-          primerNombre:                  [''],
+          primerNombre:                  ['', [Validators.required]],
           segundoNombre:                 [''],
-          primerApellido:                [''],
-          segundoApellido:               [''],
+          primerApellido:                ['', [Validators.required]],
+          segundoApellido:               ['', [Validators.required]],
           celular:                       [''],
           email:                         [''],
           genero:                        [''],

@@ -25,7 +25,8 @@ export class AppSettingsService {
     public fabricaDatos = {
         url: {
             base: EndPoints.uri('consulta-fabrica'),
-            baseCredito: EndPoints.uriCredito('fabrica-tab-titular')
+            baseCredito: EndPoints.uriCredito('fabrica-tab-titular'),
+            baseRepresentante: EndPoints.uri('informacion-representante-legal')
         }
     };
     /**
