@@ -179,14 +179,36 @@
                                         <mat-label>Fecha de nacimiento </mat-label>
                                         <input matInput type="text" placeholder="Fecha de nacimiento" [formControlName]="'fechaNacimiento'">
                                     </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Departamento de nacimiento</mat-label>
-                                        <input matInput type="text" placeholder="Departamento" [formControlName]="'codigoDepartamentoNacimiento'">
-                                    </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Ciudad / Municipio de nacimiento</mat-label>
-                                        <input matInput type="text" placeholder="Ciudad / Municipio de nacimiento" [formControlName]="'codigoCiudadNacimiento'">
-                                    </mat-form-field>
+                                    <ng-container *ngIf="departamentosNacimiento$ | async as departamentos">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Departamento de nacimiento</mat-label>
+                                            <mat-select (selectionChange)="seleccionDepartamentoNacimiento($event)"
+                                                        [value]="'seleccione'"
+                                                        [formControlName]="'codigoDepartamentoNacimiento'"
+                                            >
+                                                <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                                <mat-option *ngFor="let departamento of departamentos.data"
+                                                            [value]="departamento.codigo"
+                                                >{{departamento.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ng-container>
+                                    <ng-container *ngIf="ciudadesNacimiento$ | async as ciudades">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Ciudad / Municipio de nacimiento</mat-label>
+                                            <mat-select
+                                                        [value]="'seleccione'"
+                                                        [formControlName]="'codigoCiudadNacimiento'"
+                                            >
+                                                <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                                <mat-option *ngFor="let ciudad of ciudades.data"
+                                                            [value]="ciudad.codigo"
+                                                >{{ciudad.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </ng-container>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Tipo de vivienda</mat-label>
                                         <input matInput type="text" placeholder="Tipo de vivienda" [formControlName]="'tipoVivienda'">
@@ -295,10 +317,10 @@
                                 <ng-container *ngIf="form.controls['tipoDocumento'].value != 'NIT'">
                                     <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del negocio</span>
                                     <div class="-mx-3 md:flex mt-3 mb-2">
-                                        <ng-container *ngIf="departamentos$ | async as departamentos">
+                                        <ng-container *ngIf="departamentosNegocio$ | async as departamentos">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>Departamento del negocio</mat-label>
-                                                <mat-select (selectionChange)="seleccionDepartamento($event)"
+                                                <mat-select (selectionChange)="seleccionDepartamentoNegocio($event)"
                                                             [value]="'seleccione'"
                                                             [formControlName]="'codigoDepartamentoNegocio'"
                                                 >
@@ -310,10 +332,10 @@
                                                 </mat-select>
                                             </mat-form-field>
                                         </ng-container>
-                                        <ng-container *ngIf="ciudades$ | async as ciudades">
+                                        <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>Ciudad / municipio del negocio</mat-label>
-                                                <mat-select (selectionChange)="seleccionCiudad($event)"
+                                                <mat-select (selectionChange)="seleccionCiudadNegocio($event)"
                                                             [value]="'seleccione'"
                                                             [formControlName]="'codigoCiudadNegocio'"
                                                 >
@@ -325,7 +347,7 @@
                                                 </mat-select>
                                             </mat-form-field>
                                         </ng-container>
-                                        <ng-container *ngIf="barrios$ | async as barrios">
+                                        <ng-container *ngIf="barriosNegocio$ | async as barrios">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>Barrio</mat-label>
                                                 <mat-select

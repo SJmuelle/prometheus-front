@@ -20,12 +20,15 @@ import Swal from 'sweetalert2';
 export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public unSubscribe$: Subject<any> = new Subject<any>();
   public departamentos$: Observable<any>;
+  public departamentosNacimiento$: Observable<any>;
+  public departamentosNegocio$: Observable<any>;
   public ciudades$: Observable<any>;
+  public ciudadesNacimiento$: Observable<any>;
+  public ciudadesNegocio$: Observable<any>;
   public barrios$: Observable<any>;
+  public barriosNegocio$: Observable<any>;
+  public tipoDocumentos$: Observable<any>;
   public form: FormGroup;
-  public ciudades: any = [];
-  public departamentos: any = [];
-  public barrios: any = [];
   public subscription$: Subscription;
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
@@ -48,6 +51,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.createFormulario();
       this.getDepartamentos();
+      this.getDepartamentoNacimiento();
+      this.getDepartamentoNegocio();
   }
   /**
    * @description:
@@ -101,23 +106,40 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               this.form.controls.digitoVerificacion.setValue(diitoString);
           }
           // this.fabricaCreditoService.seleccionDatos.next({data: data, show: true});
-          if (data.codigoDepartamentoNegocio) {
-            this.getCiudades(data.codigoDepartamentoNegocio);
-          }
           if (data.codigoDepartamento) {
               this.getCiudades(data.codigoDepartamento);
           }
-          if (data.codigoCiudadNegocio) {
-            this.getBarrios(data.codigoCiudadNegocio);
+          if (data.codigoDepartamentoNacimiento) {
+              this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
+          }
+          if (data.codigoDepartamentoNegocio) {
+            this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
           }
           if (data.codigoCiudad) {
             this.getBarrios(data.codigoCiudad);
+          }
+          if (data.codigoCiudadNegocio) {
+            this.getBarriosNegocio(data.codigoCiudadNegocio);
           }
       });
   }
   public seleccionDepartamento(event: MatSelectChange): void {
        const codigo: string = event.value;
        this.getCiudades(codigo);
+  }
+  /**
+   * @description: Departamento de nacimiento
+   */
+  public seleccionDepartamentoNacimiento(event: MatSelectChange): void {
+      const codigo: string = event.value;
+      this.getCiudadesNacimiento(codigo);
+  }
+  /**
+   * @description: Departamento de negocio
+   */
+  public seleccionDepartamentoNegocio(event: MatSelectChange): void {
+      const codigo: string = event.value;
+      this.getCiudadesNegocio(codigo);
   }
   /**
    * @description: Selecciona el codigo para cargar el api barrios
@@ -128,10 +150,29 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.getBarrios(codigo);
   }
   /**
+   * @description: Selecciona el codigo para cargar el api barrios
+   */
+  public seleccionCiudadNegocio(event: MatSelectChange): void {
+      const codigo: string = event.value;
+      this.getBarriosNegocio(codigo);
+  }
+  /**
    * @description: Obtiene el listado de departamento
    */
   private getDepartamentos(): void {
       this.departamentos$ = this.departamentosCiudadesService.getDepartamentos();
+  }
+  /**
+   * @description: Obtiene listado de departamento nacimiento
+   */
+  private getDepartamentoNacimiento(): void {
+      this.departamentosNacimiento$ = this.departamentosCiudadesService.getDepartamentos();
+  }
+  /**
+   * @description:
+   */
+  private getDepartamentoNegocio(): void {
+      this.departamentosNegocio$ = this.departamentosCiudadesService.getDepartamentos();
   }
   /**
    * @description: Obtiene el listado de ciudades
@@ -140,10 +181,28 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
   }
   /**
+   * @description: Obtiene listado de ciudades nacimiento
+   */
+  private getCiudadesNacimiento(codigo: string): void {
+      this.ciudadesNacimiento$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+  /**
+   * @description: Obtiene listado de ciudades negocio
+   */
+  private getCiudadesNegocio(codigo: string): void {
+      this.ciudadesNegocio$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+  /**
    * @description: Obtiene el listado de barrios
    */
   private getBarrios(codigo: string): void {
       this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
+  }
+  /**
+   * @description: Obtiene el listado de barrios del negocio
+   */
+  private getBarriosNegocio(codigo: string): void {
+      this.barriosNegocio$ = this.departamentosCiudadesService.getBarrios(codigo);
   }
   /**
    * @description: Guardado de datos fabrica

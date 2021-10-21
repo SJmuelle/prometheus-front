@@ -53,6 +53,14 @@ export class AppSettingsService {
             base: EndPoints.uri('barrios')
         }
     };
+    /**
+     * @description: End-point Listas genericas
+     */
+    public genericas = {
+        url: {
+            base: EndPoints.uri('consulta-lista-generica')
+        }
+    };
 
 
 
