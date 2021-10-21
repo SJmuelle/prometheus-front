@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FabricaCreditoService} from '../../../../../../core/services/fabrica-credito.service';
 import {Observable, Subject, Subscription} from 'rxjs';
 import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
@@ -11,6 +11,7 @@ import {
     FormularioCreditoInterface,
 } from '../../../../../../core/interfaces/formulario-fabrica-credito.interface';
 import Swal from 'sweetalert2';
+import {GenericasService} from '../../../../../../core/services/genericas.service';
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -28,6 +29,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public barrios$: Observable<any>;
   public barriosNegocio$: Observable<any>;
   public tipoDocumentos$: Observable<any>;
+  public generos$: Observable<any>;
+  public tipoVivienda$: Observable<any>;
+  public nivelEstudio$: Observable<any>;
+  public viveNegocio$: Observable<any>;
+  public declarante$: Observable<any>;
+  public camaraComercio$: Observable<any>;
   public form: FormGroup;
   public subscription$: Subscription;
   constructor(
@@ -36,7 +43,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private fb: FormBuilder,
       private departamentosCiudadesService: DepartamentosCiudadesService,
-      private router: Router
+      private router: Router,
+      private genericaServices: GenericasService
 
   ) {
     const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
@@ -53,6 +61,13 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.getDepartamentos();
       this.getDepartamentoNacimiento();
       this.getDepartamentoNegocio();
+      this.getTiposDocumentos();
+      this.getGeneros();
+      this.getTiposVivienda();
+      this.getNivelEstudio();
+      this.getViveNegocio();
+      this.getDeclarante();
+      this.getCamaraComercio();
   }
   /**
    * @description:
@@ -205,6 +220,48 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.barriosNegocio$ = this.departamentosCiudadesService.getBarrios(codigo);
   }
   /**
+   * @description: Obtiene los tipos de documentos
+   */
+  private getTiposDocumentos(): void {
+      this.tipoDocumentos$ = this.genericaServices.getTiposDocumentos();
+  }
+  /**
+   * @description: Obtiene los generos
+   */
+  private getGeneros(): void {
+      this.generos$ = this.genericaServices.getGeneros();
+  }
+  /**
+   * @description: Obtiene los tipos de vivienda
+   */
+  private getTiposVivienda(): void {
+      this.tipoVivienda$ = this.genericaServices.getTipoViviendas();
+  }
+  /**
+   * @description: Obtiene el nivel de estudio
+   */
+  private getNivelEstudio(): void {
+      this.nivelEstudio$ = this.genericaServices.getNivelEstudio();
+  }
+  /**
+   * @description: Obtiene listado de vive en negocio
+   */
+  private getViveNegocio(): void {
+      this.viveNegocio$ = this.genericaServices.getViveNegocio();
+  }
+  /**
+   * @description: Obtiene el listado de declarantes
+   */
+  private getDeclarante(): void {
+      this.declarante$ = this.genericaServices.getDeclarante();
+  }
+  /**
+   * @description:
+   */
+  private getCamaraComercio(): void {
+      this.camaraComercio$ = this.genericaServices.getCamaraComercio();
+  }
+  /**
    * @description: Guardado de datos fabrica
    */
   private postFormularioFabrica(datos: FormularioCreditoInterface): void {
@@ -292,14 +349,14 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           codigoCiudadNegocio:           [''],
           codigoBarrioNegocio:           [''],
           direccionNegocio:              [''],
-          telefonoNegocio:               [''],
+          telefonoNegocio:               ['', [Validators.pattern(/^[0-9]*$/)]],
           telefono:                      [''],
           antiguedadNegocio:             [''],
           camaraComercio:                [''],
-          nitNegocio:                    [''],
+          nitNegocio:                    ['', [Validators.pattern(/^[0-9]*$/)]],
           tipo:                          [''],
           tipoDocumento:                 [''],
-          identificacion:                ['', [Validators.required]],
+          identificacion:                ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
           digitoVerificacion:            [''],
           nombreCompleto:                ['', [Validators.required]],
           fechaMatricula:                [''],
@@ -307,7 +364,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           segundoNombre:                 [''],
           primerApellido:                ['', [Validators.required]],
           segundoApellido:               ['', [Validators.required]],
-          celular:                       [''],
+          celular:                       ['', [Validators.pattern(/^[0-9]*$/)]],
           email:                         [''],
           genero:                        [''],
           nacionalidad:                  [''],
@@ -322,6 +379,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           nivelEstudio:                  [''],
           viveEnNegocio:                 [''],
       });
+  }
+  /**
+   * @description: Valida que el campo solo sea numeros
+   */
+  public soloNumero(field: string) {
+      return this.form.controls[field].hasError('pattern');
   }
 
   ngOnDestroy(): void {

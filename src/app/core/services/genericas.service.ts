@@ -59,7 +59,7 @@ export class GenericasService {
    * @description Obtiene listado generos
    */
   public getGeneros(): Observable<any> {
-      const params: string = 'GENEROS';
+      const params: string = 'GENERO';
       return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
   }
   /**
