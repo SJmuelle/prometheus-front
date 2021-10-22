@@ -92,27 +92,30 @@ export interface FormularioDatosTitularInterface {
 }
 
 export interface FormularioRepresentanteInterface {
-    tipoDocumento:           string;
-    identificacion:          string;
-    primerNombre:            string;
-    segundoNombre:           string;
-    primerApellido:          string;
-    segundoApellido:         string;
-    nombreCompleto:          string;
-    telefono:                string;
-    celular:                 string;
-    email:                   string;
-    genero:                  string;
-    descripcionGenero:       string;
-    nacionalidad:            string;
-    descripcionTipoVivienda: string;
-    codigoDepartamento:      string;
-    descripcionDepartamento: string;
-    codigoCiudad:            string;
-    descripcionCiudad:       string;
-    codigoBarrio:            number;
-    descripcionBarrio:       string;
-    direccionResidencial:    string;
-    descripcionNivelEstudio: string;
-    descripcionViveNegocio:  string;
+    tipoDocumento?:           string;
+    identificacion?:          string;
+    primerNombre?:            string;
+    segundoNombre?:           string;
+    primerApellido?:          string;
+    segundoApellido?:         string;
+    nombreCompleto?:          string;
+    telefono?:                string;
+    celular?:                 string;
+    email?:                   string;
+    genero?:                  string;
+    descripcionGenero?:       string;
+    nacionalidad?:            string;
+    descripcionTipoVivienda?: string;
+    codigoDepartamento?:      string;
+    descripcionDepartamento?: string;
+    codigoCiudad?:            string;
+    descripcionCiudad?:       string;
+    codigoBarrio?:            number;
+    descripcionBarrio?:       string;
+    direccionResidencial?:    string;
+    descripcionNivelEstudio?: string;
+    descripcionViveNegocio?:  string;
+    numeroSolicitud?:         number;
+    tipo?:                    string;
+    fechaNacimiento?:         string;
 }

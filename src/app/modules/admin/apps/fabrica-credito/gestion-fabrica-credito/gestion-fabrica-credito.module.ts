@@ -17,12 +17,15 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
 import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-material-components/datetime-picker";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
+import { GridReferenciasComponent } from './grid-referencias/grid-referencias.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 
 @NgModule({
   declarations: [
     FormGestionFabricaCreditoComponent,
-    FormRepresentanteLegalComponent
+    FormRepresentanteLegalComponent,
+    GridReferenciasComponent
   ],
     imports: [
         CommonModule,
@@ -39,7 +42,8 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
         MatButtonModule,
         MatSelectModule,
         NgxMatDatetimePickerModule,
-        NgxMatNativeDateModule
+        NgxMatNativeDateModule,
+        MatTooltipModule
     ],
 
 })

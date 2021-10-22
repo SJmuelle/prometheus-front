@@ -61,6 +61,14 @@ export class AppSettingsService {
             base: EndPoints.uri('consulta-lista-generica')
         }
     };
+    /**
+     * @description: End-point referencias
+     */
+    public referencias = {
+        url: {
+            base: EndPoints.uri('consulta-referencias')
+        }
+    };
 
 
 

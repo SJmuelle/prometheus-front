@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import {
     FormularioRepresentanteInterface
 } from "../../../../../../core/interfaces/formulario-fabrica-credito.interface";
+import * as moment from "moment";
 
 @Component({
   selector: 'app-form-representante-legal',
@@ -68,6 +69,12 @@ export class FormRepresentanteLegalComponent implements OnInit {
       if (this.form.valid) {
           const datos: FormularioRepresentanteInterface = this.form.getRawValue();
           console.log(datos);
+          const {fechaNacimiento, ...data} = datos;
+          const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
+          const datosFormulario: FormularioRepresentanteInterface = {
+              fechaNacimiento: fechaNacimientoFormato,
+              ...data
+          };
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',
@@ -79,7 +86,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
               cancelButtonText: 'Cancelar'
           }).then((result) => {
               if (result.isConfirmed) {
-                  this.postFormulario(datos);
+                  this.postFormulario(datosFormulario);
                   Swal.fire(
                       'Completado',
                       'Información guardada con exito',
@@ -135,6 +142,9 @@ export class FormRepresentanteLegalComponent implements OnInit {
           direccionResidencial:    [''],
           descripcionNivelEstudio: [''],
           descripcionViveNegocio:  [''],
+          numeroSolicitud:         [''],
+          tipo:                    [''],
+          fechaNacimiento:         ['']
       });
   }
     /**
