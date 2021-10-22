@@ -19,13 +19,15 @@ import {NgxMatDatetimePickerModule, NgxMatNativeDateModule} from "@angular-mater
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import { GridReferenciasComponent } from './grid-referencias/grid-referencias.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { FormDetallesReferenciasComponent } from './form-detalles-referencias/form-detalles-referencias.component';
 
 
 @NgModule({
   declarations: [
     FormGestionFabricaCreditoComponent,
     FormRepresentanteLegalComponent,
-    GridReferenciasComponent
+    GridReferenciasComponent,
+    FormDetallesReferenciasComponent
   ],
     imports: [
         CommonModule,

@@ -91,7 +91,7 @@
                     <mat-label>Tipo de vivienda</mat-label>
                     <mat-select
                         [value]="'seleccione'"
-                        [formControlName]="'descripcionTipoVivienda'"
+                        [formControlName]="'tipoVivienda'"
                     >
                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                         <mat-option *ngFor="let item of tipoViviendas.data"
@@ -159,7 +159,7 @@
                     <mat-label>Nivel de estudio</mat-label>
                     <mat-select
                         [value]="'seleccione'"
-                        [formControlName]="'descripcionNivelEstudio'"
+                        [formControlName]="'nivelEstudio'"
                     >
                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                         <mat-option *ngFor="let item of nivelEstudio.data"
@@ -174,7 +174,7 @@
                     <mat-label>¿Vive en el mismo lugar del negocio?</mat-label>
                     <mat-select
                         [value]="'seleccione'"
-                        [formControlName]="'descripcionViveNegocio'"
+                        [formControlName]="'viveEnNegocio'"
                     >
                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                         <mat-option *ngFor="let item of viveNegocio.data"

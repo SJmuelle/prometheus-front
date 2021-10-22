@@ -1,39 +1,45 @@
-<div class="row">
-    <div class="col-md-12 col-lg-12">
-        <table class="shadow p-0">
-            <thead class="bg-accent-50" >
-            <tr
-                class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3"></th>
-                <th class="px-4 py-3">Nombre / Razon social</th>
-                <th class="px-4 py-3">Teléfono / celular</th>
-                <th class="px-4 py-3">Tipo de referencia</th>
-                <th class="px-4 py-3">Estado</th>
-                <th class="px-4 py-3">Fecha de referencia</th>
-            </tr>
-            </thead>
-            <tbody class="bg-white">
-            <ng-container *ngIf="referencias$ | async as items">
-                <ng-container *ngFor="let item of items.data">
-                    <tr>
-                        <td class="px-1 text-sm border">
-                            <button mat-icon-button
-                                    (click)="onGetReferencia(item)"
-                                    matTooltip="Ver información"
-                            >
-                                <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
-                            </button>
-                        </td>
-                        <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
-                        <td class="px-2 text-sm border">{{ item.celular}}</td>
-                        <td class="px-2 text-sm border">{{ item.descripcionTipoReferencia}}</td>
-                        <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
-                        <td class="px-2 text-sm border">{{ item.fechaReferencia }}</td>
-                    </tr>
+<div class="row" [ngSwitch]="esVer">
+    <ng-container *ngSwitchCase="false">
+        <div class="col-md-12 col-lg-12">
+            <table class="shadow p-0">
+                <thead class="bg-accent-50" >
+                <tr
+                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                    <th class="px-4 py-3"></th>
+                    <th class="px-4 py-3">Nombre / Razon social</th>
+                    <th class="px-4 py-3">Teléfono / celular</th>
+                    <th class="px-4 py-3">Tipo de referencia</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3">Fecha de referencia</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white">
+                <ng-container *ngIf="referencias$ | async as items">
+                    <ng-container *ngFor="let item of items.data">
+                        <tr>
+                            <td class="px-1 text-sm border">
+                                <button mat-icon-button
+                                        (click)="onGetReferencia(item)"
+                                        matTooltip="Ver información"
+                                >
+                                    <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                </button>
+                            </td>
+                            <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
+                            <td class="px-2 text-sm border">{{ item.celular}}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionTipoReferencia}}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaReferencia }}</td>
+                        </tr>
+                    </ng-container>
                 </ng-container>
-            </ng-container>
-            </tbody>
-        </table>
-    </div>
+                </tbody>
+            </table>
+        </div>
+    </ng-container>
+    <!--Formulario detalles referencias-->
+    <ng-container *ngSwitchCase="true">
+         <app-form-detalles-referencias></app-form-detalles-referencias>
+    </ng-container>
 </div>
 

@@ -118,4 +118,7 @@ export interface FormularioRepresentanteInterface {
     numeroSolicitud?:         number;
     tipo?:                    string;
     fechaNacimiento?:         string;
+    tipoVivienda?:            string;
+    viveEnNegocio?:           string;
+    nivelEstudio?:            string;
 }

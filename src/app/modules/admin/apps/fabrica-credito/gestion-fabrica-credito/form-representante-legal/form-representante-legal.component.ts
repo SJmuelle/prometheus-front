@@ -144,7 +144,10 @@ export class FormRepresentanteLegalComponent implements OnInit {
           descripcionViveNegocio:  [''],
           numeroSolicitud:         [''],
           tipo:                    [''],
-          fechaNacimiento:         ['']
+          fechaNacimiento:         [''],
+          tipoVivienda:            [''],
+          viveEnNegocio:           [''],
+          nivelEstudio:            ['']
       });
   }
     /**
