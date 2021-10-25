@@ -1,5 +1,5 @@
 <div class="row" [ngSwitch]="esVer">
-    <ng-container *ngSwitchCase="false">
+    <ng-container >
         <div class="col-md-12 col-lg-12">
             <table class="shadow p-0">
                 <thead class="bg-accent-50" >
@@ -38,8 +38,12 @@
         </div>
     </ng-container>
     <!--Formulario detalles referencias-->
-    <ng-container *ngSwitchCase="true">
-         <app-form-detalles-referencias></app-form-detalles-referencias>
-    </ng-container>
+    <div class="sm:mt-13">
+        <ng-container *ngSwitchCase="true">
+             <app-form-detalles-referencias
+                 (cerrarFormulario)=onCerrarFormularioDetalle($event)
+             ></app-form-detalles-referencias>
+        </ng-container>
+    </div>
 </div>
 

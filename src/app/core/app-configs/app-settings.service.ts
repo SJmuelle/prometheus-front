@@ -67,7 +67,8 @@ export class AppSettingsService {
     public referencias = {
         url: {
             base: EndPoints.uri('consulta-referencias'),
-            baseDetalle: EndPoints.uri('consulta-detalle-referencias')
+            baseDetalle: EndPoints.uri('consulta-detalle-referencias'),
+            baseReferencia: EndPoints.uriGenerica('cre-actualizar-referencia')
         }
     };
 

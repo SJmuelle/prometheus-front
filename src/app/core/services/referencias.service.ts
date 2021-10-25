@@ -7,7 +7,7 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
   providedIn: 'root'
 })
 export class ReferenciasService {
-  public seleccionDatosReferencia: BehaviorSubject<{value: any}> = new BehaviorSubject<{value: any}>({value: ''});
+  public seleccionDatosReferencia: BehaviorSubject<{value: any; show: boolean}> = new BehaviorSubject<{value: any; show: boolean}>({value: '', show: false});
   constructor(
       private _http: HttpClient,
       private _appSettings: AppSettingsService
@@ -25,5 +25,11 @@ export class ReferenciasService {
   public getDetalleReferencia(datos: any): Observable<any> {
       const {numeroSolicitud, idReferencias, identificacion} = datos;
       return this._http.get(`${this._appSettings.referencias.url.baseDetalle}/${numeroSolicitud}/${idReferencias}/${identificacion}`);
+  }
+  /**
+   * @description: Actualiza la referencia
+   */
+  public putDetalleReferencia(datos: any): Observable<any> {
+      return this._http.post(this._appSettings.referencias.url.baseReferencia, datos);
   }
 }

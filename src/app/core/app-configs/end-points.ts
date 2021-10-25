@@ -13,4 +13,10 @@ export class EndPoints {
     static uriCredito(url: string): string {
         return environment.urlApi4 + url;
     }
+    /**
+     * @description: Url genericas
+     */
+    static uriGenerica(url: string): string {
+        return environment.urlApi5 + url;
+    }
 }

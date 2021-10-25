@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <form [formGroup]="form">
-            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+            <div class="bg-white shadow shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                     <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Detalle de referencia comercial</span>
                     </ng-container>
@@ -13,13 +13,13 @@
                             <mat-label>Tipo de referencia</mat-label>
                             <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'descripcionTipoReferencia'">
                         </mat-form-field>
-                        <ng-container *ngIf="form.controls['tipo'].value != 'P'">
+                        <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Razón social</mat-label>
                                 <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'nombreCompleto'">
                             </mat-form-field>
                         </ng-container>
-                        <ng-container *ngIf="form.controls['tipo'].value != 'C'">
+                        <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Primer nombre</mat-label>
                                 <input matInput type="text" placeholder="Primer nombre" [formControlName]="'primerNombre'">
@@ -35,7 +35,7 @@
                         </ng-container>
                     </div>
                     <div class="-mx-3 md:flex mt-3 mb-2">
-                        <ng-container *ngIf="form.controls['tipo'].value != 'C'">
+                        <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Segundo apellido</mat-label>
                                 <input matInput type="text" placeholder="Segundo apellido" [formControlName]="'segundoApellido'">
@@ -45,7 +45,7 @@
                             <mat-label>Teléfono / Celular</mat-label>
                             <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'celular'">
                         </mat-form-field>
-                        <ng-container *ngIf="form.controls['tipo'].value != 'P'">
+                        <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                             <ng-container *ngIf="departamentos$ | async as departamentos">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Departamento de residencia</mat-label>
@@ -99,8 +99,16 @@
                     </div>
                     <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
                         <button mat-raised-button
+                                class="mr-2"
+                                color="accent"
+                                type="button"
+                        >
+                            Nueva referencia
+                        </button>
+                        <button mat-raised-button
                                 color="primary"
                                 type="button"
+                                (click)="onActualizar()"
                         >
                             Actualizar
                         </button>

@@ -23,11 +23,17 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
+  /**
+   * @description: Cerrar formulario de detalles referencias
+   */
+  public onCerrarFormularioDetalle(event: boolean) {
+      this.esVer = event;
+  }
 
   public onGetReferencia(datos: any): void {
       this.esVer = true;
       console.log(datos);
-      this.referenciasService.seleccionDatosReferencia.next({value: datos});
+      this.referenciasService.seleccionDatosReferencia.next({value: datos, show: true});
   }
 
   /**
