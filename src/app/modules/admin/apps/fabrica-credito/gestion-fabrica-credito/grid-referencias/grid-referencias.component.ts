@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {ReferenciasService} from "../../../../../../core/services/referencias.service";
 
@@ -11,23 +11,32 @@ import {ReferenciasService} from "../../../../../../core/services/referencias.se
 export class GridReferenciasComponent implements OnInit, OnDestroy {
   public referencias$: Observable<any>;
   public esVer: boolean = false;
+  public subscription$: Subscription;
   constructor(
       private route: ActivatedRoute,
       private referenciasService: ReferenciasService
   ) {
-      const codigo: string = this.route.snapshot.paramMap.get('num');
-      if (codigo) {
-        this.getReferencias(codigo);
-      }
+
   }
 
   ngOnInit(): void {
+      this.cargarReferencias();
+      this.escuchaObservable();
   }
   /**
    * @description: Cerrar formulario de detalles referencias
    */
   public onCerrarFormularioDetalle(event: boolean) {
       this.esVer = event;
+  }
+  /**
+   * @description: carga las referencias desde el inicio
+   */
+  public cargarReferencias(): void {
+      const codigo: string = this.route.snapshot.paramMap.get('num');
+      if (codigo) {
+          this.getReferencias(codigo);
+      }
   }
 
   public onGetReferencia(datos: any): void {
@@ -42,10 +51,21 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
   private getReferencias(codigo: string): void {
       this.referencias$ = this.referenciasService.getReferencias(codigo);
   }
+  /**
+   * @description:  Escucha el observable evento
+   */
+  private escuchaObservable(): void {
+      this.subscription$ = this.referenciasService.eventos$.subscribe((res) => {
+          if (res) {
+              this.cargarReferencias();
+          }
+      });
+  }
 
     ngOnDestroy(): void {
       console.log('Destruido');
       this.esVer = false;
+      this.subscription$.unsubscribe();
     }
 
 

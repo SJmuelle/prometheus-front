@@ -1,11 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
 import {Observable, Subscription} from "rxjs";
 import {MatSelectChange} from "@angular/material/select";
 import {GenericasService} from "../../../../../../core/services/genericas.service";
 import {ActivatedRoute} from "@angular/router";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReferenciasService} from "../../../../../../core/services/referencias.service";
 import Swal from "sweetalert2";
 
@@ -14,7 +14,7 @@ import Swal from "sweetalert2";
   templateUrl: './form-dialog-referencias.component.html',
   styleUrls: ['./form-dialog-referencias.component.scss']
 })
-export class FormDialogReferenciasComponent implements OnInit {
+export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
   public departamentos$: Observable<any>;
   public ciudades$: Observable<any>;
   public barrios$: Observable<any>;
@@ -24,6 +24,7 @@ export class FormDialogReferenciasComponent implements OnInit {
   constructor(
       private departamentosCiudadService: DepartamentosCiudadesService,
       private genericaServices: GenericasService,
+      private _dialog: MatDialogRef<FormDialogReferenciasComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
       private route: ActivatedRoute,
       private fb: FormBuilder,
@@ -37,6 +38,11 @@ export class FormDialogReferenciasComponent implements OnInit {
   ngOnInit(): void {
       this.getDepartamentos();
       this.getTiposReferencia();
+      this.estadoFormulario();
+  }
+
+  public onCerrar(): void {
+      this._dialog.close();
   }
 
   public onGuardar(): void {
@@ -62,6 +68,8 @@ export class FormDialogReferenciasComponent implements OnInit {
               }
           });
 
+      }else {
+          this.form.markAllAsTouched();
       }
   }
 
@@ -102,31 +110,127 @@ export class FormDialogReferenciasComponent implements OnInit {
     private crearFormulario(): void {
         this.form = this.fb.group({
             numeroSolicitud:    [''],
-            identificacion:     [''],
-            primerNombre:       [''],
+            identificacion:     ['', [Validators.required]],
+            primerNombre:       ['', [Validators.required]],
             segundoNombre:      [''],
-            primerApellido:     [''],
+            primerApellido:     ['', [Validators.required]],
             segundoApellido:    [''],
-            nombreCompleto:     [''],
-            tipo:               [''],
+            nombreCompleto:     ['', [Validators.required]],
+            tipo:               ['seleccione', [Validators.required]],
             parentesco:         [''],
             telefono:           [''],
             celular:            [''],
             codigoPais:         [''],
-            codigoDepartamento: [''],
-            codigoCiudad:       [''],
-            codigoBarrio:       [''],
+            codigoDepartamento: ['seleccione', [Validators.required]],
+            codigoCiudad:       ['seleccione', [Validators.required]],
+            codigoBarrio:       ['seleccione', [Validators.required]],
             direccion:          [''],
-            antiguedad:         [''],
+            antiguedad:         ['', [Validators.required]],
         });
     }
     /**
      * @description: Crea una referencia
      */
     private postReferencia(datos: any): void {
-        this.subscription$ = this.referenciasService.postReferencia(datos).subscribe(() => {
+        const {tipo,
+            numeroSolicitud,
+            identificacion,
+            primerNombre,
+            segundoNombre,
+            primerApellido,
+            segundoApellido,
+            nombreCompleto,
+            parentesco,
+            telefono,
+            celular,
+            codigoPais,
+            codigoDepartamento,
+            codigoCiudad,
+            codigoBarrio,
+            direccion,
+            antiguedad
 
-        })
+        } = datos;
+        const formPersonal = {
+            numeroSolicitud: Number(numeroSolicitud),
+            identificacion:  identificacion,
+            primerNombre:    primerNombre,
+            segundoNombre:   segundoNombre,
+            primerApellido:  primerApellido,
+            segundoApellido: segundoApellido,
+            nombreCompleto:  `${primerNombre +' '}${segundoNombre? segundoNombre + ' ' : ''}${primerApellido && segundoApellido? primerApellido + ' ': primerApellido}${segundoApellido? segundoApellido : ''}`,
+            tipo:            tipo,
+            parentesco:      parentesco,
+            telefono:        telefono,
+            celular:         celular,
+            codigoPais:      codigoPais,
+            codigoDepartamento: codigoDepartamento,
+            codigoCiudad:       codigoCiudad,
+            codigoBarrio:       codigoBarrio,
+            direccion:          direccion,
+            antiguedad:         antiguedad,
+        };
+        const formComercial = {
+            numeroSolicitud: Number(numeroSolicitud),
+            identificacion:  identificacion,
+            primerNombre:    primerNombre,
+            segundoNombre:   segundoNombre,
+            primerApellido:  primerApellido,
+            segundoApellido: segundoApellido,
+            nombreCompleto:  nombreCompleto,
+            tipo:            tipo,
+            parentesco:      parentesco,
+            telefono:        telefono,
+            celular:         celular,
+            codigoPais:      codigoPais,
+            codigoDepartamento: codigoDepartamento,
+            codigoCiudad:       codigoCiudad,
+            codigoBarrio:       codigoBarrio,
+            direccion:          direccion,
+            antiguedad:         antiguedad,
+        };
+        if (tipo === 'P') {
+           /* this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
+                this.onCerrar();
+                this.referenciasService.eventos$.emit(true);
+            });*/
+        }else {
+            /*this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
+                this.onCerrar();
+                this.referenciasService.eventos$.emit(true);
+            });*/
+        }
+    }
+
+    private estadoFormulario(): void {
+        this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
+            if (tipo === 'P') {
+                this.form.controls['nombreCompleto'].setValue('');
+                this.form.controls['nombreCompleto'].clearValidators();
+                this.form.controls['codigoDepartamento'].setValue('');
+                this.form.controls['codigoDepartamento'].clearValidators();
+                this.form.controls['codigoCiudad'].setValue('');
+                this.form.controls['codigoCiudad'].clearValidators();
+                this.form.controls['codigoBarrio'].setValue(0);
+                this.form.controls['codigoBarrio'].clearValidators();
+                this.form.controls['direccion'].setValue('');
+            }else {
+                this.form.controls['primerNombre'].setValue('');
+                this.form.controls['primerNombre'].clearValidators();
+                this.form.controls['segundoNombre'].setValue('');
+                this.form.controls['primerApellido'].setValue('');
+                this.form.controls['primerApellido'].clearValidators();
+                this.form.controls['segundoApellido'].setValue('');
+                this.form.controls['nombreCompleto'].setValidators(Validators.required);
+                this.form.controls['codigoDepartamento'].setValidators(Validators.required);
+                this.form.controls['codigoCiudad'].setValidators(Validators.required);
+                this.form.controls['codigoBarrio'].setValidators(Validators.required);
+            }
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.subscription$.unsubscribe();
     }
 
 }

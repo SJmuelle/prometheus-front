@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AppSettingsService} from "../app-configs/app-settings.service";
 import {BehaviorSubject, Observable, Subject} from "rxjs";
@@ -8,6 +8,7 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
 })
 export class ReferenciasService {
   public seleccionDatosReferencia: BehaviorSubject<{value: any; show: boolean}> = new BehaviorSubject<{value: any; show: boolean}>({value: '', show: false});
+  public eventos$: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(
       private _http: HttpClient,
       private _appSettings: AppSettingsService

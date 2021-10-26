@@ -48,6 +48,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
           },
           minWidth: '680px',
           minHeight: '420px',
+          disableClose: true
       });
 
       dialogRef.afterClosed().toPromise();
@@ -157,6 +158,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
   private actualizarDetalleReferencia(datos: any): void {
       this.subscription$ = this.referenciasService.putDetalleReferencia(datos).subscribe(( ) => {
           this.cerrarFormulario.emit(false);
+          this.referenciasService.eventos$.emit(true);
       });
   }
   /**
