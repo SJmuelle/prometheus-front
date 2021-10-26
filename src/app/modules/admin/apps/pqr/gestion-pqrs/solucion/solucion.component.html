@@ -21,7 +21,9 @@
             <form class="mt-4">
                 <div>
                     <label for="filep" class="w-100">
-                        <button mat-button class="bg-gray-100 text-white"><mat-icon svgIcon="attach_file"></mat-icon> </button>
+                        <span mat-button class="bg-gray-100 text-white cursor-pointer" >
+                            <mat-icon svgIcon="attach_file"></mat-icon>
+                        </span>
                         {{filename}}
                     </label>
                     <input type="file" name="filep" id="filep" class="col-12" (change)="onCharge($event.target)"

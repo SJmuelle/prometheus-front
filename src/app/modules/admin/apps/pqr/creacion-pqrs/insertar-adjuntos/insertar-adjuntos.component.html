@@ -5,21 +5,21 @@
 
             <mat-form-field class="flex-auto w-100">
                 <mat-label>Nombre</mat-label>
-                <input matInput type="text" autocomplete="off" name="area" [(ngModel)]="evidencia.descripcion">
+                <input matInput type="text" autocomplete="off" name="area" [(ngModel)]="evidencia.descripcion" required>
             </mat-form-field>
 
         </div> 
         <div class="col-lg-6 col-sm-6 ">
 
             <form class="mt-4">
-                <div>
-                    <label for="filep" class="w-100">
-                        <button mat-button class="bg-gray-100 text-white"> <mat-icon svgIcon="attach_file"></mat-icon></button>
+               
+                    <label  for="filep"class="w-100">
+                        <span mat-button class="bg-gray-100 text-white cursor-pointer"> <mat-icon svgIcon="attach_file"></mat-icon></span>
                         {{ evidencia.filename}}
                     </label>
                     <input type="file" name="filep" id="filep" class="col-12" (change)="onCharge($event.target,0)"
                         style="display:none" />
-                </div>
+              
             </form>
         </div>
     </div>
@@ -35,6 +35,6 @@
 
 </div>
 <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="evidencia" class="color_fintra text-white">Guardar </button>
+    <button mat-button [mat-dialog-close]="evidencia" class="color_fintra text-white" [disabled]="evidencia.descripcion==''">Guardar </button>
     <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white">Cerrar </button>
 </mat-dialog-actions>

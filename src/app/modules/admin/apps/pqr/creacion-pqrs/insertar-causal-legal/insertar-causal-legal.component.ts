@@ -73,13 +73,10 @@ export class InsertarCausalLegalComponent implements OnInit {
     return retu;
   }
   nombreCausal(dato) {
-
-
     let index = this.listadoCasualPQRS.findIndex(data => data.id == dato);
     let retu
     if (index != -1) {
     retu = this.listadoCasualPQRS[index].descripcion;
-  
     } else {
       retu = '';
     }

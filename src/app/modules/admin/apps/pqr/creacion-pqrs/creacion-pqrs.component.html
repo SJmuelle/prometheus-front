@@ -48,10 +48,11 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Línea de negocio</mat-label>
                                     <mat-select [(ngModel)]="datos.lineaNegocio" name="lineaNegocio"
-                                        (ngModelChange)="negociosCabeceras(datos.lineaNegocio)" [required]="datosBasicosDisabled">
+                                        (ngModelChange)="negociosCabeceras(datos.lineaNegocio)"
+                                        [required]="datosBasicosDisabled">
                                         <mat-option value="" disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoLineaNegocio ">
-                                            {{item.descripcion}}   ({{item.cantidad}})</mat-option>
+                                            {{item.descripcion}} ({{item.cantidad}})</mat-option>
                                     </mat-select>
                                 </mat-form-field>
 
@@ -60,7 +61,8 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Código de negocio</mat-label>
                                     <mat-select [(ngModel)]="datos.negocio" name="negocio"
-                                        (ngModelChange)="seleccionarNegocio(datos.negocio)" [required]="datosBasicosDisabled" >
+                                        (ngModelChange)="seleccionarNegocio(datos.negocio)"
+                                        [required]="datosBasicosDisabled">
                                         <mat-option value="" disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.codigoNegocio}}" *ngFor="let item of listadoNegocio ">
                                             {{item.codigoNegocio}}</mat-option>
@@ -78,7 +80,7 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Entidad</mat-label>
                                     <input matInput type="text" autocomplete="off" name="entidad"
-                                        [(ngModel)]="datos.entidad">
+                                        [(ngModel)]="datos.entidad" disabled>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -100,85 +102,90 @@
                     Datos básicos
                 </div>
                 <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=2">
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-12">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Identificación</mat-label>
-                                <input matInput type="text" autocomplete="off" name="identificaiconCliente"
-                                    [disabled]="datosBasicosDisabled" (change)="buscarDatosBasicos()"
-                                    [(ngModel)]="identificaiconCliente">
-                            </mat-form-field>
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Identificación</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="identificaiconCliente"
+                                        [disabled]="datosBasicosDisabled" (change)="buscarDatosBasicos()"
+                                        [(ngModel)]="identificaiconCliente" maxlength="11" minlength="6" required>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Nombres</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="nombres" required 
+                                        [disabled]="datosBasicosDisabled" [(ngModel)]="datos.nombres" maxlength="50"  minlength="2"> 
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Apellidos</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="apellidos" required
+                                        [disabled]="datosBasicosDisabled" [(ngModel)]="datos.apellidos" maxlength="50"  minlength="2">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Departamento *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="departamento" disabled
+                                        [(ngModel)]="datos.departamento" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Municipio / Ciudad *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="municipio" disabled
+                                        [(ngModel)]="datos.ciudad" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Barrio *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="barrio" disabled
+                                        [(ngModel)]="datos.barrio" required>
+                                </mat-form-field>
+                            </div>
 
                         </div>
-                        <div class="col-lg-4 col-sm-12">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Nombres</mat-label>
-                                <input matInput type="text" autocomplete="off" name="nombres"
-                                    [disabled]="datosBasicosDisabled" [(ngModel)]="datos.nombres">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-lg-4 col-sm-12">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Apellidos</mat-label>
-                                <input matInput type="text" autocomplete="off" name="apellidos"
-                                    [disabled]="datosBasicosDisabled" [(ngModel)]="datos.apellidos">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Departamento</mat-label>
-                                <input matInput type="text" autocomplete="off" name="departamento"
-                                   disabled [(ngModel)]="datos.departamento">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
-                            <mat-form-field class="flex-auto w-100" >
-                                <mat-label>Municipio / Ciudad</mat-label>
-                                <input matInput type="text" autocomplete="off" name="municipio"
-                                disabled [(ngModel)]="datos.municipio">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Barrio</mat-label>
-                                <input matInput type="text" autocomplete="off" name="barrio"
-                                disabled [(ngModel)]="datos.barrio">
-                            </mat-form-field>
-                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Dirección *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="direccion" disabled
+                                        [(ngModel)]="datos.direccion" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Télefono / Celular</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="telefono"
+                                        [(ngModel)]="datos.telefono" required maxlength="11" minlength="7">
+                                </mat-form-field>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Dirección</mat-label>
-                                <input matInput type="text" autocomplete="off" name="direccion"
-                                disabled [(ngModel)]="datos.direccion">
-                            </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>E-mail</mat-label>
+                                    <input matInput type="email" autocomplete="off" name="email"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                        [(ngModel)]="datos.email" required maxlength="50" minlength="7">
+                                </mat-form-field>
+                            </div>
                         </div>
-                        <div class="col-lg-4 col-sm-12">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Télefono / Celular</mat-label>
-                                <input matInput type="text" autocomplete="off" name="telefono"
-                                  [(ngModel)]="datos.telefono">
-                            </mat-form-field>
-
+                        <div class="row">
+                            <div class="col-sm-12 text-end">
+                                <button mat-button class="btn bg-gray-400 text-white mr-2"
+                                    (click)="tabMostrar=1">Anterior </button>
+                                <button mat-button class="btn color_fintra text-white" (click)="validaForm(2)">Siguiente
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-lg-4 col-sm-12">
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>E-mail</mat-label>
-                                <input matInput type="text" autocomplete="off" name="email"
-                                   [(ngModel)]="datos.email">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-12 text-end">
-                            <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=1">Anterior </button>
-                            <button mat-button class="btn color_fintra text-white" (click)="tabMostrar=3">Siguiente </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </fuse-card>
         </div>
@@ -259,7 +266,7 @@
                             Insertar causal a PQRS hijas
                         </button>
 
-                        <table class="w-full shadow p-1  h-50 mt-5"  *ngIf="causalesLegales.length!=0">
+                        <table class="w-full shadow p-1  h-50 mt-5" *ngIf="causalesLegales.length!=0">
                             <thead style="background-color: #F9FAFB;">
                                 <tr
                                     class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
@@ -303,12 +310,13 @@
                         <div class="row" style="height: 10em;">
                             <div class="col-sm-12" style="height: 10em;">
                                 <quill-editor class="mb-2" placeholder=" Descripción..." name="descripcion"
-                                [(ngModel)]="datos.descripcion" [modules]="quillModules"></quill-editor>
+                                    [(ngModel)]="datos.descripcion" [modules]="quillModules"></quill-editor>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-end mt-20">
-                                <button mat-button class="btn bg-gray-400 text-white mr-2 " (click)="tabMostrar=2;">Anterior </button>
+                                <button mat-button class="btn bg-gray-400 text-white mr-2 "
+                                    (click)="tabMostrar=2;">Anterior </button>
                                 <button mat-button class="btn color_fintra text-white"
                                     (click)="validaForm(3);mostrarMensaje()">Siguiente </button>
                             </div>
@@ -355,40 +363,40 @@
                             </form>
                         </div>
                     </div> -->
-                 
-                        <!-- //validoLegal -->
-                        <button mat-button class="color_fintra text-white" (click)="insertadjunti()">
-                            Insertar Evidencia
-                        </button>
 
-                        <table class="w-full shadow p-1  h-50 mt-5"  *ngIf="evidencia.length!=0">
-                            <thead style="background-color: #F9FAFB;">
-                                <tr
-                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                    <th class="px-4 py-3 text-center"></th>
-                                    <th class="px-4 py-3 text-center">Nombre</th>
-                                    <th class="px-4 py-3 text-center">Evidencia</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <tr class="text-gray-700"
-                                    *ngFor="let item of evidencia;let indexOfelement=index; ">
-                                    <td class="px-2 text-sm border text-center pointer">
-                                        <mat-icon svgIcon="heroicons_outline:backspace"
-                                            (clicl)="eliminarCausal(indexOfelement)"></mat-icon>
-                                    </td>
-                                    <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
-                                    <td class="px-2 text-sm border text-center capitalize">{{ item.filename}}</td>
-                                </tr>
-                                <tr class="text-gray-700" *ngIf="evidencia.length==0">
-                                    <td class="px-2 text-sm border text-center" colspan="6">No hay resultados</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                   
+                    <!-- //validoLegal -->
+                    <button mat-button class="color_fintra text-white" (click)="insertadjunti()">
+                        Subir adjuntos
+                    </button>
+
+                    <table class="w-full shadow p-1  h-50 mt-5" *ngIf="evidencia.length!=0">
+                        <thead style="background-color: #F9FAFB;">
+                            <tr
+                                class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                <!-- <th class="px-4 py-3 text-center"></th> -->
+                                <th class="px-4 py-3 text-center">Nombre</th>
+                                <th class="px-4 py-3 text-center">Evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="text-gray-700" *ngFor="let item of evidencia;let indexOfelement=index; ">
+                                <!-- <td class="px-2 text-sm border text-center pointer">
+                                    <mat-icon svgIcon="heroicons_outline:backspace"
+                                        (clicl)="eliminarCausal(indexOfelement)"></mat-icon>
+                                </td> -->
+                                <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
+                                <td class="px-2 text-sm border text-center capitalize">{{ item.filename}}</td>
+                            </tr>
+                            <tr class="text-gray-700" *ngIf="evidencia.length==0">
+                                <td class="px-2 text-sm border text-center" colspan="6">No hay resultados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
                     <div class="row mt-3">
                         <div class="col-sm-12 text-end">
-                            <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=3">Anterior </button>
+                            <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=3">Anterior
+                            </button>
                             <button mat-button class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
                         </div>
                     </div>

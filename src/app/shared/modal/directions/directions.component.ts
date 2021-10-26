@@ -14,6 +14,7 @@ export class DirectionsComponent implements OnInit {
   listadoDepartamento: any[];
   listadoCiudades: any[];
   listadoTipoVia: any[];
+  listadoBarrio: any;
 
   constructor(
     public matDialogRef: MatDialogRef<DirectionsComponent>,
@@ -64,8 +65,24 @@ export class DirectionsComponent implements OnInit {
         }
       });
       this.nombreMunicipio(data)
+      this.listarBarrios(data)
+      
   }
 
+  listarBarrios(data) {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this._Service
+      .getQuery(`/listar-barrios/${data}`, true)
+      .subscribe((response: any) => {
+        Swal.close();
+        if (response) {
+          this.listadoBarrio= response.data;
+        } else {
+          this.listadoBarrio= [];
+        }
+      });
+      this.nombreMunicipio(data)
+  }
   nombreDepartamento(dato) {
     let index = this.listadoDepartamento.findIndex(data => data.codigo == dato);
     let retu

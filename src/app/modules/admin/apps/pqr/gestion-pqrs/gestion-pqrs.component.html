@@ -132,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Tipo Cliente
+                                        <div class="text-sm font-medium text-secondary font-bold">Tipo cliente
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.tipoCliente}}
                                         </div>
@@ -207,7 +207,7 @@
                                     <div class="col-sm-6 col-lg-2">
                                         <div class="text-sm font-medium text-secondary font-bold">Área
                                         </div>
-                                        <div class="capitalize" style="font-size: 16px;">{{datos.Area}}
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.area}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
@@ -229,7 +229,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 col-lg-3">
+                                    <div class="col-sm-6 col-lg-3" >
                                         <div class="text-sm font-medium text-secondary font-bold">Fecha de cierre
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.fechaCierre}}
@@ -259,7 +259,7 @@
 
                             </mat-tab>
 
-                            <mat-tab label="Solución">
+                            <mat-tab label="Solución" [disabled]="datos.estado=='Cerrado'">
 
                                 <div class="row">
                                     <app-solucion (cambiarEstado)=cargarDatos($event) class="tamano20"></app-solucion>
@@ -290,75 +290,6 @@
                                 </div>
                                 <hr>
                                 <div class="row">
-                                    <div class="col-lg-12" *ngIf="listadoHistorial.length!=0">
-                                        <div class="row"
-                                            *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial">
-                                            <div class="col-lg-12">
-                                                <!-- <table class="w-full shadow">
-                                                    
-                                                    <thead>
-                                                        <tr
-                                                            class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                                            <th class="px-4 py-3">Fecha y hora</th>
-                                                            <th class="px-4 py-3">Usuario</th>
-                                                            <th class="px-4 py-3">Descripción de la solución</th>
-                                                            <th class="px-4 py-3">Estado</th>
-                                                            <th class="px-4 py-3 text-center">Evidencias</th>
-                                                            <th class="px-4 py-3 text-center">Gestion</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="bg-white">
-                                                        <tr class="text-gray-700"
-                                                            *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial  | paginate: { itemsPerPage: tamanoTablaHistorial, currentPage: pageHistorial }">
-                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.usuario}}
-                                                            </td>
-                                                            <td class="px-4 py-1 text-sm border ">
-                                                                <div [innerHTML]=" item.detalle"></div>
-                                                            </td>
-                                                            <td class="px-4 py-1 text-sm border ">{{ item.estado}}</td>
-
-                                                            <td class="px-2 text-sm border text-center"
-                                                                (click)="busacar_url('data:application/pdf;base64,'+item.base64)">
-                                                                <mat-icon svgIcon="heroicons_outline:folder-open"
-                                                                    [hidden]="item.evidencia==''"></mat-icon>
-                                                            </td>
-                                                            <td class="px-2 text-sm border text-center"
-                                                                [hidden]="aprobarComentario==false">
-                                                                <mat-icon svgIcon="heroicons_outline:check"
-                                                                    [hidden]="item.estado!='En espera'"
-                                                                    (click)="cambiarEstado(item, true)"></mat-icon>
-                                                                <mat-icon svgIcon="heroicons_outline:x"
-                                                                    [hidden]="item.estado!='En espera'"
-                                                                    (click)="cambiarEstado(item,false)"></mat-icon>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table> -->
-                                                <div class="row p-0 m-0">
-                                                    <div class="col-lg-4 col-sm-12">
-                                                        <p class="p-0 m-0"><strong>Fecha: </strong>{{ item.fecha}}</p>
-                                                        <p class="p-0 m-0"><strong>Usuario: </strong>{{ item.usuario}}
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-lg-4" [hidden]="aprobarComentario==false">
-                                                        <mat-icon svgIcon="heroicons_outline:check"
-                                                            [hidden]="item.estado!='En espera'"
-                                                            (click)="cambiarEstado(item, true)"></mat-icon>
-                                                        <mat-icon svgIcon="heroicons_outline:x"
-                                                            [hidden]="item.estado!='En espera'"
-                                                            (click)="cambiarEstado(item,false)"></mat-icon>
-
-                                                    </div>
-                                                </div>
-
-                                                <div class="shadow  py-4 px-5 rounded-lg dark:bg-gray-800 ng-star-inserted"
-                                                    style="    overflow: auto;height: 16em;">
-                                                    <div [innerHTML]=" item.detalle"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-lg-12">
                                         <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
                                             *ngIf="listadoHistorial.length==0">
@@ -366,6 +297,117 @@
                                                 <img src="assets/images/animaciones/nodata.gif">
                                             </div>
                                         </fuse-card>
+                                    </div>
+                                    <div class="col-lg-12" *ngIf="listadoHistorial.length!=0">
+                                        <div class="">
+                                            <ol>
+                                                <!-- Activities -->
+                                                <ng-container
+                                                    *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial">
+                                                    <!-- Activity -->
+                                                    <li class="relative flex">
+                                                        <!-- Line -->
+                                                        <ng-container>
+                                                            <div
+                                                                class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600">
+                                                            </div>
+                                                        </ng-container>
+
+                                                        <div class="relative flex flex-auto">
+                                                            <!-- Icon -->
+                                                            <ng-container>
+                                                                <div
+                                                                    class="flex flex-shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
+                                                                    <mat-icon class="icon-size-5 text-white"
+                                                                        svgIcon="heroicons_solid:star">
+                                                                    </mat-icon>
+                                                                </div>
+                                                            </ng-container>
+
+                                                            <!-- Content -->
+                                                            <div class="flex flex-col flex-auto items-start mb-4">
+                                                                <!-- Description -->
+                                                                <ng-container>
+                                                                    <div class="row w-100">
+                                                                        <div class="col-lg-7">
+                                                                            <div class="text-secondary">
+                                                                                ({{pqrid}}-{{ item.id}})
+                                                                            </div>
+                                                                            <strong class="capitalize">
+                                                                                {{ item.usuario}}
+                                                                            </strong>
+                                                                        </div>
+                                                                        <div class="col-lg-5 text-right"
+                                                                            *ngIf="aprobarComentario==true">
+                                                                            <button mat-button
+                                                                                [hidden]="item.estadocolor!='bg-warning'"
+                                                                                class="color_fintra text-white"
+                                                                                (click)="cambiarEstado(item, true)">
+                                                                                <mat-icon
+                                                                                    svgIcon="heroicons_outline:check"
+                                                                                    class="cursor-pointer text-white">
+                                                                                </mat-icon>
+                                                                            </button>
+                                                                            <button mat-button
+                                                                                class="bg-gray-400 text-white"
+                                                                                [hidden]="item.estadocolor!='bg-warning'"
+                                                                                (click)="cambiarEstado(item, false)">
+                                                                                <mat-icon svgIcon="heroicons_outline:x"
+                                                                                    class="cursor-pointer text-white">
+                                                                                </mat-icon>
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </ng-container>
+                                                                <div
+                                                                    class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
+                                                                    <!-- Date -->
+                                                                    <div class="text-secondary">
+                                                                        {{ item.fecha}}
+                                                                        <!-- {{activity.date | date:'MMM dd, h:mm a'}} -->
+                                                                    </div>
+                                                                    <ng-container>
+                                                                        <div class="hidden sm:block">&bull;</div>
+                                                                        <ng-container>
+                                                                            <div [ngClass]="item.estadocolor">
+                                                                                <span
+                                                                                    class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                                                    {{ item.estado}} </span>
+                                                                            </div>
+                                                                        </ng-container>
+                                                                    </ng-container>
+                                                                </div>
+                                                                <!-- Extra content -->
+                                                                <ng-container>
+                                                                    <div class="mt-2 py-4 px-3 rounded-lg bg-gray-200 dark:bg-gray-800 "
+                                                                        [innerHTML]=" item.detalle"></div>
+                                                                </ng-container>
+                                                                <fuse-alert class="mt-2" [type]="'warn'" [appearance]="'outline'" *ngIf="item.estadocolor=='bg-pink-300'">
+                                                                    <span fuseAlertTitle>Motivo rechazo</span>
+                                                                    {{item.motivoRechazo}}
+                                                                </fuse-alert>
+                                                                <!-- <ng-container *ngIf="item.estadocolor=='bg-pink-300'">
+                                                                    <div
+                                                                        class="mb-4 py-4 px-3 rounded-lg bg-red-200 dark:bg-gray-800">
+                                                                        <div class="icon-size-8 text-red">
+                                                                            <mat-icon
+                                                                                svgIcon="heroicons_outline:x-circle">
+                                                                            </mat-icon>
+                                                                        </div>
+                                                                        <div>
+                                                                            {{item.motivoRechazo}}
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </ng-container> -->
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ng-container>
+                                            </ol>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="m-5">
@@ -402,7 +444,7 @@
                                                     <thead>
                                                         <tr
                                                             class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                                            <th class="px-4 py-3">Fecha y Hora</th>
+                                                            <th class="px-4 py-3">Fecha y hora</th>
                                                             <th class="px-4 py-3">Responsable</th>
                                                             <th class="px-4 py-3">Email</th>
                                                             <th class="px-4 py-3">Estado</th>
@@ -412,7 +454,8 @@
                                                         <tr class="text-gray-700"
                                                             *ngFor="let item of listadoAsignaciones | filter: filtrarTablaAsignaciones  | paginate: { itemsPerPage: tamanoTablaAsignaciones, currentPage: pageAsignaciones }">
                                                             <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
-                                                            <td class="px-4 py-1 text-sm border capitalize">{{ item.usuario}}
+                                                            <td class="px-4 py-1 text-sm border capitalize">
+                                                                {{ item.usuario}}
                                                             </td>
                                                             <td class="px-4 py-1 text-sm border">{{ item.email}}</td>
                                                             <td class="px-4 py-1 text-sm border">{{ item.estado}}</td>
@@ -440,10 +483,10 @@
 
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Alertas y Notificaciones">
+                            <mat-tab label="Alertas y notificaciones">
                                 <div class="row items-center">
                                     <span class="leading-none col-lg-4 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Alertas y Notificaciones
+                                        <div class="leading-tight titulo_tabs">Alertas y notificaciones
                                         </div>
                                     </span>
                                     <div class="leading-tight col-lg-8 col-sm-12 text-end">
@@ -470,8 +513,8 @@
                                                     <thead>
                                                         <tr
                                                             class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                                            <th class="px-4 py-3">Fecha y Hora</th>
-                                                            <th class="px-4 py-3">Correo Electronico</th>
+                                                            <th class="px-4 py-3">Fecha y hora</th>
+                                                            <th class="px-4 py-3">Correo electronico</th>
                                                             <th class="px-4 py-3">Detalle</th>
                                                             <th class="px-4 py-3">Tipo</th>
                                                         </tr>

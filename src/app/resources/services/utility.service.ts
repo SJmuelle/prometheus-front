@@ -143,7 +143,7 @@ export class UtilityService {
 
     const headers = new HttpHeaders(optiones);
     headers.delete('Content-Type');
-    return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
+    return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError2));
   }
 
   // postFile(query:string, data:any){
@@ -288,7 +288,82 @@ export class UtilityService {
   }
     return throwError( errorMessage );
   }
+ //Funcion para el Manejo de errores
+ handleError2 = (err: any): Observable<HttpEvent<any>> =>{
+  // debugger;
+  let errorMessage = 'No se envio el correo, favor notificar por otro medio';
+  let icon:string = 'question';
+  console.log("Algo se daño");
+  let res:any = {}
+  if (err.error instanceof ErrorEvent) {
+    icon = "question";
+    errorMessage = `Error: ${err.error.msg}`;
+  } else {
+    switch (err.status) {
+      case 401:
+        localStorage.clear();
+        localStorage.clear();
+        setTimeout(() => {
+          localStorage.setItem('closeSession','true');
 
+        }, 100);
+        break;
+      case 402:
+        localStorage.clear();
+        localStorage.clear();
+        setTimeout(() => {
+          localStorage.setItem('closeSession','true');
+        }, 100);
+        break;
+      case 403:
+          errorMessage = `No tiene permiso para ejecutar esta acción`;
+        break;
+      case 400:
+          if(err.error.msg == 'La session ha expirado'){
+            localStorage.clear();
+            localStorage.clear();
+            setTimeout(() => {
+              localStorage.setItem('closeSession','true');
+
+            }, 100);
+          }
+          if(err.error.msg !== undefined && typeof err.error.msg == 'string'){
+            errorMessage = `${err.error.msg}`;
+          }
+      break;
+      case 404:
+          errorMessage = `${err.error.msg}`
+      break;
+      case 500:
+          errorMessage = `${err.error.msg}`;
+          break;
+      default:
+        errorMessage = `${err.statusText.msg}`;
+        break;
+    }
+  }
+  if( err.status !== 401 && err.error !== 'La session ha expirado'){
+
+  
+  if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
+    Swal.fire({
+      title: 'Error',
+      text: errorMessage,
+      icon: 'error',
+      confirmButtonText: 'Cerrar'
+    })
+
+  }else{
+    Swal.fire({
+      title: 'Error',
+      text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
+      icon: 'error',
+      confirmButtonText: 'Cerrar'
+    })
+  }
+}
+  return throwError( errorMessage );
+}
 
 
 }

@@ -80,31 +80,32 @@ export class FormSolucionesComponent implements OnInit {
           if (response.status == 200) {
             if (!response.data.respuesta.includes('OK')) {
               Swal.fire(
-                '¡Información!',
+                'Información',
                 response.data.respuesta,
                 'error'
               );
               return;
             }
             Swal.fire(
-              '¡Información!',
+              'Información',
               `Se guardo el registro con éxito`,
               'success'
-            );
-            setTimeout(() => {
-              this.matDialogRef.close();
-            }, 1000);
+            ).then(resultado => {
+              if (resultado) {
+                this.matDialogRef.close();
+              }
+            });
 
           } else {
             Swal.fire(
-              '¡Información!',
+              'Información',
               `Hubo un error en los datos enviados, favor evaluar`,
               'success'
             );
           }
         } else {
           Swal.fire(
-            '¡Advertencia!',
+            'Advertencia',
             'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
             'error'
           );

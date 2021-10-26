@@ -19,7 +19,6 @@ export class FormComponent implements OnInit {
     this.datos = this.data
   }
   guardar() {
-    debugger
     let data,url;
     if (this.datos.titulo == 'N') {
       //post
@@ -48,24 +47,33 @@ export class FormComponent implements OnInit {
         Swal.close();
         if (response) {
           if(response.status==200){
+           if (!response.data.respuesta.includes('OK')) {
+              Swal.fire(
+                '¡Información!',
+                response.data.respuesta,
+                'error'
+              );
+              return; 
+            }
             Swal.fire(
-              '¡Información!',
-              `Se guardo el registro con exito`,
+              'Información',
+              `Se guardo el registro con éxito`,
               'success'
-            );
-            setTimeout(() => {
-              this.matDialogRef.close();
-            }, 1000);
+            ).then(resultado => {
+              if (resultado) {
+                this.matDialogRef.close();
+              }
+            });
           }else{
             Swal.fire(
-              '¡Información!',
+              'Información',
               `Hubo un error en los datos enviados, favor evaluar`,
               'success'
             );
           }
         }else{
           Swal.fire(
-            '¡Advertencia!',
+            'Advertencia',
             'Error en la respuesta del servicio, favor intente nuevamente',
             'error'
           );

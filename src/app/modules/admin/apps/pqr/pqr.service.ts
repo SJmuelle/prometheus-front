@@ -48,34 +48,34 @@ export class PqrService {
     }));
   }
   enviarCorreos(url1):void {
-    // this.getListados(url1)
-    //   .subscribe((response: any) => {
-    //     if (response) {
-    //       let data={
-    //         "tipoCanalId": "4",
-    //         "campanaId": "375",
-    //         "tipoCanalOrigenId": "7",
-    //         "tipocasoId": "15",
-    //         "tipoDatoContactoId": "7",
-    //         "email": response.email,
-    //         "cedula": response.cedula,
-    //         "tipoIdentificacion": "CED",
-    //         "primerNombre": response.primerNombre,
-    //         "primerApellido": response.primerApellido,
-    //         "etiqueta": response.etiqueta,
-    //         "asunto": response.asunto,
-    //         "descripcion": "PQRS",
-    //         "mensaje": response.descripcion
-    //       }
-    //      let url = "/fintracredit/webresources/sagicc/send-mail-v2";
-    //     this.envioCorreo(url, data)
-    //       .subscribe((response: any) => {
-    //         if (response) {
+    this.getListados(url1)
+      .subscribe((response: any) => {
+        if (response) {
+          let data={
+            "tipoCanalId": "4",
+            "campanaId": "375",
+            "tipoCanalOrigenId": "7",
+            "tipocasoId": "15",
+            "tipoDatoContactoId": "7",
+            "email": response.email,
+            "cedula": response.cedula,
+            "tipoIdentificacion": "CED",
+            "primerNombre": response.primerNombre,
+            "primerApellido": response.primerApellido,
+            "etiqueta": response.etiqueta,
+            "asunto": response.asunto,
+            "descripcion": "PQRS",
+            "mensaje": response.descripcion
+          }
+         let url = "/fintracredit/webresources/sagicc/send-mail-v2";
+        this.envioCorreo(url, data)
+          .subscribe((response: any) => {
+            if (response) {
 
-    //         }
-    //       })
-    //     }
-    //   })
+            }
+          })
+        }
+      })
   }
   envioCorreo(url: string, data: any): Observable<any> {
     return this._utility.postQueryCorreo(url, data)

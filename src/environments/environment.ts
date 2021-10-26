@@ -5,12 +5,12 @@
 export const environment = {
     production: false,
     //urlApi: 'http://192.168.190.237:8010/api-fintra/api',
-    urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
-    urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry',
-    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
+    urlApi: 'http://192.168.140.241:8010/api-fintra/api',
+    urlApi2: 'http://192.168.140.241:8010/api-fintra/api/generic/qry',
+    urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic',
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto:'https://prometheus.fintra.co:8443/api-fintra/api/pqrs',
+    adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
     envioCorreo:"http://192.168.140.197:8084"
 };
 

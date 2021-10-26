@@ -191,7 +191,7 @@ export class HojavidaComponent implements OnInit {
     this.tab = index;
     switch (index) {
       case 0:
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de Credito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this.listadoCredito = [];
         // SERVICIO DE LA PESTAÑA DEL CREDITO
         this._creditoService
@@ -206,7 +206,7 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 1:
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de Cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._carteraService
           .getCartera(this.info_cliente.identificacion, this.codigoNegocio)
           .subscribe((respCartera: any) => {

@@ -10,11 +10,7 @@ export class CarteraService {
 
     getCartera(cedula: string, codigoNegocio: string) {
         let url;
-        if (cedula == codigoNegocio) {
-            url = environment.urlApi2 + `/informacion-cartera/${cedula}`;
-        } else {
-            url =  environment.urlApi2 + `/informacion-cartera-negocio/${cedula}/${codigoNegocio}`
-        }
+        url = environment.urlApi2 + `/informacion-cartera/${cedula}`;
         return this._httpClient.get(url);
     }
 
@@ -22,7 +18,7 @@ export class CarteraService {
         let today = new Date();
         let year = today.getFullYear();
         let mesActual = (today.getMonth() + 1);
-        let mes = mesActual > 9 ? '' : '0' + mesActual;
+        let mes = mesActual > 9 ? mesActual : '0' + mesActual;
         return this._httpClient.get(
             environment.urlApi2 + `/informacion-detalle-cartera/${year}${mes}/1/${codigoNegocio}`
         );
@@ -32,7 +28,7 @@ export class CarteraService {
         let today = new Date();
         let year = today.getFullYear();
         let mesActual = (today.getMonth() + 1);
-        let mes = mesActual > 9 ? '' : '0' + mesActual;
+        let mes = mesActual > 9 ? mesActual : '0' + mesActual;
         return this._httpClient.get(
             environment.urlApi2 + `/informacion-detalle-cartera-sum/${year}${mes}/${id}/${codigoNegocio}`
         );
@@ -55,8 +51,8 @@ export class CarteraService {
         // console.log(this.readToken());
         const URL = `${environment.urlprometheus}?option=5&user=${codigo}&numsolc=${codigo}`
         const headers = new HttpHeaders({
-            'Content-Type': 'application/json;'
-        });
+            'Authentication' : ``
+        }); 
         console.log(headers);
         return this._httpClient.get(URL, { headers }).pipe();
 

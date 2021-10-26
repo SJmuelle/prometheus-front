@@ -30,6 +30,7 @@ export class SolucionComponent implements OnInit {
   file: any = null;
   filename: string;
   idTipoComentario: string;
+  ext: string;
   constructor(private _pqrService: PqrService, private _activatedRoute: ActivatedRoute,) { }
 
   ngOnInit(): void {
@@ -89,7 +90,29 @@ export class SolucionComponent implements OnInit {
         const file: string | ArrayBuffer = reader.result;
         this.file = file;
         this.filename = fileToRead.name;
-
+        let nombre = this.filename.split('.');
+        this.ext = nombre[1].toLowerCase();
+        console.log(this.file);
+        if (
+          (this.ext == 'pdf') ||
+          (this.ext == 'jpg') ||
+          (this.ext == 'png') ||
+          (this.ext == 'docx') ||
+          (this.ext == 'doc') ||
+          (this.ext == 'xls') ||
+          (this.ext == 'xlsx')
+        ) {
+          return;
+        }
+        Swal.fire(
+          'Información',
+          `Extensión no valida`,
+          'success'
+        );
+        this.file = '';
+        this.filename = '';
+        this.ext = '';
+       
       };
     }
   }
@@ -97,7 +120,7 @@ export class SolucionComponent implements OnInit {
   guardar() {
     this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
     let url = "/agregar-solucion-comentario";
-    Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Guardando solución de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._pqrService
       .Create(url, this.seguimiento)
       .subscribe((response: any) => {
@@ -120,12 +143,12 @@ export class SolucionComponent implements OnInit {
               let data = {
 
                 "idComentario": response.data.respuesta,
-                "nombreArchivo": `pqrs${this.pqrid}_${response.data.respuesta}`,
-                "extension": nombre[1],
+                "nombreArchivo": `solucion${this.pqrid}_${response.data.respuesta}`,
+                "extension": nombre[1].toLowerCase(),
                 "fuente": "registro-pqrs",
                 "identificador": "pqrs"+this.pqrid,
                 "base64": this.file,
-                "descripcion": 'Solución'
+                "descripcion":  `Solución ${this.pqrid}-${response.data.respuesta}`
               }
               url = "/file/cargar-archivo-pqrs";
               Swal.fire({ title: 'Cargando', html: 'Guardando documento de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -135,26 +158,27 @@ export class SolucionComponent implements OnInit {
                   Swal.close();
                   if (response) {
                     Swal.fire(
-                      'Información',
+                      '¡Información!',
                       `Se guardo el registro con éxito`,
                       'success'
-                    );
-                    setTimeout(() => {
+                    ).then(resultado => {if(resultado){
                       this.limpiar();
                       this.recargarData()
-                    }, 1000);
-                   
+                    }
+                    });
                     
                   }
                 })
             } else {
               Swal.fire(
-                'Información',
+                '¡Información!',
                 `Se guardo el registro con éxito`,
                 'success'
-              );
-              this.limpiar();
-              this.recargarData()
+              ).then(resultado => {if(resultado){
+                this.limpiar();
+                this.recargarData()
+              }
+              });
             }
 
             url = `/notificacion-crear-solucion/${this.pqrid}`;

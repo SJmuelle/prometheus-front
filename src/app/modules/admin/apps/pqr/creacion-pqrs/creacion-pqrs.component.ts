@@ -103,6 +103,7 @@ export class CreacionPQRSComponent implements OnInit {
       this.clienteExistente = false;
       this.datos.tipo = 2;
       this.datos.tipoPQRS_nombre = 'Nuevo';
+      this.identificaiconCliente = null;
     } else {
       let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
       this._pqrService
@@ -116,8 +117,8 @@ export class CreacionPQRSComponent implements OnInit {
             this.datos.ciudad = `${response.ciudad}`;
             this.datos.direccion = `${response.direccion}`;
             this.datos.barrio = `${response.barrio}`;
-            this.datos.telefono = `${response.telefono == 0 ? '' : response.telefono + ' / '}${response.celular}`;
-            this.datos.email = `${response.email}`;
+            this.datos.telefono = response.celular == 0 ? response.telefono : response.celular,
+              this.datos.email = `${response.email}`;
             this.datosBasicosDisabled = true
             this.clienteExistente = false;
             this.datos.tipo = 1;
@@ -160,6 +161,20 @@ export class CreacionPQRSComponent implements OnInit {
       case 1:
         if ((this.datos.origen != '') && (this.datos.origen != undefined) && (this.datos.origen != null)) {
           this.tabMostrar = 2
+        }
+        break;
+      case 2:
+        if (
+          (this.identificaiconCliente != '') && (this.identificaiconCliente != undefined) && (this.identificaiconCliente != null) &&
+          (this.datos.nombres != '') && (this.datos.nombres != undefined) && (this.datos.nombres != null) &&
+          (this.datos.apellidos != '') && (this.datos.apellidos != undefined) && (this.datos.apellidos != null) &&
+          (this.datos.departamento != '') && (this.datos.departamento != undefined) && (this.datos.departamento != null) &&
+          (this.datos.ciudad != '') && (this.datos.ciudad != undefined) && (this.datos.ciudad != null) &&
+          (this.datos.telefono != '') && (this.datos.telefono != undefined) && (this.datos.telefono != null) &&
+          (this.datos.direccion != '') && (this.datos.direccion != undefined) && (this.datos.direccion != null) &&
+          (this.datos.email != '') && (this.datos.email != undefined) && (this.datos.email != null)
+        ) {
+          this.tabMostrar = 3
         }
         break;
       case 3:
@@ -207,7 +222,7 @@ export class CreacionPQRSComponent implements OnInit {
 
   //datos basicos
   buscarDatosBasicos() {
-    if(this.identificaiconCliente.length==0){
+    if (this.identificaiconCliente.length == 0) {
       return;
     }
     let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
@@ -224,7 +239,7 @@ export class CreacionPQRSComponent implements OnInit {
           setTimeout(() => {
             this.router.navigateByUrl('dashboard');
           }, 1000);
-        }else{
+        } else {
           this.datos.identificacion = this.identificaiconCliente;
           this.datos.tipoPQRS_nombre = 'Nuevo';
         }
@@ -280,7 +295,7 @@ export class CreacionPQRSComponent implements OnInit {
 
     let data = {
       "empresa": "FINV",
-      "campanha": this.datos.campana== undefined ? '' : this.datos.campana,
+      "campanha": this.datos.campana == undefined ? '' : this.datos.campana,
       "origenPqrs": parseInt(this.datos.origen),
       "tipoCliente": parseInt(this.datos.tipo),
       "codigoNegocio": this.datos.negocio == undefined ? '' : this.datos.negocio,
@@ -296,7 +311,7 @@ export class CreacionPQRSComponent implements OnInit {
       "celular": this.datos.telefono,
       "email": this.datos.email,
       "idSolucion": parseInt(this.datos.solucion),
-      "detallePqrs":  this.datos.descripcion == undefined ? '' : this.datos.descripcion,
+      "detallePqrs": this.datos.descripcion == undefined ? '' : this.datos.descripcion,
       "idPqrspadre": '',
       "fechaSolucion": this.datos.fechaParaSolucion,
     }
@@ -318,11 +333,11 @@ export class CreacionPQRSComponent implements OnInit {
             }
             //contesto bien
             //valida si hay adjunto
+
+            this.guardHijos(response.data, data, "/agregar-informacion-pqrs");
+            this.guardarAdjunto(response.data.idSolucion);
             let url = `/notificacion-crear-pqrs/${response.data.idPadre} `;
             this._pqrService.enviarCorreos(url)
-            this.guardHijos(response.data, data, url);
-            this.guardarAdjunto(response.data.idSolucion);
-
 
 
             //redirijo a gestionar
@@ -383,10 +398,10 @@ export class CreacionPQRSComponent implements OnInit {
         let nombre = element.filename.split('.');
         let data = {
           "idComentario": ind + '',
-          "nombreArchivo": nombre[0],
-          "extension": nombre[1],
+          "nombreArchivo": nombre[0].toLowerCase(),
+          "extension": nombre[1].toLowerCase(),
           "fuente": "registro-pqrs",
-          "identificador": "pqrs"+ind,
+          "identificador": "pqrs" + ind,
           "base64": element.file,
           "descripcion": element.descripcion,
 
@@ -424,6 +439,27 @@ export class CreacionPQRSComponent implements OnInit {
         (dataModal.solucion != '') && (dataModal.solucion != undefined) && (dataModal.solucion != null) &&
         (dataModal.causal != '') && (dataModal.causal != undefined) && (dataModal.causal != null)
       ) {
+
+      //   const encontrodo = this.causalesLegales.find(element => element.solucion = dataModal.solucion);
+        
+      //   if(encontrodo){
+      //     Swal.fire(
+      //       'Advertencia',
+      //       'Solución repetida',
+      //       'error'
+      //     );
+      //     return
+      //   }
+
+      //   if(this.datos.solucion==dataModal.solucion){
+      //     Swal.fire(
+      //       'Advertencia',
+      //       'Solución repetida',
+      //       'error'
+      //     );
+      //     return
+      //   }
+
         this.causalesLegales.push(
           dataModal
         )
@@ -432,11 +468,11 @@ export class CreacionPQRSComponent implements OnInit {
   }
 
   guardHijos(respuesta, dataPadre, url) {
-    // debugger;
+    //debugger;
     this.causalesLegales.forEach(element => {
       let dataHijos = {
         "empresa": "FINV",
-        "campanha": this.datos.campana== undefined ? '' : this.datos.campana,
+        "campanha": this.datos.campana == undefined ? '' : this.datos.campana,
         "origenPqrs": parseInt(this.datos.origen),
         "tipoCliente": parseInt(this.datos.tipo),
         "codigoNegocio": this.datos.negocio == undefined ? '' : this.datos.negocio,
@@ -452,7 +488,7 @@ export class CreacionPQRSComponent implements OnInit {
         "celular": this.datos.telefono,
         "email": this.datos.email,
         "idSolucion": parseInt(element.solucion),
-        "detallePqrs": this.datos.descripcion == undefined ? '' : this.datos.descripcio,
+        "detallePqrs": this.datos.descripcion == undefined ? '' : this.datos.descripcion,
         "idPqrspadre": respuesta.idPadre + '',
         "fechaSolucion": element.fechaParaSolucion,
       }
@@ -498,10 +534,12 @@ export class CreacionPQRSComponent implements OnInit {
       'success'
     );
     setTimeout(() => {
-      let url = `pqr/gestion/${respuesta.idPadre}`;
-      this.router.navigateByUrl(url);
-    }, 1200);
 
+      setTimeout(() => {
+        let url = `pqr/gestion/${respuesta.idPadre}`;
+        this.router.navigateByUrl(url);
+      }, 1200);
+    }, 10000);
 
   }
   mostrarDireccion() {
@@ -533,13 +571,17 @@ export class CreacionPQRSComponent implements OnInit {
       // tipoVia: "1684"
       // viaNombre: "Calle"
       let dataModal = result;
-      if(dataModal.departamentoNombre!=undefined){
-        this.datos.departamento=dataModal.departamentoNombre;
-        this.datos.ciudad=dataModal.municipioNombre;
-        this.datos.barrio=dataModal.barrio;
-        this.datos.direccion=`${dataModal.viaNombre} ${dataModal.numero}#${dataModal.numero2}  ${dataModal.complemento}`;
+      if (dataModal.departamentoNombre != undefined) {
+        this.datos.departamento = dataModal.departamentoNombre;
+        this.datos.ciudad = dataModal.municipioNombre;
+        this.datos.barrio = dataModal.barrio;
+        this.datos.direccion = `${dataModal.viaNombre==undefined?'':dataModal.viaNombre} 
+        ${dataModal.callePrincipal==undefined?'':dataModal.callePrincipal} 
+        #${dataModal.numero==undefined?'':dataModal.numero} 
+        ${dataModal.numero2==undefined?'':dataModal.numero2} 
+         ${dataModal.complemento==undefined?'':dataModal.complemento}`;
       }
-    
+
     });
   }
 
