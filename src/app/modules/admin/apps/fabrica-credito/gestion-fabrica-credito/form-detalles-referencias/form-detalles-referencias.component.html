@@ -16,7 +16,7 @@
                         <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Razón social</mat-label>
-                                <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'nombreCompleto'">
+                                <input matInput type="text" placeholder="Nombre completo" [formControlName]="'nombreCompleto'">
                             </mat-form-field>
                         </ng-container>
                         <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
@@ -43,7 +43,10 @@
                         </ng-container>
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                             <mat-label>Teléfono / Celular</mat-label>
-                            <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'celular'">
+                            <input matInput type="text" placeholder="Número celular" [formControlName]="'celular'">
+                            <mat-error *ngIf="soloNumero('celular')">
+                                Este campo solo acepta números.
+                            </mat-error>
                         </mat-form-field>
                         <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                             <ng-container *ngIf="departamentos$ | async as departamentos">
@@ -79,7 +82,7 @@
                         </ng-container>
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                             <mat-label>Antigüedad de ser cliente (meses)</mat-label>
-                            <input matInput type="text" placeholder="Ingrese la antigüedad en meses" [formControlName]="'antiguedad'">
+                            <input matInput type="number" placeholder="Ingrese la antigüedad en meses" [formControlName]="'antiguedad'">
                         </mat-form-field>
                         <ng-container *ngIf="estadoReferencia$ | async as items">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -102,6 +105,7 @@
                                 class="mr-2"
                                 color="accent"
                                 type="button"
+                                (click)="onDialogo()"
                         >
                             Nueva referencia
                         </button>

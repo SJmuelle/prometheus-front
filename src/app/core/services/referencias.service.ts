@@ -27,6 +27,12 @@ export class ReferenciasService {
       return this._http.get(`${this._appSettings.referencias.url.baseDetalle}/${numeroSolicitud}/${idReferencias}/${identificacion}`);
   }
   /**
+   * @description: Guarda una referencia
+   */
+  public postReferencia(datos: any): Observable<any> {
+      return this._http.post(this._appSettings.referencias.url.baseReferenciaCrear, datos);
+  }
+  /**
    * @description: Actualiza la referencia
    */
   public putDetalleReferencia(datos: any): Observable<any> {

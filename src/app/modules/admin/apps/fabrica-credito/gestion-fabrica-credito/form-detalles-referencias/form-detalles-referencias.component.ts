@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReferenciasService} from "../../../../../../core/services/referencias.service";
 import {GenericasService} from "../../../../../../core/services/genericas.service";
 import {Observable, Subscription} from "rxjs";
@@ -7,6 +7,9 @@ import {DepartamentosCiudadesService} from "../../../../../../core/services/depa
 import {MatSelectChange} from "@angular/material/select";
 import Swal from "sweetalert2";
 import {switchMap} from "rxjs/operators";
+import {MatDialog} from "@angular/material/dialog";
+import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-form-detalles-referencias',
@@ -25,7 +28,9 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
       private fb: FormBuilder,
       private referenciasService: ReferenciasService,
       private genericaService: GenericasService,
-      private departamentosCiudadService: DepartamentosCiudadesService
+      private departamentosCiudadService: DepartamentosCiudadesService,
+      private _dialogo: MatDialog,
+      private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -35,7 +40,21 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
       this.getDepartamentos();
       this.escuchaObservable();
   }
+  public onDialogo(): void {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      const dialogRef = this._dialogo.open(FormDialogReferenciasComponent, {
+          data: {
+              numeroSolicitud: numeroSolicitud
+          },
+          minWidth: '680px',
+          minHeight: '420px',
+      });
 
+      dialogRef.afterClosed().toPromise();
+  }
+  /**
+   * @description: Actualiza la referencia
+   */
   public onActualizar(): void {
       if (this.form.valid) {
           const datos: any = this.form.getRawValue();
@@ -72,10 +91,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
           segundoApellido:           [''],
           nombreCompleto:            [''],
           telefono:                  [''],
-          celular:                   [''],
+          celular:                   ['',[Validators.pattern(/^[0-9]*$/)]],
           codigoDepartamento:        [''],
           codigoCiudad:              [''],
-          descripcionTipoReferencia: [''],
+          descripcionTipoReferencia: [{value: '', disabled: true}],
           estado:                    [''],
           descripcionEstado:         [''],
           antiguedad:                [''],
@@ -160,9 +179,14 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
           });
       }
   }
+    /**
+     * @description: Valida que el campo solo sea numeros
+     */
+  public soloNumero(field: string) {
+      return this.form.controls[field].hasError('pattern');
+  }
 
     ngOnDestroy(): void {
-      console.log('destruido');
       this.subscription$.unsubscribe();
     }
 

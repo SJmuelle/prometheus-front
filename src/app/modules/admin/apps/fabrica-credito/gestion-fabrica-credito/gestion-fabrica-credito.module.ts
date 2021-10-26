@@ -20,6 +20,8 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
 import { GridReferenciasComponent } from './grid-referencias/grid-referencias.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { FormDetallesReferenciasComponent } from './form-detalles-referencias/form-detalles-referencias.component';
+import { FormDialogReferenciasComponent } from './form-dialog-referencias/form-dialog-referencias.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -27,7 +29,8 @@ import { FormDetallesReferenciasComponent } from './form-detalles-referencias/fo
     FormGestionFabricaCreditoComponent,
     FormRepresentanteLegalComponent,
     GridReferenciasComponent,
-    FormDetallesReferenciasComponent
+    FormDetallesReferenciasComponent,
+    FormDialogReferenciasComponent
   ],
     imports: [
         CommonModule,
@@ -45,7 +48,8 @@ import { FormDetallesReferenciasComponent } from './form-detalles-referencias/fo
         MatSelectModule,
         NgxMatDatetimePickerModule,
         NgxMatNativeDateModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatDialogModule
     ],
 
 })
