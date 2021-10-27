@@ -1,12 +1,13 @@
 <mat-dialog-content>
-    <code><pre>{{form.valid | json}}</pre></code>
+    <!--<code><pre>{{form.valid | json}}</pre></code>
     <code><pre>{{form.status | json}}</pre></code>
+    <code><pre>identificacion: {{form.controls['identificacion'].valid | json}}</pre></code>
     <code><pre>nombreCompleto: {{form.controls['nombreCompleto'].valid | json}}</pre></code>
     <code><pre>codigoDepartamento: {{form.controls['codigoDepartamento'].valid | json}}</pre></code>
     <code><pre>codigoCiudad: {{form.controls['codigoCiudad'].valid | json}}</pre></code>
     <code><pre>codigoBarrio: {{form.controls['codigoBarrio'].valid | json}}</pre></code>
     <code><pre>primerNombre: {{form.controls['primerNombre'].valid | json}}</pre></code>
-    <code><pre>primerApellido: {{form.controls['primerApellido'].valid | json}}</pre></code>
+    <code><pre>primerApellido: {{form.controls['primerApellido'].valid | json}}</pre></code>-->
     <div class="row">
         <div class="col-md-12">
             <form [formGroup]="form">
@@ -31,6 +32,9 @@
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                             <mat-label>No. de indeitificacion</mat-label>
                             <input matInput type="text" placeholder="Ingrese numero"  [formControlName]="'identificacion'">
+                            <mat-error *ngIf="soloNumero('identificacion')">
+                                Este campo solo acepta números.
+                            </mat-error>
                         </mat-form-field>
                     </div>
                     <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
@@ -65,10 +69,16 @@
                             </mat-form-field>
                         </div>
                     </ng-container>
+                    <div class="-mx-3 md:flex mb-2">
+                        <mat-form-field class="w-full px-3 fuse-mat-dense">
+                            <mat-label>Antigüedad</mat-label>
+                            <input matInput type="number" placeholder="Ingrese valor" [min]="'0'" [formControlName]="'antiguedad'">
+                        </mat-form-field>
+                    </div>
                     <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                         <div class="-mx-3 md:flex mb-2">
                             <ng-container *ngIf="departamentos$ | async as departamentos">
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-form-field class="w-full px-3 fuse-mat-dense">
                                     <mat-label>Departamento del negocio</mat-label>
                                     <mat-select (selectionChange)="seleccionDepartamento($event)"
                                                 [value]="'seleccione'"
@@ -82,8 +92,10 @@
                                     </mat-select>
                                 </mat-form-field>
                             </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
                             <ng-container *ngIf="ciudades$ | async as ciudades">
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-form-field class="w-full px-3 fuse-mat-dense">
                                     <mat-label>Ciudad / municipio </mat-label>
                                     <mat-select (selectionChange)="seleccionCiudad($event)"
                                                 [value]="'seleccione'"
@@ -100,7 +112,7 @@
                         </div>
                         <div class="-mx-3 md:flex mb-2">
                             <ng-container *ngIf="barrios$ | async as barrios">
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-form-field class="w-full px-3 fuse-mat-dense">
                                     <mat-label>Barrio</mat-label>
                                     <mat-select
                                         [value]="'seleccione'"
@@ -114,7 +126,9 @@
                                     </mat-select>
                                 </mat-form-field>
                             </ng-container>
-                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-full px-3 fuse-mat-dense">
                                 <mat-label>Dirección</mat-label>
                                 <input matInput type="text" placeholder="Primer apellido" [formControlName]="'direccion'">
                             </mat-form-field>
@@ -124,16 +138,16 @@
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                             <mat-label>Celular</mat-label>
                             <input matInput type="text" placeholder="Primer apellido" [formControlName]="'celular'">
+                            <mat-error *ngIf="soloNumero('celular')">
+                                Este campo solo acepta números.
+                            </mat-error>
                         </mat-form-field>
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                             <mat-label>Teléfono</mat-label>
                             <input matInput type="text" placeholder="Segundo apellido" [formControlName]="'telefono'">
-                        </mat-form-field>
-                    </div>
-                    <div class="-mx-3 md:flex mb-2">
-                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                            <mat-label>Antigüedad</mat-label>
-                            <input matInput type="number" placeholder="Ingrese valor" [formControlName]="'antiguedad'">
+                            <mat-error *ngIf="soloNumero('telefono')">
+                                Este campo solo acepta números.
+                            </mat-error>
                         </mat-form-field>
                     </div>
                 </div>

@@ -110,7 +110,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private crearFormulario(): void {
         this.form = this.fb.group({
             numeroSolicitud:    [''],
-            identificacion:     ['', [Validators.required]],
+            identificacion:     ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
             primerNombre:       ['', [Validators.required]],
             segundoNombre:      [''],
             primerApellido:     ['', [Validators.required]],
@@ -118,8 +118,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             nombreCompleto:     ['', [Validators.required]],
             tipo:               ['seleccione', [Validators.required]],
             parentesco:         [''],
-            telefono:           [''],
-            celular:            [''],
+            telefono:           ['', [Validators.pattern(/^[0-9]*$/)]],
+            celular:            ['', [Validators.pattern(/^[0-9]*$/)]],
             codigoPais:         [''],
             codigoDepartamento: ['seleccione', [Validators.required]],
             codigoCiudad:       ['seleccione', [Validators.required]],
@@ -190,15 +190,15 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             antiguedad:         antiguedad,
         };
         if (tipo === 'P') {
-           /* this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
+            this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
                 this.onCerrar();
                 this.referenciasService.eventos$.emit(true);
-            });*/
+            });
         }else {
-            /*this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
+            this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
                 this.onCerrar();
                 this.referenciasService.eventos$.emit(true);
-            });*/
+            });
         }
     }
 
@@ -206,27 +206,43 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
             if (tipo === 'P') {
                 this.form.controls['nombreCompleto'].setValue('');
-                this.form.controls['nombreCompleto'].clearValidators();
                 this.form.controls['codigoDepartamento'].setValue('');
-                this.form.controls['codigoDepartamento'].clearValidators();
                 this.form.controls['codigoCiudad'].setValue('');
-                this.form.controls['codigoCiudad'].clearValidators();
                 this.form.controls['codigoBarrio'].setValue(0);
-                this.form.controls['codigoBarrio'].clearValidators();
                 this.form.controls['direccion'].setValue('');
+                this.form.controls['codigoDepartamento'].clearValidators();
+                this.form.controls['codigoDepartamento'].updateValueAndValidity();
+                this.form.controls['codigoCiudad'].clearValidators();
+                this.form.controls['codigoCiudad'].updateValueAndValidity();
+                this.form.controls['codigoBarrio'].clearValidators();
+                this.form.controls['codigoBarrio'].updateValueAndValidity();
+                this.form.controls['nombreCompleto'].clearValidators();
+                this.form.controls['nombreCompleto'].updateValueAndValidity();
             }else {
                 this.form.controls['primerNombre'].setValue('');
-                this.form.controls['primerNombre'].clearValidators();
                 this.form.controls['segundoNombre'].setValue('');
                 this.form.controls['primerApellido'].setValue('');
-                this.form.controls['primerApellido'].clearValidators();
                 this.form.controls['segundoApellido'].setValue('');
+                this.form.controls['primerNombre'].clearValidators();
+                this.form.controls['primerNombre'].updateValueAndValidity();
+                this.form.controls['primerApellido'].clearValidators();
+                this.form.controls['primerApellido'].updateValueAndValidity();
                 this.form.controls['nombreCompleto'].setValidators(Validators.required);
+                this.form.controls['nombreCompleto'].updateValueAndValidity();
                 this.form.controls['codigoDepartamento'].setValidators(Validators.required);
+                this.form.controls['codigoDepartamento'].updateValueAndValidity();
                 this.form.controls['codigoCiudad'].setValidators(Validators.required);
+                this.form.controls['codigoCiudad'].updateValueAndValidity();
                 this.form.controls['codigoBarrio'].setValidators(Validators.required);
+                this.form.controls['codigoBarrio'].updateValueAndValidity();
             }
         });
+    }
+    /**
+     * @description: Valida que el campo solo sea numeros
+     */
+    public soloNumero(field: string) {
+        return this.form.controls[field].hasError('pattern');
     }
 
     ngOnDestroy(): void {
