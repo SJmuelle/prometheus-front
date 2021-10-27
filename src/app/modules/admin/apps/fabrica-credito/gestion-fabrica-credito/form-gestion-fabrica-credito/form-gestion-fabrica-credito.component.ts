@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 import {GenericasService} from '../../../../../../core/services/genericas.service';
 import {DateAdapter} from "@angular/material/core";
 import * as moment from 'moment';
+import {MatDialog} from "@angular/material/dialog";
+import {GridComentariosComponent} from "../grid-comentarios/grid-comentarios.component";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -69,6 +71,20 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.getViveNegocio();
       this.getDeclarante();
       this.getCamaraComercio();
+  }
+  /**
+   * @description: Abre el modal de comentarios
+   */
+  public onDialogo(): void {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+
+  }
+  /**
+   * @description: Direcciona al componente comentarios
+   */
+  public onComentarios(): void {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      this.router.navigate(['/credit-factory/credit-management/commentaries', numeroSolicitud]);
   }
   /**
    * @description:

@@ -22,6 +22,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { FormDetallesReferenciasComponent } from './form-detalles-referencias/form-detalles-referencias.component';
 import { FormDialogReferenciasComponent } from './form-dialog-referencias/form-dialog-referencias.component';
 import {MatDialogModule} from "@angular/material/dialog";
+import { GridComentariosComponent } from './grid-comentarios/grid-comentarios.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     FormRepresentanteLegalComponent,
     GridReferenciasComponent,
     FormDetallesReferenciasComponent,
-    FormDialogReferenciasComponent
+    FormDialogReferenciasComponent,
+    GridComentariosComponent
   ],
     imports: [
         CommonModule,

@@ -43,7 +43,6 @@ export class FormRepresentanteLegalComponent implements OnInit {
               take(1)
           )
           .subscribe(({data}) => {
-              console.log(data);
               this.form.patchValue(data);
               if (data.codigoDepartamento) {
                   this.getCiudades(data.codigoDepartamento);

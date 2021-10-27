@@ -72,8 +72,15 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uriGenerica('cre-agregar-referencia')
         }
     };
-
-
+    /**
+     * @description: End-point comentarios
+     */
+    public comentarios = {
+        url: {
+            baseComentario:  EndPoints.uri('cre-consulta-comentarios'),
+            baseComentarioCrear: EndPoints.uri('cre-agregar-comentario')
+        }
+    };
 
 
 }

@@ -48,7 +48,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
           },
           minWidth: '680px',
           minHeight: '420px',
-          disableClose: true
+          disableClose: false
       });
 
       dialogRef.afterClosed().toPromise();
