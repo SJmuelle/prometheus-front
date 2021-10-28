@@ -1,8 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {ComentariosService} from "../../../../../../core/services/comentarios.service";
 import {Observable} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-grid-comentarios',
@@ -12,6 +11,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 export class GridComentariosComponent implements OnInit {
   public comentarios$: Observable<any>;
   public esVer: boolean = false;
+  @Output() cerrarComponente: EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(
       private comentariosServices: ComentariosService,
       private route: ActivatedRoute
@@ -21,8 +21,12 @@ export class GridComentariosComponent implements OnInit {
       this.getData();
   }
 
+  public onCerrar(): void {
+      this.cerrarComponente.emit(false);
+  }
+
   private getData(): void {
-      const numeroSolicitud: string = '';
+      const numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
       if (numeroSolicitud) {
           this.getComentarios(numeroSolicitud);
       }

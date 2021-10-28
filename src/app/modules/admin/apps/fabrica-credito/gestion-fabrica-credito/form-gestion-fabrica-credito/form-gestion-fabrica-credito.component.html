@@ -5,7 +5,8 @@
                 <h3 class="mb-2 text-gray-900">Fabrica de crédito</h3>
                 <button mat-raised-button
                         [color]="'accent'"
-                        (click)="onDialogo()"
+                        (click)="verComentarios = !verComentarios"
+                        [disabled]="verComentarios"
                 >
                     Comentarios
                 </button>
@@ -512,9 +513,9 @@
         </div>
     </div>
 </div>
-<ng-container>
+<ng-container *ngIf="verComentarios">
     <div class="fixed z-999 sm:ml-30 top-18">
-        <app-grid-comentarios></app-grid-comentarios>
+        <app-grid-comentarios (cerrarComponente)="onCerrar($event)"></app-grid-comentarios>
     </div>
 </ng-container>
 <!--<code>

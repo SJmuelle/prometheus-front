@@ -41,6 +41,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public camaraComercio$: Observable<any>;
   public form: FormGroup;
   public subscription$: Subscription;
+  public verComentarios: boolean = false;
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -71,12 +72,20 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.getViveNegocio();
       this.getDeclarante();
       this.getCamaraComercio();
+      console.log('SSSS');
+  }
+  /**
+   * @description:
+   */
+  public onCerrar(event): void {
+      console.log(event);
+      this.verComentarios = event;
   }
   /**
    * @description: Abre el modal de comentarios
    */
   public onDialogo(): void {
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+
 
   }
   /**

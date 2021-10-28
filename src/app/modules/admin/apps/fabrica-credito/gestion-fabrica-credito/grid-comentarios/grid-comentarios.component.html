@@ -1,4 +1,4 @@
-<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full">
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full" >
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
         <div class="flex flex-col">
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end">
@@ -9,6 +9,7 @@
                 </button>
                 <button mat-icon-button
                         matTooltip="Cerrar"
+                        (click)="onCerrar()"
                 >
                     <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
                 </button>
@@ -18,19 +19,15 @@
             </div>
         </div>
         <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
-            <input class="border rounded p-2 bg-gray-100 mr-4 text-xs" type="text"
-                   autocomplete="off" name="filtrarTablaHG"
-                   placeholder="Filtrar..."
+            <button mat-raised-button
+                    matTooltip="Nuevo comentario"
+                    [color]="'primary'"
             >
-            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"
-            >
-                <option value="5"> 5</option>
-                <option value="10"> 10</option>
-                <option value="20"> 20</option>
-            </select>
+                Nuevo comentario
+            </button>
         </div>
     </div>
-    <div class="row">
+    <div class="row" cdk-scrollable>
         <div class="col-md-12 col-lg-12">
             <table class="shadow p-0">
                 <thead class="bg-accent-50" >
