@@ -41,19 +41,21 @@
                                         class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
                                         <th class="px-4 py-3 text-center">Editar</th>
                                         <th class="px-4 py-3 text-center">Tipos</th>
+                                        <th class="px-4 py-3 text-center">Código causal</th>
                                         <th class="px-4 py-3 text-center">Causal</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
-                                    <tr class="text-gray-700" 
+                                    <tr class="text-gray-700"
                                         *ngFor="let item of listado | filter:filtrarTabla  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
                                         <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
 
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.id}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.causalPqrs}}</td>
                                         <td class="px-2 text-sm border text-center w-0">
-                                            <div 
+                                            <div
                                             [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
                                             <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
                                                 {{ item.estado}} </span>

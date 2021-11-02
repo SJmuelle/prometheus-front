@@ -28,7 +28,7 @@ export class InsertarAdjuntosComponent implements OnInit {
     // this.nameFile = 'masivo.cvs';
 
     const files = input.files;
-    console.log(files);
+    // console.log(files);
     if (files && files.length) {
       const fileToRead = files[0];
       const reader = new FileReader();
@@ -40,7 +40,7 @@ export class InsertarAdjuntosComponent implements OnInit {
         let nombre = this.evidencia.filename.split('.');
         this.evidencia.ext = nombre[1].toLowerCase();
         this.evidencia.nombre = nombre[0];
-        console.log(this.evidencia.file);
+        // console.log(this.evidencia.file);
         if (
           (this.evidencia.ext == 'pdf') ||
           (this.evidencia.ext == 'jpg') ||

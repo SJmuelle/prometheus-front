@@ -80,7 +80,7 @@ export class SolucionComponent implements OnInit {
     // this.showButtonRecord = true;
     // this.nameFile = 'masivo.cvs';
     const files = input.files;
-    console.log(files);
+    // console.log(files);
     // this.filename = "archivo.ext";
     if (files && files.length) {
       const fileToRead = files[0];
@@ -92,7 +92,7 @@ export class SolucionComponent implements OnInit {
         this.filename = fileToRead.name;
         let nombre = this.filename.split('.');
         this.ext = nombre[1].toLowerCase();
-        console.log(this.file);
+        // console.log(this.file);
         if (
           (this.ext == 'pdf') ||
           (this.ext == 'jpg') ||
@@ -112,7 +112,7 @@ export class SolucionComponent implements OnInit {
         this.file = '';
         this.filename = '';
         this.ext = '';
-       
+
       };
     }
   }
@@ -148,7 +148,7 @@ export class SolucionComponent implements OnInit {
                 "fuente": "registro-pqrs",
                 "identificador": "pqrs"+this.pqrid,
                 "base64": this.file,
-                "descripcion":  `Solución ${this.pqrid}-${response.data.respuesta}`
+                "descripcion":  this.filename
               }
               url = "/file/cargar-archivo-pqrs";
               Swal.fire({ title: 'Cargando', html: 'Guardando documento de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -166,7 +166,7 @@ export class SolucionComponent implements OnInit {
                       this.recargarData()
                     }
                     });
-                    
+
                   }
                 })
             } else {

@@ -48,12 +48,12 @@ export class CarteraService {
     }
     getPlanPago(codigo) {
 
-        // console.log(this.readToken());
+        // // console.log(this.readToken());
         const URL = `${environment.urlprometheus}?option=5&user=${codigo}&numsolc=${codigo}`
         const headers = new HttpHeaders({
             'Authentication' : ``
-        }); 
-        console.log(headers);
+        });
+        // console.log(headers);
         return this._httpClient.get(URL, { headers }).pipe();
 
 

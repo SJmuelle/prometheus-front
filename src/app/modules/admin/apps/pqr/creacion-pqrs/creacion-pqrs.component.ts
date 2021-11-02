@@ -216,8 +216,11 @@ export class CreacionPQRSComponent implements OnInit {
   }
 
   eliminarCausal(dato) {
-    // debugger
     this.causalesLegales.splice(dato, 1);
+  }
+
+  eliminarEvidencia(dato) {
+    this.evidencia.splice(dato, 1);
   }
 
   //datos basicos
@@ -235,7 +238,7 @@ export class CreacionPQRSComponent implements OnInit {
             '¡Advertencia!',
             'Esta opción es para clientes nuevos, por favor ingresar mediante hoja de vida/historial de PQRS/Crear PQRS.',
             'warning'
-          );
+          ).then();
           setTimeout(() => {
             this.router.navigateByUrl('dashboard');
           }, 1000);
@@ -278,20 +281,20 @@ export class CreacionPQRSComponent implements OnInit {
             '¡Información!',
             `No tiene ${titulo} parametrizada`,
             'error'
-          );
+          ).then();
           this[variable] = [];
         }
       });
   }
 
   mostrarMensaje() {
-    console.log(this.datos.descripcion);
+    // console.log(this.datos.descripcion);
   }
 
 
 
   guardar() {
-    console.log(this.datos);
+    // console.log(this.datos);
 
     let data = {
       "empresa": "FINV",
@@ -316,58 +319,69 @@ export class CreacionPQRSComponent implements OnInit {
       "fechaSolucion": this.datos.fechaParaSolucion,
     }
     let url = "/agregar-informacion-pqrs";
-    Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this._pqrService
-      .Create(url, data)
-      .subscribe((response: any) => {
-        Swal.close();
-        if (response) {
-          if (response.status == 200) {
-            if (response.data.salida != 200) {
-              Swal.fire(
-                '¡Información!',
-                `Datos incompletos, favor evaluar`,
-                'error'
-              );
-              return;
-            }
-            //contesto bien
-            //valida si hay adjunto
 
-            this.guardHijos(response.data, data, "/agregar-informacion-pqrs");
-            this.guardarAdjunto(response.data.idSolucion);
-            let url = `/notificacion-crear-pqrs/${response.data.idPadre} `;
-            this._pqrService.enviarCorreos(url)
+    Swal.fire({
+        title: 'Cargando',
+        html: 'Guardando información de PQRS',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        timer: 500000,
+        didOpen: () => {
+            Swal.showLoading();
 
-
-            //redirijo a gestionar
-            // Swal.fire(
-            //   '¡Información!',
-            //   `PQRS guardado con exito, PQRS ${response.data.idPadre}`,
-            //   'success'
-            // );
-            // setTimeout(() => {
-            //   let url = `pqr/gestion/${response.data.idPadre}`;
-            //   this.router.navigateByUrl(url);
-            // }, 1200);
+            this._pqrService
+            .Create(url, data)
+            .subscribe((response: any) => {
+                Swal.close();
+                if (response) {
+                if (response.status == 200) {
+                    if (response.data.salida != 200) {
+                    Swal.fire(
+                        '¡Información!',
+                        `Datos incompletos, favor evaluar`,
+                        'error'
+                    ).then();
+                    return;
+                    }
+                    //contesto bien
+                    //valida si hay adjunto
+                    this.guardHijos(response.data, data, "/agregar-informacion-pqrs");
+                    this.guardarAdjunto(response.data.idSolucion);
+                    let url = `/sendmail/notificacion-crear-pqrs`;///${response.data.idPadre} `;
+                    // this._pqrService.enviarCorreos(url)
+                    this._pqrService.envioCorreos(url, response.data.idPadre);
 
 
-          } else {
-            Swal.fire(
-              '¡Información!',
-              `Hubo un error en los datos enviados, favor validar`,
-              'error'
-            );
-          }
-        } else {
-          Swal.fire(
-            '¡Advertencia!',
-            'Error en la respuesta del servicio, favor intente nuevamente',
-            'error'
-          );
-        }
+                    //redirijo a gestionar
+                    // Swal.fire(
+                    //   '¡Información!',
+                    //   `PQRS guardado con exito, PQRS ${response.data.idPadre}`,
+                    //   'success'
+                    // ).then();
+                    // setTimeout(() => {
+                    //   let url = `pqr/gestion/${response.data.idPadre}`;
+                    //   this.router.navigateByUrl(url);
+                    // }, 1200);
 
-      });
+
+                } else {
+                    Swal.fire(
+                    '¡Información!',
+                    `Hubo un error en los datos enviados, favor validar`,
+                    'error'
+                    ).then();
+                }
+                } else {
+                Swal.fire(
+                    '¡Advertencia!',
+                    'Error en la respuesta del servicio, favor intente nuevamente',
+                    'error'
+                ).then();
+                }
+
+            });
+
+        }, }).then((result) => { })
   }
 
   public onCharge(input: HTMLInputElement, ind): void {
@@ -375,7 +389,7 @@ export class CreacionPQRSComponent implements OnInit {
     // this.showButtonRecord = true;
     // this.nameFile = 'masivo.cvs';
     const files = input.files;
-    console.log(files);
+    // console.log(files);
     if (files && files.length) {
       const fileToRead = files[0];
       const reader = new FileReader();
@@ -387,7 +401,7 @@ export class CreacionPQRSComponent implements OnInit {
         let nombre = this.evidencia[ind].filename.split('.');
         this.evidencia[ind].ext = nombre[1];
         this.evidencia[ind].nombre = nombre[0];
-        console.log(this.evidencia[ind].file);
+        // console.log(this.evidencia[ind].file);
 
       };
     }
@@ -432,8 +446,8 @@ export class CreacionPQRSComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      // console.log('The dialog was closed');
+      // console.log(result);
       let dataModal = result;
       if (
         (dataModal.solucion != '') && (dataModal.solucion != undefined) && (dataModal.solucion != null) &&
@@ -441,7 +455,7 @@ export class CreacionPQRSComponent implements OnInit {
       ) {
 
       //   const encontrodo = this.causalesLegales.find(element => element.solucion = dataModal.solucion);
-        
+
       //   if(encontrodo){
       //     Swal.fire(
       //       'Advertencia',
@@ -503,19 +517,19 @@ export class CreacionPQRSComponent implements OnInit {
                   '¡Información!',
                   `Datos incompletos, favor evaluar`,
                   'error'
-                );
+                ).then();
                 return;
               }
 
               this.guardarAdjunto(response.data.idSolucion);
-              let url = `/notificacion-crear-pqrs-hijos/${response.data.idPadre} `;
-              this._pqrService.enviarCorreos(url)
+              let url = `/sendmail/notificacion-crear-pqrs`;/*${response.data.idPadre} `;*/
+              this._pqrService.envioCorreos(url, response.data.idPadre);
             } else {
               Swal.fire(
                 '¡Información!',
                 `Hubo un error en los datos enviados, favor validar`,
                 'error'
-              );
+              ).then();
               return;
             }
           } else {
@@ -523,24 +537,25 @@ export class CreacionPQRSComponent implements OnInit {
               '¡Advertencia!',
               'Error en la respuesta del servicio, favor intente nuevamente',
               'error'
-            );
+            ).then();
             return;
           }
         });
     });
-    Swal.fire(
-      '¡Información!',
-      `Se guardo el registro con éxito`,
-      'success'
-    );
-    setTimeout(() => {
-
-      setTimeout(() => {
+    Swal.fire({
+        title: 'Información',
+        html: 'La PQRS se ha creado con éxito',
+        icon: 'success',
+        showLoaderOnConfirm: true,
+        showConfirmButton: true
+    }).then((result) => {
         let url = `pqr/gestion/${respuesta.idPadre}`;
         this.router.navigateByUrl(url);
-      }, 1200);
-    }, 10000);
-
+     });
+    // setTimeout(() => {
+    //     let url = `pqr/gestion/${respuesta.idPadre}`;
+    //     this.router.navigateByUrl(url);
+    // }, 5000);
   }
   mostrarDireccion() {
     // debugger;
@@ -555,8 +570,8 @@ export class CreacionPQRSComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      // console.log('The dialog was closed');
+      // console.log(result);
       // barrio: "san antonio"
       // callePrincipal: "23"
       // complemento: "apto 123"
@@ -575,10 +590,10 @@ export class CreacionPQRSComponent implements OnInit {
         this.datos.departamento = dataModal.departamentoNombre;
         this.datos.ciudad = dataModal.municipioNombre;
         this.datos.barrio = dataModal.barrio;
-        this.datos.direccion = `${dataModal.viaNombre==undefined?'':dataModal.viaNombre} 
-        ${dataModal.callePrincipal==undefined?'':dataModal.callePrincipal} 
-        #${dataModal.numero==undefined?'':dataModal.numero} 
-        ${dataModal.numero2==undefined?'':dataModal.numero2} 
+        this.datos.direccion = `${dataModal.viaNombre==undefined?'':dataModal.viaNombre}
+        ${dataModal.callePrincipal==undefined?'':dataModal.callePrincipal}
+        #${dataModal.numero==undefined?'':dataModal.numero}
+        ${dataModal.numero2==undefined?'':dataModal.numero2}
          ${dataModal.complemento==undefined?'':dataModal.complemento}`;
       }
 
@@ -594,8 +609,8 @@ export class CreacionPQRSComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      // console.log('The dialog was closed');
+      // console.log(result);
       let dataModal = result;
       if (
         (dataModal.file != '') && (dataModal.file != undefined) && (dataModal.file != null) &&

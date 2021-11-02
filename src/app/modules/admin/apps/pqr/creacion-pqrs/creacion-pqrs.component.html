@@ -116,8 +116,8 @@
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Nombres</mat-label>
-                                    <input matInput type="text" autocomplete="off" name="nombres" required 
-                                        [disabled]="datosBasicosDisabled" [(ngModel)]="datos.nombres" maxlength="50"  minlength="2"> 
+                                    <input matInput type="text" autocomplete="off" name="nombres" required
+                                        [disabled]="datosBasicosDisabled" [(ngModel)]="datos.nombres" maxlength="50"  minlength="2">
                                 </mat-form-field>
                             </div>
                             <div class="col-lg-4 col-sm-12">
@@ -270,7 +270,7 @@
                             <thead style="background-color: #F9FAFB;">
                                 <tr
                                     class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                    <!-- <th class="px-4 py-3 text-center"></th> -->
+                                    <th class="px-4 py-3 text-center"></th>
                                     <th class="px-4 py-3 text-center">Causal</th>
                                     <th class="px-4 py-3 text-center">Solución</th>
                                     <th class="px-4 py-3 text-center">Responsable</th>
@@ -281,10 +281,10 @@
                             <tbody class="bg-white">
                                 <tr class="text-gray-700"
                                     *ngFor="let item of causalesLegales;let indexOfelement=index; ">
-                                    <!-- <td class="px-2 text-sm border text-center pointer">
+                                    <td class="px-2 text-sm border text-center pointer">
                                         <mat-icon svgIcon="heroicons_outline:backspace"
-                                            (clicl)="eliminarCausal(indexOfelement)"></mat-icon>
-                                    </td> -->
+                                            (click)="eliminarCausal(indexOfelement)"></mat-icon>
+                                    </td>
                                     <td class="px-2 text-sm border text-center">{{ item.causalNombre}}</td>
                                     <td class="px-2 text-sm border text-center capitalize">{{ item.solucionNombre}}</td>
                                     <td class="px-2 text-sm border text-center">{{ item.responsable}}</td>
@@ -373,17 +373,17 @@
                         <thead style="background-color: #F9FAFB;">
                             <tr
                                 class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                <!-- <th class="px-4 py-3 text-center"></th> -->
+                                <th class="px-4 py-3 text-center"></th>
                                 <th class="px-4 py-3 text-center">Nombre</th>
                                 <th class="px-4 py-3 text-center">Evidencia</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                             <tr class="text-gray-700" *ngFor="let item of evidencia;let indexOfelement=index; ">
-                                <!-- <td class="px-2 text-sm border text-center pointer">
+                                <td class="px-2 text-sm border text-center pointer">
                                     <mat-icon svgIcon="heroicons_outline:backspace"
-                                        (clicl)="eliminarCausal(indexOfelement)"></mat-icon>
-                                </td> -->
+                                        (click)="eliminarEvidencia(indexOfelement)"></mat-icon>
+                                </td>
                                 <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
                                 <td class="px-2 text-sm border text-center capitalize">{{ item.filename}}</td>
                             </tr>

@@ -47,14 +47,14 @@ export class UtilityService {
   // funciones de peticiones puras
   getQuery(query:string,sendHeaders:boolean){
 
-    console.log(this.readToken());
+    // console.log(this.readToken());
     const URL = this.server2 + query;
     const headers = new HttpHeaders({
         'Authentication' : `${this.readToken()}`,
         'Content-Type' : 'application/json; charset=utf-8'
     });
     if(sendHeaders){
-      console.log(headers);
+      // console.log(headers);
       return this._httpClient.get(URL, { headers }).pipe(catchError(this.handleError));
     }
     else{
@@ -98,7 +98,7 @@ export class UtilityService {
       };
     }else {
       if(typeHeaders == this.notoken){
-      
+
         optiones = {
           'Authentication': ``,
           "Accept": "application/json, text/plain, */*",
@@ -117,7 +117,7 @@ export class UtilityService {
     return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
   }
   postQueryCorreo(query:string, data:any, typeHeaders:string='data'){
-    const URL = this.correo + query;
+    const URL = this.adjunto + query;
     let optiones:any;
     if(typeHeaders == 'data'){
       optiones = {
@@ -127,7 +127,7 @@ export class UtilityService {
       };
     }else {
       if(typeHeaders == this.notoken){
-      
+
         optiones = {
           'Authentication': ``,
           "Accept": "application/json, text/plain, */*",
@@ -165,7 +165,7 @@ export class UtilityService {
       };
     }else {
       if(typeHeaders == this.notoken){
-      
+
         optiones = {
           'Authentication': ``,
           "Accept": "application/json, text/plain, */*",
@@ -217,7 +217,7 @@ export class UtilityService {
     // debugger;
     let errorMessage = 'No hay respuesta, favor intente nuevamente';
     let icon:string = 'question';
-    console.log("Algo se daño");
+    // console.log("Algo se daño");
     let res:any = {}
     if (err.error instanceof ErrorEvent) {
       icon = "question";
@@ -268,14 +268,14 @@ export class UtilityService {
     }
     if( err.status !== 401 && err.error !== 'La session ha expirado'){
 
-    
+
     if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
       Swal.fire({
         title: 'Error',
         text: errorMessage,
         icon: 'error',
         confirmButtonText: 'Cerrar'
-      })
+      }).then();
 
     }else{
       Swal.fire({
@@ -283,7 +283,7 @@ export class UtilityService {
         text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
         icon: 'error',
         confirmButtonText: 'Cerrar'
-      })
+      }).then();
     }
   }
     return throwError( errorMessage );
@@ -293,7 +293,7 @@ export class UtilityService {
   // debugger;
   let errorMessage = 'No se envio el correo, favor notificar por otro medio';
   let icon:string = 'question';
-  console.log("Algo se daño");
+  // console.log("Algo se daño");
   let res:any = {}
   if (err.error instanceof ErrorEvent) {
     icon = "question";
@@ -344,14 +344,14 @@ export class UtilityService {
   }
   if( err.status !== 401 && err.error !== 'La session ha expirado'){
 
-  
+
   if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
     Swal.fire({
       title: 'Error',
       text: errorMessage,
       icon: 'error',
       confirmButtonText: 'Cerrar'
-    })
+    }).then();
 
   }else{
     Swal.fire({
@@ -359,7 +359,7 @@ export class UtilityService {
       text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
       icon: 'error',
       confirmButtonText: 'Cerrar'
-    })
+    }).then();
   }
 }
   return throwError( errorMessage );

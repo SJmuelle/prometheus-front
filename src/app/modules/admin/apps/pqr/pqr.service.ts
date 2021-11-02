@@ -43,10 +43,30 @@ export class PqrService {
   }
   Create(url: string, data: any): Observable<any> {
     return this._utility.postQuery(url, data)
-    .pipe(map((result: any) => { 
-      return result; 
+    .pipe(map((result: any) => {
+      return result;
     }));
   }
+
+    // NUEVO METODO PARA ENVIAR CORREOS
+  envioCorreos(url, pqrs){
+    let data = {
+        "pqrs": pqrs,
+        "tipo": 1
+    }
+    return this._utility.postQueryCorreo(url, data)
+        .subscribe( (res) => {
+            // debugger;
+            return res;
+        });
+    // .pipe(
+    //     map((result: any) => {
+    //         console.log(result);
+    //         return result;
+    //     })
+    // );
+  }
+
   enviarCorreos(url1):void {
     this.getListados(url1)
       .subscribe((response: any) => {
@@ -79,14 +99,14 @@ export class PqrService {
   }
   envioCorreo(url: string, data: any): Observable<any> {
     return this._utility.postQueryCorreo(url, data)
-    .pipe(map((result: any) => { 
-      return result; 
+    .pipe(map((result: any) => {
+      return result;
     }));
   }
   postFile(url: string, data: any): Observable<any> {
     return this._utility.postFile(url, data)
-    .pipe(map((result: any) => { 
-      return result; 
+    .pipe(map((result: any) => {
+      return result;
     }));
   }
 

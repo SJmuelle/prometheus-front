@@ -56,7 +56,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
     private _fullCalendarApi: FullCalendar;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     diaEvento: moment.Moment;
- 
+
 
     /**
      * Constructor
@@ -264,12 +264,12 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
         };
     }
 
-    
+
     /**
      * After view init
      */
 
-   
+
 
 
     ngAfterViewInit(): void
@@ -282,10 +282,10 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Get the view's current start and end dates, add/subtract
         // 60 days to create a ~150 days period to fetch the mock-api for
-        // console.log(this._fullCalendarApi.getDate());
+        // // console.log(this._fullCalendarApi.getDate());
         const viewStart = moment(this._fullCalendarApi.view.currentStart).subtract(60, 'days');
         const viewEnd = moment(this._fullCalendarApi.view.currentEnd).add(60, 'days');
-        console.log(this._fullCalendarApi.view.currentStart);
+        // console.log(this._fullCalendarApi.view.currentStart);
         // Get events
         this._calendarService.getEvents(viewStart, viewEnd, true).subscribe();
     }
@@ -367,7 +367,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
             return '';
         }
         let first = value.substr(0,1).toUpperCase();
-        return first + value.substr(1); 
+        return first + value.substr(1);
     }
     /**
      * Change the event panel mode between view and edit
@@ -455,7 +455,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
         // Update the view title
         this.viewTitle = this.transformCapitalize(this._fullCalendarApi.view.title);
     }
- 
+
     /**
      * Moves the calendar one stop forward
      */
@@ -502,7 +502,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
 
         // Set the event
         this.event = event;
-      
+
         this.diaEvento=moment(calendarEvent.date).startOf('day');
         this.diaEvento.locale('es');
         // Set the el on calendarEvent for consistency
@@ -656,13 +656,13 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
         //     // Close the event panel
         //     this._closeEventPanel();
         // });
-        
+
         let datos={
             estado:'',
             fecha:this.diaEvento.format('yyyy-MM-DD'),
             festivo:this.eventForm.get('calendarId').value==2?true:false,
             diaNoHabil:this.eventForm.get('calendarId').value==1?true:false,
-            
+
         }
         this._calendarService.addEvent(datos).subscribe(() => {
 
@@ -681,7 +681,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
      */
     updateEvent(): void
     {
-       
+
         // Get the clone of the event form value
         let event = clone(this.eventForm.value);
         const {
@@ -814,7 +814,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
             fecha:moment(event.start).format('yyyy-MM-DD'),
             festivo:false,
             diaNoHabil:false,
-            
+
         }
         this._calendarService.addEvent(datos).subscribe(() => {
 

@@ -27,7 +27,7 @@ export class DatatableComponent implements OnInit, AfterViewInit, OnChanges {
     constructor() {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
+        // console.log(changes);
         this.nombres;
         this.titulos;
         this.filas;
@@ -63,8 +63,8 @@ export class DatatableComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     ngOnInit(): void {
-        console.log(this.nombres);
-        console.log(this.titulos);
-        console.log(this.filas);
+        // console.log(this.nombres);
+        // console.log(this.titulos);
+        // console.log(this.filas);
     }
 }
