@@ -252,20 +252,26 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Fecha para la solución</mat-label>
                                     <input matInput type="text" autocomplete="off" name="email" disabled required
-                                        [(ngModel)]="datos.fechaParaSolucion">
+                                    [(ngModel)]="datos.fechaParaSolucion">
                                 </mat-form-field>
                             </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-checkbox
+                                    class="example-margin"
+                                    name="primerContacto"
+                                    [color]="color"
+                                    [(ngModel)]="datos.primerContacto"
+                                    *ngIf="datos.legal==false">
+                                    Respuesta de primer contacto
+                                </mat-checkbox>
+                            </div>
                         </div>
-
-
-
                     </div>
                     <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=3" *ngIf="datos.legal==true">
                         <!-- //validoLegal -->
                         <button mat-button class="color_fintra text-white" (click)="insertarCausal()">
                             Insertar causal a PQRS hijas
                         </button>
-
                         <table class="w-full shadow p-1  h-50 mt-5" *ngIf="causalesLegales.length!=0">
                             <thead style="background-color: #F9FAFB;">
                                 <tr

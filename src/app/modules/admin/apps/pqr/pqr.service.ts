@@ -54,6 +54,14 @@ export class PqrService {
         );
     }
 
+    CreatePqrs(url: string, data: any): Observable<any> {
+        return this._utility.postFile(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
     // NUEVO METODO PARA ENVIAR CORREOS
     envioCorreos(url, pqrs, tipo, descripcion = '') {
         let data = {

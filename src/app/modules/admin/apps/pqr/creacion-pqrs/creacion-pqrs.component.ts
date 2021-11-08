@@ -143,6 +143,8 @@ export class CreacionPQRSComponent implements OnInit {
                         this.datos.tipo = 2;
                         this.datos.tipoPQRS_nombre = 'Nuevo';
                     }
+
+                    this.datos.primerContacto = false;
                 });
         }
         //detalle de PQRS
@@ -325,8 +327,6 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardar() {
-        // console.log(this.datos);
-
         let data = {
             empresa: 'FINV',
             campanha: this.datos.campana == undefined ? '' : this.datos.campana,
@@ -352,8 +352,14 @@ export class CreacionPQRSComponent implements OnInit {
                     : this.datos.descripcion,
             idPqrspadre: '',
             fechaSolucion: this.datos.fechaParaSolucion,
+            primerContacto:
+                this.datos.primerContacto == undefined ? false : true,
+            adjuntos: this.crearJsonAdjuntos(),
+            hijos: this.crearJsonHijas(),
         };
-        let url = '/agregar-informacion-pqrs';
+        let url = '/crear-pqrs';
+
+        this.crearJsonHijas();
 
         Swal.fire({
             title: 'Cargando',
@@ -365,45 +371,20 @@ export class CreacionPQRSComponent implements OnInit {
                 Swal.showLoading();
 
                 this._pqrService
-                    .Create(url, data)
+                    .CreatePqrs(url, data)
                     .subscribe((response: any) => {
                         Swal.close();
                         if (response) {
                             if (response.status == 200) {
-                                if (response.data.salida != 200) {
-                                    Swal.fire(
-                                        '¡Información!',
-                                        `Datos incompletos, favor evaluar`,
-                                        'error'
-                                    ).then();
-                                    return;
-                                }
-                                //contesto bien
-                                //valida si hay adjunto
-                                this.guardHijos(
-                                    response.data,
-                                    data,
-                                    '/agregar-informacion-pqrs'
-                                );
-                                this.guardarAdjunto(response.data.idSolucion);
-                                let url = `/sendmail/notificacion-crear-pqrs`; ///${response.data.idPadre} `;
-                                // this._pqrService.enviarCorreos(url)
-                                this._pqrService.envioCorreos(
-                                    url,
-                                    response.data.idPadre,
-                                    1
-                                );
-
-                                //redirijo a gestionar
-                                // Swal.fire(
-                                //   '¡Información!',
-                                //   `PQRS guardado con exito, PQRS ${response.data.idPadre}`,
-                                //   'success'
-                                // ).then();
-                                // setTimeout(() => {
-                                //   let url = `pqr/gestion/${response.data.idPadre}`;
-                                //   this.router.navigateByUrl(url);
-                                // }, 1200);
+                                Swal.fire({
+                                    title: 'Información',
+                                    html: response.data.descripcion,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                }).then((result) => {
+                                    let url = `pqr/gestion`;
+                                    this.router.navigateByUrl(url);
+                                });
                             } else {
                                 Swal.fire(
                                     '¡Información!',
@@ -668,5 +649,63 @@ export class CreacionPQRSComponent implements OnInit {
                 this.evidencia.push(dataModal);
             }
         });
+    }
+
+    crearJsonHijas(): Array<JSON> {
+        let dataHijos = [];
+
+        this.causalesLegales.forEach((element) => {
+            dataHijos.push({
+                empresa: 'FINV',
+                campanha:
+                    this.datos.campana == undefined ? '' : this.datos.campana,
+                origenPqrs: parseInt(this.datos.origen),
+                tipoCliente: parseInt(this.datos.tipo),
+                codigoNegocio:
+                    this.datos.negocio == undefined ? '' : this.datos.negocio,
+                sucursal:
+                    this.datos.agencia == undefined ? '' : this.datos.agencia,
+                entidad:
+                    this.datos.entidad == undefined ? '' : this.datos.entidad,
+                idCliente: this.datos.identificacion,
+                nombres: this.datos.nombres,
+                apellidos: this.datos.apellidos,
+                departamento: this.datos.departamento,
+                ciudad: this.datos.ciudad,
+                barrio: this.datos.barrio,
+                direccion: this.datos.direccion,
+                celular: this.datos.telefono,
+                email: this.datos.email,
+                idSolucion: parseInt(element.solucion),
+                detallePqrs:
+                    this.datos.descripcion == undefined
+                        ? ''
+                        : this.datos.descripcion,
+                idPqrspadre: '',
+                fechaSolucion: element.fechaParaSolucion,
+                adjuntos: this.crearJsonAdjuntos(),
+            });
+        });
+
+        return dataHijos;
+    }
+
+    crearJsonAdjuntos(): Array<JSON> {
+        let data = [];
+        this.evidencia.forEach((element) => {
+            if (element.file != null) {
+                let nombre = element.filename.split('.');
+                data.push({
+                    idComentario: '',
+                    nombreArchivo: nombre[0].toLowerCase(),
+                    extension: nombre[1].toLowerCase(),
+                    fuente: 'registro-pqrs',
+                    identificador: 'pqrs',
+                    base64: element.file,
+                    descripcion: element.descripcion,
+                });
+            }
+        });
+        return data;
     }
 }
