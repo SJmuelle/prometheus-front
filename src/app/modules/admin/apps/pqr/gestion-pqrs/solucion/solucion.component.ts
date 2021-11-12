@@ -193,8 +193,10 @@ export class SolucionComponent implements OnInit {
                             });
                         }
 
-                        url = `/sendmail/notificacion-crear-pqrs`;///${this.pqrid}`;
-                        this._pqrService.envioCorreos(url, this.pqrid, 2);
+                        if (this.idTipoComentario == '1') {
+                            url = `/sendmail/notificacion-crear-pqrs`; ///${this.pqrid}`;
+                            this._pqrService.envioCorreos(url, this.pqrid, 2);
+                        }
                     } else {
                         Swal.fire(
                             'Información',

@@ -378,7 +378,7 @@ export class CreacionPQRSComponent implements OnInit {
                             if (response.status == 200) {
                                 Swal.fire({
                                     title: 'Información',
-                                    html: response.data.descripcion,
+                                    html: `${response.data.descripcion}. PQRS-${response.data.pqrs}`,
                                     icon: 'success',
                                     showConfirmButton: true,
                                 }).then((result) => {
@@ -597,33 +597,17 @@ export class CreacionPQRSComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
-            // barrio: "san antonio"
-            // callePrincipal: "23"
-            // complemento: "apto 123"
-            // departamento: "ANT"
-            // departamentoNombre: "ANTIOQUIA"
-            // direccion: ""
-            // municipio: "AB"
-            // municipioNombre: "ABEJORRAL"
-            // nada: "#"
-            // numero: "14"
-            // numero2: "11"
-            // tipoVia: "1684"
-            // viaNombre: "Calle"
             let dataModal = result;
             if (dataModal.departamentoNombre != undefined) {
                 this.datos.departamento = dataModal.departamentoNombre;
                 this.datos.ciudad = dataModal.municipioNombre;
                 this.datos.barrio = dataModal.barrio;
-                this.datos.direccion = `${
-                    dataModal.viaNombre == undefined ? '' : dataModal.viaNombre
-                }
-        ${dataModal.callePrincipal == undefined ? '' : dataModal.callePrincipal}
-        #${dataModal.numero == undefined ? '' : dataModal.numero}
-        ${dataModal.numero2 == undefined ? '' : dataModal.numero2}
-         ${dataModal.complemento == undefined ? '' : dataModal.complemento}`;
+                this.datos.direccion =
+                    (dataModal.viaNombre == undefined ? '' : `${dataModal.viaNombre}`) +
+                    (dataModal.callePrincipal == undefined ? '' : ` ${dataModal.callePrincipal}`) +
+                    (dataModal.numero == undefined ? '' : ` # ${dataModal.numero}`) +
+                    (dataModal.numero2 == undefined ? '' : ` - ${dataModal.numero2}`) +
+                    (dataModal.complemento == undefined ? '' : ` ${dataModal.complemento}`);
             }
         });
     }
