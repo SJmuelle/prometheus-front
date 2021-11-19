@@ -11,7 +11,7 @@
                     <div class="-mx-3 md:flex mt-3 mb-2">
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                             <mat-label>Tipo de referencia</mat-label>
-                            <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'descripcionTipoReferencia'">
+                            <input matInput type="text" placeholder="Tipo de referencia" [formControlName]="'descripcionTipoReferencia'" [readonly]="true">
                         </mat-form-field>
                         <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">

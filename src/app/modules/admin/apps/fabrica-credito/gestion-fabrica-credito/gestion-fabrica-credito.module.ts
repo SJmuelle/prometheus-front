@@ -23,6 +23,7 @@ import { FormDetallesReferenciasComponent } from './form-detalles-referencias/fo
 import { FormDialogReferenciasComponent } from './form-dialog-referencias/form-dialog-referencias.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { GridComentariosComponent } from './grid-comentarios/grid-comentarios.component';
+import { GridDocumentacionComponent } from './grid-documentacion/grid-documentacion.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { GridComentariosComponent } from './grid-comentarios/grid-comentarios.co
     GridReferenciasComponent,
     FormDetallesReferenciasComponent,
     FormDialogReferenciasComponent,
-    GridComentariosComponent
+    GridComentariosComponent,
+    GridDocumentacionComponent
   ],
     imports: [
         CommonModule,

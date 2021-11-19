@@ -95,7 +95,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
           celular:                   ['',[Validators.pattern(/^[0-9]*$/)]],
           codigoDepartamento:        [''],
           codigoCiudad:              [''],
-          descripcionTipoReferencia: [{value: '', disabled: true}],
+          descripcionTipoReferencia: [''],
           estado:                    [''],
           descripcionEstado:         [''],
           antiguedad:                [''],

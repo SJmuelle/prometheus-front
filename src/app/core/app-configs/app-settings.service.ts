@@ -81,6 +81,13 @@ export class AppSettingsService {
             baseComentarioCrear: EndPoints.uri('cre-agregar-comentario')
         }
     };
-
+    /**
+     * @description: End-point
+     */
+    public documentos = {
+        url: {
+            base: EndPoints.uri('documentos-reque')
+        }
+    };
 
 }

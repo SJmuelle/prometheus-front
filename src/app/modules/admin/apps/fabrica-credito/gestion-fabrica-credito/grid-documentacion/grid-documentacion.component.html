@@ -1,0 +1,64 @@
+<div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
+        <input class="border rounded p-2 bg-gray-100 mr-4 text-xs" type="text"
+               autocomplete="off" name="filtrarTablaHG"
+               placeholder="Filtrar..."
+        >
+        <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"
+        >
+            <option value="5"> 5</option>
+            <option value="10"> 10</option>
+            <option value="20"> 20</option>
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12">
+        <table class="shadow p-0">
+            <thead class="bg-accent-50" >
+                <tr
+                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                    <th class="px-4 py-3">No. Doc</th>
+                    <th class="px-4 py-3">Nombre del documento</th>
+                    <th class="px-4 py-3">Requerido</th>
+                    <th class="px-4 py-3">Cargado</th>
+                    <th class="px-4 py-3">Cargar</th>
+                    <th class="px-4 py-3">Fecha de cargue</th>
+                    <th class="px-4 py-3">Descargar</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <ng-container *ngIf="documentos$ | async as items">
+                    <ng-container *ngFor="let item of items.data">
+                        <tr>
+                            <td class="px-2 text-sm border">{{ item.idArchivo}}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                            <td class="px-2 text-sm border">{{ item.requerido? 'Si' : 'No'}}</td>
+                            <td class="px-2 text-sm border">{{ item.archivoCargado? 'No' : 'Si'}}</td>
+                            <td class="px-2 text-sm border text-center">
+                                <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
+                                       >
+                                <button mat-icon-button
+                                        matTooltip="Cargar documento"
+                                        (click)="fileInput.click()"
+                                >
+                                    <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
+                                </button>
+                            </td>
+                            <td class="px-2 text-sm border">{{item.fechaCargue}}</td>
+                            <td class="px-2 text-sm border text-center">
+                                <button mat-icon-button
+                                        matTooltip="Descargar documento"
+                                >
+                                    <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>

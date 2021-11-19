@@ -69,12 +69,14 @@
                             </mat-form-field>
                         </div>
                     </ng-container>
-                    <div class="-mx-3 md:flex mb-2">
-                        <mat-form-field class="w-full px-3 fuse-mat-dense">
-                            <mat-label>Antigüedad</mat-label>
-                            <input matInput type="number" placeholder="Ingrese valor" [min]="'0'" [formControlName]="'antiguedad'">
-                        </mat-form-field>
-                    </div>
+                    <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                <mat-label>Antigüedad</mat-label>
+                                <input matInput type="number" placeholder="Ingrese valor" [min]="'0'" [formControlName]="'antiguedad'">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
                     <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                         <div class="-mx-3 md:flex mb-2">
                             <ng-container *ngIf="departamentos$ | async as departamentos">

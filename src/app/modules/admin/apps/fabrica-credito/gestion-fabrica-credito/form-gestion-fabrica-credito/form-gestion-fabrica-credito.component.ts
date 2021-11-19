@@ -16,6 +16,7 @@ import {DateAdapter} from "@angular/material/core";
 import * as moment from 'moment';
 import {MatDialog} from "@angular/material/dialog";
 import {GridComentariosComponent} from "../grid-comentarios/grid-comentarios.component";
+import {GridDocumentacionComponent} from "../grid-documentacion/grid-documentacion.component";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -42,6 +43,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public subscription$: Subscription;
   public verComentarios: boolean = false;
+  public tipoDocumento: string = '';
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -50,6 +52,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private departamentosCiudadesService: DepartamentosCiudadesService,
       private router: Router,
       private genericaServices: GenericasService,
+      private _dialog: MatDialog
   ) {
     const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
     const identificacion: string =  this.route.snapshot.paramMap.get('id');
@@ -72,7 +75,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.getViveNegocio();
       this.getDeclarante();
       this.getCamaraComercio();
-      console.log('SSSS');
   }
   /**
    * @description:
@@ -82,10 +84,17 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.verComentarios = event;
   }
   /**
-   * @description: Abre el modal de comentarios
+   * @description: Abre el modal de listado de documentos
    */
   public onDialogo(): void {
-
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      const dialogRef = this._dialog.open(GridDocumentacionComponent, {
+          width: '80%',
+          data: {numeroSolicitud: numeroSolicitud, tipoDocumento: this.tipoDocumento}
+      });
+      dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+      });
 
   }
   /**
@@ -169,6 +178,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           if (data.codigoCiudadNegocio) {
             this.getBarriosNegocio(data.codigoCiudadNegocio);
           }
+          this.tipoDocumento = data.tipoDocumento;
       });
   }
   public seleccionDepartamento(event: MatSelectChange): void {
