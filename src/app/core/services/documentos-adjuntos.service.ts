@@ -20,4 +20,10 @@ export class DocumentosAdjuntosService {
         const {numeroSolicitud, tipoDocumento} = datos;
         return this._http.get(`${this._appSettings.documentos.url.base}/32/${numeroSolicitud}/${tipoDocumento}`);
     }
+    /**
+     * @description: Adjuntar documentos
+     */
+    public adjuntarDocumento(data: any): Observable<any> {
+        return this._http.post(`${this._appSettings.documentos.url.baseAdjunto}`, data);
+    }
 }

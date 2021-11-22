@@ -86,7 +86,8 @@ export class AppSettingsService {
      */
     public documentos = {
         url: {
-            base: EndPoints.uri('documentos-reque')
+            base: EndPoints.uri('documentos-reque'),
+            baseAdjunto: EndPoints.uriAdjuntos('adjuntar-archivo')
         }
     };
 

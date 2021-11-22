@@ -19,4 +19,10 @@ export class EndPoints {
     static uriGenerica(url: string): string {
         return environment.urlApi5 + url;
     }
+    /**
+     * @description: URL adjuntos
+     */
+    static uriAdjuntos(url: string): string {
+        return environment.urlApi6 + url;
+    }
 }

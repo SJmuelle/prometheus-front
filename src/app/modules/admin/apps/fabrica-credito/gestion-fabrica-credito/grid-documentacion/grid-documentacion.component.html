@@ -34,9 +34,11 @@
                             <td class="px-2 text-sm border">{{ item.idArchivo}}</td>
                             <td class="px-2 text-sm border">{{ item.descripcion}}</td>
                             <td class="px-2 text-sm border">{{ item.requerido? 'Si' : 'No'}}</td>
-                            <td class="px-2 text-sm border">{{ item.archivoCargado? 'No' : 'Si'}}</td>
+                            <td class="px-2 text-sm border">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}</td>
                             <td class="px-2 text-sm border text-center">
-                                <input type="file" #fileInput class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
+                                <input type="file" #fileInput
+                                       (change)="subirArchivo($event, item)"
+                                       class="d-none" [accept]="'image/jpeg,image/png,application/pdf'"
                                        >
                                 <button mat-icon-button
                                         matTooltip="Cargar documento"
