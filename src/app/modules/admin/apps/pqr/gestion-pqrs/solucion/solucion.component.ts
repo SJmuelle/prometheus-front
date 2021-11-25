@@ -194,7 +194,7 @@ export class SolucionComponent implements OnInit {
                                     if (response) {
                                         Swal.fire(
                                             '¡Información!',
-                                            `Se guardo el registro con éxito`,
+                                            `Se guardó el registro con éxito`,
                                             'success'
                                         ).then((resultado) => {
                                             if (resultado) {
@@ -207,7 +207,7 @@ export class SolucionComponent implements OnInit {
                         } else {
                             Swal.fire(
                                 '¡Información!',
-                                `Se guardo el registro con éxito`,
+                                `Se guardó el registro con éxito`,
                                 'success'
                             ).then((resultado) => {
                                 if (resultado) {

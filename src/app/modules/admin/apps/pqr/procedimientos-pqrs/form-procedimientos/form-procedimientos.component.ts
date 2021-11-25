@@ -100,7 +100,7 @@ export class FormProcedimientosComponent implements OnInit {
                     }
                     Swal.fire(
                         'Información',
-                        `Se guardo el registro con éxito`,
+                        `Se guardó el registro con éxito`,
                         'success'
                     ).then((resultado) => {
                         if (resultado) {

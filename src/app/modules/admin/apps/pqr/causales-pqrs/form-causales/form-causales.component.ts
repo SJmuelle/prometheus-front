@@ -73,7 +73,7 @@ export class FormCausalesComponent implements OnInit {
                 if (response.status == 200) {
                     Swal.fire(
                         '¡Información!',
-                        `Se guardo el registro con éxito`,
+                        `Se guardó el registro con éxito`,
                         'success'
                     ).then((resultado) => {
                         if (resultado) {

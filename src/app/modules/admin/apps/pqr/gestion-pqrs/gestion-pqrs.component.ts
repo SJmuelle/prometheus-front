@@ -243,7 +243,7 @@ export class GestionPQRSComponent implements OnInit {
                     if (response.data.respuesta == 'OK') {
                         Swal.fire(
                             'Información',
-                            `Se guardo el registro con éxito`,
+                            `Se guardó el registro con éxito`,
                             'success'
                         );
                         this.onTabChanged(2);
