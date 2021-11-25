@@ -31,94 +31,102 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { GestionPQRSComponent } from './gestion-pqrs/gestion-pqrs.component';
 import { QuillModule } from 'ngx-quill';
 import { SolucionComponent } from './gestion-pqrs/solucion/solucion.component';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ListUsuarioComponent } from './responsables-pqrs/list-usuario/list-usuario.component';
 import { InsertarCausalLegalComponent } from './creacion-pqrs/insertar-causal-legal/insertar-causal-legal.component';
 import { InsertarAdjuntosComponent } from './creacion-pqrs/insertar-adjuntos/insertar-adjuntos.component';
 import { FuseAlertModule } from '@fuse/components/alert';
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
+import { FormProcedimientosComponent } from './procedimientos-pqrs/form-procedimientos/form-procedimientos.component';
+import { ProcedimientosPQRSComponent } from './procedimientos-pqrs/procedimientos-pqrs.component';
 
 const routes: Routes = [
-  {
-    path: 'creacion/:cliente',
-    component: CreacionPQRSComponent,
-  },
-  {
-    path: 'gestion/:idPQR',
-    component: GestionPQRSComponent,
-  },
-  {
-    path: 'configuracion',
-    component: PqrComponent,
-    children: [
-      {
-        path: 'tipoPQRS',
-        component: TipopqrComponent,
-      },
-      {
-        path: 'causalesPQRS',
-        component: CausalesPQRSComponent,
-      },
-      {
-        path: 'responsablesPQRS',
-        component: ResponsablesPQRSComponent,
-      },
-      {
-        path: 'solucionesPQRS',
-        component: SolucionesPQRSComponent,
-      }
-    ]
-  },
-  { path: '**', component: ListComponent },
+    {
+        path: 'creacion/:cliente',
+        component: CreacionPQRSComponent,
+    },
+    {
+        path: 'gestion/:idPQR',
+        component: GestionPQRSComponent,
+    },
+    {
+        path: 'configuracion',
+        component: PqrComponent,
+        children: [
+            {
+                path: 'tipoPQRS',
+                component: TipopqrComponent,
+            },
+            {
+                path: 'causalesPQRS',
+                component: CausalesPQRSComponent,
+            },
+            {
+                path: 'responsablesPQRS',
+                component: ResponsablesPQRSComponent,
+            },
+            {
+                path: 'solucionesPQRS',
+                component: SolucionesPQRSComponent,
+            },
+            {
+                path: 'procedimientosPQRS',
+                component: ProcedimientosPQRSComponent,
+            },
+        ],
+    },
+    { path: '**', component: ListComponent },
 
-  // { path: 'pqrs', component: TipoPqrsComponent },
-  // { path: 'dias-no-habiles', component: DiasnohabilesComponent },
-  // { path: 'causales', component: CausalespqrsComponent },
-  // { path: 'responsables', component: ResponsablespqrsComponent },
-  // { path: 'solucion', component: SolucionpqrsComponent },
+    // { path: 'pqrs', component: TipoPqrsComponent },
+    // { path: 'dias-no-habiles', component: DiasnohabilesComponent },
+    // { path: 'causales', component: CausalespqrsComponent },
+    // { path: 'responsables', component: ResponsablespqrsComponent },
+    // { path: 'solucion', component: SolucionpqrsComponent },
 ];
 
 @NgModule({
-  declarations: [
-    PqrComponent,
-    ListComponent,
-    TipopqrComponent,
-    FormComponent,
-    CausalesPQRSComponent,
-    ResponsablesPQRSComponent,
-    SolucionesPQRSComponent,
-    FormCausalesComponent,
-    FormResponsablesComponent,
-    FormSolucionesComponent,
-    CreacionPQRSComponent,
-    GestionPQRSComponent,
-    SolucionComponent,
-    ListUsuarioComponent,
-    InsertarCausalLegalComponent,
-    InsertarAdjuntosComponent,
-    DirectionsComponent,
-    // CreacionComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    Ng2SearchPipeModule,
-    RouterModule.forChild(routes),
-    
-    NgxPaginationModule,
-    FuseCardModule,
-    
-    QuillModule.forRoot(),
-    MatButtonModule,
-    MatCheckboxModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatStepperModule,
-    MatExpansionModule,
-    FuseAlertModule 
-  ]
+    declarations: [
+        DirectionsComponent,
+        CausalesPQRSComponent,
+        CreacionPQRSComponent,
+        FormCausalesComponent,
+        FormComponent,
+        FormProcedimientosComponent,
+        FormResponsablesComponent,
+        FormSolucionesComponent,
+        GestionPQRSComponent,
+        InsertarAdjuntosComponent,
+        InsertarCausalLegalComponent,
+        ListComponent,
+        ListUsuarioComponent,
+        PqrComponent,
+        ResponsablesPQRSComponent,
+        SolucionesPQRSComponent,
+        ProcedimientosPQRSComponent,
+        TipopqrComponent,
+        SolucionComponent,
+        // CreacionComponent
+    ],
+    imports: [
+        CommonModule,
+        SharedModule,
+        Ng2SearchPipeModule,
+        RouterModule.forChild(routes),
+
+        NgxPaginationModule,
+        FuseCardModule,
+
+        QuillModule.forRoot(),
+        MatButtonModule,
+        MatCheckboxModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatRadioModule,
+        MatSelectModule,
+        MatStepperModule,
+        MatExpansionModule,
+        FuseAlertModule,
+    ],
 })
-export class PqrModule { }
+export class PqrModule {}

@@ -21,15 +21,14 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Campaña</mat-label>
                                     <input matInput type="text" autocomplete="off" name="campana"
-                                        [(ngModel)]="datos.canpana" disabled>
+                                        [(ngModel)]="datos.canpana" readonly>
                                 </mat-form-field>
-
                             </div>
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Origen de la PQRS</mat-label>
                                     <mat-select [(ngModel)]="datos.origen" name="tipo" required>
-                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option selected disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoOrigenCliente ">
                                             {{item.nombre}}</mat-option>
                                     </mat-select>
@@ -38,7 +37,7 @@
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Tipo de cliente</mat-label>
-                                    <input matInput type="text" autocomplete="off" name="tipoPQRS_nombre" disabled
+                                    <input matInput type="text" autocomplete="off" name="tipoPQRS_nombre" readonly
                                         [(ngModel)]="datos.tipoPQRS_nombre">
                                 </mat-form-field>
                             </div>
@@ -50,7 +49,7 @@
                                     <mat-select [(ngModel)]="datos.lineaNegocio" name="lineaNegocio"
                                         (ngModelChange)="negociosCabeceras(datos.lineaNegocio)"
                                         [required]="datosBasicosDisabled">
-                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option selected disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoLineaNegocio ">
                                             {{item.descripcion}} ({{item.cantidad}})</mat-option>
                                     </mat-select>
@@ -63,7 +62,7 @@
                                     <mat-select [(ngModel)]="datos.negocio" name="negocio"
                                         (ngModelChange)="seleccionarNegocio(datos.negocio)"
                                         [required]="datosBasicosDisabled">
-                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option selected disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.codigoNegocio}}" *ngFor="let item of listadoNegocio ">
                                             {{item.codigoNegocio}}</mat-option>
                                     </mat-select>
@@ -73,14 +72,14 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Sucursal o agencia</mat-label>
                                     <input matInput type="text" autocomplete="off" name="agencia"
-                                        [(ngModel)]="datos.agencia" disabled>
+                                        [(ngModel)]="datos.agencia" readonly>
                                 </mat-form-field>
                             </div>
                             <div class="col-lg-12 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Entidad</mat-label>
                                     <input matInput type="text" autocomplete="off" name="entidad"
-                                        [(ngModel)]="datos.entidad" disabled>
+                                        [(ngModel)]="datos.entidad" readonly>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -131,22 +130,22 @@
                         <div class="row">
                             <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
                                 <mat-form-field class="flex-auto w-100">
-                                    <mat-label>Departamento *</mat-label>
-                                    <input matInput type="text" autocomplete="off" name="departamento" disabled
+                                    <mat-label>Departamento</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="departamento" readonly
                                         [(ngModel)]="datos.departamento" required>
                                 </mat-form-field>
                             </div>
                             <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
                                 <mat-form-field class="flex-auto w-100">
-                                    <mat-label>Municipio / Ciudad *</mat-label>
-                                    <input matInput type="text" autocomplete="off" name="municipio" disabled
+                                    <mat-label>Municipio / Ciudad</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="municipio" readonly
                                         [(ngModel)]="datos.ciudad" required>
                                 </mat-form-field>
                             </div>
                             <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
                                 <mat-form-field class="flex-auto w-100">
-                                    <mat-label>Barrio *</mat-label>
-                                    <input matInput type="text" autocomplete="off" name="barrio" disabled
+                                    <mat-label>Barrio</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="barrio" readonly
                                         [(ngModel)]="datos.barrio" required>
                                 </mat-form-field>
                             </div>
@@ -155,8 +154,8 @@
                         <div class="row">
                             <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
                                 <mat-form-field class="flex-auto w-100">
-                                    <mat-label>Dirección *</mat-label>
-                                    <input matInput type="text" autocomplete="off" name="direccion" disabled
+                                    <mat-label>Dirección</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="direccion" readonly
                                         [(ngModel)]="datos.direccion" required>
                                 </mat-form-field>
                             </div>
@@ -203,7 +202,7 @@
                                     <mat-label>Tipo de PQRS</mat-label>
                                     <mat-select [(ngModel)]="datos.tipoPQRS" name="tipoPQRS" required
                                         (ngModelChange)="buscarSelectDinamico('listado-causal-tipo',datos.tipoPQRS,'listadoCasualPQRS','causal');validoLegal()">
-                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option selected disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoTipoPQRS ">
                                             {{item.tipoPqrs}}</mat-option>
                                     </mat-select>
@@ -213,8 +212,8 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Causal de PQRS</mat-label>
                                     <mat-select [(ngModel)]="datos.causal" name="causal" required
-                                        (ngModelChange)="buscarSelectDinamico('listado-solucion-causal',datos.causal,'listadoSolucionPQRS','soluciones')">
-                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        (ngModelChange)="buscarSelectDinamico('listado-procedimiento-causal',datos.causal,'listadoProcedimientoPQRS','procedimiento')">
+                                        <mat-option selected disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoCasualPQRS ">
                                             {{item.descripcion}}</mat-option>
                                     </mat-select>
@@ -222,11 +221,11 @@
                             </div>
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
-                                    <mat-label>Solución</mat-label>
-                                    <mat-select [(ngModel)]="datos.solucion" name="solucion" required
-                                        (ngModelChange)="buscarSelectDinamico('listado-responsable-solucion',datos.solucion,'listadoResponsablePQRS','responsable')">
-                                        <mat-option value="" disabled>Seleccionar</mat-option>
-                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoSolucionPQRS ">
+                                    <mat-label>Procedimiento PQRS</mat-label>
+                                    <mat-select [(ngModel)]="datos.procedimiento" name="procedimiento" required
+                                        (ngModelChange)="buscarSelectDinamico('listado-responsable-procedimiento',datos.procedimiento,'listadoResponsablePQRS','responsable')">
+                                        <mat-option selected disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoProcedimientoPQRS ">
                                             {{item.descripcion}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -278,7 +277,7 @@
                                     class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                     <th class="px-4 py-3 text-center"></th>
                                     <th class="px-4 py-3 text-center">Causal</th>
-                                    <th class="px-4 py-3 text-center">Solución</th>
+                                    <th class="px-4 py-3 text-center">Procedimiento</th>
                                     <th class="px-4 py-3 text-center">Responsable</th>
                                     <th class="px-4 py-3 text-center">Área</th>
                                     <th class="px-4 py-3 text-center">Fecha de solución</th>
@@ -292,7 +291,7 @@
                                             (click)="eliminarCausal(indexOfelement)"></mat-icon>
                                     </td>
                                     <td class="px-2 text-sm border text-center">{{ item.causalNombre}}</td>
-                                    <td class="px-2 text-sm border text-center capitalize">{{ item.solucionNombre}}</td>
+                                    <td class="px-2 text-sm border text-center capitalize">{{ item.procedimientoNombre}}</td>
                                     <td class="px-2 text-sm border text-center">{{ item.responsable}}</td>
                                     <td class="px-2 text-sm border text-center">{{ item.area}}</td>
                                     <td class="px-2 text-sm border text-center">{{ item.fechaParaSolucion}}</td>
@@ -358,7 +357,7 @@
                                             <mat-label>Subir evidencias</mat-label>
                                             <input matInput type="text" autocomplete="off" name="campana"
                                                 [(ngModel)]="evidencia[0].filename" placeholder="Subir archivo"
-                                                disabled>
+                                                readonly>
                                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'mat_solid:attach_file'">
                                             </mat-icon>
                                         </mat-form-field>
@@ -409,6 +408,7 @@
                 </div>
             </fuse-card>
         </div>
-
     </div>
+    <hr><hr>
+    <hr><hr>
 </div>

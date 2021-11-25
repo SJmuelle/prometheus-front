@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
-import { FormSolucionesComponent } from './form-soluciones/form-soluciones.component';
+import { FormProcedimientosComponent } from './form-procedimientos/form-procedimientos.component';
 
 @Component({
-    selector: 'app-soluciones-pqrs',
-    templateUrl: './soluciones-pqrs.component.html',
-    styleUrls: ['./soluciones-pqrs.component.scss'],
+    selector: 'app-procedimientos-pqrs',
+    templateUrl: './procedimientos-pqrs.component.html',
+    styleUrls: ['./procedimientos-pqrs.component.scss'],
 })
-export class SolucionesPQRSComponent implements OnInit {
+export class ProcedimientosPQRSComponent implements OnInit {
     listado: any = [];
     page: number = 1;
     tamanoTabl: number = 5;
@@ -26,13 +26,13 @@ export class SolucionesPQRSComponent implements OnInit {
     consulta() {
         Swal.fire({
             title: 'Cargando',
-            html: 'Buscando Informacion de Soluciones de PQRS',
+            html: 'Buscando Informacion de Procedimientos de PQRS',
             timer: 500000,
             didOpen: () => {
                 Swal.showLoading();
             },
         }).then((result) => {});
-        this._pqrService.setSoluciones().subscribe((response: any) => {
+        this._pqrService.setProcedimientos().subscribe((response: any) => {
             Swal.close();
             if (response) {
                 this.listado = response;
@@ -46,26 +46,22 @@ export class SolucionesPQRSComponent implements OnInit {
         if (titulo == 'N') {
             this.datos = {
                 idCausal: null,
-                solucion: '',
-                solucion2: '',
-                solucion3: '',
+                idResponsable: null,
+                descripcion: '',
+                diasSolucion: 0,
                 titulo: 'N',
             };
         } else {
             this.datos = {
-                id: datos.id,
-                causal: datos.causal,
-                solucion: datos.solucion,
-                idSolucion: datos.idSolucion,
-                solucion2: datos.solucion2,
-                idSolucion2: datos.idSolucion2,
-                solucion3: datos.solucion3,
-                idSolucion3: datos.idSolucion3,
+                id: datos.codigoProcedimiento,
+                idResponsable: parseInt(datos.responsable),
+                descripcion: datos.descripcion,
+                tiempo: parseInt(datos.tiempoSolucion),
                 estado: datos.estado == 'Activo' ? 'A' : 'I',
             };
         }
 
-        const dialogRef = this.dialog.open(FormSolucionesComponent, {
+        const dialogRef = this.dialog.open(FormProcedimientosComponent, {
             // width: '1080px',
             // maxHeight: '550px',
             data: this.datos,

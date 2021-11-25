@@ -29,6 +29,9 @@ export class SolucionComponent implements OnInit {
     file: any = null;
     filename: string;
     idTipoComentario: string;
+    solucionCausal: number;
+    @Input() idSolucion: number = 0;
+    listadoSoluciones: any = [];
     ext: string;
     constructor(
         private _pqrService: PqrService,
@@ -49,6 +52,7 @@ export class SolucionComponent implements OnInit {
                     motivoRechazo: '',
                     idTipoComentario: null,
                     detalle: '',
+                    idSolucion: this.solucionCausal,
                 };
                 url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
                 this._pqrService.getListados(url).subscribe((response: any) => {
@@ -79,6 +83,7 @@ export class SolucionComponent implements OnInit {
             }
         });
         let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        this.obtenerSoluciones(this.idSolucion);
     }
 
     public onCharge(input: HTMLInputElement): void {
@@ -110,7 +115,7 @@ export class SolucionComponent implements OnInit {
                 ) {
                     return;
                 }
-                Swal.fire('Información', `Extensión no valida`, 'success');
+                Swal.fire('Información', `Extensión no valida`, 'error');
                 this.file = '';
                 this.filename = '';
                 this.ext = '';
@@ -120,6 +125,24 @@ export class SolucionComponent implements OnInit {
 
     guardar() {
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
+        this.seguimiento.idSolucion = this.solucionCausal
+            ? this.solucionCausal
+            : 0;
+
+        if (this.listadoSoluciones.length > 0) {
+            if (
+                this.seguimiento.idTipoComentario == 2 &&
+                this.seguimiento.idSolucion == 0
+            ) {
+                Swal.fire(
+                    'Información',
+                    `Debe seleccionar una solución para esta PQRS.`,
+                    'error'
+                );
+                return;
+            }
+        }
+
         let url = '/agregar-solucion-comentario';
         Swal.fire({
             title: 'Cargando',
@@ -154,6 +177,7 @@ export class SolucionComponent implements OnInit {
                                 base64: this.file,
                                 descripcion: this.filename,
                             };
+
                             url = '/file/cargar-archivo-pqrs';
                             Swal.fire({
                                 title: 'Cargando',
@@ -220,6 +244,7 @@ export class SolucionComponent implements OnInit {
             idPqrsPadre: this.datos.idPadre,
             motivoRechazo: '',
             idTipoComentario: null,
+            idSolucion: null,
             detalle: '',
         };
         this.filename = '';
@@ -228,5 +253,18 @@ export class SolucionComponent implements OnInit {
 
     recargarData() {
         this.cambiarEstado.emit(true);
+    }
+
+    obtenerSoluciones(id) {
+        if (this.idSolucion > 0) {
+            let url = `/select-solucion-causales/${id}`;
+            this._pqrService.getSolucionesCausales(url).subscribe((sol) => {
+                if (sol) {
+                    this.listadoSoluciones = sol;
+                } else {
+                    this.listadoSoluciones = [];
+                }
+            });
+        }
     }
 }

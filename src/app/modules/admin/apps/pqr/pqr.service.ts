@@ -28,6 +28,15 @@ export class PqrService {
         );
     }
 
+    setProcedimientos() {
+        let url: string = `/tk/informacion-pqrs-procedimientos`;
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
     setSoluciones() {
         let url: string = `/tk/informacion-pqrs-soluciones`;
         return this._utility.getQuery(url, true).pipe(
@@ -126,6 +135,14 @@ export class PqrService {
     }
 
     getListados(url: string) {
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
+    getSolucionesCausales(url: string) {
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;

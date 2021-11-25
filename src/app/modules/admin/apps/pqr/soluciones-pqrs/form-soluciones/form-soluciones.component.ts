@@ -12,7 +12,6 @@ export class FormSolucionesComponent implements OnInit {
     listadoTipo: any;
     datos: any = {};
     listadoCausal: any[];
-    listadoResponsable: any[];
 
     constructor(
         public matDialogRef: MatDialogRef<FormSolucionesComponent>,
@@ -28,8 +27,8 @@ export class FormSolucionesComponent implements OnInit {
     consultaListado() {
         Swal.fire({
             title: 'Cargando',
-            html: 'Buscando información ...',
-            timer: 500000,
+            html: 'Buscando información...',
+            timer: 1000,
             didOpen: () => {
                 Swal.showLoading();
             },
@@ -43,44 +42,35 @@ export class FormSolucionesComponent implements OnInit {
                     this.listadoCausal = [];
                 }
             });
-
-        this._pqrService
-            .getListados(`/tk/select-responsables-pqrs`)
-            .subscribe((response: any) => {
-                Swal.close();
-                if (response) {
-                    this.listadoResponsable = response;
-                    this.datos.responsables = this.datos.idResponsable;
-                } else {
-                    this.listadoResponsable = [];
-                }
-            });
     }
 
     guardar() {
         let data, url;
         if (this.datos.titulo == 'N') {
             //post
-            url = '/agregar-pqrs-soluciones';
+            url = '/agregar-pqrs-solucion';
             data = {
                 idCausal: parseInt(this.datos.causal),
-                idResponsable: parseInt(this.datos.responsables),
-                descripcion: this.datos.descripcion,
-                diasSolucion: this.datos.tiempo,
+                solucion: this.datos.solucion,
+                solucion2: this.datos.solucion2,
+                solucion3: this.datos.solucion3,
             };
         } else {
             url = '/actualizar-pqrs-solucion';
             data = {
-                id: this.datos.id,
-                idResponsable: parseInt(this.datos.responsables),
-                descripcion: this.datos.descripcion,
-                diasSolucion: this.datos.tiempo,
-                estado: this.datos.estado == 'A' ? '' : 'A',
+                id: this.data.id,
+                solucion: this.datos.solucion,
+                idSolucion: this.data.idSolucion,
+                solucion2: this.datos.solucion2,
+                idSolucion2: this.data.idSolucion2,
+                solucion3: this.datos.solucion3,
+                idSolucion3: this.data.idSolucion3,
+                estado: this.datos.estado == 'A' ? 'A' : '',
             };
         }
         Swal.fire({
             title: 'Cargando',
-            html: 'Guardando información de PQRS',
+            html: 'Guardando solución de PQRS',
             timer: 500000,
             didOpen: () => {
                 Swal.showLoading();

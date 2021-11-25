@@ -61,7 +61,7 @@ export class FormCausalesComponent implements OnInit {
         }
         Swal.fire({
             title: 'Cargando',
-            html: 'Guardando información de PQRS',
+            html: 'Guardando causales de PQRS',
             timer: 500000,
             didOpen: () => {
                 Swal.showLoading();

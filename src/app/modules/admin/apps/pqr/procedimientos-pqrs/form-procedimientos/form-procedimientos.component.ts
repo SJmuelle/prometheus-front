@@ -4,38 +4,83 @@ import Swal from 'sweetalert2';
 import { PqrService } from '../../pqr.service';
 
 @Component({
-    selector: 'app-form-responsables',
-    templateUrl: './form-responsables.component.html',
-    styleUrls: ['./form-responsables.component.scss'],
+    selector: 'app-form-procedimientos',
+    templateUrl: './form-procedimientos.component.html',
+    styleUrls: ['./form-procedimientos.component.scss'],
 })
-export class FormResponsablesComponent implements OnInit {
+export class FormProcedimientosComponent implements OnInit {
+    listadoTipo: any;
     datos: any = {};
+    listadoCausal: any[];
+    listadoResponsable: any[];
 
     constructor(
-        public matDialogRef: MatDialogRef<FormResponsablesComponent>,
+        public matDialogRef: MatDialogRef<FormProcedimientosComponent>,
         @Inject(MAT_DIALOG_DATA) public data,
         private _pqrService: PqrService
     ) {}
 
     ngOnInit(): void {
+        this.consultaListado();
         this.datos = this.data;
     }
+
+    consultaListado() {
+        Swal.fire({
+            title: 'Cargando',
+            html: 'Buscando información ...',
+            timer: 500000,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        }).then((result) => {});
+        this._pqrService
+            .getListados(`/tk/select-causales-pqrs`)
+            .subscribe((response: any) => {
+                if (response) {
+                    this.listadoCausal = response;
+                } else {
+                    this.listadoCausal = [];
+                }
+            });
+
+        this._pqrService
+            .getListados(`/tk/select-responsables-pqrs`)
+            .subscribe((response: any) => {
+                Swal.close();
+                if (response) {
+                    this.listadoResponsable = response;
+                    this.datos.responsables = this.datos.idResponsable;
+                } else {
+                    this.listadoResponsable = [];
+                }
+            });
+    }
+
     guardar() {
         let data, url;
         if (this.datos.titulo == 'N') {
             //post
-            url = '/agregar-pqrs-tipo';
-            data = {};
+            url = '/agregar-pqrs-procedimientos';
+            data = {
+                idCausal: parseInt(this.datos.causal),
+                idResponsable: parseInt(this.datos.responsables),
+                descripcion: this.datos.descripcion,
+                diasSolucion: this.datos.tiempo,
+            };
         } else {
-            url = '/actualizar-pqrs-responsable';
+            url = '/actualizar-pqrs-procedimientos';
             data = {
                 id: this.datos.id,
+                idResponsable: parseInt(this.datos.responsables),
+                descripcion: this.datos.descripcion,
+                diasSolucion: this.datos.tiempo,
                 estado: this.datos.estado == 'A' ? '' : 'A',
             };
         }
         Swal.fire({
             title: 'Cargando',
-            html: 'Guardando responsable de PQRS',
+            html: 'Guardando procedimientos de PQRS',
             timer: 500000,
             didOpen: () => {
                 Swal.showLoading();

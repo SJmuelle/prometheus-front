@@ -14,6 +14,7 @@ export class GestionPQRSComponent implements OnInit {
     pqrid: any;
     datos: any = {};
     tab: any;
+    listadoSoluciones: any = 0;
     listadoHistorial: any = [];
     listadoAsignaciones: any = [];
     listadoNotificaciones: any = [];
@@ -61,6 +62,7 @@ export class GestionPQRSComponent implements OnInit {
             Swal.close();
             if (response) {
                 this.datos = response[0];
+                this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
             } else {
                 this.datos = {};
@@ -171,10 +173,14 @@ export class GestionPQRSComponent implements OnInit {
 
         swalWithBootstrapButtons
             .fire({
-                text: `¿Está seguro que desea ${estado == true ? 'aprobar' : 'rechazar'} solución?`,
+                text: `¿Está seguro que desea ${
+                    estado == true ? 'aprobar' : 'rechazar'
+                } la solución?`,
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: `Si, ${estado == true ? 'aprobar' : 'rechazar'} solución`,
+                confirmButtonText: `Si, ${
+                    estado == true ? 'aprobar' : 'rechazar'
+                } la solución`,
                 cancelButtonText: 'No, cancelar',
                 reverseButtons: true,
             })
@@ -244,7 +250,12 @@ export class GestionPQRSComponent implements OnInit {
 
                         let url = `/sendmail/notificacion-crear-pqrs`;
                         // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
-                        this._pqrService.envioCorreos(url, data.idPqrs, data.respuesta == true ? 3 : 4, data.comentario);
+                        this._pqrService.envioCorreos(
+                            url,
+                            data.idPqrs,
+                            data.respuesta == true ? 3 : 4,
+                            data.comentario
+                        );
                     } else {
                         Swal.fire(
                             'Información',

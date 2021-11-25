@@ -3,21 +3,21 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { ModalsolucionpqrsComponent } from '../modalsolucionpqrs/modalsolucionpqrs.component';
+import { ModalprocedimientopqrsComponent } from '../modalprocedimientopqrs/modalprocedimientopqrs.component';
 
 @Component({
-    selector: 'app-solucionpqrs',
-    templateUrl: './solucionpqrs.component.html',
-    styleUrls: ['./solucionpqrs.component.scss'],
+    selector: 'app-procedimientopqrs',
+    templateUrl: './procedimientopqrs.component.html',
+    styleUrls: ['./procedimientopqrs.component.scss'],
 })
-export class SolucionpqrsComponent implements OnInit, AfterViewInit {
+export class ProcedimientopqrsComponent implements OnInit, AfterViewInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
     formFiltros: FormGroup;
 
     displayedColumns: string[] = [
         'causal',
-        'solucion',
+        'procedimiento',
         'descripcion',
         'responsable',
         'tiempo',
@@ -63,12 +63,12 @@ export class SolucionpqrsComponent implements OnInit, AfterViewInit {
     ngOnInit(): void {}
 
     openDialog(data?): void {
-        const dialogRef = this.dialog.open(ModalsolucionpqrsComponent, {
+        const dialogRef = this.dialog.open(ModalprocedimientopqrsComponent, {
             width: '500px',
             maxHeight: '650px',
             data: {
                 causal: '1',
-                solucion: '321312',
+                procedimiento: '321312',
                 descripcion: 'cualquiera',
                 responsable: '1',
                 tiempo: '10',

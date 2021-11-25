@@ -33,7 +33,7 @@ export class CreacionPQRSComponent implements OnInit {
     };
     listadoTipoPQRS: any[];
     listadoCasualPQRS: any[];
-    listadoSolucionPQRS: any[];
+    listadoProcedimientoPQRS: any[];
     listadoResponsablePQRS: any[];
     listadoOrigenCliente: any[];
     clienteExistente: boolean;
@@ -205,9 +205,9 @@ export class CreacionPQRSComponent implements OnInit {
                     this.datos.tipoPQRS != '' &&
                     this.datos.tipoPQRS != undefined &&
                     this.datos.tipoPQRS != null &&
-                    this.datos.solucion != '' &&
-                    this.datos.solucion != undefined &&
-                    this.datos.solucion != null &&
+                    this.datos.procedimiento != '' &&
+                    this.datos.procedimiento != undefined &&
+                    this.datos.procedimiento != null &&
                     this.datos.causal != '' &&
                     this.datos.causal != undefined &&
                     this.datos.causal != null
@@ -301,12 +301,12 @@ export class CreacionPQRSComponent implements OnInit {
                     this.datos.responsable =
                         this.listadoResponsablePQRS[0].login;
                     this.datos.area = this.listadoResponsablePQRS[0].area;
-                    let index = this.listadoSolucionPQRS.findIndex(
+                    let index = this.listadoProcedimientoPQRS.findIndex(
                         (data) => data.id == tipo
                     );
                     if (index != -1) {
                         this.datos.fechaParaSolucion =
-                            this.listadoSolucionPQRS[index].diaSolucion;
+                            this.listadoProcedimientoPQRS[index].diaSolucion;
                     } else {
                         this.datos.fechaParaSolucion = '';
                     }
@@ -345,7 +345,7 @@ export class CreacionPQRSComponent implements OnInit {
             direccion: this.datos.direccion,
             celular: this.datos.telefono,
             email: this.datos.email,
-            idSolucion: parseInt(this.datos.solucion),
+            idProcedimiento: parseInt(this.datos.procedimiento),
             detallePqrs:
                 this.datos.descripcion == undefined
                     ? ''
@@ -378,7 +378,7 @@ export class CreacionPQRSComponent implements OnInit {
                             if (response.status == 200) {
                                 Swal.fire({
                                     title: 'Información',
-                                    html: `${response.data.descripcion}. PQRS-${response.data.pqrs}`,
+                                    html: `${response.data.descripcion} ${response.data.pqrs}.`,
                                     icon: 'success',
                                     showConfirmButton: true,
                                 }).then((result) => {
@@ -460,37 +460,29 @@ export class CreacionPQRSComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
             let dataModal = result;
             if (
-                dataModal.solucion != '' &&
-                dataModal.solucion != undefined &&
-                dataModal.solucion != null &&
+                dataModal.procedimiento != '' &&
+                dataModal.procedimiento != undefined &&
+                dataModal.procedimiento != null &&
                 dataModal.causal != '' &&
                 dataModal.causal != undefined &&
                 dataModal.causal != null
             ) {
-                //   const encontrodo = this.causalesLegales.find(element => element.solucion = dataModal.solucion);
+                const encontrodo = this.causalesLegales.find(
+                    (element) =>
+                        (element.procedimiento == dataModal.procedimiento)
+                );
 
-                //   if(encontrodo){
-                //     Swal.fire(
-                //       'Advertencia',
-                //       'Solución repetida',
-                //       'error'
-                //     );
-                //     return
-                //   }
+                if (encontrodo) {
+                    Swal.fire('Advertencia', 'Este procedimiento ya fue asociado a este registro.', 'error');
+                    return;
+                }
 
-                //   if(this.datos.solucion==dataModal.solucion){
-                //     Swal.fire(
-                //       'Advertencia',
-                //       'Solución repetida',
-                //       'error'
-                //     );
-                //     return
-                //   }
-
+                if (this.datos.procedimiento == dataModal.procedimiento) {
+                    Swal.fire('Advertencia', 'Este procedimiento ya fue asociado a este registro.', 'error');
+                    return;
+                }
                 this.causalesLegales.push(dataModal);
             }
         });
@@ -520,7 +512,7 @@ export class CreacionPQRSComponent implements OnInit {
                 direccion: this.datos.direccion,
                 celular: this.datos.telefono,
                 email: this.datos.email,
-                idSolucion: parseInt(element.solucion),
+                idProcedimiento: parseInt(element.procedimiento),
                 detallePqrs:
                     this.datos.descripcion == undefined
                         ? ''
@@ -543,7 +535,7 @@ export class CreacionPQRSComponent implements OnInit {
                                 return;
                             }
 
-                            this.guardarAdjunto(response.data.idSolucion);
+                            this.guardarAdjunto(response.data.idProcedimiento);
                             let url = `/sendmail/notificacion-crear-pqrs`; /*${response.data.idPadre} `;*/
                             this._pqrService.envioCorreos(
                                 url,
@@ -603,11 +595,21 @@ export class CreacionPQRSComponent implements OnInit {
                 this.datos.ciudad = dataModal.municipioNombre;
                 this.datos.barrio = dataModal.barrio;
                 this.datos.direccion =
-                    (dataModal.viaNombre == undefined ? '' : `${dataModal.viaNombre}`) +
-                    (dataModal.callePrincipal == undefined ? '' : ` ${dataModal.callePrincipal}`) +
-                    (dataModal.numero == undefined ? '' : ` # ${dataModal.numero}`) +
-                    (dataModal.numero2 == undefined ? '' : ` - ${dataModal.numero2}`) +
-                    (dataModal.complemento == undefined ? '' : ` ${dataModal.complemento}`);
+                    (dataModal.viaNombre == undefined
+                        ? ''
+                        : `${dataModal.viaNombre}`) +
+                    (dataModal.callePrincipal == undefined
+                        ? ''
+                        : ` ${dataModal.callePrincipal}`) +
+                    (dataModal.numero == undefined
+                        ? ''
+                        : ` # ${dataModal.numero}`) +
+                    (dataModal.numero2 == undefined
+                        ? ''
+                        : ` - ${dataModal.numero2}`) +
+                    (dataModal.complemento == undefined
+                        ? ''
+                        : ` ${dataModal.complemento}`);
             }
         });
     }
@@ -660,7 +662,7 @@ export class CreacionPQRSComponent implements OnInit {
                 direccion: this.datos.direccion,
                 celular: this.datos.telefono,
                 email: this.datos.email,
-                idSolucion: parseInt(element.solucion),
+                idProcedimiento: parseInt(element.procedimiento),
                 detallePqrs:
                     this.datos.descripcion == undefined
                         ? ''
@@ -668,6 +670,7 @@ export class CreacionPQRSComponent implements OnInit {
                 idPqrspadre: '',
                 fechaSolucion: element.fechaParaSolucion,
                 adjuntos: this.crearJsonAdjuntos(),
+                primerContacto: false,
             });
         });
 
