@@ -68,14 +68,26 @@
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Score acierta</mat-label>
                                 <input matInput type="text" [formControlName]="'score'">
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matSuffix
+                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Descripción del score</mat-label>
                                 <input matInput type="text" [formControlName]="'descripcionScore'">
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matSuffix
+                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Nivel de endeudamiento</mat-label>
                                 <input matInput type="text" [formControlName]="'nivelEndeudamiento'">
+                                <mat-icon
+                                    class="icon-size-5"
+                                    matSuffix
+                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
                         </div>
                     </div>
@@ -128,16 +140,7 @@
                                     <ng-container *ngIf="tipoDocumentos$ | async as documentos">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Tipo de documento</mat-label>
-                                            <mat-select
-                                                        [value]="'seleccione'"
-                                                        [formControlName]="'tipoDocumento'"
-                                            >
-                                                <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                <mat-option *ngFor="let documento of documentos.data"
-                                                            [value]="documento.codigoOpcion"
-                                                >{{documento.descripcionOpcion}}
-                                                </mat-option>
-                                            </mat-select>
+                                            <input matInput type="text" placeholder="Tipo de solicitante" [formControlName]="'tipoDocumento'" [readonly]="true">
                                         </mat-form-field>
                                     </ng-container>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -159,6 +162,10 @@
                                             <input matInput [matDatepicker]="picker" [formControlName]="'fechaMatricula'">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </ng-container>
                                 </div>
@@ -168,18 +175,34 @@
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Primer nombre</mat-label>
                                             <input matInput type="text"  [formControlName]="'primerNombre'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Segundo nombre</mat-label>
                                             <input matInput type="text" [formControlName]="'segundoNombre'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Primer apellido</mat-label>
                                             <input matInput type="text" [formControlName]="'primerApellido'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Segundo apellido</mat-label>
                                             <input matInput type="text" [formControlName]="'segundoApellido'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </div>
                                 </ng-container>
@@ -187,6 +210,10 @@
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Teléfono / Celular </mat-label>
                                         <input matInput type="text" [formControlName]="'celular'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         <mat-error *ngIf="soloNumero('celular')">
                                             Este campo solo acepta números.
                                         </mat-error>
@@ -195,6 +222,10 @@
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Email</mat-label>
                                         <input matInput type="text" [formControlName]="'email'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                     </mat-form-field>
                                     <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
                                         <ng-container *ngIf="generos$ | async as generos">
@@ -210,11 +241,19 @@
                                                     >{{genero.descripcionOpcion}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Nacionalidad</mat-label>
                                             <input matInput type="text" [formControlName]="'nacionalidad'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </ng-container>
                                 </div>
@@ -225,6 +264,10 @@
                                             <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'">
                                             <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
                                             <mat-datepicker #fechaNacimiento></mat-datepicker>
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                         <ng-container *ngIf="departamentosNacimiento$ | async as departamentos">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -239,6 +282,10 @@
                                                     >{{departamento.nombre}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <ng-container *ngIf="ciudadesNacimiento$ | async as ciudades">
@@ -254,6 +301,10 @@
                                                     >{{ciudad.nombre}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
@@ -269,6 +320,10 @@
                                                     >{{item.descripcionOpcion}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                     </div>
@@ -287,6 +342,10 @@
                                                 >{{departamento.nombre}}
                                                 </mat-option>
                                             </mat-select>
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </ng-container>
                                     <ng-container *ngIf="ciudades$ | async as ciudades">
@@ -302,6 +361,10 @@
                                                 >{{ciudad.nombre}}
                                                 </mat-option>
                                             </mat-select>
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </ng-container>
                                     <ng-container *ngIf="barrios$ | async as barrios">
@@ -317,11 +380,19 @@
                                                 >{{barrio.nombre}}
                                                 </mat-option>
                                             </mat-select>
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </ng-container>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Dirección de residencia</mat-label>
                                         <input matInput type="text" [formControlName]="'direccionResidencial'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                     </mat-form-field>
                                 </div>
                                 <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
@@ -339,6 +410,10 @@
                                                     >{{item.descripcionOpcion}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <ng-container *ngIf="viveNegocio$ | async as viveNegocio">
@@ -354,6 +429,10 @@
                                                     >{{item.descripcionOpcion}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                     </div>
@@ -363,20 +442,36 @@
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Compras semanalmente en cemento ($)</mat-label>
                                         <input matInput type="text" [formControlName]="'comprasSemanales'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Antigüedad compras (meses)</mat-label>
                                         <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Ventas mensuales ($)</mat-label>
                                         <input matInput type="text" [formControlName]="'ventasMensuales'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                     </mat-form-field>
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Activo ($)</mat-label>
                                         <input matInput type="text" placeholder="" [formControlName]="'activos'">
+                                        <mat-icon
+                                            class="icon-size-5"
+                                            matSuffix
+                                            [svgIcon]="'mat_outline:edit'"></mat-icon>
                                     </mat-form-field>
                                     <ng-container *ngIf="declarante$ | async as declarante">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -391,6 +486,10 @@
                                                 >{{item.descripcionOpcion}}
                                                 </mat-option>
                                             </mat-select>
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </ng-container>
                                 </div>
@@ -410,6 +509,10 @@
                                                     >{{departamento.nombre}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
@@ -425,6 +528,10 @@
                                                     >{{ciudad.nombre}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <ng-container *ngIf="barriosNegocio$ | async as barrios">
@@ -440,17 +547,29 @@
                                                     >{{barrio.nombre}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Direccion del negocio</mat-label>
                                             <input matInput type="text" [formControlName]="'direccionNegocio'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                     </div>
                                     <div class="-mx-3 md:flex mt-3 mb-2">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Teléfono del negocio</mat-label>
                                             <input matInput type="text" [formControlName]="'telefonoNegocio'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             <mat-error *ngIf="soloNumero('telefonoNegocio')">
                                                 Este campo solo acepta números.
                                             </mat-error>
@@ -458,6 +577,10 @@
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
                                             <input matInput type="number" [formControlName]="'antiguedadNegocio'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                         </mat-form-field>
                                         <ng-container *ngIf="camaraComercio$ | async as camara">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -472,11 +595,19 @@
                                                     >{{item.descripcionOpcion}}
                                                     </mat-option>
                                                 </mat-select>
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                         </ng-container>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Nit</mat-label>
                                             <input matInput type="text" [formControlName]="'nitNegocio'">
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             <mat-error *ngIf="soloNumero('nitNegocio')">
                                                 Este campo solo acepta números.
                                             </mat-error>

@@ -75,6 +75,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.getViveNegocio();
       this.getDeclarante();
       this.getCamaraComercio();
+      this.listenFormulario();
   }
   /**
    * @description:
@@ -421,6 +422,17 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           direccionResidencial:          [''],
           nivelEstudio:                  [''],
           viveEnNegocio:                 [''],
+      });
+  }
+  /**
+   * @description: Escucha los cambios del formulario
+   */
+  public listenFormulario(): void {
+      this.form.controls.tipoDocumento.valueChanges.subscribe((tipo) => {
+          if (tipo === 'NIT') {
+              this.form.controls.primerNombre.setValidators(Validators.nullValidator);
+              this.form.controls.primerApellido.setValidators(Validators.nullValidator);
+          }
       });
   }
   /**
