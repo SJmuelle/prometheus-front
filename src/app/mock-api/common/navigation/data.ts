@@ -135,9 +135,24 @@ export const compactNavigation: FuseNavigationItem[] = [
                     }
                 ]
             }
-        ]
-
+        ],
     },
+    {
+        id: 'agenda-completacion',
+        title: 'Agenda de completación',
+        type: 'aside',
+        icon: 'heroicons_outline:office-building',
+        children: [
+            {
+                id: 'agenda-completacion.list',
+                title: 'Agenda de completación',
+                type: 'basic',
+                link: '/credit-factory/agenda-completion',
+                icon: 'heroicons_outline:document-text',
+            },
+
+        ]
+    }
     // {
     //     id: 'calendario',
     //     title: 'Calendario',

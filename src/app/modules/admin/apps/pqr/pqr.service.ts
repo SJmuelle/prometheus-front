@@ -43,8 +43,8 @@ export class PqrService {
   }
   Create(url: string, data: any): Observable<any> {
     return this._utility.postQuery(url, data)
-    .pipe(map((result: any) => { 
-      return result; 
+    .pipe(map((result: any) => {
+      return result;
     }));
   }
   enviarCorreos(url1):void {
