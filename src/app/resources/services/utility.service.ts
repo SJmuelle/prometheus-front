@@ -23,6 +23,16 @@ export class UtilityService {
   notoken:string = 'notoken';
   constructor(private _httpClient: HttpClient) { }
 
+
+  
+  formatearNumero(value:any){
+    let valor=value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+    return valor;
+  }
+  enviarNumero(value:string){
+    let valor=value.replace(/,/g, '');
+    return valor;
+  }
   //Funciones de sesion
   readToken(){
     let token:any;

@@ -17,6 +17,7 @@ import * as moment from 'moment';
 import {MatDialog} from "@angular/material/dialog";
 import {GridComentariosComponent} from "../grid-comentarios/grid-comentarios.component";
 import {GridDocumentacionComponent} from "../grid-documentacion/grid-documentacion.component";
+import { UtilityService } from 'app/resources/services/utility.service';
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -52,7 +53,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private departamentosCiudadesService: DepartamentosCiudadesService,
       private router: Router,
       private genericaServices: GenericasService,
-      private _dialog: MatDialog
+      private _dialog: MatDialog,
+      public utility: UtilityService
   ) {
     const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
     const identificacion: string =  this.route.snapshot.paramMap.get('id');
@@ -178,6 +180,16 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           if (data.codigoCiudadNegocio) {
             this.getBarriosNegocio(data.codigoCiudadNegocio);
           }
+          if(data.comprasSemanales){
+            this.form.controls['comprasSemanales'].setValue(this.utility.formatearNumero(String(this.form.value.comprasSemanales))); 
+          }
+          if(data.ventasMensuales){
+            this.form.controls['ventasMensuales'].setValue(this.utility.formatearNumero(String(this.form.value.ventasMensuales))); 
+          }
+          if(data.activos){
+            this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos))); 
+          }
+
           this.tipoDocumento = data.tipoDocumento;
       });
   }
@@ -308,6 +320,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description: Guardado de datos fabrica
    */
   private postFormularioFabrica(datos: FormularioCreditoInterface): void {
+
       this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
           .subscribe(() => {
           this.router.navigate(['/credit-factory/agenda-completion']);
