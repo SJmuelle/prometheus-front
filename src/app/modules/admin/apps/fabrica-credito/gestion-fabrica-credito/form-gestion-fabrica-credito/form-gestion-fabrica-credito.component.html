@@ -441,7 +441,7 @@
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Compras semanalmente en cemento ($)</mat-label>
-                                        <input matInput type="text" [formControlName]="'comprasSemanales'">
+                                        <input matInput type="text" [formControlName]="'comprasSemanales'"  (keyup)="form.controls['comprasSemanales'].setValue(utility.formatearNumero(form.value.comprasSemanales)); ">
                                         <mat-icon
                                             class="icon-size-5"
                                             matSuffix
@@ -449,7 +449,7 @@
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Antigüedad compras (meses)</mat-label>
-                                        <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'">
+                                        <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'" >
                                         <mat-icon
                                             class="icon-size-5"
                                             matSuffix
@@ -457,7 +457,7 @@
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Ventas mensuales ($)</mat-label>
-                                        <input matInput type="text" [formControlName]="'ventasMensuales'">
+                                        <input matInput type="text" [formControlName]="'ventasMensuales'" (keyup)="form.controls['ventasMensuales'].setValue(utility.formatearNumero(form.value.ventasMensuales)); ">
                                         <mat-icon
                                             class="icon-size-5"
                                             matSuffix
@@ -467,7 +467,7 @@
                                 <div class="-mx-3 md:flex mt-3 mb-2">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Activo ($)</mat-label>
-                                        <input matInput type="text" placeholder="" [formControlName]="'activos'">
+                                        <input matInput type="text" placeholder="" [formControlName]="'activos'" (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); ">
                                         <mat-icon
                                             class="icon-size-5"
                                             matSuffix

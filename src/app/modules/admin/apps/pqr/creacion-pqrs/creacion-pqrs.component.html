@@ -1,0 +1,408 @@
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+    <div class="row justify-between">
+        <div class="text-left col l12">
+            <h2 class="mb-2  text-gray-900">Registro de PQRS</h2>
+            <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
+        </div>
+    </div>
+
+    <div class="row pl-3">
+        <div class="col-sm-12 col-lg-12 mt-2.5">
+            <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
+                <div class="mb-2 mt-1 mb-0 ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
+                    (click)="tabMostrar=1">
+                    <!-- <mat-icon class="icon-size-5 iconTitulo " matPrefix [svgIcon]="'mat_solid:attach_file'"></mat-icon> -->
+                    Datos de ingreso
+                </div>
+                <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=1">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Campaña</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="campana"
+                                        [(ngModel)]="datos.canpana" disabled>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Origen de la PQRS</mat-label>
+                                    <mat-select [(ngModel)]="datos.origen" name="tipo" required>
+                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoOrigenCliente ">
+                                            {{item.nombre}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Tipo de cliente</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="tipoPQRS_nombre" disabled
+                                        [(ngModel)]="datos.tipoPQRS_nombre">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Línea de negocio</mat-label>
+                                    <mat-select [(ngModel)]="datos.lineaNegocio" name="lineaNegocio"
+                                        (ngModelChange)="negociosCabeceras(datos.lineaNegocio)"
+                                        [required]="datosBasicosDisabled">
+                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoLineaNegocio ">
+                                            {{item.descripcion}} ({{item.cantidad}})</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Código de negocio</mat-label>
+                                    <mat-select [(ngModel)]="datos.negocio" name="negocio"
+                                        (ngModelChange)="seleccionarNegocio(datos.negocio)"
+                                        [required]="datosBasicosDisabled">
+                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.codigoNegocio}}" *ngFor="let item of listadoNegocio ">
+                                            {{item.codigoNegocio}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Sucursal o agencia</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="agencia"
+                                        [(ngModel)]="datos.agencia" disabled>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-12 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Entidad</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="entidad"
+                                        [(ngModel)]="datos.entidad" disabled>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-end">
+                                <button mat-button class="btn color_fintra text-white" type="submit"
+                                    (click)="validaForm(1)">Siguiente </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </fuse-card>
+        </div>
+        <div class="col-sm-12 col-lg-12 mt-2.5">
+            <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
+                <div class="mb-2 mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
+                    (click)="tabMostrar=2">
+                    Datos básicos
+                </div>
+                <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=2">
+                    <form>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Identificación</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="identificaiconCliente"
+                                        [disabled]="datosBasicosDisabled" (change)="buscarDatosBasicos()"
+                                        [(ngModel)]="identificaiconCliente" maxlength="11" minlength="6" required>
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Nombres</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="nombres" required 
+                                        [disabled]="datosBasicosDisabled" [(ngModel)]="datos.nombres" maxlength="50"  minlength="2"> 
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Apellidos</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="apellidos" required
+                                        [disabled]="datosBasicosDisabled" [(ngModel)]="datos.apellidos" maxlength="50"  minlength="2">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Departamento *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="departamento" disabled
+                                        [(ngModel)]="datos.departamento" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Municipio / Ciudad *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="municipio" disabled
+                                        [(ngModel)]="datos.ciudad" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Barrio *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="barrio" disabled
+                                        [(ngModel)]="datos.barrio" required>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12" (click)="mostrarDireccion()">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Dirección *</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="direccion" disabled
+                                        [(ngModel)]="datos.direccion" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Télefono / Celular</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="telefono"
+                                        [(ngModel)]="datos.telefono" required maxlength="11" minlength="7">
+                                </mat-form-field>
+
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>E-mail</mat-label>
+                                    <input matInput type="email" autocomplete="off" name="email"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                        [(ngModel)]="datos.email" required maxlength="50" minlength="7">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-end">
+                                <button mat-button class="btn bg-gray-400 text-white mr-2"
+                                    (click)="tabMostrar=1">Anterior </button>
+                                <button mat-button class="btn color_fintra text-white" (click)="validaForm(2)">Siguiente
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fuse-card>
+        </div>
+        <div class="col-sm-12 col-lg-12 mt-2.5">
+            <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
+                <div class="mb-2 mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
+                    (click)="tabMostrar=3">
+                    Detalle de PQRS
+                </div>
+                <form>
+                    <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=3">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Tipo de PQRS</mat-label>
+                                    <mat-select [(ngModel)]="datos.tipoPQRS" name="tipoPQRS" required
+                                        (ngModelChange)="buscarSelectDinamico('listado-causal-tipo',datos.tipoPQRS,'listadoCasualPQRS','causal');validoLegal()">
+                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoTipoPQRS ">
+                                            {{item.tipoPqrs}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Causal de PQRS</mat-label>
+                                    <mat-select [(ngModel)]="datos.causal" name="causal" required
+                                        (ngModelChange)="buscarSelectDinamico('listado-solucion-causal',datos.causal,'listadoSolucionPQRS','soluciones')">
+                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoCasualPQRS ">
+                                            {{item.descripcion}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Solución</mat-label>
+                                    <mat-select [(ngModel)]="datos.solucion" name="solucion" required
+                                        (ngModelChange)="buscarSelectDinamico('listado-responsable-solucion',datos.solucion,'listadoResponsablePQRS','responsable')">
+                                        <mat-option value="" disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoSolucionPQRS ">
+                                            {{item.descripcion}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Responsable</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="responsable" disabled required
+                                        [(ngModel)]="datos.responsable">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Área</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="area" disabled
+                                        [(ngModel)]="datos.area">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Fecha para la solución</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="email" disabled required
+                                        [(ngModel)]="datos.fechaParaSolucion">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=3" *ngIf="datos.legal==true">
+                        <!-- //validoLegal -->
+                        <button mat-button class="color_fintra text-white" (click)="insertarCausal()">
+                            Insertar causal a PQRS hijas
+                        </button>
+
+                        <table class="w-full shadow p-1  h-50 mt-5" *ngIf="causalesLegales.length!=0">
+                            <thead style="background-color: #F9FAFB;">
+                                <tr
+                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                    <!-- <th class="px-4 py-3 text-center"></th> -->
+                                    <th class="px-4 py-3 text-center">Causal</th>
+                                    <th class="px-4 py-3 text-center">Solución</th>
+                                    <th class="px-4 py-3 text-center">Responsable</th>
+                                    <th class="px-4 py-3 text-center">Área</th>
+                                    <th class="px-4 py-3 text-center">Fecha de solución</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="text-gray-700"
+                                    *ngFor="let item of causalesLegales;let indexOfelement=index; ">
+                                    <!-- <td class="px-2 text-sm border text-center pointer">
+                                        <mat-icon svgIcon="heroicons_outline:backspace"
+                                            (clicl)="eliminarCausal(indexOfelement)"></mat-icon>
+                                    </td> -->
+                                    <td class="px-2 text-sm border text-center">{{ item.causalNombre}}</td>
+                                    <td class="px-2 text-sm border text-center capitalize">{{ item.solucionNombre}}</td>
+                                    <td class="px-2 text-sm border text-center">{{ item.responsable}}</td>
+                                    <td class="px-2 text-sm border text-center">{{ item.area}}</td>
+                                    <td class="px-2 text-sm border text-center">{{ item.fechaParaSolucion}}</td>
+                                </tr>
+                                <tr class="text-gray-700" *ngIf="causalesLegales.length==0">
+
+                                    <td class="px-2 text-sm border text-center" colspan="6">No hay resultados</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span>
+                                    Descripción de PQRS
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 10em;">
+                            <div class="col-sm-12" style="height: 10em;">
+                                <quill-editor class="mb-2" placeholder=" Descripción..." name="descripcion"
+                                    [(ngModel)]="datos.descripcion" [modules]="quillModules"></quill-editor>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 text-end mt-20">
+                                <button mat-button class="btn bg-gray-400 text-white mr-2 "
+                                    (click)="tabMostrar=2;">Anterior </button>
+                                <button mat-button class="btn color_fintra text-white"
+                                    (click)="validaForm(3);mostrarMensaje()">Siguiente </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </fuse-card>
+        </div>
+        <div class="col-sm-12 col-lg-12 mt-2.5">
+            <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
+                <div class="mb-2 mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
+                    (click)="tabMostrar=4">
+                    Subir evidencias
+                </div>
+                <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=4">
+
+                    <!-- <div class="row">
+                        <div class="col-lg-6 col-sm-6">
+
+                            <mat-form-field class="flex-auto w-100">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput type="text" autocomplete="off" name="area"
+                                    [(ngModel)]="evidencia[0].descripcion">
+                            </mat-form-field>
+
+                        </div>
+                        <div class="col-lg-6 col-sm-6">
+
+                            <form class="pb-2">
+                                <div>
+                                    <label for="filep" class="w-100">
+                                        <mat-form-field class="flex-auto w-100">
+                                            <mat-label>Subir evidencias</mat-label>
+                                            <input matInput type="text" autocomplete="off" name="campana"
+                                                [(ngModel)]="evidencia[0].filename" placeholder="Subir archivo"
+                                                disabled>
+                                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'mat_solid:attach_file'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </label>
+                                    <input type="file" name="filep" id="filep" class="col-12"
+                                        (change)="onCharge($event.target,0)" style="display:none" />
+                                </div>
+                            </form>
+                        </div>
+                    </div> -->
+
+                    <!-- //validoLegal -->
+                    <button mat-button class="color_fintra text-white" (click)="insertadjunti()">
+                        Subir adjuntos
+                    </button>
+
+                    <table class="w-full shadow p-1  h-50 mt-5" *ngIf="evidencia.length!=0">
+                        <thead style="background-color: #F9FAFB;">
+                            <tr
+                                class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                <!-- <th class="px-4 py-3 text-center"></th> -->
+                                <th class="px-4 py-3 text-center">Nombre</th>
+                                <th class="px-4 py-3 text-center">Evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="text-gray-700" *ngFor="let item of evidencia;let indexOfelement=index; ">
+                                <!-- <td class="px-2 text-sm border text-center pointer">
+                                    <mat-icon svgIcon="heroicons_outline:backspace"
+                                        (clicl)="eliminarCausal(indexOfelement)"></mat-icon>
+                                </td> -->
+                                <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
+                                <td class="px-2 text-sm border text-center capitalize">{{ item.filename}}</td>
+                            </tr>
+                            <tr class="text-gray-700" *ngIf="evidencia.length==0">
+                                <td class="px-2 text-sm border text-center" colspan="6">No hay resultados</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="row mt-3">
+                        <div class="col-sm-12 text-end">
+                            <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=3">Anterior
+                            </button>
+                            <button mat-button class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
+                        </div>
+                    </div>
+                </div>
+            </fuse-card>
+        </div>
+
+    </div>
+</div>

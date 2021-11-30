@@ -148,6 +148,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
       this.subscription$ = this.referenciasService.putDetalleReferencia(datos).subscribe(( ) => {
           this.cerrarFormulario.emit(false);
           this.referenciasService.eventos$.emit(true);
+          this._matDialog.close();
       });
   }
   /**

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/modal-ingreso.component';
 import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ModalcreditoComponent } from 'app/components/hojadevida/modalcredito/modalcredito.component';
@@ -9,6 +10,7 @@ import { HistorialGestionService } from 'app/resources/services/hojadevida/histo
 import { HojadevidaService } from 'app/resources/services/hojadevida/hojadevida.service';
 import { NegociacionesService } from 'app/resources/services/hojadevida/negociaciones.service';
 import Swal from 'sweetalert2';
+import { PqrService } from '../pqr/pqr.service';
 
 @Component({
   selector: 'app-hojavida',
@@ -16,20 +18,20 @@ import Swal from 'sweetalert2';
   styleUrls: ['./hojavida.component.scss']
 })
 export class HojavidaComponent implements OnInit {
-  listCodigoNegocio: any;
-  info_cliente: any;
+  listCodigoNegocio: any=[];
+  info_cliente: any={};
   mostrarDatoCliente: boolean;
-  listadoCredito: any;
+  listadoCredito: any=[];
   filtrarTabla: string;
-  filtrarTablaCartera: any;
-  filtrarTablaHN: any;
+  filtrarTablaCartera: string;
+  filtrarTablaHN: string;
   ListadoCartera: any = [];
   listadoNegociaciones: any = [];
   listaHistoria: any = [];
   listadoExtractos: any = [];
-  tab: any;
+  tab: number;
   listadoReporteCentrales: any = [];
-  codigoNegocio2: any;
+  codigoNegocio2: string;
   tamanoTablaHG: number;
   filtrarTablaHG: string;
   tamanoTablaNeg: number;
@@ -39,12 +41,17 @@ export class HojavidaComponent implements OnInit {
   filtrarReporteC: string;
   tamanoTablaRC: number;
   btnBuscar: boolean;
+  filtrarPQRS: string;
+  tamanoPQRS: number;
+  listadoPQRS: any=[];
 
 
   constructor(private _hojadevidaService: HojadevidaService,
     private _creditoService: CreditoService,
+    private _pqrService: PqrService,
     public dialog: MatDialog,
     private _carteraService: CarteraService,
+    private route: ActivatedRoute, private router: Router,
     private _historialService: HistorialGestionService,
     private _negociacionesService: NegociacionesService) { }
 
@@ -69,11 +76,10 @@ export class HojavidaComponent implements OnInit {
   }
 
   getListadoCredito() {
-
     this._hojadevidaService
       .getNegocios(this.clienteID)
       .subscribe((res1: any) => {
-        this.listCodigoNegocio = res1.data;
+        this.listCodigoNegocio = res1;
       });
   }
 
@@ -109,6 +115,16 @@ export class HojavidaComponent implements OnInit {
             this.mostrarDatoCliente = false;
             return
           } else {
+            if (res2.data.length==0) {
+              Swal.fire(
+                '¡Advertencia!',
+                `${this.busqueda == "2" ? 'El código del negocio ' : 'El documento '} ingresado no corresponde a ningún registro guardado. Favor verificar`,
+                'error'
+              );
+              this.info_cliente = {};
+              this.mostrarDatoCliente = false;
+              return
+            }
             this.info_cliente = res2.data;
             this.mostrarDatoCliente = true;
             this.onTabChanged(this.tab);
@@ -124,9 +140,31 @@ export class HojavidaComponent implements OnInit {
         );
         return;
       }
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._hojadevidaService
         .getInfoCliente(this.codigoNegocio)
         .subscribe((res2: any) => {
+         Swal.close();
+          if (res2.status == 202) {
+            Swal.fire(
+              '¡Advertencia!',
+              `${this.busqueda == "2" ? 'El código del negocio ' : 'El documento '} ingresado no corresponde a ningún registro guardado. Favor verificar`,
+              'error'
+            );
+            this.info_cliente = {};
+            this.mostrarDatoCliente = false;
+            return
+          }
+          if (res2.data.length==0) {
+            Swal.fire(
+              '¡Advertencia!',
+              `${this.busqueda == "2" ? 'El código del negocio ' : 'El documento '} ingresado no corresponde a ningún registro guardado. Favor verificar`,
+              'error'
+            );
+            this.info_cliente = {};
+            this.mostrarDatoCliente = false;
+            return
+          }
           this.info_cliente = res2.data;
           this.mostrarDatoCliente = true;
           this.onTabChanged(this.tab);
@@ -138,6 +176,7 @@ export class HojavidaComponent implements OnInit {
     this.clienteID = null;
     this.codigoNegocio = null;
     this.listadoExtractos = [];
+    this.listadoPQRS=[];
   }
 
   // SUBSCRIBES
@@ -152,7 +191,7 @@ export class HojavidaComponent implements OnInit {
     this.tab = index;
     switch (index) {
       case 0:
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de Credito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this.listadoCredito = [];
         // SERVICIO DE LA PESTAÑA DEL CREDITO
         this._creditoService
@@ -167,7 +206,7 @@ export class HojavidaComponent implements OnInit {
           });
         break;
       case 1:
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de Cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._carteraService
           .getCartera(this.info_cliente.identificacion, this.codigoNegocio)
           .subscribe((respCartera: any) => {
@@ -243,6 +282,25 @@ export class HojavidaComponent implements OnInit {
               this.listadoReporteCentrales = response.data;
             } else {
               this.listadoReporteCentrales = [];
+            }
+          });
+        break;
+        case 6:
+        this.filtrarPQRS = "";
+        this.tamanoPQRS = 5;
+        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        let url=`/informacion-historial-pqrs/${this.info_cliente.identificacion}`;
+        this._pqrService
+          .getListados(url)
+          .subscribe((response: any) => {
+            // this.listadoReporteCentrales = response.data;
+            Swal.close();
+           
+            if (response) {
+              
+              this.listadoPQRS = response;
+            } else {
+              this.listadoPQRS = [];
             }
           });
         break;
@@ -332,6 +390,10 @@ export class HojavidaComponent implements OnInit {
     
     window.open(url, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
 
+  }
+  abrirPQRS(){
+    let url=`pqr/creacion/${this.info_cliente.identificacion}`;
+    this.router.navigateByUrl(url);
   }
 
 }

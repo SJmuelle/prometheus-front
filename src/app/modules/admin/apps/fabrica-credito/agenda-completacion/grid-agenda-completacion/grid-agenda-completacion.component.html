@@ -7,10 +7,10 @@
         </div>
         <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
             <input class="border rounded p-2 bg-gray-100 mr-4 text-xs" type="text"
-                   autocomplete="off" name="filtrarTablaHG"
+                   autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
                    placeholder="Filtrar..."
             >
-            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"
+            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"  [formControl]="tamanoTabl" (change)="page=1"
             >
                 <option value="5"> 5</option>
                 <option value="10"> 10</option>
@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 col-lg-12">
+        <div class="col-md-12 col-lg-12">           
             <table class="shadow p-0">
                 <thead class="bg-accent-50" >
                 <tr
@@ -37,8 +37,8 @@
                 </thead>
                 <tbody class="bg-white">
                 <ng-container *ngIf="agendaCompletacion$ | async as agendas;">
-                    <ng-container *ngFor="let item of agendas.data">
-                        <tr class="text-gray-700" >
+                    <ng-container *ngFor="let item of agendas.data | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                        <tr class="text-gray-700" > 
                             <td class="px-2 text-sm border">
                                 <button mat-icon-button
                                        (click)="onGetAgenda(item)"
@@ -59,6 +59,10 @@
                 </ng-container>
                 </tbody>
             </table>
+        </div>
+        <div class="col-lg-12 col-sm-12 text-end">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                nextLabel="Siguiente"></pagination-controls>
         </div>
     </div>
 </div>

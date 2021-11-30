@@ -1,0 +1,67 @@
+// .fuse-mat-rounded .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label {
+//     min-width: 0 !important;
+//     height: 40px !important;
+//     padding: 0 20px !important;
+//      border-radius:0 !important; 
+//     --tw-text-opacity: 1;
+//     color: rgba(var(--fuse-text-secondary-rgb), var(--tw-text-opacity));
+// }
+.color_salmon {
+    background: #f7ae0c;
+    /* color: #fff !important; */
+    text-align: center;
+}
+.font-titulo{
+    font-size: 15px;
+    font-weight: 600;
+    color: #111;
+    padding-left: 12px !important;
+}
+
+thead{
+    background-color: #F9FAFB;
+}
+
+.azul{
+    background: #4DBCEB;
+}
+.salmon{
+    background: #F7AE0C;
+}
+.rojo{
+    background: #dc3545;
+}
+
+.azul_border{
+    // background: #4DBCEB;
+    border-left: 3px solid#4DBCEB;
+}
+.salmon_border{
+    // background: #F7AE0C;
+    border-left: 3px solid#F7AE0C;
+}
+.rojo_border{
+    // background: #dc3545;
+    border-left: 3px solid#dc3545;
+}
+.titulo_tabs{
+    
+    color: #94a3b8;
+    font-weight: 600;
+
+}
+.sindec{
+    text-decoration: none !important;
+}
+a {
+    color: #7a889b !important;
+    text-decoration: none !important;
+}
+
+.tamano20{
+    height: 20em;
+}
+
+[hidden] {
+    display: none !important;
+}

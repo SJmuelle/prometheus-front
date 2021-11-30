@@ -14,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
 @NgModule({
     imports: [
         CommonModule,
@@ -48,6 +49,9 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatPaginatorModule,
         MatIconModule,
         MatDialogModule,
+    ],
+    declarations: [
+
     ],
 })
 export class SharedModule {}

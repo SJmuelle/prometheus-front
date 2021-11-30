@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HojavidaComponent } from './hojavida.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'app/shared/shared.module';
-
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
+import { HojavidaComponent } from './hojavida.component';
 import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ModalcreditoComponent } from 'app/components/hojadevida/modalcredito/modalcredito.component';
 import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/modal-ingreso.component';
@@ -30,7 +30,8 @@ const routes: Routes = [
     CommonModule,
     // FormControl,
     Ng2SearchPipeModule,
-    SharedModule, RouterModule.forChild(routes),
+    SharedModule,
+    RouterModule.forChild(routes),
     NgxPaginationModule
 
   ]

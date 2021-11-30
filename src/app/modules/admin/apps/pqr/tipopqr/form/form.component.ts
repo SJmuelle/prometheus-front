@@ -9,7 +9,7 @@ import { PqrService } from '../../pqr.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  datos: { id:number, tipo: string; tiempo: number; legal: string; estado: string; titulo: string ,clase:string};
+  datos: { id:number, tipo: string; tiempo: any; legal: string; estado: string; titulo: string ,clase:string};
 
   constructor(
     public matDialogRef: MatDialogRef<FormComponent>,
@@ -27,7 +27,7 @@ export class FormComponent implements OnInit {
         "estado": "",
         "descripcion": this.datos.tipo,
         "legal": this.datos.legal=='S'?true:false,
-        "diasSolucion": this.datos.tiempo,
+        "diasSolucion":this.datos.legal=='S'?(this.datos.tiempo==''?0:this.datos.tiempo):0,
         "clase": this.datos.clase,
       }
 
@@ -37,7 +37,7 @@ export class FormComponent implements OnInit {
         "id": this.datos.id,
         "estado":this.datos.estado=='A'?'':'A',
         "legal": this.datos.legal=='S'?true:false,
-        "diasSolucion":this.datos.tiempo,
+        "diasSolucion":this.datos.legal=='S'?(this.datos.tiempo==''?0:this.datos.tiempo):0,
       }
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -47,25 +47,34 @@ export class FormComponent implements OnInit {
         Swal.close();
         if (response) {
           if(response.status==200){
+           if (!response.data.respuesta.includes('OK')) {
+              Swal.fire(
+                '¡Información!',
+                response.data.respuesta,
+                'error'
+              );
+              return; 
+            }
             Swal.fire(
-              '¡Información!',
-              `Se guardo el registro con exito`,
+              'Información',
+              `Se guardo el registro con éxito`,
               'success'
-            );
-            setTimeout(() => {
-              this.matDialogRef.close();
-            }, 1000);
+            ).then(resultado => {
+              if (resultado) {
+                this.matDialogRef.close();
+              }
+            });
           }else{
             Swal.fire(
-              '¡Información!',
+              'Información',
               `Hubo un error en los datos enviados, favor evaluar`,
               'success'
             );
           }
         }else{
           Swal.fire(
-            '¡Advertencia!',
-            'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+            'Advertencia',
+            'Error en la respuesta del servicio, favor intente nuevamente',
             'error'
           );
         }

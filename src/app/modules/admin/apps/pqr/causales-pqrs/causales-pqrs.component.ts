@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
+import { FormCausalesComponent } from './form-causales/form-causales.component';
 
 @Component({
   selector: 'app-causales-pqrs',
@@ -15,8 +16,7 @@ export class CausalesPQRSComponent implements OnInit {
   tamanoTabl:number=5;
   filtrarTabla:string='';
   mostrar_form:boolean=true;
-  datos: { tipo: any; tiempo: any; legal: string; estado: string; titulo: any; };
-
+  datos: any={};
 
   constructor(
     public dialog: MatDialog,
@@ -26,7 +26,7 @@ export class CausalesPQRSComponent implements OnInit {
     this.consulta();
   }
   consulta(){
-    Swal.fire({ title: 'Cargando', html: 'Buscando informacion Causales de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando informacion causales de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
           .setCausales()
           .subscribe((response: any) => {
@@ -41,33 +41,34 @@ export class CausalesPQRSComponent implements OnInit {
   abrirModal(datos,titulo){
     if(titulo=='N'){
       this.datos={
-        tipo:'',
-        tiempo:'',
-        legal:'',
-        estado:'A',
-        titulo:titulo
-      }
+        idTipo: null,
+        estado: "",
+        descripcion: "",
+        titulo:"N"
+    }
     }else{
       this.datos={
-        tipo:datos.tipoPqrs,
-        tiempo:datos.diasSolucion,
-        legal:datos.legal=='SI'?'S':"N",
-        estado:datos.estado=='ACTIVO'?'A':"I",
-        titulo:titulo
+        idTipo: datos.tipoPqrs,
+        estado: datos.estado=='Activo'?'A':'I',
+        descripcion: datos.causalPqrs,
+        titulo:"A",
+        id:datos.id
       }
     }
 
-    // const dialogRef = this.dialog.open(FormComponent, {
-    //   // width: '1080px',
-    //   // maxHeight: '550px',
-    //   data: this.datos,
-    // });
+    const dialogRef = this.dialog.open(FormCausalesComponent, {
+      // width: '1080px',
+      // maxHeight: '550px',
+      data: this.datos,
+    });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    //   console.log(result);
-    //   this.consulta();
-    // });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+      console.log(result);
+     
+        this.consulta();
+
+    });
    
   }
 }

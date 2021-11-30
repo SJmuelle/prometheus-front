@@ -1,5 +1,5 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
 import {Observable, Subscription} from "rxjs";
 import {MatSelectChange} from "@angular/material/select";
@@ -8,6 +8,7 @@ import {ActivatedRoute} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReferenciasService} from "../../../../../../core/services/referencias.service";
 import Swal from "sweetalert2";
+import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
 
 @Component({
   selector: 'app-form-dialog-referencias',
@@ -29,6 +30,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
       private route: ActivatedRoute,
       private fb: FormBuilder,
       private referenciasService: ReferenciasService,
+      private matDialog: MatDialog
   ) {
       this.crearFormulario();
       const numeroSolicitud: string = data.numeroSolicitud;
@@ -43,6 +45,17 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
 
   public onCerrar(): void {
       this._dialog.close();
+  }
+
+  public openModalDirection(): void {
+      const dialogRef = this.matDialog.open(DirectionsComponent, {
+          // width: '250px',
+          disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          // this.formTab1.controls['direccionNegocio'].setValue(res);
+      });
   }
 
   public onGuardar(): void {
@@ -110,22 +123,21 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private crearFormulario(): void {
         this.form = this.fb.group({
             numeroSolicitud:    [''],
-            identificacion:     ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
             primerNombre:       ['', [Validators.required]],
             segundoNombre:      [''],
             primerApellido:     ['', [Validators.required]],
             segundoApellido:    [''],
-            nombreCompleto:     ['', [Validators.required]],
-            tipo:               ['seleccione', [Validators.required]],
+            nombreCompleto:     [''],
+            tipo:               ['seleccione',],
             parentesco:         [''],
             telefono:           ['', [Validators.pattern(/^[0-9]*$/)]],
-            celular:            ['', [Validators.pattern(/^[0-9]*$/)]],
+            celular:            ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
             codigoPais:         [''],
-            codigoDepartamento: ['seleccione', [Validators.required]],
-            codigoCiudad:       ['seleccione', [Validators.required]],
-            codigoBarrio:       ['seleccione', [Validators.required]],
+            codigoDepartamento: ['seleccione'],
+            codigoCiudad:       ['seleccione'],
+            codigoBarrio:       ['seleccione'],
             direccion:          [''],
-            antiguedad:         ['', [Validators.required]],
+            antiguedad:         [''],
         });
     }
     /**
@@ -203,39 +215,46 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     }
 
     private estadoFormulario(): void {
+        this.form.controls['tipo'].setValue('P');
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
             if (tipo === 'P') {
                 this.form.controls['nombreCompleto'].setValue('');
+                this.form.controls['nombreCompleto'].clearValidators();
                 this.form.controls['codigoDepartamento'].setValue('');
                 this.form.controls['codigoCiudad'].setValue('');
                 this.form.controls['codigoBarrio'].setValue(0);
                 this.form.controls['direccion'].setValue('');
+                this.form.controls['celular'].setValue('');
+                this.form.controls['primerNombre'].setValidators(Validators.required);
+                this.form.controls['primerApellido'].setValidators(Validators.required);
+                this.form.controls['celular'].setValidators(Validators.required);
                 this.form.controls['codigoDepartamento'].clearValidators();
-                this.form.controls['codigoDepartamento'].updateValueAndValidity();
                 this.form.controls['codigoCiudad'].clearValidators();
-                this.form.controls['codigoCiudad'].updateValueAndValidity();
                 this.form.controls['codigoBarrio'].clearValidators();
-                this.form.controls['codigoBarrio'].updateValueAndValidity();
-                this.form.controls['nombreCompleto'].clearValidators();
-                this.form.controls['nombreCompleto'].updateValueAndValidity();
+                this.form.controls['antiguedad'].clearValidators();
             }else {
                 this.form.controls['primerNombre'].setValue('');
                 this.form.controls['segundoNombre'].setValue('');
                 this.form.controls['primerApellido'].setValue('');
                 this.form.controls['segundoApellido'].setValue('');
+                this.form.controls['celular'].setValue('');
                 this.form.controls['primerNombre'].clearValidators();
-                this.form.controls['primerNombre'].updateValueAndValidity();
                 this.form.controls['primerApellido'].clearValidators();
-                this.form.controls['primerApellido'].updateValueAndValidity();
                 this.form.controls['nombreCompleto'].setValidators(Validators.required);
-                this.form.controls['nombreCompleto'].updateValueAndValidity();
                 this.form.controls['codigoDepartamento'].setValidators(Validators.required);
-                this.form.controls['codigoDepartamento'].updateValueAndValidity();
+                this.form.controls['celular'].setValidators(Validators.required);
                 this.form.controls['codigoCiudad'].setValidators(Validators.required);
-                this.form.controls['codigoCiudad'].updateValueAndValidity();
                 this.form.controls['codigoBarrio'].setValidators(Validators.required);
-                this.form.controls['codigoBarrio'].updateValueAndValidity();
+                this.form.controls['antiguedad'].setValidators(Validators.required);
             }
+            this.form.controls['primerNombre'].updateValueAndValidity();
+            this.form.controls['primerApellido'].updateValueAndValidity();
+            this.form.controls['codigoDepartamento'].updateValueAndValidity();
+            this.form.controls['codigoBarrio'].updateValueAndValidity();
+            this.form.controls['codigoCiudad'].updateValueAndValidity();
+            this.form.controls['nombreCompleto'].updateValueAndValidity();
+            this.form.controls['antiguedad'].updateValueAndValidity();
+            this.form.controls['celular'].updateValueAndValidity();
         });
     }
     /**

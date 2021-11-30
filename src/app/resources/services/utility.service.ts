@@ -17,10 +17,22 @@ export class UtilityService {
   server:string = environment.urlApi;
   server2:string = environment.urlApi2;
   server3:string = environment.urlApi3;
+  adjunto:string = environment.adjunto;
+  correo:string = environment.envioCorreo;
   // homelogin:string = environment.login;
   notoken:string = 'notoken';
   constructor(private _httpClient: HttpClient) { }
 
+
+  
+  formatearNumero(value:any){
+    let valor=value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
+    return valor;
+  }
+  enviarNumero(value:string){
+    let valor=value.replace(/,/g, '');
+    return valor;
+  }
   //Funciones de sesion
   readToken(){
     let token:any;
@@ -114,13 +126,71 @@ export class UtilityService {
     headers.delete('Content-Type');
     return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
   }
+  postQueryCorreo(query:string, data:any, typeHeaders:string='data'){
+    const URL = this.correo + query;
+    let optiones:any;
+    if(typeHeaders == 'data'){
+      optiones = {
+        'Authentication': `${this.readToken()}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8'
+      };
+    }else {
+      if(typeHeaders == this.notoken){
+      
+        optiones = {
+          'Authentication': ``,
+          "Accept": "application/json, text/plain, */*",
+          'Content-Type': 'application/json; charset=utf-8'
+        }
+    }else{
+        optiones = {
+          'Authentication': `${this.readToken()}`,
+          "Accept": "application/json",
+        }
+      }
+    }
 
-  postFile(query:string, data:any){
-    const URL = this.server + query;
-    let optiones = {
-      'Authentication': `${this.readToken()}`,
-    };
     const headers = new HttpHeaders(optiones);
+    headers.delete('Content-Type');
+    return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError2));
+  }
+
+  // postFile(query:string, data:any){
+  //   const URL = this.server + query;
+  //   let optiones = {
+  //     'Authentication': `${this.readToken()}`,
+  //   };
+  //   const headers = new HttpHeaders(optiones);
+  //   return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
+  // }
+  postFile(query:string, data:any, typeHeaders:string='data'){
+    const URL = this.adjunto + query;
+    let optiones:any;
+    if(typeHeaders == 'data'){
+      optiones = {
+        'Authentication': `${this.readToken()}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8'
+      };
+    }else {
+      if(typeHeaders == this.notoken){
+      
+        optiones = {
+          'Authentication': ``,
+          "Accept": "application/json, text/plain, */*",
+          'Content-Type': 'application/json; charset=utf-8'
+        }
+    }else{
+        optiones = {
+          'Authentication': `${this.readToken()}`,
+          "Accept": "application/json",
+        }
+      }
+    }
+
+    const headers = new HttpHeaders(optiones);
+    headers.delete('Content-Type');
     return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
   }
 
@@ -228,7 +298,82 @@ export class UtilityService {
   }
     return throwError( errorMessage );
   }
+ //Funcion para el Manejo de errores
+ handleError2 = (err: any): Observable<HttpEvent<any>> =>{
+  // debugger;
+  let errorMessage = 'No se envio el correo, favor notificar por otro medio';
+  let icon:string = 'question';
+  console.log("Algo se daño");
+  let res:any = {}
+  if (err.error instanceof ErrorEvent) {
+    icon = "question";
+    errorMessage = `Error: ${err.error.msg}`;
+  } else {
+    switch (err.status) {
+      case 401:
+        localStorage.clear();
+        localStorage.clear();
+        setTimeout(() => {
+          localStorage.setItem('closeSession','true');
 
+        }, 100);
+        break;
+      case 402:
+        localStorage.clear();
+        localStorage.clear();
+        setTimeout(() => {
+          localStorage.setItem('closeSession','true');
+        }, 100);
+        break;
+      case 403:
+          errorMessage = `No tiene permiso para ejecutar esta acción`;
+        break;
+      case 400:
+          if(err.error.msg == 'La session ha expirado'){
+            localStorage.clear();
+            localStorage.clear();
+            setTimeout(() => {
+              localStorage.setItem('closeSession','true');
+
+            }, 100);
+          }
+          if(err.error.msg !== undefined && typeof err.error.msg == 'string'){
+            errorMessage = `${err.error.msg}`;
+          }
+      break;
+      case 404:
+          errorMessage = `${err.error.msg}`
+      break;
+      case 500:
+          errorMessage = `${err.error.msg}`;
+          break;
+      default:
+        errorMessage = `${err.statusText.msg}`;
+        break;
+    }
+  }
+  if( err.status !== 401 && err.error !== 'La session ha expirado'){
+
+  
+  if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
+    Swal.fire({
+      title: 'Error',
+      text: errorMessage,
+      icon: 'error',
+      confirmButtonText: 'Cerrar'
+    })
+
+  }else{
+    Swal.fire({
+      title: 'Error',
+      text: "No hubo respuesta por parte del servidor, favor intente nuevamente",
+      icon: 'error',
+      confirmButtonText: 'Cerrar'
+    })
+  }
+}
+  return throwError( errorMessage );
+}
 
 
 }
