@@ -2,6 +2,9 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {ReferenciasService} from "../../../../../../core/services/referencias.service";
+import {MatDialog} from "@angular/material/dialog";
+import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
+import {FormDetallesReferenciasComponent} from "../form-detalles-referencias/form-detalles-referencias.component";
 
 @Component({
   selector: 'app-grid-referencias',
@@ -14,7 +17,8 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
   public subscription$: Subscription;
   constructor(
       private route: ActivatedRoute,
-      private referenciasService: ReferenciasService
+      private referenciasService: ReferenciasService,
+      private _dialog: MatDialog
   ) {
 
   }
@@ -22,6 +26,19 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.cargarReferencias();
       this.escuchaObservable();
+  }
+  /**
+   * @description: Abre el dialogo de nueva referencia
+   */
+  public onDialogReferencia(): void {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      const dialogRef = this._dialog.open(FormDialogReferenciasComponent, {
+          data: {numeroSolicitud: numeroSolicitud},
+          minWidth: '680px',
+          minHeight: '420px',
+          disableClose: true,
+      });
+      dialogRef.afterClosed().toPromise();
   }
   /**
    * @description: Cerrar formulario de detalles referencias
@@ -41,7 +58,13 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
 
   public onGetReferencia(datos: any): void {
       this.esVer = true;
-      console.log(datos);
+      const dialogRef = this._dialog.open(FormDetallesReferenciasComponent, {
+          minWidth: '480px',
+          minHeight: '440px',
+          disableClose: true,
+          // data: datos
+      });
+      dialogRef.afterClosed().toPromise();
       this.referenciasService.seleccionDatosReferencia.next({value: datos, show: true});
   }
 
@@ -63,7 +86,6 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
   }
 
     ngOnDestroy(): void {
-      console.log('Destruido');
       this.esVer = false;
       this.subscription$.unsubscribe();
     }

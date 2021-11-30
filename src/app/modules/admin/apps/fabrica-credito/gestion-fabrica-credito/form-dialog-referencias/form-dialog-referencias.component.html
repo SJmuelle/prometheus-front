@@ -160,19 +160,19 @@
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end mr-8 w-full">
         <button mat-raised-button
-                color="accent"
-                type="button"
-                (click)="onCerrar()"
-        >
-            Cerrar
-        </button>
-        <button mat-raised-button
                 color="primary"
                 type="button"
                 (click)="onGuardar()"
                 [disabled]="!form.valid"
         >
             Guardar
+        </button>
+        <button mat-raised-button
+                color="accent"
+                type="button"
+                (click)="onCerrar()"
+        >
+            Cerrar
         </button>
     </div>
 </mat-dialog-actions>

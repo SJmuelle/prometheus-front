@@ -1,15 +1,14 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ReferenciasService} from "../../../../../../core/services/referencias.service";
-import {GenericasService} from "../../../../../../core/services/genericas.service";
-import {Observable, Subscription} from "rxjs";
-import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
-import {MatSelectChange} from "@angular/material/select";
-import Swal from "sweetalert2";
-import {switchMap} from "rxjs/operators";
-import {MatDialog} from "@angular/material/dialog";
-import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
-import {ActivatedRoute} from "@angular/router";
+import {ReferenciasService} from '../../../../../../core/services/referencias.service';
+import {GenericasService} from '../../../../../../core/services/genericas.service';
+import {Observable, Subscription} from 'rxjs';
+import {DepartamentosCiudadesService} from '../../../../../../core/services/departamentos-ciudades.service';
+import {MatSelectChange} from '@angular/material/select';
+import Swal from 'sweetalert2';
+import {switchMap} from 'rxjs/operators';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-form-detalles-referencias',
@@ -31,6 +30,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
       private departamentosCiudadService: DepartamentosCiudadesService,
       private _dialogo: MatDialog,
       private route: ActivatedRoute,
+      private _matDialog: MatDialogRef<FormDetallesReferenciasComponent>
   ) { }
 
   ngOnInit(): void {
@@ -41,17 +41,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
       this.escuchaObservable();
   }
   public onDialogo(): void {
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
-      const dialogRef = this._dialogo.open(FormDialogReferenciasComponent, {
-          data: {
-              numeroSolicitud: numeroSolicitud
-          },
-          minWidth: '680px',
-          minHeight: '420px',
-          disableClose: false
-      });
-
-      dialogRef.afterClosed().toPromise();
+      this._matDialog.close();
   }
   /**
    * @description: Actualiza la referencia
@@ -145,7 +135,6 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
       )
       .subscribe(({data}) => {
           Swal.close();
-          console.log(data);
           this.form.patchValue(data);
           if (data.codigoDepartamento) {
             this.getCiudades(data.codigoDepartamento);
