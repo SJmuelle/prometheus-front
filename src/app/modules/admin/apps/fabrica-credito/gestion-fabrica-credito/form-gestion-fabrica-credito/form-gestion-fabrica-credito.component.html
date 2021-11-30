@@ -638,14 +638,7 @@
                         </mat-tab>
                         <mat-tab>
                             <ng-template matTabLabel>Documentación</ng-template>
-                            <div class="md:flex mb-2 mr-1">
-                                <button mat-raised-button
-                                        [color]="'accent'"
-                                        (click)="onDialogo()"
-                                >
-                                    Listado de documentos requeridos
-                                </button>
-                            </div>
+                            <app-grid-documentacion></app-grid-documentacion>
                         </mat-tab>
                         <mat-tab>
                             <ng-template matTabLabel>Politicas</ng-template>
