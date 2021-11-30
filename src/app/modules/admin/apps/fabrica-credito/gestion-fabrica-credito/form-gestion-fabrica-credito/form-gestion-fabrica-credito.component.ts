@@ -116,11 +116,20 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           const {fechaNacimiento, fechaMatricula, ...data} = datos;
           const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
           const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
+          const compraSemanal= Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
+          const ventasMensuales= Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
+          const activos= Number(this.utility.enviarNumero(this.form.value.activos));
           const datosFormularios: FormularioCreditoInterface = {
               fechaNacimiento: fechaNacimientoFormato,
               fechaMatricula: fechaMatriculaFormato,
+              comprasSemanales: compraSemanal,
+              ventasMensuales:ventasMensuales,
+              activos:activos,
               ...data
           };
+        
+     
+    
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',

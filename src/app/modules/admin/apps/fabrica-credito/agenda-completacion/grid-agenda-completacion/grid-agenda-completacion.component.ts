@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2';
 import {delay} from "rxjs/operators";
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-grid-agenda-completacion',
@@ -12,6 +13,10 @@ import {delay} from "rxjs/operators";
 })
 export class GridAgendaCompletacionComponent implements OnInit {
   public agendaCompletacion$: Observable<any>;
+  public page:number=1;
+  // public tamanoTabl:number=5;
+  public filtrarTabla = new FormControl('');
+  public tamanoTabl = new FormControl("5");
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private router: Router

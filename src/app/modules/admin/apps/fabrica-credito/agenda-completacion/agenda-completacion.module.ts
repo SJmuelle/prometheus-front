@@ -6,6 +6,10 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -14,11 +18,16 @@ import {MatButtonModule} from '@angular/material/button';
   ],
     imports: [
         CommonModule,
+        FormsModule,
         MatTabsModule,
         MatDividerModule,
         AgendaCompletacionRoutingModule,
         MatIconModule,
-        MatButtonModule
+        MatButtonModule,
+        Ng2SearchPipeModule,
+        ReactiveFormsModule,
+        MatPaginatorModule,
+        NgxPaginationModule,
     ]
 })
 export class AgendaCompletacionModule { }
