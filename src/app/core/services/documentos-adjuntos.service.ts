@@ -26,4 +26,11 @@ export class DocumentosAdjuntosService {
     public adjuntarDocumento(data: any): Observable<any> {
         return this._http.post(`${this._appSettings.documentos.url.baseAdjunto}`, data);
     }
+    /**
+     * @description: Post Consulta documentos
+     */
+    public getDocumento(datos: any): Observable<any> {
+        // const {numeroSolicitud, tipoDocumento} = datos;
+        return this._http.post(this._appSettings.documentos.url.baseConsultar, datos);
+    }
 }

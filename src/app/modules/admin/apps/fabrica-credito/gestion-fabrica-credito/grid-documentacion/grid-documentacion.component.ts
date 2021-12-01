@@ -1,31 +1,43 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
+import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Observable, Subject} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {DocumentosAdjuntosService} from "../../../../../../core/services/documentos-adjuntos.service";
 import Swal from "sweetalert2";
+import {FabricaCreditoService} from "../../../../../../core/services/fabrica-credito.service";
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-grid-documentacion',
   templateUrl: './grid-documentacion.component.html',
   styleUrls: ['./grid-documentacion.component.scss']
 })
-export class GridDocumentacionComponent implements OnInit {
+export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public documentos$: Observable<any>;
+  public unsubscribe$: Subject<any> = new Subject();
+  public datosDocumentos: any = {};
   constructor(
       private route: ActivatedRoute,
       private documentosServices: DocumentosAdjuntosService,
+      private fabricaCreditoService: FabricaCreditoService
   ) {
-      /*const datos: any = {
-          numeroSolicitud: data.numeroSolicitud,
-          tipoDocumento: data.tipoDocumento
-      };*/
-      // console.log(datos);
-      // this.getDocumentos(datos);
-
-
+      this.escuchaObservable();
   }
 
   ngOnInit(): void {
+  }
+
+  public escuchaObservable(): void {
+      this.fabricaCreditoService.seleccionDatos.pipe(takeUntil(this.unsubscribe$))
+          .subscribe(({data}) => {
+          if (data) {
+              this.getDocumentos(data);
+              this.datosDocumentos = data;
+          }
+      });
+  }
+
+  public onDescargar(item: any): void {
+      this.getDocumento(item);
   }
 
   public subirArchivo(input: any, item: any): void {
@@ -45,7 +57,7 @@ export class GridDocumentacionComponent implements OnInit {
                   extension: extension,
                   fuente: 'archivo-multi',
                   identificador: '',
-                  numeroSolicitud: 0,
+                  numeroSolicitud: this.datosDocumentos.numeroSolicitud,
                   tipoArchivo: item.idArchivo,
                   categoria: item.idCategoria,
                   agencia: 'OP',
@@ -71,11 +83,7 @@ export class GridDocumentacionComponent implements OnInit {
                   'success'
               ).then(resultado => {
                   if (resultado.isConfirmed) {
-                      const dato: any = {
-                          // numeroSolicitud: this.data.numeroSolicitud,
-                          // tipoDocumento: this.data.tipoDocumento
-                      };
-                      // this.getDocumentos(dato);
+                      this.getDocumentos(this.datosDocumentos);
                   }
               });
           }
@@ -88,5 +96,36 @@ export class GridDocumentacionComponent implements OnInit {
       });
 
   }
+
+  private getDocumento(datos: any): void {
+      Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      const datosDescargar = {
+          numeroSolicitud: numeroSolicitud,
+          idAdjunto: datos.idArchicoCargado,
+      };
+      this.documentosServices.getDocumento(datosDescargar).subscribe(res => {
+          console.log(res.data);
+          Swal.close();
+          const archivo = res.data.base64.split(',')[1];
+          console.log(archivo);
+          const downloadLink = document.createElement('a');
+          document.body.appendChild(downloadLink);
+          downloadLink.href = archivo;
+          downloadLink.target = '_self';
+          downloadLink.download = res.data.nombreArchivo;
+          downloadLink.click();
+          /*const link: any = document.createElement('a');
+          document.body.appendChild(link);
+          link.target = res.data.base64;
+          debugger;
+          link.download = `${res.data.nombreArchivo}_${datosDescargar.numeroSolicitud}.pdf`;
+          link.click();*/
+      });
+  }
+
+    ngOnDestroy(): void {
+      this.unsubscribe$.unsubscribe();
+    }
 
 }

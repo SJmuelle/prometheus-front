@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {AppSettingsService} from '../app-configs/app-settings.service';
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class FabricaCreditoService {
-  public seleccionDatos: Subject<{data: any; show: boolean}> = new Subject();
+  public seleccionDatos: BehaviorSubject<{data: any; show?: boolean}> = new BehaviorSubject<{data: any; show: boolean}>({data: '', show: false});
   constructor(
       private _http: HttpClient,
       private _appSettings: AppSettingsService

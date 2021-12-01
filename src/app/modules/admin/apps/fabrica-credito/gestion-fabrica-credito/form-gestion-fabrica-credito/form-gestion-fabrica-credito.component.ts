@@ -128,9 +128,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               activos:activos,
               ...data
           };
-        
-     
-    
+
+
+
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',
@@ -191,16 +191,21 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
             this.getBarriosNegocio(data.codigoCiudadNegocio);
           }
           if(data.comprasSemanales){
-            this.form.controls['comprasSemanales'].setValue(this.utility.formatearNumero(String(this.form.value.comprasSemanales))); 
+            this.form.controls['comprasSemanales'].setValue(this.utility.formatearNumero(String(this.form.value.comprasSemanales)));
           }
           if(data.ventasMensuales){
-            this.form.controls['ventasMensuales'].setValue(this.utility.formatearNumero(String(this.form.value.ventasMensuales))); 
+            this.form.controls['ventasMensuales'].setValue(this.utility.formatearNumero(String(this.form.value.ventasMensuales)));
           }
           if(data.activos){
-            this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos))); 
+            this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
           }
 
           this.tipoDocumento = data.tipoDocumento;
+          const datosDocumentos: any = {
+              numeroSolicitud: datosSolicitud.numeroSolicitud,
+              tipoDocumento: this.tipoDocumento
+          };
+          this.fabricaCreditoService.seleccionDatos.next({data: datosDocumentos});
       });
   }
   public seleccionDepartamento(event: MatSelectChange): void {
