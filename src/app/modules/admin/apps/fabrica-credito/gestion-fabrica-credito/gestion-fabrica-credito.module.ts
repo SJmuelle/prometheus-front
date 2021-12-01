@@ -24,6 +24,10 @@ import { FormDialogReferenciasComponent } from './form-dialog-referencias/form-d
 import {MatDialogModule} from "@angular/material/dialog";
 import { GridComentariosComponent } from './grid-comentarios/grid-comentarios.component';
 import { GridDocumentacionComponent } from './grid-documentacion/grid-documentacion.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { FormDialogCompararDocumentosComponent } from './form-dialog-comparar-documentos/form-dialog-comparar-documentos.component';
+import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
+
 
 
 @NgModule({
@@ -34,7 +38,8 @@ import { GridDocumentacionComponent } from './grid-documentacion/grid-documentac
     FormDetallesReferenciasComponent,
     FormDialogReferenciasComponent,
     GridComentariosComponent,
-    GridDocumentacionComponent
+    GridDocumentacionComponent,
+    FormDialogCompararDocumentosComponent
   ],
     imports: [
         CommonModule,
@@ -54,6 +59,9 @@ import { GridDocumentacionComponent } from './grid-documentacion/grid-documentac
         NgxMatNativeDateModule,
         MatTooltipModule,
         MatDialogModule,
+        MatCheckboxModule,
+        NgxExtendedPdfViewerModule,
+
     ],
 
 })

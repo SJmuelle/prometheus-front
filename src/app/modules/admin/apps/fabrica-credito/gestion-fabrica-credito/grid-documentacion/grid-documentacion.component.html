@@ -1,9 +1,23 @@
+<div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent mb-3">
+    <div class="flex flex-col">
+        <div class="flex flex-col sm:flex-row flex-0 sm:px-13 sm:items-center sm:justify-end border-b">
+            <button mat-icon-button
+                    matTooltip="Comparar"
+                    [disabled]="archivos.length > 2"
+                    (click)="onDialogComparar()"
+            >
+                <mat-icon [svgIcon]="'mat_outline:compare_arrows'"></mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12 col-lg-12">
         <table class="shadow p-0">
             <thead class="bg-accent-50" >
                 <tr
                     class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                    <th class="px-4 py-3"></th>
                     <th class="px-4 py-3">No. Doc</th>
                     <th class="px-4 py-3">Nombre del documento</th>
                     <th class="px-4 py-3">Requerido</th>
@@ -11,13 +25,15 @@
                     <th class="px-4 py-3">Cargar</th>
                     <th class="px-4 py-3">Fecha de cargue</th>
                     <th class="px-4 py-3">Descargar</th>
-                    <th class="px-4 py-3"></th>
                 </tr>
             </thead>
             <tbody class="bg-white">
                 <ng-container *ngIf="documentos$ | async as items">
                     <ng-container *ngFor="let item of items.data">
                         <tr>
+                            <td class="px-2 text-sm border text-center">
+                                <mat-checkbox #checkbox (change)="onSeleccionDocumento(checkbox, item)"></mat-checkbox>
+                            </td>
                             <td class="px-2 text-sm border">{{ item.idArchivo}}</td>
                             <td class="px-2 text-sm border">{{ item.descripcion}}</td>
                             <td class="px-2 text-sm border">{{ item.requerido? 'Si' : 'No'}}</td>
@@ -45,15 +61,15 @@
                                     </button>
                                 </ng-container>
                             </td>
-                            <td class="px-2 text-sm border text-center">
+                            <!--<td class="px-2 text-sm border text-center">
                                 <ng-container *ngIf="item.archivoCargado !== 'N'">
                                     <button mat-icon-button
-                                            matTooltip="Visualizar"
+                                            matTooltip="Comparar"
                                     >
-                                        <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                        <mat-icon [svgIcon]="'mat_outline:compare_arrows'"></mat-icon>
                                     </button>
                                 </ng-container>
-                            </td>
+                            </td>-->
                         </tr>
                     </ng-container>
                 </ng-container>

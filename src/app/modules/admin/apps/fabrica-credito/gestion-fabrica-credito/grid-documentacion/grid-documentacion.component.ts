@@ -5,6 +5,10 @@ import {DocumentosAdjuntosService} from "../../../../../../core/services/documen
 import Swal from "sweetalert2";
 import {FabricaCreditoService} from "../../../../../../core/services/fabrica-credito.service";
 import {takeUntil} from "rxjs/operators";
+import {MatCheckbox, MatCheckboxChange} from "@angular/material/checkbox";
+import {MatDialog} from "@angular/material/dialog";
+import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
+import {FormDialogCompararDocumentosComponent} from "../form-dialog-comparar-documentos/form-dialog-comparar-documentos.component";
 
 @Component({
   selector: 'app-grid-documentacion',
@@ -15,16 +19,20 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public documentos$: Observable<any>;
   public unsubscribe$: Subject<any> = new Subject();
   public datosDocumentos: any = {};
+  public archivos: any = [];
   constructor(
       private route: ActivatedRoute,
       private documentosServices: DocumentosAdjuntosService,
-      private fabricaCreditoService: FabricaCreditoService
+      private fabricaCreditoService: FabricaCreditoService,
+      private _dialog: MatDialog
   ) {
       this.escuchaObservable();
   }
 
   ngOnInit(): void {
   }
+
+
 
   public escuchaObservable(): void {
       this.fabricaCreditoService.seleccionDatos.pipe(takeUntil(this.unsubscribe$))
@@ -35,9 +43,25 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
           }
       });
   }
-
+  /**
+   * @description: Metodo para descargar documentos
+   */
   public onDescargar(item: any): void {
       this.getDocumento(item);
+  }
+  /**
+   * @description: Seleccion de check
+   */
+  public onSeleccionDocumento(event: MatCheckbox, item: any): void {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      if (event.checked) {
+          const datos: any = {
+              numeroSolicitud: numeroSolicitud,
+              idAdjunto: item.idArchicoCargado
+          };
+          this.compararDocumentos(datos);
+      }
+
   }
 
   public subirArchivo(input: any, item: any): void {
@@ -97,30 +121,45 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
   }
 
+  public onDialogComparar(): void {
+      const dialogRef = this._dialog.open(FormDialogCompararDocumentosComponent, {
+          minWidth: '680px',
+          minHeight: '420px',
+          disableClose: true,
+          data: this.archivos
+        });
+      dialogRef.afterClosed().toPromise();
+  }
+
   private getDocumento(datos: any): void {
-      Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
       const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       const datosDescargar = {
           numeroSolicitud: numeroSolicitud,
           idAdjunto: datos.idArchicoCargado,
       };
-      this.documentosServices.getDocumento(datosDescargar).subscribe(res => {
-          console.log(res.data);
-          Swal.close();
+      this.documentosServices.getDocumento(datosDescargar).subscribe((res) => {
           const archivo = res.data.base64.split(',')[1];
-          console.log(archivo);
-          const downloadLink = document.createElement('a');
-          document.body.appendChild(downloadLink);
-          downloadLink.href = archivo;
-          downloadLink.target = '_self';
-          downloadLink.download = res.data.nombreArchivo;
-          downloadLink.click();
-          /*const link: any = document.createElement('a');
+          const extension = res.data.nombreArchivo.split('.')[1];
+          console.log(extension);
+          const link = document.createElement('a');
           document.body.appendChild(link);
-          link.target = res.data.base64;
-          debugger;
-          link.download = `${res.data.nombreArchivo}_${datosDescargar.numeroSolicitud}.pdf`;
-          link.click();*/
+          link.href = `data:application/${extension};base64,${archivo}`;
+          link.target = '_self';
+          link.download = res.data.nombreArchivo;
+          link.click();
+          Swal.close();
+      });
+  }
+
+  private compararDocumentos(datos: any): void {
+      Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+      this.documentosServices.getDocumento(datos).subscribe((res) => {
+          if (res) {
+              this.archivos.push(res.data);
+          }
+          console.log(this.archivos);
+          Swal.close();
       });
   }
 
