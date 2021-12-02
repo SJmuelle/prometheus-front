@@ -3,7 +3,7 @@
         <div class="flex flex-col sm:flex-row flex-0 sm:px-13 sm:items-center sm:justify-end border-b">
             <button mat-icon-button
                     matTooltip="Comparar"
-                    [disabled]="archivos.length > 2"
+                    [disabled]="!longitudArchivos"
                     (click)="onDialogComparar()"
             >
                 <mat-icon [svgIcon]="'mat_outline:compare_arrows'"></mat-icon>
@@ -25,11 +25,14 @@
                     <th class="px-4 py-3">Cargar</th>
                     <th class="px-4 py-3">Fecha de cargue</th>
                     <th class="px-4 py-3">Descargar</th>
+                    <ng-container *ngIf="longitudArchivos">
+                        <th class="px-4 py-3">Comparar</th>
+                    </ng-container>
                 </tr>
             </thead>
             <tbody class="bg-white">
                 <ng-container *ngIf="documentos$ | async as items">
-                    <ng-container *ngFor="let item of items.data">
+                    <ng-container *ngFor="let item of items.data; let  i = index">
                         <tr>
                             <td class="px-2 text-sm border text-center">
                                 <mat-checkbox #checkbox (change)="onSeleccionDocumento(checkbox, item)"></mat-checkbox>
@@ -61,15 +64,31 @@
                                     </button>
                                 </ng-container>
                             </td>
-                            <!--<td class="px-2 text-sm border text-center">
-                                <ng-container *ngIf="item.archivoCargado !== 'N'">
-                                    <button mat-icon-button
-                                            matTooltip="Comparar"
-                                    >
-                                        <mat-icon [svgIcon]="'mat_outline:compare_arrows'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>-->
+                            <ng-container *ngIf="longitudArchivos && item.archivoCargado !== 'N'">
+                                <td class="px-2 py-2 text-sm border text-center">
+                                    <!--<ng-container *ngIf="item.archivoCargado !== 'N'">
+                                        <button mat-icon-button
+                                                matTooltip="Comparar"
+                                        >
+                                            <mat-icon [svgIcon]="'mat_outline:compare_arrows'"></mat-icon>
+                                        </button>
+                                    </ng-container>-->
+                                    <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                        <mat-select
+                                        >
+                                            <ng-container *ngFor="let data of items.data">
+                                                <mat-option
+                                                    *ngIf="data.archivoCargado !== 'N'"
+                                                            [value]="data.archivoCargado"
+                                                >
+                                                    {{data.descripcion}}
+                                                </mat-option>
+                                            </ng-container>
+
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                            </ng-container>
                         </tr>
                     </ng-container>
                 </ng-container>

@@ -27,6 +27,7 @@ import { GridDocumentacionComponent } from './grid-documentacion/grid-documentac
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { FormDialogCompararDocumentosComponent } from './form-dialog-comparar-documentos/form-dialog-comparar-documentos.component';
 import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
 
 
 
@@ -61,6 +62,7 @@ import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
         MatDialogModule,
         MatCheckboxModule,
         NgxExtendedPdfViewerModule,
+        Ng2SearchPipeModule,
 
     ],
 

@@ -1,6 +1,8 @@
 <h2 mat-dialog-title>Vista previa</h2>
 <mat-dialog-content>
-    <ngx-extended-pdf-viewer [base64Src]="data" [textLayer]="true" useBrowserLocale="true" height="80vh"></ngx-extended-pdf-viewer>
+    <div class="w-5/16">
+        <ngx-extended-pdf-viewer [base64Src]="data.base64" [textLayer]="true" useBrowserLocale="true" height="80vh"></ngx-extended-pdf-viewer>
+    </div>
 
 </mat-dialog-content>
 <mat-dialog-actions>

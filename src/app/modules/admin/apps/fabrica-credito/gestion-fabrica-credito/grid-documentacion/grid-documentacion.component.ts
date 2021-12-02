@@ -19,7 +19,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public documentos$: Observable<any>;
   public unsubscribe$: Subject<any> = new Subject();
   public datosDocumentos: any = {};
-  public archivos: any = [];
+  public archivos: any = {};
+  public longitudArchivos: number;
   constructor(
       private route: ActivatedRoute,
       private documentosServices: DocumentosAdjuntosService,
@@ -60,6 +61,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
               idAdjunto: item.idArchicoCargado
           };
           this.compararDocumentos(datos);
+      }else {
+          this.longitudArchivos = 0;
       }
 
   }
@@ -123,7 +126,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
   public onDialogComparar(): void {
       const dialogRef = this._dialog.open(FormDialogCompararDocumentosComponent, {
-          minWidth: '680px',
+          minWidth: '100%',
           minHeight: '420px',
           disableClose: true,
           data: this.archivos
@@ -156,9 +159,16 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
       Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
       this.documentosServices.getDocumento(datos).subscribe((res) => {
           if (res) {
-              this.archivos.push(res.data);
+              const archivo = res.data.base64.split(',')[1];
+              const extension = res.data.nombreArchivo.split('.')[1];
+              this.archivos = {
+                  base64: `${archivo}`,
+                  nombreArchivo: res.data.nombreArchivo,
+              };
+              this.longitudArchivos = Object.keys(this.archivos).length;
           }
           console.log(this.archivos);
+          console.log(this.longitudArchivos);
           Swal.close();
       });
   }
