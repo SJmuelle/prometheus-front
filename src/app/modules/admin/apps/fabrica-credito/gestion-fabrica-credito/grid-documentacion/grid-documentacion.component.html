@@ -31,11 +31,12 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <ng-container *ngIf="documentos$ | async as items">
-                    <ng-container *ngFor="let item of items.data; let  i = index">
+                    <ng-container *ngFor="let item of documentos; let  i = index">
                         <tr>
                             <td class="px-2 text-sm border text-center">
-                                <mat-checkbox #checkbox (change)="onSeleccionDocumento(checkbox, item)"></mat-checkbox>
+                                <mat-checkbox
+                                    *ngIf="item.archivoCargado !== 'N'"
+                                    #checkbox (change)="onSeleccionDocumento(checkbox, item)"></mat-checkbox>
                             </td>
                             <td class="px-2 text-sm border">{{ item.idArchivo}}</td>
                             <td class="px-2 text-sm border">{{ item.descripcion}}</td>
@@ -75,11 +76,14 @@
                                     </ng-container>-->
                                     <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                         <mat-select
+                                            [formControl]="documentoComparado"
+                                            (selectionChange)="onSeleccionadoComparar($event)"
                                         >
-                                            <ng-container *ngFor="let data of items.data">
+                                            <mat-option value="seleccione" disabled>Seleccione</mat-option>
+                                            <ng-container *ngFor="let data of documentos">
                                                 <mat-option
-                                                    *ngIf="data.archivoCargado !== 'N'"
-                                                            [value]="data.archivoCargado"
+                                                    *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                                            [value]="data.idArchicoCargado"
                                                 >
                                                     {{data.descripcion}}
                                                 </mat-option>
@@ -91,7 +95,6 @@
                             </ng-container>
                         </tr>
                     </ng-container>
-                </ng-container>
             </tbody>
         </table>
     </div>

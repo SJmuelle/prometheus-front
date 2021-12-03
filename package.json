@@ -41,6 +41,7 @@
         "lodash-es": "4.17.21",
         "moment": "2.29.1",
         "ng-apexcharts": "1.5.9",
+        "ng2-pdf-viewer": "^7.0.2",
         "ng2-search-filter": "^0.5.1",
         "ngx-extended-pdf-viewer": "^10.5.0",
         "ngx-markdown": "11.1.3",

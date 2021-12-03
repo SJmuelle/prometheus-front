@@ -9,6 +9,8 @@ import {MatCheckbox, MatCheckboxChange} from "@angular/material/checkbox";
 import {MatDialog} from "@angular/material/dialog";
 import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
 import {FormDialogCompararDocumentosComponent} from "../form-dialog-comparar-documentos/form-dialog-comparar-documentos.component";
+import {FormControl} from "@angular/forms";
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-grid-documentacion',
@@ -19,8 +21,12 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public documentos$: Observable<any>;
   public unsubscribe$: Subject<any> = new Subject();
   public datosDocumentos: any = {};
-  public archivos: any = {};
+  public archivoIzquierda: any = {};
+  public archivoDerecha: any = {};
   public longitudArchivos: number;
+  public documentos: any [] = [];
+  public documentoComparado: FormControl = new FormControl('seleccione');
+  public numeroSolicitud: string;
   constructor(
       private route: ActivatedRoute,
       private documentosServices: DocumentosAdjuntosService,
@@ -28,6 +34,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
       private _dialog: MatDialog
   ) {
       this.escuchaObservable();
+      this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
   }
 
   ngOnInit(): void {
@@ -54,16 +61,30 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
    * @description: Seleccion de check
    */
   public onSeleccionDocumento(event: MatCheckbox, item: any): void {
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       if (event.checked) {
+          this.documentos.map((x) =>{
+              if (x.idArchivo == item.idArchivo){
+                  x.selected = event.checked;
+              }
+              return x;
+          });
+          console.log(this.documentos);
           const datos: any = {
-              numeroSolicitud: numeroSolicitud,
+              numeroSolicitud: this.numeroSolicitud,
               idAdjunto: item.idArchicoCargado
           };
-          this.compararDocumentos(datos);
+          this.seleccionDocumentoIzquierdo(datos);
       }else {
           this.longitudArchivos = 0;
       }
+  }
+
+  public onSeleccionadoComparar(event: MatSelectChange): void {
+      const datos: any = {
+          numeroSolicitud: this.numeroSolicitud,
+          idAdjunto: event.value
+      };
+      this.seleccionDocumentoDerecho(datos);
 
   }
 
@@ -98,7 +119,13 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   }
 
   private getDocumentos(datos: any): void {
-      this.documentos$ = this.documentosServices.getDocumentos(datos);
+      this.documentosServices.getDocumentos(datos).subscribe((res) => {
+          this.documentos = res.data;
+          this.documentos.map((x) => {
+              x['selected'] = false;
+              return x;
+          });
+      });
   }
 
   private guardarAdjunto(datos: any): void {
@@ -108,7 +135,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                   '¡Información!',
                   'Se guardo el registro con éxito',
                   'success'
-              ).then(resultado => {
+              ).then((resultado) => {
                   if (resultado.isConfirmed) {
                       this.getDocumentos(this.datosDocumentos);
                   }
@@ -125,20 +152,24 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   }
 
   public onDialogComparar(): void {
+      const datosComparar: any = {
+          izquierda: this.archivoIzquierda,
+          derecha: this.archivoDerecha
+      };
       const dialogRef = this._dialog.open(FormDialogCompararDocumentosComponent, {
           minWidth: '100%',
-          minHeight: '420px',
+          minHeight: '100vh',
           disableClose: true,
-          data: this.archivos
+          data: datosComparar,
+          panelClass: 'my-full-screen-dialog'
         });
       dialogRef.afterClosed().toPromise();
   }
 
   private getDocumento(datos: any): void {
       Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       const datosDescargar = {
-          numeroSolicitud: numeroSolicitud,
+          numeroSolicitud: this.numeroSolicitud,
           idAdjunto: datos.idArchicoCargado,
       };
       this.documentosServices.getDocumento(datosDescargar).subscribe((res) => {
@@ -155,20 +186,36 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
       });
   }
 
-  private compararDocumentos(datos: any): void {
+  private seleccionDocumentoIzquierdo(datos: any): void {
       Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
       this.documentosServices.getDocumento(datos).subscribe((res) => {
           if (res) {
               const archivo = res.data.base64.split(',')[1];
               const extension = res.data.nombreArchivo.split('.')[1];
-              this.archivos = {
-                  base64: `${archivo}`,
+              this.archivoIzquierda = {
+                  // base64: `${archivo}`,
+                  base64: `data:application/${extension};base64,${archivo}`,
                   nombreArchivo: res.data.nombreArchivo,
               };
-              this.longitudArchivos = Object.keys(this.archivos).length;
+              this.longitudArchivos = Object.keys(this.archivoIzquierda).length;
           }
-          console.log(this.archivos);
+          console.log(this.archivoIzquierda);
           console.log(this.longitudArchivos);
+          Swal.close();
+      });
+  }
+  private seleccionDocumentoDerecho(datos: any): void {
+      Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+      this.documentosServices.getDocumento(datos).subscribe((res) => {
+          if (res) {
+              const archivo = res.data.base64.split(',')[1];
+              const extension = res.data.nombreArchivo.split('.')[1];
+              this.archivoDerecha = {
+                  // base64: `${archivo}`,
+                  base64: `data:application/${extension};base64,${archivo}`,
+                  nombreArchivo: res.data.nombreArchivo,
+              };
+          }
           Swal.close();
       });
   }
