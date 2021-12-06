@@ -21,13 +21,7 @@ export class FormDialogCompararDocumentosComponent implements OnInit, AfterViewI
   }
 
     ngAfterViewInit(): void {
-        console.log(this.data);
-        console.log(this.data.base64);
-        console.log(this.pdfDerecho)
 
-
-        // this.pdfViewerOnDemand.nativeElement.baseHref = this.data.izquierda.base64;
-        // this.pdfViewerAutoLoad.nativeElement.baseHref =  this.data.derecha.base64;
     }
 
 }

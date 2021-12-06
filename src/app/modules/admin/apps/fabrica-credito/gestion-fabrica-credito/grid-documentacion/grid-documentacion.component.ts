@@ -194,7 +194,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
               const extension = res.data.nombreArchivo.split('.')[1];
               this.archivoIzquierda = {
                   // base64: `${archivo}`,
-                  base64: `data:application/${extension};base64,${archivo}`,
+                  extension: extension,
+                  base64: extension === 'pdf'? `data:application/${extension};base64,${archivo}` : `data:image/${extension};base64,${archivo}`,
                   nombreArchivo: res.data.nombreArchivo,
               };
               this.longitudArchivos = Object.keys(this.archivoIzquierda).length;
@@ -212,7 +213,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
               const extension = res.data.nombreArchivo.split('.')[1];
               this.archivoDerecha = {
                   // base64: `${archivo}`,
-                  base64: `data:application/${extension};base64,${archivo}`,
+                  extension: extension,
+                  base64: extension === 'pdf'? `data:application/${extension};base64,${archivo}` : `data:image/${extension};base64,${archivo}`,
                   nombreArchivo: res.data.nombreArchivo,
               };
           }
