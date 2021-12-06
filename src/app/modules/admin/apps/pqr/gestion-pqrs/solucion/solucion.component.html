@@ -1,8 +1,7 @@
 <div *ngIf="seguimiento!={}">
     <div class="row items-center">
         <span class="leading-none col-lg-4 col-sm-12">
-            <div class="leading-tight titulo_tabs">Historial de
-                seguimiento</div>
+            <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
         </span>
         <hr class="w-full border-t col-lg-12 col-sm-12">
     </div>
@@ -17,8 +16,16 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-lg-6 col-sm-12">
-            <form class="mt-4">
+        <div class="col-lg-6 col-sm-12" *ngIf="idTipoComentario == 2 && listadoSoluciones.length > 0">
+            <mat-form-field class="flex-auto w-100">
+                <mat-label>Solución</mat-label>
+                <mat-select [(ngModel)]="solucionCausal" name="solucionCausal" required>
+                    <mat-option *ngFor="let solucion of listadoSoluciones" [value]="solucion.id">{{ solucion.solucion }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-12 col-sm-12">
+            <form class="mt-2 mb-2">
                 <div>
                     <label for="filep" class="w-100">
                         <span mat-button class="bg-gray-100 text-white cursor-pointer" >

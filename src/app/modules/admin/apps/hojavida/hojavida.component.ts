@@ -70,8 +70,8 @@ export class HojavidaComponent implements OnInit {
     // });
 
     // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    //   console.log(result);
+    //   // console.log('The dialog was closed');
+    //   // console.log(result);
     // });
   }
 
@@ -84,7 +84,7 @@ export class HojavidaComponent implements OnInit {
   }
 
   buscarClientes() {
-  
+
     if (this.busqueda == "1") {
       if (this.clienteID == null || this.clienteID == undefined || this.clienteID == 0) {
         Swal.fire(
@@ -210,7 +210,7 @@ export class HojavidaComponent implements OnInit {
         this._carteraService
           .getCartera(this.info_cliente.identificacion, this.codigoNegocio)
           .subscribe((respCartera: any) => {
-            console.log(respCartera);
+            // // console.log(respCartera);
             Swal.close();
             if (respCartera.data) {
               this.ListadoCartera = respCartera.data;
@@ -244,7 +244,7 @@ export class HojavidaComponent implements OnInit {
             // this.listadoNegociaciones = response.data;
             Swal.close();
             if (response.data) {
-            
+
               this.listadoNegociaciones = response.data;
             } else {
               this.listadoNegociaciones = [];
@@ -261,7 +261,7 @@ export class HojavidaComponent implements OnInit {
             // this.listadoExtractos = response.data;
             Swal.close();
             if (response.data) {
-           
+
               this.listadoExtractos = response.data;
             } else {
               this.listadoExtractos = [];
@@ -278,7 +278,7 @@ export class HojavidaComponent implements OnInit {
             // this.listadoReporteCentrales = response.data;
             Swal.close();
             if (response.data) {
-              
+
               this.listadoReporteCentrales = response.data;
             } else {
               this.listadoReporteCentrales = [];
@@ -295,9 +295,9 @@ export class HojavidaComponent implements OnInit {
           .subscribe((response: any) => {
             // this.listadoReporteCentrales = response.data;
             Swal.close();
-           
+
             if (response) {
-              
+
               this.listadoPQRS = response;
             } else {
               this.listadoPQRS = [];
@@ -310,15 +310,15 @@ export class HojavidaComponent implements OnInit {
   }
 
   openDialogCredito(codigoNegocio): void {
-    
+
     const dialogRef = this.dialog.open(ModalcreditoComponent, {
       // mixWidth: '480px',
       // mixHeight: '550px',
       data: { codigoNegocio },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      // console.log('The dialog was closed');
+      // console.log(result);
     });
   }
   openDialogCartera(index, saldo,id): void {
@@ -337,8 +337,8 @@ export class HojavidaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      // console.log('The dialog was closed');
+      // console.log(result);
     });
   }
 
@@ -350,8 +350,8 @@ export class HojavidaComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-      console.log(result);
+      // console.log('The dialog was closed');
+      // console.log(result);
     });
   }
 
@@ -371,7 +371,7 @@ export class HojavidaComponent implements OnInit {
     this._carteraService
       .getPlanPago(codigo)
       .subscribe((respuesta: any) => {
-        console.log(respuesta);
+        // console.log(respuesta);
         Swal.close();
         if (respuesta.data) {
           // respuesta.data="http://prometheus.fintra.co:8094/fintra/exportar/migracion/119236/f_plan_de_pagos.pdf";
@@ -387,7 +387,7 @@ export class HojavidaComponent implements OnInit {
   }
   busacar_url2(url) {
 
-    
+
     window.open(url, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
 
   }

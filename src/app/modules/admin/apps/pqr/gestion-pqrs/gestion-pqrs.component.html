@@ -79,7 +79,10 @@
                             <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
                         </div>
                         <div class="font-titulo col-lg-10 col-sm-10 m-0 p-0">
-                            {{item.descripcion}}
+                            {{ item.descripcion }} <br>
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{ item.fechaCreacion }}
+                            </span>
                         </div>
 
                     </div>
@@ -155,7 +158,7 @@
                                         <div class="capitalize" style="font-size: 16px;">{{datos.sucursal}}
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-lg-2">
+                                    <div class="col-sm-6 col-lg-3">
                                         <div class="text-sm font-medium text-secondary font-bold">Entidad
                                         </div>
                                         <div class="" style="font-size: 16px;">{{datos.entidad}}
@@ -193,8 +196,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-3">
-                                        <div class="text-sm font-medium text-secondary font-bold">Solución
-                                        </div>
+                                        <div class="text-sm font-medium text-secondary font-bold">Procedimiento</div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.solucionPqrs}}
                                         </div>
                                     </div>
@@ -247,31 +249,27 @@
                     <div>
                         <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
                             <mat-tab label="Descripción">
-
                                 <div class="row">
-
                                     <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted"
                                         style="    overflow: auto;height: 16em;">
                                         <p><strong>Detalle de la PQRS</strong></p><br>
                                         <div [innerHTML]=" datos.detalle"></div>
                                     </div>
                                 </div>
-
                             </mat-tab>
 
                             <mat-tab label="Solución" [disabled]="datos.estado=='Cerrado'">
-
                                 <div class="row">
-                                    <app-solucion (cambiarEstado)=cargarDatos($event) class="tamano20"></app-solucion>
+                                    <app-solucion
+                                        (cambiarEstado)=cargarDatos($event)
+                                        [idSolucion]="listadoSoluciones" class="tamano20">
+                                    </app-solucion>
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Historial de
-                            seguimiento">
+                            <mat-tab label="Historial de seguimiento">
                                 <div class="row items-center">
                                     <span class="leading-none col-lg-6 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Historial de
-                                            seguimiento
-                                        </div>
+                                        <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
                                     </span>
                                     <div class="leading-tight col-lg-6 col-sm-12 text-end">
                                         <input class="border rounded p-2 bg-gray-100"
@@ -380,12 +378,31 @@
                                                                 </div>
                                                                 <!-- Extra content -->
                                                                 <ng-container>
-                                                                    <div class="mt-2 py-4 px-3 rounded-lg bg-gray-200 dark:bg-gray-800 "
-                                                                        [innerHTML]=" item.detalle"></div>
+                                                                    <div *ngFor="let adj of listarAdjuntos" class="w-50 text-start">
+                                                                        <div class="row items-center mt-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"
+                                                                            *ngIf="adj.idSolucion == item.id">
+                                                                            <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(adj.idComentario)">
+                                                                                <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
+                                                                            </div>
+                                                                            <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
+                                                                                {{ adj.descripcion }} <br>
+                                                                                <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                                                                    {{ adj.fechaCreacion }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="mt-2 px-3 rounded-lg bg-gray-200 dark:bg-gray-800 "
+                                                                        [innerHTML]=" item.detalle">
+                                                                    </div>
                                                                 </ng-container>
                                                                 <fuse-alert class="mt-2" [type]="'warn'" [appearance]="'outline'" *ngIf="item.estadocolor=='bg-pink-300'">
                                                                     <span fuseAlertTitle>Motivo rechazo</span>
-                                                                    {{item.motivoRechazo}}
+                                                                    <div>
+                                                                        <span class="flex pb-1.5" style="font-size: 12px!important;"><i>{{ item.fechaRespuesta }}</i></span>
+                                                                        {{item.motivoRechazo}}
+                                                                    </div>
                                                                 </fuse-alert>
                                                                 <!-- <ng-container *ngIf="item.estadocolor=='bg-pink-300'">
                                                                     <div
@@ -517,6 +534,7 @@
                                                             <th class="px-4 py-3">Correo electronico</th>
                                                             <th class="px-4 py-3">Detalle</th>
                                                             <th class="px-4 py-3">Tipo</th>
+                                                            <th class="px-4 py-3">Estado</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="bg-white">
@@ -524,9 +542,9 @@
                                                             *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
                                                             <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
                                                             <td class="px-4 py-1 text-sm border">{{ item.email}}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion}}
-                                                            </td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion}}</td>
                                                             <td class="px-4 py-1 text-sm border">{{ item.tipo}}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.estado}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

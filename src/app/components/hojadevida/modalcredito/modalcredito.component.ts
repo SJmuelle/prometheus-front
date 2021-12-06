@@ -35,7 +35,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.data.codigoNegocio);
+        // console.log(this.data.codigoNegocio);
         this.onTabChangedCredito(0);
     }
 
@@ -65,7 +65,7 @@ export class ModalcreditoComponent implements OnInit {
             .subscribe((response: any) => {
                 Swal.close();
                 if (response.data) {
-                   
+
                     this.infoInfoPerLab=response.data;
                 }else{
                     this.infoInfoPerLab={};
@@ -78,10 +78,10 @@ export class ModalcreditoComponent implements OnInit {
         return this._detalleCredito
             .getInformacionReferencias(data)
             .subscribe((response: any) => {
-                console.log(response);
+                // // console.log(response);
                 Swal.close();
                 if (response.data) {
-                   
+
                     // this.infore.patchValue(response.data);
                     this.infoRefePer = response.data
                 }else{
@@ -98,7 +98,7 @@ export class ModalcreditoComponent implements OnInit {
             .subscribe((response: any) => {
                 Swal.close();
                 if (response.data) {
-                    
+
                     this.infoCodeu=response.data;
                 }else{
                     this.infoRefePer =[];
@@ -111,7 +111,7 @@ export class ModalcreditoComponent implements OnInit {
         return this._detalleCredito
             .getInformacionNegocio(data)
             .subscribe((response: any) => {
-                console.log(response);
+                // // console.log(response);
                 Swal.close();
                 if (response.data) {
                     this.infoNegocio=response.data;
@@ -126,7 +126,7 @@ export class ModalcreditoComponent implements OnInit {
         return this._detalleCredito
             .getInformacionConyuge(data)
             .subscribe((response: any) => {
-                console.log(response);
+                // // console.log(response);
                 Swal.close();
                 if (response.data) {
                     this.infoConyugue=response.data;

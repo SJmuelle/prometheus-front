@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Insertar causal a PQRS hija </h2>
 <div class="bg-white col-lg-12 col-sm-12">
     <div class="row"  >
-      
+
             <div class="bg-white col l12">
                 <div class="row justify-start ">
                     <form>
@@ -17,7 +17,7 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Causal de PQRS</mat-label>
                                     <mat-select [(ngModel)]="datos.causal" name="causal" required
-                                        (ngModelChange)="buscarSelectDinamico('listado-solucion-causal',datos.causal,'listadoSolucionPQRS','soluciones');datos.causalNombre=nombreCausal(datos.causal)">
+                                        (ngModelChange)="buscarSelectDinamico('listado-procedimiento-causal',datos.causal,'listadoProcedimientosPQRS','procedimientos');datos.causalNombre=nombreCausal(datos.causal)">
                                         <mat-option value="" disabled>Seleccionar</mat-option>
                                         <mat-option value="{{item.id}}" *ngFor="let item of listadoCasualPQRS ">
                                             {{item.descripcion}}</mat-option>
@@ -27,14 +27,14 @@
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Solución</mat-label>
-                                    <mat-select [(ngModel)]="datos.solucion" name="solucion" required
-                                        (ngModelChange)="buscarSelectDinamico('listado-responsable-solucion',datos.solucion,'listadoResponsablePQRS','responsable');datos.solucionNombre=nombreSolucion(datos.solucion)">
+                                    <mat-select [(ngModel)]="datos.procedimiento" name="procedimiento" required
+                                        (ngModelChange)="buscarSelectDinamico('listado-responsable-procedimiento',datos.procedimiento,'listadoResponsablePQRS','responsable');datos.procedimientoNombre=nombreSolucion(datos.procedimiento)">
                                         <mat-option value="" disabled>Seleccionar</mat-option>
-                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoSolucionPQRS ">
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoProcedimientosPQRS ">
                                             {{item.descripcion}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
-    
+
                             </div>
                         </div>
                         <div class="row">
@@ -63,10 +63,10 @@
                     </form>
                 </div>
             </div>
-      
+
     </div>
 </div>
-<mat-dialog-actions align="end"> 
+<mat-dialog-actions align="end">
     <button mat-button   [mat-dialog-close]="datos" class="color_fintra text-white" >Guardar </button>
     <button mat-button  [mat-dialog-close]="[]" class="bg-gray-400 text-white">Cerrar </button>
 </mat-dialog-actions>

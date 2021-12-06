@@ -48,11 +48,13 @@ export class CarteraService {
         );
     }
     getPlanPago(codigo) {
+
+        // // console.log(this.readToken());
         const URL = `${environment.urlprometheus}?option=5&user=${codigo}&numsolc=${codigo}`
-        const headers = new HttpHeaders({           
-            'Content-Type' : 'application/json; charset=utf-8'
-        }); 
-        console.log(headers);
+        const headers = new HttpHeaders({
+            'Authentication' : ``
+        });
+        // console.log(headers);
         return this._httpClient.get(URL, { headers }).pipe();
     }
 }
