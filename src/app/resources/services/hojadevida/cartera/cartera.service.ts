@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-
+import { UtilityService } from '../../utility.service';
+import { map } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root',
 })
 export class CarteraService {
-    constructor(private _httpClient: HttpClient) { }
+    constructor(private _httpClient: HttpClient,private _utility: UtilityService) { }
 
     getCartera(cedula: string, codigoNegocio: string) {
         let url;
@@ -47,19 +48,11 @@ export class CarteraService {
         );
     }
     getPlanPago(codigo) {
-
-        // console.log(this.readToken());
         const URL = `${environment.urlprometheus}?option=5&user=${codigo}&numsolc=${codigo}`
-        const headers = new HttpHeaders({
-            'Authentication' : ``
+        const headers = new HttpHeaders({           
+            'Content-Type' : 'application/json; charset=utf-8'
         }); 
         console.log(headers);
         return this._httpClient.get(URL, { headers }).pipe();
-
-
-        // return this._httpClient.get(
-        //     `http://piloto.fintra.co:8094/fintra/EndPointCoreServlet?option=5&user=${codigo}&numsolc=${codigo}`
-        // );
-        // http://piloto.fintra.co:8094/fintra/EndPointCoreServlet?option=5&user=184992&numsolc=184992
     }
 }

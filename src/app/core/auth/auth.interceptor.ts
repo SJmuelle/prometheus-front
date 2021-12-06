@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'app/core/auth/auth.service';
 import { AuthUtils } from 'app/core/auth/auth.utils';
+import { environment } from 'environments/environment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor
@@ -25,7 +26,6 @@ export class AuthInterceptor implements HttpInterceptor
     {
         // Clone the request object
         let newReq = req.clone();
-
         // Request
         //
         // If the access token didn't expire, add the Authorization header.
@@ -36,8 +36,16 @@ export class AuthInterceptor implements HttpInterceptor
         // the user out from the app.
         if ( this._authService.accessToken && !AuthUtils.isTokenExpired(this._authService.accessToken) )
         {
+           
             newReq = req.clone({
                 headers: req.headers.set('Authentication',  this._authService.accessToken)
+            });
+        }
+        const url = newReq.url.split('?')[0];
+        if(url==environment.urlprometheus){
+            console.log(url)
+            newReq = req.clone({
+               
             });
         }
 
