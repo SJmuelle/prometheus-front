@@ -76,7 +76,7 @@
                         <div class="font-titulo col-lg-11 col-sm-10  m-0 p-0">
                             Ubicación
                         </div>
-                       
+
 
                         <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                             {{info_cliente.direccion}} <br>
@@ -91,7 +91,7 @@
                         <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
                             Contacto
                         </div>
-                     
+
 
                         <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
                             {{info_cliente.celular}} {{info_cliente.telefono==0?'':'-'}}
@@ -106,7 +106,7 @@
                         <div class="font-titulo col-lg-11 m-0 p-0 col-sm-10">
                             Negociación
                         </div>
-                      
+
 
                         <span class="leading-none lowercase" style="line-height: 1.3em !important;font-size: 13px;">
                             <text class="capitalize">Última</text> negociación: {{info_cliente.tipoNegociacion}}
@@ -122,7 +122,7 @@
                 <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
                     <mat-tab label="Crédito">
                         <!-- <ng-template mat-tab-label>
-                         
+
                             Third
                             <button mat-icon-button="" class="mat-focus-indicator mat-icon-button mat-button-base"><span class="mat-button-wrapper"><span class="absolute top-0 right-0 left-0 flex items-center justify-center h-3 ng-star-inserted"><span class="flex items-center justify-center flex-shrink-0 min-w-4 h-4 px-1 ml-4 mt-2.5 rounded-full bg-teal-600 text-indigo-50 text-xs font-medium"> 3 </span></span>
                             <mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true" ng-reflect-svg-icon="heroicons_outline:bell" data-mat-icon-type="svg" data-mat-icon-name="bell" data-mat-icon-namespace="heroicons_outline"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
@@ -260,12 +260,10 @@
                             </div>
                         </div>
                         <div class="m-5">
-
                         </div>
                     </mat-tab>
                     <mat-tab label="Cartera">
                         <div class="row items-center">
-
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Cartera</div>
                             </span>
@@ -371,7 +369,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -407,7 +404,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -442,10 +438,8 @@
                                                                         class="mt-2 font-medium text-3xl leading-none text-center">
                                                                         {{data.cuotasPendientes}}</div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -455,12 +449,10 @@
                             </div>
                         </div>
                         <div class="m-5">
-
                         </div>
                     </mat-tab>
                     <mat-tab label="Historial gestión">
                         <div class="row items-center">
-
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs"> Historial gestión</div>
                             </span>
@@ -523,11 +515,9 @@
                                             nextLabel="Siguiente"></pagination-controls>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="m-5">
-
                         </div>
                     </mat-tab>
                     <mat-tab label="Negociaciones">
@@ -544,7 +534,6 @@
                         </div>
                         <hr> -->
                         <div class="row items-center">
-
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Negociaciones</div>
                             </span>
@@ -613,9 +602,7 @@
                                 </fuse-card>
                             </div>
                         </div>
-
                         <div class="m-5">
-
                         </div>
                     </mat-tab>
                     <mat-tab label="Extractos">
@@ -691,13 +678,10 @@
                             </div>
                         </div>
                         <div class="m-5">
-
                         </div>
                     </mat-tab>
                     <mat-tab label="Reporte centrales">
-
                         <div class="row items-center">
-
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Reporte de las Centrales</div>
                             </span>
@@ -730,8 +714,6 @@
                                                     <!-- <th class="px-4 py-3">Estado de cuenta</th> -->
                                                     <th class="px-4 py-3">Valor</th>
                                                     <th class="px-4 py-3">Saldo en mora</th>
-
-
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
@@ -764,7 +746,6 @@
                             </fuse-card>
                         </div>
                         <div class="m-5">
-
                         </div>
                     </mat-tab>
                     <mat-tab label="PQRS">
@@ -800,15 +781,12 @@
                                                 <tr
                                                     class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">Fecha</th>
-                                                 
                                                     <th class="px-4 py-3">Numero</th>
                                                     <th class="px-4 py-3">Tipo</th>
                                                     <th class="px-4 py-3">Causal</th>
                                                     <th class="px-4 py-3">Estado</th>
                                                     <th class="px-4 py-3">Responsable</th>
                                                     <th class="px-4 py-3">Solución</th>
-                                         
-
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
@@ -841,16 +819,158 @@
                             </fuse-card>
                         </div>
                         <div class="m-5">
-
                         </div>
+                    </mat-tab>
+                    <mat-tab label="Certificaciones">
+                        <div class="row items-center">
+                            <span class="leading-none col-lg-4 col-sm-12">
+                                <div class="leading-tight titulo_tabs">Certificaciones</div>
+                            </span>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-lg-12 mb-8">
+                                <div class="flex flex-col px-2 py-4 rounded shadow-md mb-10">
+                                    <form [formGroup]="formCertificados">
+                                        <!-- <div>
+                                            {{ formCertificados.value | json }}
+                                            {{ formCertificados.controls.tipoCertificado.value }}
+                                        </div>
+                                        <hr>
+                                        <br> -->
+                                        <div class="md:flex mb-2">
+                                            <mat-form-field class="w-full px-3">
+                                                <mat-label>Código de negocio</mat-label>
+                                                <mat-select formControlName="negocio">
+                                                    <mat-option disabled selected>Seleccione</mat-option>
+                                                    <mat-option [value]="lNegocio.codigoNegocio" *ngFor="let lNegocio of listCodigoNegocio">{{ lNegocio.codigoNegocio }}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+
+                                            <mat-form-field class="w-full px-3">
+                                                <mat-label>Tipo de certificado</mat-label>
+                                                <mat-select formControlName="tipoCertificado">
+                                                    <mat-option disabled selected>Seleccione</mat-option>
+                                                    <mat-option value="1">Certificado al día</mat-option>
+                                                    <mat-option value="2">Certificado de deuda</mat-option>
+                                                    <mat-option value="3">Certificado de paz y salvo</mat-option>
+                                                    <mat-option value="4">Certificado de vínculo comercial</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <!-- <div class="w-full px-3"> -->
+                                                <mat-form-field class="w-full px-3" *ngIf="formCertificados.controls.tipoCertificado.value == 2">
+                                                    <mat-label>Fecha máxima de pago</mat-label>
+                                                    <input matInput
+                                                        [matDatepicker]="fechaMaximaN"
+                                                        formControlName="fechaMaxima"
+                                                        [min]="fechaMinima">
+
+                                                    <mat-datepicker-toggle matSuffix [for]="fechaMaximaN">
+                                                        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #fechaMaximaN></mat-datepicker>
+                                                </mat-form-field>
+                                            <!-- </div> -->
+                                        </div>
+                                        <div class="md:flex mb-2">
+                                            <div class="w-full px-3">
+                                                <div class="flex flex-row">
+                                                    <div class="w-full">
+                                                        <label>En calidad de:</label>
+                                                        <mat-radio-group formControlName="propietario" class="flex flex-col">
+                                                            <mat-radio-button class="mx-2" value="1">Titular</mat-radio-button>
+                                                            <mat-radio-button class="mx-2" value="2">Codeudor</mat-radio-button>
+                                                            <mat-radio-button class="mx-2" value="3">Ambos</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                    <div  class="w-full">
+                                                        <label>Trato:</label>
+                                                        <mat-radio-group formControlName="tratoCliente" class="flex flex-col">
+                                                            <mat-radio-button class="mx-2" value="1">El señor</mat-radio-button>
+                                                            <mat-radio-button class="mx-2" value="2">La señora</mat-radio-button>
+                                                            <mat-radio-button class="mx-2" value="3">Los señores</mat-radio-button>
+                                                        </mat-radio-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="w-full">
+                                                <button
+                                                    mat-raised-button
+                                                    class="w-1/2 mt-4 bg-accent text-white"
+                                                    [disabled]="!formCertificados.valid"
+                                                    (click)="formCertificados.controls.tipoCertificado.value == 2 ? dialogDeuda() : ''">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
 
+                                <!-- TABLA DE CERTIFICACIONES -->
+                                <div class="row items-center mb-4">
+                                    <span class="leading-none col-lg-4 col-sm-12">
+                                        <div class="leading-tight titulo_tabs">Historial de certificaciones</div>
+                                    </span>
+                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                        <input class="border rounded p-2 bg-gray-100"
+                                            style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                            name="filtrarTablaExt" [(ngModel)]="filtrarTablaExt" placeholder="Filtrar...">
+                                        <select name="tamanoTablaExt" id="tamanoTablaExt" class="border rounded  bg-gray-100"
+                                            (change)="pageEXT=1" [(ngModel)]="tamanoTablaExt"
+                                            style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                            <option value="5"> 5</option>
+                                            <option value="10"> 10</option>
+                                            <option value="20"> 20</option>
+                                        </select>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <table class="w-full shadow">
+                                            <thead>
+                                                <tr
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                    <th class="px-4 py-3">Consecutivo</th>
+                                                    <th class="px-4 py-3">Fecha envio</th>
+                                                    <th class="px-4 py-3">Método envio</th>
+                                                    <th class="px-4 py-3">Extracto</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                <tr class="text-gray-700"
+                                                    *ngFor="let item of listadoExtractos | filter: filtrarTablaExt  | paginate: { itemsPerPage: tamanoTablaExt, currentPage: pageEXT }">
+                                                    <td class="px-4 py-1 text-sm border">{{ item.consecutivo}}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.fechaEnvio}}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.metodoEnvio}}</td>
+                                                    <!-- <td class="px-4 py-3 text-sm border"> <a href="{{item.extracto}}"
+                                                            target="_blank">
+                                                            <mat-icon class="material-icons-two-tone"
+                                                                style="    align-self: center; height: 100%;">
+                                                                description</mat-icon>
+                                                        </a></td> -->
+                                                    <td class="px-2 text-sm border text-center">
+                                                        <a class="sindec">
+                                                            <mat-icon class="material-icons-two-tone cursor-pointer"
+                                                                style="    color: #f7ae0c; "
+                                                                (click)="busacar_url2( item.extracto)">description
+                                                            </mat-icon>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-lg-12 col-sm-12 text-end">
+                                        <pagination-controls (pageChange)="pageEXT = $event" previousLabel="Anterior"
+                                            nextLabel="Siguiente"></pagination-controls>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </mat-tab>
                 </mat-tab-group>
-
-
             </div>
         </div>
-
     </div>
 </div>

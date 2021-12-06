@@ -1,0 +1,123 @@
+<h2 mat-dialog-title>Estado de Cuenta</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-card
+        class="example-card rounded shadow-md col-lg-6 col-md-8 col-sm-12 mb-4"
+    >
+        <mat-card-subtitle>
+            <strong>Cliente: </strong>Sergio Cortés
+        </mat-card-subtitle>
+        <mat-card-subtitle>
+            <strong>Negocio: </strong>MC0123456
+        </mat-card-subtitle>
+
+        <mat-divider inset class="mt-4"></mat-divider>
+        <div class="bg-blue-400 px-2 text-start mb-3 text-white">
+            <mat-card-title>Información del Negocio</mat-card-title>
+        </div>
+        <mat-card-content>
+            <div class="flex flex-col">
+                <mat-form-field>
+                    <mat-label>Valor Negocio</mat-label>
+                    <input
+                        matInput
+                        placeholder="Ingrese el valor del negocio"
+                        type="text"
+                    />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Tasa de Interés</mat-label>
+                    <input
+                        matInput
+                        placeholder="Ingrese el Tasa de Interés"
+                        type="text"
+                    />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Número de Cuotas</mat-label>
+                    <input
+                        matInput
+                        placeholder="Ingrese el Número de Cuotas"
+                        type="text"
+                    />
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Valor Aval</mat-label>
+                    <input
+                        matInput
+                        placeholder="Ingrese el Valor Aval"
+                        type="text"
+                    />
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <div>
+        <div class="row items-center mb-4">
+            <span class="leading-none col-lg-4 col-sm-12">
+                <div class="leading-tight titulo_tabs">Historial de certificaciones</div>
+            </span>
+            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                <input class="border rounded p-2 bg-gray-100"
+                    style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                    name="filtrarTablaExt" placeholder="Filtrar...">
+                <select name="tamanoTablaExt" id="tamanoTablaExt" class="border rounded  bg-gray-100"
+                    style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                    <option value="5"> 5</option>
+                    <option value="10"> 10</option>
+                    <option value="20"> 20</option>
+                </select>
+            </div>
+            <hr>
+        </div>
+        <div class="tableResponsive shadow-md">
+            <table>
+                <thead>
+                    <tr
+                        class="
+                            text-md
+                            font-semibold
+                            tracking-wide
+                            text-left text-gray-400
+                            border-b border-gray-600">
+                        <th class="px-4 py-3">Factura</th>
+                        <th class="px-4 py-3">Fecha</th>
+                        <th class="px-4 py-3">Cuota</th>
+                        <th class="px-4 py-3">Días Mora</th>
+                        <th class="px-4 py-3">Capital</th>
+                        <th class="px-4 py-3">Interés</th>
+                        <th class="px-4 py-3">Mi Pyme</th>
+                        <th class="px-4 py-3">Intermediación Financiera</th>
+                        <th class="px-4 py-3">Saldo Cuota</th>
+                        <th class="px-4 py-3">Interés Mora</th>
+                        <th class="px-4 py-3">Gasto de Cobranza</th>
+                        <th class="px-4 py-3">Total Saldo</th>
+                        <th class="px-4 py-3">Estado</th>
+                    </tr>
+                </thead>
+
+                <tbody class="bg-white">
+                    <tr class="text-gray-700">
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="px-8 my-4 bg-accent text-white">
+        Generar Estado de Cuenta
+    </button>
+</mat-dialog-actions>
