@@ -1,4 +1,4 @@
-import {Component, Inject, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Observable, Subject} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {DocumentosAdjuntosService} from "../../../../../../core/services/documentos-adjuntos.service";
@@ -7,7 +7,6 @@ import {FabricaCreditoService} from "../../../../../../core/services/fabrica-cre
 import {takeUntil} from "rxjs/operators";
 import {MatCheckbox, MatCheckboxChange} from "@angular/material/checkbox";
 import {MatDialog} from "@angular/material/dialog";
-import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
 import {FormDialogCompararDocumentosComponent} from "../form-dialog-comparar-documentos/form-dialog-comparar-documentos.component";
 import {FormControl} from "@angular/forms";
 import {MatSelectChange} from "@angular/material/select";
@@ -23,10 +22,12 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public datosDocumentos: any = {};
   public archivoIzquierda: any = {};
   public archivoDerecha: any = {};
-  public longitudArchivos: number;
+  public longitudArchivos: number = 0;
   public documentos: any [] = [];
   public documentoComparado: FormControl = new FormControl('seleccione');
   public numeroSolicitud: string;
+  public habilitarComparar: boolean = false;
+  // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
   constructor(
       private route: ActivatedRoute,
       private documentosServices: DocumentosAdjuntosService,
@@ -36,12 +37,11 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
       this.escuchaObservable();
       this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
   }
-
   ngOnInit(): void {
   }
-
-
-
+  /**
+  * @description: Escucha el observable
+  * */
   public escuchaObservable(): void {
       this.fabricaCreditoService.seleccionDatos.pipe(takeUntil(this.unsubscribe$))
           .subscribe(({data}) => {
@@ -62,8 +62,9 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
    */
   public onSeleccionDocumento(event: MatCheckbox, item: any): void {
       if (event.checked) {
+          console.log(item);
           this.documentos.map((x) =>{
-              if (x.idArchivo == item.idArchivo){
+              if (x.idArchivoCargado === item.idArchivoCargado){
                   x.selected = event.checked;
               }
               return x;
@@ -71,11 +72,17 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
           console.log(this.documentos);
           const datos: any = {
               numeroSolicitud: this.numeroSolicitud,
-              idAdjunto: item.idArchicoCargado
+              idAdjunto: item.idArchivoCargado
           };
           this.seleccionDocumentoIzquierdo(datos);
       }else {
           this.longitudArchivos = 0;
+          this.documentos.map((x) =>{
+              if (x.idArchivoCargado === item.idArchivoCargado){
+                  x.selected = event.checked;
+              }
+              return x;
+          });
       }
   }
 
@@ -85,7 +92,16 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
           idAdjunto: event.value
       };
       this.seleccionDocumentoDerecho(datos);
-
+  }
+  /**
+   * @description: Elimina documento adjunto
+   */
+  public onEliminarDocumento(item: any): void {
+      const datos: any = {
+          numeroSolicitud: Number(this.numeroSolicitud),
+          idArchivoCargado: Number(item.idArchivoCargado)
+      };
+      this.eliminarDocumentos(datos);
   }
 
   public subirArchivo(input: any, item: any): void {
@@ -170,7 +186,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
       Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
       const datosDescargar = {
           numeroSolicitud: this.numeroSolicitud,
-          idAdjunto: datos.idArchicoCargado,
+          idAdjunto: datos.idArchivoCargado,
       };
       this.documentosServices.getDocumento(datosDescargar).subscribe((res) => {
           const archivo = res.data.base64.split(',')[1];
@@ -199,16 +215,18 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                   nombreArchivo: res.data.nombreArchivo,
               };
               this.longitudArchivos = Object.keys(this.archivoIzquierda).length;
+              console.log(this.longitudArchivos);
           }
           console.log(this.archivoIzquierda);
-          console.log(this.longitudArchivos);
           Swal.close();
       });
+
   }
   private seleccionDocumentoDerecho(datos: any): void {
       Swal.fire({ title: 'Cargando', html: 'Descargando...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
       this.documentosServices.getDocumento(datos).subscribe((res) => {
           if (res) {
+              this.habilitarComparar = true;
               const archivo = res.data.base64.split(',')[1];
               const extension = res.data.nombreArchivo.split('.')[1];
               this.archivoDerecha = {
@@ -219,6 +237,29 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
               };
           }
           Swal.close();
+      });
+  }
+
+  private eliminarDocumentos(datos: any): void {
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+      this.documentosServices.eliminaDocumento(datos).subscribe((data: any) => {
+          if (data.status === 200) {
+              Swal.fire(
+                  '¡Información!',
+                  'Se eliminó el registro con éxito',
+                  'success'
+              ).then((resultado) => {
+                  if (resultado.isConfirmed) {
+                      this.getDocumentos(this.datosDocumentos);
+                  }
+              });
+          }
+      }, error => {
+          Swal.fire(
+              '¡Información!',
+              'Ha ocurrido un error',
+              'error',
+          );
       });
   }
 

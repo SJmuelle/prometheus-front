@@ -20,6 +20,10 @@ export class FormDialogCompararDocumentosComponent implements OnInit, AfterViewI
       // console.log(this.pdfViewerAutoLoad)
   }
 
+  public oncCerrarDialog(): void {
+      this._matDialog.close();
+  }
+
     ngAfterViewInit(): void {
 
     }

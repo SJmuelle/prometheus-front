@@ -33,4 +33,10 @@ export class DocumentosAdjuntosService {
         // const {numeroSolicitud, tipoDocumento} = datos;
         return this._http.post(this._appSettings.documentos.url.baseConsultar, datos);
     }
+    /**
+     * @description: Elimina un documento
+     */
+    public eliminaDocumento(datos: any): Observable<any> {
+        return this._http.post(this._appSettings.documentos.url.baseEliminar, datos);
+    }
 }
