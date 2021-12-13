@@ -92,5 +92,14 @@ export class AppSettingsService {
             baseEliminar: EndPoints.uriGenerica('cre-inactivar-doc')
         }
     };
+    /**
+     * @description: End-point
+     */
+    public decision = {
+        url: {
+            base: EndPoints.uri('consulta-lista-generica/DECISION'),
+            baseDecision: EndPoints.uriGenerica('cre-decision')
+        }
+    };
 
 }

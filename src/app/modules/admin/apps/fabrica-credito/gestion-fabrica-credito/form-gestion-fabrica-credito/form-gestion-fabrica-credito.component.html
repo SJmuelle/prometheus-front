@@ -1,15 +1,44 @@
 <div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full y-100" cdkScrollable>
+    <!--<div class="grid grid-cols-12">
+        <div class="col-span-6">
+            <h3 class="mb-2 text-gray-900">Fabrica de crédito</h3>
+        </div>
+        <button mat-raised-button
+                class="col-start-11"
+                [color]="'primary'"
+        >
+            Decisión
+        </button>
+        <button mat-raised-button
+                [color]="'accent'"
+                (click)="verComentarios = !verComentarios"
+                [disabled]="verComentarios"
+        >
+            Comentarios
+        </button>
+    </div>-->
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent mb-3">
         <div class="flex flex-col">
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-6 px-6 md:px-8 border-b">
-                <h3 class="mb-2 text-gray-900">Fabrica de crédito</h3>
-                <button mat-raised-button
-                        [color]="'accent'"
-                        (click)="verComentarios = !verComentarios"
-                        [disabled]="verComentarios"
-                >
-                    Comentarios
-                </button>
+                <div class="grow h-14">
+                    <h3 class="mb-2 text-gray-900">Fabrica de crédito</h3>
+                </div>
+                <div class="grow h-14">
+                    <button mat-raised-button
+                            class="mr-1.5"
+                            [color]="'primary'"
+                            (click)="onDialogoDecision()"
+                    >
+                        Decisión
+                    </button>
+                    <button mat-raised-button
+                            [color]="'accent'"
+                            (click)="verComentarios = !verComentarios"
+                            [disabled]="verComentarios"
+                    >
+                        Comentarios
+                    </button>
+                </div>
             </div>
         </div>
     </div>

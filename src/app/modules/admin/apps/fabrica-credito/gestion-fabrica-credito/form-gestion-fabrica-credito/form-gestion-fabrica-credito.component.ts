@@ -18,6 +18,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {GridComentariosComponent} from "../grid-comentarios/grid-comentarios.component";
 import {GridDocumentacionComponent} from "../grid-documentacion/grid-documentacion.component";
 import { UtilityService } from 'app/resources/services/utility.service';
+import {FormDialogDecisionComponent} from "../form-dialog-decision/form-dialog-decision.component";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -98,7 +99,18 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
       });
-
+  }
+  public onDialogoDecision(): void {
+      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+      const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
+          minWidth: '30%',
+          minHeight: '30%',
+          data: {numeroSolicitud: numeroSolicitud},
+          disableClose: false,
+      });
+      dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+      });
   }
   /**
    * @description: Direcciona al componente comentarios

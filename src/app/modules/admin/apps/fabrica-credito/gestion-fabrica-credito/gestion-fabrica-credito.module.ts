@@ -29,6 +29,7 @@ import { FormDialogCompararDocumentosComponent } from './form-dialog-comparar-do
 import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {PdfViewerModule} from "ng2-pdf-viewer";
+import { FormDialogDecisionComponent } from './form-dialog-decision/form-dialog-decision.component';
 
 
 
@@ -41,7 +42,8 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
     FormDialogReferenciasComponent,
     GridComentariosComponent,
     GridDocumentacionComponent,
-    FormDialogCompararDocumentosComponent
+    FormDialogCompararDocumentosComponent,
+    FormDialogDecisionComponent,
   ],
     imports: [
         CommonModule,

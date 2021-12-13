@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>Decisión</h2>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12 col-md-12 col-lg-12">
+            <form [formGroup]="form">
+                <!--{{form.getRawValue() | json}}-->
+                <div class="bg-white flex flex-col">
+                    <div class="md:flex">
+                        <!--{{form.controls.tipo.value}}-->
+                        <ng-container *ngIf="decision$ | async as items">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Tipo de acción</mat-label>
+                                <mat-select
+                                    [formControlName]="'concepto'"
+                                >
+                                    <mat-option *ngFor="let item of items.data"
+                                                [value]="item.codigoOpcion"
+                                    >{{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <ng-container *ngIf="form.controls.concepto.value === 'A'">
+                        <div class="md:flex">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Valor cupo</mat-label>
+                                <input matInput type="text" [formControlName]="'cupo'">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <button mat-raised-button
+                color="primary"
+                type="button"
+
+                [disabled]="form.invalid"
+        >
+            Guardar
+        </button>
+        <button mat-raised-button
+                class="mr-2 bg-gray-400 text-white"
+                type="button"
+                (click)="onCerrar()"
+        >
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>
