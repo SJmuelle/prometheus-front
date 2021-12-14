@@ -25,7 +25,7 @@
                         <div class="md:flex">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Valor cupo</mat-label>
-                                <input matInput type="text" [formControlName]="'cupo'">
+                                <input matInput type="text" [formControlName]="'cupo'" (keyup)="form.controls['cupo'].setValue(utility.formatearNumero(form.value.cupo));">
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -39,8 +39,7 @@
         <button mat-raised-button
                 color="primary"
                 type="button"
-
-                [disabled]="form.invalid"
+                (click)="onGuardar()"
         >
             Guardar
         </button>

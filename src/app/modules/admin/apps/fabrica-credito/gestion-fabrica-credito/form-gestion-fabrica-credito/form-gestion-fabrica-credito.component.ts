@@ -12,13 +12,11 @@ import {
 } from '../../../../../../core/interfaces/formulario-fabrica-credito.interface';
 import Swal from 'sweetalert2';
 import {GenericasService} from '../../../../../../core/services/genericas.service';
-import {DateAdapter} from "@angular/material/core";
 import * as moment from 'moment';
-import {MatDialog} from "@angular/material/dialog";
-import {GridComentariosComponent} from "../grid-comentarios/grid-comentarios.component";
-import {GridDocumentacionComponent} from "../grid-documentacion/grid-documentacion.component";
+import {MatDialog} from '@angular/material/dialog';
+import {GridDocumentacionComponent} from '../grid-documentacion/grid-documentacion.component';
 import { UtilityService } from 'app/resources/services/utility.service';
-import {FormDialogDecisionComponent} from "../form-dialog-decision/form-dialog-decision.component";
+import {FormDialogDecisionComponent} from '../form-dialog-decision/form-dialog-decision.component';
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -46,6 +44,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public subscription$: Subscription;
   public verComentarios: boolean = false;
   public tipoDocumento: string = '';
+  public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+  public identificacion: string = this.route.snapshot.paramMap.get('id');
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -57,12 +57,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private _dialog: MatDialog,
       public utility: UtilityService
   ) {
-    const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
-    const identificacion: string =  this.route.snapshot.paramMap.get('id');
-    if (!numeroSolicitud) {
+
+    if (!this.numeroSolicitud) {
         return;
     }else {
-        this.getFabricaCreditoAgenda(numeroSolicitud, identificacion);
+        this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
     }
   }
 
@@ -91,33 +90,37 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description: Abre el modal de listado de documentos
    */
   public onDialogo(): void {
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       const dialogRef = this._dialog.open(GridDocumentacionComponent, {
           width: '80%',
-          data: {numeroSolicitud: numeroSolicitud, tipoDocumento: this.tipoDocumento}
+          data: {numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento}
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe((result) => {
           console.log('The dialog was closed');
       });
   }
   public onDialogoDecision(): void {
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
           minWidth: '30%',
           minHeight: '30%',
-          data: {numeroSolicitud: numeroSolicitud},
+          data: {numeroSolicitud: this.numeroSolicitud},
           disableClose: false,
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().toPromise().then(() => {
           console.log('The dialog was closed');
+          console.log();
+          this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
       });
+
+      /*dialogRef.afterClosed().subscribe((result) => {
+          console.log('The dialog was closed');
+          // this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+      });*/
   }
   /**
    * @description: Direcciona al componente comentarios
    */
   public onComentarios(): void {
-      const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
-      this.router.navigate(['/credit-factory/credit-management/commentaries', numeroSolicitud]);
+      this.router.navigate(['/credit-factory/credit-management/commentaries', this.numeroSolicitud]);
   }
   /**
    * @description:
@@ -140,8 +143,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               activos:activos,
               ...data
           };
-
-
 
           Swal.fire({
               title: 'Guardar información',
@@ -166,13 +167,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       }else {
           this.form.markAllAsTouched();
       }
-
   }
   /**
    * @description: Obtiene la data para cargar al formulario
    */
   private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
-      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
       const datosSolicitud: any  = {
           numeroSolicitud: numeroSolicitud,
           identificacion: identificacion
@@ -347,7 +347,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description: Guardado de datos fabrica
    */
   private postFormularioFabrica(datos: FormularioCreditoInterface): void {
-
       this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
           .subscribe(() => {
           this.router.navigate(['/credit-factory/agenda-completion']);
