@@ -67,7 +67,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
   public onPostDatos(): void {
       if (this.form.valid) {
           const datos: FormularioRepresentanteInterface = this.form.getRawValue();
-          console.log(datos);
+          // console.log(datos);
           const {fechaNacimiento, ...data} = datos;
           const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
           const datosFormulario: FormularioRepresentanteInterface = {
@@ -86,11 +86,6 @@ export class FormRepresentanteLegalComponent implements OnInit {
           }).then((result) => {
               if (result.isConfirmed) {
                   this.postFormulario(datosFormulario);
-                  Swal.fire(
-                      'Completado',
-                      'Información guardada con exito',
-                      'success'
-                  );
                   // console.log(this.form.getRawValue());
               }
           });
@@ -153,9 +148,15 @@ export class FormRepresentanteLegalComponent implements OnInit {
      * @description: Guardado de datos fabrica
      */
   private postFormulario(datos: FormularioRepresentanteInterface): void {
+      Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
       this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
           .subscribe(() => {
-                this.router.navigate(['/credit-factory/agenda-completion']);
+              Swal.fire(
+                  'Completado',
+                  'Información guardada con exito',
+                  'success'
+              );
+              this.router.navigate(['/credit-factory/agenda-completion']);
           });
   }
   /**

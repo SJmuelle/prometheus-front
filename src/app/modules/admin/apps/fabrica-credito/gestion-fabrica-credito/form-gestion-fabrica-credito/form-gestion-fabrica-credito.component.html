@@ -183,7 +183,9 @@
                                 <div class="-mx-3 md:flex mb-2">
                                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                                         <mat-label>Nombre / Razón social</mat-label>
-                                        <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true">
+                                        <input matInput type="text" [formControlName]="'nombreCompleto'"
+                                               [readonly]="true"
+                                        >
                                     </mat-form-field>
                                     <ng-container *ngIf="form.controls['tipoDocumento'].value != 'CC'">
                                         <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -203,7 +205,9 @@
                                     <div class="-mx-3 md:flex mt-3 mb-2">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Primer nombre</mat-label>
-                                            <input matInput type="text"  [formControlName]="'primerNombre'">
+                                            <input matInput type="text"  [formControlName]="'primerNombre'"
+                                                   (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
+                                            >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 matSuffix
@@ -211,7 +215,9 @@
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Segundo nombre</mat-label>
-                                            <input matInput type="text" [formControlName]="'segundoNombre'">
+                                            <input matInput type="text" [formControlName]="'segundoNombre'"
+                                                   (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
+                                            >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 matSuffix
@@ -219,7 +225,9 @@
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Primer apellido</mat-label>
-                                            <input matInput type="text" [formControlName]="'primerApellido'">
+                                            <input matInput type="text" [formControlName]="'primerApellido'"
+                                                   (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
+                                            >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 matSuffix
@@ -227,7 +235,9 @@
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Segundo apellido</mat-label>
-                                            <input matInput type="text" [formControlName]="'segundoApellido'">
+                                            <input matInput type="text" [formControlName]="'segundoApellido'"
+                                                   (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
+                                            >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 matSuffix
