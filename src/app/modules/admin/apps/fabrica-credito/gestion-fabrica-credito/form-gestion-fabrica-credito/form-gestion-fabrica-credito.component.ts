@@ -4,7 +4,7 @@ import {Observable, Subject, Subscription} from 'rxjs';
 import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
 import {delay, takeUntil} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ValidatorFn, Validators} from '@angular/forms';
 import {DepartamentosCiudadesService} from '../../../../../../core/services/departamentos-ciudades.service';
 import {MatSelectChange} from '@angular/material/select';
 import {
@@ -490,6 +490,17 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
       this.unSubscribe$.unsubscribe();
       // this.agendaCompletacionService.resetSeleccionAgenda();
+  }
+
+  get primerNombre(): ValidatorFn {
+      return this.form.controls.primerNombre.errors?.required ||
+          (this.form.controls.primerNombre.dirty ||
+          this.form.controls.primerNombre.touched);
+  }
+  get primerApellido(): ValidatorFn {
+      return this.form.controls.primerApellido.errors?.required ||
+          (this.form.controls.primerApellido.dirty ||
+          this.form.controls.primerApellido.touched);
   }
 
 }

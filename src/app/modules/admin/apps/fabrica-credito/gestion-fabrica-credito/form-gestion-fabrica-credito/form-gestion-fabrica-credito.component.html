@@ -212,7 +212,10 @@
                                                 class="icon-size-5"
                                                 matSuffix
                                                 [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                        </mat-form-field>
+                                                <mat-error *ngIf="primerNombre">
+                                                    Este campo es requerido.
+                                                </mat-error>
+                                            </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Segundo nombre</mat-label>
                                             <input matInput type="text" [formControlName]="'segundoNombre'"
@@ -232,6 +235,7 @@
                                                 class="icon-size-5"
                                                 matSuffix
                                                 [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                            <mat-error *ngIf="primerApellido">Este campo es requerido.</mat-error>
                                         </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Segundo apellido</mat-label>
