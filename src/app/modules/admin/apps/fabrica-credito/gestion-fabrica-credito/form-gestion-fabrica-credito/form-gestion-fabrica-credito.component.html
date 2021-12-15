@@ -655,7 +655,7 @@
                                 </div>
                             </div>
                         </mat-tab>
-                        <ng-container *ngIf="form.controls['tipoDocumento'].value != 'CC'">
+                        <ng-container *ngIf="form.controls['tipoDocumento'].value === 'NIT'">
                             <mat-tab>
                                 <ng-template matTabLabel>Representante legal</ng-template>
                                 <app-form-representante-legal></app-form-representante-legal>
