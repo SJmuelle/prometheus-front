@@ -1,10 +1,11 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {DecisionService} from '../../../../../../core/services/decision.service';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import {UtilityService} from '../../../../../../resources/services/utility.service';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-form-dialog-decision',
@@ -14,7 +15,7 @@ import {UtilityService} from '../../../../../../resources/services/utility.servi
 export class FormDialogDecisionComponent implements OnInit, OnDestroy {
   public decision$: Observable<any>;
   public form: FormGroup;
-  public subscription$: Subscription;
+  public unsuscribe$: Subject<any> = new Subject<any>();
   constructor(
       private fb: FormBuilder,
       private decisionService: DecisionService,
@@ -92,7 +93,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
    */
   private postDecision(data: any): void {
       Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-      this.subscription$ = this.decisionService.postDecision(data).subscribe((res) => {
+      this.decisionService.postDecision(data).pipe(takeUntil(this.unsuscribe$))
+          .subscribe((res) => {
           switch (res.status) {
               case 200:
                   this.mostrarAlerta(res.data.respuesta);
@@ -124,7 +126,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
   }
 
     ngOnDestroy(): void {
-      this.subscription$.unsubscribe();
+      this.unsuscribe$.unsubscribe();
     }
 
 }

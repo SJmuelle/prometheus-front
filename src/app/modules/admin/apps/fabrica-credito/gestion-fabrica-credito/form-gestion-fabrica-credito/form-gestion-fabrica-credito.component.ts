@@ -98,6 +98,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           console.log('The dialog was closed');
       });
   }
+  /**
+   * @description: Modal de decision
+   */
   public onDialogoDecision(): void {
       const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
           minWidth: '30%',
@@ -106,15 +109,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           disableClose: false,
       });
       dialogRef.afterClosed().toPromise().then(() => {
-          console.log('The dialog was closed');
-          console.log();
           this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
       });
-
-      /*dialogRef.afterClosed().subscribe((result) => {
-          console.log('The dialog was closed');
-          // this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-      });*/
   }
   /**
    * @description: Direcciona al componente comentarios
@@ -128,22 +124,26 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public onPostDatos(): void {
       if (this.form.valid) {
           const datos: FormularioCreditoInterface = this.form.getRawValue();
-          console.log(datos);
           const {fechaNacimiento, fechaMatricula, ...data} = datos;
           const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
           const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
           const compraSemanal= Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
           const ventasMensuales= Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
+          const antiguedadComprasSemanales = Number(this.utility.enviarNumero(this.form.value.antiguedadComprasSemanales));
           const activos= Number(this.utility.enviarNumero(this.form.value.activos));
+          delete data.ventasMensuales;
+          delete data.comprasSemanales;
+          delete data.antiguedadComprasSemanales;
+          delete data.activos;
           const datosFormularios: FormularioCreditoInterface = {
               fechaNacimiento: fechaNacimientoFormato,
               fechaMatricula: fechaMatriculaFormato,
               comprasSemanales: compraSemanal,
-              ventasMensuales:ventasMensuales,
-              activos:activos,
+              ventasMensuales: ventasMensuales,
+              activos: activos,
+              antiguedadComprasSemanales: antiguedadComprasSemanales,
               ...data
           };
-
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',
@@ -156,11 +156,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           }).then((result) => {
               if (result.isConfirmed) {
                   this.postFormularioFabrica(datosFormularios);
-                  Swal.fire(
-                      'Completado',
-                      'Información guardada con exito',
-                      'success'
-                  );
                   // console.log(this.form.getRawValue());
               }
           });
@@ -347,10 +342,22 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description: Guardado de datos fabrica
    */
   private postFormularioFabrica(datos: FormularioCreditoInterface): void {
+      Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
       this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
           .subscribe(() => {
-          this.router.navigate(['/credit-factory/agenda-completion']);
-      });
+              Swal.fire(
+                  'Completado',
+                  'Información guardada con exito',
+                  'success'
+              );
+              this.router.navigate(['/credit-factory/agenda-completion']);
+      }, (error) => {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Ha ocurrido un error',
+                  text: error.error.msg,
+              });
+          });
   }
   /**
    * @description: Calcula el digito de verificacion

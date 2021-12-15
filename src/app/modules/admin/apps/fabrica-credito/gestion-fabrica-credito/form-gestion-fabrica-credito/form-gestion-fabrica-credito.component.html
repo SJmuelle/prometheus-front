@@ -478,7 +478,7 @@
                                     </mat-form-field>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Antigüedad compras (meses)</mat-label>
-                                        <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'" >
+                                        <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'" (keyup)="form.controls['antiguedadComprasSemanales'].setValue(utility.formatearNumero(form.value.antiguedadComprasSemanales)); " >
                                         <mat-icon
                                             class="icon-size-5"
                                             matSuffix

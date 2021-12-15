@@ -24,14 +24,18 @@ export class UtilityService {
   constructor(private _httpClient: HttpClient) { }
 
 
-  
+
   formatearNumero(value:any){
     let valor=value.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ",");
     return valor;
   }
-  enviarNumero(value:string){
-    let valor=value.replace(/,/g, '');
-    return valor;
+  enviarNumero(value: string){
+    if (value == '0') {
+        return 0;
+    }else {
+        const valor = value.replace(/,/g, '');
+        return valor;
+    }
   }
   //Funciones de sesion
   readToken(){
@@ -108,7 +112,7 @@ export class UtilityService {
       };
     }else {
       if(typeHeaders == this.notoken){
-      
+
         optiones = {
           'Authentication': ``,
           "Accept": "application/json, text/plain, */*",
@@ -137,7 +141,7 @@ export class UtilityService {
       };
     }else {
       if(typeHeaders == this.notoken){
-      
+
         optiones = {
           'Authentication': ``,
           "Accept": "application/json, text/plain, */*",
@@ -175,7 +179,7 @@ export class UtilityService {
       };
     }else {
       if(typeHeaders == this.notoken){
-      
+
         optiones = {
           'Authentication': ``,
           "Accept": "application/json, text/plain, */*",
@@ -278,7 +282,7 @@ export class UtilityService {
     }
     if( err.status !== 401 && err.error !== 'La session ha expirado'){
 
-    
+
     if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
       Swal.fire({
         title: 'Error',
@@ -354,7 +358,7 @@ export class UtilityService {
   }
   if( err.status !== 401 && err.error !== 'La session ha expirado'){
 
-  
+
   if((errorMessage != "undefined") && (errorMessage !== undefined) && (errorMessage != null )&& (errorMessage != "" ) && (errorMessage != "UNKNOWN ERROR!" ) ){
     Swal.fire({
       title: 'Error',
