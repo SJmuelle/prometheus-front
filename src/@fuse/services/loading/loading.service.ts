@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoadingService {
+export class FuseLoadingService {
     private _auto$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
     private _mode$: BehaviorSubject<'determinate' | 'indeterminate'> = new BehaviorSubject<'determinate' | 'indeterminate'>('indeterminate');
     private _progress$: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(0);

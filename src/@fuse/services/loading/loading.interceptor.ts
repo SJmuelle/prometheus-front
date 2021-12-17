@@ -6,15 +6,15 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {LoadingService} from "./loading.service";
+import { FuseLoadingService } from '@fuse/services/loading';
 import {finalize} from "rxjs/operators";
 
 @Injectable()
-export class LoadingInterceptor implements HttpInterceptor {
+export class FuseLoadingInterceptor implements HttpInterceptor {
   handleRequestsAutomatically: boolean;
 
   constructor(
-      private _fuseLoadingService: LoadingService
+      private _fuseLoadingService: FuseLoadingService
   ) {
       // Subscribe to the auto
       this._fuseLoadingService.auto$

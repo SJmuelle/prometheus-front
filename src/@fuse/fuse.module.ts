@@ -1,6 +1,7 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { FuseMediaWatcherModule } from '@fuse/services/media-watcher/media-watcher.module';
+import { FuseLoadingModule } from '@fuse/services/loading';
 import { FuseSplashScreenModule } from '@fuse/services/splash-screen/splash-screen.module';
 import { FuseTailwindConfigModule } from '@fuse/services/tailwind/tailwind.module';
 import { FuseUtilsModule } from '@fuse/services/utils/utils.module';
@@ -8,9 +9,11 @@ import { FuseUtilsModule } from '@fuse/services/utils/utils.module';
 @NgModule({
     imports  : [
         FuseMediaWatcherModule,
+        FuseLoadingModule,
         FuseSplashScreenModule,
         FuseTailwindConfigModule,
-        FuseUtilsModule
+        FuseUtilsModule,
+
     ],
     providers: [
         {
