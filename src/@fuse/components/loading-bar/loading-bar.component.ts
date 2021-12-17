@@ -1,27 +1,35 @@
-import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {
+    AfterViewInit, ChangeDetectorRef,
+    Component,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    SimpleChanges,
+    ViewEncapsulation
+} from '@angular/core';
 import {Subject} from "rxjs";
-import {LoadingService} from "../../core/services/loading.service";
 import {coerceBooleanProperty} from "@angular/cdk/coercion";
-import {takeUntil} from "rxjs/operators";
+import {delay, takeUntil} from "rxjs/operators";
+import { FuseLoadingService } from '@fuse/services/loading';
 
 @Component({
-  selector: 'app-loading-bar',
+  selector: 'fuse-loading-bar',
   templateUrl: './loading-bar.component.html',
   styleUrls: ['./loading-bar.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  // exportAs     : 'fuseLoadingBar'
+  exportAs     : 'fuseLoadingBar'
 })
-export class LoadingBarComponent implements OnChanges, OnInit, OnDestroy {
+export class FuseLoadingBarComponent implements OnChanges, OnInit, OnDestroy {
   @Input() autoMode: boolean = true;
   mode: 'determinate' | 'indeterminate';
   progress: number = 0;
   show: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   constructor(
-      private _fuseLoadingService: LoadingService
-  ) {
-      console.log('SSSSSS')
-  }
+      private _fuseLoadingService: FuseLoadingService,
+      private cd: ChangeDetectorRef
+  ) { }
 
     /**
      * On changes
@@ -42,23 +50,23 @@ export class LoadingBarComponent implements OnChanges, OnInit, OnDestroy {
   ngOnInit(): void {
       // Subscribe to the service
       this._fuseLoadingService.mode$
-          .pipe(takeUntil(this._unsubscribeAll))
+          .pipe(takeUntil(this._unsubscribeAll)).pipe(delay(300))
           .subscribe((value) => {
               this.mode = value;
           });
 
       this._fuseLoadingService.progress$
-          .pipe(takeUntil(this._unsubscribeAll))
+          .pipe(takeUntil(this._unsubscribeAll)).pipe(delay(300))
           .subscribe((value) => {
               this.progress = value;
           });
 
       this._fuseLoadingService.show$
-          .pipe(takeUntil(this._unsubscribeAll))
+          .pipe(takeUntil(this._unsubscribeAll)).pipe(delay(300))
           .subscribe((value) => {
-              console.log(value);
               this.show = value;
           });
+
   }
 
 
@@ -68,5 +76,6 @@ export class LoadingBarComponent implements OnChanges, OnInit, OnDestroy {
         this._unsubscribeAll.next(null);
         this._unsubscribeAll.complete();
     }
+
 
 }

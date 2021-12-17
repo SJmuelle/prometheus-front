@@ -17,7 +17,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {GridDocumentacionComponent} from '../grid-documentacion/grid-documentacion.component';
 import { UtilityService } from 'app/resources/services/utility.service';
 import {FormDialogDecisionComponent} from '../form-dialog-decision/form-dialog-decision.component';
-import {LoadingService} from "../../../../../../core/services/loading.service";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -57,7 +56,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       private genericaServices: GenericasService,
       private _dialog: MatDialog,
       public utility: UtilityService,
-      private loading:LoadingService
   ) {
 
     if (!this.numeroSolicitud) {
@@ -170,7 +168,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    */
   private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
       Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-      this.loading.show();
       const datosSolicitud: any  = {
           numeroSolicitud: numeroSolicitud,
           identificacion: identificacion
