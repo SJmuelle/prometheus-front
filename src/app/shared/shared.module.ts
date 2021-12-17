@@ -13,6 +13,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { LoadingBarComponent } from './loading-bar/loading-bar.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {LoadingInterceptor} from "../core/services/loading.interceptor";
 
 
 @NgModule({
@@ -32,6 +36,7 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatPaginatorModule,
         MatIconModule,
         MatDialogModule,
+        MatProgressBarModule,
     ],
     exports: [
         CommonModule,
@@ -49,9 +54,19 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatPaginatorModule,
         MatIconModule,
         MatDialogModule,
+        LoadingBarComponent
     ],
     declarations: [
 
-    ],
+
+    LoadingBarComponent
+  ],
+    providers: [
+        {
+            provide : HTTP_INTERCEPTORS,
+            useClass: LoadingInterceptor,
+            multi   : true
+        }
+    ]
 })
 export class SharedModule {}

@@ -57,6 +57,7 @@ const routerConfig: ExtraOptions = {
     providers: [
         AppSettingsService
     ]
+
 })
 export class AppModule
 {
