@@ -104,18 +104,25 @@ export class SolucionComponent implements OnInit {
                 let nombre = this.filename.split('.');
                 this.ext = nombre[1].toLowerCase();
                 // console.log(this.file);
-                if (
-                    this.ext == 'pdf' ||
-                    this.ext == 'jpg' ||
-                    this.ext == 'png' ||
-                    this.ext == 'docx' ||
-                    this.ext == 'doc' ||
-                    this.ext == 'xls' ||
-                    this.ext == 'xlsx'
-                ) {
-                    return;
+                if (fileToRead.size / 1024 <= 10000) {
+                    if (
+                        this.ext == 'pdf' ||
+                        this.ext == 'jpg' ||
+                        this.ext == 'png' ||
+                        this.ext == 'docx' ||
+                        this.ext == 'doc' ||
+                        this.ext == 'xls' ||
+                        this.ext == 'xlsx'
+                    ) {
+                        return;
+                    }
                 }
-                Swal.fire('Información', `Extensión no valida`, 'error');
+
+                Swal.fire(
+                    'Información',
+                    `Verificar las condiciones antes de subir un archivo.`,
+                    'error'
+                );
                 this.file = '';
                 this.filename = '';
                 this.ext = '';
@@ -143,6 +150,26 @@ export class SolucionComponent implements OnInit {
             }
         }
 
+        if (this.seguimiento.idTipoComentario == 2) {
+            if (this.file != null) {
+                if (this.ext != 'pdf') {
+                    Swal.fire(
+                        'Información',
+                        `Verificar las condiciones antes de subir un archivo.`,
+                        'error'
+                    );
+                    return;
+                }
+            } else {
+                Swal.fire(
+                    'Información',
+                    `Debe agregar un archivo PDF para dar una respuesta al cliente.`,
+                    'error'
+                );
+                return;
+            }
+        }
+
         let url = '/agregar-solucion-comentario';
         Swal.fire({
             title: 'Cargando',
@@ -158,6 +185,7 @@ export class SolucionComponent implements OnInit {
                 Swal.close();
                 if (response) {
                     if (response.status == 200) {
+                        console.log(response.data.respuesta);
                         if (response.data.respuesta.includes('Error')) {
                             Swal.fire(
                                 'Información',
@@ -197,7 +225,27 @@ export class SolucionComponent implements OnInit {
                                             `Se guardó el registro con éxito`,
                                             'success'
                                         ).then((resultado) => {
+                                            console.log(response);
                                             if (resultado) {
+                                                // if (this.idTipoComentario == '1') {
+                                                //     url = `/sendmail/notificacion-crear-pqrs`;
+                                                //     this._pqrService.envioCorreos(url, this.pqrid, 5, response.data.nombre, response.data.ubicacion);
+                                                //     // this._pqrService.envioCorreos(url, response.data.id, 5);
+                                                // }
+
+                                                if (
+                                                    this.idTipoComentario == '2'
+                                                ) {
+                                                    url = `/sendmail/notificacion-crear-pqrs`;
+                                                    this._pqrService.envioCorreos(
+                                                        url,
+                                                        this.pqrid,
+                                                        5,
+                                                        response.data.nombre,
+                                                        response.data.ubicacion
+                                                    );
+                                                }
+
                                                 this.limpiar();
                                                 this.recargarData();
                                             }

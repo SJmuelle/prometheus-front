@@ -295,36 +295,36 @@
                                     <div class="col-lg-12">
                                         <div class="row pt-2.5">
                                             <div class="col-sm-12 col-lg-2 m-0 p-0">
-                                                <div class="text-sm font-medium text-secondary font-bold">Código negocio
+                                                <div class="text-sm font-medium text-secondary">Código negocio
                                                 </div>
                                                 <div class="" style="font-size: 16px;">{{data.codigoNegocio}}</div>
                                             </div>
                                             <div class="col-sm-12 col-lg-2 m-0 p-0">
-                                                <div class="text-sm font-medium text-secondary font-bold">Unidad negocio
+                                                <div class="text-sm font-medium text-secondary">Unidad negocio
                                                 </div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.unidadNegocio}}
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-lg-2 m-0 p-0">
-                                                <div class="text-sm font-medium text-secondary font-bold">Altura mora
+                                                <div class="text-sm font-medium text-secondary">Altura mora
                                                 </div>
                                                 <div class="lowercase" style="font-size: 16px;">{{data.edadMora}}</div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1 m-0 p-0">
-                                                <div class="text-sm font-medium text-secondary font-bold">Estado</div>
+                                                <div class="text-sm font-medium text-secondary">Estado</div>
                                                 <div class="" style="font-size: 16px;">{{data.estado}}</div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1 m-0 p-0">
-                                                <div class="text-sm font-medium text-secondary font-bold">Tipo</div>
+                                                <div class="text-sm font-medium text-secondary">Tipo</div>
                                                 <div class="" style="font-size: 16px;">{{data.tipo}}</div>
                                             </div>
                                             <div class="col-sm-12 col-lg-2 m-0 p-0">
-                                                <div class="text-sm font-medium text-secondary font-bold">Tipo cuenta
+                                                <div class="text-sm font-medium text-secondary">Tipo cuenta
                                                 </div>
                                                 <div class="" style="font-size: 16px;">{{data.tipoCuenta}}</div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1">
-                                                <div class="text-sm font-medium text-secondary font-bold text-center">
+                                                <div class="text-sm font-medium text-secondary text-center">
                                                     Detalle
                                                 </div>
                                                 <div class="text-center">
@@ -335,7 +335,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1">
-                                                <div class="text-sm font-medium text-secondary font-bold text-center">
+                                                <div class="text-sm font-medium text-secondary text-center">
                                                     Ingreso
                                                 </div>
                                                 <div class="text-center">
@@ -353,7 +353,7 @@
                                                     <div class="">
                                                         <div [className]="data.color  + ' row'">
                                                             <div
-                                                                class="col-lg-12 justify-center text-center text-secondary text-center">
+                                                                class="col-lg-12 justify-center text-center text-secondary">
                                                                 <div class="ml-1.5 text-lg font-semibold text-white">
                                                                     Cuota del mes</div>
                                                             </div>
@@ -378,7 +378,7 @@
                                                     <div class="">
                                                         <div [className]="data.color + ' row'">
                                                             <div
-                                                                class="col-lg-12 justify-center text-center text-secondary text-center">
+                                                                class="col-lg-12 justify-center text-center text-secondary">
                                                                 <div class="ml-1.5 text-lg font-semibold text-white">
                                                                     Vencido</div>
                                                             </div>
@@ -413,7 +413,7 @@
                                                     <div class="">
                                                         <div class="row" [className]="data.color  + ' row'">
                                                             <div
-                                                                class="col-lg-12 justify-center text-center text-secondary text-center">
+                                                                class="col-lg-12 justify-center text-center text-secondary">
                                                                 <div
                                                                     class="ml-1.5 text-lg font-semibold text-white text-center">
                                                                     Obligación</div>
@@ -821,7 +821,7 @@
                         <div class="m-5">
                         </div>
                     </mat-tab>
-                    <mat-tab label="Certificaciones">
+                    <!-- <mat-tab label="Certificaciones">
                         <div class="row items-center">
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">Certificaciones</div>
@@ -831,14 +831,18 @@
                         <div class="row">
                             <div class="col-lg-12 mb-8">
                                 <div class="flex flex-col px-2 py-4 rounded shadow-md mb-10">
-                                    <form [formGroup]="formCertificados">
+                                    <form [formGroup]="formCertificados"> -->
+
+
                                         <!-- <div>
                                             {{ formCertificados.value | json }}
                                             {{ formCertificados.controls.tipoCertificado.value }}
                                         </div>
                                         <hr>
                                         <br> -->
-                                        <div class="md:flex mb-2">
+
+
+                                        <!-- <div class="md:flex mb-2">
                                             <mat-form-field class="w-full px-3">
                                                 <mat-label>Código de negocio</mat-label>
                                                 <mat-select formControlName="negocio">
@@ -856,9 +860,9 @@
                                                     <mat-option value="3">Certificado de paz y salvo</mat-option>
                                                     <mat-option value="4">Certificado de vínculo comercial</mat-option>
                                                 </mat-select>
-                                            </mat-form-field>
+                                            </mat-form-field> -->
                                             <!-- <div class="w-full px-3"> -->
-                                                <mat-form-field class="w-full px-3" *ngIf="formCertificados.controls.tipoCertificado.value == 2">
+                                                <!-- <mat-form-field class="w-full px-3" *ngIf="formCertificados.controls.tipoCertificado.value == 2">
                                                     <mat-label>Fecha máxima de pago</mat-label>
                                                     <input matInput
                                                         [matDatepicker]="fechaMaximaN"
@@ -869,10 +873,10 @@
                                                         <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
                                                     </mat-datepicker-toggle>
                                                     <mat-datepicker #fechaMaximaN></mat-datepicker>
-                                                </mat-form-field>
+                                                </mat-form-field> -->
                                             <!-- </div> -->
-                                        </div>
-                                        <div class="md:flex mb-2">
+                                        <!-- </div> -->
+                                        <!-- <div class="md:flex mb-2">
                                             <div class="w-full px-3">
                                                 <div class="flex flex-row">
                                                     <div class="w-full">
@@ -898,15 +902,16 @@
                                                     mat-raised-button
                                                     class="w-1/2 mt-4 bg-accent text-white"
                                                     [disabled]="!formCertificados.valid"
-                                                    (click)="formCertificados.controls.tipoCertificado.value == 2 ? dialogDeuda() : ''">Guardar</button>
-                                            </div>
+                                                    (click)="generarCertificado()"
+                                                    >Guardar</button>
+                                                </div>
                                         </div>
                                     </form>
-                                </div>
+                                </div> -->
 
 
                                 <!-- TABLA DE CERTIFICACIONES -->
-                                <div class="row items-center mb-4">
+                                <!-- <div class="row items-center mb-2">
                                     <span class="leading-none col-lg-4 col-sm-12">
                                         <div class="leading-tight titulo_tabs">Historial de certificaciones</div>
                                     </span>
@@ -924,12 +929,11 @@
                                     </div>
                                     <hr>
                                 </div>
-                                <div class="row">
+                                <div class="row mb-6">
                                     <div class="col-lg-12">
                                         <table class="w-full shadow">
                                             <thead>
-                                                <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">Consecutivo</th>
                                                     <th class="px-4 py-3">Fecha envio</th>
                                                     <th class="px-4 py-3">Método envio</th>
@@ -938,24 +942,11 @@
                                             </thead>
                                             <tbody class="bg-white">
                                                 <tr class="text-gray-700"
-                                                    *ngFor="let item of listadoExtractos | filter: filtrarTablaExt  | paginate: { itemsPerPage: tamanoTablaExt, currentPage: pageEXT }">
-                                                    <td class="px-4 py-1 text-sm border">{{ item.consecutivo}}</td>
-                                                    <td class="px-4 py-1 text-sm border">{{ item.fechaEnvio}}</td>
-                                                    <td class="px-4 py-1 text-sm border">{{ item.metodoEnvio}}</td>
-                                                    <!-- <td class="px-4 py-3 text-sm border"> <a href="{{item.extracto}}"
-                                                            target="_blank">
-                                                            <mat-icon class="material-icons-two-tone"
-                                                                style="    align-self: center; height: 100%;">
-                                                                description</mat-icon>
-                                                        </a></td> -->
-                                                    <td class="px-2 text-sm border text-center">
-                                                        <a class="sindec">
-                                                            <mat-icon class="material-icons-two-tone cursor-pointer"
-                                                                style="    color: #f7ae0c; "
-                                                                (click)="busacar_url2( item.extracto)">description
-                                                            </mat-icon>
-                                                        </a>
-                                                    </td>
+                                                    *ngFor="let item of historialCertificado | filter: filtrarTablaExt  | paginate: { itemsPerPage: tamanoTablaExt, currentPage: pageEXT }">
+                                                    <td class="px-4 py-1 text-sm border">{{ item.id }}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.fechaCreacion }}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.codigoNegocio }}</td>
+                                                    <td class="px-4 py-1 text-sm border">{{ item.tipoCertificado }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -965,10 +956,9 @@
                                             nextLabel="Siguiente"></pagination-controls>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
-                    </mat-tab>
+                    </mat-tab> -->
                 </mat-tab-group>
             </div>
         </div>

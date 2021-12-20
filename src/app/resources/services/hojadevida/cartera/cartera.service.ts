@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class CarteraService {
     constructor(private _httpClient: HttpClient,private _utility: UtilityService) { }
 
-    getCartera(cedula: string, codigoNegocio: string) {
+    getCartera(cedula: string) {
         let url;
         url = environment.urlApi2 + `/informacion-cartera/${cedula}`;
         return this._httpClient.get(url);

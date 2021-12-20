@@ -50,6 +50,9 @@ export class HojavidaComponent implements OnInit {
     listadoPQRS: any = [];
     formCertificados: FormGroup;
     fechaMinima: Moment;
+    // CERTIFICACIONES
+    historialCertificado: any = [];
+    infoLiquidacion: any = [];
 
     constructor(
         private _hojadevidaService: HojadevidaService,
@@ -167,6 +170,9 @@ export class HojavidaComponent implements OnInit {
                         this.info_cliente = res2.data;
                         this.mostrarDatoCliente = true;
                         this.onTabChanged(this.tab);
+                        // this.historialCertificados(
+                        //     this.info_cliente.identificacion
+                        // );
                     }
                 });
         } else {
@@ -225,6 +231,9 @@ export class HojavidaComponent implements OnInit {
                     this.info_cliente = res2.data;
                     this.mostrarDatoCliente = true;
                     this.onTabChanged(this.tab);
+                    // this.historialCertificados(
+                    //     this.info_cliente.identificacion
+                    // );
                 });
         }
     }
@@ -274,11 +283,9 @@ export class HojavidaComponent implements OnInit {
                 }).then((result) => {});
                 this._carteraService
                     .getCartera(
-                        this.info_cliente.identificacion,
-                        this.codigoNegocio
+                        this.info_cliente.identificacion
                     )
                     .subscribe((respCartera: any) => {
-                        // // console.log(respCartera);
                         Swal.close();
                         if (respCartera.data) {
                             this.ListadoCartera = respCartera.data;
@@ -412,10 +419,7 @@ export class HojavidaComponent implements OnInit {
             // mixHeight: '550px',
             data: { codigoNegocio },
         });
-        dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
-        });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
     openDialogCartera(index, saldo, id): void {
@@ -433,10 +437,7 @@ export class HojavidaComponent implements OnInit {
             data: { codigoNegocio: index, ideNegocio: id },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
-        });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
     openDialogIngreso(index): void {
@@ -449,10 +450,7 @@ export class HojavidaComponent implements OnInit {
             },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
-        });
+        dialogRef.afterClosed().subscribe((result) => {});
     }
 
     mostrar_mensaje(titulo, mensaje) {
@@ -474,7 +472,6 @@ export class HojavidaComponent implements OnInit {
             },
         }).then((result) => {});
         this._carteraService.getPlanPago(codigo).subscribe((respuesta: any) => {
-            // console.log(respuesta);
             Swal.close();
             if (respuesta.data) {
                 // respuesta.data="http://prometheus.fintra.co:8094/fintra/exportar/migracion/119236/f_plan_de_pagos.pdf";
@@ -519,8 +516,20 @@ export class HojavidaComponent implements OnInit {
     }
 
     dialogDeuda() {
+        let { primerNombre, segundoNombre, primerApellido, segundoApellido } =
+            this.info_cliente;
         const dialogRef = this.dialog.open(CertificadorDeudaComponent, {
-            width: '60%',
+            width: '90%',
+            data: {
+                documento: this.formCertificados.controls.negocio.value,
+                fecha: this.formCertificados.controls.fechaMaxima.value,
+                cliente: {
+                    primerNombre,
+                    segundoNombre,
+                    primerApellido,
+                    segundoApellido,
+                },
+            },
         });
 
         dialogRef.afterClosed().subscribe((resp) => {
@@ -528,12 +537,23 @@ export class HojavidaComponent implements OnInit {
         });
     }
 
-    limpiarCertificaciones() {
-
-    }
+    limpiarCertificaciones() {}
 
     fechaValida(): void {
         const anioActual = moment(new Date(), 'yyyy-MM-dd');
         this.fechaMinima = anioActual;
+    }
+
+    historialCertificados(certificado) {
+        let url = `/cargar-historial-certificados/${certificado}`;
+        this._pqrService.getListados(url).subscribe((resp) => {
+            this.historialCertificado = resp;
+        });
+    }
+
+    generarCertificado() {
+        if (this.formCertificados.controls.tipoCertificado.value == 2) {
+            this.dialogDeuda();
+        }
     }
 }

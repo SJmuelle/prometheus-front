@@ -72,11 +72,12 @@ export class PqrService {
     }
 
     // NUEVO METODO PARA ENVIAR CORREOS
-    envioCorreos(url, pqrs, tipo, descripcion = '') {
+    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '') {
         let data = {
             pqrs: parseInt(pqrs),
             tipo: tipo,
             descripcion: descripcion,
+            adjuntos: adjuntos
         };
         return this._utility.postQueryCorreo(url, data).subscribe((res) => {
             // debugger;
@@ -148,5 +149,17 @@ export class PqrService {
                 return res.data;
             })
         );
+    }
+
+    getHistorialCertificados(url: string) {
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
+    generarCertificados(url: string) {
+
     }
 }

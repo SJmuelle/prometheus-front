@@ -471,16 +471,24 @@ export class CreacionPQRSComponent implements OnInit {
             ) {
                 const encontrodo = this.causalesLegales.find(
                     (element) =>
-                        (element.procedimiento == dataModal.procedimiento)
+                        element.procedimiento == dataModal.procedimiento
                 );
 
                 if (encontrodo) {
-                    Swal.fire('Advertencia', 'Este procedimiento ya fue asociado a este registro.', 'error');
+                    Swal.fire(
+                        'Advertencia',
+                        'Este procedimiento ya fue asociado a este registro.',
+                        'error'
+                    );
                     return;
                 }
 
                 if (this.datos.procedimiento == dataModal.procedimiento) {
-                    Swal.fire('Advertencia', 'Este procedimiento ya fue asociado a este registro.', 'error');
+                    Swal.fire(
+                        'Advertencia',
+                        'Este procedimiento ya fue asociado a este registro.',
+                        'error'
+                    );
                     return;
                 }
                 this.causalesLegales.push(dataModal);
@@ -540,7 +548,9 @@ export class CreacionPQRSComponent implements OnInit {
                             this._pqrService.envioCorreos(
                                 url,
                                 response.data.idPadre,
-                                1
+                                1,
+                                '',
+                                ''
                             );
                         } else {
                             Swal.fire(

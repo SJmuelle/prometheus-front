@@ -1,7 +1,7 @@
 <div *ngIf="seguimiento!={}">
     <div class="row items-center">
         <span class="leading-none col-lg-4 col-sm-12">
-            <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
+            <div class="leading-tight titulo_tabs">Solución</div>
         </span>
         <hr class="w-full border-t col-lg-12 col-sm-12">
     </div>
@@ -33,10 +33,33 @@
                         </span>
                         {{filename}}
                     </label>
-                    <input type="file" name="filep" id="filep" class="col-12" (change)="onCharge($event.target)"
+                    <input type="file"
+                        name="filep"
+                        id="filep"
+                        class="col-12"
+                        (change)="onCharge($event.target)"
+                        [required]="idTipoComentario == '2'"
                         style="display:none" />
                 </div>
             </form>
+            <div class="row" *ngIf="idTipoComentario == '2'; else validarAdjuntosData">
+                <!-- Success -->
+                <fuse-alert [type]="'success'">
+                    <span fuseAlertTitle>Condiciones del archivo</span>
+                    * Archivos permitidos ( .pdf). <br>
+                    * Tamaño máximo del archivo  (10mb). <br>
+                    * El nombre del archivo no debe contener puntos.
+                </fuse-alert>
+            </div>
+            <ng-template #validarAdjuntosData class="row">
+                <!-- Success -->
+                <fuse-alert [type]="'success'">
+                    <span fuseAlertTitle>Condiciones del archivo</span>
+                    * Archivos permitidos ( .pdf, .docx, .xlsx, .jpg, .png). <br>
+                    * Tamaño máximo del archivo  (10mb). <br>
+                    * El nombre del archivo no debe contener puntos.
+                </fuse-alert>
+            </ng-template>
         </div>
     </div>
 

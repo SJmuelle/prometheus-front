@@ -69,8 +69,8 @@ export class GestionPQRSComponent implements OnInit {
             }
         });
         //prueba
-        url = `/pqrs-escalar/${this.pqrid}`;
-        this._pqrService.getListados(url).subscribe((response: any) => {});
+        // url = `/pqrs-escalar/${this.pqrid}`;
+        // this._pqrService.getListados(url).subscribe((response: any) => {});
 
         //reposnable
         let usuario = JSON.parse(sessionStorage.getItem('usuario'));
@@ -256,6 +256,7 @@ export class GestionPQRSComponent implements OnInit {
                             data.respuesta == true ? 3 : 4,
                             data.comentario
                         );
+                        this.buscarDatos();
                     } else {
                         Swal.fire(
                             'Información',

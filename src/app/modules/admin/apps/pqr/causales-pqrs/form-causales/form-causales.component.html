@@ -7,14 +7,14 @@
                     <mat-form-field class="flex-auto w-100">
                         <mat-label>Nombre</mat-label>
                         <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.descripcion"
-                            [disabled]="datos.titulo!='N'">
+                            [required]="datos.titulo=='N'" [disabled]="datos.titulo!='N'">
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo=='N'">
                     <mat-form-field class="flex-auto w-100">
                         <mat-label>Tipo de PQRS </mat-label>
-                        <mat-select [(ngModel)]="datos.idTipo" name="legal">
+                        <mat-select [(ngModel)]="datos.idTipo" name="legal" [required]="datos.titulo=='N'">
                             <mat-option value="{{l.id}}" *ngFor="let l of listadoTipo">{{l.tipoPqrs}}</mat-option>
                         </mat-select>
                         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">

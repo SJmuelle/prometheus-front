@@ -345,7 +345,9 @@ export class UtilityService {
                             localStorage.setItem('closeSession', 'true');
                         }, 100);
                     }
-                    if (
+                    if(err.error.data.data){
+                        errorMessage = `${err.error.data.data}`;
+                    } else if (
                         err.error.msg !== undefined &&
                         typeof err.error.msg == 'string'
                     ) {

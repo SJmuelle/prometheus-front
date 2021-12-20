@@ -1,123 +1,268 @@
 <h2 mat-dialog-title>Estado de Cuenta</h2>
+<hr>
 <mat-dialog-content class="mat-typography">
-    <mat-card
-        class="example-card rounded shadow-md col-lg-6 col-md-8 col-sm-12 mb-4"
-    >
-        <mat-card-subtitle>
-            <strong>Cliente: </strong>Sergio Cortés
-        </mat-card-subtitle>
-        <mat-card-subtitle>
-            <strong>Negocio: </strong>MC0123456
-        </mat-card-subtitle>
-
-        <mat-divider inset class="mt-4"></mat-divider>
-        <div class="bg-blue-400 px-2 text-start mb-3 text-white">
-            <mat-card-title>Información del Negocio</mat-card-title>
+    <span class="mb-4 text-2xl capitalize"> <strong>{{ data.documento }}</strong>- {{data.cliente.primerNombre}} {{data.cliente.segundoNombre}} {{data.cliente.primerApellido}} {{data.cliente.segundoApellido}} </span>
+    <div class="grid grid-cols-4 gap-2">
+        <div class="border-1 mb-5">
+            <div class="bg-card rounded shadow overflow-hidden">
+                <div class="bg-blue-400 row">
+                    <div class="col-lg-12 justify-center text-center text-secondary">
+                        <div class="ml-1.5 text-lg font-semibold text-white">
+                            Valor Negocio
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-12 col-sm-12  my-3">
+                        <div class="text-sm font-medium leading-none text-secondary text-center">
+                            Valor
+                        </div>
+                        <div class="mt-2 font-medium text-3xl leading-none text-center">
+                            {{ formPazySalvo.controls.valorNegocio.value | currency:'$':'symbol':'0.0-0' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <mat-card-content>
+        <div class="border-1 mb-5">
+            <div class="bg-card rounded shadow overflow-hidden">
+                <div class="bg-blue-400 row">
+                    <div class="col-lg-12 justify-center text-center text-secondary">
+                        <div class="ml-1.5 text-lg font-semibold text-white">
+                            Tasa de Interés
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-12 col-sm-12  my-3">
+                        <div class="text-sm font-medium leading-none text-secondary text-center">
+                            Valor
+                        </div>
+                        <div class="mt-2 font-medium text-3xl leading-none text-center">
+                            {{ formPazySalvo.controls.tasa.value | currency:'$':'symbol':'0.0-0' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-1 mb-5">
+            <div class="bg-card rounded shadow overflow-hidden">
+                <div class="bg-blue-400 row">
+                    <div class="col-lg-12 justify-center text-center text-secondary">
+                        <div class="ml-1.5 text-lg font-semibold text-white">
+                            Número de Cuotas
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-12 col-sm-12  my-3">
+                        <div class="text-sm font-medium leading-none text-secondary text-center">
+                            Valor
+                        </div>
+                        <div class="mt-2 font-medium text-3xl leading-none text-center">
+                            {{ formPazySalvo.controls.numeroCuotas.value | currency:'$':'symbol':'0.0-0' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-1 mb-5">
+            <div class="bg-card rounded shadow overflow-hidden">
+                <div class="bg-blue-400 row">
+                    <div class="col-lg-12 justify-center text-center text-secondary">
+                        <div class="ml-1.5 text-lg font-semibold text-white">
+                            Valor Aval
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-lg-12 col-sm-12  my-3">
+                        <div class="text-sm font-medium leading-none text-secondary text-center">
+                            Valor
+                        </div>
+                        <div class="mt-2 font-medium text-3xl leading-none text-center">
+                            {{ formPazySalvo.controls.valorAval.value | currency:'$':'symbol':'0.0-0' }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex flex-row">
+        <div class="flex flex-col mx-2 w-2/4 rounded shadow-md mb-4 pt-2 border-cblue" [formGroup]="formPazySalvo">
+            <!-- FORMULARIO PARA INFORMACION DEL NEGOCIO -->
+            <div class="container mb-2 row">
+                <span class="mb-1 text-2xl capitalize"> <strong>Cliente: </strong>{{data.cliente.primerNombre}} {{data.cliente.segundoNombre}} {{data.cliente.primerApellido}} {{data.cliente.segundoApellido}} </span>
+                <span class="mb-1 text-2xl"> <strong>Negocio: </strong>{{ data.documento }} </span>
+            </div>
+            <div class="bg-blue-400 py-1 px-2 mb-2 text-start text-white">
+                <mat-card-title class="text-2xl">Información del Negocio</mat-card-title>
+            </div>
             <div class="flex flex-col">
-                <mat-form-field>
-                    <mat-label>Valor Negocio</mat-label>
-                    <input
-                        matInput
-                        placeholder="Ingrese el valor del negocio"
-                        type="text"
-                    />
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Tasa de Interés</mat-label>
-                    <input
-                        matInput
-                        placeholder="Ingrese el Tasa de Interés"
-                        type="text"
-                    />
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Número de Cuotas</mat-label>
-                    <input
-                        matInput
-                        placeholder="Ingrese el Número de Cuotas"
-                        type="text"
-                    />
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Valor Aval</mat-label>
-                    <input
-                        matInput
-                        placeholder="Ingrese el Valor Aval"
-                        type="text"
-                    />
-                </mat-form-field>
+                <div class="mb-2 mx-2">
+                    <mat-label>
+                        <strong> Valor Negocio: </strong> {{ formPazySalvo.controls.valorNegocio.value | currency:'$':'symbol':'0.0-0' }}
+                    </mat-label>
+                </div>
+                <div class="mb-2 mx-2">
+                    <mat-label>
+                        <strong> Tasa de Interés: </strong> {{ formPazySalvo.controls.tasa.value }}%
+                    </mat-label>
+                </div>
+                <div class="mb-2 mx-2">
+                    <mat-label>
+                        <strong> Número de Cuotas: </strong> {{ formPazySalvo.controls.numeroCuotas.value }}
+                    </mat-label>
+                </div>
+                <div class="mb-2 mx-2">
+                    <mat-label>
+                        <strong> Valor Aval: </strong> {{ formPazySalvo.controls.valorAval.value | currency:'$':'symbol':'0.0-0' }}
+                    </mat-label>
+                </div>
             </div>
-        </mat-card-content>
-    </mat-card>
-    <div>
-        <div class="row items-center mb-4">
-            <span class="leading-none col-lg-4 col-sm-12">
-                <div class="leading-tight titulo_tabs">Historial de certificaciones</div>
-            </span>
-            <div class="leading-tight col-lg-8 col-sm-12 text-end">
-                <input class="border rounded p-2 bg-gray-100"
-                    style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                    name="filtrarTablaExt" placeholder="Filtrar...">
-                <select name="tamanoTablaExt" id="tamanoTablaExt" class="border rounded  bg-gray-100"
-                    style="font-size: 10px; color: #9aa8bc; padding: 7px;">
-                    <option value="5"> 5</option>
-                    <option value="10"> 10</option>
-                    <option value="20"> 20</option>
-                </select>
-            </div>
-            <hr>
         </div>
-        <div class="tableResponsive shadow-md">
-            <table>
-                <thead>
-                    <tr
-                        class="
-                            text-md
-                            font-semibold
-                            tracking-wide
-                            text-left text-gray-400
-                            border-b border-gray-600">
-                        <th class="px-4 py-3">Factura</th>
-                        <th class="px-4 py-3">Fecha</th>
-                        <th class="px-4 py-3">Cuota</th>
-                        <th class="px-4 py-3">Días Mora</th>
-                        <th class="px-4 py-3">Capital</th>
-                        <th class="px-4 py-3">Interés</th>
-                        <th class="px-4 py-3">Mi Pyme</th>
-                        <th class="px-4 py-3">Intermediación Financiera</th>
-                        <th class="px-4 py-3">Saldo Cuota</th>
-                        <th class="px-4 py-3">Interés Mora</th>
-                        <th class="px-4 py-3">Gasto de Cobranza</th>
-                        <th class="px-4 py-3">Total Saldo</th>
-                        <th class="px-4 py-3">Estado</th>
-                    </tr>
-                </thead>
-
-                <tbody class="bg-white">
-                    <tr class="text-gray-700">
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                        <td class="px-4 py-1 text-sm border">Item De Prueba</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="flex flex-col mx-2 w-2/4 rounded shadow-md mb-4 pt-2 border-cblue" [formGroup]="formPazySalvo">
+            <!-- FORMULARIO PARA INFORMACION GENERAL -->
+            <div class="bg-blue-400 py-1 px-2 mb-2 text-start text-white">
+                <mat-card-title class="text-2xl">Información General</mat-card-title>
+            </div>
+            <div class="flex flex-col">
+                <!-- <div class="md:flex"> -->
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Capital: </strong> {{ formInfoGeneral.controls.capital.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Intereses: </strong> {{ formInfoGeneral.controls.intereses.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Comisión Ley Mipyme: </strong> {{ formInfoGeneral.controls.comisionLey.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Intermediación Financiera: </strong> {{ formInfoGeneral.controls.intermediacion.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Seguro: </strong> {{ formInfoGeneral.controls.seguro.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Aval a Pagar: </strong> {{ formInfoGeneral.controls.aval.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Otros Conceptos: </strong> {{ formInfoGeneral.controls.otrosConceptos.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Intereses Mora: </strong> {{ formInfoGeneral.controls.interesMora.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Gasto Cobranza: </strong> {{ formInfoGeneral.controls.gastoCobranza.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Total a Pagar: </strong> {{ formInfoGeneral.controls.total.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div class="row items-center">
+            <span class="leading-none col-lg-4 col-sm-12">
+                <div mat-dialog-title>
+                    Historial de certificaciones
+                </div>
+            </span>
+        </div>
+        <div class="flex flex-col h-90">
+            <div class="tableResponsive shadow-md flex-grow overflow-auto">
+                <table class="mb-5 relative w-full">
+                    <thead class="bg-gray-200 sticky top-0">
+                        <tr
+                            class="
+                                text-md
+                                font-semibold
+                                tracking-wide
+                                text-left text-gray-400
+                                border-b border-gray-600" >
+                            <th class="px-4 py-3">Factura</th>
+                            <th class="px-4 py-3">Fecha</th>
+                            <th class="px-4 py-3">Cuota</th>
+                            <th class="px-4 py-3">Días Mora</th>
+                            <th class="px-4 py-3">Capital</th>
+                            <th class="px-4 py-3">Interés</th>
+                            <th class="px-4 py-3">Mi Pyme</th>
+                            <th class="px-4 py-3">Intermediación Financiera</th>
+                            <th class="px-4 py-3">Saldo Cuota</th>
+                            <th class="px-4 py-3">Interés Mora</th>
+                            <th class="px-4 py-3">Gasto de Cobranza</th>
+                            <th class="px-4 py-3">Total Saldo</th>
+                            <th class="px-4 py-3">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y">
+                        <tr class="text-gray-700" *ngFor="let item of infoLiquidacion.data">
+                            <td class="px-4 py-1 text-sm border">{{ item.factura }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.fecha }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.cuota }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.diasMora }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.capital | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.intereses | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.comisionLey | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.intermediacion | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.saldoCuota | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.interesMora | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.gastoCobranza | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.total | currency:'$':'symbol':'0.0-0' }}</td>
+                            <td class="px-4 py-1 text-sm border">{{ item.estado }}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="bg-gray-200 sticky bottom-0">
+                        <td class="px-4 py-1 text-sm border"></td>
+                        <td class="px-4 py-1 text-sm border"></td>
+                        <td class="px-4 py-1 text-sm border"></td>
+                        <td class="px-4 py-1 text-sm border"></td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.capital | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.intereses | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.comisionLey | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.intermediacion | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.saldoCuota | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.interesMora | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.gastoCobranza | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border">{{ infoLiquidacionTotal.total | currency:'$':'symbol':'0.0-0' }}</td>
+                        <td class="px-4 py-1 text-sm border"></td>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial class="px-8 my-4 bg-accent text-white">
+    <button
+        mat-button
+        [mat-dialog-close]="true"
+        cdkFocusInitial
+        class="px-8 my-4 bg-accent text-white"
+    >
         Generar Estado de Cuenta
     </button>
 </mat-dialog-actions>
