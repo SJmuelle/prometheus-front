@@ -25,7 +25,7 @@ export class ModalcarteraComponent implements OnInit {
 
 
   ngOnInit(): void {
-    console.log(this.data.codigoNegocio);
+    // console.log(this.data.codigoNegocio);
     this.getDetalle(this.data.codigoNegocio,this.data.ideNegocio);
     this.listadoDetalleCartera=[];
   }
@@ -38,7 +38,7 @@ export class ModalcarteraComponent implements OnInit {
         Swal.close();
         if (response.data) {
           this.listadoDetalleCartera=response.data;
-          console.log(this.listadoDetalleCartera);
+          // // console.log(this.listadoDetalleCartera);
           this.getTotal(data,id);
         }
       });
@@ -51,7 +51,7 @@ export class ModalcarteraComponent implements OnInit {
       .subscribe((response: any) => {
         if (response.data) {
           this.totales=response.data;
-          console.log(this.totales);
+          // // console.log(this.totales);
         }
       });
   }
@@ -62,8 +62,8 @@ export class ModalcarteraComponent implements OnInit {
     }else{
       this.totalSeleccionado=this.totalSeleccionado-valor;
     }
-    
+
   }
-  
+
 
 }

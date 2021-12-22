@@ -79,7 +79,10 @@
                             <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
                         </div>
                         <div class="font-titulo col-lg-10 col-sm-10 m-0 p-0">
-                            {{item.descripcion}}
+                            {{ item.descripcion }} <br>
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                {{ item.fechaCreacion }}
+                            </span>
                         </div>
 
                     </div>
@@ -96,67 +99,67 @@
                                 <div class="row border-card pt-2 pb-2">
                                     <div class="col-sm-12 col-lg-12">
                                         <div
-                                            class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                                            class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0">
                                             Datos de ingreso
                                         </div>
                                     </div>
                                     <hr class="ml-3 w-full border-t col-lg-12 col-sm-12">
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Campaña
+                                        <div class="text-sm text-secondary font-bold">Campaña
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.campanha}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Origen
+                                        <div class="text-sm text-secondary font-bold">Origen
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.origenPqrs}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Número PQRS
+                                        <div class="text-sm text-secondary font-bold">Número PQRS
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.numeroPqrs}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Fecha creación
+                                        <div class="text-sm text-secondary font-bold">Fecha creación
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.fechaCreacion}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-3">
-                                        <div class="text-sm font-medium text-secondary font-bold">Usuario creación
+                                        <div class="text-sm text-secondary font-bold">Usuario creación
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.usuarioCreacion}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Tipo cliente
+                                        <div class="text-sm text-secondary font-bold">Tipo cliente
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.tipoCliente}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Línea negocio
+                                        <div class="text-sm text-secondary font-bold">Línea negocio
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.lineaNegocio}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Código negocio
+                                        <div class="text-sm text-secondary font-bold">Código negocio
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.codigoNegocio}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Sucursal
+                                        <div class="text-sm text-secondary font-bold">Sucursal
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.sucursal}}
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Entidad
+                                    <div class="col-sm-6 col-lg-3">
+                                        <div class="text-sm text-secondary font-bold">Entidad
                                         </div>
                                         <div class="" style="font-size: 16px;">{{datos.entidad}}
                                         </div>
@@ -175,62 +178,61 @@
                                 <div class="row border-card pt-2 pb-2">
                                     <div class="col-sm-12 col-lg-12">
                                         <div
-                                            class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                                            class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0">
                                             Detalle del PQRS
                                         </div>
                                     </div>
                                     <hr class="ml-3 w-full border-t col-lg-12 col-sm-12">
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Tipo
+                                        <div class="text-sm text-secondary font-bold">Tipo
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.tipoPqrs}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Causal
+                                        <div class="text-sm text-secondary font-bold">Causal
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.causalPqrs}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-3">
-                                        <div class="text-sm font-medium text-secondary font-bold">Solución
-                                        </div>
+                                        <div class="text-sm text-secondary font-bold">Procedimiento</div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.solucionPqrs}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-3">
-                                        <div class="text-sm font-medium text-secondary font-bold">Responsable
+                                        <div class="text-sm text-secondary font-bold">Responsable
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.responsable}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Área
+                                        <div class="text-sm text-secondary font-bold">Área
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.area}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Estado
+                                        <div class="text-sm text-secondary font-bold">Estado
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.estado}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
-                                        <div class="text-sm font-medium text-secondary font-bold">Fecha para solución
+                                        <div class="text-sm text-secondary font-bold">Fecha para solución
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.fechaParaSolucion}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-3">
-                                        <div class="text-sm font-medium text-secondary font-bold">Fecha de solución
+                                        <div class="text-sm text-secondary font-bold">Fecha de solución
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.fechaSolucion}}
                                         </div>
                                     </div>
 
                                     <div class="col-sm-6 col-lg-3" >
-                                        <div class="text-sm font-medium text-secondary font-bold">Fecha de cierre
+                                        <div class="text-sm text-secondary font-bold">Fecha de cierre
                                         </div>
                                         <div class="capitalize" style="font-size: 16px;">{{datos.fechaCierre}}
                                         </div>
@@ -247,31 +249,27 @@
                     <div>
                         <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
                             <mat-tab label="Descripción">
-
                                 <div class="row">
-
                                     <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted"
                                         style="    overflow: auto;height: 16em;">
                                         <p><strong>Detalle de la PQRS</strong></p><br>
                                         <div [innerHTML]=" datos.detalle"></div>
                                     </div>
                                 </div>
-
                             </mat-tab>
 
                             <mat-tab label="Solución" [disabled]="datos.estado=='Cerrado'">
-
                                 <div class="row">
-                                    <app-solucion (cambiarEstado)=cargarDatos($event) class="tamano20"></app-solucion>
+                                    <app-solucion
+                                        (cambiarEstado)=cargarDatos($event)
+                                        [idSolucion]="listadoSoluciones" class="tamano20">
+                                    </app-solucion>
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Historial de
-                            seguimiento">
+                            <mat-tab label="Historial de seguimiento">
                                 <div class="row items-center">
                                     <span class="leading-none col-lg-6 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Historial de
-                                            seguimiento
-                                        </div>
+                                        <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
                                     </span>
                                     <div class="leading-tight col-lg-6 col-sm-12 text-end">
                                         <input class="border rounded p-2 bg-gray-100"
@@ -380,12 +378,31 @@
                                                                 </div>
                                                                 <!-- Extra content -->
                                                                 <ng-container>
-                                                                    <div class="mt-2 py-4 px-3 rounded-lg bg-gray-200 dark:bg-gray-800 "
-                                                                        [innerHTML]=" item.detalle"></div>
+                                                                    <div *ngFor="let adj of listarAdjuntos" class="w-50 text-start">
+                                                                        <div class="row items-center mt-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"
+                                                                            *ngIf="adj.idSolucion == item.id">
+                                                                            <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(adj.idComentario)">
+                                                                                <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
+                                                                            </div>
+                                                                            <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
+                                                                                {{ adj.descripcion }} <br>
+                                                                                <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                                                                    {{ adj.fechaCreacion }}
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="mt-2 px-3 rounded-lg bg-gray-200 dark:bg-gray-800 "
+                                                                        [innerHTML]=" item.detalle">
+                                                                    </div>
                                                                 </ng-container>
                                                                 <fuse-alert class="mt-2" [type]="'warn'" [appearance]="'outline'" *ngIf="item.estadocolor=='bg-pink-300'">
                                                                     <span fuseAlertTitle>Motivo rechazo</span>
-                                                                    {{item.motivoRechazo}}
+                                                                    <div>
+                                                                        <span class="flex pb-1.5" style="font-size: 12px!important;"><i>{{ item.fechaRespuesta }}</i></span>
+                                                                        {{item.motivoRechazo}}
+                                                                    </div>
                                                                 </fuse-alert>
                                                                 <!-- <ng-container *ngIf="item.estadocolor=='bg-pink-300'">
                                                                     <div
@@ -424,6 +441,7 @@
                                         <input class="border rounded p-2 bg-gray-100"
                                             style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
                                             name="filtrarTablaAsignaciones" [(ngModel)]="filtrarTablaAsignaciones"
+                                            (ngModelChange)="page = 1"
                                             placeholder="Filtrar...">
                                         <select name="tamanoTablaAsignaciones" id="tamanoTablaAsignaciones"
                                             class="border rounded  bg-gray-100" (change)="pageAsignaciones=1"
@@ -458,7 +476,13 @@
                                                                 {{ item.usuario}}
                                                             </td>
                                                             <td class="px-4 py-1 text-sm border">{{ item.email}}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.estado}}</td>
+                                                            <td class="px-4 py-1 text-sm border">
+                                                                <div [ngClass]="item.estado.includes('Error') ? 'bg-pink-300' : 'bg-green-300'">
+                                                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                                        {{ item.estado}}
+                                                                    </span>
+                                                                </div>
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -517,16 +541,26 @@
                                                             <th class="px-4 py-3">Correo electronico</th>
                                                             <th class="px-4 py-3">Detalle</th>
                                                             <th class="px-4 py-3">Tipo</th>
+                                                            <th class="px-4 py-3">Estado</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody class="bg-white">
                                                         <tr class="text-gray-700"
                                                             *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
-                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha}}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.email}}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion}}
+                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha }}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.email }}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion }}</td>
+                                                            <td class="px-4 py-1 text-sm border">{{ item.tipo }}</td>
+                                                            <!-- <td class="px-4 py-1 text-sm border" [class]="item.estado.includes('Error') ? 'bg-red-500 text-white font-bold text-center' : 'bg-green-500 text-white font-bold text-center'">
+                                                                {{ item.estado }}
+                                                            </td> -->
+                                                            <td class="px-4 py-1 text-sm border">
+                                                                <div [ngClass]="item.estado.includes('Error') ? 'bg-pink-300' : 'bg-green-300'">
+                                                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                                        {{ item.estado}}
+                                                                    </span>
+                                                                </div>
                                                             </td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.tipo}}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
