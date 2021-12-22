@@ -1,0 +1,42 @@
+import { Component, OnInit } from '@angular/core';
+import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
+import {Observable} from 'rxjs';
+import {Router} from "@angular/router";
+import Swal from 'sweetalert2';
+import {delay} from "rxjs/operators";
+import { FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-grid-agenda-completacion',
+  templateUrl: './grid-agenda-completacion.component.html',
+  styleUrls: ['./grid-agenda-completacion.component.scss']
+})
+export class GridAgendaCompletacionComponent implements OnInit {
+  public agendaCompletacion$: Observable<any>;
+  public page:number=1;
+  // public tamanoTabl:number=5;
+  public filtrarTabla = new FormControl('');
+  public tamanoTabl = new FormControl("5");
+  constructor(
+      private agendaCompletacionService: AgendaCompletacionService,
+      private router: Router
+  ) { }
+
+  ngOnInit(): void {
+      this.getAgendaCompletacion();
+  }
+  public onGetAgenda(data: any): void {
+      //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+      const {numeroSolicitud, identificacion} = data;
+      this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
+  }
+  /**
+   * @description: Obtiene el listado de agenda de completacion
+  */
+  private getAgendaCompletacion(): void {
+      Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+      this.agendaCompletacion$ = this.agendaCompletacionService.getAgendaCompletacion();
+      Swal.close();
+  }
+
+}
