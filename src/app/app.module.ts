@@ -29,7 +29,6 @@ const routerConfig: ExtraOptions = {
 @NgModule({
     declarations: [
         AppComponent,
-
     ],
     imports     : [
         BrowserModule,
@@ -57,7 +56,6 @@ const routerConfig: ExtraOptions = {
     providers: [
         AppSettingsService
     ]
-
 })
 export class AppModule
 {

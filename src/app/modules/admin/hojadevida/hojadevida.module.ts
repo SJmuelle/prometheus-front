@@ -14,7 +14,9 @@ import { ModalescausalespqrsComponent } from '../../../components/hojadevida/pqr
 import { ResponsablespqrsComponent } from '../../../components/hojadevida/pqrs/responsablespqrs/responsablespqrs.component';
 import { ModalresponsablespqrsComponent } from '../../../components/hojadevida/pqrs/modalresponsablespqrs/modalresponsablespqrs.component';
 import { SolucionpqrsComponent } from '../../../components/hojadevida/pqrs/solucionpqrs/solucionpqrs.component';
+import { ProcedimientopqrsComponent } from '../../../components/hojadevida/pqrs/procedimientospqrs/procedimientopqrs.component';
 import { ModalsolucionpqrsComponent } from '../../../components/hojadevida/pqrs/modalsolucionpqrs/modalsolucionpqrs.component';
+import { ModalprocedimientopqrsComponent } from '../../../components/hojadevida/pqrs/modalprocedimientopqrs/modalprocedimientopqrs.component';
 import { HojadevidaService } from 'app/resources/services/hojadevida/hojadevida.service';
 
 const routes: Routes = [
@@ -42,7 +44,9 @@ const routes: Routes = [
         ResponsablespqrsComponent,
         ModalresponsablespqrsComponent,
         SolucionpqrsComponent,
+        ProcedimientopqrsComponent,
         ModalsolucionpqrsComponent,
+        ModalprocedimientopqrsComponent,
     ],
     imports: [SharedModule, RouterModule.forChild(routes)],
     providers: [HojadevidaService],

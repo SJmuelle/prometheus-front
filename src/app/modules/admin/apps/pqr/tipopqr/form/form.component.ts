@@ -53,11 +53,11 @@ export class FormComponent implements OnInit {
                 response.data.respuesta,
                 'error'
               );
-              return; 
+              return;
             }
             Swal.fire(
               'Información',
-              `Se guardo el registro con éxito`,
+              `Se guardó el registro con éxito`,
               'success'
             ).then(resultado => {
               if (resultado) {
@@ -78,7 +78,7 @@ export class FormComponent implements OnInit {
             'error'
           );
         }
-       
+
       });
   }
 

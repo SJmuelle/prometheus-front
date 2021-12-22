@@ -23,7 +23,7 @@ export class ModalIngresoComponent implements OnInit {
     private _cartera_service: CarteraService) { }
 
   ngOnInit(): void {
-    console.log(this.data.codigoNegocio);
+    // console.log(this.data.codigoNegocio);
     this.getIngreso(this.data.codigoNegocio);
     this.listadoIngreso=[];
   }
@@ -35,7 +35,7 @@ export class ModalIngresoComponent implements OnInit {
       .subscribe((response: any) => {
         if (response.data) {
           this.listadoIngreso=response.data;
-          console.log(this.listadoIngreso);
+          // // console.log(this.listadoIngreso);
           Swal.close();
         }
       });
@@ -51,7 +51,7 @@ export class ModalIngresoComponent implements OnInit {
           this.listadoDetalleIngreso=response.data;
           this.mostrar_infor=true;
           this.elegido=data;
-          console.log(this.listadoDetalleIngreso);
+          // // console.log(this.listadoDetalleIngreso);
           Swal.close();
         }
       });

@@ -1,95 +1,89 @@
-<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4">
-    <div class="row justify-between">
-        <div class="text-left col l12">
-            <h2 class="mb-2 text-gray-900">Soluciones de PQRS</h2>
-            <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
-        </div>
-    </div>
-    <div class="row"> 
-        <div class="bg-white col-lg-12 col-sm-12">
-            <div class="row items-center">
-
-                <span class="leading-none col-lg-4 col-sm-12">
-                    <div class="leading-tight titulo_tabs">
-                        <button mat-button class="mt-7 color_fintra text-white" (click)="abrirModal(null,'N')">
-                            Crear nuevo
-                        </button>
-                    </div>
-                </span>
-                <div class="leading-tight col-lg-8 col-sm-12 text-end">
-                    <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
-                        type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
-                        placeholder="Filtrar...">
-                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100" (change)="page=1"
-                        [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px;">
-                        <option value="5"> 5</option>
-                        <option value="10"> 10</option>
-                        <option value="20"> 20</option>
-                    </select>
-                </div>
+<div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+    <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
+        <h2 class="text-gray-900 col-span-12 mb-4">Soluciones de PQRS</h2>
+        <div class="col-span-12 grid grid-cols-12">
+            <div class="col-span-6">
+                <button
+                    mat-button
+                    class="color_fintra text-white w-30"
+                    (click)="abrirModal(null, 'N')"
+                >
+                    Crear nuevo
+                </button>
             </div>
-            <hr>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <div class="col-lg-12 ">
-                            <table class="w-full shadow p-1">
-                                <!-- causal: "Mala Paga"
-codigoSolucion: 1
-descripcion: "NUEVA SOLUCION DE PQRS 1"
-estado: "ACTIVO"
-responsable: "LUIS JACITO CANTILLO GALINDO "
-tiempoSolucion: 15 -->
-                                <thead style="background-color: #F9FAFB;">
-                                    <tr
-                                        class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
-                                        <th class="px-4 py-3 text-center">Editar</th>
-                                        <th class="px-4 py-3 text-center">Causal</th>
-                                        <th class="px-4 py-3 text-center">Responsable</th>
-                                        <th class="px-4 py-3 text-center">Descripción Solución</th>
-                                        <th class="px-4 py-3 text-center">Tiempo</th>
-                                        <th class="px-4 py-3 text-center">Estado</th>
-                                       
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
-                                    <tr class="text-gray-700"
-                                        *ngFor="let item of listado | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
-                                        <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'A')">
-                                            <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
-                                        </td>
-                                        <td class="px-2 text-sm border py-1 text-center">{{ item.causal}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.responsableNombre}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.tiempoSolucion}}</td>
-                                        <td class="px-2 text-sm border text-center w-0">
-                                            <div 
-                                            [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
-                                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
-                                                {{ item.estado}} </span>
-                                        </div>
-
-                                     
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-lg-12 col-sm-12 text-end">
-                            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-                                nextLabel="Siguiente"></pagination-controls>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <!-- <fuse-card>
-                        <div class="w-3/12">
-                            <img src="assets/images/animaciones/nodatos.gif">
-                        </div>
-                    </fuse-card> -->
-                </div>
+            <div class="col-span-6 justify-self-end">
+                <input
+                    class="border rounded p-2 bg-gray-100"
+                    style="font-size: 10px; margin-right: 1em"
+                    type="text"
+                    autocomplete="off"
+                    name="filtrarTabla"
+                    [(ngModel)]="filtrarTabla"
+                    (ngModelChange)="page = 1"
+                    placeholder="Filtrar..."
+                />
+                <select
+                    name="tamanoTabl"
+                    id="tamanoTabl"
+                    class="border rounded bg-gray-100"
+                    (change)="page = 1"
+                    [(ngModel)]="tamanoTabl"
+                    style="font-size: 10px; color: #9aa8bc; padding: 7px"
+                >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                </select>
             </div>
         </div>
-
     </div>
 
+    <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr class="text-md font-semibold
+                    tracking-wide text-left text-gray-400
+                    capitalize border-b border-gray-600" >
+                    <th class="px-4 py-3 text-center">Editar</th>
+                    <th class="px-4 py-3 text-center">ID Causal</th>
+                    <th class="px-4 py-3 text-center">Causal</th>
+                    <th class="px-4 py-3 text-center">ID Sol. N°1</th>
+                    <th class="px-4 py-3 text-center">Solución N°1</th>
+                    <th class="px-4 py-3 text-center">ID Sol. N°2</th>
+                    <th class="px-4 py-3 text-center">Solución N°2</th>
+                    <th class="px-4 py-3 text-center">ID Sol. N°3</th>
+                    <th class="px-4 py-3 text-center">Solución N°3</th>
+                    <th class="px-4 py-3 text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr
+                    class="text-gray-700"
+                    *ngFor="let item of listado | filter: filtrarTabla | paginate : { itemsPerPage: tamanoTabl, currentPage: page }" >
+                    <td class="px-2 text-sm border text-center w-0" (click)="abrirModal(item,'A')">
+                        <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                    </td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.idCausal }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.causal }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.idSolucion }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.solucion }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.idSolucion2 > 0 ? item.idSolucion2: '' }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.solucion2 }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.idSolucion3 > 0 ? item.idSolucion3: '' }}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.solucion3 }}</td>
+                    <td class="px-2 text-sm border text-center w-0">
+                        <div [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
+                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                            {{ item.estado}} </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="grid ">
+        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+            nextLabel="Siguiente"></pagination-controls>
+    </div>
 </div>

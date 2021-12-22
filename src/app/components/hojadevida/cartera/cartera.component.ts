@@ -48,7 +48,7 @@ export class CarteraComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
+        // console.log(changes);
         this.onCartera(this.codNegocio);
     }
 
@@ -64,8 +64,8 @@ export class CarteraComponent implements OnInit, OnChanges {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('The dialog was closed');
-            console.log(result);
+            // // console.log('The dialog was closed');
+            // // console.log(result);
         });
     }
 
@@ -74,7 +74,7 @@ export class CarteraComponent implements OnInit, OnChanges {
         this._carteraService
             .getCartera(codigo)
             .subscribe((respCartera: any) => {
-                console.log(respCartera);
+                // // console.log(respCartera);
                 if (respCartera.data) {
                     this.iCartera = respCartera.data;
                 } else {

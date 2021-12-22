@@ -54,7 +54,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
                     localStorage.clear();
                     this._router.navigate(['sign-in']);
                 }
-                console.log(user);
+                // // console.log(user);
                 this.user = {
                     id: user.id,
                     name: user.name,
@@ -62,7 +62,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
                     avatar: 'assets/images/avatars/male-01.jpg',
                     status: 'online',
                 };
-                console.log(this.user);
+                // // console.log(this.user);
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
