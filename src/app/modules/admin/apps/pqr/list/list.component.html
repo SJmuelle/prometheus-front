@@ -26,7 +26,7 @@
                     </select>
                 </div>
             </div>
-            <hr>
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
@@ -35,16 +35,17 @@
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
                                         class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                        <th class="px-4 py-3 text-center"></th>
-                                        <th class="px-4 py-3 text-center">Nro</th>
-                                        <th class="px-4 py-3 text-center">Identificación</th>
+                                        <th class="px-4 py-3 text-center w-0"></th>
+                                        <th class="px-4 py-3 text-center w-0">N°</th>
+                                        <th class="px-4 py-3 text-center w-0">Identificación</th>
                                         <th class="px-4 py-3 text-center">Nombre completo</th>
                                         <th class="px-4 py-3 text-center">Línea de negocio</th>
-                                        <th class="px-4 py-3 text-center">Tipo</th>
+                                        <th class="px-4 py-3 text-center w-0">Tipo</th>
                                         <th class="px-4 py-3 text-center">Causal</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
-                                        <th class="px-4 py-3 text-center">Nro rechazos</th>
-                                        <th class="px-4 py-3 text-center">Último rechazo</th>
+                                        <th class="px-4 py-3 text-center">Solución</th>
+                                        <th class="px-4 py-3 text-center w-0">N° rechazos</th>
+                                        <th class="px-4 py-3 text-center w-0">Último rechazo</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -55,15 +56,14 @@
                                         </td>
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs}}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.identificacion}}</td>
-                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente}} {{ item.apellidosCliente}}</td>
-                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.tipoPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.causalPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.estado}}</td>
-                                        
-                                        <td class="px-2 text-sm border text-center">{{ item.numeroRechazados}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.fechaRechazo}}</td>
-                                       
+                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{ item.apellidosCliente }}</td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.tipoPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.causalPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.estado }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.solucionPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.numeroRechazados }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.fechaRechazo }}</td>
                                     </tr>
                                 </tbody>
                             </table>

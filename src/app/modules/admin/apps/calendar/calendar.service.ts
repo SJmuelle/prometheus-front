@@ -181,36 +181,36 @@ export class CalendarService {
     getEvents(start: Moment, end: Moment, replace = false): Observable<CalendarEvent[]> {
         // Set the new start date for loaded events
         // console
- 
+
       const d=new Date(parseInt(end.format('yyyy')),parseInt(end.format('MM')), 0).getDate();
       start=moment(`${start.format('yyyy')}-${start.format('MM')}-01`);
       end=moment(`${end.format('yyyy')}-${end.format('MM')}-${d}`);
 
 
         if (replace || !this._loadedEventsRange.start || start.isBefore(this._loadedEventsRange.start)) {
-          
+
             this._loadedEventsRange.start = start;
             this.start=start;
         }
 
         // Set the new end date for loaded events
         if (replace || !this._loadedEventsRange.end || end.isAfter(this._loadedEventsRange.end)) {
-          
+
             this._loadedEventsRange.end = end;
             this.end=end;
         }
 
-      
-       
-       
-      
-        // console.log(start.format('yyyy') + '-' + start.format('MM'));
+
+
+
+
+        // // console.log(start.format('yyyy') + '-' + start.format('MM'));
         let annoI = start.format('yyyy')
         let mesI = start.format('MM');
-    
+
         let annoF = end.format('yyyy')
         let mesF = end.format('MM');
-        console.log(`${annoI}${mesI}-${annoF}${mesF}`)
+        // console.log(`${annoI}${mesI}-${annoF}${mesF}`)
 
         // /tk/informacion-dias-no-habiles
         let url: string = `/informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
@@ -220,10 +220,10 @@ export class CalendarService {
                 take(1),
                 map((events) => {
 
-                   
+
 
                     // Return the response
-                 
+
                     let datos: CalendarEvent[] = []
                     let datos2: CalendarEvent;
                     for (const iterator of response.data) {
@@ -239,7 +239,7 @@ export class CalendarService {
                             start:  iterator.start+"T19:00:00.000Z",
                             title:  iterator.title,
                         };
-                    
+
                         datos.push(datos2)
                     }
 
@@ -298,7 +298,7 @@ export class CalendarService {
                         start:  iterator.start+"T19:00:00.000Z",
                         title:  iterator.title,
                     };
-                
+
                     datos.push(datos2)
                 }
                 this._events.next(datos);
@@ -389,7 +389,7 @@ export class CalendarService {
         // return this.events$.pipe(
         //     take(1),
         //     switchMap(events => this._httpClient.post<CalendarEvent>('api/apps/calendar/event', {
-        //         event 
+        //         event
         //     }).pipe(
         //         map((addedEvent) => {
 

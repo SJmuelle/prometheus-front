@@ -1,62 +1,61 @@
 <h2 mat-dialog-title>{{datos.titulo=='N'?'Nuevo':'Actualizar'}} tipo</h2>
 <div class="bg-white col-lg-12 col-sm-12  5 ">
-    <div class="row"  >
-      
-            <div class="bg-white col l12">
-                <div class="row justify-start ">
-                    <div class="col-sm-12 col-lg-12" >
-                        <mat-form-field class="flex-auto w-100" >
-                            <mat-label>Nombre</mat-label>
-                            <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.tipo" [disabled]="datos.titulo!='N'" >
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-12 col-lg-12">
-                        <mat-form-field class="flex-auto w-100">
-                            <mat-label>Legal</mat-label>
-                            <mat-select [(ngModel)]="datos.legal" name="legal">
-                                <mat-option value="S">Si</mat-option>
-                                <mat-option value="N">No</mat-option>
-                            </mat-select>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:library'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo=='N'" >
-                        <mat-form-field class="flex-auto w-100">
-                            <mat-label>Clase</mat-label>
-                            <mat-select [(ngModel)]="datos.clase" name="legal">
-                                <mat-option value="PETICION">Petición</mat-option>
-                                <mat-option value="QUEJA">Queja</mat-option>
-                                <mat-option value="RECLAMO">Reclamo</mat-option>
-                                <mat-option value="SOLICITUD">Solucion</mat-option>
-                            </mat-select>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-12 col-lg-12"  *ngIf="datos.legal=='S'" >
-                        <mat-form-field class="flex-auto w-100">
-                            <mat-label>Tiempo solución (días)</mat-label>
-                            <input matInput type="number" min="1" autocomplete="off" name="tiempo" [(ngModel)]="datos.tiempo"
-                                >
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'" >
-                        <mat-form-field class="flex-auto w-100">
-                            <mat-label>Estado</mat-label>
-                            <mat-select [(ngModel)]="datos.estado" name="legal">
-                                <mat-option value="A">Activo</mat-option>
-                                <mat-option value="I">Inactivo</mat-option>
-                            </mat-select>
-                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
-                            </mat-icon>
-                        </mat-form-field>
-                    </div>
+    <div class="row">
+        <div class="bg-white col l12">
+            <div class="row justify-start ">
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.tipo" [disabled]="datos.titulo!='N'">
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Legal</mat-label>
+                        <mat-select [(ngModel)]="datos.legal" name="legal">
+                            <mat-option value="S">Si</mat-option>
+                            <mat-option value="N">No</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:library'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo=='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Clase</mat-label>
+                        <mat-select [(ngModel)]="datos.clase" name="legal">
+                            <mat-option value="FELICITACIONES">Felicitaciones</mat-option>
+                            <mat-option value="PETICION">Petición</mat-option>
+                            <mat-option value="QUEJA">Queja</mat-option>
+                            <mat-option value="RECLAMO">Reclamo</mat-option>
+                            <mat-option value="REDCONTROL">Requerimiento de entes de control</mat-option>
+                            <mat-option value="SUGERENCIA">Sugerencia</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:document'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12"  *ngIf="datos.legal=='S'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Tiempo solución (días)</mat-label>
+                        <input matInput type="number" min="1" autocomplete="off" name="tiempo" [(ngModel)]="datos.tiempo">
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:calendar'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Estado</mat-label>
+                        <mat-select [(ngModel)]="datos.estado" name="legal">
+                            <mat-option value="A">Activo</mat-option>
+                            <mat-option value="I">Inactivo</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                    </mat-form-field>
                 </div>
             </div>
-      
+        </div>
     </div>
 </div>
 <mat-dialog-actions align="end">
