@@ -264,6 +264,10 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         return this.form.controls[field].hasError('pattern');
     }
 
+    public campoRequerido(field: string) {
+        return this.form.controls[field].errors && this.form.controls[field].touched;
+    }
+
     ngOnDestroy(): void {
         this.subscription$.unsubscribe();
     }
