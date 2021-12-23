@@ -21,7 +21,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type: 'collapsable',
                 icon: 'heroicons_outline:check-circle',
                 children: [
-             
+
                     {
                         id: 'dashboard.pqr.configuracion',
                         title: 'Configuración',
@@ -41,7 +41,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                                 type: 'basic',
                                 // icon: 'heroicons_outline:calendar',
                                 link: '/calendar'
-                        
+
                             },
                             {
                                 id: 'dashboard.pqr.configuracion.causales',
@@ -138,10 +138,10 @@ export const compactNavigation: FuseNavigationItem[] = [
         ],
     },
     {
-        id: 'agenda-completacion',
-        title: 'Agenda de completación',
+        id: 'credito',
+        title: 'Crédito',
         type: 'aside',
-        icon: 'heroicons_outline:office-building',
+        icon: 'mat_outline:attach_money',
         children: [
             {
                 id: 'agenda-completacion.list',
