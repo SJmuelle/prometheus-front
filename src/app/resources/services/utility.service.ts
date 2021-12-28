@@ -28,6 +28,20 @@ export class UtilityService {
     notoken: string = 'notoken';
     constructor(private _httpClient: HttpClient) {}
 
+
+
+  formatearNumero(value: any){
+    const valor: any = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ',');
+    return valor;
+  }
+  enviarNumero(value: string){
+    if (value == '0') {
+        return 0;
+    }else {
+        const valor = value.replace(/,/g, '');
+        return valor;
+    }
+  }
     //Funciones de sesion
     readToken() {
         let token: any;
@@ -167,7 +181,7 @@ export class UtilityService {
     //   const headers = new HttpHeaders(optiones);
     //   return this._httpClient.post(URL, data, { headers }).pipe(catchError(this.handleError));
     // }
-    postFile(query: string, data: any, typeHeaders: string = 'data') {
+    postFile(query: string, data: any, typeHeaders: string = 'data'): any {
         const URL = this.adjunto + query;
         let optiones: any;
         if (typeHeaders == 'data') {
@@ -305,7 +319,7 @@ export class UtilityService {
             }
         }
         return throwError(errorMessage);
-    }
+    };
 
     //Funcion para el Manejo de errores
     handleError2 = (err: any): Observable<HttpEvent<any>> => {
@@ -389,5 +403,7 @@ export class UtilityService {
             }
         }
         return throwError(errorMessage);
-    }
+    };
 }
+
+

@@ -14,6 +14,7 @@ import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {AppSettingsService} from "./core/app-configs/app-settings.service";
 
 
 
@@ -51,6 +52,9 @@ const routerConfig: ExtraOptions = {
     ],
     bootstrap   : [
         AppComponent
+    ],
+    providers: [
+        AppSettingsService
     ]
 })
 export class AppModule

@@ -1,0 +1,74 @@
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full y-100">
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-start py-6 px-6 md:px-8 border-b">
+                <h3 class="mb-2 text-gray-900">Agenda de completación</h3>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
+            <input class="border rounded p-2 bg-gray-100 mr-4 text-xs" type="text"
+                   autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                   placeholder="Filtrar..."
+            >
+            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"  [formControl]="tamanoTabl" (change)="page=1"
+            >
+                <option value="5"> 5</option>
+                <option value="10"> 10</option>
+                <option value="20"> 20</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <table class="shadow p-0">
+                <thead class="bg-accent-50" >
+                <tr
+                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                    <th class="px-4 py-3"></th>
+                    <th class="px-4 py-3">N° de solicitud</th>
+                    <th class="px-4 py-3">Nombres</th>
+                    <th class="px-4 py-3">Identificación</th>
+                    <th class="px-4 py-3">Fecha de solicitud</th>
+                    <th class="px-4 py-3">Preaprobado</th>
+                    <th class="px-4 py-3">Unidad de negocio</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3">Subestado</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white">
+                <ng-container *ngIf="agendaCompletacion$ | async as agendas; else noDatos">
+                    <ng-container *ngFor="let item of agendas.data | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                        <tr class="text-gray-700" >
+                            <td class="px-2 text-sm border">
+                                <button mat-icon-button
+                                       (click)="onGetAgenda(item)"
+                                >
+                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                </button>
+                            </td>
+                            <td class="px-2 text-sm border">{{ item.numeroSolicitud}}</td>
+                            <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
+                            <td class="px-2 text-sm border">{{ item.identificacion}}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaEmision}}</td>
+                            <td class="px-2 text-sm border">{{ item.origen }}</td>
+                            <td class="px-2 text-sm border">{{ '' }}</td>
+                            <td class="px-2 text-sm border">{{ item.estado }}</td>
+                            <td class="px-2 text-sm border">{{ item.subEstado }}</td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-lg-12 col-sm-12 text-end">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
+    </div>
+</div>
+<ng-template #noDatos>
+    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
+        No existen registros
+    </div>
+</ng-template>
+

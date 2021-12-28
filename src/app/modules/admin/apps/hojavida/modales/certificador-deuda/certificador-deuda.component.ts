@@ -43,10 +43,10 @@ export class CertificadorDeudaComponent implements OnInit {
 
     ngOnInit(): void {
         this.crearFormulario();
-        // this.getPazySalvo(this.data.documento);
-        // this.getInfoGeneral(this.data.documento, this.data.fecha);
-        // this.getLiquidacion(this.data.documento, this.data.fecha);
-        // this.getLiquidacionTotal(this.data.documento, this.data.fecha);
+        this.getPazySalvo(this.data.documento);
+        this.getInfoGeneral(this.data.documento, this.data.fecha);
+        this.getLiquidacion(this.data.documento, this.data.fecha);
+        this.getLiquidacionTotal(this.data.documento, this.data.fecha);
     }
 
     crearFormulario() {

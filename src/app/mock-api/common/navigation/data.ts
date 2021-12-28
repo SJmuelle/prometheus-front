@@ -137,12 +137,28 @@ export const compactNavigation: FuseNavigationItem[] = [
                         id: 'dashboard.pqr.solucion',
                         title: 'Solución de PQRS',
                         type: 'basic',
-                        link: '/pqr/hoja-vida/solucion',
+                        link: '/pqr/hoja-vida/solucion'
                     },
                 ],
             },
         ],
     },
+    {
+        id: 'agenda-completacion',
+        title: 'Agenda de completación',
+        type: 'aside',
+        icon: 'heroicons_outline:office-building',
+        children: [
+            {
+                id: 'agenda-completacion.list',
+                title: 'Agenda de completación',
+                type: 'basic',
+                link: '/credit-factory/agenda-completion',
+                icon: 'heroicons_outline:document-text',
+            },
+
+        ]
+    }
     // {
     //     id: 'calendario',
     //     title: 'Calendario',
