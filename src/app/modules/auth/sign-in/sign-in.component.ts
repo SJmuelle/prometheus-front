@@ -45,8 +45,8 @@ export class AuthSignInComponent implements OnInit
     {
         // Create the form
         this.signInForm = this._formBuilder.group({
-            email     : ['hughes.brian@company.com', [Validators.required, Validators.email]],
-            password  : ['admin', Validators.required],
+            userName  : ['', [Validators.required]],
+            password  : ['', Validators.required],
             rememberMe: ['']
         });
     }
@@ -73,7 +73,7 @@ export class AuthSignInComponent implements OnInit
         this.showAlert = false;
 
         // Sign in
-        this._authService.signIn(this.signInForm.value)
+        this._authService.signIn({userName: this.signInForm.controls.userName.value, password: this.signInForm.controls.password.value})
             .subscribe(
                 () => {
 
@@ -88,6 +88,7 @@ export class AuthSignInComponent implements OnInit
 
                 },
                 (response) => {
+                    
 
                     // Re-enable the form
                     this.signInForm.enable();
@@ -98,7 +99,7 @@ export class AuthSignInComponent implements OnInit
                     // Set the alert
                     this.alert = {
                         type   : 'error',
-                        message: 'Wrong email or password'
+                        message: 'Usuario o contraseña equivocada'
                     };
 
                     // Show the alert

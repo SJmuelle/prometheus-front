@@ -1,0 +1,79 @@
+<div *ngIf="seguimiento!={}">
+    <div class="row items-center">
+        <span class="leading-none col-lg-4 col-sm-12">
+            <div class="leading-tight titulo_tabs">Solución</div>
+        </span>
+        <hr class="w-full border-t col-lg-12 col-sm-12">
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <mat-form-field class="flex-auto w-100">
+                <mat-label>Tipo de solución</mat-label>
+                <mat-select [(ngModel)]="idTipoComentario" name="tipo">
+                    <mat-option value="1">Solución de área</mat-option>
+                    <mat-option value="2">Solución de cliente</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-sm-12" *ngIf="idTipoComentario == 2 && listadoSoluciones.length > 0">
+            <mat-form-field class="flex-auto w-100">
+                <mat-label>Solución</mat-label>
+                <mat-select [(ngModel)]="solucionCausal" name="solucionCausal" required>
+                    <mat-option *ngFor="let solucion of listadoSoluciones" [value]="solucion.id">{{ solucion.solucion }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-lg-12 col-sm-12">
+            <form class="mt-2 mb-2">
+                <div>
+                    <label for="filep" class="w-100">
+                        <span mat-button class="bg-gray-100 text-white cursor-pointer" >
+                            <mat-icon svgIcon="attach_file"></mat-icon>
+                        </span>
+                        {{filename}}
+                    </label>
+                    <input type="file"
+                        name="filep"
+                        id="filep"
+                        class="col-12"
+                        (change)="onCharge($event.target)"
+                        [required]="idTipoComentario == '2'"
+                        style="display:none" />
+                </div>
+            </form>
+            <div class="row" *ngIf="idTipoComentario == '2'; else validarAdjuntosData">
+                <!-- Success -->
+                <fuse-alert [type]="'success'">
+                    <span fuseAlertTitle>Condiciones del archivo</span>
+                    * Archivos permitidos ( .pdf). <br>
+                    * Tamaño máximo del archivo  (10mb). <br>
+                    * El nombre del archivo no debe contener puntos.
+                </fuse-alert>
+            </div>
+            <ng-template #validarAdjuntosData class="row">
+                <!-- Success -->
+                <fuse-alert [type]="'success'">
+                    <span fuseAlertTitle>Condiciones del archivo</span>
+                    * Archivos permitidos ( .pdf, .docx, .xlsx, .jpg, .png). <br>
+                    * Tamaño máximo del archivo  (10mb). <br>
+                    * El nombre del archivo no debe contener puntos.
+                </fuse-alert>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 mt-2 mb-10">
+            <div style="height: 7em;">
+                <quill-editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="seguimiento.detalle"
+                    [modules]="quillModules"></quill-editor>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-sm-12 text-end"  *ngIf="nada==false">
+            <button mat-button  class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
+        </div>
+    </div>
+</div>

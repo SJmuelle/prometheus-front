@@ -12,6 +12,13 @@ import { mockApiServices } from 'app/mock-api';
 import { LayoutModule } from 'app/layout/layout.module';
 import { AppComponent } from 'app/app.component';
 import { appRoutes } from 'app/app.routing';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+
+
+// import { FormControl } from '@angular/forms';
+
 
 const routerConfig: ExtraOptions = {
     scrollPositionRestoration: 'enabled',
@@ -20,12 +27,12 @@ const routerConfig: ExtraOptions = {
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports     : [
         BrowserModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot(appRoutes, routerConfig),
+        RouterModule.forRoot(appRoutes, {useHash:true}),
 
         // Fuse & Fuse Mock API
         FuseModule,
@@ -34,12 +41,13 @@ const routerConfig: ExtraOptions = {
 
         // Core
         CoreModule,
-
         // Layout
         LayoutModule,
-
+        Ng2SearchPipeModule,
+        // FormControl,
         // 3rd party modules
-        MarkdownModule.forRoot({})
+        MarkdownModule.forRoot({}),
+        NgxPaginationModule
     ],
     bootstrap   : [
         AppComponent

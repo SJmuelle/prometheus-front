@@ -1,0 +1,197 @@
+<div class="container-fluid" style="width: inherit">
+    <form [formGroup]="formHv">
+        <div class="col-lg-12">
+            <div class="row">
+                <mat-form-field class="col-lg-4" appearance="fill">
+                    <mat-label>Buscar por:</mat-label>
+                    <mat-select formControlName="search" [compareWith]="compareObjects">
+                        <mat-option value="1">Cedula</mat-option>
+                        <mat-option value="2">Código de Negocio</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="row align-items-baseline" *ngIf="formHv.controls.search.value === '1'">
+                <mat-form-field class="col-lg-4" appearance="fill">
+                    <mat-label>Número de identificación</mat-label>
+                    <input type="number" matInput formControlName="cedula"
+                        placeholder="Escribir número de identificación" />
+                </mat-form-field>
+                <mat-form-field class="col-lg-4" appearance="fill" *ngIf="negocios">
+                    <mat-label>Número de negocio</mat-label>
+                    <mat-select formControlName="codigoNegocio" [compareWith]="compareObjects"
+                        (selectionChange)="buscarInfo(formHv.value)">
+                        <mat-option [value]="0">Todos</mat-option>
+                        <mat-option *ngFor="let negocio of negocios" [value]="negocio.codigoNegocio">
+                            {{ negocio.codigoNegocio }}</mat-option>
+
+                    </mat-select>
+                </mat-form-field>
+                <button type="submit" (click)="buscarClientes(formHv.value)" [disabled]="formHv.invalid"
+                    class="col-lg-1" mat-flat-button color="primary">
+                    <span *ngIf="!formHv.disabled"> Buscar </span>
+                    <mat-progress-spinner *ngIf="formHv.disabled" [diameter]="24" [mode]="'indeterminate'">
+                    </mat-progress-spinner>
+                </button>
+            </div>
+            <div class="row align-items-baseline" *ngIf="formHv.controls.search.value === '2'">
+                <mat-form-field class="col-lg-4" appearance="fill">
+                    <mat-label>Número de negocio</mat-label>
+                    <input type="text" matInput formControlName="codigoNegocio" (change)="buscarClientes(formHv.value)"
+                        placeholder="Escribir código de negocio" />
+                </mat-form-field>
+                <button [disabled]="formHv.invalid" class="col-lg-1" mat-flat-button color="primary">
+                    Buscar
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <mat-divider class="mb-4"></mat-divider>
+
+    <form [formGroup]="datosCliente" *ngIf="datosClientesVal">
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Primer Nombre</mat-label>
+                <input formControlName="primerNombre" type="text" matInput placeholder="Primer Nombre" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Segundo Nombre</mat-label>
+                <input formControlName="segundoNombre" type="text" matInput placeholder="Segundo Nombre" />
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Primer Apellido</mat-label>
+                <input formControlName="primerApellido" type="text" matInput placeholder="Primer Apellido" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Segundo Apellido</mat-label>
+                <input formControlName="segundoApellido" type="text" matInput placeholder="Segundo Apellido" />
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Departamento</mat-label>
+                <input formControlName="departamento" type="text" matInput placeholder="Departamento" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Ciudad / Municipio</mat-label>
+                <input formControlName="ciudad" type="text" matInput placeholder="Ciudad" />
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Barrio</mat-label>
+                <input formControlName="barrio" type="text" matInput placeholder="Barrio" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <input formControlName="direccion" type="text" matInput placeholder="Direccion" />
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Telefono</mat-label>
+                <input formControlName="telefono" type="number" matInput placeholder="Telefono" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Celular</mat-label>
+                <input formControlName="celular" type="number" matInput placeholder="Celular" />
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Correo electrónico</mat-label>
+                <input formControlName="email" type="email" matInput placeholder="Correo Electrónico" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Segmentación</mat-label>
+                <input formControlName="segmento" type="email" matInput placeholder="" value="" />
+            </mat-form-field>
+        </div>
+        <div class="row justify-content-center">
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Tipo negociación cartera</mat-label>
+                <input formControlName="tipoNegociacion" type="email" matInput placeholder="Tipo de Negociacion" />
+            </mat-form-field>
+            <mat-form-field class="col-lg-6" appearance="fill">
+                <mat-label>Fecha negociación</mat-label>
+                <input matInput [matDatepicker]="datepicker" formControlName="fechaNegociacion" />
+                <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                <mat-datepicker #datepicker>
+                    <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel>Cancel</button>
+                        <button mat-raised-button color="primary" matDatepickerApply>
+                            Apply
+                        </button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+    </form>
+
+    <mat-divider class="mb-4"></mat-divider>
+
+    <!-- <ng-container *ngIf="(asyncTabs | async) === null">
+        Loading tabs...
+    </ng-container> -->
+
+    <mat-tab-group *ngIf="datosClientesVal" (selectedTabChange)="onTabChanged($event)">
+        <!-- <mat-tab *ngFor="let tab of asyncTabs | async">
+            <ng-template mat-tab-label>{{tab.label}}</ng-template>
+            {{tab.content}}
+        </mat-tab> -->
+        <ng-container>
+            <mat-tab>
+                <ng-template mat-tab-label>Crédito</ng-template>
+                <app-credito *ngIf="iCredito" [iCredito]="iCredito"></app-credito>
+            </mat-tab>
+        </ng-container>
+
+        <!-- <ng-container (click)="onCartera(formHv.value)"> -->
+        <mat-tab>
+            <ng-template mat-tab-label>Cartera</ng-template>
+            <ng-container *ngIf="tabCartera">
+                <app-cartera [codNegocio]="codNegocio"></app-cartera>
+            </ng-container>
+        </mat-tab>
+
+        <!-- <ng-container (click)="gonHistorialGestion(formHv.value)"> -->
+        <mat-tab>
+            <ng-template mat-tab-label>Historial de gestión</ng-template>
+            <ng-container *ngIf="tabGestion.state">
+                <app-datatable [filas]="tabNegociaciones.data.filas" [nombres]="tabNegociaciones.data.nombres"
+                    [titulos]="tabNegociaciones.data.titulos"></app-datatable>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>Negociaciones</ng-template>
+            <ng-container *ngIf="tabNegociaciones.state">
+                <app-datatable [filas]="tabNegociaciones.data.filas" [nombres]="tabNegociaciones.data.nombres"
+                    [titulos]="tabNegociaciones.data.titulos"></app-datatable>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>Extractos</ng-template>
+            <ng-container *ngIf="tabExtractos">
+                <app-datatable></app-datatable>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label>Reportes a centrales</ng-template>
+            <ng-container *ngIf="tabReportes">
+                <app-datatable></app-datatable>
+            </ng-container>
+        </mat-tab>
+
+        <mat-tab>
+            <ng-template mat-tab-label disabled>PQRS</ng-template>
+            <ng-container *ngIf="tabPqrs">
+                <app-datatable></app-datatable>
+            </ng-container>
+        </mat-tab>
+    </mat-tab-group>
+</div>

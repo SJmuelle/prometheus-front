@@ -2,19 +2,18 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy
 import { Router } from '@angular/router';
 import { BooleanInput } from '@angular/cdk/coercion';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 
 @Component({
-    selector       : 'user-menu',
-    templateUrl    : './user-menu.component.html',
-    encapsulation  : ViewEncapsulation.None,
+    selector: 'user-menu',
+    templateUrl: './user-menu.component.html',
+    encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
-    exportAs       : 'userMenu'
+    exportAs: 'userMenu'
 })
-export class UserMenuComponent implements OnInit, OnDestroy
-{
+export class UserMenuComponent implements OnInit, OnDestroy {
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_showAvatar: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
@@ -31,8 +30,7 @@ export class UserMenuComponent implements OnInit, OnDestroy
         private _changeDetectorRef: ChangeDetectorRef,
         private _router: Router,
         private _userService: UserService
-    )
-    {
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -42,14 +40,29 @@ export class UserMenuComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Subscribe to user changes
         this._userService.user$
-            .pipe(takeUntil(this._unsubscribeAll))
+            .pipe(
+                takeUntil(this._unsubscribeAll)
+            )
             .subscribe((user: User) => {
-                this.user = user;
-
+                if(user==undefined){
+                    user=JSON.parse(sessionStorage.getItem("usuario"));
+                }
+                if(user==undefined){
+                    localStorage.clear();
+                    this._router.navigate(['sign-in']);
+                }
+                // // console.log(user);
+                this.user = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    avatar: 'assets/images/avatars/male-01.jpg',
+                    status: 'online',
+                };
+                // // console.log(this.user);
                 // Mark for check
                 this._changeDetectorRef.markForCheck();
             });
@@ -58,8 +71,7 @@ export class UserMenuComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -74,11 +86,9 @@ export class UserMenuComponent implements OnInit, OnDestroy
      *
      * @param status
      */
-    updateUserStatus(status: string): void
-    {
+    updateUserStatus(status: string): void {
         // Return if user is not available
-        if ( !this.user )
-        {
+        if (!this.user) {
             return;
         }
 
@@ -92,8 +102,7 @@ export class UserMenuComponent implements OnInit, OnDestroy
     /**
      * Sign out
      */
-    signOut(): void
-    {
+    signOut(): void {
         this._router.navigate(['/sign-out']);
     }
 }

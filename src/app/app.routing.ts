@@ -3,6 +3,9 @@ import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
 import { InitialDataResolver } from 'app/app.resolvers';
+import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
+import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
+import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -34,7 +37,8 @@ export const appRoutes: Route[] = [
             {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule)},
             {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)},
             {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)},
-            {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)}
+            {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)},
+            {path: 'hv', loadChildren: () => HojavidaModule}
         ]
     },
 
@@ -64,6 +68,10 @@ export const appRoutes: Route[] = [
             {path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)},
         ]
     },
+     // Landing routes
+    
+            {path: 'hv', loadChildren: () => import('app/modules/admin/apps/hojavida/hojavida.module').then(m => m.HojavidaModule)},
+
 
     // Admin routes
     {
@@ -77,8 +85,19 @@ export const appRoutes: Route[] = [
         children   : [
             {
                 path: 'dashboard',
-                loadChildren: () => import('app/modules/admin/example/example.module').then(m => m.ExampleModule)
+                loadChildren: () => HojavidaModule
+            },
+            {
+                path: 'calendar',
+                loadChildren: () => CalendarModule
+            },
+            {
+                path: 'pqr',
+                loadChildren: () => PqrModule
             },
         ]
-    }
+    },
+    {path: '**', redirectTo: 'dashboard'}
+    // {path: '**', redirectTo: 'sign-in'},
+    // {path: '*', redirectTo: 'sign-in'}
 ];

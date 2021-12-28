@@ -3,7 +3,28 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    production: false
+    production: false,
+    //urlApi: 'http://192.168.190.237:8010/api-fintra/api',
+
+    urlApi: 'http://192.168.140.241:8010/api-fintra/api',
+    urlApi2: 'http://192.168.140.241:8010/api-fintra/api/generic/qry',
+    urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic',
+
+    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
+    // envioCorreo:"http://192.168.140.197:8084"
+    envioCorreo:"http://prometheus.fintra.co:8443/apicredit"
+
+
+    // NGROK
+    // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
+    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',
+    // urlApi3: 'https://tefi.ngrok.io/api-fintra/api/generic',
+
+    // urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    // adjunto:'https://tefi.ngrok.io/api-fintra/api/pqrs',
+    // // envioCorreo:"http://192.168.140.197:8084"
+    // envioCorreo:"http://prometheus.fintra.co:8443/apicredit"
 };
 
 /*

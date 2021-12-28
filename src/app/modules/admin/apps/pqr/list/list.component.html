@@ -1,0 +1,89 @@
+<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100 m-4">
+    <div class="row justify-between">
+        <div class="text-left col l12">
+            <h2 class="mb-2 text-gray-900">Gestión de PQRS</h2>
+            <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="bg-white col-lg-12 col-sm-12">
+            <div class="row items-center">
+
+                <span class="leading-none col-lg-4 col-sm-12">
+                    <div class="leading-tight titulo_tabs">
+
+                    </div>
+                </span>
+                <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                    <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
+                        type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
+                        placeholder="Filtrar...">
+                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100" (change)="page=1"
+                        [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                        <option value="5"> 5</option>
+                        <option value="10"> 10</option>
+                        <option value="20"> 20</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12 ">
+                            <table class="w-full shadow p-1">
+                                <thead style="background-color: #F9FAFB;">
+                                    <tr
+                                        class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                        <th class="px-4 py-3 text-center w-0"></th>
+                                        <th class="px-4 py-3 text-center w-0">N°</th>
+                                        <th class="px-4 py-3 text-center w-0">Identificación</th>
+                                        <th class="px-4 py-3 text-center">Nombre completo</th>
+                                        <th class="px-4 py-3 text-center">Línea de negocio</th>
+                                        <th class="px-4 py-3 text-center w-0">Tipo</th>
+                                        <th class="px-4 py-3 text-center">Causal</th>
+                                        <th class="px-4 py-3 text-center">Estado</th>
+                                        <th class="px-4 py-3 text-center">Solución</th>
+                                        <th class="px-4 py-3 text-center w-0">N° rechazos</th>
+                                        <th class="px-4 py-3 text-center w-0">Último rechazo</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white">
+                                    <tr class="text-gray-700"
+                                        *ngFor="let item of listado | filter:filtrarTabla  | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+                                        <td class="px-2 text-sm border text-center" (click)="gestion(item.id)">
+                                            <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                                        </td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs}}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.identificacion}}</td>
+                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{ item.apellidosCliente }}</td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.tipoPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.causalPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.estado }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.solucionPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.numeroRechazados }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.fechaRechazo }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-12 col-sm-12 text-end">
+                            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                                nextLabel="Siguiente"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <!-- <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around">
+                        <div class="w-3/12">
+                            <img src="assets/images/animaciones/nodatos.gif">
+                        </div>
+                    </fuse-card> -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
