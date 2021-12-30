@@ -49,7 +49,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
   public onActualizar(): void {
       if (this.form.valid) {
           const datos: any = this.form.getRawValue();
-          const {tipo, descripcionTipoReferencia, descripcionEstado, ...data } = datos;
+          const {descripcionTipoReferencia, descripcionEstado, ...data } = datos;
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',
@@ -145,11 +145,12 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
    * @description: Actualiza la referencia
    */
   private actualizarDetalleReferencia(datos: any): void {
-      this.subscription$ = this.referenciasService.putDetalleReferencia(datos).subscribe(( ) => {
+      console.log(datos);
+      /*this.subscription$ = this.referenciasService.putDetalleReferencia(datos).subscribe(( ) => {
           this.cerrarFormulario.emit(false);
           this.referenciasService.eventos$.emit(true);
           this._matDialog.close();
-      });
+      });*/
   }
   /**
    * @description:
