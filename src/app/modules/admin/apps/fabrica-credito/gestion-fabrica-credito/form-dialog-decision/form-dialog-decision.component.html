@@ -43,7 +43,7 @@
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Valor cupo</mat-label>
                                 <input matInput type="text" [formControlName]="'cupo'" (keyup)="form.controls['cupo'].setValue(utility.formatearNumero(form.value.cupo));">
-                                <mat-error *ngIf="requeridoCupo">El cupo es requerido.</mat-error>
+                                <mat-error *ngIf="requeridoCupo">Este campo es requerido.</mat-error>
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -51,7 +51,7 @@
                         <mat-form-field class="w-full mr-2 fuse-mat-dense">
                             <mat-label>Comentario</mat-label>
                             <textarea  matInput [formControlName]="'comentario'"></textarea>
-                            <mat-error *ngIf="requeridoComentario">El comentario es requerido.</mat-error>
+                            <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                         </mat-form-field>
                     </div>
                 </div>
