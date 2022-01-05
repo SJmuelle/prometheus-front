@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InsertarCausalLegalComponent } from './insertar-causal-legal/insertar-causal-legal.component';
 import { InsertarAdjuntosComponent } from './insertar-adjuntos/insertar-adjuntos.component';
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
     selector: 'app-creacion-pqrs',
@@ -41,21 +42,57 @@ export class CreacionPQRSComponent implements OnInit {
     file: any;
     evidencia: any = [];
     causalesLegales: any = [];
+    campana: any;
+    tipo: any;
+    UsuarioSaggics: string;
 
     constructor(
         private _pqrService: PqrService,
         private _activatedRoute: ActivatedRoute,
         public dialog: MatDialog,
-        private router: Router
-    ) {}
+        private router: Router,
+        private _authService: AuthService,
+    ) { }
 
     ngOnInit(): void {
         this._activatedRoute.params.subscribe((param) => {
-            this.identificaiconCliente = param.cliente;
+            debugger;
+            if (param.cliente) {
+                this.identificaiconCliente = param.cliente;
+                // this.insertadjunti();
+                this.tabMostrar = 1;
+                this.buscarListados();
+                this.UsuarioSaggics="";
+            } else {
+                this.identificaiconCliente = param.numeroDocumeto;
+                this.campana = param.campana;
+                this.tipo = param.tipo;
+                this.UsuarioSaggics = param.usuario;
+                this._authService.signIn({ userName: "scortes", password: 'Elskngio312' }).subscribe(
+                    () => {
+
+                        // this.insertadjunti();
+                        this.tabMostrar = 1;
+                        this.buscarListados();
+                        
+                        setTimeout(() => {
+                            this.datos.canpana =   this.campana ;
+                            this.datos.origen = this.tipo; 
+                        }, 1000);
+                    },
+                    (response) => {
+                        Swal.fire(
+                            '¡Advertencia!',
+                            'Esta opción es para clientes nuevos, por favor ingresar mediante hoja de vida/historial de PQRS/Crear PQRS.',
+                            'warning'
+                        ).then();
+                    }
+                );
+
+            }
+            // alert(this.identificaiconCliente)
         });
-        // this.insertadjunti();
-        this.tabMostrar = 1;
-        this.buscarListados();
+
     }
 
     buscarListados() {
@@ -356,6 +393,7 @@ export class CreacionPQRSComponent implements OnInit {
                 this.datos.primerContacto == undefined ? false : true,
             adjuntos: this.crearJsonAdjuntos(),
             hijos: this.crearJsonHijas(),
+            user:this.UsuarioSaggics
         };
         let url = '/crear-pqrs';
 
@@ -401,7 +439,7 @@ export class CreacionPQRSComponent implements OnInit {
                         }
                     });
             },
-        }).then((result) => {});
+        }).then((result) => { });
     }
 
     public onCharge(input: HTMLInputElement, ind): void {
@@ -681,6 +719,7 @@ export class CreacionPQRSComponent implements OnInit {
                 fechaSolucion: element.fechaParaSolucion,
                 adjuntos: this.crearJsonAdjuntos(),
                 primerContacto: false,
+                user:this.UsuarioSaggics
             });
         });
 
