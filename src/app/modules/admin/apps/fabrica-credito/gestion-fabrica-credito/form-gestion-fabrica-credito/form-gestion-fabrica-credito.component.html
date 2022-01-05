@@ -705,8 +705,16 @@
 <div class="sm:mt-13"></div>
 <ng-container *ngIf="verComentarios">
     <div class="fixed z-999 sm:ml-30 top-18">
-        <app-grid-comentarios (cerrarComponente)="onCerrar($event)"></app-grid-comentarios>
+        <app-grid-comentarios
+            (cerrarComponente)="onCerrar($event)"
+            (minimizarComponente)="onMinimiza($event)"
+        ></app-grid-comentarios>
     </div>
+</ng-container>
+<ng-container *ngIf="minimizarComentarios">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3">
+        <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
+    </button>
 </ng-container>
 <!--<code>
     <pre>{{form.getRawValue() | json}}</pre>
