@@ -144,10 +144,10 @@ export const compactNavigation: FuseNavigationItem[] = [
         ],
     },
     {
-        id: 'agenda-completacion',
-        title: 'Agenda de completación',
+        id: 'credito',
+        title: 'Crédito',
         type: 'aside',
-        icon: 'heroicons_outline:office-building',
+        icon: 'mat_outline:attach_money',
         children: [
             {
                 id: 'agenda-completacion.list',
