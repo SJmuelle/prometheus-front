@@ -690,6 +690,7 @@
                             </mat-tab>
                             <mat-tab>
                                 <ng-template matTabLabel>Politicas</ng-template>
+                                <app-grid-politicas></app-grid-politicas>
                             </mat-tab>
                             <mat-tab>
                                 <ng-template matTabLabel>Nivel de endeudamiento</ng-template>
@@ -712,7 +713,10 @@
     </div>
 </ng-container>
 <ng-container *ngIf="minimizarComentarios">
-    <button mat-icon-button class="fixed z-999 ml-40 top-3">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
+            [matTooltip]="'Restaura ventana comentarios'"
+            (click)="verComentarios = !verComentarios"
+    >
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>

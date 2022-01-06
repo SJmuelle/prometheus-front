@@ -44,6 +44,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public subscription$: Subscription;
   public verComentarios: boolean = false;
   public minimizarComentarios:  boolean = false;
+  public esVerComentarios: boolean = false;
   public tipoDocumento: string = '';
   public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
@@ -84,11 +85,15 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description:
    */
   public onCerrar(event): void {
-      console.log(event);
       this.verComentarios = event;
-  }
-  public onMinimiza(event): void {
       this.minimizarComentarios = event;
+  }
+  /**
+   * @description: Minimiza el componente comentarios
+   */
+  public onMinimiza(event): void {
+      this.minimizarComentarios = !event;
+      this.verComentarios = event;
   }
   /**
    * @description: Abre el modal de listado de documentos
