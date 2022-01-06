@@ -1,5 +1,7 @@
 export const environment = {
     production: true,
+    userName: "APPWEB",
+    password: btoa("123456"),
     urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
     urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry',
     urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',

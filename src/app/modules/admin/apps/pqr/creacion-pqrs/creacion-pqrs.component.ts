@@ -7,6 +7,7 @@ import { InsertarCausalLegalComponent } from './insertar-causal-legal/insertar-c
 import { InsertarAdjuntosComponent } from './insertar-adjuntos/insertar-adjuntos.component';
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 import { AuthService } from 'app/core/auth/auth.service';
+import { environment } from 'environments/environment';
 
 @Component({
     selector: 'app-creacion-pqrs',
@@ -45,6 +46,7 @@ export class CreacionPQRSComponent implements OnInit {
     campana: any;
     tipo: any;
     UsuarioSaggics: string;
+    EstadoSagicc: boolean;
 
     constructor(
         private _pqrService: PqrService,
@@ -63,12 +65,15 @@ export class CreacionPQRSComponent implements OnInit {
                 this.tabMostrar = 1;
                 this.buscarListados();
                 this.UsuarioSaggics="";
+                this.EstadoSagicc=false;
             } else {
                 this.identificaiconCliente = param.numeroDocumeto;
                 this.campana = param.campana;
                 this.tipo = param.tipo;
                 this.UsuarioSaggics = param.usuario;
-                this._authService.signIn({ userName: "scortes", password: 'Elskngio312' }).subscribe(
+                this.EstadoSagicc=true;
+
+                this._authService.signIn({ userName: environment.userName, password: environment.password }).subscribe(
                     () => {
 
                         // this.insertadjunti();
@@ -303,11 +308,16 @@ export class CreacionPQRSComponent implements OnInit {
                 if (response) {
                     Swal.fire(
                         '¡Advertencia!',
-                        'Esta opción es para clientes nuevos, por favor ingresar mediante hoja de vida/historial de PQRS/Crear PQRS.',
+                        'Esta opción es para clientes nuevos, por favor ingresar mediante Servicio al cliente/Gestión al cliente/historial de PQRS/Crear PQRS.',
                         'warning'
                     ).then();
                     setTimeout(() => {
-                        this.router.navigateByUrl('dashboard');
+                        debugger;
+                        if(this.EstadoSagicc==true){
+                            this.router.navigateByUrl('/listado');
+                        }else{
+                            this.router.navigateByUrl('/sagicc/pqrs/creacionExitosa');
+                        }
                     }, 1000);
                 } else {
                     this.datos.identificacion = this.identificaiconCliente;
