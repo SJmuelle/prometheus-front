@@ -9,11 +9,18 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "ngx-pagination";
+import { FormGestionReferenciacionModalComponent } from './form-gestion-referenciacion-modal/form-gestion-referenciacion-modal.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
   declarations: [
-    GridAgendaReferenciacionComponent
+    GridAgendaReferenciacionComponent,
+    FormGestionReferenciacionModalComponent
   ],
     imports: [
         CommonModule,
@@ -23,7 +30,12 @@ import {NgxPaginationModule} from "ngx-pagination";
         MatTooltipModule,
         Ng2SearchPipeModule,
         ReactiveFormsModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatSelectModule
     ]
 })
 export class AgendaReferenciacionModule { }
