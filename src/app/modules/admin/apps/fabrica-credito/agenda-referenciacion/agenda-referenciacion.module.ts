@@ -6,6 +6,9 @@ import { GridAgendaReferenciacionComponent } from './grid-agenda-referenciacion/
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+import {ReactiveFormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import {MatTooltipModule} from "@angular/material/tooltip";
         AgendaReferenciacionRoutingModule,
         MatButtonModule,
         MatIconModule,
-        MatTooltipModule
+        MatTooltipModule,
+        Ng2SearchPipeModule,
+        ReactiveFormsModule,
+        NgxPaginationModule
     ]
 })
 export class AgendaReferenciacionModule { }

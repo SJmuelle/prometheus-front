@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Observable} from "rxjs";
 import {AgendaReferenciacionService} from '../../../../../../core/services/agenda-referenciacion.service';
 import {Router} from '@angular/router';
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-grid-agenda-referenciacion',
@@ -10,6 +11,9 @@ import {Router} from '@angular/router';
 })
 export class GridAgendaReferenciacionComponent implements OnInit {
   public agendaReferencia$: Observable<any>;
+  public filtrarTabla = new FormControl('');
+  public tamanoTabl = new FormControl('5');
+  public page:number = 1;
   constructor(
       private agendaReferenciaService: AgendaReferenciacionService,
       private router: Router

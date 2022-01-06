@@ -156,6 +156,13 @@ export const compactNavigation: FuseNavigationItem[] = [
                 link: '/credit-factory/agenda-completion',
                 icon: 'heroicons_outline:document-text',
             },
+            {
+                id: 'agenda-referenciacion.list',
+                title: 'Agenda de referenciación',
+                type: 'basic',
+                link: '/credit-factory/agenda-referencing',
+                icon: 'heroicons_outline:document',
+            },
 
         ]
     }
