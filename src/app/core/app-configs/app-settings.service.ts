@@ -102,5 +102,13 @@ export class AppSettingsService {
             baseCausal: EndPoints.uri('cau-rechazo')
         }
     };
+    /**
+     * @description: End-Point
+     */
+    public politicas = {
+        url: {
+            base: EndPoints.uri('cre-politicas-adm')
+        }
+    };
 
 }
