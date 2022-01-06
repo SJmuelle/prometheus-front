@@ -1,9 +1,11 @@
 <h2 mat-dialog-title>Estado de Cuenta</h2>
 <hr>
 <mat-dialog-content class="mat-typography">
-    <span class="mb-4 text-2xl capitalize"> <strong>{{ data.documento }}</strong>- {{data.cliente.primerNombre}} {{data.cliente.segundoNombre}} {{data.cliente.primerApellido}} {{data.cliente.segundoApellido}} </span>
-    <div class="grid grid-cols-4 gap-2">
-        <div class="border-1 mb-5">
+    <div class="mt-3 mb-3">
+        <span class=" mt-4 text-2xl capitalize"> <strong>{{ data.documento }}</strong>- {{data.cliente.primerNombre}} {{data.cliente.segundoNombre}} {{data.cliente.primerApellido}} {{data.cliente.segundoApellido}} </span>
+    </div>
+    <div class="grid grid-cols-4 gap-2 mb-5">
+        <div class="border-1">
             <div class="bg-card rounded shadow overflow-hidden">
                 <div class="bg-blue-400 row">
                     <div class="col-lg-12 justify-center text-center text-secondary">
@@ -24,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="border-1 mb-5">
+        <div class="border-1">
             <div class="bg-card rounded shadow overflow-hidden">
                 <div class="bg-blue-400 row">
                     <div class="col-lg-12 justify-center text-center text-secondary">
@@ -39,13 +41,13 @@
                             Valor
                         </div>
                         <div class="mt-2 font-medium text-3xl leading-none text-center">
-                            {{ formPazySalvo.controls.tasa.value | currency:'$':'symbol':'0.0-0' }}
+                            {{ formPazySalvo.controls.tasa.value }}%
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="border-1 mb-5">
+        <div class="border-1">
             <div class="bg-card rounded shadow overflow-hidden">
                 <div class="bg-blue-400 row">
                     <div class="col-lg-12 justify-center text-center text-secondary">
@@ -60,13 +62,13 @@
                             Valor
                         </div>
                         <div class="mt-2 font-medium text-3xl leading-none text-center">
-                            {{ formPazySalvo.controls.numeroCuotas.value | currency:'$':'symbol':'0.0-0' }}
+                            {{ formPazySalvo.controls.numeroCuotas.value }}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="border-1 mb-5">
+        <div class="border-1">
             <div class="bg-card rounded shadow overflow-hidden">
                 <div class="bg-blue-400 row">
                     <div class="col-lg-12 justify-center text-center text-secondary">
@@ -89,102 +91,7 @@
         </div>
     </div>
 
-
-    <div class="flex flex-row">
-        <div class="flex flex-col mx-2 w-2/4 rounded shadow-md mb-4 pt-2 border-cblue" [formGroup]="formPazySalvo">
-            <!-- FORMULARIO PARA INFORMACION DEL NEGOCIO -->
-            <div class="container mb-2 row">
-                <span class="mb-1 text-2xl capitalize"> <strong>Cliente: </strong>{{data.cliente.primerNombre}} {{data.cliente.segundoNombre}} {{data.cliente.primerApellido}} {{data.cliente.segundoApellido}} </span>
-                <span class="mb-1 text-2xl"> <strong>Negocio: </strong>{{ data.documento }} </span>
-            </div>
-            <div class="bg-blue-400 py-1 px-2 mb-2 text-start text-white">
-                <mat-card-title class="text-2xl">Información del Negocio</mat-card-title>
-            </div>
-            <div class="flex flex-col">
-                <div class="mb-2 mx-2">
-                    <mat-label>
-                        <strong> Valor Negocio: </strong> {{ formPazySalvo.controls.valorNegocio.value | currency:'$':'symbol':'0.0-0' }}
-                    </mat-label>
-                </div>
-                <div class="mb-2 mx-2">
-                    <mat-label>
-                        <strong> Tasa de Interés: </strong> {{ formPazySalvo.controls.tasa.value }}%
-                    </mat-label>
-                </div>
-                <div class="mb-2 mx-2">
-                    <mat-label>
-                        <strong> Número de Cuotas: </strong> {{ formPazySalvo.controls.numeroCuotas.value }}
-                    </mat-label>
-                </div>
-                <div class="mb-2 mx-2">
-                    <mat-label>
-                        <strong> Valor Aval: </strong> {{ formPazySalvo.controls.valorAval.value | currency:'$':'symbol':'0.0-0' }}
-                    </mat-label>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-col mx-2 w-2/4 rounded shadow-md mb-4 pt-2 border-cblue" [formGroup]="formPazySalvo">
-            <!-- FORMULARIO PARA INFORMACION GENERAL -->
-            <div class="bg-blue-400 py-1 px-2 mb-2 text-start text-white">
-                <mat-card-title class="text-2xl">Información General</mat-card-title>
-            </div>
-            <div class="flex flex-col">
-                <!-- <div class="md:flex"> -->
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Capital: </strong> {{ formInfoGeneral.controls.capital.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Intereses: </strong> {{ formInfoGeneral.controls.intereses.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Comisión Ley Mipyme: </strong> {{ formInfoGeneral.controls.comisionLey.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Intermediación Financiera: </strong> {{ formInfoGeneral.controls.intermediacion.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Seguro: </strong> {{ formInfoGeneral.controls.seguro.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Aval a Pagar: </strong> {{ formInfoGeneral.controls.aval.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Otros Conceptos: </strong> {{ formInfoGeneral.controls.otrosConceptos.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Intereses Mora: </strong> {{ formInfoGeneral.controls.interesMora.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Gasto Cobranza: </strong> {{ formInfoGeneral.controls.gastoCobranza.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-                    <div class="mb-2 mx-2">
-                        <mat-label>
-                            <strong> Total a Pagar: </strong> {{ formInfoGeneral.controls.total.value | currency:'$':'symbol':'0.0-0' }}
-                        </mat-label>
-                    </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div>
+    <div class="mb-6">
         <div class="row items-center">
             <span class="leading-none col-lg-4 col-sm-12">
                 <div mat-dialog-title>
@@ -251,6 +158,68 @@
                         <td class="px-4 py-1 text-sm border"></td>
                     </tfoot>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-row">
+        <div class="flex flex-col mx-2 w-2/4 rounded shadow-md mb-4 pt-2 border-cblue" [formGroup]="formPazySalvo">
+            <!-- FORMULARIO PARA INFORMACION GENERAL -->
+            <div class="bg-blue-400 py-1 px-2 mb-2 text-start text-white">
+                <mat-card-title class="text-2xl">Información General</mat-card-title>
+            </div>
+            <div class="flex flex-col">
+                <!-- <div class="md:flex"> -->
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Capital: </strong> {{ formInfoGeneral.controls.capital.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Intereses: </strong> {{ formInfoGeneral.controls.intereses.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Comisión Ley Mipyme: </strong> {{ formInfoGeneral.controls.comisionLey.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Intermediación Financiera: </strong> {{ formInfoGeneral.controls.intermediacion.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Seguro: </strong> {{ formInfoGeneral.controls.seguro.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Aval a Pagar: </strong> {{ formInfoGeneral.controls.aval.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Otros Conceptos: </strong> {{ formInfoGeneral.controls.otrosConceptos.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Intereses Mora: </strong> {{ formInfoGeneral.controls.interesMora.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Gasto Cobranza: </strong> {{ formInfoGeneral.controls.gastoCobranza.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
+                    <div class="mb-2 mx-2">
+                        <mat-label>
+                            <strong> Total a Pagar: </strong> {{ formInfoGeneral.controls.total.value | currency:'$':'symbol':'0.0-0' }}
+                        </mat-label>
+                    </div>
             </div>
         </div>
     </div>

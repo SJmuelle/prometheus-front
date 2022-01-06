@@ -10,10 +10,19 @@ import { ResponsablesPQRSComponent } from './responsables-pqrs/responsables-pqrs
 import { SolucionesPQRSComponent } from './soluciones-pqrs/soluciones-pqrs.component';
 import { ProcedimientosPQRSComponent } from './procedimientos-pqrs/procedimientos-pqrs.component';
 import { ListComponent } from './list/list.component';
+import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.component';
 
 export const pqrRoutes: Route[] = [
     {
         path: 'creacion/:cliente',
+        component: CreacionPQRSComponent,
+    },
+    {
+        path: 'pqrs/creacionExitosa',
+        component: MensajeCreacionComponent
+    },
+    {
+        path: 'pqrs/:numeroDocumeto/:campana/:tipo/:usuario',
         component: CreacionPQRSComponent,
     },
     {
