@@ -71,12 +71,12 @@ export class AuthSignInComponent implements OnInit
 
         // Hide the alert
         this.showAlert = false;
-
+        debugger;
         // Sign in
-        this._authService.signIn({userName: this.signInForm.controls.userName.value, password: this.signInForm.controls.password.value})
+        this._authService.signIn({userName: this.signInForm.controls.userName.value, password: btoa(this.signInForm.controls.password.value)})
             .subscribe(
                 () => {
-
+                 
                     // Set the redirect url.
                     // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
                     // to the correct page after a successful sign in. This way, that url can be set via

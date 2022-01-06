@@ -50,11 +50,45 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
   public openModalDirection(): void {
       const dialogRef = this.matDialog.open(DirectionsComponent, {
           // width: '250px',
+          width: '60%',
+            data: {
+                departamento: '',
+                municipio: '',
+                barrio: '',
+                direccion: '',
+            },
           disableClose: false
-      });
+      }); 
 
       dialogRef.afterClosed().subscribe((res) => {
           // this.formTab1.controls['direccionNegocio'].setValue(res);
+          let dataModal = res;
+            console.log(dataModal)
+
+            if (dataModal.departamentoNombre != undefined) {
+                this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
+                this.form.controls.departamentoNombre.setValue(dataModal.departamentoNombre);
+                this.form.controls.codigoCiudad.setValue(dataModal.municipio);
+                this.form.controls.ciudadNombre.setValue(dataModal.municipioNombre);
+                 this.form.controls.codigoBarrio.setValue(parseInt(dataModal.codigoBarrio));
+                 this.form.controls.nombreBarrio.setValue(dataModal.barrio);
+                 this.form.controls.direccion.setValue(
+                    (dataModal.viaNombre == undefined
+                        ? ''
+                        : `${dataModal.viaNombre}`) +
+                    (dataModal.callePrincipal == undefined
+                        ? ''
+                        : ` ${dataModal.callePrincipal}`) +
+                    (dataModal.numero == undefined
+                        ? ''
+                        : ` # ${dataModal.numero}`) +
+                    (dataModal.numero2 == undefined
+                        ? ''
+                        : ` - ${dataModal.numero2}`) +
+                    (dataModal.complemento == undefined
+                        ? ''
+                        : ` ${dataModal.complemento}`));
+            }
       });
   }
 
@@ -129,8 +163,11 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             celular:            ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
             codigoPais:         [''],
             codigoDepartamento: [''],
+            departamentoNombre: [''],
             codigoCiudad:       [''],
-            codigoBarrio:       ['0'],
+            ciudadNombre:       [''],
+            codigoBarrio:       [''],
+            nombreBarrio:       [],
             direccion:          [''],
             antiguedad:         [''],
         });
