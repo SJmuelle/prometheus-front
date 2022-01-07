@@ -1,94 +1,96 @@
 <h2 mat-dialog-title>Persona Natural</h2>
 <mat-dialog-content>
     <div class="grid grid-cols-1">
-        <form >
+        <form [formGroup]="form">
             <div class="bg-white flex flex-col">
                 <span class="col-span-12 rounded-1 mb-3 text-dark">Datos del cliente</span>
+                <hr>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Primer nombre</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="'primerNombre'">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Segundo nombre</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="'segundoNombre'">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Primer apellido</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text"  [formControlName]="'primerApellido'">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Segundo apellido</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="'segundoApellido'">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Teléfono</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="'telefono'">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Celular cliente</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="'celular'">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Email</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Departamento residencia</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Ciudad municipio residencia</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Barrio</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Dirección</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
                 <span class="col-span-12 rounded-1 mb-3 text-dark">Datos e información financiera del negocio</span>
+                <hr>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Departamento del negocio</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Ciudad / municipio del negocio</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Barrio</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Dirección del negocio</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Teléfono del negocio</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                     <mat-form-field class="col-lg-6" appearance="fill">
                         <mat-label>¿Se encuentra registrado en camára de comercio?</mat-label>
-                        <mat-select formControlName="cliente">
+                        <mat-select >
                             <mat-option value="">Selecciona</mat-option>
                             <mat-option >Si
                             </mat-option>
@@ -98,17 +100,17 @@
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Nit</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Activos ($)</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
                 <div class="md:flex">
                     <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                         <mat-label>Ventas mensuales ($)</mat-label>
-                        <input matInput type="text" >
+                        <input matInput type="text" [formControlName]="">
                     </mat-form-field>
                 </div>
             </div>

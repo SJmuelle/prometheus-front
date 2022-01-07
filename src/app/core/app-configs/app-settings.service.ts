@@ -110,5 +110,13 @@ export class AppSettingsService {
             base: EndPoints.uri('cre-politicas-adm')
         }
     };
+    /**
+     * @description: End-point
+     */
+    public referenciaCliente = {
+        url: {
+            base: EndPoints.uri('informacion-cliente-referenciar')
+        }
+    };
 
 }

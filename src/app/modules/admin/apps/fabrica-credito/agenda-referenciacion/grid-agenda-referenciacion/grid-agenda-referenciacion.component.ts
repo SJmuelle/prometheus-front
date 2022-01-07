@@ -32,10 +32,11 @@ export class GridAgendaReferenciacionComponent implements OnInit {
 
   }
 
-  public onOpenDialog(): void {
+  public onOpenDialog(item: any): void {
       const dialogRef = this._matDialog.open(FormGestionReferenciacionModalComponent, {
           minWidth: '90%',
-          minHeight: '80%'
+          minHeight: '80%',
+          data: {numeroSolicitud: item.numeroSolicitud}
       });
       dialogRef.afterClosed().subscribe((res) => {
           console.log('CLOSE');
