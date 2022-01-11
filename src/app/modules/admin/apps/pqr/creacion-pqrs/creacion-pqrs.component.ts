@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
     styleUrls: ['./creacion-pqrs.component.scss'],
 })
 export class CreacionPQRSComponent implements OnInit {
+    mostrar_formulario:boolean=true;
     datos: any = {};
     panelOpenState: boolean = false;
     tabMostrar: number;
@@ -46,7 +47,7 @@ export class CreacionPQRSComponent implements OnInit {
     campana: any;
     tipo: any;
     UsuarioSaggics: string;
-    EstadoSagicc: boolean;
+    EstadoSagicc: boolean = false;
 
     constructor(
         private _pqrService: PqrService,
@@ -58,20 +59,19 @@ export class CreacionPQRSComponent implements OnInit {
 
     ngOnInit(): void {
         this._activatedRoute.params.subscribe((param) => {
-            debugger;
             if (param.cliente) {
                 this.identificaiconCliente = param.cliente;
                 // this.insertadjunti();
                 this.tabMostrar = 1;
                 this.buscarListados();
-                this.UsuarioSaggics="";
-                this.EstadoSagicc=false;
+                this.UsuarioSaggics = "";
+                this.EstadoSagicc = false;
             } else {
                 this.identificaiconCliente = param.numeroDocumeto;
                 this.campana = param.campana;
                 this.tipo = param.tipo;
                 this.UsuarioSaggics = param.usuario;
-                this.EstadoSagicc=true;
+                this.EstadoSagicc = true;
 
                 this._authService.signIn({ userName: environment.userName, password: environment.password }).subscribe(
                     () => {
@@ -79,10 +79,10 @@ export class CreacionPQRSComponent implements OnInit {
                         // this.insertadjunti();
                         this.tabMostrar = 1;
                         this.buscarListados();
-                        
+
                         setTimeout(() => {
-                            this.datos.canpana =   this.campana ;
-                            this.datos.origen = this.tipo; 
+                            this.datos.canpana = this.campana;
+                            this.datos.origen = this.tipo;
                         }, 1000);
                     },
                     (response) => {
@@ -312,12 +312,7 @@ export class CreacionPQRSComponent implements OnInit {
                         'warning'
                     ).then();
                     setTimeout(() => {
-                        debugger;
-                        if(this.EstadoSagicc==true){
-                            this.router.navigateByUrl('/listado');
-                        }else{
-                            this.router.navigateByUrl('/sagicc/pqrs/creacionExitosa');
-                        }
+                        this.router.navigateByUrl('/dashboard');
                     }, 1000);
                 } else {
                     this.datos.identificacion = this.identificaiconCliente;
@@ -403,7 +398,7 @@ export class CreacionPQRSComponent implements OnInit {
                 this.datos.primerContacto == undefined ? false : true,
             adjuntos: this.crearJsonAdjuntos(),
             hijos: this.crearJsonHijas(),
-            user:this.UsuarioSaggics
+            user: this.UsuarioSaggics
         };
         let url = '/crear-pqrs';
 
@@ -430,9 +425,25 @@ export class CreacionPQRSComponent implements OnInit {
                                     icon: 'success',
                                     showConfirmButton: true,
                                 }).then((result) => {
-                                    let url = `pqr/gestion`;
-                                    this.router.navigateByUrl(url);
+                                    debugger
+                                    if (this.EstadoSagicc == false) {
+                                        let url = `pqrs/gestion`;
+                                        this.router.navigateByUrl(url);
+                                    } else {
+                                        this.mostrar_formulario=false;
+                                    }
+
+
                                 });
+                                setTimeout(() => {
+                                    debugger;
+                                    if (this.EstadoSagicc == false) {
+                                        let url = `pqrs/gestion`;
+                                        this.router.navigateByUrl(url);
+                                    } else {
+                                        this.mostrar_formulario=false;
+                                    }
+                                }, 2000);
                             } else {
                                 Swal.fire(
                                     '¡Información!',
@@ -729,7 +740,7 @@ export class CreacionPQRSComponent implements OnInit {
                 fechaSolucion: element.fechaParaSolucion,
                 adjuntos: this.crearJsonAdjuntos(),
                 primerContacto: false,
-                user:this.UsuarioSaggics
+                user: this.UsuarioSaggics
             });
         });
 

@@ -43,6 +43,7 @@ import { FormResponsablesComponent } from './responsables-pqrs/form-responsables
 import { InsertarCausalLegalComponent } from './creacion-pqrs/insertar-causal-legal/insertar-causal-legal.component';
 import { FormProcedimientosComponent } from './procedimientos-pqrs/form-procedimientos/form-procedimientos.component';
 import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.component';
+import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 // import { CreacionComponent } from './creacion/creacion.component';
 // import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
@@ -68,6 +69,7 @@ import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.co
         TipopqrComponent,
         SolucionComponent,
         MensajeCreacionComponent,
+        MensajeErrorComponent
         // CreacionComponent
     ],
     imports: [

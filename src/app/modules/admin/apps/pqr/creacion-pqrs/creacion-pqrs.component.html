@@ -1,4 +1,6 @@
-<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+
+<app-mensaje-creacion  *ngIf="mostrar_formulario==false"></app-mensaje-creacion>
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="mostrar_formulario==true">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2  text-gray-900">Registro de PQRS</h2>
@@ -412,3 +414,5 @@
     <hr><hr>
     <hr><hr>
 </div>
+
+

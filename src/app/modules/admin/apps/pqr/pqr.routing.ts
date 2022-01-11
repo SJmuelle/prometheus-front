@@ -11,6 +11,7 @@ import { SolucionesPQRSComponent } from './soluciones-pqrs/soluciones-pqrs.compo
 import { ProcedimientosPQRSComponent } from './procedimientos-pqrs/procedimientos-pqrs.component';
 import { ListComponent } from './list/list.component';
 import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.component';
+import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 
 export const pqrRoutes: Route[] = [
     {
@@ -22,8 +23,16 @@ export const pqrRoutes: Route[] = [
         component: MensajeCreacionComponent
     },
     {
+        path: 'pqrs/mensajeError',
+        component: MensajeErrorComponent
+    },
+    {
         path: 'pqrs/:numeroDocumeto/:campana/:tipo/:usuario',
         component: CreacionPQRSComponent,
+    },
+    {
+        path: 'gestion',
+        component: ListComponent,
     },
     {
         path: 'gestion/:idPQR',
@@ -55,5 +64,5 @@ export const pqrRoutes: Route[] = [
             },
         ],
     },
-    { path: '**', component: ListComponent },
+    { path: '**', component: MensajeErrorComponent },
 ];
