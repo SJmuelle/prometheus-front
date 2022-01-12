@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { MatFormFieldControl } from '@angular/material/form-field';
 
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss'],  
+  styleUrls: ['./factura.component.scss'],
 })
 export class FacturaComponent implements OnInit {
 
@@ -16,10 +15,10 @@ export class FacturaComponent implements OnInit {
   page:number=1;
   tamanoTabl:number=5;
   filtrarTabla:string='';
-  mostrar_form:boolean=true;
+  mostrar_form:boolean = true;
   datos: any={};
 
-  banco: any=[];
+  banco: any = [];
 
   total:number;
 
@@ -28,13 +27,14 @@ export class FacturaComponent implements OnInit {
   ngOnInit(): void {
     // this.consulta();
     // this.total = this.cuentaService().reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-    // this.suma();
-    
+    this.suma();
+    this.consultaBnco();
+
   }
 
   suma(){
     this.cuentaService.getAllFactures().subscribe((response: any) => {
-      
+
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
       console.log(this.total)
     });
@@ -54,12 +54,10 @@ export class FacturaComponent implements OnInit {
   }
 
   consultaBnco(){
-    this.cuentaService.getAllFactures().subscribe((response: any) => {
-      // console.log(response)
+    this.cuentaService.getBnco().subscribe((response: any) => {
+      console.log(response)
       if (response) {
-        //this.banco = response.data;
-      } else {
-        this.banco = [];
+        this.banco = response.data;
       }
   });
   }

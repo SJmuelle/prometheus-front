@@ -4,35 +4,34 @@ import { CommonModule } from '@angular/common';
 // MODULOS
 import { FuseCardModule } from '../../../../../@fuse/components/card/card.module';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 // MODULOS MATERIAL
 import { SharedModule } from 'app/shared/shared.module';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatStepperModule } from '@angular/material/stepper';
-
 import { FechaCorridaRoutingModule } from './fecha-corrida-routing.module';
 import { FacturaComponent } from './factura/factura.component';
-import { FormsModule } from '@angular/forms';
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
   declarations: [
     FacturaComponent
   ],
-  imports: [
-    CommonModule,
-    FechaCorridaRoutingModule,
-    FuseCardModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatStepperModule,
-    MatExpansionModule,
-    NgxPaginationModule,
-    SharedModule,
-    FormsModule    
-  ]
+    imports: [
+        CommonModule,
+        FechaCorridaRoutingModule,
+        FuseCardModule,
+        NgxPaginationModule,
+        MatExpansionModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+    ]
 })
 export class FechaCorridaModule { }
