@@ -48,6 +48,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public tipoDocumento: string = '';
   public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public estado: string = '';
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -221,6 +222,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               tipoDocumento: this.tipoDocumento
           };
           this.fabricaCreditoService.seleccionDatos.next({data: datosDocumentos});
+          this.estado = data.descripcionEstado;
       });
   }
   public seleccionDepartamento(event: MatSelectChange): void {
