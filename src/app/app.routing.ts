@@ -7,6 +7,7 @@ import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
 import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
 import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
 import {FabricaCreditoModule} from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
+import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -99,6 +100,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'credit-factory',
                 loadChildren: () => FabricaCreditoModule
+            },
+            {
+                path: 'run-date',
+                loadChildren: () => FechaCorridaModule
             }
         ]
     },
