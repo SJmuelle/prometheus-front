@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 
 
 @Component({
@@ -22,14 +23,28 @@ export class FacturaComponent implements OnInit {
 
   total:number;
 
-  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService) { }
+  bncoForm: FormGroup;
+
+  get frm() {
+    return this.bncoForm.controls;
+  }
+
+  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder) {
+    this.bncoForm = this.fb.group({
+      nombreBanco: ['', [Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
-    // this.consulta();
-    // this.total = this.cuentaService().reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
+    this.consulta();
     this.suma();
     this.consultaBnco();
+  }
 
+  seleccionarTodo(e:any){
+    this.listado.array.forEach(x => {
+      
+    });
   }
 
   suma(){
