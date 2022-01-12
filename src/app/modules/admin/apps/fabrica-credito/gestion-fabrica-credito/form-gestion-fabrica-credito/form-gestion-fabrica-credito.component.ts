@@ -475,6 +475,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           direccionResidencial:          [''],
           nivelEstudio:                  [''],
           viveEnNegocio:                 [''],
+          descripcionTipo:               [''],
+
       });
   }
   /**

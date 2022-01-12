@@ -169,12 +169,12 @@
                                     <div class="-mx-3 md:flex mb-2">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Tipo de solicitante</mat-label>
-                                            <input matInput type="text" placeholder="Tipo de solicitante" [formControlName]="'tipo'" [readonly]="true">
+                                            <input matInput type="text" [formControlName]="'descripcionTipo'" [readonly]="true">
                                         </mat-form-field>
                                         <ng-container *ngIf="tipoDocumentos$ | async as documentos">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>Tipo de documento</mat-label>
-                                                <input matInput type="text" placeholder="Tipo de solicitante" [formControlName]="'tipoDocumento'" [readonly]="true">
+                                                <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true">
                                             </mat-form-field>
                                         </ng-container>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -624,7 +624,9 @@
                                             </mat-form-field>
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
-                                                <input matInput type="number" [formControlName]="'antiguedadNegocio'">
+                                                <input matInput type="number" [formControlName]="'antiguedadNegocio'"
+                                                       [matTooltip]="'¿Hace cuanto tiempo funciona el negocio? (meses)'"
+                                                >
                                                 <mat-icon
                                                     class="icon-size-5"
                                                     matSuffix
@@ -636,6 +638,7 @@
                                                     <mat-select
                                                         [value]="'seleccione'"
                                                         [formControlName]="'camaraComercio'"
+                                                        [matTooltip]="'¿Se encuentra registrado en camára de comercio?'"
                                                     >
                                                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
                                                         <mat-option *ngFor="let item of camara.data"
