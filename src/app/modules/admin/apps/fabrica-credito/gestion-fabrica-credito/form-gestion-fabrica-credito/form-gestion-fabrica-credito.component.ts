@@ -134,12 +134,16 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public onPostDatos(): void {
       if (this.form.valid) {
           const datos: FormularioCreditoInterface = this.form.getRawValue();
-          const {fechaNacimiento, fechaMatricula, antiguedadComprasSemanales, ...data} = datos;
+          const {fechaNacimiento, fechaMatricula, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible,  nivelEndeudamiento, ...data} = datos;
           const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
           const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
           const compraSemanal= Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
           const ventasMensuales= Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
-          // const antiguedadComprasSemanales = Number(this.form.value.antiguedadComprasSemanales);
+          const scoreFormato = Number(this.form.value.score);
+          const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
+          const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
+          const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
+          const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
           const activos= Number(this.utility.enviarNumero(this.form.value.activos));
           delete data.ventasMensuales;
           delete data.comprasSemanales;
@@ -151,6 +155,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               ventasMensuales: ventasMensuales,
               activos: activos,
               antiguedadComprasSemanales: Number(antiguedadComprasSemanales),
+              score: Number(scoreFormato),
+              nivelEndeudamiento: Number(nivelEndeudamientoFormato),
+              cupoTotal: Number(cupoTotalFormato),
+              cupoReservado: Number(cupoReservadoFormato),
+              cupoDisponible: Number(cupoDisponbileFormato),
               ...data
           };
           Swal.fire({
@@ -166,6 +175,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               if (result.isConfirmed) {
                   this.postFormularioFabrica(datosFormularios);
                   // console.log(this.form.getRawValue());
+                  // console.log(datosFormularios);
               }
           });
       }else {
@@ -437,7 +447,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           cupoDisponible:                [''],
           score:                         [''],
           descripcionSubestado:          [''],
-          descripcionScore:              [''],
+          nivelRiesgo:                   [''],
           nivelEndeudamiento:            [''],
           comprasSemanales:              [''],
           antiguedadComprasSemanales:    [''],

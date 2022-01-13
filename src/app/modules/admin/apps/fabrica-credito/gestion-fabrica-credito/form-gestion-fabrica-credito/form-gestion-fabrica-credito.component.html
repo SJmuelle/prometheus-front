@@ -84,17 +84,17 @@
                                     <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true">
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Cupo aprobado</mat-label>
-                                    <input matInput type="text"  [formControlName]="'cupoTotal'" [readonly]="true">
+                                    <mat-label>Cupo aprobado $</mat-label>
+                                    <input matInput type="text"  [formControlName]="'cupoTotal'" [readonly]="true" (keyup)="form.controls['cupoTotal'].setValue(utility.formatearNumero(form.value.cupoTotal)); ">
                                 </mat-form-field>
                             </div>
                             <div class="-mx-3 md:flex mb-2">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Cupo reservado</mat-label>
+                                    <mat-label>Cupo reservado $</mat-label>
                                     <input matInput type="text"  [formControlName]="'cupoReservado'" [readonly]="true">
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Cupo disponible</mat-label>
+                                    <mat-label>Cupo disponible $</mat-label>
                                     <input matInput type="text"  [formControlName]="'cupoDisponible'" [readonly]="true">
                                 </mat-form-field>
                             </div>
@@ -110,7 +110,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Descripción del score</mat-label>
-                                    <input matInput type="text" [formControlName]="'descripcionScore'">
+                                    <input matInput type="text" [formControlName]="'nivelRiesgo'">
                                     <mat-icon
                                         class="icon-size-5"
                                         matSuffix
