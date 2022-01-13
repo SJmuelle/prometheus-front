@@ -91,11 +91,11 @@
                             <div class="-mx-3 md:flex mb-2">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Cupo reservado $</mat-label>
-                                    <input matInput type="text"  [formControlName]="'cupoReservado'" [readonly]="true">
+                                    <input matInput type="text"  [formControlName]="'cupoReservado'" [readonly]="true" (keyup)="form.controls['cupoReservado'].setValue(utility.formatearNumero(form.value.cupoReservado)); ">
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Cupo disponible $</mat-label>
-                                    <input matInput type="text"  [formControlName]="'cupoDisponible'" [readonly]="true">
+                                    <input matInput type="text"  [formControlName]="'cupoDisponible'" [readonly]="true" (keyup)="form.controls['cupoDisponible'].setValue(utility.formatearNumero(form.value.cupoDisponible)); ">
                                 </mat-form-field>
                             </div>
                             <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos de riesgos</span>
