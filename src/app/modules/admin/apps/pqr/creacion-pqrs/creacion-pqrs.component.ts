@@ -148,6 +148,8 @@ export class CreacionPQRSComponent implements OnInit {
             this.datos.tipo = 2;
             this.datos.tipoPQRS_nombre = 'Nuevo';
             this.identificaiconCliente = null;
+            this.datos.primerContacto = false;
+
         } else {
             let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
             this._pqrService
@@ -394,8 +396,7 @@ export class CreacionPQRSComponent implements OnInit {
                     : this.datos.descripcion,
             idPqrspadre: '',
             fechaSolucion: this.datos.fechaParaSolucion,
-            primerContacto:
-                this.datos.primerContacto == undefined ? false : true,
+            primerContacto:this.datos.primerContacto,
             adjuntos: this.crearJsonAdjuntos(),
             hijos: this.crearJsonHijas(),
             user: this.UsuarioSaggics
