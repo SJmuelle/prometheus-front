@@ -1,4 +1,6 @@
-<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+
+<app-mensaje-creacion  *ngIf="mostrar_formulario==false"></app-mensaje-creacion>
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="mostrar_formulario==true">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2  text-gray-900">Registro de PQRS</h2>
@@ -332,7 +334,7 @@
         </div>
         <div class="col-sm-12 col-lg-12 mt-2.5">
             <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
-                <div class="mb-2 mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
+                <div class="mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold  col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
                     (click)="tabMostrar=4">
                     Subir evidencias
                 </div>
@@ -412,3 +414,5 @@
     <hr><hr>
     <hr><hr>
 </div>
+
+
