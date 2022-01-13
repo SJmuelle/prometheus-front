@@ -39,7 +39,7 @@
                         <thead style="background-color: #F9FAFB;">
                             <tr
                                 class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
-                                <th class="px-4 py-3 text-center w-0 text-base"><mat-checkbox></mat-checkbox></th>
+                                <th class="px-4 py-3 text-center w-0 text-base"><mat-checkbox [(ngModel)]="isMasterSel" (change)="checkUncheckAll()"></mat-checkbox></th>
                                 <th class="px-4 py-3 text-center text-base">Factura</th>
                                 <th class="px-4 py-3 text-center text-base">NIT</th>
                                 <th class="px-4 py-3 text-center text-base">Proveedor</th>
@@ -49,7 +49,7 @@
                         <tbody class="bg-white">
                             <tr class="text-gray-700" *ngFor="let item of listado | paginate: { itemsPerPage: 6, currentPage: page } ">
                                 <td class="px-2 py-3 text-sm text-center">
-                                    <mat-checkbox></mat-checkbox>
+                                    <mat-checkbox [(ngModel)]="item.isSelected" value="{{item.id}}" (change)="isAllSelected()"></mat-checkbox>
                                 </td>
                                 <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
                                     {{ item.numeroFactura }}
