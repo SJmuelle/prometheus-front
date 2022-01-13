@@ -16,11 +16,18 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import { FilterPipe } from './factura/filter.pipe';
+import { MatSelectSearchModule } from 'mat-select-search';
+import { SearchPipe } from './factura/search.pipe';
 
 
 @NgModule({
   declarations: [
-    FacturaComponent
+    FacturaComponent,
+    FilterPipe,
+    SearchPipe,
   ],
     imports: [
         CommonModule,
@@ -35,7 +42,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         MatIconModule,
         FormsModule,
         ReactiveFormsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatDatepickerModule,
+        ScrollingModule,
+        MatSelectSearchModule
     ]
 })
 export class FechaCorridaModule { }

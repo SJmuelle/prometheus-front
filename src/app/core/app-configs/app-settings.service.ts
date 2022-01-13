@@ -59,8 +59,9 @@ export class AppSettingsService {
     public genericas = {
         url: {
             base: EndPoints.uri('consulta-lista-generica'),
-            baseFacturas: EndPoints.uri('cxp_ultracem'),
-            baseBancos: EndPoints.uri('bnco_transferencia/JHSALAZAR')
+            baseFacturas: EndPoints.uri('cxp_proveedor/900570964/2022-01-12'),
+            baseBancos: EndPoints.uri('bnco_transferencia/JHSALAZAR'),
+            baseProveedor: EndPoints.uri('buscar_proveedor')
         }
     };
     /**

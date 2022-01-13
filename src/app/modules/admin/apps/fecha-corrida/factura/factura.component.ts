@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {MatTableDataSource} from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
   styleUrls: ['./factura.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FacturaComponent implements OnInit {
 
@@ -20,16 +20,26 @@ export class FacturaComponent implements OnInit {
 
   banco: any = [];
 
+  prov: any = [];
+
   total:number;
 
   bncoForm: FormGroup;
 
-  isMasterSel:boolean;
+  provForm: FormGroup;
 
-  checkedItemList:any;
+  allComplete: boolean = false;
+
+  filterfact = '';
+
+  searchTxt: any;
 
   get frm() {
     return this.bncoForm.controls;
+  }
+
+  get frm2() {
+    return this.provForm.controls;
   }
 
   constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder) {
@@ -37,55 +47,37 @@ export class FacturaComponent implements OnInit {
       nombreBanco: ['', [Validators.required]]
     });
 
-    this.isMasterSel = false;
-
-    this.listado = [];
-
-    this.getCheckedItemList();
+    this.provForm = this.fb.group({
+      nombreProveedor: ['', [Validators.required]],
+      fechaVencimiento: ['', [Validators.required]],
+      filterprov: ['']
+    });
   }
 
   ngOnInit(): void {
     this.consulta();
     this.suma();
     this.consultaBnco();
+    this.consultaProveedor();
   }
 
-  checkUncheckAll(){
-    for (var i = 0; i < this.listado.length; i++) {
+  updateAllComplete() {
+    this.allComplete = this.listado != null && this.listado.every(t => t.completed);
+  }
 
-      this.listado[i].isSelected = this.isMasterSel;
-
+  someComplete(): boolean {
+    if (this.listado== null) {
+      return false;
     }
-
-    this.getCheckedItemList();
+    return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
   }
 
-  isAllSelected() {
-
-    this.isMasterSel = this.listado.every(function(item:any) {
-
-        return item.isSelected == true;
-
-      })
-
-    this.getCheckedItemList();
-
-  }
-
-  getCheckedItemList(){
-
-    this.checkedItemList = [];
-
-    for (var i = 0; i < this.listado.length; i++) {
-
-      if(this.listado[i].isSelected)
-
-      this.checkedItemList.push(this.listado[i]);
-
+  setAll(completed: boolean) {
+    this.allComplete = completed;
+    if (this.listado == null) {
+      return;
     }
-
-    this.checkedItemList = JSON.stringify(this.checkedItemList);
-
+    this.listado.forEach(t => (t.completed = completed));
   }
 
   suma(){
@@ -97,7 +89,7 @@ export class FacturaComponent implements OnInit {
   }
 
   consulta(){
-    Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    // Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getAllFactures().subscribe((response: any) => {
         Swal.close();
         // console.log(response)
@@ -115,7 +107,16 @@ export class FacturaComponent implements OnInit {
       if (response) {
         this.banco = response.data;
       }
-  });
+    });
+  }
+
+  consultaProveedor(){
+    this.cuentaService.getProveedor().subscribe((response: any) => {
+      console.log(response)
+      if (response) {
+        this.prov = response.data;
+      }
+    });
   }
 
 }

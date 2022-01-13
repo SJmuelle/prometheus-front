@@ -21,5 +21,9 @@ export class CuentasxcobrarService {
     return this._http.get(`${this._appSettings.genericas.url.baseBancos}`);
   }
 
+  public  getProveedor(): Observable<any> {
+    return this._http.get(`${this._appSettings.genericas.url.baseProveedor}`);
+  }
+
   
 }
