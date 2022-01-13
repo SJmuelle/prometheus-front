@@ -5,10 +5,10 @@
 export const environment = {
     production: false,
     // urlApi: 'http://192.168.190.237:8010/api-fintra/api',
-    urlApi: 'https://ultracem.ngrok.io/api-fintra/api',
-    // urlApi: 'http://192.168.140.241:8010/api-fintra/api',
-    urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/generic/qry/',
-   //  urlApi2: 'http://192.168.190.237:8010/api-fintra/api/generic/qry/',
+    // urlApi: 'https://ultracem.ngrok.io/api-fintra/api',
+    // urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/generic/qry/',
+    urlApi: 'http://192.168.140.241:8010/api-fintra/api',
+    urlApi2: 'http://192.168.140.241:8010/api-fintra/api/generic/qry/',
     urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic',
     urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
@@ -16,13 +16,13 @@ export const environment = {
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
-    // envioCorreo:"http://192.168.140.197:8084"
-    envioCorreo:"http://prometheus.fintra.co:8443/apicredit"
+//     // envioCorreo:"http://192.168.140.197:8084"
+    envioCorreo:"http://prometheus.fintra.co:8443/apicredit",
 
 
     // NGROK
     // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
-    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',
+    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',<
     // urlApi3: 'https://tefi.ngrok.io/api-fintra/api/generic',
 
     // urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
