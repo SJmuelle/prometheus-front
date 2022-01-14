@@ -428,7 +428,7 @@ export class CreacionPQRSComponent implements OnInit {
                                 }).then((result) => {
                                     debugger
                                     if (this.EstadoSagicc == false) {
-                                        let url = `pqrs/gestion`;
+                                        let url = `pqr/list`;
                                         this.router.navigateByUrl(url);
                                     } else {
                                         this.mostrar_formulario=false;
@@ -439,7 +439,7 @@ export class CreacionPQRSComponent implements OnInit {
                                 setTimeout(() => {
                                     debugger;
                                     if (this.EstadoSagicc == false) {
-                                        let url = `pqrs/gestion`;
+                                        let url = `pqr/list`;
                                         this.router.navigateByUrl(url);
                                     } else {
                                         this.mostrar_formulario=false;
@@ -637,13 +637,13 @@ export class CreacionPQRSComponent implements OnInit {
             showLoaderOnConfirm: true,
             showConfirmButton: true,
         }).then((result) => {
-            let url = `pqr/gestion/${respuesta.idPadre}`;
+            let url = `/pqr/list`;
             this.router.navigateByUrl(url);
         });
-        // setTimeout(() => {
-        //     let url = `pqr/gestion/${respuesta.idPadre}`;
-        //     this.router.navigateByUrl(url);
-        // }, 5000);
+        setTimeout(() => {
+            let url = `/pqr/list`;
+            this.router.navigateByUrl(url);
+        }, 5000);
     }
 
     mostrarDireccion() {
@@ -663,7 +663,7 @@ export class CreacionPQRSComponent implements OnInit {
             if (dataModal.departamentoNombre != undefined) {
                 this.datos.departamento = dataModal.departamentoNombre;
                 this.datos.ciudad = dataModal.municipioNombre;
-                this.datos.barrio = dataModal.barrio;
+                this.datos.barrio = dataModal.barrio==null?'':dataModal.barrio;
                 this.datos.direccion =
                     (dataModal.viaNombre == undefined
                         ? ''
