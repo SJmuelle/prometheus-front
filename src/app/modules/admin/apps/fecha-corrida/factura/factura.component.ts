@@ -2,7 +2,8 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FilterPipe } from './filterfactura.pipe';
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
@@ -24,30 +25,32 @@ export class FacturaComponent implements OnInit {
 
   total:number;
 
-  bncoForm: FormGroup;
+  bancoForm: FormGroup;
 
-  provForm: FormGroup;
+  proveedorForm: FormGroup;
 
   allComplete: boolean = false;
 
-  filterfact = '';
+  filterfactura = '';
 
-  searchTxt: any;
+  filterfactdate = '';
+
+  filterproveedor= '';
 
   get frm() {
-    return this.bncoForm.controls;
+    return this.bancoForm.controls;
   }
 
-  get frm2() {
-    return this.provForm.controls;
+  get frmprov() {
+    return this.proveedorForm.controls;
   }
 
   constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder) {
-    this.bncoForm = this.fb.group({
+    this.bancoForm = this.fb.group({
       nombreBanco: ['', [Validators.required]]
     });
 
-    this.provForm = this.fb.group({
+    this.proveedorForm = this.fb.group({
       nombreProveedor: ['', [Validators.required]],
       fechaVencimiento: ['', [Validators.required]],
       filterprov: ['']
@@ -59,6 +62,19 @@ export class FacturaComponent implements OnInit {
     this.suma();
     this.consultaBnco();
     this.consultaProveedor();
+  }
+
+  consulta(){
+    Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this.cuentaService.getAllFactures().subscribe((response: any) => {
+        Swal.close();
+        console.log(response)
+        if (response) {
+          this.listado = response.data;
+        } else {
+          this.listado = [];
+        }
+    });
   }
 
   updateAllComplete() {
@@ -85,19 +101,6 @@ export class FacturaComponent implements OnInit {
 
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
       console.log(this.total)
-    });
-  }
-
-  consulta(){
-    // Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.cuentaService.getAllFactures().subscribe((response: any) => {
-        Swal.close();
-        // console.log(response)
-        if (response) {
-          this.listado = response.data;
-        } else {
-          this.listado = [];
-        }
     });
   }
 

@@ -18,9 +18,10 @@ import {MatIconModule} from "@angular/material/icon";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ScrollingModule} from '@angular/cdk/scrolling';
-import { FilterPipe } from './factura/filter.pipe';
+import { FilterPipe } from './factura/filterfactura.pipe';
 import { MatSelectSearchModule } from 'mat-select-search';
-import { SearchPipe } from './factura/search.pipe';
+import { SearchPipe } from './factura/filterproveedor.pipe';
+import { FilterdatePipe } from './factura/filterdate.pipe';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { SearchPipe } from './factura/search.pipe';
     FacturaComponent,
     FilterPipe,
     SearchPipe,
+    FilterdatePipe,
   ],
     imports: [
         CommonModule,

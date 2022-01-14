@@ -17,16 +17,17 @@
                                 </div>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <form [formGroup]="provForm">
+                        <form [formGroup]="proveedorForm">
                             <div class="col-lg-12 col-sm-12 card_interna">
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-12">
                                         <mat-form-field class="flex-auto w-100">
                                             <mat-label>Proveedor</mat-label>
-                                            <mat-select [(ngModel)]="filterfact" [ngModelOptions]="{standalone: true}">
-                                                <input [(ngModel)]="searchTxt" matInput placeholder="search" [ngModelOptions]="{standalone: true}">
-                                                <mat-option 
-                                                    *ngFor="let item of prov | search : searchTxt"
+                                            <mat-select [(ngModel)]="filterfactura" [ngModelOptions]="{standalone: true}">
+                                                <input [(ngModel)]="filterproveedor" matInput placeholder="search" [ngModelOptions]="{standalone: true}">
+                                                <mat-option [value]="" selected>Selecciona..</mat-option>
+                                                <mat-option
+                                                    *ngFor="let item of prov | search : filterproveedor"
                                                     [value]="item.nit">{{ item.proveedor }}</mat-option>
                                             </mat-select>
                                         </mat-form-field>
@@ -34,7 +35,7 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <mat-form-field class="flex-auto w-100">
                                             <mat-label>Fecha de vencimiento</mat-label>
-                                            <input matInput [matDatepicker]="picker" formControlName="fechaVencimiento">
+                                            <input matInput [matDatepicker]="picker" [matDatepickerFilter]="filterfactdate" formControlName="fechaVencimiento">
                                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                             <mat-datepicker #picker></mat-datepicker>
                                         </mat-form-field>
@@ -52,7 +53,7 @@
                                 </div>
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <form [formGroup]="bncoForm">
+                        <form [formGroup]="bancoForm">
                             <div class="col-lg-12 col-sm-12 card_interna">
                                 <div class="row">
                                     <div class="col-lg-6 col-sm-12">
@@ -80,10 +81,11 @@
                                     <th class="px-4 py-3 text-center text-base">NIT</th>
                                     <th class="px-4 py-3 text-center text-base">Proveedor</th>
                                     <th class="px-4 py-3 text-center text-base">Valor</th>
+                                    <th class="px-4 py-3 text-center text-base">Vencimiento</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
-                                <tr class="text-gray-700" *ngFor="let item of listado | paginate: { itemsPerPage: 6, currentPage: page } | filter: filterfact">
+                                <tr class="text-gray-700" *ngFor="let item of listado | paginate: { itemsPerPage: 6, currentPage: page } | filter: filterfactura">
                                     <td class="px-2 py-3 text-sm text-center">
                                         <mat-checkbox [(ngModel)]="item.completed" value="{{item.id}}" (ngModelChange)="updateAllComplete()"></mat-checkbox>
                                     </td>
@@ -98,6 +100,9 @@
                                     </td>
                                     <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
                                         {{item.valorFactura | currency}}
+                                    </td>
+                                    <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
+                                        {{ item.vencimiento }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -114,7 +119,7 @@
                     </fuse-card>
                     <br>
                     <div class="flex-1 w-288 flex items-center justify-center">
-                        <button mat-raised-button color="primary" class="right-3" [disabled]="!bncoForm.valid"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Transferir</button>
+                        <button mat-raised-button color="primary" class="right-3" [disabled]="!bancoForm.valid"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Transferir</button>
                         <button mat-raised-button color="primary"><mat-icon>vertical_align_top</mat-icon>Exportar</button>
                         <button mat-raised-button class="left-3"><mat-icon>clear</mat-icon>Salir</button>
                     </div>
