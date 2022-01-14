@@ -31,7 +31,7 @@ export const pqrRoutes: Route[] = [
         component: CreacionPQRSComponent,
     },
     {
-        path: 'gestion',
+        path: 'list',
         component: ListComponent,
     },
     {
