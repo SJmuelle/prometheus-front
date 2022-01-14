@@ -225,6 +225,15 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           if(data.activos){
             this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
           }
+          if(data.cupoTotal){
+            this.form.controls['cupoTotal'].setValue(this.utility.formatearNumero(String(this.form.value.cupoTotal)));
+          }
+          if(data.cupoReservado){
+            this.form.controls['cupoReservado'].setValue(this.utility.formatearNumero(String(this.form.value.cupoReservado)));
+          }
+          if(data.cupoDisponible){
+            this.form.controls['cupoDisponible'].setValue(this.utility.formatearNumero(String(this.form.value.cupoDisponible)));
+          }
 
           this.tipoDocumento = data.tipoDocumento;
           const datosDocumentos: any = {
@@ -447,7 +456,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           cupoDisponible:                [''],
           score:                         [''],
           descripcionSubestado:          [''],
-          nivelRiesgo:                   [''],
+          descripcionScore:              [''],
           nivelEndeudamiento:            [''],
           comprasSemanales:              [''],
           antiguedadComprasSemanales:    [''],
