@@ -1,27 +1,29 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { FilterPipe } from './filterfactura.pipe';
+
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./factura.component.scss']
 })
 export class FacturaComponent implements OnInit {
 
   listado: any=[];
+
   page:number=1;
+
   tamanoTabl:number=5;
+
   filtrarTabla:string='';
+
   mostrar_form:boolean = true;
-  datos: any={};
 
   banco: any = [];
 
-  prov: any = [];
+  proveedor: any = [];
 
   total:number;
 
@@ -31,12 +33,18 @@ export class FacturaComponent implements OnInit {
 
   allComplete: boolean = false;
 
-  filterfactura = '';
+  filterfactura: String = '';
 
   filterfactdate = '';
 
-  filterproveedor= '';
+  filterproveedor: String = '';
 
+  nit = false;
+  docufactura: String = '';
+  opcion = false;
+  transferencia:string = '';
+
+  ArrayGuardado:any=[]
   get frm() {
     return this.bancoForm.controls;
   }
@@ -62,6 +70,32 @@ export class FacturaComponent implements OnInit {
     this.suma();
     this.consultaBnco();
     this.consultaProveedor();
+  }
+
+  acumular(item){
+    let data={
+      nit:item.nit,
+      factura:item.documentoCxp
+    }
+    if(item.completed){
+      this.ArrayGuardado.push(data)
+    }else{
+      let idx =  this.ArrayGuardado.indexOf(data);
+      this.ArrayGuardado.splice(idx, 1)
+    }
+    console.log( this.ArrayGuardado)
+  }
+
+  pagarFacturas(){
+    
+  }
+
+  suma(){
+    this.cuentaService.getAllFactures().subscribe((response: any) => {
+
+      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
+      console.log(this.total)
+    });
   }
 
   consulta(){
@@ -93,15 +127,19 @@ export class FacturaComponent implements OnInit {
     if (this.listado == null) {
       return;
     }
+    if(completed){
+      this.ArrayGuardado=[];
+      for (const item of this.listado) {
+        this.ArrayGuardado.push({
+          nit:item.nit,
+          factura:item.documentoCxp
+        })
+      }
+    }else{
+      this.ArrayGuardado=[];
+    }
+    console.log( this.ArrayGuardado)
     this.listado.forEach(t => (t.completed = completed));
-  }
-
-  suma(){
-    this.cuentaService.getAllFactures().subscribe((response: any) => {
-
-      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-      console.log(this.total)
-    });
   }
 
   consultaBnco(){
@@ -117,7 +155,7 @@ export class FacturaComponent implements OnInit {
     this.cuentaService.getProveedor().subscribe((response: any) => {
       console.log(response)
       if (response) {
-        this.prov = response.data;
+        this.proveedor = response.data;
       }
     });
   }
