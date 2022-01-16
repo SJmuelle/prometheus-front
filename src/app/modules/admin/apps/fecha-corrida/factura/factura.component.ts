@@ -45,6 +45,17 @@ export class FacturaComponent implements OnInit {
   transferencia:string = '';
 
   ArrayGuardado:any=[]
+
+  ArrayBanco:any=[]
+
+  datosTransferencia:any;
+
+  trans={
+    banco:'',
+    proveedor:'',
+    ArrayGuardado:[]
+  }
+
   get frm() {
     return this.bancoForm.controls;
   }
@@ -74,20 +85,35 @@ export class FacturaComponent implements OnInit {
 
   acumular(item){
     let data={
-      nit:item.nit,
       factura:item.documentoCxp
     }
     if(item.completed){
-      this.ArrayGuardado.push(data)
+      this.trans.ArrayGuardado.push(data)
+
     }else{
-      let idx =  this.ArrayGuardado.indexOf(data);
-      this.ArrayGuardado.splice(idx, 1)
+      let idx =  this.trans.ArrayGuardado.indexOf(data);
+      this.trans.ArrayGuardado.splice(idx, 1)
     }
-    console.log( this.ArrayGuardado)
+    console.log( this.trans.ArrayGuardado)
+  }
+
+  acumularBanco(item){
+    let data={
+      descripcion:item.descripcion
+    }
+
+    this.ArrayBanco.push(data)
+    let idx =  this.ArrayBanco.indexOf(data);
+    this.ArrayGuardado.splice(idx, 1)
+    
+    console.log( this.ArrayBanco)
   }
 
   pagarFacturas(){
-    
+    // this.cuentaService.postTransferencia(this.ArrayGuardado).subscribe((response: any)=>{})
+    // console.log("Aqui tu arreglo: ", this.ArrayGuardado)
+    // console.log("Usuario: ", localStorage.getItem('usuario'))
+    console.log("Aqui tu banco: ", this.trans.banco)
   }
 
   suma(){

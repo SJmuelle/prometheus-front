@@ -60,7 +60,7 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <mat-form-field class="flex-auto w-100">
                                             <mat-label>Banco transferencia</mat-label>
-                                            <mat-select formControlName="nombreBanco">
+                                            <mat-select [(ngModel)]="trans.banco" [ngModelOptions]="{standalone: true}">
                                                 <mat-option
                                                     *ngFor="let item of banco"
                                                     [value]="item.descripcion">{{ item.tableCode }}</mat-option>
