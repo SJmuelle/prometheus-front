@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'app-factura',
@@ -48,12 +49,19 @@ export class FacturaComponent implements OnInit {
 
   ArrayBanco:any=[]
 
+  tempArray:any=[]
+
+  myArr = sessionStorage.getItem('usuario');
+
+  myArrStr = JSON.parse(this.myArr);
+
   datosTransferencia:any;
 
   trans={
-    banco:'',
-    proveedor:'',
-    ArrayGuardado:[]
+    proveedor:"",
+    banco:"",
+    usuario: this.myArrStr.user,
+    details:[]
   }
 
   get frm() {
@@ -64,7 +72,7 @@ export class FacturaComponent implements OnInit {
     return this.proveedorForm.controls;
   }
 
-  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder) {
+  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder, private auth: AuthService) {
     this.bancoForm = this.fb.group({
       nombreBanco: ['', [Validators.required]]
     });
@@ -81,20 +89,23 @@ export class FacturaComponent implements OnInit {
     this.suma();
     this.consultaBnco();
     this.consultaProveedor();
+    
+    // console.log(this.myArrStr.user);
   }
 
   acumular(item){
     let data={
-      factura:item.documentoCxp
+      documentoCxp:item.documentoCxp
     }
     if(item.completed){
-      this.trans.ArrayGuardado.push(data)
+
+      this.trans.details.push(data)
 
     }else{
-      let idx =  this.trans.ArrayGuardado.indexOf(data);
-      this.trans.ArrayGuardado.splice(idx, 1)
+      let idx =  this.trans.details.indexOf(data);
+      this.trans.details.splice(idx, 1)
     }
-    console.log( this.trans.ArrayGuardado)
+    console.log( this.trans.details)
   }
 
   acumularBanco(item){
@@ -110,10 +121,18 @@ export class FacturaComponent implements OnInit {
   }
 
   pagarFacturas(){
-    // this.cuentaService.postTransferencia(this.ArrayGuardado).subscribe((response: any)=>{})
-    // console.log("Aqui tu arreglo: ", this.ArrayGuardado)
+    this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
+      console.log("Aqui tus datos: ", response)
+      // console.log("Aqui tu proveedor: ", this.trans.proveedor)
+      // console.log("Aqui tu banco: ", this.trans.banco)
+      // console.log("Aqui tu usuario: ", this.trans.usuario)
+      // console.log("Aqui tus facturas: ", this.trans.details)
+    })
+    
+    // console.log("Aqui tu usuario: ", sessionStorage.getItem('user'))
+
     // console.log("Usuario: ", localStorage.getItem('usuario'))
-    console.log("Aqui tu banco: ", this.trans.banco)
+    
   }
 
   suma(){

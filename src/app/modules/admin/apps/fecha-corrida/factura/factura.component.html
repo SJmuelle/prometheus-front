@@ -23,7 +23,7 @@
                                     <div class="col-lg-6 col-sm-12">
                                         <mat-form-field class="flex-auto w-100">
                                             <mat-label>Proveedor</mat-label>
-                                            <mat-select [(ngModel)]="filterfactura" [ngModelOptions]="{standalone: true}">
+                                            <mat-select [(ngModel)]="filterfactura" [(ngModel)]="trans.proveedor" [ngModelOptions]="{standalone: true}">
                                                 <input matInput placeholder="Buscar proveedor" [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}">
                                                 <mat-option [value]="" selected>Selecciona..</mat-option>
                                                 <mat-option

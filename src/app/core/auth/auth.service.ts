@@ -96,7 +96,8 @@ export class AuthService
                     id: response.data.nit,
                     name: response.data.nombre,
                     email: response.data.email,
-                    status: 'online'
+                    status: 'online',
+                    user: response.data.idusuario
                 });
                 sessionStorage.setItem("usuario", user );
                 // Return a new observable with the response
