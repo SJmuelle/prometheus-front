@@ -1,7 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ReferenciacionClienteService} from "../../../../../../core/services/referenciacion-cliente.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
+import {UtilityService} from "../../../../../../resources/services/utility.service";
 
 @Component({
   selector: 'app-form-gestion-referenciacion-modal',
@@ -13,13 +15,103 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
   constructor(
       private referenciacionCliente: ReferenciacionClienteService,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private _matDialog: MatDialog,
+      private _matDialogRef: MatDialogRef<FormGestionReferenciacionModalComponent>,
+      public utility: UtilityService,
   ) { }
 
   ngOnInit(): void {
       const numeroSolicitud: string = this.data.numeroSolicitud;
       this.getReferencia(numeroSolicitud);
       this.crearFormulario();
+  }
+
+  public onCerrar(): void {
+      this._matDialogRef.close();
+  }
+
+  public openModalDirection(): void {
+      const dialoRef = this._matDialog.open(DirectionsComponent, {
+         width: '60%',
+         data: {
+             departamento: '',
+             municipio: '',
+             barrio: '',
+             direccion: '',
+         },
+         disableClose: false
+      });
+
+      dialoRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          console.log(dataModal);
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
+              this.form.controls.departamento.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudad.setValue(dataModal.municipio);
+              this.form.controls.ciudad.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.barrio.setValue(dataModal.barrio);
+              this.form.controls.direccionResidencial.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
+  }
+  public openModalDirectionNegocio(): void {
+      const dialoRef = this._matDialog.open(DirectionsComponent, {
+         width: '60%',
+         data: {
+             departamento: '',
+             municipio: '',
+             barrio: '',
+             direccion: '',
+         },
+         disableClose: false
+      });
+
+      dialoRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          console.log(dataModal);
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamentoNegocio.setValue(dataModal.departamento);
+              this.form.controls.departamentoNegocio.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudadNegocio.setValue(dataModal.municipio);
+              this.form.controls.ciudadNegocio.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrioNegocio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.barrioNegocio.setValue(dataModal.barrio);
+              this.form.controls.direccionNegocio.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
   }
 
   private getReferencia(numeroSolicitud: string): void {

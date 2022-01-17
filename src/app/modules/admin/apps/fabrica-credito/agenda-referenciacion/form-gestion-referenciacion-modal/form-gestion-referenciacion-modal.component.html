@@ -1,145 +1,307 @@
-<h2 mat-dialog-title>Persona Natural</h2>
-<mat-dialog-content>
-    <div class="grid grid-cols-1">
-        <form [formGroup]="form">
-            <div class="bg-white flex flex-col">
-                <span class="col-span-12 rounded-1 mb-3 text-dark">Datos del cliente</span>
-                <hr>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Primer nombre</mat-label>
-                        <input matInput type="text" [formControlName]="'primerNombre'">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Segundo nombre</mat-label>
-                        <input matInput type="text" [formControlName]="'segundoNombre'">
-                    </mat-form-field>
+<ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+    <h2 mat-dialog-title>Persona Natural</h2>
+</ng-container>
+<ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+    <h2 mat-dialog-title>Persona Jurídica</h2>
+</ng-container>
+<mat-tab-group [animationDuration]="'0'">
+    <mat-tab>
+        <ng-template matTabLabel>Datos del titular</ng-template>
+        <mat-dialog-content>
+            <div class="grid grid-cols-1">
+                <form [formGroup]="form">
+                    <div class="bg-white flex flex-col">
+                        <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos del cliente</span>
+                        <div class="md:flex">
+                            <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Razón social</mat-label>
+                                    <input matInput type="text" [formControlName]="'nombreCompleto'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Teléfono de la empresa</mat-label>
+                                    <input matInput type="text" [formControlName]="'telefono'">
+                                </mat-form-field>
+                            </ng-container>
+                            <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Primer nombre</mat-label>
+                                    <input matInput type="text" [formControlName]="'primerNombre'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Segundo nombre</mat-label>
+                                    <input matInput type="text" [formControlName]="'segundoNombre'">
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="md:flex">
+                            <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Primer apellido</mat-label>
+                                    <input matInput type="text"  [formControlName]="'primerApellido'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Segundo apellido</mat-label>
+                                    <input matInput type="text" [formControlName]="'segundoApellido'">
+                                </mat-form-field>
+                            </ng-container>
+                            <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Celular empresa</mat-label>
+                                    <input matInput type="text" [formControlName]="'celular'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="text" [formControlName]="'email'">
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Teléfono</mat-label>
+                                    <input matInput type="text" [formControlName]="'telefono'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Celular cliente</mat-label>
+                                    <input matInput type="text" [formControlName]="'celular'">
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="text" [formControlName]="'email'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Departamento residencia</mat-label>
+                                    <input matInput type="text" [formControlName]="'departamento'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Ciudad municipio residencia</mat-label>
+                                    <input matInput type="text" [formControlName]="'ciudad'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Barrio</mat-label>
+                                    <input matInput type="text" [formControlName]="'barrio'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Dirección</mat-label>
+                                    <input matInput type="text" [formControlName]="'direccionResidencial'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                            <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos e información financiera del negocio</span>
+                        </ng-container>
+                        <div class="md:flex">
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Departamento del negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'departamentoNegocio'"
+                                       (keydown)="openModalDirectionNegocio()" (click)="openModalDirectionNegocio()"
+                                >
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Ciudad / municipio del negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'ciudadNegocio'"
+                                       (keydown)="openModalDirectionNegocio()" (click)="openModalDirectionNegocio()"
+                                >
+                            </mat-form-field>
+                        </div>
+                        <div class="md:flex">
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Barrio</mat-label>
+                                <input matInput type="text" [formControlName]="'barrioNegocio'"
+                                       (keydown)="openModalDirectionNegocio()" (click)="openModalDirectionNegocio()"
+                                >
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Dirección del negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'direccionNegocio'"
+                                       (keydown)="openModalDirectionNegocio()" (click)="openModalDirectionNegocio()"
+                                >
+                            </mat-form-field>
+                        </div>
+                        <div class="md:flex">
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Teléfono del negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'telefonoNegocio'">
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                                <mat-form-field class="col-lg-6" appearance="fill">
+                                    <mat-label>¿Se encuentra registrado en camára de comercio?</mat-label>
+                                    <mat-select [formControlName]="'camaraComercio'">
+                                        <mat-option value="">Selecciona</mat-option>
+                                        <mat-option [value]="'S'">Si</mat-option>
+                                        <mat-option [value]="'N'">Si</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                            <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Activos ($)</mat-label>
+                                    <input matInput type="text" [formControlName]="'activos'"
+                                           (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); "
+                                    >
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Ventas mensuales ($)</mat-label>
+                                <input matInput type="text" [formControlName]="'ventasMensuales'"
+                                       (keyup)="form.controls['ventasMensuales'].setValue(utility.formatearNumero(form.value.ventasMensuales)); "
+                                >
+                            </mat-form-field>
+                        </ng-container>
+                        <div></div>
+                        <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Nit</mat-label>
+                                    <input matInput type="text" [formControlName]="'nitNegocio'">
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Activos ($)</mat-label>
+                                    <input matInput type="text" [formControlName]="'activos'"
+                                           (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); "
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Ventas mensuales ($)</mat-label>
+                                    <input matInput type="text" [formControlName]="'ventasMensuales'"
+                                           (keyup)="form.controls['ventasMensuales'].setValue(utility.formatearNumero(form.value.ventasMensuales)); "
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+                            <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos del representante legal</span>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Primer nombre</mat-label>
+                                    <input matInput type="text" [formControlName]="'primerNombre'"
+                                    >
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Segundo nombre</mat-label>
+                                    <input matInput type="text" [formControlName]="'segundoNombre'"
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Primer apellido</mat-label>
+                                    <input matInput type="text" [formControlName]="'primerApellido'"
+                                    >
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Segundo apellido</mat-label>
+                                    <input matInput type="text" [formControlName]="'segundoApellido'"
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Celular</mat-label>
+                                    <input matInput type="text" [formControlName]="'celular'"
+                                    >
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="text" [formControlName]="'email'"
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Departamento residencia</mat-label>
+                                    <input matInput type="text" [formControlName]="'departamento'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Ciudad / municipio residencia</mat-label>
+                                    <input matInput type="text" [formControlName]="'ciudad'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                            </div>
+                            <div class="md:flex">
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Barrio</mat-label>
+                                    <input matInput type="text" [formControlName]="'barrio'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                    <mat-label>Dirección</mat-label>
+                                    <input matInput type="text" [formControlName]="'direccionResidencial'"
+                                           (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                    >
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                    </div>
+                </form>
+            </div>
+        </mat-dialog-content>
+        <mat-dialog-actions>
+            <div class="flex flex-row items-center justify-content-between sm:justify-between w-full">
+                <div>
+                    <button mat-raised-button color="primary" type="button">
+                        Referenciar
+                    </button>
+                    <button mat-raised-button class="bg-gray-400 text-white" type="button" >
+                        Reprogramar
+                    </button>
+                    <button mat-raised-button color="primary" type="button">
+                        Devolver
+                    </button>
+                    <button mat-raised-button class="bg-gray-400 text-white" type="button" >
+                        Comentarios
+                    </button>
                 </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Primer apellido</mat-label>
-                        <input matInput type="text"  [formControlName]="'primerApellido'">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Segundo apellido</mat-label>
-                        <input matInput type="text" [formControlName]="'segundoApellido'">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Teléfono</mat-label>
-                        <input matInput type="text" [formControlName]="'telefono'">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Celular cliente</mat-label>
-                        <input matInput type="text" [formControlName]="'celular'">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="text" [formControlName]="'email'">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Departamento residencia</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Ciudad municipio residencia</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Barrio</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Dirección</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                </div>
-                <span class="col-span-12 rounded-1 mb-3 text-dark">Datos e información financiera del negocio</span>
-                <hr>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Departamento del negocio</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Ciudad / municipio del negocio</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Barrio</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Dirección del negocio</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Teléfono del negocio</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                    <mat-form-field class="col-lg-6" appearance="fill">
-                        <mat-label>¿Se encuentra registrado en camára de comercio?</mat-label>
-                        <mat-select >
-                            <mat-option value="">Selecciona</mat-option>
-                            <mat-option >Si
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Nit</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Activos ($)</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
-                </div>
-                <div class="md:flex">
-                    <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
-                        <mat-label>Ventas mensuales ($)</mat-label>
-                        <input matInput type="text" [formControlName]="">
-                    </mat-form-field>
+                <div>
+                    <button mat-raised-button color="primary" type="button">
+                        Guardar
+                    </button>
+                    <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button"
+                            (click)="onCerrar()"
+                    >
+                        Cerrar
+                    </button>
                 </div>
             </div>
-        </form>
-    </div>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <div class="flex flex-row items-center justify-content-between sm:justify-between w-full">
-        <div>
-            <button mat-raised-button color="primary" type="button">
-                Referenciar
-            </button>
-            <button mat-raised-button class="bg-gray-400 text-white" type="button" >
-                Reprogramar
-            </button>
-            <button mat-raised-button color="primary" type="button">
-                Devolver
-            </button>
-            <button mat-raised-button class="bg-gray-400 text-white" type="button" >
-                Comentarios
-            </button>
-        </div>
-        <div>
-            <button mat-raised-button color="primary" type="button">
-                Guardar
-            </button>
-            <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" >
-                Cerrar
-            </button>
-        </div>
-    </div>
-</mat-dialog-actions>
+        </mat-dialog-actions>
+    </mat-tab>
+    <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
+        <mat-tab>
+            <ng-template matTabLabel>Referencias personales</ng-template>
+            <app-grid-referenciacion></app-grid-referenciacion>
+        </mat-tab>
+    </ng-container>
+    <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
+        <mat-tab>
+            <ng-template matTabLabel>Referencias comerciales</ng-template>
+            <app-grid-referenciacion></app-grid-referenciacion>
+        </mat-tab>
+    </ng-container>
+</mat-tab-group>
+
+

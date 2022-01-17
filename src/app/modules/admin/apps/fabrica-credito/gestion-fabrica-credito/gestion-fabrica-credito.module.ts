@@ -37,19 +37,19 @@ import { GridPoliticasComponent } from './grid-politicas/grid-politicas.componen
 
 
 @NgModule({
-  declarations: [
-    FormGestionFabricaCreditoComponent,
-    FormRepresentanteLegalComponent,
-    GridReferenciasComponent,
-    FormDetallesReferenciasComponent,
-    FormDialogReferenciasComponent,
-    GridComentariosComponent,
-    GridDocumentacionComponent,
-    FormDialogCompararDocumentosComponent,
-    FormDialogDecisionComponent,
-    FormDialogComentariosComponent,
-    GridPoliticasComponent,
-  ],
+    declarations: [
+        FormGestionFabricaCreditoComponent,
+        FormRepresentanteLegalComponent,
+        GridReferenciasComponent,
+        FormDetallesReferenciasComponent,
+        FormDialogReferenciasComponent,
+        GridComentariosComponent,
+        GridDocumentacionComponent,
+        FormDialogCompararDocumentosComponent,
+        FormDialogDecisionComponent,
+        FormDialogComentariosComponent,
+        GridPoliticasComponent,
+    ],
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
@@ -76,5 +76,8 @@ import { GridPoliticasComponent } from './grid-politicas/grid-politicas.componen
 
     ],
 
+    exports: [
+        GridReferenciasComponent
+    ]
 })
 export class GestionFabricaCreditoModule { }
