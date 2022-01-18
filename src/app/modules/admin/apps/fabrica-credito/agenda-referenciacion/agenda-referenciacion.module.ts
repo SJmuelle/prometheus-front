@@ -18,17 +18,13 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
-import { GridReferenciacionComponent } from './grid-referenciacion/grid-referenciacion.component';
 import {GestionFabricaCreditoModule} from "../gestion-fabrica-credito/gestion-fabrica-credito.module";
-import { FormDialogReferenciacionComponent } from './form-dialog-referenciacion/form-dialog-referenciacion.component';
 
 
 @NgModule({
   declarations: [
     GridAgendaReferenciacionComponent,
     FormGestionReferenciacionModalComponent,
-    GridReferenciacionComponent,
-    FormDialogReferenciacionComponent
   ],
     imports: [
         CommonModule,

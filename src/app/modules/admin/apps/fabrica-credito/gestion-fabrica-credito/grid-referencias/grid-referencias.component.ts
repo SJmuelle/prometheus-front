@@ -5,9 +5,7 @@ import {ReferenciasService} from "../../../../../../core/services/referencias.se
 import {MatDialog} from "@angular/material/dialog";
 import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
 import {FormDetallesReferenciasComponent} from "../form-detalles-referencias/form-detalles-referencias.component";
-import {
-    FormDialogReferenciacionComponent
-} from "../../agenda-referenciacion/form-dialog-referenciacion/form-dialog-referenciacion.component";
+
 
 @Component({
   selector: 'app-grid-referencias',
