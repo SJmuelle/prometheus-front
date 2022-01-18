@@ -118,6 +118,8 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
       this.referenciacionCliente.getReferenciaCliente(numeroSolicitud).subscribe((res) => {
           if (res.data){
               this.form.patchValue(res.data);
+              this.data.ver = true;
+              this.data.tipoDocumento = res.data.tipoDocumento;
           }
       });
 

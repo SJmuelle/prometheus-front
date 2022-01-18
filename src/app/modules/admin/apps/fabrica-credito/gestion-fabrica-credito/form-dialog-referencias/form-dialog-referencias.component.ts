@@ -58,7 +58,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                 direccion: '',
             },
           disableClose: false
-      }); 
+      });
 
       dialogRef.afterClosed().subscribe((res) => {
           // this.formTab1.controls['direccionNegocio'].setValue(res);

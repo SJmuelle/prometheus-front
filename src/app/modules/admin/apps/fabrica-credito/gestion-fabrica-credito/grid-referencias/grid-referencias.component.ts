@@ -1,25 +1,30 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {ReferenciasService} from "../../../../../../core/services/referencias.service";
 import {MatDialog} from "@angular/material/dialog";
 import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
 import {FormDetallesReferenciasComponent} from "../form-detalles-referencias/form-detalles-referencias.component";
+import {
+    FormDialogReferenciacionComponent
+} from "../../agenda-referenciacion/form-dialog-referenciacion/form-dialog-referenciacion.component";
 
 @Component({
   selector: 'app-grid-referencias',
   templateUrl: './grid-referencias.component.html',
   styleUrls: ['./grid-referencias.component.scss']
 })
-export class GridReferenciasComponent implements OnInit, OnDestroy {
+export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewInit {
   public referencias$: Observable<any>;
   public esVer: boolean = false;
   public subscription$: Subscription;
+  @Input() datos: any;
   constructor(
       private route: ActivatedRoute,
       private referenciasService: ReferenciasService,
       private _dialog: MatDialog
   ) {
+
 
   }
 
@@ -88,6 +93,14 @@ export class GridReferenciasComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
       this.esVer = false;
       this.subscription$.unsubscribe();
+    }
+
+    ngAfterViewInit(): void {
+        if (this.datos) {
+            if (Object.keys(this.datos).length) {
+                this.getReferencias(this.datos.numeroSolicitud);
+            }
+        }
     }
 
 

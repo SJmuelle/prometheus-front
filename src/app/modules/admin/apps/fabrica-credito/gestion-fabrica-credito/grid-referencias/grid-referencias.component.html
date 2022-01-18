@@ -1,12 +1,23 @@
 <div class="row" [ngSwitch]="esVer">
     <div class="flex justify-end mb-4">
-        <button mat-raised-button
-                color="accent"
-                type="button"
-                (click)="onDialogReferencia()"
-        >
-            Nueva referencia
-        </button>
+        <ng-container *ngIf="!datos">
+            <button mat-raised-button
+                    color="accent"
+                    type="button"
+                    (click)="onDialogReferencia()"
+            >
+                Nueva referencia
+            </button>
+        </ng-container>
+        <!--<ng-container *ngIf="datos">
+            <button mat-raised-button
+                    color="accent"
+                    type="button"
+                    (click)="onDialogReferenciacion()"
+            >
+                Nueva referencia
+            </button>
+        </ng-container>-->
     </div>
     <ng-container >
         <div class="col-md-12 col-lg-12">

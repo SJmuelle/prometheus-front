@@ -293,13 +293,23 @@
     <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
         <mat-tab>
             <ng-template matTabLabel>Referencias personales</ng-template>
-            <app-grid-referenciacion></app-grid-referenciacion>
+            <ng-container *ngIf="(data | json) != undefined">
+                <app-grid-referencias
+                    [datos]="data"
+                >
+                </app-grid-referencias>
+            </ng-container>
         </mat-tab>
     </ng-container>
     <ng-container *ngIf="form.controls.tipoDocumento.value === 'NIT'">
         <mat-tab>
             <ng-template matTabLabel>Referencias comerciales</ng-template>
-            <app-grid-referenciacion></app-grid-referenciacion>
+            <ng-container *ngIf="(data | json) != undefined">
+                <app-grid-referencias
+                    [datos]="data"
+                >
+                </app-grid-referencias>
+            </ng-container>
         </mat-tab>
     </ng-container>
 </mat-tab-group>
