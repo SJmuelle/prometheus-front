@@ -71,7 +71,7 @@ export class FacturaComponent implements OnInit {
 
   myArrStr = JSON.parse(this.myArr);
 
-  public ver:boolean = true;
+  mostrar:boolean;
 
   datosTransferencia:any;
 
@@ -111,8 +111,8 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
     // this.mystartDate = new Date('12/2/2020');
-    // this.consulta();
-    this.filtrarDatos();
+    //this.consulta();
+    //this.filtrarDatos();
     // this.suma();
     this.consultaBnco();
     this.consultaProveedor();
@@ -123,22 +123,27 @@ export class FacturaComponent implements OnInit {
   }
 
   filtrarDatos(){
+    
     const {nit, vencimiento} = this.proveedorForm.getRawValue();
     console.log(nit, vencimiento);
+    Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, vencimiento).subscribe((response: any)=>{
-      this.arrayFiltro = response.data
+      Swal.close();
+      debugger;
+      // this.arrayFiltro = response.data
+      // console.log(this.arrayFiltro)
 
       if (response) {
-        this.listado = this.arrayFiltro;
+        this.listado = response.data;
       } else {
         this.listado = [];
       }
-
-      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-      console.log(this.total)
-      // console.log("Aqui tu dato", response.data)
-      this.ver=true
+      this.mostrar=true
+      // this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
+      // console.log(this.total)
     })
+   
+    
   }
 
   acumular(item){
