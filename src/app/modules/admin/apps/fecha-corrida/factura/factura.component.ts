@@ -1,47 +1,22 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from 'app/core/auth/auth.service';
-import { HttpClient } from '@angular/common/http'; 
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import * as _moment from 'moment';
-import { Moment } from 'moment';
-import {default as _rollupMoment} from 'moment';
-
-const moment = _rollupMoment || _moment;
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'YYYY-MM-DD',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
-  ]
+  styleUrls: ['./factura.component.scss']
 })
 export class FacturaComponent implements OnInit {
 
   listado: any=[];
 
-  public page:number=1;
+  page:number=1;
 
-  public tamanoTabl = new FormControl("5");
+  tamanoTabl:number=5;
 
   filtrarTabla:string='';
 
@@ -59,19 +34,26 @@ export class FacturaComponent implements OnInit {
 
   allComplete: boolean = false;
 
-  filterfactura = '';
+  filterfactura: String = '';
 
   filterfactdate = '';
 
   filterproveedor: String = '';
 
+  nit = false;
+  docufactura: String = '';
+  opcion = false;
+  transferencia:string = '';
+
   ArrayGuardado:any=[]
+
+  ArrayBanco:any=[]
+
+  tempArray:any=[]
 
   myArr = sessionStorage.getItem('usuario');
 
   myArrStr = JSON.parse(this.myArr);
-
-  mostrar:boolean;
 
   datosTransferencia:any;
 
@@ -82,13 +64,9 @@ export class FacturaComponent implements OnInit {
     details:[]
   }
 
-  arrayFiltro:any=[]
+  details:any=[];
 
-  date = new FormControl(new Date());
-
-  mystartDate:Date;
-
-  showModal = false;
+  mostrar:boolean;
 
   get frm() {
     return this.bancoForm.controls;
@@ -98,86 +76,23 @@ export class FacturaComponent implements OnInit {
     return this.proveedorForm.controls;
   }
 
-  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder, private auth: AuthService, private http:HttpClient) {
+  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder, private auth: AuthService) {
     this.bancoForm = this.fb.group({
       nombreBanco: ['', [Validators.required]]
     });
 
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
-      vencimiento: ['', [Validators.required]]
+      vencimiento: ['', [Validators.required]],
+      filterprov: ['']
     });
   }
 
   ngOnInit(): void {
-    // this.mystartDate = new Date('12/2/2020');
-    //this.consulta();
-    //this.filtrarDatos();
-    // this.suma();
+    // this.consulta();
+    //this.suma();
     this.consultaBnco();
     this.consultaProveedor();
-  }
-
-  toggleModal(){
-    this.showModal = !this.showModal;
-  }
-
-  filtrarDatos(){
-    
-    const {nit, vencimiento} = this.proveedorForm.getRawValue();
-    console.log(nit, vencimiento);
-    Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.cuentaService.getFacturesFilter(nit, vencimiento).subscribe((response: any)=>{
-      Swal.close();
-      debugger;
-      // this.arrayFiltro = response.data
-      // console.log(this.arrayFiltro)
-
-      if (response) {
-        this.listado = response.data;
-      } else {
-        this.listado = [];
-      }
-      this.mostrar=true
-      // this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-      // console.log(this.total)
-    })
-   
-    
-  }
-
-  acumular(item){
-    let data={
-      documentoCxp:item.documentoCxp
-    }
-    if(item.completed){
-
-      this.trans.details.push(data)
-
-    }else{
-      let idx =  this.trans.details.indexOf(data);
-      this.trans.details.splice(idx, 1)
-    }
-    console.log( this.trans.details)
-  }
-
-  pagarFacturas(){
-    this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
-      console.log("Aqui tus datos: ", response)
-      // console.log("Aqui tu proveedor: ", this.trans.proveedor)
-      // console.log("Aqui tu banco: ", this.trans.banco)
-      // console.log("Aqui tu usuario: ", this.trans.usuario)
-      // console.log("Aqui tus facturas: ", this.trans.details)
-    })
-    
-  }
-
-  suma(){
-    this.cuentaService.getAllFactures().subscribe((response: any) => {
-
-      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-      console.log(this.total)
-    });
   }
 
   consulta(){
@@ -192,6 +107,83 @@ export class FacturaComponent implements OnInit {
         }
     });
   }
+
+  filtrarDatos(){
+    
+    const {nit, vencimiento} = this.proveedorForm.getRawValue();
+    console.log(nit, vencimiento);
+    Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this.cuentaService.getFacturesFilter(nit, vencimiento).subscribe((response: any)=>{
+      Swal.close();
+      // this.arrayFiltro = response.data
+      console.log(response.data)
+
+      if (response) {
+        this.listado = response.data;
+      } else {
+        this.listado = [];
+      }
+      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
+      // console.log(this.total)
+      this.mostrar=true
+    })
+   
+    
+  }
+
+  acumular(item){
+    let data={
+      documentoCxp:item.documentoCxp
+    }
+    if(item.completed){
+
+      this.details.push(data)
+
+    }else{
+      let idx =  this.details.indexOf(data);
+      this.details.splice(idx, 1)
+    }
+    console.log( this.details)
+  }
+
+  acumularBanco(item){
+    let data={
+      descripcion:item.descripcion
+    }
+
+    this.ArrayBanco.push(data)
+    let idx =  this.ArrayBanco.indexOf(data);
+    this.ArrayGuardado.splice(idx, 1)
+    
+    console.log( this.ArrayBanco)
+  }
+
+  pagarFacturas(){
+    const {nit} = this.proveedorForm.getRawValue();
+    const {} = this.bancoForm.getRawValue();
+    this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
+      console.log("Aqui tus datos: ", response)
+      // console.log("Aqui tu proveedor: ", this.trans.proveedor)
+      // console.log("Aqui tu banco: ", this.trans.banco)
+      // console.log("Aqui tu usuario: ", this.trans.usuario)
+      // console.log("Aqui tus facturas: ", this.trans.details)
+    })
+    
+    // console.log("Aqui tu usuario: ", sessionStorage.getItem('user'))
+
+    // console.log("Usuario: ", localStorage.getItem('usuario'))
+    
+  }
+
+  suma(){
+    this.cuentaService.getAllFactures().subscribe((response: any) => {
+
+      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
+      console.log(this.total)
+    });
+  }
+
+  
 
   updateAllComplete() {
     this.allComplete = this.listado != null && this.listado.every(t => t.completed);

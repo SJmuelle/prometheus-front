@@ -1,9 +1,8 @@
 <div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
-
     <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
 
         <h2 class="mb-2  text-gray-900">Transferencia de pagos</h2>
-
+    
     </div>
 
     <br>
@@ -11,6 +10,7 @@
     <form [formGroup]="proveedorForm">
 
         <div class="flex flew-row items-center justify-content-between sm:justify-between w-240">
+            
             <mat-form-field class="w-90">
                 <mat-label>Proveedor</mat-label>
                 <mat-select formControlName="nit">
@@ -24,40 +24,41 @@
                     Debe elegir un proveedor.
                 </mat-error>
             </mat-form-field>
-    
+        
             <mat-form-field class="w-90">
                 <mat-label>Fecha de vencimiento</mat-label>
                 <!-- <input matInput [matDatepicker]="picker" autocomplete="off" formControlName="vencimiento" disabled>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker> -->
-                <input matInput type="date" formControlName="vencimiento" [formControl]="date">
+                <input matInput type="date" formControlName="vencimiento">
                 <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
                     Debe digitar una fecha.
                 </mat-error>
             </mat-form-field>
-    
+        
             <div>
                 <button mat-raised-button (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar factura</button>
             </div>
-            
+                
         </div>
 
-    </form>    
-
+    </form>
+    
     <div *ngIf="mostrar==true">
+
         <form [formGroup]="bancoForm">
 
             <div class="flex flew-row items-center justify-content-between sm:justify-between w-160">
                 <mat-form-field class="w-90">
                     <mat-label>Banco de transferencia</mat-label>
-                    <mat-select [(ngModel)]="trans.banco" [ngModelOptions]="{standalone: true}">
+                    <mat-select formControlName="nombreBanco">
                         <mat-option
                             *ngFor="let item of banco"
                             [value]="item.descripcion">{{ item.tableCode }}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 
-                <button mat-raised-button><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Realizar transferencia</button>
+                <button mat-raised-button (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Realizar transferencia</button>
                 
             </div>
 
@@ -120,85 +121,6 @@
         </div>
 
     </div>
-
     
-
-    <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center flex mt-13 ml-18">
-
-        <div class="relative w-auto my-6 mx-auto max-w-6xl ml-3">
-
-            <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                
-                <div class="flex items-start justify-between pl-9 pt-2 border-b border-solid border-blueGray-200 rounded-t">
-                    
-                    <h3 class="text-3xl font-semibold ">
-                        Buscar facturas
-                    </h3>
-
-                    <button mat-raised-button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
-                        <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                            X
-                        </span>
-                    </button>
-
-                </div>
-
-                <div class="relative p-6 flex-auto">
-
-                    <form [formGroup]="proveedorForm">
-
-                        <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
-
-                            <mat-form-field class="flex-auto w-100 p-3">
-                                <mat-label>Proveedor</mat-label>
-                                <mat-select formControlName="nit">
-                                    <input matInput placeholder="Buscar proveedor">
-                                    <mat-option [value]="" selected>Selecciona..</mat-option>
-                                    <mat-option
-                                        *ngFor="let item of proveedor | search : filterproveedor"
-                                        [value]="item.nit">{{ item.proveedor }}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
-                                    Debe elegir un proveedor.
-                                </mat-error>
-                            </mat-form-field>
-
-                            <mat-form-field class="flex-auto w-100 p-3">
-                                <mat-label>Fecha de vencimiento</mat-label>
-                                <!-- <input matInput [matDatepicker]="picker" autocomplete="off" formControlName="vencimiento" disabled>
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker disabled="false"></mat-datepicker> -->
-                                <input matInput type="date" formControlName="vencimiento" [formControl]="date">
-                                <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
-                                    Debe digitar una fecha.
-                                </mat-error>
-                            </mat-form-field>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-                <div class="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-
-                    <button mat-raised-button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-                        Cerrar
-                    </button>
-
-                    <button mat-raised-button [disabled]="!proveedorForm.valid" class="bg-green-600 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="filtrarDatos()">
-                        Buscar
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
     
 </div>
-<!-- <button mat-raised-button color="primary"><mat-icon>vertical_align_top</mat-icon>Exportar</button> -->
-
