@@ -1,134 +1,157 @@
-<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="example-viewport">
-    <div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
-        <div class="row justify-between">
-            <div class="text-left col l12">
-                <h2 class="mb-2  text-gray-900">Transferencia pago proveedor</h2>
-            </div>
+
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+    <div class="row justify-between">
+        <div class="text-left col l12">
+            <h2 class="mb-2  text-gray-900">Transferencia de pagos</h2>
         </div>
-    
-        <div class="row pl-3">
-            <div class="col-sm-12 col-lg-12 mt-2.5">
-    
-                    <mat-expansion-panel hideToggle class="shadow row mr-4">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <div class="mb-2 mt-1 mb-0 ml-3 leading-tight text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer">
-                                    <Fieldset>Filtrar facturas</Fieldset>
+    </div>
+
+    <div class="row pl-3">
+        <div class="col-sm-12 col-lg-12 mt-2.5">
+
+                <mat-expansion-panel hideToggle class="shadow row mr-4">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="mb-2 mt-1 mb-0 ml-3 leading-tight text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer">
+                                <Fieldset>Filtrar facturas</Fieldset>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <form [formGroup]="proveedorForm">
+                        <div class="col-lg-12 col-sm-12 card_interna">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12">
+                                    <mat-form-field class="flex-auto w-100">
+                                        <mat-label>Proveedor</mat-label>
+                                        <mat-select formControlName="nit">
+                                            <input matInput placeholder="Buscar proveedor">
+                                            <mat-option [value]="" selected>Selecciona..</mat-option>
+                                            <mat-option
+                                                *ngFor="let item of proveedor | search : filterproveedor"
+                                                [value]="item.nit">{{ item.proveedor }}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
+                                            Debe elegir un proveedor.
+                                        </mat-error>
+                                    </mat-form-field>
                                 </div>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <form [formGroup]="proveedorForm">
-                            <div class="col-lg-12 col-sm-12 card_interna">
-                                <div class="row">
-                                    <div class="col-lg-6 col-sm-12">
-                                        <mat-form-field class="flex-auto w-100">
-                                            <mat-label>Proveedor</mat-label>
-                                            <mat-select [(ngModel)]="filterfactura" [(ngModel)]="trans.proveedor" [ngModelOptions]="{standalone: true}">
-                                                <input matInput placeholder="Buscar proveedor" [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}">
-                                                <mat-option [value]="" selected>Selecciona..</mat-option>
-                                                <mat-option
-                                                    *ngFor="let item of proveedor | search : filterproveedor"
-                                                    [value]="item.nit">{{ item.proveedor }}</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-lg-6 col-sm-12">
-                                        <mat-form-field class="flex-auto w-100">
-                                            <mat-label>Fecha de vencimiento</mat-label>
-                                            <input matInput [matDatepicker]="picker" [(ngModel)]="filterfactdate" [ngModelOptions]="{standalone: true}">
-                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker></mat-datepicker>
-                                        </mat-form-field>
-                                    </div>
+                                <div class="col-lg-6 col-sm-12">
+                                    <mat-form-field class="flex-auto w-100">
+                                        <mat-label>Fecha de vencimiento</mat-label>
+                                        <!-- <input matInput [matDatepicker]="picker" autocomplete="off" formControlName="vencimiento" disabled>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker disabled="false"></mat-datepicker>
+                                        <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
+                                            Debe digitar una fecha.
+                                        </mat-error> -->
+                                        <input matInput type="date" formControlName="vencimiento" [formControl]="date">
+                                        <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
+                                            Debe digitar una fecha.
+                                        </mat-error>
+                                    </mat-form-field>
+                                    
                                 </div>
                             </div>
-                        </form>
-                    </mat-expansion-panel>
-                    <br>
+                            <br>
                 
-                    <mat-expansion-panel hideToggle class="shadow row mr-4">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                <div class="mb-2 mt-1 mb-0 ml-3 leading-tight text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer">
-                                    <Fieldset>Realizar transferencia</Fieldset>
-                                </div>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <form [formGroup]="bancoForm">
-                            <div class="col-lg-12 col-sm-12 card_interna">
-                                <div class="row">
-                                    <div class="col-lg-6 col-sm-12">
-                                        <mat-form-field class="flex-auto w-100">
-                                            <mat-label>Banco transferencia</mat-label>
-                                            <mat-select [(ngModel)]="trans.banco" [ngModelOptions]="{standalone: true}">
-                                                <mat-option
-                                                    *ngFor="let item of banco"
-                                                    [value]="item.descripcion">{{ item.tableCode }}</mat-option>
-                                            </mat-select>
-                                        </mat-form-field>
-                                    </div>
+                            <div class="flex w-288 flex-row-reverse">
+                                <button [disabled]="!proveedorForm.valid" mat-raised-button class="left-3" (click)="filtrarDatos()">Filtrar</button>
+                            </div>
+                            
+                        </div>
+                    </form>
+                </mat-expansion-panel>
+                <br>
+            
+                <mat-expansion-panel hideToggle class="shadow row mr-4">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="mb-2 mt-1 mb-0 ml-3 leading-tight text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer">
+                                <Fieldset>Realizar transferencia</Fieldset>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <form [formGroup]="bancoForm">
+                        <div class="col-lg-12 col-sm-12 card_interna">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12">
+                                    <mat-form-field class="flex-auto w-100">
+                                        <mat-label>Banco transferencia</mat-label>
+                                        <mat-select [(ngModel)]="trans.banco" [ngModelOptions]="{standalone: true}">
+                                            <mat-option
+                                                *ngFor="let item of banco"
+                                                [value]="item.descripcion">{{ item.tableCode }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
                                 </div>
                             </div>
-                        </form>     
-                    </mat-expansion-panel>
-                    <br>
-                    <fuse-card class="card pr-3 pl-3 shadow row mr-3">
-                        
-                        <table>
-                            <thead style="background-color: #F9FAFB;">
-                                <tr
-                                    class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
-                                    <th class="px-4 py-3 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
-                                    <th class="px-4 py-3 text-center text-base">Factura</th>
-                                    <th class="px-4 py-3 text-center text-base">NIT</th>
-                                    <th class="px-4 py-3 text-center text-base">Proveedor</th>
-                                    <th class="px-4 py-3 text-center text-base">Valor</th>
-                                    <th class="px-4 py-3 text-center text-base">Vencimiento</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <tr class="text-gray-700" *ngFor="let item of listado | paginate: { itemsPerPage: 6, currentPage: page } | filter: filterfactura">
-                                    <td class="px-2 py-3 text-sm text-center">
-                                        <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
-                                    </td>
-                                    <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
-                                        {{ item.documentoCxp }}
-                                    </td>
-                                    <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
-                                        {{ item.nit }}
-                                    </td>
-                                    <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
-                                        {{ item.nombreCliente }}
-                                    </td>
-                                    <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
-                                        {{item.valorFactura | currency}}
-                                    </td>
-                                    <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
-                                        {{ item.vencimiento }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
-                                    <td class="px-4 py-3 text-center"></td>
-                                    <td class="px-4 py-3 text-center"></td>
-                                    <td class="px-4 py-3 text-center"></td>
-                                    <td class="px-4 py-3 text-right text-base">Total</td>
-                                    <td class="px-4 py-3 text-center">{{ total | currency}}</td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                        
-                    </fuse-card>
-                    <br>
-                    <div class="flex-1 w-288 flex items-center justify-center">
+                        </div>
+                    </form>     
+                </mat-expansion-panel>
+                <br>
+                <fuse-card class="card pr-2 pl-2 shadow row mr-2">
+                    
+                    <table *ngIf="ver==true">
+                        <thead style="background-color: #F9FAFB;">
+                            <tr
+                                class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
+                                <th class="px-4 py-3 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
+                                <th class="px-4 py-3 text-center text-base">Factura</th>
+                                <th class="px-4 py-3 text-center text-base">NIT</th>
+                                <th class="px-4 py-3 text-center text-base">Proveedor</th>
+                                <th class="px-4 py-3 text-center text-base">Valor</th>
+                                <th class="px-4 py-3 text-center text-base">Vencimiento</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="text-gray-700" *ngFor="let item of listado | paginate: { itemsPerPage: 4, currentPage: page }">
+                                <td class="px-2 py-3 text-sm text-center">
+                                    <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                </td>
+                                <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
+                                    {{ item.documentoCxp }}
+                                </td>
+                                <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
+                                    {{ item.nit }}
+                                </td>
+                                <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
+                                    {{ item.nombreCliente }}
+                                </td>
+                                <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
+                                    {{item.valorFactura | currency}}
+                                </td>
+                                <td class="px-2 py-3 text-center text-md text-gray-600 capitalize">
+                                    {{ item.vencimiento }}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
+                                <td class="px-4 py-3 text-center"></td>
+                                <td class="px-4 py-3 text-center"></td>
+                                <td class="px-4 py-3 text-center"></td>
+                                <td class="px-4 py-3 text-right text-base">Total</td>
+                                <td class="px-4 py-3 text-center">{{ total | currency}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </fuse-card>
+                <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
+                    <div>
+                        <pagination-controls
+                            (pageChange)="page = $event"
+                            previousLabel="Anterior"
+                            nextLabel="Siguiente">
+                        </pagination-controls>
+                    </div>
+                    <div>
                         <button mat-raised-button color="primary" class="right-3" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Transferir</button>
                         <button mat-raised-button color="primary"><mat-icon>vertical_align_top</mat-icon>Exportar</button>
                         <button mat-raised-button class="left-3"><mat-icon>clear</mat-icon>Salir</button>
                     </div>
-                    <p>{{transferencia}}</p>
-            </div>
+                </div>
         </div>
     </div>
+</div>
     
-</cdk-virtual-scroll-viewport>
+

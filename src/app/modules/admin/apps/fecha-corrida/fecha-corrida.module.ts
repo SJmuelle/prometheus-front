@@ -22,7 +22,7 @@ import { FilterPipe } from './factura/filterfactura.pipe';
 import { MatSelectSearchModule } from 'mat-select-search';
 import { SearchPipe } from './factura/filterproveedor.pipe';
 import { FilterdatePipe } from './factura/filterdate.pipe';
-
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -50,7 +50,7 @@ import { FilterdatePipe } from './factura/filterdate.pipe';
         MatDatepickerModule,
         ScrollingModule,
         MatSelectSearchModule,
-        
+        HttpClientModule
     ]
 })
 export class FechaCorridaModule { }

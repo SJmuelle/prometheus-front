@@ -1,22 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { AuthService } from 'app/core/auth/auth.service';
+import { HttpClient } from '@angular/common/http'; 
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import * as _moment from 'moment';
+import { Moment } from 'moment';
+import {default as _rollupMoment} from 'moment';
+
+const moment = _rollupMoment || _moment;
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 @Component({
   selector: 'app-factura',
   templateUrl: './factura.component.html',
-  styleUrls: ['./factura.component.scss']
+  styleUrls: ['./factura.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+  ]
 })
 export class FacturaComponent implements OnInit {
 
   listado: any=[];
 
-  page:number=1;
+  public page:number=1;
 
-  tamanoTabl:number=5;
+  public tamanoTabl = new FormControl("5");
 
   filtrarTabla:string='';
 
@@ -34,26 +59,19 @@ export class FacturaComponent implements OnInit {
 
   allComplete: boolean = false;
 
-  filterfactura: String = '';
+  filterfactura = '';
 
   filterfactdate = '';
 
   filterproveedor: String = '';
 
-  nit = false;
-  docufactura: String = '';
-  opcion = false;
-  transferencia:string = '';
-
   ArrayGuardado:any=[]
-
-  ArrayBanco:any=[]
-
-  tempArray:any=[]
 
   myArr = sessionStorage.getItem('usuario');
 
   myArrStr = JSON.parse(this.myArr);
+
+  public ver:boolean = true;
 
   datosTransferencia:any;
 
@@ -64,6 +82,12 @@ export class FacturaComponent implements OnInit {
     details:[]
   }
 
+  arrayFiltro:any=[]
+
+  date = new FormControl(new Date());
+
+  mystartDate:Date;
+
   get frm() {
     return this.bancoForm.controls;
   }
@@ -72,25 +96,44 @@ export class FacturaComponent implements OnInit {
     return this.proveedorForm.controls;
   }
 
-  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder, private auth: AuthService) {
+  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder, private auth: AuthService, private http:HttpClient) {
     this.bancoForm = this.fb.group({
       nombreBanco: ['', [Validators.required]]
     });
 
     this.proveedorForm = this.fb.group({
-      nombreProveedor: ['', [Validators.required]],
-      fechaVencimiento: ['', [Validators.required]],
-      filterprov: ['']
+      nit: ['', [Validators.required]],
+      vencimiento: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
-    this.consulta();
-    this.suma();
+    // this.mystartDate = new Date('12/2/2020');
+    
+    // this.consulta();
+    this.filtrarDatos();
+    // this.suma();
     this.consultaBnco();
     this.consultaProveedor();
-    
-    // console.log(this.myArrStr.user);
+  }
+
+  filtrarDatos(){
+    const {nit, vencimiento} = this.proveedorForm.getRawValue();
+    console.log(nit, vencimiento);
+    this.cuentaService.getFacturesFilter(nit, vencimiento).subscribe((response: any)=>{
+      this.arrayFiltro = response.data
+
+      if (response) {
+        this.listado = this.arrayFiltro;
+      } else {
+        this.listado = [];
+      }
+
+      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
+      console.log(this.total)
+      // console.log("Aqui tu dato", response.data)
+      this.ver=true
+    })
   }
 
   acumular(item){
@@ -108,18 +151,6 @@ export class FacturaComponent implements OnInit {
     console.log( this.trans.details)
   }
 
-  acumularBanco(item){
-    let data={
-      descripcion:item.descripcion
-    }
-
-    this.ArrayBanco.push(data)
-    let idx =  this.ArrayBanco.indexOf(data);
-    this.ArrayGuardado.splice(idx, 1)
-    
-    console.log( this.ArrayBanco)
-  }
-
   pagarFacturas(){
     this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
       console.log("Aqui tus datos: ", response)
@@ -128,10 +159,6 @@ export class FacturaComponent implements OnInit {
       // console.log("Aqui tu usuario: ", this.trans.usuario)
       // console.log("Aqui tus facturas: ", this.trans.details)
     })
-    
-    // console.log("Aqui tu usuario: ", sessionStorage.getItem('user'))
-
-    // console.log("Usuario: ", localStorage.getItem('usuario'))
     
   }
 
