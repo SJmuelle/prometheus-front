@@ -88,6 +88,8 @@ export class FacturaComponent implements OnInit {
 
   mystartDate:Date;
 
+  showModal = false;
+
   get frm() {
     return this.bancoForm.controls;
   }
@@ -109,12 +111,15 @@ export class FacturaComponent implements OnInit {
 
   ngOnInit(): void {
     // this.mystartDate = new Date('12/2/2020');
-    
     // this.consulta();
     this.filtrarDatos();
     // this.suma();
     this.consultaBnco();
     this.consultaProveedor();
+  }
+
+  toggleModal(){
+    this.showModal = !this.showModal;
   }
 
   filtrarDatos(){
