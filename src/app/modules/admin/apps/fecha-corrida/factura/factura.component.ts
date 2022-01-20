@@ -168,11 +168,6 @@ export class FacturaComponent implements OnInit {
       // console.log("Aqui tu usuario: ", this.trans.usuario)
       // console.log("Aqui tus facturas: ", this.trans.details)
     })
-    
-    // console.log("Aqui tu usuario: ", sessionStorage.getItem('user'))
-
-    // console.log("Usuario: ", localStorage.getItem('usuario'))
-    
   }
 
   suma(){

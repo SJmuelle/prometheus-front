@@ -37,7 +37,7 @@
             </mat-form-field>
         
             <div>
-                <button mat-raised-button (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar factura</button>
+                <button mat-raised-button [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar factura</button>
             </div>
                 
         </div>
@@ -56,9 +56,12 @@
                             *ngFor="let item of banco"
                             [value]="item.descripcion">{{ item.tableCode }}</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
+                        Debe seleccionar un banco para hacer transferencia.
+                    </mat-error>
                 </mat-form-field>
                 
-                <button mat-raised-button (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Realizar transferencia</button>
+                <button mat-raised-button [disabled]="bancoForm.invalid" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Realizar transferencia</button>
                 
             </div>
 
