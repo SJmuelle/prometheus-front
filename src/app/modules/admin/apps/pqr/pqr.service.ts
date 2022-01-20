@@ -158,8 +158,11 @@ export class PqrService {
             })
         );
     }
-
-    generarCertificados(url: string) {
-
+    generarCertificados(url: string, data:any) {
+        return this._utility.postFile(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
     }
 }
