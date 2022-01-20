@@ -63,7 +63,7 @@ export class AppSettingsService {
             baseFiltro: EndPoints.uri('cxp_proveedor'),
             baseBancos: EndPoints.uri('bnco_transferencia/JHSALAZAR'),
             baseProveedor: EndPoints.uri('buscar_proveedor'),
-            baseTransferencia: EndPoints.uri('trans_cxp_prove')
+            baseTransferencia: EndPoints.uriGenerica('trans_cxp_prove')
         }
     };
     /**

@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
     <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
 
@@ -14,7 +15,7 @@
             <mat-form-field class="w-90">
                 <mat-label>Proveedor</mat-label>
                 <mat-select formControlName="nit">
-                    <input matInput placeholder="Buscar proveedor">
+                    <input matInput [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholder="Buscar proveedor">
                     <mat-option [value]="" selected>Selecciona..</mat-option>
                     <mat-option
                         *ngFor="let item of proveedor | search : filterproveedor"
@@ -27,17 +28,16 @@
         
             <mat-form-field class="w-90">
                 <mat-label>Fecha de vencimiento</mat-label>
-                <!-- <input matInput [matDatepicker]="picker" autocomplete="off" formControlName="vencimiento" disabled>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" autocomplete="off" formControlName="vencimiento">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker disabled="false"></mat-datepicker> -->
-                <input matInput type="date" formControlName="vencimiento">
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
                 <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
                     Debe digitar una fecha.
                 </mat-error>
             </mat-form-field>
         
             <div>
-                <button mat-raised-button [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar factura</button>
+                <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar factura</button>
             </div>
                 
         </div>
@@ -48,10 +48,11 @@
 
         <form [formGroup]="bancoForm">
 
-            <div class="flex flew-row items-center justify-content-between sm:justify-between w-160">
+            <div class="flex flew-row items-center justify-content-between sm:justify-between w-140">
                 <mat-form-field class="w-90">
                     <mat-label>Banco de transferencia</mat-label>
                     <mat-select formControlName="nombreBanco">
+                    <mat-option [value]="" selected>Selecciona..</mat-option>
                         <mat-option
                             *ngFor="let item of banco"
                             [value]="item.descripcion">{{ item.tableCode }}</mat-option>
@@ -61,8 +62,7 @@
                     </mat-error>
                 </mat-form-field>
                 
-                <button mat-raised-button [disabled]="bancoForm.invalid" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane"></mat-icon>Realizar transferencia</button>
-                
+                <button mat-raised-button color="accent" [disabled]="!((bancoForm.valid==true) && (details.length != 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
             </div>
 
         </form>

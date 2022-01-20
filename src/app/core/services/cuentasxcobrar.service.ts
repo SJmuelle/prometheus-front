@@ -30,7 +30,7 @@ export class CuentasxcobrarService {
   }
 
   public postTransferencia(datosTransferencia: any): Observable<any> {
-    return this._http.post(this._appSettings.genericas.url.baseTransferencia, JSON.stringify(datosTransferencia));
+    return this._http.post(this._appSettings.genericas.url.baseTransferencia, datosTransferencia);
   }
 
   

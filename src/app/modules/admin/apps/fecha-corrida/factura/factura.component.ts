@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuthService } from 'app/core/auth/auth.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-factura',
@@ -32,6 +33,8 @@ export class FacturaComponent implements OnInit {
 
   proveedorForm: FormGroup;
 
+  facturaForm: FormGroup;
+
   allComplete: boolean = false;
 
   filterfactura: String = '';
@@ -55,6 +58,12 @@ export class FacturaComponent implements OnInit {
 
   myArrStr = JSON.parse(this.myArr);
 
+  usuario:any = this.myArrStr.user
+  
+  public details:any=[];
+
+  public facturaPagar:any=[];
+
   datosTransferencia:any;
 
   trans={
@@ -64,9 +73,14 @@ export class FacturaComponent implements OnInit {
     details:[]
   }
 
-  details:any=[];
-
   mostrar:boolean;
+
+  formatofecha:any;
+
+  public hoy = new Date();
+
+  minFecha: Date;
+  maxFecha: Date;
 
   get frm() {
     return this.bancoForm.controls;
@@ -84,13 +98,15 @@ export class FacturaComponent implements OnInit {
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
       vencimiento: ['', [Validators.required]],
-      filterprov: ['']
     });
   }
 
   ngOnInit(): void {
     // this.consulta();
     //this.suma();
+    const currentYear = new Date().getFullYear();
+    this.minFecha = new Date(currentYear - 20, 0, 1);
+    this.maxFecha = new Date(this.hoy);
     this.consultaBnco();
     this.consultaProveedor();
   }
@@ -111,9 +127,12 @@ export class FacturaComponent implements OnInit {
   filtrarDatos(){
     
     const {nit, vencimiento} = this.proveedorForm.getRawValue();
-    console.log(nit, vencimiento);
+
+    this.formatofecha = moment(vencimiento).format("YYYY-MM-DD");
+
+    console.log(nit, this.formatofecha);
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.cuentaService.getFacturesFilter(nit, vencimiento).subscribe((response: any)=>{
+    this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
       // this.arrayFiltro = response.data
       console.log(response.data)
@@ -146,28 +165,33 @@ export class FacturaComponent implements OnInit {
     console.log( this.details)
   }
 
-  acumularBanco(item){
-    let data={
-      descripcion:item.descripcion
+  pagarFacturas(){
+
+    const {nit} = this.proveedorForm.getRawValue();
+    const { nombreBanco } = this.bancoForm.getRawValue();
+    this.trans={
+      proveedor:nit,
+      banco:nombreBanco,
+      usuario: this.myArrStr.user,
+      details:this.details
     }
 
-    this.ArrayBanco.push(data)
-    let idx =  this.ArrayBanco.indexOf(data);
-    this.ArrayGuardado.splice(idx, 1)
-    
-    console.log( this.ArrayBanco)
-  }
+    if (this.trans.details.length <= 0) {
+      alert("Debe seleccionarse al menos una factura.")
+      console.log("Debe seleccionarse al menos una factura.")
+    }else{
+      console.log( this.trans)
 
-  pagarFacturas(){
-    const {nit} = this.proveedorForm.getRawValue();
-    const {} = this.bancoForm.getRawValue();
-    this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
-      console.log("Aqui tus datos: ", response)
-      // console.log("Aqui tu proveedor: ", this.trans.proveedor)
-      // console.log("Aqui tu banco: ", this.trans.banco)
-      // console.log("Aqui tu usuario: ", this.trans.usuario)
-      // console.log("Aqui tus facturas: ", this.trans.details)
-    })
+      this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
+        console.log("Aqui tus datos: ", response)
+        alert("Transferencia exitosa.")
+        
+      })
+    }
+
+    this.proveedorForm.reset()
+    this.bancoForm.reset();
+    
   }
 
   suma(){

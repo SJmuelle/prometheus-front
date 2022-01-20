@@ -17,6 +17,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FilterPipe } from './factura/filterfactura.pipe';
 import { MatSelectSearchModule } from 'mat-select-search';
@@ -50,7 +51,7 @@ import { FilterdatePipe } from './factura/filterdate.pipe';
         MatDatepickerModule,
         ScrollingModule,
         MatSelectSearchModule,
-        
+        MatMomentDateModule
     ]
 })
 export class FechaCorridaModule { }
