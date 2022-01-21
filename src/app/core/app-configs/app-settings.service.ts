@@ -61,9 +61,9 @@ export class AppSettingsService {
             base: EndPoints.uri('consulta-lista-generica'),
             baseFacturas: EndPoints.uri('cxp_proveedor/900570964/2022-01-12'),
             baseFiltro: EndPoints.uri('cxp_proveedor'),
-            baseBancos: EndPoints.uri('bnco_transferencia/JHSALAZAR'),
-            baseFiltroProveedor: EndPoints.uri('cxp_proveedor'),
-            baseProveedor: EndPoints.uri('buscar_proveedor'),
+            baseBancos: EndPoints.uri('bancos-transferencia'),
+            baseFiltroProveedor: EndPoints.uri('buscar-proveedor'),
+            baseProveedor: EndPoints.uri('transferencia-cxp-proveedor'),
             baseTransferencia: EndPoints.uriGenerica('trans_cxp_prove')
         }
     };

@@ -104,7 +104,7 @@ export class FacturaComponent implements OnInit {
 
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
-      vencimiento: ['', [Validators.required]],
+      vencimiento: [this.hoy, [Validators.required]],
       filtro: ['']
     });
   }

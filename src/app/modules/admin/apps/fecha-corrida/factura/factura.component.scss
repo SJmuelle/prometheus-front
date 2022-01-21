@@ -7,10 +7,9 @@
 }
 
 .example-viewport {
-    height: 800px;
-    width: 1400px;
-    
-  }
+  height: 310px;
+  width: 1210px;    
+}
   
   .example-item {
     height: 50px;
@@ -19,3 +18,24 @@
 .tamano_div {
   width: 57.5rem/* 800px */;
 }  
+
+thead th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+  background-color: #F9FAFB;
+  z-index: 999999999999999;
+}
+
+tbody th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  left: 0;
+}
+
+tfoot th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  background-color: #F9FAFB;
+  bottom: 0;
+}
