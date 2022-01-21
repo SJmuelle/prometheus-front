@@ -1,9 +1,12 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 
 @Pipe({
   name: 'search'
 })
 export class SearchPipe implements PipeTransform {
+
+  constructor(cuentaService: CuentasxcobrarService){}
 
   transform(value: any, arg: any): any {
 

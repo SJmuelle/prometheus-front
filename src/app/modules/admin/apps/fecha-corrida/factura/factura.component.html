@@ -1,4 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/> -->
 <div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
     <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
 
@@ -15,8 +15,9 @@
             <mat-form-field class="w-90">
                 <mat-label>Proveedor</mat-label>
                 <mat-select formControlName="nit">
-                    <input matInput [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholder="Buscar proveedor">
-                    <mat-option [value]="" selected>Selecciona..</mat-option>
+                    <mat-option>
+                        <ngx-mat-select-search formControlName="filtrador" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
+                    </mat-option>
                     <mat-option
                         *ngFor="let item of proveedor | search : filterproveedor"
                         [value]="item.nit">{{ item.proveedor }}</mat-option>
@@ -52,10 +53,10 @@
                 <mat-form-field class="w-90">
                     <mat-label>Banco de transferencia</mat-label>
                     <mat-select formControlName="nombreBanco">
-                    <mat-option [value]="" selected>Selecciona..</mat-option>
-                        <mat-option
-                            *ngFor="let item of banco"
-                            [value]="item.descripcion">{{ item.tableCode }}</mat-option>
+                    <!-- <mat-option [value]="" selected>Selecciona..</mat-option> -->
+                    <mat-option
+                        *ngFor="let item of banco"
+                        [value]="item.descripcion">{{ item.tableCode }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
                         Debe seleccionar un banco para hacer transferencia.

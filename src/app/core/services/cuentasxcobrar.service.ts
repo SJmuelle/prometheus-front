@@ -21,6 +21,10 @@ export class CuentasxcobrarService {
     return this._http.get(`${this._appSettings.genericas.url.baseFiltro}/${nit}/${vencimiento}`);
   }
 
+  public getProveedorFilter(proveedor: any): Observable<any>{
+    return this._http.get(`${this._appSettings.genericas.url.baseFiltroProveedor}/${proveedor}`);
+  }
+
   public  getBnco(): Observable<any> {
     return this._http.get(`${this._appSettings.genericas.url.baseBancos}`);
   }

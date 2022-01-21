@@ -98,6 +98,7 @@ export class FacturaComponent implements OnInit {
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
       vencimiento: ['', [Validators.required]],
+      filtrador: ['']
     });
   }
 
@@ -134,7 +135,7 @@ export class FacturaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      // this.arrayFiltro = response.data
+      
       console.log(response.data)
 
       if (response) {
