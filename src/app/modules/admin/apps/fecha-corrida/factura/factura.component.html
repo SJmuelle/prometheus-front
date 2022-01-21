@@ -1,4 +1,3 @@
-<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/> -->
 <div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
     <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
 
@@ -16,7 +15,7 @@
                 <mat-label>Proveedor</mat-label>
                 <mat-select formControlName="nit">
                     <mat-option>
-                        <ngx-mat-select-search formControlName="filtrador" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
+                        <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
                     </mat-option>
                     <mat-option
                         *ngFor="let item of proveedor | search : filterproveedor"
@@ -29,7 +28,7 @@
         
             <mat-form-field class="w-90">
                 <mat-label>Fecha de vencimiento</mat-label>
-                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" autocomplete="off" formControlName="vencimiento">
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker>
                 <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
@@ -38,7 +37,7 @@
             </mat-form-field>
         
             <div>
-                <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar factura</button>
+                <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar facturas</button>
             </div>
                 
         </div>
@@ -49,7 +48,7 @@
 
         <form [formGroup]="bancoForm">
 
-            <div class="flex flew-row items-center justify-content-between sm:justify-between w-140">
+            <div class="flex flew-row items-center justify-content-between sm:justify-between tamano_div">
                 <mat-form-field class="w-90">
                     <mat-label>Banco de transferencia</mat-label>
                     <mat-select formControlName="nombreBanco">
@@ -61,6 +60,12 @@
                     <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
                         Debe seleccionar un banco para hacer transferencia.
                     </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-90">
+                    <mat-label>Total de la transferencia</mat-label>
+                    <mat-icon> attach_money</mat-icon>
+                    <input matInput value="{{valores | number}}" readonly>
                 </mat-form-field>
                 
                 <button mat-raised-button color="accent" [disabled]="!((bancoForm.valid==true) && (details.length != 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
@@ -80,8 +85,8 @@
                                 <th class="px-4 py-2 text-center text-base">Factura</th>
                                 <th class="px-4 py-2 text-center text-base">NIT</th>
                                 <th class="px-4 py-2 text-center text-base">Proveedor</th>
-                                <th class="px-4 py-2 text-center text-base">Valor</th>
                                 <th class="px-4 py-2 text-center text-base">Vencimiento</th>
+                                <th class="px-4 py-2 text-center text-base">Valor</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
@@ -99,10 +104,10 @@
                                     {{ item.nombreCliente }}
                                 </td>
                                 <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                    {{item.valorFactura | currency}}
-                                </td>
-                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
                                     {{ item.vencimiento }}
+                                </td>
+                                <td class="px-2 py-2 text-right text-md text-gray-600 capitalize">
+                                    $ {{item.valorFactura | number}}
                                 </td>
                             </tr>
                         </tbody>
@@ -111,8 +116,9 @@
                                 <td class="px-4 py-2 text-center"></td>
                                 <td class="px-4 py-2 text-center"></td>
                                 <td class="px-4 py-2 text-center"></td>
+                                <td class="px-4 py-2 text-center"></td>
                                 <td class="px-4 py-2 text-center text-base">Total:</td>
-                                <td class="px-4 py-2 text-center">{{ total | currency}}</td>
+                                <td class="px-4 py-2 text-center">$ {{ total | number}}</td>
                             </tr>
                         </tfoot>
                     </table>

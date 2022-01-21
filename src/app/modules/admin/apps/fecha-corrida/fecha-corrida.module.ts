@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 // MODULOS
 import { FuseCardModule } from '../../../../../@fuse/components/card/card.module';
+import { FuseAlertModule } from '@fuse/components/alert';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 // MODULOS MATERIAL
@@ -39,6 +40,7 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
         CommonModule,
         FechaCorridaRoutingModule,
         FuseCardModule,
+        FuseAlertModule,
         NgxPaginationModule,
         MatExpansionModule,
         MatFormFieldModule,

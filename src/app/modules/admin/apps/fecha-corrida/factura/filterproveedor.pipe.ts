@@ -6,8 +6,6 @@ import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service'
 })
 export class SearchPipe implements PipeTransform {
 
-  constructor(cuentaService: CuentasxcobrarService){}
-
   transform(value: any, arg: any): any {
 
     const resultProv = [];
