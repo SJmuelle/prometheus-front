@@ -170,9 +170,9 @@ export class HojavidaComponent implements OnInit {
                         this.info_cliente = res2.data;
                         this.mostrarDatoCliente = true;
                         this.onTabChanged(this.tab);
-                        // this.historialCertificados(
-                        //     this.info_cliente.identificacion
-                        // );
+                        this.historialCertificados(
+                            this.info_cliente.identificacion
+                        );
                     }
                 });
         } else {
@@ -406,8 +406,7 @@ export class HojavidaComponent implements OnInit {
                     }
                 });
             case 7:
-                this.historialCertificados(this.info_cliente.identificacion
-                    );
+                this.historialCertificados(this.info_cliente.identificacion);
                 break;
             default:
                 break;
