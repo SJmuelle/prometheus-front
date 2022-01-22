@@ -170,9 +170,9 @@ export class HojavidaComponent implements OnInit {
                         this.info_cliente = res2.data;
                         this.mostrarDatoCliente = true;
                         this.onTabChanged(this.tab);
-                        // this.historialCertificados(
-                        //     this.info_cliente.identificacion
-                        // );
+                        this.historialCertificados(
+                            this.info_cliente.identificacion
+                        );
                     }
                 });
         } else {
@@ -231,9 +231,9 @@ export class HojavidaComponent implements OnInit {
                     this.info_cliente = res2.data;
                     this.mostrarDatoCliente = true;
                     this.onTabChanged(this.tab);
-                    // this.historialCertificados(
-                    //     this.info_cliente.identificacion
-                    // );
+                    this.historialCertificados(
+                        this.info_cliente.identificacion
+                    );
                 });
         }
     }
@@ -282,9 +282,7 @@ export class HojavidaComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this._carteraService
-                    .getCartera(
-                        this.info_cliente.identificacion
-                    )
+                    .getCartera(this.info_cliente.identificacion)
                     .subscribe((respCartera: any) => {
                         Swal.close();
                         if (respCartera.data) {
@@ -407,6 +405,8 @@ export class HojavidaComponent implements OnInit {
                         this.listadoPQRS = [];
                     }
                 });
+            case 7:
+                this.historialCertificados(this.info_cliente.identificacion);
                 break;
             default:
                 break;
@@ -548,12 +548,46 @@ export class HojavidaComponent implements OnInit {
         let url = `/cargar-historial-certificados/${certificado}`;
         this._pqrService.getListados(url).subscribe((resp) => {
             this.historialCertificado = resp;
+            console.log(this.historialCertificado);
         });
     }
+
 
     generarCertificado() {
         if (this.formCertificados.controls.tipoCertificado.value == 2) {
             this.dialogDeuda();
+        } else {
+            let url = `/generar-certificado-info`;
+            let data = {
+                "negocio": this.formCertificados.controls.negocio.value,
+                "cedula": this.info_cliente.identificacion,
+                "tipoCertificado": Number(this.formCertificados.controls.tipoCertificado.value),
+                "tipoCliente": Number(this.formCertificados.controls.propietario.value),
+                "titulo": Number(this.formCertificados.controls.tratoCliente.value)
+            }
+            this._pqrService.generarCertificados(url, data).subscribe((resp) => {
+                debugger;
+                const downloadLink = document.createElement('a');
+                document.body.appendChild(downloadLink);
+                downloadLink.href = 'data:application/pdf;base64,'+resp.data.base64;
+                downloadLink.target = '_self';
+                switch (this.formCertificados.controls.tipoCertificado.value) {
+                    case "1":
+                        downloadLink.download = 'Certificado al día.pdf';
+                    break;
+                    case "2":
+                        downloadLink.download = 'Certificado de deuda.pdf';
+                    break;
+                    case "3":
+                        downloadLink.download = 'Certificado de paz y salvo.pdf';
+                    break;
+                    case "4":
+                        downloadLink.download = 'Certificado de vínculo comercial.pdf';
+                    break;
+                }
+
+                downloadLink.click();
+            });
         }
     }
 }
