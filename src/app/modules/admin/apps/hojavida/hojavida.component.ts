@@ -534,6 +534,7 @@ export class HojavidaComponent implements OnInit {
 
         dialogRef.afterClosed().subscribe((resp) => {
             this.limpiarCertificaciones();
+            this.descargar();
         });
     }
 
@@ -557,37 +558,42 @@ export class HojavidaComponent implements OnInit {
         if (this.formCertificados.controls.tipoCertificado.value == 2) {
             this.dialogDeuda();
         } else {
-            let url = `/generar-certificado-info`;
-            let data = {
-                "negocio": this.formCertificados.controls.negocio.value,
-                "cedula": this.info_cliente.identificacion,
-                "tipoCertificado": Number(this.formCertificados.controls.tipoCertificado.value),
-                "tipoCliente": Number(this.formCertificados.controls.propietario.value),
-                "titulo": Number(this.formCertificados.controls.tratoCliente.value)
-            }
-            this._pqrService.generarCertificados(url, data).subscribe((resp) => {
-                debugger;
-                const downloadLink = document.createElement('a');
-                document.body.appendChild(downloadLink);
-                downloadLink.href = 'data:application/pdf;base64,'+resp.data.base64;
-                downloadLink.target = '_self';
-                switch (this.formCertificados.controls.tipoCertificado.value) {
-                    case "1":
-                        downloadLink.download = 'Certificado al día.pdf';
-                    break;
-                    case "2":
-                        downloadLink.download = 'Certificado de deuda.pdf';
-                    break;
-                    case "3":
-                        downloadLink.download = 'Certificado de paz y salvo.pdf';
-                    break;
-                    case "4":
-                        downloadLink.download = 'Certificado de vínculo comercial.pdf';
-                    break;
-                }
-
-                downloadLink.click();
-            });
+            this.descargar();
         }
+    }
+
+    descargar(){
+        let url = `/generar-certificado-info`;
+        let data = {
+            "negocio": this.formCertificados.controls.negocio.value,
+            "cedula": this.info_cliente.identificacion,
+            "tipoCertificado": Number(this.formCertificados.controls.tipoCertificado.value),
+            "tipoCliente": Number(this.formCertificados.controls.propietario.value),
+            "titulo": Number(this.formCertificados.controls.tratoCliente.value),
+            "fecha":this.formCertificados.controls.tipoCertificado.value == 2?this.formCertificados.controls.fechaMaxima.value:'',
+            "valor":0
+        }
+        this._pqrService.generarCertificados(url, data).subscribe((resp) => {
+            const downloadLink = document.createElement('a');
+            document.body.appendChild(downloadLink);
+            downloadLink.href = 'data:application/pdf;base64,'+resp.data.base64;
+            downloadLink.target = '_self';
+            switch (this.formCertificados.controls.tipoCertificado.value) {
+                case "1":
+                    downloadLink.download = 'Certificado al día.pdf';
+                break;
+                case "2":
+                    downloadLink.download = 'Certificado de deuda.pdf';
+                break;
+                case "3":
+                    downloadLink.download = 'Certificado de paz y salvo.pdf';
+                break;
+                case "4":
+                    downloadLink.download = 'Certificado de vínculo comercial.pdf';
+                break;
+            }
+
+            downloadLink.click();
+        });
     }
 }
