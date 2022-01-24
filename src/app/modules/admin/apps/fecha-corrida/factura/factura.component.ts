@@ -13,15 +13,7 @@ import moment from 'moment';
 })
 export class FacturaComponent implements OnInit {
 
-  listado: any=[];
-
-  page:number=1;
-
-  tamanoTabl:number=5;
-
-  filtrarTabla:string='';
-
-  mostrar_form:boolean = true;
+  listadoFacturas: any=[];
 
   banco: any = [];
 
@@ -33,47 +25,24 @@ export class FacturaComponent implements OnInit {
 
   proveedorForm: FormGroup;
 
-  facturaForm: FormGroup;
-
   allComplete: boolean = false;
-
-  filterfactura: String = '';
-
-  filterfactdate = '';
 
   filterproveedor: String = '';
 
-  nit = false;
-  docufactura: String = '';
-  opcion = false;
-  transferencia:string = '';
+  ArrayUser = sessionStorage.getItem('usuario');
 
-  ArrayGuardado:any=[]
-
-  ArrayBanco:any=[]
-
-  tempArray:any=[]
-
-  myArr = sessionStorage.getItem('usuario');
-
-  myArrStr = JSON.parse(this.myArr);
-
-  usuario:any = this.myArrStr.user
+  myUser = JSON.parse(this.ArrayUser);
   
-  public details:any=[];
+  public detailsFacture:any=[];
 
   public valores:number=0;
 
-  totalpago:number;
-
-  public facturaPagar:any=[];
-
   datosTransferencia:any;
 
-  trans={
+  transferencia={
     proveedor:"",
     banco:"",
-    usuario: this.myArrStr.user,
+    usuario: this.myUser.user,
     details:[]
   }
 
@@ -81,12 +50,10 @@ export class FacturaComponent implements OnInit {
 
   formatofecha:any;
 
-  public hoy = new Date();
+  public fechaActual = new Date();
 
   minFecha: Date;
   maxFecha: Date;
-
-  filtradorProveedor:any = [];
 
   get frm() {
     return this.bancoForm.controls;
@@ -96,38 +63,23 @@ export class FacturaComponent implements OnInit {
     return this.proveedorForm.controls;
   }
 
-  constructor(public dialog: MatDialog, private cuentaService: CuentasxcobrarService, private fb: FormBuilder, private auth: AuthService) {
+  constructor(private cuentaService: CuentasxcobrarService, private fb: FormBuilder) {
     this.bancoForm = this.fb.group({
-      nombreBanco: ['', [Validators.required]],
-      totaltransferencia: ['']
+      nombreBanco: ['', [Validators.required]]
     });
 
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
-      vencimiento: [this.hoy, [Validators.required]],
-      filtro: ['']
+      vencimiento: [this.fechaActual, [Validators.required]]
     });
   }
 
   ngOnInit(): void {
     const currentYear = new Date().getFullYear();
     this.minFecha = new Date(currentYear - 20, 0, 1);
-    this.maxFecha = new Date(this.hoy);
-    this.consultaBnco();
+    this.maxFecha = new Date(this.fechaActual);
+    this.consultaBanco();
     this.consultaProveedor();
-  }
-
-  consulta(){
-    Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.cuentaService.getAllFactures().subscribe((response: any) => {
-        Swal.close();
-        console.log(response)
-        if (response) {
-          this.listado = response.data;
-        } else {
-          this.listado = [];
-        }
-    });
   }
 
   filtrarDatos(){
@@ -135,18 +87,16 @@ export class FacturaComponent implements OnInit {
     const {nit, vencimiento} = this.proveedorForm.getRawValue();
 
     this.formatofecha = moment(vencimiento).format("YYYY-MM-DD");
-
-    console.log(nit, this.formatofecha);
+    // console.log(nit, this.formatofecha);
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      
-      console.log(response.data)
-
+      // console.log(response.data)
+      // console.log(this.myUser)
       if (response) {
-        this.listado = response.data;
+        this.listadoFacturas = response.data;
       } else {
-        this.listado = [];
+        this.listadoFacturas = [];
       }
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
       // console.log(this.total)
@@ -159,21 +109,20 @@ export class FacturaComponent implements OnInit {
 
     const {nit} = this.proveedorForm.getRawValue();
     const { nombreBanco } = this.bancoForm.getRawValue();
-    this.trans={
+    this.transferencia={
       proveedor:nit,
       banco:nombreBanco,
-      usuario: this.myArrStr.user,
-      details:this.details
+      usuario: this.myUser.user,
+      details:this.detailsFacture
     }
 
-    if (this.trans.details.length <= 0) {
+    if (this.transferencia.details.length <= 0) {
       alert("Debe seleccionarse al menos una factura.")
-      // console.log("Debe seleccionarse al menos una factura.")
     }else{
 
-      console.log( this.trans)
-      this.cuentaService.postTransferencia(this.trans).subscribe((response: any)=>{
-        console.log("Aqui tus datos: ", response)
+      console.log( this.transferencia)
+      this.cuentaService.postTransferencia(this.transferencia).subscribe((response: any)=>{
+        // console.log("Aqui tus datos: ", response)
         alert("Transferencia exitosa.")
       })
 
@@ -181,6 +130,7 @@ export class FacturaComponent implements OnInit {
 
     this.bancoForm.reset();
     this.proveedorForm.reset()
+    this.mostrar=false
 
   }
 
@@ -191,53 +141,53 @@ export class FacturaComponent implements OnInit {
 
     if(item.completed){
 
-      this.details.push(data.documentoCxp)   
+      this.detailsFacture.push(data.documentoCxp)   
       this.valores=this.valores+item.valorFactura;
     }else{
 
-      let idx =  this.details.indexOf(data);
-      this.details.splice(idx, 1)
+      let idx =  this.detailsFacture.indexOf(data);
+      this.detailsFacture.splice(idx, 1)
       this.valores=this.valores-item.valorFactura;
     }
-    console.log( this.details)
-    console.log( this.valores)
+    // console.log( this.details)
+    // console.log( this.valores)
   }
 
   updateAllComplete() {
-    this.allComplete = this.listado != null && this.listado.every(t => t.completed);
+    this.allComplete = this.listadoFacturas != null && this.listadoFacturas.every(t => t.completed);
   }
 
   someComplete(): boolean {
-    if (this.listado== null) {
+    if (this.listadoFacturas== null) {
       return false;
     }
-    return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
+    return this.listadoFacturas.filter(t => t.completed).length > 0 && !this.allComplete;
   }
 
   setAll(completed: boolean) {
     this.allComplete = completed;
-    if (this.listado == null) {
+    if (this.listadoFacturas == null) {
       return;
     }
     if(completed){
-      this.details=[];
-      for (const item of this.listado) {
-        this.details.push({
+      this.detailsFacture=[];
+      for (const item of this.listadoFacturas) {
+        this.detailsFacture.push({
           documentoCxp:item.documentoCxp
         })
         this.valores=this.total;
       }
     }else{
-      this.details=[];
+      this.detailsFacture=[];
       this.valores=0;
     }
-    console.log("Detalle factura", this.details)
-    this.listado.forEach(t => (t.completed = completed));
+    // console.log("Detalle factura", this.details)
+    this.listadoFacturas.forEach(t => (t.completed = completed));
   }
 
-  consultaBnco(){
-    this.cuentaService.getBnco().subscribe((response: any) => {
-      console.log(response)
+  consultaBanco(){
+    this.cuentaService.getBanco().subscribe((response: any) => {
+      // console.log(response)
       if (response) {
         this.banco = response.data;
       }
@@ -246,7 +196,7 @@ export class FacturaComponent implements OnInit {
 
   consultaProveedor(){
     this.cuentaService.getProveedor().subscribe((response: any) => {
-      console.log(response)
+      // console.log(response)
       if (response) {
         this.proveedor = response.data;
       }
