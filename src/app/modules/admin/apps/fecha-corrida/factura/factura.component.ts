@@ -122,35 +122,39 @@ export class FacturaComponent implements OnInit {
 
       console.log( this.transferencia)
       this.cuentaService.postTransferencia(this.transferencia).subscribe((response: any)=>{
-        // console.log("Aqui tus datos: ", response)
+        console.log("Aqui tus datos: ", response)
         alert("Transferencia exitosa.")
       })
 
     }
 
-    this.bancoForm.reset();
-    this.proveedorForm.reset()
-    this.mostrar=false
+    // this.bancoForm.reset();
+    // this.proveedorForm.reset()
+    // this.mostrar=false
 
   }
 
   acumular(item){
-    let data={
-      documentoCxp:item.documentoCxp
-    }
+    // let data={
+    //   documentoCxp:item.documentoCxp
+    // }
 
     if(item.completed){
 
-      this.detailsFacture.push(data.documentoCxp)   
+      this.detailsFacture.push({
+        documentoCxp:item.documentoCxp
+      })   
       this.valores=this.valores+item.valorFactura;
     }else{
 
-      let idx =  this.detailsFacture.indexOf(data);
+      let idx =  this.detailsFacture.indexOf({
+        documentoCxp:item.documentoCxp
+      });
       this.detailsFacture.splice(idx, 1)
       this.valores=this.valores-item.valorFactura;
     }
-    // console.log( this.details)
-    // console.log( this.valores)
+    console.log( this.detailsFacture)
+    console.log( this.valores)
   }
 
   updateAllComplete() {
@@ -181,7 +185,7 @@ export class FacturaComponent implements OnInit {
       this.detailsFacture=[];
       this.valores=0;
     }
-    // console.log("Detalle factura", this.details)
+    console.log("Detalle factura", this.detailsFacture)
     this.listadoFacturas.forEach(t => (t.completed = completed));
   }
 

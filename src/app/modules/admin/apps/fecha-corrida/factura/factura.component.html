@@ -28,7 +28,7 @@
         
             <mat-form-field class="w-90">
                 <mat-label>Fecha de vencimiento</mat-label>
-                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker>
                 <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
