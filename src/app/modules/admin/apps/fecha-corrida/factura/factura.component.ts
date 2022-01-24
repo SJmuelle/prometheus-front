@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { AuthService } from 'app/core/auth/auth.service';
 import moment from 'moment';
 
 @Component({
@@ -143,20 +141,17 @@ export class FacturaComponent implements OnInit {
         ).then();
         this.mostrar=false
         this.bancoForm.reset();
+        this.detailsFacture=[];
+        console.log("Tus facturas: ",this.detailsFacture)
+        this.valores=0;
+        console.log("Tus valores de facturas: ",this.valores)
       })
 
     }
-
-    // this.bancoForm.reset();
-    // this.proveedorForm.reset()
     
-
   }
 
   acumular(item){
-    // let data={
-    //   documentoCxp:item.documentoCxp
-    // }
 
     if(item.completed){
 
