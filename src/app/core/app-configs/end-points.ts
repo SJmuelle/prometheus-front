@@ -31,4 +31,7 @@ export class EndPoints {
     static uriAdjuntos(url: string): string {
         return environment.urlApi6 + url;
     }
+    static uriTransferencia(url: string): string {
+        return environment.urlApi7 + url;
+    }
 }

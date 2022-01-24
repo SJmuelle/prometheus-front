@@ -28,7 +28,7 @@
         
             <mat-form-field class="w-90">
                 <mat-label>Fecha de vencimiento</mat-label>
-                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento">
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker>
                 <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
@@ -52,7 +52,6 @@
                 <mat-form-field class="w-90">
                     <mat-label>Banco de transferencia</mat-label>
                     <mat-select formControlName="nombreBanco">
-                    <!-- <mat-option [value]="" selected>Selecciona..</mat-option> -->
                     <mat-option
                         *ngFor="let item of banco"
                         [value]="item.descripcion">{{ item.tableCode }}</mat-option>
@@ -65,10 +64,10 @@
                 <mat-form-field class="w-90">
                     <mat-label>Total de la transferencia</mat-label>
                     <mat-icon> attach_money</mat-icon>
-                    <input matInput value="{{valores | number}}" readonly>
+                    <input matInput formControlName="totaltransferencia" value="{{valores | number}}" readonly>
                 </mat-form-field>
                 
-                <button mat-raised-button color="accent" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length != 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
+                <button id="btntransferir" mat-raised-button color="accent" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length > 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
             </div>
 
         </form>
@@ -129,6 +128,7 @@
                 
             </div>
         </div>
+        
 
     </div>
     

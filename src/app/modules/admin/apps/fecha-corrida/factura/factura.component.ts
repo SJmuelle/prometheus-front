@@ -65,7 +65,8 @@ export class FacturaComponent implements OnInit {
 
   constructor(private cuentaService: CuentasxcobrarService, private fb: FormBuilder) {
     this.bancoForm = this.fb.group({
-      nombreBanco: ['', [Validators.required]]
+      nombreBanco: ['', [Validators.required]],
+      totaltransferencia:['']
     });
 
     this.proveedorForm = this.fb.group({
@@ -117,20 +118,38 @@ export class FacturaComponent implements OnInit {
     }
 
     if (this.transferencia.details.length <= 0) {
-      alert("Debe seleccionarse al menos una factura.")
+      Swal.fire(
+        '¡Información!',
+        `Debe seleccionar al menos una factura.`,
+        'error'
+      ).then();
     }else{
 
-      console.log( this.transferencia)
       this.cuentaService.postTransferencia(this.transferencia).subscribe((response: any)=>{
+        console.log( this.transferencia)
         console.log("Aqui tus datos: ", response)
-        alert("Transferencia exitosa.")
+        if (response.msg != "OK") {
+          Swal.fire(
+            '¡Información!',
+            `Debe seleccionar al menos una factura.`,
+            'error'
+          ).then();
+          return;
+        }
+        Swal.fire(
+          '¡Transferencia!',
+          `La transferencia ha sido exitosa.`,
+          'success'
+        ).then();
+        this.mostrar=false
+        this.bancoForm.reset();
       })
 
     }
 
     // this.bancoForm.reset();
     // this.proveedorForm.reset()
-    // this.mostrar=false
+    
 
   }
 
@@ -141,9 +160,7 @@ export class FacturaComponent implements OnInit {
 
     if(item.completed){
 
-      this.detailsFacture.push({
-        documentoCxp:item.documentoCxp
-      })   
+      this.detailsFacture.push({documentoCxp:item.documentoCxp})   
       this.valores=this.valores+item.valorFactura;
     }else{
 
