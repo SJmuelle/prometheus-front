@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Activity } from 'app/modules/admin/pages/activities/activities.types';
+import { Item } from './file-manager.types'; 
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,7 @@ export class ActivitiesService
 {
     // Private
     private _activities: BehaviorSubject<any> = new BehaviorSubject(null);
+    private _items: BehaviorSubject<Item | null> = new BehaviorSubject(null);
 
     /**
      * Constructor
@@ -31,6 +33,11 @@ export class ActivitiesService
         return this._activities.asObservable();
     }
 
+    get items$(): Observable<Item>
+    {
+        return this._items.asObservable();
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -43,6 +50,15 @@ export class ActivitiesService
         return this._httpClient.get<Activity[]>('api/pages/activities').pipe(
             tap((response: Activity[]) => {
                 this._activities.next(response);
+            })
+        );
+    }
+
+    getItems(folderId: string | null = null): Observable<Item[]>
+    {
+        return this._httpClient.get<Item>('api/apps/file-manager', {params: {folderId}}).pipe(
+            tap((response: any) => {
+                this._items.next(response);
             })
         );
     }

@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'app/shared/shared.module';
 import { ActivitiesComponent } from 'app/modules/admin/pages/activities/activities.component';
 import { activitiesRoutes } from 'app/modules/admin/pages/activities/activities.routing';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
     declarations: [
@@ -12,7 +13,8 @@ import { activitiesRoutes } from 'app/modules/admin/pages/activities/activities.
     imports     : [
         RouterModule.forChild(activitiesRoutes),
         MatIconModule,
-        SharedModule
+        SharedModule,
+        ScrollingModule
     ]
 })
 export class ActivitiesModule
