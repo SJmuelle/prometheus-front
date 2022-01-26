@@ -5,6 +5,8 @@ import { SharedModule } from 'app/shared/shared.module';
 import { ActivitiesComponent } from 'app/modules/admin/pages/activities/activities.component';
 import { activitiesRoutes } from 'app/modules/admin/pages/activities/activities.routing';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FuseCardModule } from '@fuse/components/card';
 
 @NgModule({
     declarations: [
@@ -14,7 +16,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         RouterModule.forChild(activitiesRoutes),
         MatIconModule,
         SharedModule,
-        ScrollingModule
+        ScrollingModule,
+        MatSidenavModule,
+        FuseCardModule
     ]
 })
 export class ActivitiesModule
