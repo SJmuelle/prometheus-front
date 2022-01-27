@@ -7,6 +7,8 @@ import { activitiesRoutes } from 'app/modules/admin/pages/activities/activities.
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseCardModule } from '@fuse/components/card';
+import { PdfViewerModule } from "ng2-pdf-viewer";
+
 
 @NgModule({
     declarations: [
@@ -18,7 +20,8 @@ import { FuseCardModule } from '@fuse/components/card';
         SharedModule,
         ScrollingModule,
         MatSidenavModule,
-        FuseCardModule
+        FuseCardModule,
+        PdfViewerModule
     ]
 })
 export class ActivitiesModule
