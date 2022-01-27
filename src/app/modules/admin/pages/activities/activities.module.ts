@@ -9,7 +9,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseCardModule } from '@fuse/components/card';
 import { PdfViewerModule } from "ng2-pdf-viewer";
 
-
 @NgModule({
     declarations: [
         ActivitiesComponent
