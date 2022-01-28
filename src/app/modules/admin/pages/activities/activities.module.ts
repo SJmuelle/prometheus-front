@@ -8,10 +8,13 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseCardModule } from '@fuse/components/card';
 import { PdfViewerModule } from "ng2-pdf-viewer";
+import { PreviewComponent } from './preview/preview.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     declarations: [
-        ActivitiesComponent
+        ActivitiesComponent,
+        PreviewComponent
     ],
     imports     : [
         RouterModule.forChild(activitiesRoutes),
@@ -20,7 +23,8 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
         ScrollingModule,
         MatSidenavModule,
         FuseCardModule,
-        PdfViewerModule
+        PdfViewerModule,
+        MatDialogModule
     ]
 })
 export class ActivitiesModule

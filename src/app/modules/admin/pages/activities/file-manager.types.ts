@@ -11,6 +11,7 @@ export interface Item
     path?: string;
     date?: string;
     icon?: string;
+    docupreview?: boolean;
     // contents?: string | null;
     // description?: string | null;
 }
