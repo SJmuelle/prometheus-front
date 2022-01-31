@@ -7,31 +7,40 @@
 }
 
 .estatura {
-height: 37rem
+  height: 37rem
 }
 
 .anchura {
-width: 78.3rem
+  width: 78.3rem
 }
 
 .example-container {
-width: 400px;
-height: 1000px;
-margin: 10px;
-border: 1px solid #555;
+  width: 400px;
+  height: 1000px;
+  margin: 10px;
+  border: 1px solid #555;
 }
 
-.example-viewport {
-height: 310px;
-width: 1200px;    
+.cdk-virtual-scroll-data-source-example .example-viewport {
+  height: 310px;
+  width: 1200px;    
 }
 
-.example-item {
-height: 50px;
+.cdk-virtual-scroll-data-source-example .example-viewport .cdk-virtual-scroll-content-wrapper {
+  display: flex;
+  flex-direction: row;
 }
+
+.cdk-virtual-scroll-data-source-example .example-item {
+  height: 50px;
+  height: 100%;
+  writing-mode: vertical-lr;
+}
+
+
 
 .tamano_div {
-width: 57.5rem/* 800px */;
+  width: 57.5rem/* 800px */;
 }  
 
 thead th {
