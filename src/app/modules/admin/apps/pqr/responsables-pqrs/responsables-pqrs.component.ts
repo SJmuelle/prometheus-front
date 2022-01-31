@@ -108,13 +108,15 @@ export class ResponsablesPQRSComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       // console.log('The dialog was closed');
       // console.log(result);
-      if(tipo=='R'){
-        this.responsable=result;
-        this.datos.responsable=` ${result.cedula}  (${result.usuario}) `
-      }else{
-        this.escala=result;
-        this.datos.escalado= ` ${result.cedula}  (${result.usuario}) `
-      }
+        if(result){
+            if(tipo=='R'){
+                this.responsable=result;
+                this.datos.responsable=` ${result.cedula}  (${result.usuario}) `
+              }else{
+                this.escala=result;
+                this.datos.escalado= ` ${result.cedula}  (${result.usuario}) `
+              }
+        }
 
     });
   }
