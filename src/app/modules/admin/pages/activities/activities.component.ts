@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as moment from 'moment';
-import { Activity } from 'app/modules/admin/pages/activities/activities.types';
 import { ActivitiesService } from 'app/modules/admin/pages/activities/activities.service';
 import { Item } from './file-manager.types'; 
-import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { PreviewComponent } from './preview/preview.component';
 
 @Component({
@@ -16,9 +14,6 @@ import { PreviewComponent } from './preview/preview.component';
 export class ActivitiesComponent implements OnInit
 {
     value = '';
-
-    imageURL: string;
-    uploadFile: FormGroup;
 
     files: Item[];
 

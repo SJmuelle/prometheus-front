@@ -2,13 +2,13 @@
 
    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
        
-        <div class="flex flex-row flex-auto px-6 py-10 sm:px-16 sm:pt-18 sm:pb-20 justify-between">
+        <div class="flex flex-col md:flex-row flex-auto px-6 py-10 md:justify-between">
 
             <div class="text-4xl font-extrabold tracking-tight leading-none">Historial de archivos</div>
 
-            <mat-form-field class="w-50">
+            <mat-form-field class="w-90 md:w-96 top-5 md:top-0">
                 <mat-icon>search</mat-icon>
-                <input matInput type="text" placeholder="Buscar Archivos" [(ngModel)]="value">
+                <input matInput type="text" placeholder="Buscar Archivos por nombre o extension" [(ngModel)]="value">
                 <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -18,7 +18,7 @@
 
         <div class="px-16">
 
-            <div *ngFor="let file of files; let i = index; let first = first; trackBy: trackByFn">
+            <div *ngFor="let file of files | filter:value; let i = index; let first = first; trackBy: trackByFn">
 
                 <ng-container *ngIf="first || !isSameDay(file.date, files[i - 1].date)">
                     <li class="relative flex py-7">

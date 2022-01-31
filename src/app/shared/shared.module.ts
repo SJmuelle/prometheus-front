@@ -18,6 +18,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
     imports: [
@@ -59,6 +60,7 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatRadioModule,
         MatFormFieldModule,
         MatCardModule,
+        Ng2SearchPipeModule,
     ],
     declarations: [],
 })
