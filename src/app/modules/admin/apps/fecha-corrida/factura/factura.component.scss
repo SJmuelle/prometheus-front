@@ -1,41 +1,56 @@
 .card_interna{
-    border-left: 5px solid #b6ce1d;
-    // border-top: 1px solid #dfdfdf;
-    padding: 1em;
-    margin-left: 1em;
-    margin-bottom: 1em;
+  border-left: 5px solid #b6ce1d;
+  // border-top: 1px solid #dfdfdf;
+  padding: 1em;
+  margin-left: 1em;
+  margin-bottom: 1em;
+}
+
+.estatura {
+height: 37rem
+}
+
+.anchura {
+width: 78.3rem
+}
+
+.example-container {
+width: 400px;
+height: 1000px;
+margin: 10px;
+border: 1px solid #555;
 }
 
 .example-viewport {
-  height: 310px;
-  width: 1210px;    
+height: 310px;
+width: 1200px;    
 }
-  
-  .example-item {
-    height: 50px;
-  }
+
+.example-item {
+height: 50px;
+}
 
 .tamano_div {
-  width: 57.5rem/* 800px */;
+width: 57.5rem/* 800px */;
 }  
 
 thead th {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  top: 0;
-  background-color: #F9FAFB;
-  z-index: 999999999999999;
+position: -webkit-sticky; /* for Safari */
+position: sticky;
+top: 0;
+background-color: #F9FAFB;
+z-index: 999999999999999;
 }
 
 tbody th {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  left: 0;
+position: -webkit-sticky; /* for Safari */
+position: sticky;
+left: 0;
 }
 
 tfoot th {
-  position: -webkit-sticky; /* for Safari */
-  position: sticky;
-  background-color: #F9FAFB;
-  bottom: 0;
+position: -webkit-sticky; /* for Safari */
+position: sticky;
+background-color: #F9FAFB;
+bottom: 0;
 }

@@ -1,80 +1,83 @@
-<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
-    <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
+<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="bg-white estatura anchura">
 
-        <h2 class="mb-2  text-gray-900">Transferencia de pagos</h2>
+    <div class="overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+        <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
     
-    </div>
-
-    <br>
-
-    <form [formGroup]="proveedorForm">
-
-        <div class="flex flew-row items-center justify-content-between sm:justify-between w-240">
-            
-            <mat-form-field class="w-90">
-                <mat-label>Proveedor</mat-label>
-                <mat-select formControlName="nit">
-                    <mat-option>
-                        <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
-                    </mat-option>
-                    <mat-option
-                        *ngFor="let item of proveedor | search : filterproveedor"
-                        [value]="item.nit">{{ item.proveedor }}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
-                    Debe elegir un proveedor.
-                </mat-error>
-            </mat-form-field>
-        
-            <mat-form-field class="w-90">
-                <mat-label>Fecha de vencimiento</mat-label>
-                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker disabled="false"></mat-datepicker>
-                <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
-                    Debe digitar una fecha.
-                </mat-error>
-            </mat-form-field>
-        
-            <div>
-                <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar facturas</button>
-            </div>
-                
+            <h2 class="mb-2  text-gray-900">Transferencia de pagos</h2>
+    
         </div>
-
-    </form>
     
-    <div *ngIf="mostrar==true">
-
-        <form [formGroup]="bancoForm">
-
-            <div class="flex flew-row items-center justify-content-between sm:justify-between tamano_div">
+        <form [formGroup]="proveedorForm">
+    
+            <div class="flex flex-col md:flex-row md:items-center md:justify-content-between md:justify-between md:w-240">
+    
                 <mat-form-field class="w-90">
-                    <mat-label>Banco de transferencia</mat-label>
-                    <mat-select formControlName="nombreBanco">
-                    <mat-option
-                        *ngFor="let item of banco"
-                        [value]="item.descripcion">{{ item.tableCode }}</mat-option>
+                    <mat-label>Proveedor</mat-label>
+                    <mat-select formControlName="nit">
+                        <mat-option>
+                            <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
+                        </mat-option>
+                        <mat-option
+                            *ngFor="let item of proveedor | search : filterproveedor"
+                            [value]="item.nit">{{ item.proveedor }}</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
-                        Debe seleccionar un banco para hacer transferencia.
+                    <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
+                        Debe elegir un proveedor.
                     </mat-error>
                 </mat-form-field>
-
+    
                 <mat-form-field class="w-90">
-                    <mat-label>Total de la transferencia</mat-label>
-                    <mat-icon> attach_money</mat-icon>
-                    <input matInput formControlName="totaltransferencia" value="{{valores | number}}" readonly>
+                    <mat-label>Fecha de vencimiento</mat-label>
+                    <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                    <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
+                        Debe digitar una fecha.
+                    </mat-error>
                 </mat-form-field>
-                
-                <button id="btntransferir" mat-raised-button color="accent" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length > 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
+    
+                <div>
+                    <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()"><mat-icon>search</mat-icon>Buscar facturas</button>
+                </div>
+    
             </div>
-
+    
         </form>
+    
+        <div *ngIf="mostrar==true" class="py-3 md:py-0">
+    
+            <form [formGroup]="bancoForm">
+    
+                <div class="flex flex-col md:flex-row md:items-center md:justify-content-between md:justify-between md:w-240">
+                    <mat-form-field class="w-90">
+                        <mat-label>Banco de transferencia</mat-label>
+                        <mat-select formControlName="nombreBanco">
+                        <mat-option
+                            *ngFor="let item of banco"
+                            [value]="item.descripcion">{{ item.tableCode }}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
+                            Debe seleccionar un banco para hacer transferencia.
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field class="w-90 md:right-8">
+                        <mat-label>Total de la transferencia</mat-label>
+                        <mat-icon> attach_money</mat-icon>
+                        <input matInput formControlName="totaltransferencia" value="{{valores | number}}" readonly>
+                    </mat-form-field>
+                    
+                    <div>
+                        <button mat-raised-button color="accent" class="md:right-16" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length > 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
+                    </div>
 
-        <div class="row pl-3">
-            <div class="col-sm-12 col-lg-12 mt-2.5">
-                <fuse-card class="card pr-2 pl-2 shadow row mr-2">
+                </div>
+    
+            </form>
+
+            <fuse-card class="card shadow mr-5">
+
+                <div>
 
                     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
                         <table>
@@ -123,14 +126,14 @@
                             </tfoot>
                         </table>
                     </cdk-virtual-scroll-viewport>
-                    
-                </fuse-card>
-                
-            </div>
-        </div>
-        
+    
+                </div>
 
+            </fuse-card>
+    
+        </div>
+    
+    
     </div>
-    
-    
-</div>
+
+</cdk-virtual-scroll-viewport>
