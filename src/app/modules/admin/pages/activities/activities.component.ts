@@ -15,6 +15,7 @@ import { PreviewComponent } from './preview/preview.component';
 })
 export class ActivitiesComponent implements OnInit
 {
+    value = '';
 
     imageURL: string;
     uploadFile: FormGroup;

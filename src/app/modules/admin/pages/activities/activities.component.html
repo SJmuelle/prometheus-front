@@ -2,9 +2,17 @@
 
    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
        
-        <div class="flex flex-col flex-auto px-6 py-10 sm:px-16 sm:pt-18 sm:pb-20">
+        <div class="flex flex-row flex-auto px-6 py-10 sm:px-16 sm:pt-18 sm:pb-20 justify-between">
 
             <div class="text-4xl font-extrabold tracking-tight leading-none">Historial de archivos</div>
+
+            <mat-form-field class="w-50">
+                <mat-icon>search</mat-icon>
+                <input matInput type="text" placeholder="Buscar Archivos" [(ngModel)]="value">
+                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
 
         </div>
 
@@ -26,9 +34,9 @@
 
                         <ng-container>
     
-                            <li class="relative flex py-3">
+                            <li class="relative flex py-3 px-4">
     
-                                <fuse-card class="flex flex-col md:flex-row max-w-80 md:max-w-140 w-full filter-testimonial shadow">
+                                <fuse-card class="flex flex-col md:flex-row max-w-80 md:max-w-280 w-full filter-testimonial shadow">
                     
                                     <div class="flex-0 w-80 md:w-32">
             
