@@ -4,6 +4,8 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
 import {UtilityService} from "../../../../../../resources/services/utility.service";
+import Swal from "sweetalert2";
+import {FormDialogReprogramarComponent} from "../form-dialog-reprogramar/form-dialog-reprogramar.component";
 
 @Component({
   selector: 'app-form-gestion-referenciacion-modal',
@@ -29,6 +31,40 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
   public onCerrar(): void {
       this._matDialogRef.close();
+  }
+
+  public onReferenciar(): void {
+      const data: any = {
+          numeroSolicitud: this.data.numeroSolicitud
+      };
+      Swal.fire({
+          title: 'Guardar información',
+          text: '¿Está seguro de guardar información?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#a3a0a0',
+          confirmButtonText: 'Guardar',
+          cancelButtonText: 'Cancelar'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              this.postReferenciar(data);
+          }
+      });
+  }
+
+  public onReprogramar(): void {
+      const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
+          width: '30%',
+          data: {
+              numeroSolicitud: this.data.numeroSolicitud
+          }
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          console.log('CERRAR');
+      });
+
   }
 
   public openModalDirection(): void {
@@ -159,6 +195,12 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           nitNegocio: [''],
           activos: [''],
           ventasMensuales: ['']
+      });
+  }
+
+  private postReferenciar(data: any): void {
+      this.referenciacionCliente.postReferenciacion(data).subscribe((res) => {
+          console.log(res);
       });
   }
 

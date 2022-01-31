@@ -18,5 +18,9 @@ export class ReferenciacionClienteService {
     public getReferenciaCliente(numeroSolicitud: string): Observable<any> {
         return this._http.get(`${this._appSettings.referenciaCliente.url.base}/${numeroSolicitud}`);
     }
+
+    public postReferenciacion(data: any): Observable<any> {
+        return this._http.post(this._appSettings.referenciaCliente.url.baseReferecia, data);
+    }
 }
 

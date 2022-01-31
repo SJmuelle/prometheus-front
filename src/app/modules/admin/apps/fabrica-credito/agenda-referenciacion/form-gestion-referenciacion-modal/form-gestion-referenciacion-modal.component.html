@@ -264,10 +264,16 @@
         <mat-dialog-actions>
             <div class="flex flex-row items-center justify-content-between sm:justify-between w-full">
                 <div>
-                    <button mat-raised-button color="primary" type="button">
+                    <button
+                        mat-raised-button color="primary"
+                        type="button"
+                    (click)="onReferenciar()"
+                    >
                         Referenciar
                     </button>
-                    <button mat-raised-button class="bg-gray-400 text-white" type="button" >
+                    <button mat-raised-button class="bg-gray-400 text-white" type="button"
+                            (click)="onReprogramar()"
+                    >
                         Reprogramar
                     </button>
                     <button mat-raised-button color="primary" type="button">

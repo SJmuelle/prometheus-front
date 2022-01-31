@@ -115,7 +115,8 @@ export class AppSettingsService {
      */
     public referenciaCliente = {
         url: {
-            base: EndPoints.uri('informacion-cliente-referenciar')
+            base: EndPoints.uri('informacion-cliente-referenciar'),
+            baseReferecia: EndPoints.uriGenerica('cre-referenciar'),
         }
     };
 
