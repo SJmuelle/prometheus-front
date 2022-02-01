@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Comentario</h2>
+<mat-dialog-content>
+    <mat-form-field class="w-full fuse-mat-dense">
+        <mat-label>Texto</mat-label>
+        <textarea  matInput [formControl]="comentario"></textarea>
+        <!--<mat-error *ngIf="comentario.value.length <=10">Este campo es requerido.</mat-error>-->
+        <mat-error *ngIf="comentario.value.length <=10">Se requiere mínimo 10 caracteres.</mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <button mat-raised-button color="primary" type="button"
+                (click)="onComentario()"
+                [disabled]="comentario.value.length <=10"
+        >
+            Guardar
+        </button>
+        <button mat-raised-button
+                class="mr-2 bg-gray-400 text-white"
+                type="button"
+                [mat-dialog-close]="false"
+        >
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

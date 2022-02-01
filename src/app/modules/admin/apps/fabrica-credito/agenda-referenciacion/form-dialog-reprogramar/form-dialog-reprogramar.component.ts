@@ -61,13 +61,18 @@ export class FormDialogReprogramarComponent implements OnInit, OnDestroy {
            takeUntil(this.unsubscribe$)
        ).subscribe((res) => {
           if (res.data.respuesta == 'OK') {
-              console.log(res);
               Swal.fire(
                   'Completado',
                   'Información guardada con éxito',
                   'success'
               );
               this.onCerrar();
+          }else {
+              Swal.fire(
+                  'Advertencia',
+                  `${res.data.respuesta}`,
+                  'warning'
+              );
           }
       });
   }

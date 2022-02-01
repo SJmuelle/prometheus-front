@@ -8,6 +8,10 @@ import Swal from "sweetalert2";
 import {FormDialogReprogramarComponent} from "../form-dialog-reprogramar/form-dialog-reprogramar.component";
 import {AgendaReferenciacionService} from "../../../../../../core/services/agenda-referenciacion.service";
 import {Observable} from "rxjs";
+import {
+    FormDialogComentarioReferenciaComponent
+} from "../form-dialog-comentario-referencia/form-dialog-comentario-referencia.component";
+
 
 @Component({
   selector: 'app-form-gestion-referenciacion-modal',
@@ -16,7 +20,6 @@ import {Observable} from "rxjs";
 })
 export class FormGestionReferenciacionModalComponent implements OnInit {
   public form: FormGroup;
-  public agendaReferencia$: Observable<any>;
   constructor(
       private referenciacionCliente: ReferenciacionClienteService,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -56,7 +59,9 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           }
       });
   }
-
+  /**
+   * @description: Guarda la reprogramacion
+   */
   public onReprogramar(): void {
       const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
           width: '30%',
@@ -68,10 +73,30 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((res) => {
           if (res) {
-            this.getAgendaReferenciacion();
+              console.log(res);
+              this.agendaReferenciaService.refrescarListado$.next({estado: true});
+              this.onCerrar();
           }
       });
+  }
+  /**
+   * @description: Guarda el comentario
+   */
+  public onComentarios(): void {
+      const dialogRef = this._matDialog.open(FormDialogComentarioReferenciaComponent, {
+          width: '30%',
+          data: {
+              numeroSolicitud: this.data.numeroSolicitud
+          },
+          disableClose: true
+      });
 
+      dialogRef.afterClosed().subscribe((res) => {
+          if (res) {
+              this.agendaReferenciaService.refrescarListado$.next({estado: true});
+              this.onCerrar();
+          }
+      });
   }
 
   public openModalDirection(): void {
@@ -210,9 +235,5 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           console.log(res);
       });
   }
-
-    private getAgendaReferenciacion(): void {
-        this.agendaReferencia$ = this.agendaReferenciaService.getAgendaReferenciacion();
-    }
 
 }

@@ -6,7 +6,7 @@ import {FormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {
     FormGestionReferenciacionModalComponent
-} from "../form-gestion-referenciacion-modal/form-gestion-referenciacion-modal.component";
+} from '../form-gestion-referenciacion-modal/form-gestion-referenciacion-modal.component';
 
 @Component({
   selector: 'app-grid-agenda-referenciacion',
@@ -26,6 +26,7 @@ export class GridAgendaReferenciacionComponent implements OnInit {
 
   ngOnInit(): void {
       this.getAgendaReferenciacion();
+      this.escuchaObservable();
   }
 
   public onGetAgenda(data: any): void {
@@ -46,5 +47,14 @@ export class GridAgendaReferenciacionComponent implements OnInit {
   private getAgendaReferenciacion(): void {
       this.agendaReferencia$ = this.agendaReferenciaService.getAgendaReferenciacion();
   }
-
+    /**
+     * @description: Escucha el observabke
+     */
+    private escuchaObservable(): void {
+        this.agendaReferenciaService.refrescarListado$.subscribe(({estado}) => {
+            if (estado) {
+                this.getAgendaReferenciacion();
+            }
+        });
+    }
 }

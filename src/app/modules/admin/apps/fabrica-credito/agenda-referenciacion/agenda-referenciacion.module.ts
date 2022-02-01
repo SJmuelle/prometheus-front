@@ -22,6 +22,9 @@ import {GestionFabricaCreditoModule} from "../gestion-fabrica-credito/gestion-fa
 import { FormDialogReprogramarComponent } from './form-dialog-reprogramar/form-dialog-reprogramar.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
+import {
+    FormDialogComentarioReferenciaComponent
+} from "./form-dialog-comentario-referencia/form-dialog-comentario-referencia.component";
 
 
 @NgModule({
@@ -29,6 +32,7 @@ import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-
     GridAgendaReferenciacionComponent,
     FormGestionReferenciacionModalComponent,
     FormDialogReprogramarComponent,
+    FormDialogComentarioReferenciaComponent
   ],
     imports: [
         CommonModule,
