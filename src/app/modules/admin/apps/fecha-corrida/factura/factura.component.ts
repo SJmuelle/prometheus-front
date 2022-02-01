@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';

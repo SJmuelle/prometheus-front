@@ -6,11 +6,11 @@
 }
 
 .estatura {
-  height: 37rem
+  height: 100%
 }
 
 .anchura {
-  width: 78.3rem
+  width: 100%
 }
 
 .giantScroll {
@@ -29,11 +29,13 @@
   // border: 1px solid black;
 }
 
-.example-item {
-  height: 50px;
+.cdk-virtual-scroll-data-source-example {
+  height: 285px;
+  width: 1200px;
+  // border: 1px solid black;
 }
 
-.cdk-virtual-scroll-data-source-example .example-viewport {
+.example-viewport {
   height: 285px;
   width: 1200px;
   border: 1px solid black;
@@ -45,9 +47,9 @@
 }
 
 .cdk-virtual-scroll-data-source-example .example-item {
-  width: 50px;
+  width: 100px;
   height: 100%;
-  writing-mode: vertical-lr;
+  // writing-mode: vertical-lr;
 }
 
 .tamano_div {
