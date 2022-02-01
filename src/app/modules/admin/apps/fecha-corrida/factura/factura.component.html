@@ -1,5 +1,5 @@
-<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="bg-white estatura anchura">
-
+<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="scrolling">
+    
     <div class="overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
         <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
     
@@ -44,7 +44,7 @@
     
         </form>
     
-        <div *ngIf="mostrar==true" class="py-3 md:py-0">
+        <div class="py-3 md:py-0">
     
             <form [formGroup]="bancoForm">
     
@@ -70,75 +70,138 @@
                     <div>
                         <button mat-raised-button color="accent" class="sm:w-40 md:right-1" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length > 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
                     </div>
-
+    
                 </div>
     
             </form>
-
-            <div class="py-3">
-
-                <fuse-card class="card shadow mr-5">
-
-                    <div class="cdk-virtual-scroll-data-source-example">
+    
+            <div class="py-4 cdk-virtual-scroll-data-source-example">
+    
+                <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+                    
+                    <table>
+                        <thead>
+                            <tr
+                                class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
+                                <th class="px-4 py-2 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
+                                <th class="px-4 py-2 text-center text-base">Factura</th>
+                                <th class="px-4 py-2 text-center text-base">NIT</th>
+                                <th class="px-4 py-2 text-center text-base">Proveedor</th>
+                                <th class="px-4 py-2 text-center text-base">Vencimiento</th>
+                                <th class="px-4 py-2 text-center text-base">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="text-gray-700" *ngFor="let item of listadoFacturas">
+                                <td class="px-2 py-2 text-sm text-center">
+                                    <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                </td>
+                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                    {{ item.documentoCxp }}
+                                </td>
+                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                    {{ item.nit }}
+                                </td>
+                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                    {{ item.nombreCliente }}
+                                </td>
+                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                    {{ item.vencimiento }}
+                                </td>
+                                <td class="px-2 py-2 text-right text-md text-gray-600 capitalize">
+                                    $ {{item.valorFactura | number}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
+                                <th class="px-4 py-2 text-center"></th>
+                                <th class="px-4 py-2 text-center"></th>
+                                <th class="px-4 py-2 text-center"></th>
+                                <th class="px-4 py-2 text-center"></th>
+                                <th class="px-4 py-2 text-center text-base">Total:</th>
+                                <th class="px-4 py-2 text-right">$ {{ total | number}}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+    
+                </cdk-virtual-scroll-viewport>
+    
+                <!-- <div class="flex flex-row h-72 w-full">
+    
+                    <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="h-72 w-full">
+    
+                        <table>
+                            <thead>
+                                <tr
+                                    class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
+                                    <th class="px-4 py-2 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
+                                    <th class="px-4 py-2 text-center text-base">Factura</th>
+                                    <th class="px-4 py-2 text-center text-base">NIT</th>
+                                    <th class="px-4 py-2 text-center text-base">Proveedor</th>
+                                    <th class="px-4 py-2 text-center text-base">Vencimiento</th>
+                                    <th class="px-4 py-2 text-center text-base">Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="text-gray-700" *ngFor="let item of listadoFacturas">
+                                    <td class="px-2 py-2 text-sm text-center">
+                                        <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                    </td>
+                                    <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                        {{ item.documentoCxp }}
+                                    </td>
+                                    <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                        {{ item.nit }}
+                                    </td>
+                                    <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                        {{ item.nombreCliente }}
+                                    </td>
+                                    <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                        {{ item.vencimiento }}
+                                    </td>
+                                    <td class="px-2 py-2 text-right text-md text-gray-600 capitalize">
+                                        $ {{item.valorFactura | number}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
+                                    <th class="px-4 py-2 text-center"></th>
+                                    <th class="px-4 py-2 text-center"></th>
+                                    <th class="px-4 py-2 text-center"></th>
+                                    <th class="px-4 py-2 text-center"></th>
+                                    <th class="px-4 py-2 text-center text-base">Total:</th>
+                                    <th class="px-4 py-2 text-right">$ {{ total | number}}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+    
+                    </cdk-virtual-scroll-viewport>
+    
+                </div> -->
+    
+                <!-- <fuse-card class="card shadow"> -->
+    
+                    
+    
+                    <!-- <div class="cdk-virtual-scroll-data-source-example">
+    
+                    </div> -->
+    
+                    <!-- <div class="cdk-virtual-scroll-data-source-example">
     
                         <cdk-virtual-scroll-viewport itemSize="50" orientation="horizontal" class="example-viewport">
-                            <table>
-                                <thead>
-                                    <tr
-                                        class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
-                                        <th class="px-4 py-2 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
-                                        <th class="px-4 py-2 text-center text-base">Factura</th>
-                                        <th class="px-4 py-2 text-center text-base">NIT</th>
-                                        <th class="px-4 py-2 text-center text-base">Proveedor</th>
-                                        <th class="px-4 py-2 text-center text-base">Vencimiento</th>
-                                        <th class="px-4 py-2 text-center text-base">Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
-                                    <tr class="text-gray-700" *ngFor="let item of listadoFacturas">
-                                        <td class="px-2 py-2 text-sm text-center">
-                                            <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
-                                        </td>
-                                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                            {{ item.documentoCxp }}
-                                        </td>
-                                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                            {{ item.nit }}
-                                        </td>
-                                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                            {{ item.nombreCliente }}
-                                        </td>
-                                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                            {{ item.vencimiento }}
-                                        </td>
-                                        <td class="px-2 py-2 text-right text-md text-gray-600 capitalize">
-                                            $ {{item.valorFactura | number}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
-                                        <th class="px-4 py-2 text-center"></th>
-                                        <th class="px-4 py-2 text-center"></th>
-                                        <th class="px-4 py-2 text-center"></th>
-                                        <th class="px-4 py-2 text-center"></th>
-                                        <th class="px-4 py-2 text-center text-base">Total:</th>
-                                        <th class="px-4 py-2 text-right">$ {{ total | number}}</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            
                         </cdk-virtual-scroll-viewport>
         
-                    </div>
+                    </div> -->
     
-                </fuse-card>
-
+                <!-- </fuse-card> -->
+    
             </div>
-
-            
     
         </div>
-    
     
     </div>
 

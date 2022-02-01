@@ -1,6 +1,5 @@
 .card_interna{
   border-left: 5px solid #b6ce1d;
-  // border-top: 1px solid #dfdfdf;
   padding: 1em;
   margin-left: 1em;
   margin-bottom: 1em;
@@ -14,16 +13,30 @@
   width: 78.3rem
 }
 
-.example-container {
-  width: 400px;
-  height: 1000px;
-  margin: 10px;
-  border: 1px solid #555;
+.giantScroll {
+  height: 290px;
+  width: 1200px;
+}
+
+.mediumScroll {
+  height: 290px;
+  width: 1115px;
+}
+
+.scrolling {
+  height: 592px;
+  width: 1255px;
+  // border: 1px solid black;
+}
+
+.example-item {
+  height: 50px;
 }
 
 .cdk-virtual-scroll-data-source-example .example-viewport {
-  height: 310px;
-  width: 1200px;    
+  height: 285px;
+  width: 1200px;
+  border: 1px solid black;
 }
 
 .cdk-virtual-scroll-data-source-example .example-viewport .cdk-virtual-scroll-content-wrapper {
@@ -32,12 +45,10 @@
 }
 
 .cdk-virtual-scroll-data-source-example .example-item {
-  height: 50px;
+  width: 50px;
   height: 100%;
   writing-mode: vertical-lr;
 }
-
-
 
 .tamano_div {
   width: 57.5rem/* 800px */;
