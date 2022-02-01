@@ -6,6 +6,8 @@ import {DirectionsComponent} from "../../../../../../shared/modal/directions/dir
 import {UtilityService} from "../../../../../../resources/services/utility.service";
 import Swal from "sweetalert2";
 import {FormDialogReprogramarComponent} from "../form-dialog-reprogramar/form-dialog-reprogramar.component";
+import {AgendaReferenciacionService} from "../../../../../../core/services/agenda-referenciacion.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-form-gestion-referenciacion-modal',
@@ -14,6 +16,7 @@ import {FormDialogReprogramarComponent} from "../form-dialog-reprogramar/form-di
 })
 export class FormGestionReferenciacionModalComponent implements OnInit {
   public form: FormGroup;
+  public agendaReferencia$: Observable<any>;
   constructor(
       private referenciacionCliente: ReferenciacionClienteService,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -21,6 +24,7 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
       private _matDialog: MatDialog,
       private _matDialogRef: MatDialogRef<FormGestionReferenciacionModalComponent>,
       public utility: UtilityService,
+      private agendaReferenciaService: AgendaReferenciacionService,
   ) { }
 
   ngOnInit(): void {
@@ -58,11 +62,14 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           width: '30%',
           data: {
               numeroSolicitud: this.data.numeroSolicitud
-          }
+          },
+          disableClose: true
       });
 
       dialogRef.afterClosed().subscribe((res) => {
-          console.log('CERRAR');
+          if (res) {
+            this.getAgendaReferenciacion();
+          }
       });
 
   }
@@ -203,5 +210,9 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           console.log(res);
       });
   }
+
+    private getAgendaReferenciacion(): void {
+        this.agendaReferencia$ = this.agendaReferenciaService.getAgendaReferenciacion();
+    }
 
 }

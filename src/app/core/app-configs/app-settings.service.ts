@@ -117,6 +117,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('informacion-cliente-referenciar'),
             baseReferecia: EndPoints.uriGenerica('cre-referenciar'),
+            baseReprogramar: EndPoints.uriGenerica('cre-reprogramar-solicitud')
         }
     };
 

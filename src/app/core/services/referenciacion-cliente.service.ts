@@ -22,5 +22,9 @@ export class ReferenciacionClienteService {
     public postReferenciacion(data: any): Observable<any> {
         return this._http.post(this._appSettings.referenciaCliente.url.baseReferecia, data);
     }
+
+    public postReprogramarSolicitud(data: any): Observable<any> {
+        return this._http.post(this._appSettings.referenciaCliente.url.baseReprogramar, data);
+    }
 }
 
