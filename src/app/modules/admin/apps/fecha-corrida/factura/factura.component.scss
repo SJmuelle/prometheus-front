@@ -75,6 +75,14 @@ position: sticky;
 left: 0;
 }
 
+tbody tr:nth-child(even) {
+  background-color: #eee;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
 tfoot th {
 position: -webkit-sticky; /* for Safari */
 position: sticky;

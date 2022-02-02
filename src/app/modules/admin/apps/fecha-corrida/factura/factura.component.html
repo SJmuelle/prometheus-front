@@ -1,133 +1,131 @@
+<div class="px-3 py-2 h-screen overflow-y-auto overflow-x-hidden w-full">
 
+    <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
 
-    <div class="px-3 py-2 h-screen overflow-y-auto overflow-x-hidden w-full">
-    
-        <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
-    
-            <h2 class="mb-2  text-gray-900">Transferencia de pagos</h2>
-    
-        </div>
-    
-        <form [formGroup]="proveedorForm">
-    
-            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:gap-3">
-    
-                <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
-                    <mat-label>Proveedor</mat-label>
-                    <mat-select formControlName="nit">
-                        <mat-option>
-                            <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
-                        </mat-option>
-                        <mat-option
-                            *ngFor="let item of proveedor | search : filterproveedor"
-                            [value]="item.nit">{{ item.proveedor }}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
-                        Debe elegir un proveedor.
-                    </mat-error>
-                </mat-form-field>
-    
-                <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
-                    <mat-label>Fecha de vencimiento</mat-label>
-                    <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker disabled="false"></mat-datepicker>
-                    <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
-                        Debe digitar una fecha.
-                    </mat-error>
-                </mat-form-field>
-    
-                <div>
-                    <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()" class="sm:w-40"><mat-icon>search</mat-icon>Buscar facturas</button>
-                </div>
-    
-            </div>
-    
-        </form>
-    
-        <div class="py-3 md:py-0">
-    
-            <form [formGroup]="bancoForm">
-    
-                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:gap-3">
-                    <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
-                        <mat-label>Banco de transferencia</mat-label>
-                        <mat-select formControlName="nombreBanco">
-                        <mat-option
-                            *ngFor="let item of banco"
-                            [value]="item.descripcion">{{ item.tableCode }}</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
-                            Debe seleccionar un banco para hacer transferencia.
-                        </mat-error>
-                    </mat-form-field>
-    
-                    <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
-                        <mat-label>Total de la transferencia</mat-label>
-                        <mat-icon> attach_money</mat-icon>
-                        <input matInput formControlName="totaltransferencia" value="{{valores | number}}" readonly>
-                    </mat-form-field>
-                    
-                    <div class="md:right-1">
-                        <button mat-raised-button color="accent" class="sm:w-40" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length > 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
-                    </div>
-    
-                </div>
-    
-            </form>
-    
-            <div class="py-4">
-    
-                <div class="shadow overflow-x-scroll overflow-y-auto h-64 xl:h-140">
-                    <table>
-                        <thead>
-                            <tr
-                                class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
-                                <th class="px-4 py-2 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
-                                <th class="px-4 py-2 text-center text-base">Factura</th>
-                                <th class="px-4 py-2 text-center text-base">NIT</th>
-                                <th class="px-4 py-2 text-center text-base">Proveedor</th>
-                                <th class="px-4 py-2 text-center text-base">Vencimiento</th>
-                                <th class="px-4 py-2 text-center text-base">Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white">
-                            <tr class="text-gray-700 example-item" *ngFor="let item of listadoFacturas">
-                                <td class="px-2 py-2 text-sm text-center">
-                                    <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
-                                </td>
-                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                    {{ item.documentoCxp }}
-                                </td>
-                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                    {{ item.nit }}
-                                </td>
-                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                    {{ item.nombreCliente }}
-                                </td>
-                                <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
-                                    {{ item.vencimiento }}
-                                </td>
-                                <td class="px-2 py-2 text-right text-md text-gray-600 capitalize">
-                                    $ {{item.valorFactura | number}}
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
-                                <th class="px-4 py-2 text-center"></th>
-                                <th class="px-4 py-2 text-center"></th>
-                                <th class="px-4 py-2 text-center"></th>
-                                <th class="px-4 py-2 text-center"></th>
-                                <th class="px-4 py-2 text-center text-base">Total:</th>
-                                <th class="px-4 py-2 text-right">$ {{ total | number}}</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-    
-            </div>
-    
-        </div>
-    
+        <h2 class="mb-2  text-gray-900">Transferencia de pagos</h2>
+
     </div>
+
+    <form [formGroup]="proveedorForm">
+
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:gap-3">
+
+            <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Proveedor</mat-label>
+                <mat-select formControlName="nit">
+                    <mat-option>
+                        <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
+                    </mat-option>
+                    <mat-option
+                        *ngFor="let item of proveedor | search : filterproveedor"
+                        [value]="item.nit">{{ item.proveedor }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
+                    Debe elegir un proveedor.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Fecha de vencimiento</mat-label>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
+                    Debe digitar una fecha.
+                </mat-error>
+            </mat-form-field>
+
+            <div>
+                <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()" class="sm:w-40"><mat-icon>search</mat-icon>Buscar facturas</button>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div *ngIf="mostrar==true" class="py-3 md:py-0">
+
+        <form [formGroup]="bancoForm">
+
+            <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:gap-3">
+                <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                    <mat-label>Banco de transferencia</mat-label>
+                    <mat-select formControlName="nombreBanco">
+                    <mat-option
+                        *ngFor="let item of banco"
+                        [value]="item.descripcion">{{ item.tableCode }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="bancoForm.get('nombreBanco').hasError('required')">
+                        Debe seleccionar un banco para hacer transferencia.
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                    <mat-label>Total de la transferencia</mat-label>
+                    <mat-icon> attach_money</mat-icon>
+                    <input matInput formControlName="totaltransferencia" value="{{valores | number}}" readonly>
+                </mat-form-field>
+                
+                <div class="md:right-1">
+                    <button mat-raised-button color="accent" class="sm:w-40" [disabled]="!((bancoForm.valid==true) && (detailsFacture.length > 0))" (click)="pagarFacturas()"><mat-icon svgIcon="iconsmind:paper_plane" class="pr-2"></mat-icon>Transferir</button>
+                </div>
+
+            </div>
+
+        </form>
+
+        <div class="py-4">
+
+            <div class="shadow overflow-x-scroll overflow-y-auto h-64 xl:h-140">
+                <table>
+                    <thead>
+                        <tr
+                            class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize" >
+                            <th class="px-4 py-2 text-center w-0 text-base"><mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox></th>
+                            <th class="px-4 py-2 text-center text-base">Factura</th>
+                            <th class="px-4 py-2 text-center text-base">NIT</th>
+                            <th class="px-4 py-2 text-center text-base">Proveedor</th>
+                            <th class="px-4 py-2 text-center text-base">Vencimiento</th>
+                            <th class="px-4 py-2 text-center text-base">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr class="text-gray-700 example-item" *ngFor="let item of listadoFacturas">
+                            <td class="px-2 py-2 text-sm text-center">
+                                <mat-checkbox [(ngModel)]="item.completed"  value="{{item.id}}" (ngModelChange)="updateAllComplete();acumular(item)" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                            </td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                {{ item.documentoCxp }}
+                            </td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                {{ item.nit }}
+                            </td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                {{ item.nombreCliente }}
+                            </td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">
+                                {{ item.vencimiento }}
+                            </td>
+                            <td class="px-2 py-2 text-right text-md text-gray-600 capitalize">
+                                $ {{item.valorFactura | number}}
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center text-base">Total:</th>
+                            <th class="px-4 py-2 text-right">$ {{ total | number}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
