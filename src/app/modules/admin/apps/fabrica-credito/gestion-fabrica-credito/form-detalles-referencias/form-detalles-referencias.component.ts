@@ -49,7 +49,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
   public onActualizar(): void {
       if (this.form.valid) {
           const datos: any = this.form.getRawValue();
-          const {tipo, descripcionTipoReferencia, descripcionEstado, ...data } = datos;
+          const {descripcionTipoReferencia, descripcionEstado, ...data } = datos;
           Swal.fire({
               title: 'Guardar información',
               text: '¿Está seguro de guardar información?',
@@ -62,11 +62,6 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
           }).then((result) => {
               if (result.isConfirmed) {
                   this.actualizarDetalleReferencia(data);
-                  Swal.fire(
-                      'Completado',
-                      'Información guardada con éxito',
-                      'success'
-                  );
               }
           });
       }
@@ -145,7 +140,48 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
    * @description: Actualiza la referencia
    */
   private actualizarDetalleReferencia(datos: any): void {
-      this.subscription$ = this.referenciasService.putDetalleReferencia(datos).subscribe(( ) => {
+      let formulario: any = {};
+      if (datos.tipo === 'P') {
+          formulario = {
+              antiguedad: datos.antiguedad,
+              celular: datos.celular,
+              estado: datos.estado,
+              codigoCiudad: '0',
+              codigoDepartamento: datos.codigoDepartamento,
+              idReferencia: datos.idReferencia,
+              identificacion: datos.identificacion,
+              nombreCompleto: `${datos.primerNombre + ' '}${datos.segundoNombre? datos.segundoNombre + ' ' : ''}${datos.primerApellido && datos.segundoApellido? datos.primerApellido + ' ' : datos.primerApellido}${datos.segundoApellido}`,
+              numeroSolicitud: datos.numeroSolicitud,
+              primerApellido: datos.primerApellido,
+              primerNombre: datos.primerNombre,
+              segundoApellido: datos.segundoApellido,
+              segundoNombre: datos.segundoNombre,
+              telefono: datos.telefono,
+          };
+      }else {
+          formulario = {
+              antiguedad: datos.antiguedad,
+              celular: datos.celular,
+              codigoCiudad: datos.codigoCiudad,
+              codigoDepartamento: datos.codigoDepartamento,
+              estado: datos.estado,
+              idReferencia: datos.idReferencia,
+              identificacion: datos.identificacion,
+              nombreCompleto: datos.nombreCompleto,
+              numeroSolicitud: datos.numeroSolicitud,
+              primerApellido: datos.primerApellido,
+              primerNombre: datos.primerNombre,
+              segundoApellido: datos.segundoApellido,
+              segundoNombre: datos.segundoNombre,
+              telefono: datos.telefono
+          };
+      };
+      this.subscription$ = this.referenciasService.putDetalleReferencia(formulario).subscribe(( ) => {
+          Swal.fire(
+              'Completado',
+              'Información guardada con éxito',
+              'success'
+          );
           this.cerrarFormulario.emit(false);
           this.referenciasService.eventos$.emit(true);
           this._matDialog.close();

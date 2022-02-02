@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>Información de referencia</h2>
 <mat-dialog-content>
-   <!-- <code><pre>{{form.valid | json}}</pre></code>
+    <!-- <code><pre>{{form.valid | json}}</pre></code>
     <code><pre>{{form.status | json}}</pre></code>
     <code><pre>nombreCompleto: {{form.controls['nombreCompleto'].valid | json}}</pre></code>
     <code><pre>codigoDepartamento: {{form.controls['codigoDepartamento'].valid | json}}</pre></code>
@@ -19,12 +19,9 @@
                         <ng-container *ngIf="tiposReferencia$ | async as items">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Tipo de referencia</mat-label>
-                                <mat-select
-                                    [formControlName]="'tipo'"
-                                >
-                                    <mat-option *ngFor="let item of items.data"
-                                                [value]="item.codigoOpcion"
-                                    >{{item.descripcionOpcion}}
+                                <mat-select [formControlName]="'tipo'">
+                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                        {{item.descripcionOpcion}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -34,7 +31,7 @@
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Nombre completo</mat-label>
-                                <input matInput type="text"  [formControlName]="'nombreCompleto'">
+                                <input matInput type="text" [formControlName]="'nombreCompleto'">
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -43,6 +40,9 @@
                             <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                                 <mat-label>Primer nombre</mat-label>
                                 <input matInput type="text" [formControlName]="'primerNombre'">
+                                <mat-error *ngIf="campoRequerido('primerNombre')">
+                                    Este campo es requerido
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 fuse-mat-dense">
                                 <mat-label>Segundo nombre (opcional)</mat-label>
@@ -55,6 +55,9 @@
                             <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                                 <mat-label>Primer apellido</mat-label>
                                 <input matInput type="text" [formControlName]="'primerApellido'">
+                                <mat-error *ngIf="campoRequerido('primerApellido')">
+                                    Este campo es requerido
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 fuse-mat-dense">
                                 <mat-label>Segundo apellido (opcional)</mat-label>
@@ -72,60 +75,31 @@
                     </ng-container>
                     <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
                         <div class="md:flex">
-                            <ng-container *ngIf="departamentos$ | async as departamentos">
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Departamento del negocio</mat-label>
-                                    <mat-select (selectionChange)="seleccionDepartamento($event)"
-                                                [value]="'seleccione'"
-                                                [formControlName]="'codigoDepartamento'"
-                                    >
-                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                        <mat-option *ngFor="let departamento of departamentos.data"
-                                                    [value]="departamento.codigo"
-                                        >{{departamento.nombre}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex ">
-                            <ng-container *ngIf="ciudades$ | async as ciudades">
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Ciudad / municipio </mat-label>
-                                    <mat-select (selectionChange)="seleccionCiudad($event)"
-                                                [value]="'seleccione'"
-                                                [formControlName]="'codigoCiudad'"
-                                    >
-                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                        <mat-option *ngFor="let ciudad of ciudades.data"
-                                                    [value]="ciudad.codigo"
-                                        >{{ciudad.nombre}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </ng-container>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Departamento</mat-label>
+                                <input matInput type="text" [formControlName]="'departamentoNombre'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
                         </div>
                         <div class="md:flex">
-                            <ng-container *ngIf="barrios$ | async as barrios">
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Barrio</mat-label>
-                                    <mat-select
-                                        [value]="'seleccione'"
-                                        [formControlName]="'codigoBarrio'"
-                                    >
-                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                        <mat-option *ngFor="let barrio of barrios.data"
-                                                    [value]="barrio.codigo"
-                                        >{{barrio.nombre}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </ng-container>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Cuidad / municipio</mat-label>
+                                <input matInput type="text" [formControlName]="'ciudadNombre'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Barrio</mat-label>
+                                <input matInput type="text" [formControlName]="'nombreBarrio'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
                         </div>
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Dirección</mat-label>
-                                <input matInput type="text" [formControlName]="'direccion'" (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                <input matInput type="text" [formControlName]="'direccion'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -152,21 +126,11 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                (click)="onGuardar()"
-                [disabled]="form.invalid"
-        >
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
             Guardar
         </button>
-        <button mat-raised-button
-                class="mr-2 bg-gray-400 text-white"
-                type="button"
-                (click)="onCerrar()"
-        >
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
             Cerrar
         </button>
     </div>
 </mat-dialog-actions>
-

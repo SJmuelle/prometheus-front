@@ -124,16 +124,15 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public onPostDatos(): void {
       if (this.form.valid) {
           const datos: FormularioCreditoInterface = this.form.getRawValue();
-          const {fechaNacimiento, fechaMatricula, ...data} = datos;
+          const {fechaNacimiento, fechaMatricula, antiguedadComprasSemanales, ...data} = datos;
           const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
           const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
           const compraSemanal= Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
           const ventasMensuales= Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
-          const antiguedadComprasSemanales = Number(this.utility.enviarNumero(this.form.value.antiguedadComprasSemanales));
+          // const antiguedadComprasSemanales = Number(this.form.value.antiguedadComprasSemanales);
           const activos= Number(this.utility.enviarNumero(this.form.value.activos));
           delete data.ventasMensuales;
           delete data.comprasSemanales;
-          delete data.antiguedadComprasSemanales;
           delete data.activos;
           const datosFormularios: FormularioCreditoInterface = {
               fechaNacimiento: fechaNacimientoFormato,
@@ -141,7 +140,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               comprasSemanales: compraSemanal,
               ventasMensuales: ventasMensuales,
               activos: activos,
-              antiguedadComprasSemanales: antiguedadComprasSemanales,
+              antiguedadComprasSemanales: Number(antiguedadComprasSemanales),
               ...data
           };
           Swal.fire({
@@ -420,7 +419,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           numeroSolicitud:               [''],
           emision:                       [''],
           descripcionEstado:             [''],
-          origen:                        [''],
+          descripcionOrigen:             [''],
           codigoSubEstado:               [''],
           cupoTotal:                     [''],
           cupoReservado:                 [''],
