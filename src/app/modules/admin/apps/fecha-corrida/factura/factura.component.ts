@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FuseScrollbarDirective } from '@fuse/directives/scrollbar/scrollbar.directive';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -10,6 +11,9 @@ import moment from 'moment';
   styleUrls: ['./factura.component.scss']
 })
 export class FacturaComponent implements OnInit {
+
+  @ViewChildren(FuseScrollbarDirective)
+  private fuseScrollbarDirectives: QueryList<FuseScrollbarDirective>
 
   listadoFacturas: any=[];
 
@@ -79,6 +83,16 @@ export class FacturaComponent implements OnInit {
     this.maxFecha = new Date(this.fechaActual);
     this.consultaBanco();
     this.consultaProveedor();
+
+    // this.fuseScrollbarDirectives.forEach((fuseScrollbarDirective) => {
+    //   fuseScrollbarDirective.update()
+    // });
+  }
+
+  ngAfterViewInit(): void {
+    this.fuseScrollbarDirectives.forEach((fuseScrollbarDirective) => {
+      fuseScrollbarDirective.scrollToY(1, 2)
+    });
   }
 
   filtrarDatos(){

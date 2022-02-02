@@ -56,12 +56,17 @@
   width: 57.5rem/* 800px */;
 }  
 
+.container {
+  height: 100vh;
+  width: 100vw;
+}
+
 thead th {
 position: -webkit-sticky; /* for Safari */
 position: sticky;
 top: 0;
 background-color: #F9FAFB;
-z-index: 999999999999999;
+z-index: 9;
 }
 
 tbody th {
