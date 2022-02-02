@@ -1,4 +1,4 @@
-<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+<div class=" bg-white h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2 text-gray-900">Gestión del cliente</h2>
@@ -58,7 +58,7 @@
         <div class="col-sm-12 col-lg-3 pb-3">
             <fuse-card class="card p-3 shadow capitalize row mr-3 ">
                 <div
-                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0">
                     {{info_cliente.primerNombre}}
                     {{info_cliente.segundoNombre}}
                     {{info_cliente.primerApellido}}
@@ -180,67 +180,58 @@
                                     <div class="col-lg-11  border-card">
                                         <div class="row border-card pt-2 pb-3">
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Código negocio
-                                                </div>
+                                                <div class="text-sm text-secondary font-bold">Código negocio</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.codigoNegocio}}
                                                 </div>
                                             </div>
                                             <div class="col-sm-5 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Tipo
-                                                    cliente</div>
+                                                <div class="text-sm text-secondary font-bold">Tipo cliente</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.tipoCliente }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Tipo
-                                                    crédito</div>
+                                                <div class="text-sm text-secondary font-bold">Tipo crédito</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.tipoCredito}}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Agencia</div>
+                                                <div class="text-sm text-secondary font-bold">Agencia</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.agencia}}</div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Solicitud
-                                                </div>
+                                                <div class="text-sm text-secondary font-bold">Solicitud</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.fechaSolicitud}}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Unidad negocio
-                                                </div>
+                                                <div class="text-sm text-secondary font-bold">Unidad negocio</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.unidadNegocio}}
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Aprobación
-                                                </div>
+                                                <div class="text-sm text-secondary font-bold">Aprobación</div>
                                                 <div class="capitalize" style="font-size: 16px;">
                                                     {{data.fechaAprobacion}}</div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Estado</div>
+                                                <div class="text-sm text-secondary font-bold">Estado</div>
                                                 <div class="capitalize" style="font-size: 16px;">{{data.estado}}</div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Valor negocio
-                                                </div>
+                                                <div class="text-sm text-secondary font-bold">Valor negocio</div>
                                                 <div class="capitalize" style="font-size: 16px;">
                                                     {{data.valorNegocio  | currency:'$':'symbol':'0.0-0'}}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Valor
-                                                    disponible</div>
+                                                <div class="text-sm text-secondary font-bold">Valor disponible</div>
                                                 <div class="capitalize" style="font-size: 16px;">
                                                     {{data.valorDisponible  | currency:'$':'symbol':'0.0-0'}}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2 ">
-                                                <div class="text-sm font-medium text-secondary font-bold ">Plan pagos
-                                                </div>
+                                                <div class="text-sm text-secondary font-bold ">Plan pagos</div>
                                                 <div class="capitalize" style="font-size: 16px; margin-left: 20px;">
                                                     <mat-icon class="material-icons-two-tone cursor-pointer"
                                                         (click)="buscar_url(data.numeroSolicitud)"
@@ -249,7 +240,7 @@
                                                 </div>
                                             </div>
                                             <!-- <div class="col-sm-6 col-lg-2">
-                                                <div class="text-sm font-medium text-secondary font-bold">Detalle</div>
+                                                <div class="text-sm text-secondary font-bold">Detalle</div>
                                                 <div class=""> <button>
                                                         <mat-icon class="material-icons-two-tone" style="color:#fff;     align-self: center; height: 100%;">description</mat-icon>
                                                     </button></div>

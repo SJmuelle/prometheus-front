@@ -1,6 +1,6 @@
 
 <app-mensaje-creacion  *ngIf="mostrar_formulario==false"></app-mensaje-creacion>
-<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="mostrar_formulario==true">
+<div class="bg-white h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="mostrar_formulario==true">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2  text-gray-900">Registro de PQRS</h2>
@@ -11,8 +11,7 @@
     <div class="row pl-3">
         <div class="col-sm-12 col-lg-12 mt-2.5">
             <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
-                <div class="mb-2 mt-1 mb-0 ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
-                    (click)="tabMostrar=1">
+                <div class="mb-2 mt-1 ml-3 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color">
                     <!-- <mat-icon class="icon-size-5 iconTitulo " matPrefix [svgIcon]="'mat_solid:attach_file'"></mat-icon> -->
                     Datos de ingreso
                 </div>
@@ -98,8 +97,7 @@
         </div>
         <div class="col-sm-12 col-lg-12 mt-2.5">
             <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
-                <div class="mb-2 mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
-                    (click)="tabMostrar=2">
+                <div class="mb-2 mt-1 ml-3 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color">
                     Datos básicos
                 </div>
                 <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=2">
@@ -173,17 +171,15 @@
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>E-mail</mat-label>
                                     <input matInput type="email" autocomplete="off" name="email"
-                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" [email]="true"
                                         [(ngModel)]="datos.email" required maxlength="50" minlength="7">
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-end">
-                                <button mat-button class="btn bg-gray-400 text-white mr-2"
-                                    (click)="tabMostrar=1">Anterior </button>
-                                <button mat-button class="btn color_fintra text-white" (click)="validaForm(2)">Siguiente
-                                </button>
+                                <button mat-button class="btn bg-gray-400 text-white mr-2" (click)="tabMostrar=1">Anterior </button>
+                                <button mat-button class="btn color_fintra text-white" (click)="validaForm(2)">Siguiente</button>
                             </div>
                         </div>
                     </form>
@@ -192,8 +188,7 @@
         </div>
         <div class="col-sm-12 col-lg-12 mt-2.5">
             <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
-                <div class="mb-2 mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
-                    (click)="tabMostrar=3">
+                <div class="mb-2 mt-1 ml-3 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color">
                     Detalle de PQRS
                 </div>
                 <form>
@@ -334,8 +329,7 @@
         </div>
         <div class="col-sm-12 col-lg-12 mt-2.5">
             <fuse-card class="card pr-3 pl-3 shadow row mr-3 ">
-                <div class="mt-1 mb-0  ml-3 leading-tight titulo_tabs text-2xl font-semibold  col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color"
-                    (click)="tabMostrar=4">
+                <div class="mt-1 mb-0 ml-3 leading-tight titulo_tabs text-2xl font-semibold  col-lg-12 col-sm-12 pl-0 cursor-pointer titulo_color">
                     Subir evidencias
                 </div>
                 <div class="col-lg-12 col-sm-12 card_interna" [hidden]="tabMostrar!=4">
