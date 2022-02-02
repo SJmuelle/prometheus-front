@@ -1,16 +1,16 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ReferenciacionClienteService} from "../../../../../../core/services/referenciacion-cliente.service";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
-import {UtilityService} from "../../../../../../resources/services/utility.service";
-import Swal from "sweetalert2";
-import {FormDialogReprogramarComponent} from "../form-dialog-reprogramar/form-dialog-reprogramar.component";
-import {AgendaReferenciacionService} from "../../../../../../core/services/agenda-referenciacion.service";
-import {Observable} from "rxjs";
+import {ReferenciacionClienteService} from '../../../../../../core/services/referenciacion-cliente.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {DirectionsComponent} from '../../../../../../shared/modal/directions/directions.component';
+import {UtilityService} from '../../../../../../resources/services/utility.service';
+import Swal from 'sweetalert2';
+import {FormDialogReprogramarComponent} from '../form-dialog-reprogramar/form-dialog-reprogramar.component';
+import {AgendaReferenciacionService} from '../../../../../../core/services/agenda-referenciacion.service';
+import {combineLatest} from 'rxjs';
 import {
     FormDialogComentarioReferenciaComponent
-} from "../form-dialog-comentario-referencia/form-dialog-comentario-referencia.component";
+} from '../form-dialog-comentario-referencia/form-dialog-comentario-referencia.component';
 
 
 @Component({
@@ -37,7 +37,63 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
   }
 
   public onCerrar(): void {
-      this._matDialogRef.close();
+      this._matDialogRef.close(true);
+  }
+
+  public onGuardar(): void {
+      const data: any = this.form.getRawValue();
+      const datosCliente: any = {
+          tipoIdentificacion: data.tipoDocumento,
+          numeroSolicitud: this.data.numeroSolicitud,
+          identificacion: data.identificacion,
+          celular: data.celular,
+          telefono: data.telefono,
+          email: data.email,
+          departamento: data.codigoDepartamento,
+          ciudad: data.codigoCiudad,
+          barrio: data.codigoBarrio,
+          direccion: data.direccionResidencial,
+          activos: data.activos,
+          ventasMensuales: data.ventasMensuales
+      };
+      const datosNegocio: any = {
+          numeroSolicitud: this.data.numeroSolicitud,
+          identificacion: data.identificacion,
+          departamento: data.codigoDepartamentoNegocio,
+          ciudad: data.codigoCiudadNegocio,
+          barrio: data.codigoBarrioNegocio,
+          direccion: data.direccionNegocio,
+          telefono: data.telefonoNegocio,
+          nitNegocio: data.nitNegocio,
+          activos: data.activos,
+          ventasMensuales: data.ventasMensuales
+      };
+      Swal.fire({
+          title: 'Guardar información',
+          text: '¿Está seguro de guardar información?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#a3a0a0',
+          confirmButtonText: 'Guardar',
+          cancelButtonText: 'Cancelar'
+      }).then((result) => {
+          if (result.isConfirmed) {
+              combineLatest([
+                  this.referenciacionCliente.putCliente(datosCliente),
+                  this.referenciacionCliente.putNegocio(datosNegocio)
+              ]).subscribe((res) => {
+                  if (res) {
+                      Swal.fire(
+                          'Completado',
+                          'Información guardada con éxito',
+                          'success'
+                      );
+                      this.onCerrar();
+                  }
+              });
+          }
+      });
   }
 
   public onReferenciar(): void {
@@ -229,11 +285,9 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           ventasMensuales: ['']
       });
   }
-
   private postReferenciar(data: any): void {
       this.referenciacionCliente.postReferenciacion(data).subscribe((res) => {
           console.log(res);
       });
   }
-
 }

@@ -286,11 +286,15 @@
                     </button>
                 </div>
                 <div>
-                    <button mat-raised-button color="primary" type="button">
+                    <button mat-raised-button
+                            color="primary"
+                            type="button"
+                            (click)="onGuardar()"
+                    >
                         Guardar
                     </button>
                     <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button"
-                            (click)="onCerrar()"
+                            [mat-dialog-close]="false"
                     >
                         Cerrar
                     </button>

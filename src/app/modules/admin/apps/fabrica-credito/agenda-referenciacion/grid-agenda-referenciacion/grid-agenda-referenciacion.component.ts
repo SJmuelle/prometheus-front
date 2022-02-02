@@ -40,7 +40,9 @@ export class GridAgendaReferenciacionComponent implements OnInit {
           data: {numeroSolicitud: item.numeroSolicitud}
       });
       dialogRef.afterClosed().subscribe((res) => {
-          console.log('CLOSE');
+          if (res) {
+              this.getAgendaReferenciacion();
+          }
       });
   }
 

@@ -69,7 +69,9 @@ export class AppSettingsService {
             base: EndPoints.uri('consulta-referencias'),
             baseDetalle: EndPoints.uri('consulta-detalle-referencias'),
             baseReferencia: EndPoints.uriGenerica('cre-actualizar-referencia'),
-            baseReferenciaCrear: EndPoints.uriGenerica('cre-agregar-referencia')
+            baseReferenciaCrear: EndPoints.uriGenerica('cre-agregar-referencia'),
+            baseCliente: EndPoints.uriGenerica('actualizar-nits-referencias'),
+            baseNegocio: EndPoints.uriGenerica('cre-actualizar-info-negocio-ref'),
         }
     };
     /**
