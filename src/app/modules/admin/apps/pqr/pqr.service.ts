@@ -71,6 +71,14 @@ export class PqrService {
         );
     }
 
+    permisoCreacion(url: string): Observable<any> {
+        return this._utility.getQuery(url, true).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
     // NUEVO METODO PARA ENVIAR CORREOS
     envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '') {
         let data = {
@@ -158,8 +166,11 @@ export class PqrService {
             })
         );
     }
-
-    generarCertificados(url: string) {
-
+    generarCertificados(url: string, data:any) {
+        return this._utility.postFile(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
     }
 }

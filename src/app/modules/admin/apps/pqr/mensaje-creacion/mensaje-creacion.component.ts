@@ -10,6 +10,7 @@ export class MensajeCreacionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.clear();
   }
 
 }
