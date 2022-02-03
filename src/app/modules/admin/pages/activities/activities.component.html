@@ -1,6 +1,6 @@
-<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="h-140 w-320">
+<!-- <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="h-140 w-320">
 
-   <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden">
+   <div class="relative flex flex-col flex-auto">
        
         <div class="flex flex-col md:flex-row flex-auto px-6 py-10 md:justify-between">
 
@@ -113,4 +113,237 @@
 
    </div>
     
+</cdk-virtual-scroll-viewport> -->
+<!-- <div class="px-3 py-2 h-screen overflow-y-auto overflow-x-hidden w-full">
+       
+    <div class="flex flex-col md:flex-row flex-auto px-6 py-5 md:justify-between">
+
+        <div class="text-4xl font-extrabold tracking-tight leading-none">Historial de archivos</div>
+
+        <mat-form-field class="w-90 md:w-96 top-5 md:top-0">
+            <mat-icon>search</mat-icon>
+            <input matInput type="text" placeholder="Buscar Archivos por nombre o extension" [(ngModel)]="value">
+            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
+    </div>
+
+    <div class="px-16">
+
+        <div *ngFor="let file of files | filter:value; let i = index; let first = first; trackBy: trackByFn">
+
+            <ng-container *ngIf="first || !isSameDay(file.date, files[i - 1].date)">
+                <li class="relative flex py-7">
+                    <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
+                        {{getRelativeFormat(file.date)}}
+                    </div>
+                </li>
+            </ng-container>
+
+            <div class="flex">
+
+                <div class="w-full">
+
+                    <ng-container>
+
+                        <li class="relative flex py-3 px-4">
+
+                            <fuse-card class="flex flex-col md:flex-row max-w-80 md:max-w-280 w-full filter-testimonial shadow">
+                
+                                <div class="flex-0 w-80 md:w-32">
+        
+                                    <div class="aspect-w-9 aspect-h-6">
+        
+                                        <div class="flex items-center justify-center">
+                                            
+                                            <div class="relative self-center top-7">
+        
+                                                <mat-icon class="icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+        
+                                                <div
+                                                    class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
+                                                    [class.bg-red-600]="file.type === 'pdf'"
+                                                    [class.bg-blue-600]="file.type === 'doc'"
+                                                    [class.bg-green-600]="file.type === 'xls'"
+                                                    [class.bg-gray-600]="file.type === 'txt'"
+                                                    [class.bg-amber-600]="file.type === 'jpg'">
+                                                    {{file.type.toUpperCase()}}
+                                                </div>
+        
+                                            </div>
+        
+                                        </div>
+        
+                                    </div>
+        
+                                </div>
+        
+                                <div class="flex flex-col flex-auto m-8 top-5">
+        
+                                    <ng-container *ngIf="file.name">
+        
+                                        <div class="text-lg font-medium line-clamp-2">{{file.name}}</div>
+                            
+                                    </ng-container>
+        
+                                    <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
+                                        
+                                        <div class="text-secondary">
+        
+                                            {{file.date | date:'MMM dd, h:mm a'}}
+                                            
+                                        </div>
+        
+                                    </div>
+        
+                                </div>
+        
+                                <div class="flex flex-col flex-auto m-8 items-end">
+        
+                                    <ng-container *ngIf="file.icon">
+                                        <div class="flex flew-row items-center gap-4 justify-between w-15 h-12 mr-14 rounded-full">
+                                            <button mat-raised-button><mat-icon class="icon-size-5 text-white" [svgIcon]="file.icon"></mat-icon></button>
+                                            <a class="cursor-pointer" (click)="openDialog()"><mat-icon class="hover:bg-hover">remove_red_eye</mat-icon></a>
+                                        </div>
+                                    </ng-container>
+                                    
+                                </div>
+        
+                            </fuse-card>
+        
+                        </li>
+
+                    </ng-container>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div> -->
+
+<cdk-virtual-scroll-viewport appendOnly itemSize="50" class="h-full w-full">
+
+    <div class="px-3 py-2">
+
+        <div class="flex flex-col sm:flex-row sm:justify-between w-full">
+    
+            <div class="py-4">
+    
+                <h2 class="text-4xl text-gray-900 tracking-tight leading-none">Historial de archivos</h2>
+    
+            </div>
+    
+            <div class="py-4">
+                <mat-form-field class="w-64">
+                    <mat-icon>search</mat-icon>
+                    <input matInput type="text" placeholder="Buscar en los archivos" [(ngModel)]="value">
+                    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+    
+        </div>
+    
+        <div class="flex flex-col">
+    
+            <div *cdkVirtualFor="let file of files | filter:value; let i = index; let first = first; trackBy: trackByFn">
+    
+                <ng-container *ngIf="first || !isSameDay(file.date, files[i - 1].date)">
+                    <li class="relative flex py-7">
+                        <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
+                            {{getRelativeFormat(file.date)}}
+                        </div>
+                    </li>
+                </ng-container>
+    
+                <ng-container>
+    
+                    <li class="relative flex py-3 px-2">
+    
+                        <fuse-card class="flex flex-row w-1/2 sm:w-full filter-testimonial shadow">
+    
+                            <div class="flex-col w-80 sm:w-64">
+    
+                                <div class="aspect-w-5 aspect-h-2">
+    
+                                    <div class="flex items-center justify-center">
+    
+                                        <div class="relative self-center top-15 sm:top-1.5 left-3 sm:left-0">
+
+                                            <mat-icon class="icon-size-10 sm:icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+
+                                            <div
+                                                class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
+                                                [class.bg-red-600]="file.type === 'pdf'"
+                                                [class.bg-blue-600]="file.type === 'doc'"
+                                                [class.bg-green-600]="file.type === 'xls'"
+                                                [class.bg-gray-600]="file.type === 'txt'"
+                                                [class.bg-amber-600]="file.type === 'jpg'">
+                                                {{file.type.toUpperCase()}}
+                                            </div>
+
+                                        </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+
+                            <div class="flex flex-col flex-auto m-8 top-5">
+        
+                                <ng-container *ngIf="file.name">
+    
+                                    <div class="text-lg font-medium line-clamp-2"><a matTooltip="Info about the action" aria-label="Button that displays a tooltip when focused or hovered over">{{file.name}}</a></div>
+                        
+                                </ng-container>
+    
+                                <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md">
+                                    
+                                    <div class="text-secondary line-clamp-2">
+    
+                                        {{file.date | date:'MMM dd, h:mm a'}}
+                                        
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+
+                            <div class="flex flex-col md:flex-row m-8 items-end">
+
+                                <div class="sm:flex sm:flew-row relative sm:gap-4 sm:justify-between top-5 md:-top-2">
+
+                                    <ng-container *ngIf="file.icon">
+                                        <a matTooltip="Info about the action" aria-label="Button that displays a tooltip when focused or hovered over"><mat-icon class="hover:bg-hover" [svgIcon]="file.icon"></mat-icon></a>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="file.icon">
+                                        <a (click)="openDialog()"><mat-icon class="hover:bg-hover">remove_red_eye</mat-icon></a>
+                                    </ng-container>
+
+                                </div>
+                                
+                            </div>
+    
+                        </fuse-card>
+    
+                    </li>
+    
+                </ng-container>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
 </cdk-virtual-scroll-viewport>
+

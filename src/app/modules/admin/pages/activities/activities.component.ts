@@ -31,35 +31,35 @@ export class ActivitiesComponent implements OnInit
                 id: '1',
                 icon: 'heroicons_solid:download',
                 type: 'pdf',
-                name: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop p',
+                name: 'Reporte de pagos realizados',
                 date: moment().subtract(25, 'minutes').toISOString()
             },
             {
                 id: '2',
                 icon: 'heroicons_solid:download',
                 type: 'doc',
-                name: 'Reporte Facturas',
+                name: 'Dialogo entre clientes.',
                 date: moment().subtract(50, 'minutes').toISOString()
             },
             {
                 id: '3',
                 icon: 'heroicons_solid:download',
                 type: 'xls',
-                name: 'Reporte Facturas',
+                name: 'Cuentas ganadas durante el mes.',
                 date: moment().subtract(9, 'hours').toISOString()
             },
             {
                 id: '4',
                 icon: 'heroicons_solid:download',
                 type: 'jpg',
-                name: 'Reporte Facturas',
+                name: 'Fondo de pantalla',
                 date: moment().subtract(1, 'day').toISOString()
             },
             {
                 id: '5',
                 icon: 'heroicons_solid:download',
                 type: 'txt',
-                name: 'Reporte Facturas',
+                name: 'Notas pendientes del dia.',
                 date: moment().subtract(4, 'day').toISOString()
             }
         ]

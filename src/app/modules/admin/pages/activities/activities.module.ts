@@ -10,6 +10,7 @@ import { FuseCardModule } from '@fuse/components/card';
 import { PdfViewerModule } from "ng2-pdf-viewer";
 import { PreviewComponent } from './preview/preview.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatSidenavModule,
         FuseCardModule,
         PdfViewerModule,
-        MatDialogModule
+        MatDialogModule,
+        MatTooltipModule
     ]
 })
 export class ActivitiesModule
