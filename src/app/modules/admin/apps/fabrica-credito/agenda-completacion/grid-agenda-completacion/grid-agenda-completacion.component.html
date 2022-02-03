@@ -36,8 +36,7 @@
                 </tr>
                 </thead>
                 <tbody class="bg-white">
-                <ng-container *ngIf="agendaCompletacion$ | async as agendas; else noDatos">
-                    <ng-container *ngFor="let item of agendas.data | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                    <ng-container *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                         <tr class="text-gray-700" >
                             <td class="px-2 text-sm border">
                                 <button mat-icon-button
@@ -56,19 +55,23 @@
                             <td class="px-2 text-sm border">{{ item.subEstado }}</td>
                         </tr>
                     </ng-container>
-                </ng-container>
+
                 </tbody>
             </table>
         </div>
+        <ng-container *ngIf="mostrar">
+            <fuse-alert [type]="'info'" >
+                <span fuseAlertTitle>Información</span>
+                En este momento no hay información para mostrar.
+            </fuse-alert>
+        </ng-container>
         <div class="col-lg-12 col-sm-12 text-end">
-            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-                nextLabel="Siguiente"></pagination-controls>
+            <pagination-controls (pageChange)="page = $event"
+                                 previousLabel="Anterior"
+                                nextLabel="Siguiente"
+            >
+            </pagination-controls>
         </div>
     </div>
 </div>
-<ng-template #noDatos>
-    <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">
-        No existen registros
-    </div>
-</ng-template>
 

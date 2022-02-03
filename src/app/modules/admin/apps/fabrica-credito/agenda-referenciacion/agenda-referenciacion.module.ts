@@ -25,6 +25,7 @@ import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-
 import {
     FormDialogComentarioReferenciaComponent
 } from "./form-dialog-comentario-referencia/form-dialog-comentario-referencia.component";
+import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import {
         GestionFabricaCreditoModule,
         NgxMatDatetimePickerModule,
         FormsModule,
+        FuseAlertModule,
     ]
 })
 export class AgendaReferenciacionModule { }
