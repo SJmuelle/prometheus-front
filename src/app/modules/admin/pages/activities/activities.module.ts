@@ -11,11 +11,13 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
 import { PreviewComponent } from './preview/preview.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { InfofileComponent } from './infofile/infofile.component';
 
 @NgModule({
     declarations: [
         ActivitiesComponent,
-        PreviewComponent
+        PreviewComponent,
+        InfofileComponent
     ],
     imports     : [
         RouterModule.forChild(activitiesRoutes),

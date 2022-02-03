@@ -4,6 +4,7 @@ import { ActivitiesService } from 'app/modules/admin/pages/activities/activities
 import { Item } from './file-manager.types'; 
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewComponent } from './preview/preview.component';
+import { InfofileComponent } from './infofile/infofile.component';
 
 @Component({
     selector       : 'activity',
@@ -21,10 +22,14 @@ export class ActivitiesComponent implements OnInit
 
     archivopreview: any;
 
+    screenWidth: any;
+
     constructor(public _activityService: ActivitiesService, private dialog: MatDialog){}
 
     
     ngOnInit(): void {
+
+        this.screenWidth = window.innerWidth;
 
         this.files = [
             {
@@ -73,15 +78,29 @@ export class ActivitiesComponent implements OnInit
     }
 
     openDialog(){
-        const dialogRef = this.dialog.open(PreviewComponent, {
-            width: '90vw',
-            data: {
-                id: this.archivopreview.id,
-                type: this.archivopreview.type,
-                base64: this.archivopreview.base64
-            }
-        })
-        dialogRef.afterClosed().toPromise();
+
+        this.screenWidth = window.innerWidth;
+
+        if (this.screenWidth <= 768) {
+            
+            const dialogRef = this.dialog.open(InfofileComponent)
+            dialogRef.afterClosed().toPromise();
+
+        } else{
+
+            const dialogRef = this.dialog.open(PreviewComponent, {
+                width: 'w-11/12',
+                data: {
+                    id: this.archivopreview.id,
+                    type: this.archivopreview.type,
+                    base64: this.archivopreview.base64
+                }
+            })
+            dialogRef.afterClosed().toPromise();
+
+        }
+
+        
     }
 
     prevista(i:number){
