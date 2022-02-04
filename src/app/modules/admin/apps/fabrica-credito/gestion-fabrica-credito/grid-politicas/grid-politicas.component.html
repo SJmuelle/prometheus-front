@@ -18,7 +18,19 @@
                             <td class="px-2 text-sm border">{{item.tipo}}</td>
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border" [ngClass]="{'bg-green-200': item.estadoAccion === 'CUMPLE', 'bg-red-200': item.estadoAccion != 'CUMPLE'}">{{item.estadoAccion | titlecase}}</td>
+                            <td class="px-2 text-sm border w-0"
+                            >
+                                <div
+                                    class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 "
+                                    [ngClass]="
+                                    item.estadoAccion !== 'CUMPLE'
+                                    ? 'bg-pink-300'
+                                    : 'bg-green-300'
+                                    "
+                                >
+                                    {{item.estadoAccion | titlecase}}
+                                </div>
+                            </td>
                         </tr>
                     </ng-container>
                 </ng-container>
