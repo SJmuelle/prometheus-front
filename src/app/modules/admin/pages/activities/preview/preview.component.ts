@@ -16,7 +16,7 @@ export class PreviewComponent implements OnInit {
 
   public oncCerrarDialog(): void {
     this.dialog.close();
-}
+  }
 
   ngAfterViewInit(): void {
 

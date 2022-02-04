@@ -322,7 +322,7 @@
                                 <div class="sm:flex sm:flew-row relative sm:gap-4 sm:justify-between top-5 md:-top-2">
 
                                     <ng-container *ngIf="file.icon">
-                                        <a matTooltip="Info about the action" aria-label="Button that displays a tooltip when focused or hovered over"><mat-icon class="hover:bg-hover" [svgIcon]="file.icon"></mat-icon></a>
+                                        <a (click)="downloadFile()"><mat-icon class="hover:bg-hover" [svgIcon]="file.icon"></mat-icon></a>
                                     </ng-container>
 
                                     <ng-container *ngIf="file.icon">

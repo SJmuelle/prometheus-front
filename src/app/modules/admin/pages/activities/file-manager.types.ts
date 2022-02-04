@@ -12,6 +12,7 @@ export interface Item
     date?: string;
     icon?: string;
     docupreview?: boolean;
+    base64?: string;
     // contents?: string | null;
     // description?: string | null;
 }
