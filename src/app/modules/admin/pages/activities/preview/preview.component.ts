@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-preview',
@@ -16,6 +17,25 @@ export class PreviewComponent implements OnInit {
 
   public oncCerrarDialog(): void {
     this.dialog.close();
+  }
+
+  downloadFile(){
+
+    Swal.fire({ title: 'Cargando', html: 'Descarga en proceso...', timer: 500000, didOpen: () => { 
+    Swal.showLoading() }, }).then((result) => { });   
+
+    const archivo = this.data.base64.split(',')[1];
+    const extension = this.data.type
+
+    console.log(extension);
+    console.log(archivo);
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    link.href = `data:application/${extension};base64,${archivo}`;
+    link.target = '_self';
+    link.download = this.data.name;
+    link.click();
+    Swal.close();
   }
 
   ngAfterViewInit(): void {

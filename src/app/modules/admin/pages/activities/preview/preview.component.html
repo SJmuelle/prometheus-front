@@ -39,9 +39,15 @@
 
 </mat-dialog-content>
 
+<mat-dialog-actions class="flex flex-row justify-between w-full">
 
-<mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
+    <div class="text-lg font-medium line-clamp-2">Descargue su archivo <a class="underline" (click)="downloadFile()">aqui</a></div>
+
+    <div>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+
+    
 </mat-dialog-actions>                
 
 
