@@ -26,7 +26,6 @@
                 <input matInput type="text" placeholder="Nombre / Razón de social" [formControlName]="'nombreCompleto'" [readonly]="true">
             </mat-form-field>
         </div>
-        <mat-divider></mat-divider>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Primer nombre</mat-label>
@@ -72,7 +71,10 @@
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Fecha de nacimiento </mat-label>
-                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'">
+                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
+                       (click)="fechaNacimiento.open()"
+                       (keydown)="fechaNacimiento.open()"
+                >
                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
                 <mat-datepicker #fechaNacimiento></mat-datepicker>
                 <mat-icon
@@ -154,7 +156,13 @@
             </ng-container>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
-            <ng-container *ngIf="departamentos$ | async as departamentos">
+            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Departamento residencia</mat-label>
+                <input matInput type="text" [formControlName]="'descripcionDepartamento'"
+                       (keydown)="openModalDirection()" (click)="openModalDirection()"
+                >
+            </mat-form-field>
+            <!--<ng-container *ngIf="departamentos$ | async as departamentos">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Departamento de residencia</mat-label>
                         <mat-select (selectionChange)="seleccionDepartamento($event)"
@@ -172,8 +180,8 @@
                             matSuffix
                             [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
-            </ng-container>
-            <ng-container *ngIf="ciudades$ | async as ciudades">
+            </ng-container>-->
+            <!--<ng-container *ngIf="ciudades$ | async as ciudades">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Ciudad / municipio de residencia</mat-label>
                     <mat-select (selectionChange)="seleccionCiudad($event)"
@@ -191,8 +199,14 @@
                         matSuffix
                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
-            </ng-container>
-            <ng-container *ngIf="barrios$ | async as barrios">
+            </ng-container>-->
+            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Ciudad / municipio de residencia</mat-label>
+                <input matInput type="text" [formControlName]="'descripcionCiudad'"
+                       (keydown)="openModalDirection()" (click)="openModalDirection()"
+                >
+            </mat-form-field>
+            <!--<ng-container *ngIf="barrios$ | async as barrios">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Barrio</mat-label>
                     <mat-select
@@ -210,7 +224,13 @@
                         matSuffix
                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
-            </ng-container>
+            </ng-container>-->
+            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Barrio</mat-label>
+                <input matInput type="text" [formControlName]="'descripcionBarrio'"
+                       (keydown)="openModalDirection()" (click)="openModalDirection()"
+                >
+            </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Dirección de residencia</mat-label>
                 <input matInput type="text" placeholder="Dirección de residencia" [formControlName]="'direccionResidencial'">

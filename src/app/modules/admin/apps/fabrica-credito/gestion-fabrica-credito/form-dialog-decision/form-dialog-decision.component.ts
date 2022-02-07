@@ -71,7 +71,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
   public escuchaObservable(): void {
       this.form.controls['concepto'].setValue('A');
       this.form.controls.concepto.valueChanges.subscribe((concepto) => {
-          console.log(concepto);
           if (concepto !== 'A') {
               this.form.controls['cupo'].setValue('1');
               this.form.controls['causal'].setValue(1);
@@ -120,15 +119,31 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
       Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
       this.decisionService.postDecision(data).pipe(takeUntil(this.unsuscribe$))
           .subscribe((res) => {
+              let respuesta: any = {};
           switch (res.status) {
               case 200:
-                  this.mostrarAlerta(res.data.respuesta);
+                  respuesta = {
+                      icon: 'success',
+                      title: 'Mensaje',
+                      text: 'Completado'
+                  };
+                  this.mostrarAlerta(respuesta);
               break;
               case 400:
-                  this.mostrarAlerta(res.data.respuesta);
+                  respuesta = {
+                      icon: 'warning',
+                      title: 'Mensaje',
+                      text: 'Advertencia'
+                  };
+                  this.mostrarAlerta(respuesta);
               break;
               case 500:
-                  this.mostrarAlerta(res.data.respuesta);
+                  respuesta = {
+                      icon: 'error',
+                      title: 'Mensaje',
+                      text: 'Ha ocurrido un error'
+                  };
+                  this.mostrarAlerta(respuesta);
               break;
               default:
               break;
@@ -138,11 +153,11 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
   /**
    * @description: Captura el mensaje de la respuesta
    */
-  private mostrarAlerta(respuesta: string): void {
+  private mostrarAlerta(respuesta: any): void {
       Swal.fire({
-          icon: 'error',
-          title: 'Mensaje',
-          text: respuesta,
+          icon: respuesta.icon,
+          title: respuesta.title,
+          text: respuesta.text,
       }).then((result) => {
           if (result.isConfirmed) {
               this.onCerrar();

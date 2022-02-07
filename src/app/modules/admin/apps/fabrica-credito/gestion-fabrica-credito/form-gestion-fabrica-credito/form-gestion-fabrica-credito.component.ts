@@ -17,6 +17,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {GridDocumentacionComponent} from '../grid-documentacion/grid-documentacion.component';
 import { UtilityService } from 'app/resources/services/utility.service';
 import {FormDialogDecisionComponent} from '../form-dialog-decision/form-dialog-decision.component';
+import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -122,6 +123,89 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
       });
   }
+
+  public openModalDirection(): void {
+      const dialogRef = this._dialog.open(DirectionsComponent, {
+          width: '60%',
+          data: {
+              departamento: '',
+              municipio: '',
+              barrio: '',
+              direccion: '',
+          },
+          disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
+              this.form.controls.descripcionDepartamento.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudad.setValue(dataModal.municipio);
+              this.form.controls.descripcionCiudad.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.descripcionBarrio.setValue(dataModal.barrio);
+              this.form.controls.direccionResidencial.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
+  }
+
+  public openModalNegocio(): void {
+      const dialogRef = this._dialog.open(DirectionsComponent, {
+          width: '60%',
+          data: {
+              departamento: '',
+              municipio: '',
+              barrio: '',
+              direccion: '',
+          },
+          disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamentoNegocio.setValue(dataModal.departamento);
+              this.form.controls.descripcionDepartamentoNegocio.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudadNegocio.setValue(dataModal.municipio);
+              this.form.controls.descripcionCiudadNegocio.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrioNegocio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.descripcionBarrioNegocio.setValue(dataModal.barrio);
+              this.form.controls.direccionNegocio.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
+  }
+
   /**
    * @description: Direcciona al componente comentarios
    */
@@ -464,8 +548,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           activos:                       [''],
           declarante:                    ['', [Validators.required]],
           codigoDepartamentoNegocio:     [''],
+          descripcionDepartamentoNegocio:[''],
           codigoCiudadNegocio:           [''],
+          descripcionCiudadNegocio:      [''],
           codigoBarrioNegocio:           [''],
+          descripcionBarrioNegocio:      [''],
           direccionNegocio:              [''],
           telefonoNegocio:               ['', [Validators.pattern(/^[0-9]*$/)]],
           telefono:                      [''],
@@ -491,8 +578,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           codigoCiudadNacimiento:        [''],
           tipoVivienda:                  [''],
           codigoDepartamento:            [''],
+          descripcionDepartamento:       [''],
           codigoCiudad:                  [''],
+          descripcionCiudad:             [''],
           codigoBarrio:                  [''],
+          descripcionBarrio:             [''],
           direccionResidencial:          [''],
           nivelEstudio:                  [''],
           viveEnNegocio:                 [''],

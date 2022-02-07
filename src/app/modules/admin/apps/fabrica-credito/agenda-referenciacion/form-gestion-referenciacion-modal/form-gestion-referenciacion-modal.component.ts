@@ -169,7 +169,7 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
       dialoRef.afterClosed().subscribe((res) => {
           const dataModal: any = res;
-          console.log(dataModal);
+          // console.log(dataModal);
           if (dataModal.departamento != undefined) {
               this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
               this.form.controls.departamento.setValue(dataModal.departamentoNombre);

@@ -196,7 +196,10 @@
                                         <ng-container *ngIf="form.controls['tipoDocumento'].value != 'CC'">
                                             <mat-form-field class="w-full px-3 fuse-mat-dense">
                                                 <mat-label>Fecha de matricula</mat-label>
-                                                <input matInput [matDatepicker]="picker" [formControlName]="'fechaMatricula'">
+                                                <input matInput [matDatepicker]="picker" [formControlName]="'fechaMatricula'"
+                                                       (click)="picker.open()"
+                                                       (keydown)="picker.open()"
+                                                >
                                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                 <mat-datepicker #picker></mat-datepicker>
                                                 <mat-icon
@@ -378,66 +381,41 @@
                                         </div>
                                     </ng-container>
                                     <div class="-mx-3 md:flex mt-3 mb-2">
-                                        <ng-container *ngIf="departamentos$ | async as departamentos">
-                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                <mat-label>Departamento de residencia</mat-label>
-                                                <mat-select (selectionChange)="seleccionDepartamento($event)"
-                                                            [value]="'seleccione'"
-                                                            [formControlName]="'codigoDepartamento'"
-                                                >
-                                                    <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                    <mat-option *ngFor="let departamento of departamentos.data"
-                                                                [value]="departamento.codigo"
-                                                    >{{departamento.nombre}}
-                                                    </mat-option>
-                                                </mat-select>
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    matSuffix
-                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                            </mat-form-field>
-                                        </ng-container>
-                                        <ng-container *ngIf="ciudades$ | async as ciudades">
-                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                <mat-label>Ciudad / municipio de residencia</mat-label>
-                                                <mat-select (selectionChange)="seleccionCiudad($event)"
-                                                            [value]="'seleccione'"
-                                                            [formControlName]="'codigoCiudad'"
-                                                >
-                                                    <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                    <mat-option *ngFor="let ciudad of ciudades.data"
-                                                                [value]="ciudad.codigo"
-                                                    >{{ciudad.nombre}}
-                                                    </mat-option>
-                                                </mat-select>
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    matSuffix
-                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                            </mat-form-field>
-                                        </ng-container>
-                                        <ng-container *ngIf="barrios$ | async as barrios">
-                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                <mat-label>Barrio</mat-label>
-                                                <mat-select
-                                                    [value]="'seleccione'"
-                                                    [formControlName]="'codigoBarrio'"
-                                                >
-                                                    <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                    <mat-option *ngFor="let barrio of barrios.data"
-                                                                [value]="barrio.codigo"
-                                                    >{{barrio.nombre}}
-                                                    </mat-option>
-                                                </mat-select>
-                                                <mat-icon
-                                                    class="icon-size-5"
-                                                    matSuffix
-                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                            </mat-form-field>
-                                        </ng-container>
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Departamento de residencia</mat-label>
+                                            <input matInput type="text" [formControlName]="'descripcionDepartamento'"
+                                                   (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                            >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                        </mat-form-field>
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Ciudad / municipio de residencia</mat-label>
+                                            <input matInput type="text" [formControlName]="'descripcionCiudad'"
+                                                   (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                            >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                        </mat-form-field>
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Barrio</mat-label>
+                                            <input matInput type="text" [formControlName]="'descripcionBarrio'"
+                                                   (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                            >
+                                            <mat-icon
+                                                class="icon-size-5"
+                                                matSuffix
+                                                [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                        </mat-form-field>
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Dirección de residencia</mat-label>
-                                            <input matInput type="text" [formControlName]="'direccionResidencial'">
+                                            <input matInput type="text" [formControlName]="'direccionResidencial'"
+                                                   (keydown)="openModalDirection()" (click)="openModalDirection()"
+                                            >
                                             <mat-icon
                                                 class="icon-size-5"
                                                 matSuffix
@@ -545,66 +523,41 @@
                                     <ng-container *ngIf="form.controls['tipoDocumento'].value != 'NIT'">
                                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del negocio</span>
                                         <div class="-mx-3 md:flex mt-3 mb-2">
-                                            <ng-container *ngIf="departamentosNegocio$ | async as departamentos">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Departamento del negocio</mat-label>
-                                                    <mat-select (selectionChange)="seleccionDepartamentoNegocio($event)"
-                                                                [value]="'seleccione'"
-                                                                [formControlName]="'codigoDepartamentoNegocio'"
-                                                    >
-                                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                        <mat-option *ngFor="let departamento of departamentos.data"
-                                                                    [value]="departamento.codigo"
-                                                        >{{departamento.nombre}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                    <mat-icon
-                                                        class="icon-size-5"
-                                                        matSuffix
-                                                        [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                                </mat-form-field>
-                                            </ng-container>
-                                            <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad / municipio del negocio</mat-label>
-                                                    <mat-select (selectionChange)="seleccionCiudadNegocio($event)"
-                                                                [value]="'seleccione'"
-                                                                [formControlName]="'codigoCiudadNegocio'"
-                                                    >
-                                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                        <mat-option *ngFor="let ciudad of ciudades.data"
-                                                                    [value]="ciudad.codigo"
-                                                        >{{ciudad.nombre}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                    <mat-icon
-                                                        class="icon-size-5"
-                                                        matSuffix
-                                                        [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                                </mat-form-field>
-                                            </ng-container>
-                                            <ng-container *ngIf="barriosNegocio$ | async as barrios">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Barrio</mat-label>
-                                                    <mat-select
-                                                        [value]="'seleccione'"
-                                                        [formControlName]="'codigoBarrioNegocio'"
-                                                    >
-                                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                        <mat-option *ngFor="let barrio of barrios.data"
-                                                                    [value]="barrio.codigo"
-                                                        >{{barrio.nombre}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                    <mat-icon
-                                                        class="icon-size-5"
-                                                        matSuffix
-                                                        [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                                </mat-form-field>
-                                            </ng-container>
+                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                                <mat-label>Departamento del negocio</mat-label>
+                                                <input matInput type="text" [formControlName]="'descripcionDepartamentoNegocio'"
+                                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()"
+                                                >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                            </mat-form-field>
+                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                                <mat-label>Ciudad / municipio del negocio</mat-label>
+                                                <input matInput type="text" [formControlName]="'descripcionCiudadNegocio'"
+                                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()"
+                                                >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                            </mat-form-field>
+                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                                <mat-label>Barrio</mat-label>
+                                                <input matInput type="text" [formControlName]="'descripcionBarrioNegocio'"
+                                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()"
+                                                >
+                                                <mat-icon
+                                                    class="icon-size-5"
+                                                    matSuffix
+                                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                            </mat-form-field>
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>Direccion del negocio</mat-label>
-                                                <input matInput type="text" [formControlName]="'direccionNegocio'">
+                                                <input matInput type="text" [formControlName]="'direccionNegocio'"
+                                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()"
+                                                >
                                                 <mat-icon
                                                     class="icon-size-5"
                                                     matSuffix
