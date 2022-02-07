@@ -19,9 +19,9 @@
                         <pdf-viewer
                             [src]="data.base64"
                             [render-text]="true"
-                            [original-size]="true"
+                            [original-size]="false"
                             [show-all]="true"
-                            style="width: 100%; height: 82vh"
+                            style="width: 100%; height: 62vh"
                             >
                         </pdf-viewer>
                     </ng-container>
@@ -41,7 +41,7 @@
 
 <mat-dialog-actions class="flex flex-row justify-between w-full">
 
-    <div class="text-lg font-medium line-clamp-2">Descargue su archivo <a class="underline" (click)="downloadFile()">aqui</a></div>
+    <div class="text-lg font-medium line-clamp-2">Descargue su archivo <a class="underline cursor-pointer" (click)="downloadFile()">aqui</a></div>
 
     <div>
         <button mat-button mat-dialog-close>Cancel</button>
