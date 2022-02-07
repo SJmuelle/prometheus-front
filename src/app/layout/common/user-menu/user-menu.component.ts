@@ -48,7 +48,7 @@ export class UserMenuComponent implements OnInit, OnDestroy {
             )
             .subscribe((user: User) => {
                 if(user==undefined){
-                    user=JSON.parse(sessionStorage.getItem("usuario"));
+                    user=JSON.parse(localStorage.getItem("usuario"));
                 }
                 if(user==undefined){
                     localStorage.clear();
