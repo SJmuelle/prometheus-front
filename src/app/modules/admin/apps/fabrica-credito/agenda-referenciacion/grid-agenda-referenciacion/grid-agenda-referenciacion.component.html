@@ -42,16 +42,16 @@
                         <tr>
                             <td class="px-1 text-sm border">
                                 <button mat-icon-button
-                                        (click)="onGetAgenda(item)"
-                                        matTooltip="Ver información"
+                                        (click)="onOpenDialog(item)"
+                                        matTooltip="Ver información referencia"
                                 >
                                     <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
                                 </button>
                             </td>
                             <td class="px-1 text-sm border">
                                 <button mat-icon-button
-                                        matTooltip="Ver información"
-                                        (click)="onOpenDialog(item)"
+                                        matTooltip="Ver información en fabrica"
+                                        (click)="onGetAgenda(item)"
                                 >
                                     <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
                                 </button>
