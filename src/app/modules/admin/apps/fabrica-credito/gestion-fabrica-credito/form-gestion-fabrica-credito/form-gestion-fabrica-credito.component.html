@@ -26,19 +26,19 @@
                 </div>
                 <div class="grow h-14">
                     <button mat-raised-button
-                            class="mr-1.5 bg-orange-300 text-white"
+                            class="mr-1.5 bg-amber-500 text-white"
                     >
                         Centrales
                     </button>
                     <button mat-raised-button
-                            class="mr-1.5"
+                            class="mr-1.5 bg-green-600 text-white"
                             [color]="'primary'"
                             (click)="onDialogoDecision()"
                     >
                         Decisión
                     </button>
                     <button mat-raised-button
-                            [color]="'accent'"
+                            class="bg-blue-800 text-white"
                             (click)="verComentarios = !verComentarios"
                             [disabled]="verComentarios"
                     >
@@ -209,7 +209,6 @@
                                             </mat-form-field>
                                         </ng-container>
                                     </div>
-                                    <mat-divider></mat-divider>
                                     <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
                                         <div class="-mx-3 md:flex mt-3 mb-2">
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">

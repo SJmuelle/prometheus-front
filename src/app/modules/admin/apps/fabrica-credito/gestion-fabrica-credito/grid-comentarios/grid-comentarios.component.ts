@@ -40,6 +40,15 @@ export class GridComentariosComponent implements OnInit {
       });
   }
 
+  public onVerComentario(item): void {
+      const dialogRef = this._dialog.open(FormDialogComentariosComponent, {
+          minWidth: '30%',
+          minHeight: '30%',
+          data: item
+      });
+      dialogRef.afterClosed().toPromise();
+  }
+
   public onCerrar(): void {
       this.cerrarComponente.emit(false);
   }
