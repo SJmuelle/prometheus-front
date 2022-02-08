@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ReferenciacionClienteService} from '../../../../../../core/services/referenciacion-cliente.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DirectionsComponent} from '../../../../../../shared/modal/directions/directions.component';
 import {UtilityService} from '../../../../../../resources/services/utility.service';
 import Swal from 'sweetalert2';
@@ -260,8 +260,8 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           primerApellido: [''],
           segundoApellido: [''],
           nombreCompleto: [''],
-          telefono: [''],
-          celular: [''],
+          telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+          celular: ['',  [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
           email: [''],
           codigoDepartamento: [''],
           departamento: [''],
@@ -277,7 +277,7 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
           codigoBarrioNegocio: [''],
           barrioNegocio: [''],
           direccionNegocio: [''],
-          telefonoNegocio: [''],
+          telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
           camaraComercio: [''],
           camaraComercioRespuesta: [''],
           nitNegocio: [''],
