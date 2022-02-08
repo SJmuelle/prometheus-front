@@ -61,10 +61,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
       });
 
       dialogRef.afterClosed().subscribe((res) => {
-          // this.formTab1.controls['direccionNegocio'].setValue(res);
           let dataModal = res;
-            console.log(dataModal)
-
             if (dataModal.departamentoNombre != undefined) {
                 this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
                 this.form.controls.departamentoNombre.setValue(dataModal.departamentoNombre);
@@ -159,8 +156,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             nombreCompleto:     [''],
             tipo:               ['seleccione',],
             parentesco:         [''],
-            telefono:           ['', [Validators.pattern(/^[0-9]*$/)]],
-            celular:            ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+            telefono:           ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+            celular:            ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
             codigoPais:         [''],
             codigoDepartamento: [''],
             departamentoNombre: [''],
@@ -262,7 +259,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private estadoFormulario(): void {
         this.form.controls['tipo'].setValue('P');
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
-            console.log(tipo);
             if (tipo === 'P') {
                 this.form.controls['nombreCompleto'].setValue('');
                 this.form.controls['nombreCompleto'].clearValidators();

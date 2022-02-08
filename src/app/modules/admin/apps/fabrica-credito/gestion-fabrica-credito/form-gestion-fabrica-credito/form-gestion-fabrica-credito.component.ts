@@ -569,7 +569,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           segundoNombre:                 [''],
           primerApellido:                ['', [Validators.required]],
           segundoApellido:               [''],
-          celular:                       ['', [Validators.pattern(/^[0-9]*$/)]],
+          celular:                       ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
           email:                         [''],
           genero:                        [''],
           nacionalidad:                  [''],

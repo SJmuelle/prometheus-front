@@ -102,7 +102,7 @@
                             <div class="-mx-3 md:flex mb-2">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Score acierta</mat-label>
-                                    <input matInput type="text" [formControlName]="'score'">
+                                    <input matInput type="text" [formControlName]="'score'" [required]="true">
                                     <mat-icon
                                         class="icon-size-5"
                                         matSuffix
@@ -110,7 +110,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Descripción del score</mat-label>
-                                    <input matInput type="text" [formControlName]="'descripcionScore'">
+                                    <input matInput type="text" [formControlName]="'descripcionScore'" [required]="true">
                                     <mat-icon
                                         class="icon-size-5"
                                         matSuffix
@@ -118,7 +118,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Nivel de endeudamiento</mat-label>
-                                    <input matInput type="text" [formControlName]="'nivelEndeudamiento'">
+                                    <input matInput type="text" [formControlName]="'nivelEndeudamiento'" [required]="true">
                                     <mat-icon
                                         class="icon-size-5"
                                         matSuffix
@@ -128,34 +128,6 @@
                         </div>
                     </mat-expansion-panel>
                     <!--Panel datos de riesgo-->
-                    <!--<mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                Datos de riesgo
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-                            <div class="-mx-3 md:flex mb-2">
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Score acierta</mat-label>
-                                    <input matInput type="text" placeholder="Score acierta" >
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Descripción del score</mat-label>
-                                    <input matInput type="text" placeholder="Descripción" >
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Nivel de endeudamiento</mat-label>
-                                    <input matInput type="text" placeholder="Nivel de endeudamiento">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        &lt;!&ndash;<mat-form-field appearance="fill">
-                            <mat-label>Date</mat-label>
-                            <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly>
-                        </mat-form-field>
-                        <mat-datepicker #picker></mat-datepicker>&ndash;&gt;
-                    </mat-expansion-panel>-->
                     <!--Panel informacion del titular-->
                     <mat-expansion-panel expanded>
                         <mat-expansion-panel-header>
@@ -260,13 +232,16 @@
                                     <div class="-mx-3 md:flex mt-3 mb-2">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Teléfono / Celular </mat-label>
-                                            <input matInput type="text" [formControlName]="'celular'">
+                                            <input matInput type="text" [formControlName]="'celular'" [required]="true">
                                             <mat-icon
                                                 class="icon-size-5"
                                                 matSuffix
                                                 [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                            <mat-error *ngIf="soloNumero('celular')">
-                                                Este campo solo acepta números.
+                                            <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
+                                                <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                                                <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                                                <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                                                <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
                                             </mat-error>
                                         </mat-form-field>
                                         <!--<code><pre>{{form.controls.celular.value | json}}</pre></code>-->

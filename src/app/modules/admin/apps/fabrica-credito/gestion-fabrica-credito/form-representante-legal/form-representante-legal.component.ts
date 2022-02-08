@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FabricaCreditoService} from '../../../../../../core/services/fabrica-credito.service';
 import {Observable, Subscription} from "rxjs";
 import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
@@ -165,7 +165,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
           segundoApellido:         [''],
           nombreCompleto:          [''],
           telefono:                [''],
-          celular:                 [''],
+          celular:                 ['',  [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
           email:                   [''],
           genero:                  [''],
           descripcionGenero:       [''],
