@@ -66,6 +66,15 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point Listas genericas
+     */
+     public archivos = {
+        url: {
+            ListFiles: EndPoints.uriGetFiles('transferencia-consultar-achivo'),
+            DownFile: EndPoints.uriShowFiles('obtener-achivo-base64')
+        }
+    };
+    /**
      * @description: End-point referencias
      */
     public referencias = {

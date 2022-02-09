@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Activity } from 'app/modules/admin/pages/activities/activities.types';
 import { Item } from './file-manager.types'; 
+import { AppSettingsService } from 'app/core/app-configs/app-settings.service'; 
+
 
 @Injectable({
     providedIn: 'root'
@@ -17,14 +19,10 @@ export class ActivitiesService
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient)
+    constructor(private _http: HttpClient,
+        private _appSettings: AppSettingsService)
     {
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * Getter for activities
      */
@@ -37,17 +35,12 @@ export class ActivitiesService
     {
         return this._items.asObservable();
     }
-
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
     /**
      * Get activities
      */
     getActivities(): Observable<any>
     {
-        return this._httpClient.get<Activity[]>('api/pages/activities').pipe(
+        return this._http.get<Activity[]>('api/pages/activities').pipe(
             tap((response: Activity[]) => {
                 this._activities.next(response);
             })
@@ -56,10 +49,19 @@ export class ActivitiesService
 
     getItems(folderId: string | null = null): Observable<Item[]>
     {
-        return this._httpClient.get<Item>('api/apps/file-manager', {params: {folderId}}).pipe(
+        return this._http.get<Item>('api/apps/file-manager', {params: {folderId}}).pipe(
             tap((response: any) => {
                 this._items.next(response);
             })
         );
     }
+
+    public  getFiles(): Observable<any> {
+        return this._http.get(`${this._appSettings.archivos.url.ListFiles}`);
+    }
+
+    public  downFiles(): Observable<any> {
+        return this._http.get(`${this._appSettings.archivos.url.DownFile}`);
+    }
+
 }
