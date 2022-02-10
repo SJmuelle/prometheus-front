@@ -60,8 +60,16 @@ export class ActivitiesService
         return this._http.get(`${this._appSettings.archivos.url.ListFiles}`);
     }
 
-    public  downFiles(): Observable<any> {
+    public  showFiles(data: any): Observable<any> {
+        return this._http.post(this._appSettings.archivos.url.ListFiles, data);
+    }
+
+    public  getFilesDown(): Observable<any> {
         return this._http.get(`${this._appSettings.archivos.url.DownFile}`);
+    }
+
+    public  downFiles(data: any = 2): Observable<any> {
+        return this._http.post(this._appSettings.archivos.url.DownFile, data);
     }
 
 }

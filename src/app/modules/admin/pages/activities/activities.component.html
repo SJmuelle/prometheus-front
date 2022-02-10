@@ -26,95 +26,92 @@
     
             <div *cdkVirtualFor="let file of listFile | filter:value; let i = index; let first = first; trackBy: trackByFn">
 
-                <form [formGroup]="fileForm">
+                <ng-container *ngIf="first || !isSameDay(file.fecha_creacion, listFile[i - 1].fecha_creacion)">
+                    <li class="relative flex py-7">
+                        <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
+                            {{getRelativeFormat(file.fecha_creacion)}}
+                        </div>
+                    </li>
+                </ng-container>
 
-                    <ng-container *ngIf="first || !isSameDay(file.fecha_creacion, listFile[i - 1].fecha_creacion)">
-                        <li class="relative flex py-7">
-                            <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
-                                {{getRelativeFormat(file.fecha_creacion)}}
-                            </div>
-                        </li>
-                    </ng-container>
+                <ng-container>
 
-                    <ng-container>
+                    <li class="relative flex py-3 px-2">
     
-                        <li class="relative flex py-3 px-2">
-        
-                            <fuse-card class="flex flex-row w-1/2 sm:w-full filter-testimonial shadow">
-        
-                                <div class="flex-col w-80 sm:w-64">
-        
-                                    <div class="aspect-w-5 aspect-h-2">
-        
-                                        <div class="flex items-center justify-center">
-        
-                                            <div class="relative self-center top-15 sm:top-1.5 left-3 sm:left-0">
+                        <fuse-card class="flex flex-row w-1/2 sm:w-full filter-testimonial shadow">
     
-                                                <mat-icon class="icon-size-10 sm:icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+                            <div class="flex-col w-80 sm:w-64">
     
-                                                <div
-                                                    class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
-                                                    [class.bg-red-600]="file.extension === 'pdf'"
-                                                    [class.bg-blue-600]="file.extension === 'doc'"
-                                                    [class.bg-green-600]="file.extension === 'xls'"
-                                                    [class.bg-gray-600]="file.extension === 'pgp'"
-                                                    [class.bg-amber-600]="file.extension === 'jpg'"
-                                                    >
-                                                    {{file.extension.toUpperCase()}}
-                                                </div>
+                                <div class="aspect-w-5 aspect-h-2">
     
+                                    <div class="flex items-center justify-center">
+    
+                                        <div class="relative self-center top-15 sm:top-1.5 left-3 sm:left-0">
+
+                                            <mat-icon class="icon-size-10 sm:icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+
+                                            <div
+                                                class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
+                                                [class.bg-red-600]="file.extension === 'pdf'"
+                                                [class.bg-blue-600]="file.extension === 'doc'"
+                                                [class.bg-green-600]="file.extension === 'xls'"
+                                                [class.bg-gray-600]="file.extension === 'pgp'"
+                                                [class.bg-amber-600]="file.extension === 'jpg'"
+                                                [class.bg-amber-600]="file.extension === 'png'"
+                                                >
+                                                {{file.extension.toUpperCase()}}
                                             </div>
-        
-                                        </div>
-        
-                                    </div>
-        
-                                </div>
-    
-                                <div class="flex flex-col flex-auto m-8 top-5">
-            
-                                    <ng-container *ngIf="file.filename">
-        
-                                        <div class="text-lg font-medium line-clamp-2"><a matTooltip="{{file.filename}}" aria-label="Button that displays a tooltip when focused or hovered over">{{file.filename}}</a></div>
-                                        <input type="hidden">
-                            
-                                    </ng-container>
-        
-                                    <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md">
-                                        
-                                        <div class="text-secondary line-clamp-2">
-        
-                                            {{file.fecha_creacion | date:'MMM dd, h:mm a'}}
-                                            
-                                        </div>
-        
-                                    </div>
-        
-                                </div>
-    
-                                <div class="flex flex-col md:flex-row m-8 items-end">
-    
-                                    <div class="sm:flex sm:flew-row relative sm:gap-4 sm:justify-between top-5 md:-top-2">
-    
-                                        <ng-container>
-                                            <a (click)="downloadFile()"><mat-icon class="hover:bg-hover cursor-pointer" [svgIcon]="'heroicons_solid:download'"></mat-icon></a>
-                                        </ng-container>
-    
-                                        <ng-container>
-                                            <a (click)="openDialog()"><mat-icon class="hover:bg-hover cursor-pointer">remove_red_eye</mat-icon></a>
-                                        </ng-container>
-    
-                                    </div>
-                                    
-                                </div>
-        
-                            </fuse-card>
-        
-                        </li>
-        
-                    </ng-container>
 
-                </form>
+                                        </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+
+                            <div class="flex flex-col flex-auto m-8 top-5">
+        
+                                <ng-container *ngIf="file.filename">
+    
+                                    <div class="text-lg font-medium line-clamp-2"><a matTooltip="{{file.filename}}" aria-label="Button that displays a tooltip when focused or hovered over">{{file.filename}}</a></div>
+                                    <input type="hidden">
+                        
+                                </ng-container>
+    
+                                <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md">
+                                    
+                                    <div class="text-secondary line-clamp-2">
+    
+                                        {{file.fecha_creacion | date:'MMM dd, h:mm a'}}
+                                        
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+
+                            <div class="flex flex-col md:flex-row m-8 items-end">
+
+                                <div class="sm:flex sm:flew-row relative sm:gap-4 sm:justify-between top-5 md:-top-2">
+
+                                    <ng-container>
+                                        <a (click)="downloadFile(file.idArchivo, file.extension)"><mat-icon class="hover:bg-hover cursor-pointer" [svgIcon]="'heroicons_solid:download'"></mat-icon></a>
+                                    </ng-container>
+
+                                    <ng-container *ngIf="file.extension != 'pgp'">
+                                        <a (click)="openDialog()"><mat-icon class="hover:bg-hover cursor-pointer">remove_red_eye</mat-icon></a>
+                                    </ng-container>
+
+                                </div>
+                                
+                            </div>
+    
+                        </fuse-card>
+    
+                    </li>
+    
+                </ng-container>
     
             </div>
     

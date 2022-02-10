@@ -22,6 +22,8 @@ export class ActivitiesComponent implements OnInit
 
     listFile: any = [];
 
+    listFileDown: any = [];
+
     docupreview:boolean = false;
 
     archivopreview: any;
@@ -62,10 +64,22 @@ export class ActivitiesComponent implements OnInit
 
     consultarArchivos(){
         this.activityService.getFiles().subscribe((response: any) => {
-            // console.log(response)
+            console.log(response.data)
             if (response.data) {
 
                 this.listFile = response.data;
+                
+            }
+            
+        });
+    }
+
+    getFilesDown(){
+        this.activityService.getFilesDown().subscribe((response: any) => {
+            console.log(response)
+            if (response.data) {
+
+                this.listFileDown = response.data;
                 
             }
             
@@ -106,22 +120,34 @@ export class ActivitiesComponent implements OnInit
         
     }
 
-    downloadFile(){
+    downloadFile(id:any, type:any){
 
-        Swal.fire({ title: 'Cargando', html: 'Descarga en proceso...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });   
-        
-        const archivo = this.files[0].base64.split(',')[1];
-        const extension = this.files[0].type
+        console.log(id)
+        console.log(type)
 
-        console.log(extension);
-        console.log(archivo)
-        const link = document.createElement('a');
-        document.body.appendChild(link);
-        link.href = `data:application/${extension};base64,${archivo}`;
-        link.target = '_self';
-        link.download = this.files[0].name;
-        link.click();
-        Swal.close();
+        const datosDescargar = {
+            idArchivo: id
+        };
+
+        this.activityService.downFiles(datosDescargar).subscribe((response)=>{
+
+            const archivo = response.data.base64.split(',')[1];
+            const extension = type
+
+            console.log(extension)
+            console.log(archivo)
+
+            const link = document.createElement('a');
+            document.body.appendChild(link);
+
+            link.href = `data:application/${extension};base64,${archivo}`;
+            link.target = '_self';
+            link.download = response.data.filename
+            link.click();
+            Swal.close();
+
+        }) 
+
     }
 
     prevista(i:number){
