@@ -25,7 +25,7 @@ export class PreviewComponent implements OnInit {
     Swal.showLoading() }, }).then((result) => { });   
 
     const archivo = this.data.base64.split(',')[1];
-    const extension = this.data.type
+    const extension = this.data.extension
 
     console.log(extension);
     console.log(archivo);
@@ -33,7 +33,7 @@ export class PreviewComponent implements OnInit {
     document.body.appendChild(link);
     link.href = `data:application/${extension};base64,${archivo}`;
     link.target = '_self';
-    link.download = this.data.name;
+    link.download = this.data.nombre;
     link.click();
     Swal.close();
   }

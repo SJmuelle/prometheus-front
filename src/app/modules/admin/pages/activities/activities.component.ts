@@ -11,8 +11,7 @@ import { InfofileComponent } from './infofile/infofile.component';
 @Component({
     selector       : 'activity',
     templateUrl    : './activities.component.html',
-    encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.Default
+    encapsulation  : ViewEncapsulation.None
 })
 export class ActivitiesComponent implements OnInit
 {
@@ -48,8 +47,6 @@ export class ActivitiesComponent implements OnInit
     
     ngOnInit(): void {
 
-        this.screenWidth = window.innerWidth;
-
         this.archivopreview = {
             id: '1', 
             type: 'pdf',
@@ -74,49 +71,44 @@ export class ActivitiesComponent implements OnInit
         });
     }
 
-    getFilesDown(){
-        this.activityService.getFilesDown().subscribe((response: any) => {
-            console.log(response)
-            if (response.data) {
-
-                this.listFileDown = response.data;
-                
-            }
-            
-        });
-    }
-
-    openDialog(){
+    openDialog(id:any, type:any, name:any){
 
         this.screenWidth = window.innerWidth;
 
-        console.log(this.listFile)
+        const datosMostrar = {
+            idArchivo: id
+        };
 
-        // if (this.screenWidth <= 768) {
-            
-        //     const dialogRef = this.dialog.open(InfofileComponent,{
-        //         data: {
-        //             id: this.listFile.idArchivo,
-        //             name: this.archivopreview.name,
-        //             base64: this.archivopreview.base64
-        //         }
-        //     })
-        //     dialogRef.afterClosed().toPromise();
+        this.activityService.downFiles(datosMostrar).subscribe((response)=>{
 
-        // } else{
+            if (this.screenWidth <= 768) {
 
-        //     const dialogRef = this.dialog.open(PreviewComponent, {
-        //         width: '90vw',
-        //         data: {
-        //             id: this.archivopreview.id,
-        //             type: this.archivopreview.type,
-        //             name: this.archivopreview.name,
-        //             base64: this.archivopreview.base64
-        //         }
-        //     })
-        //     dialogRef.afterClosed().toPromise();
+                const dialogRef = this.dialog.open(InfofileComponent, {
+                    data: {
+                        id: id,
+                        extension: type,
+                        nombre: name,
+                        base64: response.data.base64
+                    }
+                })
+                dialogRef.afterClosed().toPromise();
 
-        // }
+            } else {
+
+                const dialogRef = this.dialog.open(PreviewComponent, {
+                    width: '90vw',
+                    data: {
+                        id: id,
+                        extension: type,
+                        nombre: name,
+                        base64: response.data.base64
+                    }
+                })
+                dialogRef.afterClosed().toPromise();
+
+            }
+
+        })
         
     }
 

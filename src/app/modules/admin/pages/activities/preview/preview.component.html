@@ -1,8 +1,6 @@
 <div class="flex flex-row items-center justify-between">
     <h2 mat-dialog-title>Vista previa</h2>
-    <!-- <button mat-button [mat-dialog-close]="true" class="-mt-10">
-        <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
-    </button> -->
+    
 </div>
 
 <mat-dialog-content class="mat-typography">
@@ -15,7 +13,7 @@
     
                 <div class="flex flex-col">
                     
-                    <ng-container *ngIf="data.type === 'pdf'">
+                    <ng-container>
                         <pdf-viewer
                             [src]="data.base64"
                             [render-text]="true"
@@ -25,8 +23,8 @@
                             >
                         </pdf-viewer>
                     </ng-container>
-                    <ng-container *ngIf="data.type === 'jpeg' || data.type === 'jpg' || data.type === 'png'">
-                        <img [src]="data.base64" alt="" style="width: 100%; height: 82vh">
+                    <ng-container *ngIf="data.extension === 'jpeg' || data.extension === 'jpg' || data.extension === 'png'">
+                        <img [src]="data.base64" class="w-full h-full">
                     </ng-container>
     
                 </div>
@@ -41,7 +39,7 @@
 
 <mat-dialog-actions class="flex flex-row justify-between w-full">
 
-    <div class="text-lg font-medium line-clamp-2">Descargue su archivo <a class="underline cursor-pointer" (click)="downloadFile()">aqui</a></div>
+    <div class="text-lg font-medium line-clamp-2">Si tiene problemas para visualizar, descargue su archivo <a class="underline cursor-pointer" (click)="downloadFile()">aqui</a></div>
 
     <div>
         <button mat-button mat-dialog-close>Cancel</button>
