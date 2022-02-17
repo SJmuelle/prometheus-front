@@ -13,7 +13,7 @@ export const environment = {
     urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
-    urlApi7: 'http://ultracem.ngrok.io/api-fintra/api/transferencia/',
+    urlApi7: 'http://tefi.ngrok.io/api-fintra/api/transferencia/',
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
