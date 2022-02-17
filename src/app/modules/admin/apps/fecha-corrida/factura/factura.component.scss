@@ -35,21 +35,28 @@
   // border: 1px solid black;
 }
 
+.estatura {
+  height: 37rem
+}
+
+.anchura {
+  width: 78.3rem
+}
+
+.example-container {
+  width: 400px;
+  height: 1000px;
+  margin: 10px;
+  border: 1px solid #555;
+}
+
 .example-viewport {
-  height: 285px;
-  width: 1200px;
-  border: 1px solid black;
+  height: 310px;
+  width: 1200px;    
 }
-
-.cdk-virtual-scroll-data-source-example .example-viewport .cdk-virtual-scroll-content-wrapper {
-  display: flex;
-  flex-direction: row;
-}
-
-.cdk-virtual-scroll-data-source-example .example-item {
-  width: 100px;
-  height: 100%;
-  // writing-mode: vertical-lr;
+  
+.example-item {
+  height: 50px;
 }
 
 .tamano_div {

@@ -104,9 +104,24 @@ export const appRoutes: Route[] = [
             {
                 path: 'run-date',
                 loadChildren: () => FechaCorridaModule
+            },
+            {
+                path: 'activities', 
+                loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule)
             }
+            // {
+            //     path: 'act',
+            //     loadChildren: () => ActivitiesModule
+            // }
         ]
     },
+    // {path: 'pages', children: [
+
+    //     // Activities
+    //     {path: 'activities', loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule)},
+
+    // ]},
+
     {path: '**', redirectTo: 'dashboard'}
     // {path: '**', redirectTo: 'sign-in'},
     // {path: '*', redirectTo: 'sign-in'}
