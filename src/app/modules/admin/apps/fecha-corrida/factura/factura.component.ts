@@ -1,5 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FuseScrollbarDirective } from '@fuse/directives/scrollbar/scrollbar.directive';
+import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -12,14 +11,12 @@ import moment from 'moment';
 })
 export class FacturaComponent implements OnInit {
 
-  @ViewChildren(FuseScrollbarDirective)
-  private fuseScrollbarDirectives: QueryList<FuseScrollbarDirective>
-
   listadoFacturas: any=[];
 
   banco: any = [];
 
   proveedor: any = [];
+  seleccionados:any[]=[];
 
   total:number;
 
@@ -83,16 +80,6 @@ export class FacturaComponent implements OnInit {
     this.maxFecha = new Date(this.fechaActual);
     this.consultaBanco();
     this.consultaProveedor();
-
-    // this.fuseScrollbarDirectives.forEach((fuseScrollbarDirective) => {
-    //   fuseScrollbarDirective.update()
-    // });
-  }
-
-  ngAfterViewInit(): void {
-    this.fuseScrollbarDirectives.forEach((fuseScrollbarDirective) => {
-      fuseScrollbarDirective.scrollToY(1, 2)
-    });
   }
 
   filtrarDatos(){
@@ -104,7 +91,7 @@ export class FacturaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      // console.log(response.data)
+      console.log(nit)
       // console.log(this.myUser)
       if (response) {
         this.listadoFacturas = response.data;

@@ -12,7 +12,7 @@
 
             <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
                 <mat-label>Proveedor</mat-label>
-                <mat-select formControlName="nit">
+                <mat-select formControlName="nit" multiple="multiple">
                     <mat-option>
                         <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
                     </mat-option>
@@ -27,7 +27,7 @@
 
             <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
                 <mat-label>Fecha de vencimiento</mat-label>
-                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" disabled>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker disabled="false"></mat-datepicker>
                 <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
