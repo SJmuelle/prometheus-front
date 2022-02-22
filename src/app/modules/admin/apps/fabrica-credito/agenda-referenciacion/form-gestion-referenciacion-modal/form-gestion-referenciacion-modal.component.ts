@@ -287,7 +287,13 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
   }
   private postReferenciar(data: any): void {
       this.referenciacionCliente.postReferenciacion(data).subscribe((res) => {
-          console.log(res);
+          if (res) {
+              Swal.fire(
+                  'Mensaje',
+                  `${res.data.respuesta}`,
+                  'warning'
+              );
+          }
       });
   }
 }

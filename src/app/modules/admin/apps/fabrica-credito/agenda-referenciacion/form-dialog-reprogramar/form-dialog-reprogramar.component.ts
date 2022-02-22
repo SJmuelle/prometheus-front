@@ -15,6 +15,7 @@ import {takeUntil} from "rxjs/operators";
 export class FormDialogReprogramarComponent implements OnInit, OnDestroy {
   public myDatePicker: FormControl = new FormControl(['']);
   public unsubscribe$: Subject<any> = new Subject<any>();
+  public fechaActual = new Date();
   constructor(
       @Inject(MAT_DIALOG_DATA) public data: any,
       private _matDialog: MatDialogRef<FormDialogReprogramarComponent>,

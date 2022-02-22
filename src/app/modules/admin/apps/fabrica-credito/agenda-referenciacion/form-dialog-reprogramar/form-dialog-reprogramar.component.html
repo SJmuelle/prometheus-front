@@ -5,6 +5,7 @@
             <input matInput [ngxMatDatetimePicker]="picker"
                    placeholder="Fecha y hora"
                    autocomplete="off"
+                   [min]="fechaActual"
                    [formControl]="myDatePicker"
                    (keydown)="picker.open()"
                    (click)="picker.open()"
