@@ -85,7 +85,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     },
                 ],
             },
+            
         ],
+    },
+    {
+        id: 'prooveedores',
+        title: 'Proveedores',
+        icon: 'transfer_within_a_station',
+        type: 'aside',
+        children: [
+            {
+                id: 'transportadora.transferencia',
+                title: 'Transferencias',
+                icon: 'iconsmind:paper_plane',
+                type: 'basic',
+                link: '/run-date/factura',
+            }
+        ]
     },
 ];
 
@@ -141,6 +157,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                     },
                 ],
             },
+            
         ],
     },
     {
@@ -158,7 +175,22 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
 
         ]
-    }
+    },
+    {
+        id: 'proveedores',
+        title: 'Proveedores',
+        icon: 'transfer_within_a_station',
+        type: 'aside',
+        children: [
+            {
+                id: 'transportadora.transferencia',
+                title: 'Transferencias',
+                icon: 'iconsmind:paper_plane',
+                type: 'basic',
+                link: '/run-date/factura',
+            }
+        ]
+    },
     // {
     //     id: 'calendario',
     //     title: 'Calendario',
