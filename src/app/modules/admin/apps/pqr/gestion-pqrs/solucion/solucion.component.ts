@@ -82,7 +82,7 @@ export class SolucionComponent implements OnInit {
                 this.datos = {};
             }
         });
-        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        let usuario = JSON.parse(localStorage.getItem('usuario'));
         this.obtenerSoluciones(this.idSolucion);
     }
 

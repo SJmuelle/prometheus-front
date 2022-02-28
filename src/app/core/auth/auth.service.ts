@@ -98,7 +98,7 @@ export class AuthService
                     email: response.data.email,
                     status: 'online'
                 });
-                sessionStorage.setItem("usuario", user );
+                localStorage.setItem("usuario", user );
                 // Return a new observable with the response
                 return of(response);
             })
