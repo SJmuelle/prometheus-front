@@ -7,20 +7,21 @@ import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
 import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
 import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
 import {FabricaCreditoModule} from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
+import { MenuModule } from './modules/admin/apps/menu/menu.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path: '', pathMatch : 'full', redirectTo: 'dashboard'},
+    {path: '', pathMatch : 'full', redirectTo: 'atencion-cliente'},
 
     // Redirect signed in user to the '/example'
     //
     // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'dashboard'},
+    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'atencion-cliente'},
 
     // Auth routes for guests
     {
@@ -85,7 +86,7 @@ export const appRoutes: Route[] = [
         },
         children   : [
             {
-                path: 'dashboard',
+                path: 'atencion-cliente',
                 loadChildren: () => HojavidaModule
             },
             {
@@ -97,12 +98,16 @@ export const appRoutes: Route[] = [
                 loadChildren: () => PqrModule
             },
             {
+                path: 'menu',
+                loadChildren: () => MenuModule
+            },
+            {
                 path: 'credit-factory',
                 loadChildren: () => FabricaCreditoModule
             }
         ]
     },
-    {path: '**', redirectTo: 'dashboard'}
+    {path: '**', redirectTo: 'atencion-cliente'}
     // {path: '**', redirectTo: 'sign-in'},
     // {path: '*', redirectTo: 'sign-in'}
 ];

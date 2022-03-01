@@ -58,8 +58,9 @@ import { MatTabsModule } from '@angular/material/tabs';
         MatDialogModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatCardModule,
+        MatCardModule
     ],
-    declarations: [],
+    declarations: [
+  ],
 })
 export class SharedModule {}

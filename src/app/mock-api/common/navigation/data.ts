@@ -12,7 +12,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id: 'dashboard.hojavida',
                 title: 'Gestión del cliente',
                 type: 'basic',
-                link: '/dashboard',
+                link: '/atencionCliente',
                 icon: 'heroicons_outline:chart-square-bar',
             },
             {
