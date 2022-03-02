@@ -27,10 +27,6 @@ export class FacturaComponent implements OnInit {
   allComplete: boolean = false;
 
   filterproveedor: String = '';
-
-  ArrayUser = sessionStorage.getItem('usuario');
-
-  myUser = JSON.parse(this.ArrayUser);
   
   public detailsFacture:any=[];
 
@@ -41,7 +37,6 @@ export class FacturaComponent implements OnInit {
   transferencia={
     proveedor:"",
     banco:"",
-    usuario: this.myUser.user,
     details:[]
   }
 
@@ -75,6 +70,7 @@ export class FacturaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // console.log('Aqui tu usuario: ', this.ArrayUser)
     const currentYear = new Date().getFullYear();
     this.minFecha = new Date(currentYear - 20, 0, 1);
     this.maxFecha = new Date(this.fechaActual);
@@ -112,7 +108,6 @@ export class FacturaComponent implements OnInit {
     this.transferencia={
       proveedor:nit,
       banco:nombreBanco,
-      usuario: this.myUser.user,
       details:this.detailsFacture
     }
 

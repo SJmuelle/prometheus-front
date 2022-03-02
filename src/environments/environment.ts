@@ -14,9 +14,17 @@ export const environment = {
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
     urlApi7: 'http://tefi.ngrok.io/api-fintra/api/transferencia/',
+    userName: 'APPWEB',
+    password: btoa('123456'),
 
-    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
+    // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
+    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry/',
+    // urlApi3: 'https://tefi.ngrok.io/api-fintra/api/generic/',
+
+    urlprometheus:
+        'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    adjunto: 'http://192.168.140.241:8010/api-fintra/api/pqrs',
+    // adjunto:'https://tefi.ngrok.io/api-fintra/api/pqrs',
     // envioCorreo:"http://192.168.140.197:8084"
     envioCorreo:"http://prometheus.fintra.co:8443/apicredit",
 
@@ -26,7 +34,7 @@ export const environment = {
 
     // NGROK
     // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
-    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',
+    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',<
     // urlApi3: 'https://tefi.ngrok.io/api-fintra/api/generic',
 
     // urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',

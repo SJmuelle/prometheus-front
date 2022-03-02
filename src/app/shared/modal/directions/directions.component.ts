@@ -103,7 +103,7 @@ export class DirectionsComponent implements OnInit {
             },
         }).then((result) => {});
         this._Service
-            .getQuery(`/listar-barrios/${data}`, true)
+            .getQuery(`/barrios/${data}`, true)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -152,6 +152,23 @@ export class DirectionsComponent implements OnInit {
         this.datos.barrio = null;
         this.datos.tipoVia = null;
     }
+
+
+    nombreBarrio(dato){
+        let index = this.listadoBarrio.findIndex(
+            (data) => data.codigo == dato
+        );
+        let retu;
+        if (index != -1) {
+            retu = this.listadoBarrio[index].nombre;
+        } else {
+            retu = '';
+        }
+        this.datos.barrio = retu;
+        // Vaciar siguientes listas
+        
+    }
+
 
     nombreVia(dato) {
         let index = this.listadoTipoVia.findIndex((data) => data.id == dato);

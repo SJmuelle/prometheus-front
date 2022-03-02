@@ -73,7 +73,7 @@ export class GestionPQRSComponent implements OnInit {
         // this._pqrService.getListados(url).subscribe((response: any) => {});
 
         //reposnable
-        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        let usuario = JSON.parse(localStorage.getItem('usuario'));
         url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             this.aprobarComentario =

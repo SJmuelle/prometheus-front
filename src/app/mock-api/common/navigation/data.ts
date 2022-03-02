@@ -176,6 +176,7 @@ export const compactNavigation: FuseNavigationItem[] = [
 
         ]
     },
+
     {
         id: 'proveedores',
         title: 'Proveedores',
