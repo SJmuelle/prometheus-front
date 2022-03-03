@@ -1,16 +1,17 @@
 export const environment = {
     production: true,
+
     userName: "APPWEB",
     password: btoa("123456"),
-    urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
-    urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry',
-    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
 
+    urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api/',
+    urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry/',
+    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/',
     urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
-
     urlApi7: 'http://tefi.ngrok.io/api-fintra/api/transferencia/',
+
     urlGetFile: "http://tefi.ngrok.io/api-fintra/api/generic/qry/tk/",
     urlDonwloadFile: "http://tefi.ngrok.io/api-fintra/api/transferencia/",
 

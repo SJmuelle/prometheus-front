@@ -101,7 +101,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('documentos-reque'),
             baseAdjunto: EndPoints.uriAdjuntos('adjuntar-archivo'),
-            baseConsultar: EndPoints.uriBase('/pqrs/file/load/cre-consultar-documento'),
+            baseConsultar: EndPoints.uriBase('pqrs/file/load/cre-consultar-documento'),
             baseEliminar: EndPoints.uriGenerica('cre-inactivar-doc')
         }
     };
