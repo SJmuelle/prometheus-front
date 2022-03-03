@@ -10,10 +10,10 @@ export const environment = {
     urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
-    urlApi7: 'http://tefi.ngrok.io/api-fintra/api/transferencia/',
+    urlApi7: 'https://tefi.ngrok.io/api-fintra/api/transferencia/',
 
-    urlGetFile: "http://tefi.ngrok.io/api-fintra/api/generic/qry/tk/",
-    urlDonwloadFile: "http://tefi.ngrok.io/api-fintra/api/transferencia/",
+    urlGetFile: "https://tefi.ngrok.io/api-fintra/api/generic/qry/tk/",
+    urlDonwloadFile: "https://tefi.ngrok.io/api-fintra/api/transferencia/",
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'https://prometheus.fintra.co:8443/api-fintra/api/pqrs',
