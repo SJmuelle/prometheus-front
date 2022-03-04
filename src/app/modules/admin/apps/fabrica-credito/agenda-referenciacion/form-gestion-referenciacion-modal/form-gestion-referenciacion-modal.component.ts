@@ -21,6 +21,7 @@ import { FormDialogDecisionComponent } from '../../gestion-fabrica-credito/form-
 })
 export class FormGestionReferenciacionModalComponent implements OnInit {
   public form: FormGroup;
+    mostrarDecision: boolean=false;
   constructor(
       private referenciacionCliente: ReferenciacionClienteService,
       @Inject(MAT_DIALOG_DATA) public data: any,
@@ -289,11 +290,21 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
   private postReferenciar(data: any): void {
       this.referenciacionCliente.postReferenciacion(data).subscribe((res) => {
           if (res) {
-              Swal.fire(
-                  'Mensaje',
-                  `${res.data.respuesta}`,
-                  'warning'
-              );
+              if(res.data.respuesta=='OK'){
+                  this.mostrarDecision=true;
+                Swal.fire(
+                    'Mensaje',
+                    `Solicitud lista para decisión`,
+                    'warning'
+                );
+              }else{
+                Swal.fire(
+                    'Mensaje',
+                    `${res.data.respuesta}`,
+                    'warning'
+                );
+              }
+             
           }
       });
   }

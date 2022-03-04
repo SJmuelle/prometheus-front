@@ -318,7 +318,7 @@
                     <button mat-raised-button (click)="cambioEstado()" class="bg-red-800 text-white" type="button">
                         Devolver
                     </button>
-                    <button mat-raised-button (click)="decision()" class="bg-green-600 text-white" type="button">
+                    <button mat-raised-button *ngIf="mostrarDecision==true" (click)="decision()" class="bg-green-600 text-white" type="button">
                         Decisión
                     </button>
                     <button mat-raised-button class="bg-blue-800 text-white" type="button" (click)="onComentarios()">
