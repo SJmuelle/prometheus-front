@@ -116,7 +116,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
           minWidth: '30%',
           minHeight: '30%',
-          data: {numeroSolicitud: this.numeroSolicitud},
+          data: {numeroSolicitud: this.numeroSolicitud, etapa:1},
           disableClose: false,
       });
       dialogRef.afterClosed().toPromise().then(() => {
@@ -564,6 +564,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           identificacion:                ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
           digitoVerificacion:            [''],
           nombreCompleto:                ['', [Validators.required]],
+          nombreNegocio:                 [''],
           fechaMatricula:                [''],
           primerNombre:                  ['', [Validators.required]],
           segundoNombre:                 [''],

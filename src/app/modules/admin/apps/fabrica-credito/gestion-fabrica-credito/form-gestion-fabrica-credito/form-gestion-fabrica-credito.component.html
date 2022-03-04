@@ -1,22 +1,4 @@
-<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full y-100" cdkScrollable>
-    <!--<div class="grid grid-cols-12">
-        <div class="col-span-6">
-            <h3 class="mb-2 text-gray-900">Fabrica de crédito</h3>
-        </div>
-        <button mat-raised-button
-                class="col-start-11"
-                [color]="'primary'"
-        >
-            Decisión
-        </button>
-        <button mat-raised-button
-                [color]="'accent'"
-                (click)="verComentarios = !verComentarios"
-                [disabled]="verComentarios"
-        >
-            Comentarios
-        </button>
-    </div>-->
+<div class="bg-white h-full  overflow-auto px-3 py-2 rounded-lg shadow w-full y-100" cdkScrollable>
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent mb-3">
         <div class="flex flex-col">
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-6 px-6 md:px-8 border-b">
@@ -35,7 +17,7 @@
                             [color]="'primary'"
                             (click)="onDialogoDecision()"
                     >
-                        Decisión
+                        Siguiente etapa
                     </button>
                     <button mat-raised-button
                             class="bg-blue-800 text-white"
@@ -515,7 +497,7 @@
                                                     [svgIcon]="'mat_outline:edit'"></mat-icon>
                                             </mat-form-field>
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                <mat-label>Direccion del negocio</mat-label>
+                                                <mat-label>Dirección del negocio</mat-label>
                                                 <input matInput type="text" [formControlName]="'direccionNegocio'"
                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()"
                                                 >
@@ -566,17 +548,27 @@
                                                         matSuffix
                                                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                                                 </mat-form-field>
+                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                                    <mat-label>Nit</mat-label>
+                                                    <input matInput type="text" [formControlName]="'nitNegocio'">
+                                                    <mat-icon
+                                                        class="icon-size-5"
+                                                        matSuffix
+                                                        [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                                    <mat-error *ngIf="soloNumero('nitNegocio')">
+                                                        Este campo solo acepta números.
+                                                    </mat-error>
+                                                </mat-form-field>
                                             </ng-container>
-                                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                <mat-label>Nit</mat-label>
-                                                <input matInput type="text" [formControlName]="'nitNegocio'">
+                                        </div>
+                                        <div class="-mx-3 md:flex mt-3 mb-2">
+                                            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                                <mat-label>Razón social</mat-label>
+                                                <input matInput type="text" [formControlName]="'nombreNegocio'">
                                                 <mat-icon
                                                     class="icon-size-5"
                                                     matSuffix
                                                     [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                                <mat-error *ngIf="soloNumero('nitNegocio')">
-                                                    Este campo solo acepta números.
-                                                </mat-error>
                                             </mat-form-field>
                                         </div>
                                     </ng-container>

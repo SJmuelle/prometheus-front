@@ -88,7 +88,7 @@ export class AppSettingsService {
      */
     public documentos = {
         url: {
-            base: EndPoints.uri('/generic/qry/documentos-reque'),
+            base: EndPoints.uri('/generic/qry/documentos-requeridos-fabrica'),
             baseAdjunto: EndPoints.uri('/archivos/guardar/adjuntar-archivo'),
             baseConsultar: EndPoints.uri('/pqrs/file/load/cre-consultar-documento'),
             baseEliminar: EndPoints.uri('/generic/cre-inactivar-doc')
@@ -101,6 +101,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
             baseDecision: EndPoints.uri('/generic/cre-decision'),
+            cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausal: EndPoints.uri('/generic/qry/cau-rechazo')
         }
     };

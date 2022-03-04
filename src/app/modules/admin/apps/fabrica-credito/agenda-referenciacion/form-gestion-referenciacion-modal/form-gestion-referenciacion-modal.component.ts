@@ -11,6 +11,7 @@ import {combineLatest} from 'rxjs';
 import {
     FormDialogComentarioReferenciaComponent
 } from '../form-dialog-comentario-referencia/form-dialog-comentario-referencia.component';
+import { FormDialogDecisionComponent } from '../../gestion-fabrica-credito/form-dialog-decision/form-dialog-decision.component';
 
 
 @Component({
@@ -295,5 +296,28 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
               );
           }
       });
+  }
+
+  cambioEstado(){
+    const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
+        minWidth: '30%',
+        minHeight: '30%',
+        data: {numeroSolicitud:this.data.numeroSolicitud, etapa:2},
+        disableClose: false,
+    });
+    dialogRef.afterClosed().toPromise().then(() => {
+        
+    });
+  }
+  decision(){
+    const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
+        minWidth: '30%',
+        minHeight: '30%',
+        data: {numeroSolicitud:this.data.numeroSolicitud, etapa:6},
+        disableClose: false,
+    });
+    dialogRef.afterClosed().toPromise().then(() => {
+        
+    }); 
   }
 }
