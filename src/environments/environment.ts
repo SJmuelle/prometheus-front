@@ -8,7 +8,7 @@ export const environment = {
     userName: 'APPWEB',
     password: btoa('123456'),
 
-    urlApi: 'https://ultracem.ngrok.io/api-fintra/api/',
+    urlApi: 'https://tefi.ngrok.io/api-fintra/api',
     urlApi2: 'http://tefi.ngrok.io/api-fintra/api/generic/qry/',
     urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic/',
     urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',

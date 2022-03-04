@@ -138,6 +138,8 @@ export class ActivitiesComponent implements OnInit
             link.click();
             Swal.close();
 
+        }, error => {
+            console.log(error)
         }) 
 
     }
