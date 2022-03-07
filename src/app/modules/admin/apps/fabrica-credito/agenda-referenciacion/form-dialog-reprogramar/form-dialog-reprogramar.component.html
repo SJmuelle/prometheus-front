@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Reprogramar</h2>
+<mat-dialog-content>
+        <mat-form-field class="w-full fuse-mat-dense">
+            <mat-label>Seleccione fecha y hora</mat-label>
+            <input matInput [ngxMatDatetimePicker]="picker"
+                   placeholder="Fecha y hora"
+                   autocomplete="off"
+                   [min]="fechaActual"
+                   [formControl]="myDatePicker"
+                   (keydown)="picker.open()"
+                   (click)="picker.open()"
+            >
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+        </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <button mat-raised-button color="primary" type="button"
+                (click)="onReprogramar()"
+                [disabled]="myDatePicker.invalid"
+        >
+            Guardar
+        </button>
+        <button mat-raised-button
+                class="mr-2 bg-gray-400 text-white"
+                type="button"
+                [mat-dialog-close]="false"
+        >
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

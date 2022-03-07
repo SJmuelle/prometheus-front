@@ -143,7 +143,29 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
         ],
     },
+    {
+        id: 'credito',
+        title: 'Crédito',
+        type: 'aside',
+        icon: 'mat_outline:attach_money',
+        children: [
+            {
+                id: 'agenda-completacion.list',
+                title: 'Agenda de completación',
+                type: 'basic',
+                link: '/credit-factory/agenda-completion',
+                icon: 'heroicons_outline:document-text',
+            },
+            {
+                id: 'agenda-referenciacion.list',
+                title: 'Agenda de referenciación',
+                type: 'basic',
+                link: '/credit-factory/agenda-referencing',
+                icon: 'heroicons_outline:document',
+            },
 
+        ]
+    }
     // {
     //     id: 'calendario',
     //     title: 'Calendario',

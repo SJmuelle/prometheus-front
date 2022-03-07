@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AgendaCompletacionService} from '../../../../../../core/services/agenda-completacion.service';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {Router} from "@angular/router";
 import Swal from 'sweetalert2';
-import {delay} from "rxjs/operators";
+import {delay, takeUntil} from "rxjs/operators";
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -11,12 +11,14 @@ import { FormControl } from '@angular/forms';
   templateUrl: './grid-agenda-completacion.component.html',
   styleUrls: ['./grid-agenda-completacion.component.scss']
 })
-export class GridAgendaCompletacionComponent implements OnInit {
-  public agendaCompletacion$: Observable<any>;
+export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
+  public unsubscribe$: Subject<any> = new Subject();
   public page:number=1;
   // public tamanoTabl:number=5;
   public filtrarTabla = new FormControl('');
   public tamanoTabl = new FormControl("5");
+  public mostrar: boolean = true;
+  public datos: any [] = [];
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private router: Router
@@ -35,8 +37,21 @@ export class GridAgendaCompletacionComponent implements OnInit {
   */
   private getAgendaCompletacion(): void {
       Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-      this.agendaCompletacion$ = this.agendaCompletacionService.getAgendaCompletacion();
-      Swal.close();
+      this.agendaCompletacionService.getAgendaCompletacion().pipe(
+          takeUntil(this.unsubscribe$)
+      ).subscribe((res) => {
+          if (res.status === 200) {
+              this.datos = res.data;
+              this.mostrar = false;
+              Swal.close();
+          }else {
+              Swal.close();
+          }
+      });
   }
+
+    ngOnDestroy(): void {
+      this.unsubscribe$.unsubscribe();
+    }
 
 }
