@@ -9,16 +9,22 @@ export const environment = {
     password: btoa('123456'),
 
     urlApi: 'https://tefi.ngrok.io/api-fintra/api',
+
+    //eñiminar -----------------------------------------------
     urlApi2: 'http://tefi.ngrok.io/api-fintra/api/generic/qry/',
-    urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic/',
+    urlApi3: 'http://tefi.ngrok.io/api-fintra/api/transferencia/',
     urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
     urlApi7: 'http://tefi.ngrok.io/api-fintra/api/transferencia/',
 
     urlGetFile: "http://tefi.ngrok.io/api-fintra/api/generic/qry/tk/",
+
+
     urlDonwloadFile: "http://tefi.ngrok.io/api-fintra/api/transferencia/",
 
+
+    // ----------------
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto: 'http://192.168.140.241:8010/api-fintra/api/pqrs',
 

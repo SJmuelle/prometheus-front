@@ -47,6 +47,6 @@ export class EndPoints {
      * @description: URL ver archivos
      */
      static uriShowFiles(url: string): string {
-        return environment.urlDonwloadFile + url;
+        return environment.urlApi7 + url;
     }
 }

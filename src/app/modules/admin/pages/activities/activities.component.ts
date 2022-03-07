@@ -31,16 +31,23 @@ export class ActivitiesComponent implements OnInit
 
     fileForm: FormGroup;
 
+    datosDescarga={
+        idArchivo:""
+      }
+
     ArrayNames = localStorage.getItem('filename');
     myName = JSON.parse(this.ArrayNames);
+
+    get frm() {
+        return this.fileForm.controls;
+    }
 
     constructor(public activityService: ActivitiesService, 
         private dialog: MatDialog, 
         private fb: FormBuilder){
 
             this.fileForm = this.fb.group({
-                idArchivo: [''],
-                filename:['']
+                idArchivo: ['']
             });
     }
 
@@ -112,34 +119,41 @@ export class ActivitiesComponent implements OnInit
         
     }
 
-    downloadFile(id:any, type:any){
+    downloadFile(id: any, type:any){
 
         console.log(id)
         console.log(type)
 
-        const datosDescargar = {
+        const {idArchivo} = this.fileForm.getRawValue();
+
+        this.datosDescarga={
             idArchivo: id
-        };
+        }
 
-        this.activityService.downFiles(datosDescargar).subscribe((response)=>{
+        console.log(this.datosDescarga)
 
-            const archivo = response.data.base64.split(',')[1];
-            const extension = type
+        this.activityService.downFiles(this.datosDescarga).subscribe((response:any)=>{
 
-            console.log(extension)
-            console.log(archivo)
+            if(response) {
 
-            const link = document.createElement('a');
-            document.body.appendChild(link);
+                console.log("Aqui estoy... Si estoy entrando")
 
-            link.href = `data:application/${extension};base64,${archivo}`;
-            link.target = '_self';
-            link.download = response.data.filename
-            link.click();
-            Swal.close();
+                console.log(response.data)
+    
+                const archivo = response.data.base64.split(',')[1];
+                console.log(archivo)
+                const extension = type
+                console.log(response)
+                const link = document.createElement('a');
+                document.body.appendChild(link);
 
-        }, error => {
-            console.log(error)
+                link.href = `data:application/${extension};base64,${archivo}`;
+                link.target = '_self';
+                link.download = response.data.filename
+                link.click();
+                Swal.close();
+            }
+
         }) 
 
     }

@@ -5,6 +5,7 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Activity } from 'app/modules/admin/pages/activities/activities.types';
 import { Item } from './file-manager.types'; 
 import { AppSettingsService } from 'app/core/app-configs/app-settings.service'; 
+import { UtilityService } from 'app/resources/services/utility.service';
 
 
 @Injectable({
@@ -20,6 +21,7 @@ export class ActivitiesService
      * Constructor
      */
     constructor(private _http: HttpClient,
+        private _utility: UtilityService,
         private _appSettings: AppSettingsService)
     {
     }
@@ -65,10 +67,12 @@ export class ActivitiesService
     }
 
     public  getFilesDown(): Observable<any> {
-        return this._http.get(`${this._appSettings.archivos.url.DownFile}`);
+        return this._http.get(`${this._appSettings.archivos.url.ListFiles}`);
     }
 
-    public  downFiles(data: any = 2): Observable<any> {
+    public  downFiles(data: any = 1): Observable<any> {
+        console.log(data)
+        debugger;
         return this._http.post(this._appSettings.archivos.url.DownFile, data);
     }
 
