@@ -29,7 +29,8 @@
                 <ng-container *ngIf="first || !isSameDay(file.fecha_creacion, listFile[i - 1].fecha_creacion)">
                     <li class="relative flex py-4 bottom-6">
                         <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
-                            {{getRelativeFormat(file.fecha_creacion)}}
+                            <!-- {{getRelativeFormat(file.fecha_creacion)}} -->
+                            {{file.fecha_creacion | date: 'dd/MM/yyyy'}}
                         </div>
                     </li>
                 </ng-container>
@@ -84,7 +85,7 @@
                                     
                                     <div class="text-secondary line-clamp-2">
     
-                                        {{file.fecha_creacion | date:'MMM dd, h:mm a'}}
+                                        {{file.fecha_creacion | date:'dd/MM/yyyy, h:mm a'}}
                                         
                                     </div>
     

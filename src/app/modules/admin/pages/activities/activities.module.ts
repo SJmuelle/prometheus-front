@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from 'app/shared/shared.module';
 import { ActivitiesComponent } from 'app/modules/admin/pages/activities/activities.component';
@@ -19,7 +20,7 @@ import { InfofileComponent } from './infofile/infofile.component';
         PreviewComponent,
         InfofileComponent
     ],
-    imports     : [
+    imports: [
         RouterModule.forChild(activitiesRoutes),
         MatIconModule,
         SharedModule,
@@ -28,7 +29,8 @@ import { InfofileComponent } from './infofile/infofile.component';
         FuseCardModule,
         PdfViewerModule,
         MatDialogModule,
-        MatTooltipModule
+        MatTooltipModule,
+        CommonModule
     ]
 })
 export class ActivitiesModule

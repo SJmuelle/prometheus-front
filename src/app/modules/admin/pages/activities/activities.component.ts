@@ -194,13 +194,13 @@ export class ActivitiesComponent implements OnInit
         // Is today?
         if ( moment(date, moment.ISO_8601).isSame(today, 'day') )
         {
-            return 'Today';
+            return 'Hoy';
         }
 
         // Is yesterday?
         if ( moment(date, moment.ISO_8601).isSame(yesterday, 'day') )
         {
-            return 'Yesterday';
+            return 'Ayer';
         }
 
         return moment(date, moment.ISO_8601).fromNow();
