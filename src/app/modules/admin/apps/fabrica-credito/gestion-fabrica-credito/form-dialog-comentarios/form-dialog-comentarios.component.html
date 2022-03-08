@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Nuevo comentario</h2>
+<ng-container *ngIf="data.idComentario">
+    <h2 mat-dialog-title>Detalle comentario</h2>
+</ng-container>
+<ng-container *ngIf="!data.idComentario">
+    <h2 mat-dialog-title>Nuevo comentario</h2>
+</ng-container>
 <mat-dialog-content>
     <div class="grid-cols-12 ">
         <div class="col-span-12">
@@ -7,7 +12,10 @@
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Texto</mat-label>
-                            <textarea  matInput [formControlName]="'comentario'"></textarea>
+                            <textarea  matInput [formControlName]="'comentario'"
+                                       [readonly]="data.idComentario"
+                            >
+                            </textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                             <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>
                         </mat-form-field>
@@ -19,14 +27,16 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button
-                color="primary"
-                type="button"
-                (click)="onGuardar()"
-                [disabled]="form.invalid"
-        >
-            Guardar
-        </button>
+        <ng-container *ngIf="!data.idComentario">
+            <button mat-raised-button
+                    color="primary"
+                    type="button"
+                    (click)="onGuardar()"
+                    [disabled]="form.invalid"
+            >
+                Guardar
+            </button>
+        </ng-container>
         <button mat-raised-button
                 class="mr-2 bg-gray-400 text-white"
                 type="button"

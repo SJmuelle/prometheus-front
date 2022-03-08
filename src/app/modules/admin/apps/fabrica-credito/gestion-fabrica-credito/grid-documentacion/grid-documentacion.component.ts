@@ -62,14 +62,12 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
    */
   public onSeleccionDocumento(event: MatCheckbox, item: any): void {
       if (event.checked) {
-          console.log(item);
           this.documentos.map((x) =>{
               if (x.idArchivoCargado === item.idArchivoCargado){
                   x.selected = event.checked;
               }
               return x;
           });
-          console.log(this.documentos);
           const datos: any = {
               numeroSolicitud: this.numeroSolicitud,
               idAdjunto: item.idArchivoCargado
@@ -191,7 +189,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
       this.documentosServices.getDocumento(datosDescargar).subscribe((res) => {
           const archivo = res.data.base64.split(',')[1];
           const extension = res.data.nombreArchivo.split('.')[1];
-          console.log(extension);
+          // console.log(extension);
           const link = document.createElement('a');
           document.body.appendChild(link);
           link.href = `data:application/${extension};base64,${archivo}`;
@@ -215,9 +213,9 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                   nombreArchivo: res.data.nombreArchivo,
               };
               this.longitudArchivos = Object.keys(this.archivoIzquierda).length;
-              console.log(this.longitudArchivos);
+             // console.log(this.longitudArchivos);
           }
-          console.log(this.archivoIzquierda);
+          // console.log(this.archivoIzquierda);
           Swal.close();
       });
 

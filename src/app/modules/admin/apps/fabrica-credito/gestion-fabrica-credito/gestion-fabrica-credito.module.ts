@@ -32,22 +32,24 @@ import {PdfViewerModule} from "ng2-pdf-viewer";
 import { FormDialogDecisionComponent } from './form-dialog-decision/form-dialog-decision.component';
 import { FormDialogComentariosComponent } from './form-dialog-comentarios/form-dialog-comentarios.component';
 import {NgxPaginationModule} from "ngx-pagination";
+import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
 
 
 
 @NgModule({
-  declarations: [
-    FormGestionFabricaCreditoComponent,
-    FormRepresentanteLegalComponent,
-    GridReferenciasComponent,
-    FormDetallesReferenciasComponent,
-    FormDialogReferenciasComponent,
-    GridComentariosComponent,
-    GridDocumentacionComponent,
-    FormDialogCompararDocumentosComponent,
-    FormDialogDecisionComponent,
-    FormDialogComentariosComponent,
-  ],
+    declarations: [
+        FormGestionFabricaCreditoComponent,
+        FormRepresentanteLegalComponent,
+        GridReferenciasComponent,
+        FormDetallesReferenciasComponent,
+        FormDialogReferenciasComponent,
+        GridComentariosComponent,
+        GridDocumentacionComponent,
+        FormDialogCompararDocumentosComponent,
+        FormDialogDecisionComponent,
+        FormDialogComentariosComponent,
+        GridPoliticasComponent,
+    ],
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
@@ -74,5 +76,8 @@ import {NgxPaginationModule} from "ngx-pagination";
 
     ],
 
+    exports: [
+        GridReferenciasComponent
+    ]
 })
 export class GestionFabricaCreditoModule { }

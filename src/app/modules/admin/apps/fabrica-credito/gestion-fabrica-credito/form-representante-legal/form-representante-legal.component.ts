@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {FabricaCreditoService} from '../../../../../../core/services/fabrica-credito.service';
 import {Observable, Subscription} from "rxjs";
 import {DepartamentosCiudadesService} from "../../../../../../core/services/departamentos-ciudades.service";
@@ -12,6 +12,8 @@ import {
     FormularioRepresentanteInterface
 } from "../../../../../../core/interfaces/formulario-fabrica-credito.interface";
 import * as moment from "moment";
+import {MatDialog} from "@angular/material/dialog";
+import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
 
 @Component({
   selector: 'app-form-representante-legal',
@@ -36,6 +38,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
       private route: ActivatedRoute,
       private genericaServices: GenericasService,
       private router: Router,
+      private _dialog: MatDialog,
   ) {
       const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       if (numeroSolicitud) {
@@ -95,6 +98,47 @@ export class FormRepresentanteLegalComponent implements OnInit {
 
   }
 
+  public openModalDirection(): void {
+      const dialogRef = this._dialog.open(DirectionsComponent, {
+          width: '60%',
+          data: {
+              departamento: '',
+              municipio: '',
+              barrio: '',
+              direccion: '',
+          },
+          disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
+              this.form.controls.descripcionDepartamento.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudad.setValue(dataModal.municipio);
+              this.form.controls.descripcionCiudad.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.descripcionBarrio.setValue(dataModal.barrio);
+              this.form.controls.direccionResidencial.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
+  }
+
   public seleccionDepartamento(event: MatSelectChange): void {
       const codigo: string = event.value;
       this.getCiudades(codigo);
@@ -121,7 +165,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
           segundoApellido:         [''],
           nombreCompleto:          [''],
           telefono:                [''],
-          celular:                 [''],
+          celular:                 ['',  [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
           email:                   [''],
           genero:                  [''],
           descripcionGenero:       [''],

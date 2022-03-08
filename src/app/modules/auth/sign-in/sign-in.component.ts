@@ -71,7 +71,6 @@ export class AuthSignInComponent implements OnInit
 
         // Hide the alert
         this.showAlert = false;
-        debugger;
         // Sign in
         this._authService.signIn({userName: this.signInForm.controls.userName.value, password: btoa(this.signInForm.controls.password.value)})
             .subscribe(

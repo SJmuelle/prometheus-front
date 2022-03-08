@@ -24,6 +24,9 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
       this.crearFormulario();
       this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
+      if (this.data.idComentario) {
+          this.form.controls.comentario.setValue(this.data.comentario);
+      }
   }
     /**
      * @description: Cierra el dialogo

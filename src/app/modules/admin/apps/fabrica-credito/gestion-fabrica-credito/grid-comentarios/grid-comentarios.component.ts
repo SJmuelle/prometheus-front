@@ -15,6 +15,7 @@ export class GridComentariosComponent implements OnInit {
   public comentarios$: Observable<any>;
   public esVer: boolean = false;
   @Output() cerrarComponente: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() minimizarComponente: EventEmitter<boolean> = new EventEmitter<boolean>();
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public page: number = 1;
   public tamanoTabl = new FormControl('5');
@@ -39,8 +40,21 @@ export class GridComentariosComponent implements OnInit {
       });
   }
 
+  public onVerComentario(item): void {
+      const dialogRef = this._dialog.open(FormDialogComentariosComponent, {
+          minWidth: '30%',
+          minHeight: '30%',
+          data: item
+      });
+      dialogRef.afterClosed().toPromise();
+  }
+
   public onCerrar(): void {
       this.cerrarComponente.emit(false);
+  }
+
+  public onMinimiza(): void {
+      this.minimizarComponente.emit(false);
   }
 
   private getData(): void {
