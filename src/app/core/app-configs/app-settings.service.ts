@@ -62,6 +62,26 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point Transferencias
+     */
+     public transferencias = {
+        url: {
+            baseTransferencia: EndPoints.uriTransferencia('transferencia/transferencia-cxp-proveedor'),
+            baseProveedor: EndPoints.uriTransferencia('generic/qry/buscar-proveedor'),
+            baseBancos: EndPoints.uriTransferencia('generic/qry/bancos-transferencia/JHSALAZAR'),
+            baseFiltro: EndPoints.uriTransferencia('generic/qry/cxp-proveedor'),
+        }
+    };
+    /**
+     * @description: End-point Archivos de transferencias
+     */
+     public archivos = {
+        url: {
+            ListFiles: EndPoints.uriTransferencia('generic/qry/tk/transferencia-consultar-achivo'),
+            DownFile: EndPoints.uriTransferencia('transferencia/obtener-achivo-base64')
+        }
+    };
+    /**
      * @description: End-point referencias
      */
     public referencias = {

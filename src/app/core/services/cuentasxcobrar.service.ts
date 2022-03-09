@@ -14,19 +14,19 @@ export class CuentasxcobrarService {
   ) { }
 
   public getFacturesFilter(nit: any, vencimiento: any): Observable<any>{
-    return this._http.get(`${this._appSettings.genericas.url.baseFiltro}/${nit}/${vencimiento}`);
+    return this._http.get(`${this._appSettings.transferencias.url.baseFiltro}/${nit}/${vencimiento}`);
   }
 
   public  getBanco(): Observable<any> {
-    return this._http.get(`${this._appSettings.genericas.url.baseBancos}`);
+    return this._http.get(`${this._appSettings.transferencias.url.baseBancos}`);
   }
 
   public  getProveedor(): Observable<any> {
-    return this._http.get(`${this._appSettings.genericas.url.baseProveedor}`);
+    return this._http.get(`${this._appSettings.transferencias.url.baseProveedor}`);
   }
 
   public postTransferencia(datosTransferencia: any): Observable<any> {
-    return this._http.post(this._appSettings.genericas.url.baseTransferencia, datosTransferencia);
+    return this._http.post(this._appSettings.transferencias.url.baseTransferencia, datosTransferencia);
   }
 
   

@@ -23,7 +23,7 @@ export class EndPoints {
      * @description: URL lista de archivos
      */
      static uriGetFiles(url: string): string {
-        return environment.urlGetFile + url;
+        return environment.urlApi7 + url;
     }
     /**
      * @description: URL ver archivos

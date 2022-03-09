@@ -16,7 +16,6 @@ export class FacturaComponent implements OnInit {
   banco: any = [];
 
   proveedor: any = [];
-  seleccionados:any[]=[];
 
   total:number;
 
@@ -31,8 +30,6 @@ export class FacturaComponent implements OnInit {
   public detailsFacture:any=[];
 
   public valores:number=0;
-
-  datosTransferencia:any;
 
   transferencia={
     proveedor:"",
@@ -87,7 +84,7 @@ export class FacturaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      console.log(nit)
+      // console.log(nit)
       // console.log(this.myUser)
       if (response) {
         this.listadoFacturas = response.data;
@@ -138,9 +135,9 @@ export class FacturaComponent implements OnInit {
         this.mostrar=false
         this.bancoForm.reset();
         this.detailsFacture=[];
-        console.log("Tus facturas: ",this.detailsFacture)
+        // console.log("Tus facturas: ",this.detailsFacture)
         this.valores=0;
-        console.log("Tus valores de facturas: ",this.valores)
+        // console.log("Tus valores de facturas: ",this.valores)
       })
 
     }
@@ -161,8 +158,8 @@ export class FacturaComponent implements OnInit {
       this.detailsFacture.splice(idx, 1)
       this.valores=this.valores-item.valorFactura;
     }
-    console.log( this.detailsFacture)
-    console.log( this.valores)
+    // console.log( this.detailsFacture)
+    // console.log( this.valores)
   }
 
   updateAllComplete() {
@@ -193,7 +190,7 @@ export class FacturaComponent implements OnInit {
       this.detailsFacture=[];
       this.valores=0;
     }
-    console.log("Detalle factura", this.detailsFacture)
+    // console.log("Detalle factura", this.detailsFacture)
     this.listadoFacturas.forEach(t => (t.completed = completed));
   }
 
