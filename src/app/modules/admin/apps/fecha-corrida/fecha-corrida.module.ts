@@ -47,11 +47,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         ReactiveFormsModule,
         MatCheckboxModule,
         MatDatepickerModule,
-        MatSelectSearchModule,
         MatMomentDateModule,
-        NgxMatSelectSearchModule,
         FuseScrollbarModule,
-        ScrollingModule
+        ScrollingModule,
+        MatSelectSearchModule,
+        NgxMatSelectSearchModule
     ]
 })
 export class FechaCorridaModule { }
