@@ -50,7 +50,6 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatMomentDateModule,
         FuseScrollbarModule,
         ScrollingModule,
-        MatSelectSearchModule,
         NgxMatSelectSearchModule
     ]
 })
