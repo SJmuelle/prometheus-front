@@ -158,7 +158,7 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'agenda-referenciacion.list',
-                title: 'Agenda de referenciación',
+                title: 'Agenda de referenciación y desición',
                 type: 'basic',
                 link: '/credit-factory/agenda-referencing',
                 icon: 'heroicons_outline:document',

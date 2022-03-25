@@ -460,10 +460,10 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           .subscribe(() => {
               Swal.fire(
                   'Completado',
-                  'Información guardada con exito',
+                  'Información guardada con éxito',
                   'success'
               );
-              this.router.navigate(['/credit-factory/agenda-completion']);
+            //   this.router.navigate(['/credit-factory/agenda-completion']);
       }, (error) => {
               Swal.fire({
                   icon: 'error',
