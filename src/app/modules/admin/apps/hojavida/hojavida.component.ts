@@ -546,11 +546,11 @@ export class HojavidaComponent implements OnInit {
     }
 
     historialCertificados(certificado) {
-        let url = `/cargar-historial-certificados/${certificado}`;
-        this._pqrService.getListados(url).subscribe((resp) => {
-            this.historialCertificado = resp;
-            console.log(this.historialCertificado);
-        });
+        // let url = `/cargar-historial-certificados/${certificado}`;
+        // this._pqrService.getListados(url).subscribe((resp) => {
+        //     this.historialCertificado = resp;
+        //     console.log(this.historialCertificado);
+        // });
     }
 
 

@@ -8,7 +8,7 @@ export const environment = {
     password: btoa('123456'),
     urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
     urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/',
-    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
+    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/',
 
     // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
     // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry/',
