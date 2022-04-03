@@ -80,12 +80,13 @@ export class PqrService {
     }
 
     // NUEVO METODO PARA ENVIAR CORREOS
-    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '') {
+    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '', mensaje?) {
         let data = {
             pqrs: parseInt(pqrs),
             tipo: tipo,
             descripcion: descripcion,
-            adjuntos: adjuntos
+            adjuntos: adjuntos,
+            mensaje:mensaje
         };
         return this._utility.postQueryCorreo(url, data).subscribe((res) => {
             // debugger;
@@ -145,6 +146,13 @@ export class PqrService {
 
     getListados(url: string) {
         return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+    getListadosUnico(url: string) {
+        return this._utility.getQueryUnico(url, true).pipe(
             map((res: any) => {
                 return res.data;
             })

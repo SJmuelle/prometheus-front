@@ -74,16 +74,15 @@ export class CreacionPQRSComponent implements OnInit {
                 this.EstadoSagicc = true;
 
                 this._authService
-                    .signIn({
-                        userName: environment.userName,
-                        password: environment.password,
+                    .signSagicc({
+                        userName: this.UsuarioSaggics
                     })
                     .subscribe(
                         () => {
                             // this.insertadjunti();
                             this.tabMostrar = 1;
                             this.buscarListados();
-
+                            this.buscarUsuarioSagicc()
                             setTimeout(() => {
                                 this.datos.canpana = this.campana;
                                 this.datos.origen = this.tipo;
@@ -201,6 +200,21 @@ export class CreacionPQRSComponent implements OnInit {
                 this.listadoTipoPQRS = [];
             }
         });
+    }
+
+    buscarUsuarioSagicc() {
+        //datos ingreso
+        let urlOrigenCliente = `/generic/qry/obtener-usuario-prometheus/${this.UsuarioSaggics}`;
+        this._pqrService
+            .getListadosUnico(urlOrigenCliente)
+            .subscribe((response: any) => {
+                if (response) {
+                   console.log(response)
+                   this.UsuarioSaggics=response.respuesta
+                } else {
+                    console.log(response)
+                }
+            });
     }
 
     validaForm(tab) {
