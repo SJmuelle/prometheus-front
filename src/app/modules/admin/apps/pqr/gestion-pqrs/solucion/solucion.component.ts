@@ -276,13 +276,13 @@ export class SolucionComponent implements OnInit {
                                                 if (
                                                     this.idTipoComentario == '2'
                                                 ) {
-                                                    url = `/sendmail/notificacion-crear-pqrs`;
+                                                    url = `/sendmail/notificacion-crear-pqrs2`;
                                                     this._pqrService.envioCorreos(
                                                         url,
                                                         this.pqrid,
                                                         5,
                                                         response.data.nombre,
-                                                        response.data.ubicacion,
+                                                        response.data.archivos,
                                                         mensaje
                                                     );
 
