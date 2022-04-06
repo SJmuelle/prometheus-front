@@ -80,13 +80,14 @@ export class PqrService {
     }
 
     // NUEVO METODO PARA ENVIAR CORREOS
-    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '', mensaje?) {
+    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '', mensaje?,envioCorreo?) {
         let data = {
             pqrs: parseInt(pqrs),
             tipo: tipo,
             descripcion: descripcion,
             adjuntos: adjuntos,
-            mensaje:mensaje
+            mensaje:mensaje,
+            envioCorreo:envioCorreo
         };
         return this._utility.postQueryCorreo(url, data).subscribe((res) => {
             // debugger;

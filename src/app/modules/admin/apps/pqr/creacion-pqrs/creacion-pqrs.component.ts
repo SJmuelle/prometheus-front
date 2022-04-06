@@ -753,7 +753,12 @@ export class CreacionPQRSComponent implements OnInit {
                 dataModal.descripcion != undefined &&
                 dataModal.descripcion != null
             ) {
-                this.evidencia.push(dataModal);
+                this.evidencia.push({
+                    "nombreArchivo": dataModal.nombre,
+                    "extension": dataModal.ext,
+                    "base64": dataModal.file,
+                    "descripcion": dataModal.descripcion
+                });
             }
         });
     }

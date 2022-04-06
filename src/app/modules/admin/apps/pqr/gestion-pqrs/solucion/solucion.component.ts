@@ -37,6 +37,7 @@ export class SolucionComponent implements OnInit {
     listadoSoluciones: any = [];
     ext: string;
     evidencia: any=[];
+    envioCorreo: boolean=false;
     constructor(
         private _pqrService: PqrService,
         public dialog: MatDialog,
@@ -283,7 +284,8 @@ export class SolucionComponent implements OnInit {
                                                         5,
                                                         response.data.nombre,
                                                         response.data.archivos,
-                                                        mensaje
+                                                        mensaje,
+                                                        this.envioCorreo
                                                     );
 
                                                 }
