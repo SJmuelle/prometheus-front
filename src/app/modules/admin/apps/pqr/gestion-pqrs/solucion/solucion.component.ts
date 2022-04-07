@@ -155,7 +155,7 @@ export class SolucionComponent implements OnInit {
                 dataModal.descripcion != null
             ) {
                 if (this.idTipoComentario == "2") {
-                   
+
                         if (dataModal.ext !== 'pdf') {
                             Swal.fire(
                                 'Información',
@@ -164,7 +164,7 @@ export class SolucionComponent implements OnInit {
                             );
                             return;
                         }
-                    
+
                 }
                 // this.evidencia.push(this.evidencia)
                 this.evidencia.push({
@@ -239,7 +239,7 @@ export class SolucionComponent implements OnInit {
                             return;
                         }
                         if (this.evidencia.length > 0) {
-                            
+
                             let data = {
                                 idComentario: response.data.respuesta,
                                 fuente: 'registro-pqrs',
@@ -285,7 +285,7 @@ export class SolucionComponent implements OnInit {
                                                         response.data.nombre,
                                                         response.data.archivos,
                                                         mensaje,
-                                                        this.envioCorreo
+                                                        this.envioCorreo==true?'S':'N'
                                                     );
 
                                                 }

@@ -402,6 +402,7 @@ export class CreacionPQRSComponent implements OnInit {
                 } else {
                     let data = {
                         empresa: 'FINV',
+                        identificador:'pqrs',
                         campanha:
                             this.datos.campana == undefined
                                 ? ''
@@ -437,7 +438,7 @@ export class CreacionPQRSComponent implements OnInit {
                         idPqrspadre: '',
                         fechaSolucion: this.datos.fechaParaSolucion,
                         primerContacto: this.datos.primerContacto,
-                        adjuntos: this.crearJsonAdjuntos(),
+                        file: this.crearJsonAdjuntos(),
                         hijos: this.crearJsonHijas(),
                         user: this.UsuarioSaggics,
                     };
@@ -806,20 +807,20 @@ export class CreacionPQRSComponent implements OnInit {
 
     crearJsonAdjuntos(): Array<JSON> {
         let data = [];
-        this.evidencia.forEach((element) => {
-            if (element.file != null) {
-                let nombre = element.filename.split('.');
-                data.push({
-                    idComentario: '',
-                    nombreArchivo: nombre[0].toLowerCase(),
-                    extension: nombre[1].toLowerCase(),
-                    fuente: 'registro-pqrs',
-                    identificador: 'pqrs',
-                    base64: element.file,
-                    descripcion: element.descripcion,
-                });
-            }
-        });
-        return data;
+        // this.evidencia.forEach((element) => {
+        //     if (element.file != null) {
+        //         let nombre = element.filename.split('.');
+        //         data.push({
+        //             idComentario: '',
+        //             nombreArchivo: nombre[0].toLowerCase(),
+        //             extension: nombre[1].toLowerCase(),
+        //             fuente: 'registro-pqrs',
+        //             identificador: 'pqrs',
+        //             base64: element.file,
+        //             descripcion: element.descripcion,
+        //         });
+        //     }
+        // });
+        return  this.evidencia;
     }
 }
