@@ -21,7 +21,7 @@ export class SolucionComponent implements OnInit {
             ['clean'],
         ],
     };
-
+    @ViewChild('editor') editor;
     seguimiento: any = {};
     pqrid: any;
     datos: any = {};
@@ -38,6 +38,7 @@ export class SolucionComponent implements OnInit {
     ext: string;
     evidencia: any=[];
     envioCorreo: boolean=false;
+    mensajeQuill: string;
     constructor(
         private _pqrService: PqrService,
         public dialog: MatDialog,
@@ -176,12 +177,20 @@ export class SolucionComponent implements OnInit {
             }
         });
     }
+    logChange($event) {
+        console.log(this.editor);
+        //console.log($event);
+        this.mensajeQuill=$event.text;
+    }
     guardar() {
+        // console.log(this.editor)
+        // console.log(this.editor.editorElem.outerText)
+        // console.log(this.seguimiento.detalle)
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal
             ? this.solucionCausal
             : 0;
-        let mensaje=this.seguimiento.detalle
+        let mensaje=this.editor.editorElem.outerText
         if (this.listadoSoluciones.length > 0) {
             if (
                 this.seguimiento.idTipoComentario == 2 &&
