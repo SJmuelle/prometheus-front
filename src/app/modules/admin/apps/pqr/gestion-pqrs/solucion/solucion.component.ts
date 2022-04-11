@@ -183,9 +183,18 @@ export class SolucionComponent implements OnInit {
         this.mensajeQuill=$event.text;
     }
     guardar() {
-        // console.log(this.editor)
-        // console.log(this.editor.editorElem.outerText)
-        // console.log(this.seguimiento.detalle)
+        if(this.envioCorreo==true){
+            if(this.editor.editorElem.outerText.length>650){
+                Swal.fire(
+                    'Información',
+                    `La cantidad de caracteres máxima del comentario para ser enviada por correo es de: (650).
+                    Su cantidad de caracteres actual es de: (${this.editor.editorElem.outerText.length})`,
+                    'warning'
+                );
+                return
+            }
+        }
+
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal
             ? this.solucionCausal
