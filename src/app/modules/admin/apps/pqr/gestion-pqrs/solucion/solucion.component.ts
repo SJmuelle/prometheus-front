@@ -321,6 +321,21 @@ export class SolucionComponent implements OnInit {
                                 'success'
                             ).then((resultado) => {
                                 if (resultado) {
+                                    if (
+                                        this.idTipoComentario == '2'
+                                    ) {
+                                        url = `/sendmail/notificacion-crear-pqrs2`;
+                                        this._pqrService.envioCorreos(
+                                            url,
+                                            this.pqrid,
+                                            5,
+                                            response.data.nombre,
+                                            response.data.archivos,
+                                            mensaje,
+                                            this.envioCorreo==true?'S':'N'
+                                        );
+
+                                    }
                                     this.limpiar();
                                     this.recargarData();
                                 }
