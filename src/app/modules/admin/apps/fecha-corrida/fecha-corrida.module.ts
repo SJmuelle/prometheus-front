@@ -21,6 +21,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { SearchPipe } from './factura/filterproveedor.pipe';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MatSelectSearchModule } from 'mat-select-search';
 import { FuseScrollbarModule } from '@fuse/directives/scrollbar';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -49,7 +50,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatMomentDateModule,
         FuseScrollbarModule,
         ScrollingModule,
-        NgxMatSelectSearchModule
+        NgxMatSelectSearchModule,
+        MatSelectSearchModule
     ]
 })
 export class FechaCorridaModule { }

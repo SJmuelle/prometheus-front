@@ -71,8 +71,8 @@ export class ActivitiesService
     }
 
     public  downFiles(data: any = 1): Observable<any> {
-        console.log(data)
-        debugger;
+        // console.log(data)
+        // debugger;
         return this._http.post(this._appSettings.archivos.url.DownFile, data);
     }
 

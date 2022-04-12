@@ -16,6 +16,9 @@
                     <mat-option>
                         <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
                     </mat-option>
+                    <!-- <mat-option>
+                        <lib-mat-select-search [list]="proveedor" [searchProperties]="['proveedor']" (filtered)="filterproveedor"></lib-mat-select-search>
+                    </mat-option> -->
                     <mat-option
                         *ngFor="let item of proveedor | search : filterproveedor"
                         [value]="item.nit">{{ item.proveedor }}</mat-option>
