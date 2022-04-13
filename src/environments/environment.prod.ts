@@ -5,11 +5,11 @@ export const environment = {
     urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
     urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
     urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic',
-    urlApiNgrok: 'https://ultracem.ngrok.io/api-fintra/api',
+    urlApiNgrok: 'http://demo.fintra.co:8010/api-fintra/api',
 
-    urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
-    urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
-    urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
+    urlApi4: 'http://demo.fintra.co:8010/api-fintra/api/credito/tk/recursos/',
+    urlApi5: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
+    urlApi6: 'http://demo.fintra.co:8010/api-fintra/api/archivos/guardar/',
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
