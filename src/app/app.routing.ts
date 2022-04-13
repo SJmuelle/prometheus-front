@@ -6,7 +6,8 @@ import { InitialDataResolver } from 'app/app.resolvers';
 import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
 import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
 import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
-import {FabricaCreditoModule} from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
+import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
+import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -99,6 +100,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'credit-factory',
                 loadChildren: () => FabricaCreditoModule
+            },
+            {
+                path: 'pagaduria',
+                loadChildren: () => PagaduriaModule
             }
         ]
     },

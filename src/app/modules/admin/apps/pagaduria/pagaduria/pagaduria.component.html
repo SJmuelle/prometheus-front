@@ -1,0 +1,165 @@
+<div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+    <div class="grid grid-cols-12 w-100 mb-2">
+        <h2 class="text-gray-900 col-span-12 mb-4">Gestion de solicitudes</h2>
+    </div>
+    <div class="flex flex-row w-100 justify-start gap-4">
+        <div>
+            <p class="text-xl font-medium">Tipo: </p>
+        </div>
+        <div class="flex flex-row w-1/5 justify-between">
+            <div class="mr-4">
+                <mat-radio-button value="1">Referencia laboral</mat-radio-button>
+            </div>
+
+            <div>
+                <mat-radio-button value="1">Capacidad de pago</mat-radio-button>
+            </div>
+        </div>
+        <div class="ml-20">
+            <button mat-button class="bg-accent text-white">Buscar</button>
+        </div>
+    </div>
+    <hr class="w-full">
+    <div class="flex flex-row w-full justify-between">
+        <div class="flex flex-row justify-between w-1/4">
+            <div>
+                <button mat-button class="color_fintra text-white w-30" (click)="cpendiente()">
+                    Pendiente
+                </button>
+            </div>
+            <div>
+                <button mat-button class="color_fintra text-white w-30" (click)="caprobada()">
+                    Aprobada
+                </button>
+            </div>
+            <div>
+                <button mat-button class="color_fintra text-white w-30" (click)="crechazada()">
+                    Rechazada
+                </button>
+            </div>
+        </div>
+        
+        <div>
+            <input
+                class="border rounded p-2 bg-gray-100"
+                style="font-size: 10px; margin-right: 1em"
+                type="text"
+                autocomplete="off"
+                name="filtrarTabla"
+                placeholder="Filtrar..." />
+        </div>
+    </div>
+    <div *ngIf="pendiente" class="mt-4 h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr
+                    class=" text-md font-semibold
+                        tracking-wide text-left text-gray-400
+                        capitalize border-b border-gray-600">
+                    <th class="px-4 py-3 text-center">N°de identificacion</th>
+                    <th class="px-4 py-3 text-center">Nombres</th>
+                    <th class="px-4 py-3 text-center">Apellidos</th>
+                    <th class="px-4 py-3 text-center">#de solicitud</th>
+                    <th class="px-4 py-3 text-center">Fecha de solicitud</th>
+                    <th class="px-4 py-3 text-center">Monto</th>
+                    <th class="px-4 py-3 text-center">Plazo(meses)</th>
+                    <th class="px-4 py-3 text-center">Valor cuota</th>
+                    <th class="px-4 py-3 text-center">Destino</th>
+                    <th class="px-4 py-3 text-center">Anexo</th>
+                    <th class="px-4 py-3 text-center">Accion</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700">
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="aprobada" class="mt-4 h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr
+                    class=" text-md font-semibold
+                        tracking-wide text-left text-gray-400
+                        capitalize border-b border-gray-600">
+                    <th class="px-4 py-3 text-center">N°de identificacion</th>
+                    <th class="px-4 py-3 text-center">Nombres</th>
+                    <th class="px-4 py-3 text-center">Apellidos</th>
+                    <th class="px-4 py-3 text-center">#de solicitud</th>
+                    <th class="px-4 py-3 text-center">Fecha de solicitud</th>
+                    <th class="px-4 py-3 text-center">Monto</th>
+                    <th class="px-4 py-3 text-center">Plazo(meses)</th>
+                    <th class="px-4 py-3 text-center">Valor cuota</th>
+                    <th class="px-4 py-3 text-center">Destino</th>
+                    <th class="px-4 py-3 text-center">Accion</th>
+                    <th class="px-4 py-3 text-center">Fecha de aprobacion</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700">
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="rechazada" class="mt-4 h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr
+                    class=" text-md font-semibold
+                        tracking-wide text-left text-gray-400
+                        capitalize border-b border-gray-600">
+                    <th class="px-4 py-3 text-center">N°de identificacion</th>
+                    <th class="px-4 py-3 text-center">Nombres</th>
+                    <th class="px-4 py-3 text-center">Apellidos</th>
+                    <th class="px-4 py-3 text-center">#de solicitud</th>
+                    <th class="px-4 py-3 text-center">Fecha de solicitud</th>
+                    <th class="px-4 py-3 text-center">Monto</th>
+                    <th class="px-4 py-3 text-center">Plazo(meses)</th>
+                    <th class="px-4 py-3 text-center">Valor cuota</th>
+                    <th class="px-4 py-3 text-center">Destino</th>
+                    <th class="px-4 py-3 text-center">Fecha de rechazo</th>
+                    <th class="px-4 py-3 text-center">Accion</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700">
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
