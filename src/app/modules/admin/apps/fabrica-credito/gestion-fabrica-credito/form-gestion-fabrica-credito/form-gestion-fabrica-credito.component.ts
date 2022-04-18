@@ -50,6 +50,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public estado: string = '';
+  public agenda_fabrica: string='';
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -280,6 +281,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           Swal.close();
           // console.log(data);
           this.form.patchValue(data);
+          this.agenda_fabrica = data.agenda;
           if (data.tipoDocumento === 'NIT') {
               const digitoVerificacion: string = this.calcularDigitoVerificacion(data.identificacion);
               const diitoString: string = digitoVerificacion.toString();
@@ -532,6 +534,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           id:                             undefined,
           numeroSolicitud:               [''],
           emision:                       [''],
+          fechaIngresoFabrica:           [''],
           descripcionEstado:             [''],
           descripcionOrigen:             [''],
           codigoSubEstado:               [''],

@@ -24,15 +24,16 @@
                 <thead class="bg-accent-50" >
                 <tr
                     class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3"></th>
-                    <th class="px-4 py-3">N° de solicitud</th>
-                    <th class="px-4 py-3">Nombres</th>
-                    <th class="px-4 py-3">Identificación</th>
-                    <th class="px-4 py-3">Fecha de solicitud</th>
-                    <th class="px-4 py-3">Preaprobado</th>
-                    <th class="px-4 py-3">Unidad de negocio</th>
-                    <th class="px-4 py-3">Estado</th>
-                    <th class="px-4 py-3">Subestado</th>
+                    <th class="px-4 text-sm py-3"></th>
+                    <th class="px-4 text-sm py-3">N° solicitud</th>
+                    <th class="px-4 text-sm py-3">Nombres</th>
+                    <th class="px-4 text-sm py-3">Identificación</th>
+                    <th class="px-4 text-sm py-3">F. solicitud</th>
+                    <th class="px-4 text-sm py-3">F. ingreso</th>
+                    <th class="px-4 text-sm py-3">Preaprobado</th>
+                    <th class="px-4 text-sm py-3">Unidad negocio</th>
+                    <th class="px-4 text-sm py-3">Estado</th>
+                    <th class="px-4 text-sm py-3">Subestado</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -49,6 +50,7 @@
                             <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
                             <td class="px-2 text-sm border">{{ item.identificacion}}</td>
                             <td class="px-2 text-sm border">{{ item.fechaEmision}}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaIngresoFabrica}}</td>
                             <td class="px-2 text-sm border">{{ item.descripcionOrigen }}</td>
                             <td class="px-2 text-sm border">{{ item.undadNegocio }}</td>
                             <td class="px-2 text-sm border">{{ item.estado }}</td>
