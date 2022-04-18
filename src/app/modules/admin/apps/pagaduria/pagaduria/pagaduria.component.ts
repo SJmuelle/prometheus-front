@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { ObligacionesComponent } from './obligaciones/obligaciones.component';
+import { AprobarReferenciaLaboralComponent } from './aprobar-referencia-laboral/aprobar-referencia-laboral.component';
+import { RechazarReferenciaLaboralComponent } from './rechazar-referencia-laboral/rechazar-referencia-laboral.component';
 
 @Component({
   selector: 'app-pagaduria',
@@ -11,9 +15,68 @@ export class PagaduriaComponent implements OnInit {
   aprobada:boolean = false;
   rechazada:boolean = false;
 
-  constructor() { }
+  datos:any =[];
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    
+    this.datos = [
+      {
+        identificacion: 1,
+        nombres: "Tavo",
+        apellidos: "Salas",
+        solicitud: 10,
+        fecha: "27/03/2022",
+        monto: 2500000,
+        plazo: 24,
+        valor: 100000,
+        destino: "Libre inversion"
+      },
+      {
+        identificacion: 1,
+        nombres: "Tavo",
+        apellidos: "Salas",
+        solicitud: 10,
+        fecha: "27/03/2022",
+        monto: 2500000,
+        plazo: 24,
+        valor: 100000,
+        destino: "Compra de cartera"
+      }
+    ]
+
+  }
+
+  AbrirObligaciones(){
+    const dialogRef = this.dialog.open(ObligacionesComponent);
+
+    dialogRef.afterClosed().subscribe(result =>{
+      // console.log(`Dialog result: ${result}`);
+    });
+
+  }
+
+  AprobarReferenciaLaboral(){
+    const dialogRef = this.dialog.open(AprobarReferenciaLaboralComponent, {
+
+      width: '60%'
+
+    });
+
+    dialogRef.afterClosed().toPromise();
+
+  }
+
+  RechazarReferenciaLaboral(){
+    const dialogRef = this.dialog.open(RechazarReferenciaLaboralComponent, {
+
+      width: '60%'
+
+    });
+
+    dialogRef.afterClosed().toPromise();
+
   }
 
   cpendiente(){

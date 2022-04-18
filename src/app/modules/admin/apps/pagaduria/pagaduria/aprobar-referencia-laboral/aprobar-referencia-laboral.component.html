@@ -1,0 +1,63 @@
+<mat-dialog-content>
+    <form [formGroup]="AprobarForm">
+
+        <div class="flex flex-col w-100">
+
+            <div class="w-full">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Confirmar el valor de las deduciones del empleado:</mat-label>
+                    <input type="number" matInput formControlName="confirmar">
+                    <mat-error *ngIf="frm.confirmar.errors?.required">
+                      Campo requerido.
+                    </mat-error>
+                    <mat-error *ngIf="frm.confirmar.errors?.min">
+                        Solo valores mayores a 0.
+                    </mat-error>
+                </mat-form-field>
+    
+            </div>
+
+            <div class="w-full">
+                
+                <mat-form-field class="w-full">
+                    <mat-label>¿Presenta el trabajador un proceso disciplinario?:</mat-label>
+                    <mat-select formControlName="proceso">
+                        <mat-option value="1">Si</mat-option>
+                        <mat-option value="0">No</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="frm.proceso.errors?.required">
+                        Campo requerido.
+                      </mat-error>
+                </mat-form-field>
+    
+            </div>
+
+            <div class="w-full">
+    
+                <mat-form-field class="w-full">
+                    <mat-label>Detalle de aprobación: </mat-label>
+                    <textarea matInput formControlName="detalle" cdkTextareaAutosize 
+                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" 
+                    (keyup)="contarCaracteres($event)"></textarea>
+                    <mat-error *ngIf="frm.detalle.errors?.required">
+                        Campo requerido.
+                      </mat-error>
+                      <mat-error *ngIf="frm.detalle.errors?.maxlength">
+                          Maximo 500 caracteres.
+                      </mat-error>
+                </mat-form-field>
+                <div class="flex flex-row w-100 justify-end">
+                    <span> <em>{{contador}} de 500 caracteres</em> </span>
+                </div>
+    
+            </div>
+    
+        </div>
+
+    </form>
+    
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button id="guardar" class="text-white" color="color-fintra" [disabled]="AprobarForm.invalid">Guardar</button>
+    <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
+</mat-dialog-actions>
