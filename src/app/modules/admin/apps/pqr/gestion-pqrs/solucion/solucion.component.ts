@@ -265,7 +265,7 @@ export class SolucionComponent implements OnInit {
                                 file:this.evidencia
                             };
 
-                            url = '/file/cargar-archivo-pqrs2';
+                            url = '/file/cargar-archivo-pqrs';
                             Swal.fire({
                                 title: 'Cargando',
                                 html: 'Guardando documento de PQRS',
@@ -295,7 +295,7 @@ export class SolucionComponent implements OnInit {
                                                 if (
                                                     this.idTipoComentario == '2'
                                                 ) {
-                                                    url = `/sendmail/notificacion-crear-pqrs2`;
+                                                    url = `/sendmail/notificacion-crear-pqrs`;
                                                     this._pqrService.envioCorreos(
                                                         url,
                                                         this.pqrid,
@@ -324,7 +324,7 @@ export class SolucionComponent implements OnInit {
                                     if (
                                         this.idTipoComentario == '2'
                                     ) {
-                                        url = `/sendmail/notificacion-crear-pqrs2`;
+                                        url = `/sendmail/notificacion-crear-pqrs`;
                                         this._pqrService.envioCorreos(
                                             url,
                                             this.pqrid,
@@ -334,6 +334,9 @@ export class SolucionComponent implements OnInit {
                                             mensaje,
                                             this.envioCorreo==true?'S':'N'
                                         );
+                                        setTimeout(() => {
+                                            location.reload();
+                                        }, 10000);
 
                                     }
                                     this.limpiar();
