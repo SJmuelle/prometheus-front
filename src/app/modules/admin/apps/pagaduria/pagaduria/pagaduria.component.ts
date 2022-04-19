@@ -19,7 +19,7 @@ export class PagaduriaComponent implements OnInit {
   rechazada:boolean = false;
 
   datos:any =[];
-  listSolicitudes:any =[];
+  solicitudes:any =[];
 
   posicion:any = 'above';
 
@@ -52,6 +52,18 @@ export class PagaduriaComponent implements OnInit {
       }
     ]
 
+    this.consultaSolicitudes();
+
+  }
+
+  consultaSolicitudes(){
+    this.paga.getSolicitudes().subscribe((response: any) => {
+      // console.log(response)
+      if (response) {
+        this.solicitudes = response.data;
+        console.log(this.solicitudes)
+      }
+    });
   }
 
   AbrirObligaciones(){
