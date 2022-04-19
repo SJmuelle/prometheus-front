@@ -44,7 +44,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public subscription$: Subscription;
   public verComentarios: boolean = false;
+  public verDevoluciones: boolean = false;
   public minimizarComentarios:  boolean = false;
+  public minimizarDevoluciones:  boolean = false;
   public esVerComentarios: boolean = false;
   public tipoDocumento: string = '';
   public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
@@ -98,6 +100,20 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       this.minimizarComentarios = !event;
       this.verComentarios = event;
   }
+    /**
+   * @description:Cierra el componente de devoluciones
+   */
+     public onCerrarDevolucion(event): void {
+        this.verDevoluciones = event;
+        this.minimizarDevoluciones = event;
+    }
+    /**
+     * @description: Minimiza el componente Devoluciones
+     */
+    public onMinimizaDevolucion(event): void {
+        this.minimizarDevoluciones = !event;
+        this.verDevoluciones = event;
+    }
   /**
    * @description: Abre el modal de listado de documentos
    */

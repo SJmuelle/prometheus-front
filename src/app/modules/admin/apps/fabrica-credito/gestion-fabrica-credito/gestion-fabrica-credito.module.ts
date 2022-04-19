@@ -33,6 +33,8 @@ import { FormDialogDecisionComponent } from './form-dialog-decision/form-dialog-
 import { FormDialogComentariosComponent } from './form-dialog-comentarios/form-dialog-comentarios.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
+import { GridDevolucionesComponent } from './grid-devoluciones/grid-devoluciones.component';
+import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form-dialog-devoluciones.component';
 
 
 
@@ -49,6 +51,8 @@ import { GridPoliticasComponent } from './grid-politicas/grid-politicas.componen
         FormDialogDecisionComponent,
         FormDialogComentariosComponent,
         GridPoliticasComponent,
+        GridDevolucionesComponent,
+        FormDialogDevolucionesComponent
     ],
     imports: [
         CommonModule,

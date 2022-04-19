@@ -1,0 +1,82 @@
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full" >
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end">
+                <button mat-icon-button
+                        matTooltip="Minimizar"
+                        (click)="onMinimiza()"
+                >
+                    <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
+                </button>
+                <button mat-icon-button
+                        matTooltip="Cerrar"
+                        (click)="onCerrar()"
+                >
+                    <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
+                </button>
+            </div>
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-start py-6 px-6 md:px-8 border-b">
+                <h3 class="mb-2 text-gray-900">Devoluciones</h3>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
+            <button mat-raised-button
+                    matTooltip="Nuevo devolución"
+                    [color]="'primary'"
+                    (click)="onDevolucion()"
+            >
+                Devolver
+            </button>
+        </div>
+    </div>
+    <div class="grid-cols-12">
+        <div class="col-span-12" cdk-scrollable>
+            <table class="shadow p-0">
+                <thead class="bg-accent-50" >
+                <tr
+                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                    <th class="px-4 py-3"></th>
+                    <th class="px-4 py-3">Fecha</th>
+                    <th class="px-4 py-3">Asesor</th>
+                    <th class="px-4 py-3">Estado anterior</th>
+                    <th class="px-4 py-3">Subestado anterior</th>
+                    <th class="px-4 py-3">Estado actual</th>
+                    <th class="px-4 py-3">Subestado actual</th>
+                    <th class="px-4 py-3">Causal</th>
+                    <th class="px-4 py-3">Obaservación</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white">
+                <ng-container *ngIf="devolucion$ | async as items;">
+                    <ng-container *ngFor="let item of items.data | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                        <tr class="text-gray-700" >
+                            <td class="px-2 text-sm border">
+                                <button mat-icon-button
+                                        matTooltip="Ver devolución"
+                                        (click)="onVerDevolucion(item)"
+                                >
+                                    <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                </button>
+                            </td>
+                            <td class="px-2 text-sm border">{{ item.fechaDevolucion }}</td>
+                            <td class="px-2 text-sm border">{{ item.asesor }}</td>
+                            <td class="px-2 text-sm border">{{ item.estadoAnterior }}</td>
+                            <td class="px-2 text-sm border">{{ item.SubEstadoAnterior }}</td>
+                            <td class="px-2 text-sm border">{{ item.estadoActual }}</td>
+                            <td class="px-2 text-sm border">{{ item.SubEstadoActual }}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionCausal }}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionDevolucion | slice: 0: 16}}</td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-end">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                                 nextLabel="Siguiente"></pagination-controls>
+        </div>
+    </div>
+</div>
+
+

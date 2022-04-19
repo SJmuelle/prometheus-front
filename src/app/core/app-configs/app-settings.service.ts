@@ -123,4 +123,14 @@ export class AppSettingsService {
             baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud')
         }
     };
+    /**
+     * @description: End-point devoluciones
+     */
+     public devoluciones = {
+        url: {
+            baseDevolucion:  EndPoints.uri('/generic/qry/obtener-devoluciones'),
+            baseDevolucionCrear: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
+            baseDevolucionCausal: EndPoints.uri('/generic/qry/causales-devolucion')
+        }
+    };
 }

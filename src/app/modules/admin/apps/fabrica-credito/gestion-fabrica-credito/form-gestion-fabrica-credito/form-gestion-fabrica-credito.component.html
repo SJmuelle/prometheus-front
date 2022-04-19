@@ -20,11 +20,18 @@
                         Siguiente etapa
                     </button>
                     <button mat-raised-button
-                            class="bg-blue-800 text-white"
+                            class="mr-1.5 bg-blue-800 text-white"
                             (click)="verComentarios = !verComentarios"
                             [disabled]="verComentarios"
                     >
                         Comentarios
+                    </button>
+                    <button mat-raised-button
+                            class="mr-1.5 bg-purple-900 text-white"
+                            (click)="verDevoluciones = !verDevoluciones"
+                            [disabled]="verDevoluciones"
+                    >
+                        Devolver
                     </button>
                 </div>
             </div>
@@ -635,6 +642,23 @@
     <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
             [matTooltip]="'Restaura ventana comentarios'"
             (click)="verComentarios = !verComentarios"
+    >
+        <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
+    </button>
+</ng-container>
+<ng-container *ngIf="verDevoluciones">
+    <div class="fixed z-999 sm:ml-30 top-18">
+        <app-grid-devoluciones
+            (cerrarComponente)="onCerrarDevolucion($event)"
+            (minimizarComponente)="onMinimizaDevolucion($event)"
+            [agenda]="agenda_fabrica"
+        ></app-grid-devoluciones>
+    </div>
+</ng-container>
+<ng-container *ngIf="minimizarDevoluciones">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
+            [matTooltip]="'Restaura ventana devoluciones'"
+            (click)="verDevoluciones = !verDevoluciones"
     >
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
