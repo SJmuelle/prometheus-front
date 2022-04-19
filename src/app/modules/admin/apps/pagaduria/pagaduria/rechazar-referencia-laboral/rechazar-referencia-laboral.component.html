@@ -12,10 +12,10 @@
                     (keyup)="contarCaracteres($event)"></textarea>
                     <mat-error *ngIf="frm.detalle.errors?.required">
                         Campo requerido.
-                      </mat-error>
-                      <mat-error *ngIf="frm.detalle.errors?.maxlength">
-                          Maximo 500 caracteres.
-                      </mat-error>
+                    </mat-error>
+                    <mat-error *ngIf="frm.detalle.errors?.maxlength">
+                        Maximo 500 caracteres.
+                    </mat-error>
                 </mat-form-field>
                 <div class="flex flex-row w-100 justify-end">
                     <span> <em>{{contador}} de 500 caracteres</em> </span>

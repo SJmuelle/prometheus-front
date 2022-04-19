@@ -6,6 +6,8 @@ import { PagaduriaComponent } from './pagaduria/pagaduria.component';
 import { ObligacionesComponent } from './pagaduria/obligaciones/obligaciones.component';
 import { AprobarReferenciaLaboralComponent } from './pagaduria/aprobar-referencia-laboral/aprobar-referencia-laboral.component';
 import { RechazarReferenciaLaboralComponent } from './pagaduria/rechazar-referencia-laboral/rechazar-referencia-laboral.component';
+import { AprobarCapacidadPagoComponent } from './pagaduria/aprobar-capacidad-pago/aprobar-capacidad-pago.component';
+import { RechazarCapacidadPagoComponent } from './pagaduria/rechazar-capacidad-pago/rechazar-capacidad-pago.component';
 
 import { FuseAlertModule } from '@fuse/components/alert';
 
@@ -21,8 +23,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AprobarCapacidadPagoComponent } from './pagaduria/aprobar-capacidad-pago/aprobar-capacidad-pago.component';
-import { RechazarCapacidadPagoComponent } from './pagaduria/rechazar-capacidad-pago/rechazar-capacidad-pago.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { RechazarCapacidadPagoComponent } from './pagaduria/rechazar-capacidad-p
     MatStepperModule,
     MatDialogModule,
     MatExpansionModule,
+    MatTooltipModule,
     FuseAlertModule
   ]
 })

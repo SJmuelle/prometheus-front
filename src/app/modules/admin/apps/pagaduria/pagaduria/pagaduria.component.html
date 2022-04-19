@@ -6,22 +6,30 @@
         <div>
             <p class="text-xl font-medium">Tipo: </p>
         </div>
-        <div class="flex flex-row w-1/5 justify-between">
-            <div class="mr-4">
-                <mat-radio-button value="1">Referencia laboral</mat-radio-button>
-            </div>
+        <div class="flex flex-row w-1/2 xl:w-1/5 justify-between">
 
-            <div>
-                <mat-radio-button value="1">Capacidad de pago</mat-radio-button>
+            <div class="flex flex-row gap-4 justify-between">
+
+                <div>
+                    <mat-radio-button value="1">Referencia laboral</mat-radio-button>
+                </div>
+    
+                <div>
+                    <mat-radio-button value="2">Capacidad de pago</mat-radio-button>
+                </div>
+
+            </div>
+            
+            <div class="mr-5">
+                <button mat-button class="bg-accent text-white">Buscar</button>
             </div>
         </div>
-        <div class="ml-20">
-            <button mat-button class="bg-accent text-white">Buscar</button>
-        </div>
+        
     </div>
     <hr class="w-full">
     <div class="flex flex-row w-full justify-between">
-        <div class="flex flex-row justify-between w-1/4">
+
+        <div class="flex flex-row justify-between w-1/3 xl:w-1/4">
             <div>
                 <button mat-button class="color_fintra text-white w-30" (click)="cpendiente()">
                     Pendiente
@@ -49,7 +57,7 @@
                 placeholder="Filtrar..." />
         </div>
     </div>
-    <div *ngIf="pendiente" class="mt-4 h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+    <div *ngIf="pendiente" class="mt-4 h-60 xl:overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr
@@ -78,7 +86,11 @@
                     <td class="px-2 py-2 text-sm border text-center">{{item.fecha}}</td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.monto}}</td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.plazo}}</td>
-                    <td class="px-2 py-2 text-sm border text-center">{{item.valor}}</td>
+                    <td class="px-2 py-2 text-sm border text-center" matTooltip="El
+                    valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
+                        [matTooltipPosition]="posicion">
+                        {{item.valor | currency}}
+                    </td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
                     <td class="px-2 py-2 text-sm border text-center">
                         <div *ngIf="item.destino!='Compra de cartera'">
@@ -90,7 +102,8 @@
                         
                     </td>
                     <td class="px-2 py-2 text-sm border text-center">
-                        <div class="flex flex-row justify-between">
+
+                        <div class="flex flex-row w-1/2 gap-3 justify-between">
                             <div>
                                 <button mat-raised-button class="bg-green-400"  (click)="AprobarReferenciaLaboral()">
                                     <mat-icon>check</mat-icon>
@@ -103,13 +116,14 @@
                                 </button>
                             </div>
                         </div>
+
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div *ngIf="aprobada" class="mt-4 h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+    <div *ngIf="aprobada" class="mt-4 h-60 xl:overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr
@@ -147,7 +161,7 @@
         </table>
     </div>
 
-    <div *ngIf="rechazada" class="mt-4 h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+    <div *ngIf="rechazada" class="mt-4 h-60 xl:overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr

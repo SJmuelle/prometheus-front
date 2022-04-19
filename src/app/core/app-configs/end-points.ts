@@ -31,4 +31,10 @@ export class EndPoints {
     static uriAdjuntos(url: string): string {
         return environment.urlApi6 + url;
     }
+    /**
+     * @description: URL pagaduria
+     */
+     static uriPaga(url: string): string {
+        return environment.urlPagaduria + url;
+    }
 }

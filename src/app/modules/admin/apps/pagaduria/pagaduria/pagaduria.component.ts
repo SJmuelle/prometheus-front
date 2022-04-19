@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { ObligacionesComponent } from './obligaciones/obligaciones.component';
 import { AprobarReferenciaLaboralComponent } from './aprobar-referencia-laboral/aprobar-referencia-laboral.component';
+import { AprobarCapacidadPagoComponent } from './aprobar-capacidad-pago/aprobar-capacidad-pago.component';
 import { RechazarReferenciaLaboralComponent } from './rechazar-referencia-laboral/rechazar-referencia-laboral.component';
+import { RechazarCapacidadPagoComponent } from './rechazar-capacidad-pago/rechazar-capacidad-pago.component';
+import { PagaduriaService } from 'app/core/services/pagaduria.service';
 
 @Component({
   selector: 'app-pagaduria',
@@ -16,8 +19,11 @@ export class PagaduriaComponent implements OnInit {
   rechazada:boolean = false;
 
   datos:any =[];
+  listSolicitudes:any =[];
 
-  constructor(public dialog: MatDialog) { }
+  posicion:any = 'above';
+
+  constructor(public dialog: MatDialog, public paga: PagaduriaService) { }
 
   ngOnInit(): void {
     

@@ -12,6 +12,14 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point pagaduria
+     */
+     public pagaduria = {
+        url: {
+            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/RF')
+        }
+    };
+    /**
      * @description: End-point agenda de referenciacion
      */
     public agendaReferenciacion = {
