@@ -4,6 +4,7 @@
 
 export const environment = {
     production: false,
+    //
     // urlApi: 'http://192.168.190.237:8010/api-fintra/api',
     urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
     // urlApi: 'http://192.168.140.241:8010/api-fintra/api',
