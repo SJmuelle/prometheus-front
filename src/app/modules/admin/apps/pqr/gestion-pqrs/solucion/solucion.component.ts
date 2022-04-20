@@ -334,9 +334,6 @@ export class SolucionComponent implements OnInit {
                                             mensaje,
                                             this.envioCorreo==true?'S':'N'
                                         );
-                                        setTimeout(() => {
-                                            location.reload();
-                                        }, 10000);
 
                                     }
                                     this.limpiar();
@@ -367,6 +364,9 @@ export class SolucionComponent implements OnInit {
     }
 
     limpiar() {
+        setTimeout(() => {
+            location.reload();
+        }, 10000);
         this.seguimiento = {
             idPqrs: parseInt(this.pqrid),
             idPqrsPadre: this.datos.idPadre,

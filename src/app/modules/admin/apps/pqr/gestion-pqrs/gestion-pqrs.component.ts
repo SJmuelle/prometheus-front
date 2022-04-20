@@ -108,7 +108,23 @@ export class GestionPQRSComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this._pqrService.getListados(url).subscribe((data: any) => {
-                    this.listadoHistorial = data;
+                    const numeros = data;
+
+                    const unicos = [...new Set(numeros)]; // Array sin duplicados
+
+                    let duplicados = [...numeros]; // Creamos una copia del array original
+                    unicos.forEach((numero) => {
+                        const indice = duplicados.indexOf(numero);
+                        duplicados = duplicados
+                            .slice(0, indice)
+                            .concat(
+                                duplicados.slice(indice + 1, duplicados.length)
+                            );
+                    });
+
+                    console.log(unicos); // [ 2, 4 ]
+                    this.listadoHistorial = unicos;
+
                     Swal.close();
                 });
                 break;
