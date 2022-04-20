@@ -4,6 +4,7 @@
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end">
                 <button mat-icon-button
                         matTooltip="Minimizar"
+                        (click)="onMinimiza()"
                 >
                     <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
                 </button>
@@ -22,13 +23,14 @@
             <button mat-raised-button
                     matTooltip="Nuevo comentario"
                     [color]="'primary'"
+                    (click)="onComentario()"
             >
                 Nuevo comentario
             </button>
         </div>
     </div>
-    <div class="row" cdk-scrollable>
-        <div class="col-md-12 col-lg-12">
+    <div class="grid-cols-12">
+        <div class="col-span-12" cdk-scrollable>
             <table class="shadow p-0">
                 <thead class="bg-accent-50" >
                 <tr
@@ -44,26 +46,31 @@
                 </thead>
                 <tbody class="bg-white">
                 <ng-container *ngIf="comentarios$ | async as items;">
-                    <ng-container *ngFor="let item of items.data">
+                    <ng-container *ngFor="let item of items.data | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                         <tr class="text-gray-700" >
                             <td class="px-2 text-sm border">
                                 <button mat-icon-button
                                         matTooltip="Ver comentario"
+                                        (click)="onVerComentario(item)"
                                 >
                                     <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
                                 </button>
                             </td>
-                            <td class="px-2 text-sm border">{{ item.numeroSolicitud}}</td>
+                            <td class="px-2 text-sm border">{{ item.numeroSolicitud }}</td>
                             <td class="px-2 text-sm border">{{ item.comentario | slice: 0: 10}}</td>
-                            <td class="px-2 text-sm border">{{ item.fechaCreacion}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionSubEstado}}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaCreacion }}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionEstado }}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionSubEstado }}</td>
                             <td class="px-2 text-sm border">{{ item.usuarioCreacion }}</td>
                         </tr>
                     </ng-container>
                 </ng-container>
                 </tbody>
             </table>
+        </div>
+        <div class="text-end">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                                 nextLabel="Siguiente"></pagination-controls>
         </div>
     </div>
 </div>

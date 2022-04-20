@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PqrService } from '../../pqr.service';
@@ -10,6 +10,7 @@ import { PqrService } from '../../pqr.service';
 })
 export class SolucionComponent implements OnInit {
     @Output() cambiarEstado: EventEmitter<boolean> = new EventEmitter();
+    @ViewChild('filep') fileP: ElementRef
     mensaje: any;
     quillModules: any = {
         toolbar: [
@@ -82,7 +83,7 @@ export class SolucionComponent implements OnInit {
                 this.datos = {};
             }
         });
-        let usuario = JSON.parse(sessionStorage.getItem('usuario'));
+        let usuario = JSON.parse(localStorage.getItem('usuario'));
         this.obtenerSoluciones(this.idSolucion);
     }
 
@@ -296,7 +297,8 @@ export class SolucionComponent implements OnInit {
             detalle: '',
         };
         this.filename = '';
-        this.file = null;
+        this.file = undefined;
+        this.fileP.nativeElement.value = '';
     }
 
     recargarData() {

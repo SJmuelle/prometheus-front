@@ -77,7 +77,6 @@ export class AuthService
 
         return this._httpClient.post(environment.urlApi + '/private/iniciar-sesion', credentials).pipe(
             switchMap((response: any) => {
-
                 // Store the access token in the local storage
                 this.accessToken = response.data.token;
                 // this.accessToken = response.accessToken;
@@ -92,13 +91,14 @@ export class AuthService
                     email: response.data.email,
                     status: 'online'
                 };
-                let user=JSON.stringify({
+                let user = JSON.stringify({
                     id: response.data.nit,
                     name: response.data.nombre,
                     email: response.data.email,
-                    status: 'online'
+                    status: 'online',
+                    user: response.data.idusuario
                 });
-                sessionStorage.setItem("usuario", user );
+                localStorage.setItem("usuario", user );
                 // Return a new observable with the response
                 return of(response);
             })

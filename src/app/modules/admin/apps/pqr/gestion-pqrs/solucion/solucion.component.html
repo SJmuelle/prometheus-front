@@ -36,6 +36,7 @@
                     <input type="file"
                         name="filep"
                         id="filep"
+                        #filep
                         class="col-12"
                         (change)="onCharge($event.target)"
                         [required]="idTipoComentario == '2'"
@@ -47,7 +48,7 @@
                 <fuse-alert [type]="'success'">
                     <span fuseAlertTitle>Condiciones del archivo</span>
                     * Archivos permitidos ( .pdf). <br>
-                    * Tamaño máximo del archivo  (10mb). <br>
+                    * Tamaño máximo del archivo  (10mb). <br> 
                     * El nombre del archivo no debe contener puntos.
                 </fuse-alert>
             </div>

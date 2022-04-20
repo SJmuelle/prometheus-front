@@ -14,8 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { CertificadorDeudaComponent } from './modales/certificador-deuda/certificador-deuda.component';
+import { CertificacionesComponent } from './certificaciones/certificaciones.component';
 const routes: Routes = [
     { path: '', component: HojavidaComponent },
+    { path: 'certificaciones', component: CertificacionesComponent },
     // { path: 'pqrs', component: TipoPqrsComponent },
     // { path: 'dias-no-habiles', component: DiasnohabilesComponent },
     // { path: 'causales', component: CausalespqrsComponent },
@@ -30,6 +32,7 @@ const routes: Routes = [
         ModalcreditoComponent,
         ModalIngresoComponent,
         CertificadorDeudaComponent,
+        CertificacionesComponent,
     ],
     imports: [
         CommonModule,

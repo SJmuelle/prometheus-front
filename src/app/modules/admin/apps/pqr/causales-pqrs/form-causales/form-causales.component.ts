@@ -71,6 +71,14 @@ export class FormCausalesComponent implements OnInit {
             Swal.close();
             if (response) {
                 if (response.status == 200) {
+                    if (!response.data.respuesta.includes('OK')) {
+                        Swal.fire(
+                            'Información',
+                            response.data.respuesta,
+                            'error'
+                        );
+                        return;
+                    }
                     Swal.fire(
                         '¡Información!',
                         `Se guardó el registro con éxito`,
