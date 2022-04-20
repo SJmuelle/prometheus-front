@@ -148,14 +148,21 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Crédito',
         type: 'aside',
         icon: 'mat_outline:attach_money',
-        children: [
+        children: [ 
+            {
+                id: 'agenda-comercial.list',
+                title: 'Agenda de comercial',
+                type: 'basic',
+                link: '/credit-factory/agenda-comercial',
+                icon: 'heroicons_outline:document-text',
+            },
             {
                 id: 'agenda-completacion.list',
                 title: 'Agenda de completación',
                 type: 'basic',
                 link: '/credit-factory/agenda-completion',
                 icon: 'heroicons_outline:document-text',
-            },
+            }, 
             {
                 id: 'agenda-referenciacion.list',
                 title: 'Agenda de referenciación y desición',

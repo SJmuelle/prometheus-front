@@ -133,4 +133,12 @@ export class AppSettingsService {
             baseDevolucionCausal: EndPoints.uri('/generic/qry/causales-devolucion')
         }
     };
+        /**
+     * @description: End-point agenda comercial
+     */
+         public agendaComercial = {
+            url: {
+                base: EndPoints.uri('/generic/qry/agendas-credito/CM')
+            }
+        };
 }

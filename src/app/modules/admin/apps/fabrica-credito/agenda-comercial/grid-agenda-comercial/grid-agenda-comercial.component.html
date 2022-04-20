@@ -1,0 +1,83 @@
+<div class="bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full y-100">
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-start py-6 px-6 md:px-8 border-b">
+                <h3 class="mb-2 text-gray-900">Agenda de comercial</h3>
+            </div>
+        </div>
+        <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
+            <input class="border rounded p-2 bg-gray-100 mr-4 text-xs" type="text" autocomplete="off"
+                name="filtrarTablaHG" [formControl]="filtrarTabla" placeholder="Filtrar...">
+            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
+                (change)="page=1">
+                <option value="5"> 5</option>
+                <option value="10"> 10</option>
+                <option value="20"> 20</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <table class="shadow p-0">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-4 text-sm py-3"></th>
+                        <th class="px-4 text-sm py-3">N° solicitud</th>
+                        <th class="px-4 text-sm py-3">Nombres</th>
+                        <th class="px-4 text-sm py-3">Identificación</th>
+                        <th class="px-4 text-sm py-3">F. solicitud</th>
+                        <th class="px-4 text-sm py-3">Unidad negocio</th>
+                        <th class="px-4 text-sm py-3">Causal</th>
+                        <th class="px-4 text-sm py-3">F. Devolucion</th>
+                        <th class="px-4 text-sm py-3">Nº de intentos</th>
+                        <th class="px-4 text-sm py-3">F. Reprogramación</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container
+                        *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                        <tr class="text-gray-700">
+                            <td class="px-2 text-sm border">
+                                <button class="m-0 p-0" mat-icon-button *ngIf="item.estado!='Aprobado'" (click)="onGetAgenda(item)"
+                                    matTooltip="Ver información referencia">
+                                    <mat-icon [svgIcon]="'iconsmind:file_edit'"></mat-icon>
+                                </button>
+                                <button class="m-0 p-0" mat-icon-button *ngIf="item.estado!='Aprobado'" (click)="onGetAgenda(item)"
+                                    matTooltip="Ver información referencia">
+                                    <mat-icon [svgIcon]="'iconsmind:folder_share'"></mat-icon>
+                                </button>
+                                <button class="m-0 p-0" mat-icon-button *ngIf="item.estado!='Aprobado'" (click)="onGetAgenda(item)"
+                                    matTooltip="Ver información referencia">
+                                    <mat-icon [svgIcon]="'iconsmind:delete_file'"></mat-icon>
+                                </button>
+                                <button class="m-0 p-0" mat-icon-button (click)="onReprogramar()">
+                                    <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
+                                </button>
+                            </td>
+                            <td class="px-2 text-sm border">{{ item.numeroSolicitud}}</td>
+                            <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
+                            <td class="px-2 text-sm border">{{ item.identificacion}}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaEmision}}</td>
+                            <td class="px-2 text-sm border">{{ item.undadNegocio }}</td>
+                            <td class="px-2 text-sm border">{{ item.causalDevolucion }}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaDevolucion }}</td>
+                            <td class="px-2 text-sm border">{{ item.numeroIntentos }}</td>
+                            <td class="px-2 text-sm border">{{ item.fechaReprogramacion }}</td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </div>
+        <ng-container *ngIf="mostrar">
+            <fuse-alert [type]="'info'">
+                <span fuseAlertTitle>Información</span>
+                En este momento no hay información para mostrar.
+            </fuse-alert>
+        </ng-container>
+        <div class="col-lg-12 col-sm-12 text-end">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+        </div>
+    </div>
+</div>

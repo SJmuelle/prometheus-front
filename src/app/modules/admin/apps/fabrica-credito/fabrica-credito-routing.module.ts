@@ -3,12 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import {AgendaCompletacionModule} from './agenda-completacion/agenda-completacion.module';
 import {GestionFabricaCreditoModule} from './gestion-fabrica-credito/gestion-fabrica-credito.module';
 import {AgendaReferenciacionModule} from "./agenda-referenciacion/agenda-referenciacion.module";
+import {AgendaComercialModule} from "./agenda-comercial/agenda-comercial.module";
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
+            {
+                path: 'agenda-comercial',
+                loadChildren: () => AgendaComercialModule
+            },
             {
                 path: 'agenda-completion',
                 loadChildren: () => AgendaCompletacionModule
