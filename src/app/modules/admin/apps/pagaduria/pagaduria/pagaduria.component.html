@@ -78,18 +78,18 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <tr class="text-gray-700" *ngFor="let item of datos">
+                <tr class="text-gray-700" *ngFor="let item of solicitudes">
                     <td class="px-2 py-2 text-sm border text-center">{{item.identificacion}}</td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.nombres}}</td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.apellidos}}</td>
-                    <td class="px-2 py-2 text-sm border text-center">{{item.solicitud}}</td>
-                    <td class="px-2 py-2 text-sm border text-center">{{item.fecha}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.numero_solicitud}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.fecha_solicitud}}</td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.monto}}</td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.plazo}}</td>
                     <td class="px-2 py-2 text-sm border text-center" matTooltip="El
                     valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
                         [matTooltipPosition]="posicion">
-                        {{item.valor | currency}}
+                        {{item.valor_cuota | currency}}
                     </td>
                     <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
                     <td class="px-2 py-2 text-sm border text-center">
@@ -144,17 +144,23 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <tr class="text-gray-700">
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
+                <tr class="text-gray-700" *ngFor="let item of solicitudes">
+                    <td class="px-2 py-2 text-sm border text-center">{{item.identificacion}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.nombres}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.apellidos}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.numero_solicitud}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.fecha_solicitud}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.monto}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.plazo}}</td>
+                    <td class="px-2 py-2 text-sm border text-center" matTooltip="El
+                    valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
+                        [matTooltipPosition]="posicion">
+                        {{item.valor_cuota | currency}}
+                    </td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
+                    <td class="px-2 text-sm border text-center">
+                        <mat-icon svgIcon="thumbs-up" (click)="AbrirReactivar()"></mat-icon>
+                    </td>
                     <td class="px-2 text-sm border text-center"></td>
                 </tr>
             </tbody>
@@ -182,18 +188,24 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <tr class="text-gray-700">
+                <tr class="text-gray-700" *ngFor="let item of solicitudes">
+                    <td class="px-2 py-2 text-sm border text-center">{{item.identificacion}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.nombres}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.apellidos}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.numero_solicitud}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.fecha_solicitud}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.monto}}</td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.plazo}}</td>
+                    <td class="px-2 py-2 text-sm border text-center" matTooltip="El
+                    valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
+                        [matTooltipPosition]="posicion">
+                        {{item.valor_cuota | currency}}
+                    </td>
+                    <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
                     <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center">
+                        <mat-icon svgIcon="thumbs-up" (click)="AbrirReactivar()"></mat-icon>
+                    </td>
                 </tr>
             </tbody>
         </table>

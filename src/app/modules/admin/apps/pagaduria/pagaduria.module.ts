@@ -12,6 +12,7 @@ import { RechazarCapacidadPagoComponent } from './pagaduria/rechazar-capacidad-p
 import { FuseAlertModule } from '@fuse/components/alert';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from "@angular/common/http";
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -24,6 +25,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
 
 
 @NgModule({
@@ -33,10 +35,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     AprobarReferenciaLaboralComponent,
     RechazarReferenciaLaboralComponent,
     AprobarCapacidadPagoComponent,
-    RechazarCapacidadPagoComponent
+    RechazarCapacidadPagoComponent,
+    GestionSolicitudesComponent
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     PagaduriaRoutingModule,
