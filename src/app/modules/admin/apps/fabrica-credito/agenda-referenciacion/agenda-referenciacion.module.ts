@@ -26,6 +26,8 @@ import {
     FormDialogComentarioReferenciaComponent
 } from "./form-dialog-comentario-referencia/form-dialog-comentario-referencia.component";
 import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
+import { FormDialogListErrorDialogComponent } from './form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
     GridAgendaReferenciacionComponent,
     FormGestionReferenciacionModalComponent,
     FormDialogReprogramarComponent,
-    FormDialogComentarioReferenciaComponent
+    FormDialogComentarioReferenciaComponent,
+    FormDialogListErrorDialogComponent
   ],
     imports: [
         CommonModule,
@@ -56,6 +59,7 @@ import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
         GestionFabricaCreditoModule,
         NgxMatDatetimePickerModule,
         FormsModule,
+        MatListModule,
         FuseAlertModule,
     ]
 })

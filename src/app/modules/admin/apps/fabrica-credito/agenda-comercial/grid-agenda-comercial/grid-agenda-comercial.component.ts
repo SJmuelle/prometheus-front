@@ -41,7 +41,6 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
-    debugger;
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaComercialService.getAgendaComercial().pipe(
       takeUntil(this.unsubscribe$)

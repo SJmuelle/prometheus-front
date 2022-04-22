@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>No es posible cambiar de estado por las siguientes validaciones:</h2>
+<div mat-dialog-content>
+    <!-- <ul>
+        <li *ngFor="let item of data">
+            <mat-icon svgIcon="mat_outline:cancel_presentation"></mat-icon>
+
+            {{item.descripcion}}
+        </li>
+    </ul> -->
+    <mat-list>
+        <mat-list-item *ngFor="let item of data">
+            <mat-icon mat-list-icon>cancel_presentation</mat-icon>
+            <div mat-line> {{item.descripcion}}</div>
+        </mat-list-item>
+    </mat-list>
+</div>
+<div mat-dialog-actions class="align-content-center justify-center">
+    <button mat-raised-button mat-button mat-dialog-close class="mr-2 bg-gray-400 text-white" type="button">
+        Cerrar
+    </button>
+</div>

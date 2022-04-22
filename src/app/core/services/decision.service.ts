@@ -24,9 +24,20 @@ export class DecisionService {
   public postDecision(data: any): Observable<any> {
     return this._http.post(this._appSettings.decision.url.baseDecision, data);
   }
+  /**
+ * @description:post de cmabio de estado
+ */
   public postCambioEstado(data: any): Observable<any> {
     return this._http.post(this._appSettings.decision.url.cambioEstado, data);
   }
+
+  /**
+  * @description:post de validacion Datos
+  */
+  public postValidacionDatos(data: any): Observable<any> {
+    return this._http.post(this._appSettings.decision.url.validaCampos, data);
+  }
+
   /**
    * @description: Obtiene el listado de causales
    */
