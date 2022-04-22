@@ -17,4 +17,22 @@ export class PagaduriaService {
     return this._http.get(this._appSettings.pagaduria.url.base)
   }
 
+  //`${this._appSettings.pagaduria.url.base}/${tipo}/${estado}`
+  // /RL/P
+
+  /**
+   * @description: Obtiene listado de solicitudes segun el tipo
+   */
+   public getSolicitudesFilter(tipo:any, estado:any): Observable<any> {
+     console.log(tipo)
+    return this._http.get(`${this._appSettings.pagaduria.url.baseSoli}/${tipo}/${estado}`)
+  }
+
+  /**
+   * @description: Obtiene listado de obligaciones
+   */
+   public getObligaciones(): Observable<any> {
+    return this._http.get(this._appSettings.pagaduria.url.baseObli)
+  }
+
 }

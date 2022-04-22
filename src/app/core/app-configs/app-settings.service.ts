@@ -16,7 +16,9 @@ export class AppSettingsService {
      */
      public pagaduria = {
         url: {
-            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/RF')
+            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
+            baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
+            baseObli: EndPoints.uriPaga('api/generic/qry/obligaciones-comprar/LB0053294')
         }
     };
     /**

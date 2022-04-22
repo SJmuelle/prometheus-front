@@ -9,6 +9,7 @@ import { RechazarReferenciaLaboralComponent } from './rechazar-referencia-labora
 import { RechazarCapacidadPagoComponent } from './rechazar-capacidad-pago/rechazar-capacidad-pago.component';
 import { GestionSolicitudesComponent } from './gestion-solicitudes/gestion-solicitudes.component';
 import { PagaduriaService } from 'app/core/services/pagaduria.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-pagaduria',
@@ -17,22 +18,91 @@ import { PagaduriaService } from 'app/core/services/pagaduria.service';
 })
 export class PagaduriaComponent implements OnInit {
 
-  pendiente:boolean = false;
-  aprobada:boolean = false;
-  rechazada:boolean = false;
+  solicitudes:any =[]; //para almacenar las solicitudes consultadas
+  posicion:any = 'above'; //posicion del texto para el tooltip
+  tipo:any = 'RF'; // cargar por defecto las solicitudes de tipo referencia laboral
+  estado:any = 'P'; // cargar por defecto las solicitudes en estado pendiente
+  solicitudForm: FormGroup; //formulario para hacer las validaciones requeridas
 
-  solicitudes:any =[];
+  /**
+   * @description: control del formulario creado.
+   */
+  get frm() {
+    return this.solicitudForm.controls;
+  }
 
-  posicion:any = 'above';
-
-  constructor(public dialog: MatDialog, public paga: PagaduriaService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(public dialog: MatDialog, 
+              public pagaduria: PagaduriaService,
+              private fb: FormBuilder, 
+              iconRegistry: MatIconRegistry, 
+              sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon('thumbs-up', sanitizer.bypassSecurityTrustResourceUrl('assets/icons/Group-192.svg'));
+    this.solicitudForm = this.fb.group({
+      tipo: ['', [Validators.required]],
+      estado:['']
+    });
   }
 
   ngOnInit(): void {
-
     this.consultaSolicitudes();
+  }
 
+  /**
+   * @description: metodo para cargar todas las solicitudes
+   */
+   consultaSolicitudes(){
+    this.pagaduria.getSolicitudesFilter(this.tipo, this.estado).subscribe((response: any) => {
+      console.log(response)
+      if (response) {
+        this.solicitudes = response.data;
+        console.log(this.solicitudes)
+      }
+    });
+  }
+
+  /**
+   * @description: metodo para que la variable estado tome un valor de P.
+   */
+  pendiente(estado){
+    this.estado = estado;
+    console.log('Aqui tu estado: ', this.estado)
+    // this.pagaduria.getSolicitudesFilter(tipo, estado).subscribe((response: any) => {
+    //   console.log(response)
+    //   if (response) {
+    //     this.solicitudes = response.data;
+    //     console.log(this.solicitudes)
+    //   }
+    // });
+  }
+
+  /**
+   * @description: metodo para que la variable estado tome un valor de A.
+   */
+   aprobada(estado){
+    this.estado = estado;
+    console.log('Aqui tu estado: ', this.estado)
+    // this.pagaduria.getSolicitudesFilter(tipo, estado).subscribe((response: any) => {
+    //   console.log(response)
+    //   if (response) {
+    //     this.solicitudes = response.data;
+    //     console.log(this.solicitudes)
+    //   }
+    // });
+  }
+
+  /**
+   * @description: metodo para que la variable estado tome un valor de R.
+   */
+   rechazada(estado){
+    this.estado = estado;
+    console.log('Aqui tu estado: ', this.estado)
+    // this.pagaduria.getSolicitudesFilter(tipo, estado).subscribe((response: any) => {
+    //   console.log(response)
+    //   if (response) {
+    //     this.solicitudes = response.data;
+    //     console.log(this.solicitudes)
+    //   }
+    // });
   }
 
   /**
@@ -40,27 +110,9 @@ export class PagaduriaComponent implements OnInit {
    */
    AbrirReactivar(){
     const dialogRef = this.dialog.open(GestionSolicitudesComponent, {
-
       width: '60%'
-
     });
-
     dialogRef.afterClosed().toPromise();
-
-  }
-
-
-  /**
-   * @description: metodo para cargar todas las solicitudes
-   */
-  consultaSolicitudes(){
-    this.paga.getSolicitudes().subscribe((response: any) => {
-      // console.log(response)
-      if (response) {
-        this.solicitudes = response.data;
-        console.log(this.solicitudes)
-      }
-    });
   }
 
 
@@ -69,11 +121,7 @@ export class PagaduriaComponent implements OnInit {
    */
   AbrirObligaciones(){
     const dialogRef = this.dialog.open(ObligacionesComponent);
-
-    dialogRef.afterClosed().subscribe(result =>{
-      // console.log(`Dialog result: ${result}`);
-    });
-
+    dialogRef.afterClosed().subscribe(result =>{});
   }
 
   /**
@@ -81,13 +129,9 @@ export class PagaduriaComponent implements OnInit {
    */
   AprobarReferenciaLaboral(){
     const dialogRef = this.dialog.open(AprobarReferenciaLaboralComponent, {
-
       width: '60%'
-
     });
-
     dialogRef.afterClosed().toPromise();
-
   }
 
   /**
@@ -95,13 +139,9 @@ export class PagaduriaComponent implements OnInit {
    */
    AprobarCapacidadPago(){
     const dialogRef = this.dialog.open(AprobarCapacidadPagoComponent, {
-
       width: '60%'
-
     });
-
     dialogRef.afterClosed().toPromise();
-
   }
 
   /**
@@ -109,13 +149,9 @@ export class PagaduriaComponent implements OnInit {
    */
   RechazarReferenciaLaboral(){
     const dialogRef = this.dialog.open(RechazarReferenciaLaboralComponent, {
-
       width: '60%'
-
     });
-
     dialogRef.afterClosed().toPromise();
-
   }
 
   /**
@@ -123,52 +159,24 @@ export class PagaduriaComponent implements OnInit {
    */
    RechazarCapacidadPago(){
     const dialogRef = this.dialog.open(RechazarCapacidadPagoComponent, {
-
       width: '60%'
-
     });
-
     dialogRef.afterClosed().toPromise();
-
   }
 
   /**
    * @description: metodo para abrir la tabla de solicitudes pendientes.
    */
-  cpendiente(){
-    if (this.pendiente==true) {
-      this.pendiente=false
-    } else {
-      this.pendiente=true
-      this.aprobada=false
-      this.rechazada=false
-    }
-  }
+  cpendiente(){}
 
   /**
    * @description: metodo para abrir la tabla de solicitudes aprobadas.
    */
-  caprobada(){
-    if (this.aprobada==true) {
-      this.aprobada=false
-    } else {
-      this.aprobada=true
-      this.pendiente=false
-      this.rechazada=false
-    }
-  }
+  caprobada(){}
 
   /**
    * @description: metodo para abrir la tabla de solicitudes rechazadas.
    */
-  crechazada(){
-    if (this.rechazada==true) {
-      this.rechazada=false
-    } else {
-      this.rechazada=true
-      this.pendiente=false
-      this.aprobada=false
-    }
-  }
+  crechazada(){}
 
 }

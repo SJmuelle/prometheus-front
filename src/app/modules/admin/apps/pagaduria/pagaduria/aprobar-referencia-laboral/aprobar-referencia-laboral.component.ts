@@ -9,10 +9,12 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 })
 export class AprobarReferenciaLaboralComponent implements OnInit {
 
-  AprobarForm: FormGroup;
+  AprobarForm: FormGroup;//formulario para hacer las validaciones requeridas
+  contador = 0; //contar los caracteres restantes en el textarea
 
-  public contador = 0;
-
+  /**
+   * @description: control del formulario creado.
+   */
   get frm() {
     return this.AprobarForm.controls;
   }
@@ -25,11 +27,14 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     })
   }
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize; //controlar el tamaño del textarea a medida que se escribe.
 
   ngOnInit(): void {
   }
 
+  /**
+   * @description: contar los caracteres restantes.
+   */
   contarCaracteres(event){
     this.contador = event.target.value.length
    }

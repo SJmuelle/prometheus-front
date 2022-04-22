@@ -9,10 +9,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RechazarCapacidadPagoComponent implements OnInit {
 
-  RechazarForm: FormGroup;
+  RechazarForm: FormGroup; //formulario para hacer las validaciones requeridas
+  contador = 0; //contar los caracteres restantes en el textarea
 
-  public contador = 0;
-
+  /**
+   * @description: control del formulario creado.
+   */
   get frm() {
     return this.RechazarForm.controls;
   }
@@ -23,11 +25,14 @@ export class RechazarCapacidadPagoComponent implements OnInit {
     })
   }
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize; //controlar el tamaño del textarea a medida que se escribe.
 
   ngOnInit(): void {
   }
 
+  /**
+   * @description: contar los caracteres restantes.
+   */
   contarCaracteres(event){
     this.contador = event.target.value.length
    }
