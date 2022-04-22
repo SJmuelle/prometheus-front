@@ -83,6 +83,14 @@ export class AppSettingsService {
             baseComentarioCrear: EndPoints.uri('/generic/cre-agregar-comentario')
         }
     };
+     /**
+     * @description: End-point comentarios para devolver Fabrica
+     */
+      public comentariosDevolverFabrica = {
+        url: {
+            baseComentarioCrear: EndPoints.uri('/credito/tk/formulario-solicitud-tabs')
+        }
+    };
     /**
      * @description: End-point
      */

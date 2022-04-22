@@ -134,6 +134,9 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
               console.log(res);
               this.agendaReferenciaService.refrescarListado$.next({estado: true});
               this.onCerrar();
+          }{
+            
+            this.onCerrar();
           }
       });
   }

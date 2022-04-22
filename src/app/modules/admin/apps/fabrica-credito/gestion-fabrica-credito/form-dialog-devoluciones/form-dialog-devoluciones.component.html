@@ -9,6 +9,7 @@
         <div class="col-span-12">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
+                    <ng-container *ngIf="!data.idDevolucion">
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense" appearance="fill">
                             <mat-label>Motivo / causal</mat-label>
@@ -23,6 +24,15 @@
                             <mat-error *ngIf="requeridoCausal">Este campo es requerido.</mat-error>
                         </mat-form-field>
                     </div>
+                    </ng-container>
+                    <ng-container *ngIf="data.idDevolucion">
+                    <div class="md:flex">
+                        <mat-form-field class="w-full fuse-mat-dense" appearance="fill">
+                            <mat-label>Motivo / causal</mat-label>
+                            <input matInput type="text" readonly [formControlName]="'descripcionCausal'" [required]="true">
+                        </mat-form-field>
+                    </div>
+                    </ng-container>
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Observación</mat-label>

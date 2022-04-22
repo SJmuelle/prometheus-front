@@ -24,4 +24,11 @@ export class ComentariosService {
   public postComentario(datos: any): Observable<any> {
       return this._http.post(this._appSettings.comentarios.url.baseComentarioCrear, datos);
   }
+
+   /**
+   * @description: Crea un comentario para devolver
+   */
+    public postComentarioDevolver(datos: any): Observable<any> {
+      return this._http.post(this._appSettings.comentariosDevolverFabrica.url.baseComentarioCrear, datos);
+  }
 }

@@ -38,19 +38,18 @@
                         *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                         <tr class="text-gray-700">
                             <td class="px-2 text-sm border">
-                                <button class="m-0 p-0" mat-icon-button *ngIf="item.estado!='Aprobado'" (click)="onGetAgenda(item)"
-                                    matTooltip="Ver información referencia">
-                                    <mat-icon [svgIcon]="'iconsmind:file_edit'"></mat-icon>
+                                <button mat-icon-button (click)="onGetAgenda(item)" matTooltip="Ver información referencia">
+                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                 </button>
-                                <button class="m-0 p-0" mat-icon-button *ngIf="item.estado!='Aprobado'" (click)="onGetAgenda(item)"
-                                    matTooltip="Ver información referencia">
-                                    <mat-icon [svgIcon]="'iconsmind:folder_share'"></mat-icon>
+                                <button class="m-0 p-0" mat-icon-button 
+                                    (click)="onComentario(item)"  matTooltip="Devolver a Fabrica">
+                                    <mat-icon [svgIcon]="'mat_outline:replay_circle_filled'"></mat-icon>
                                 </button>
-                                <button class="m-0 p-0" mat-icon-button *ngIf="item.estado!='Aprobado'" (click)="onGetAgenda(item)"
-                                    matTooltip="Ver información referencia">
-                                    <mat-icon [svgIcon]="'iconsmind:delete_file'"></mat-icon>
-                                </button>
-                                <button class="m-0 p-0" mat-icon-button (click)="onReprogramar()">
+                                <!-- <button class="m-0 p-0" mat-icon-button
+                                    (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
+                                    <mat-icon [svgIcon]="'mat_outline:replay'"></mat-icon>
+                                </button> -->
+                                <button class="m-0 p-0" mat-icon-button (click)="onReprogramar(item)">
                                     <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
                                 </button>
                             </td>

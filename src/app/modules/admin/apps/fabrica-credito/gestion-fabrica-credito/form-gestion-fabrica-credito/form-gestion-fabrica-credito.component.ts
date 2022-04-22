@@ -53,6 +53,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public estado: string = '';
   public agenda_fabrica: string='';
+   public redeonlyForm: { id: boolean; numeroSolicitud: boolean; emision: boolean; fechaIngresoFabrica: boolean; descripcionEstado: boolean; descripcionOrigen: boolean; codigoSubEstado: boolean; cupoTotal: boolean; cupoReservado: boolean; cupoDisponible: boolean; score: boolean; descripcionSubestado: boolean; descripcionScore: boolean; nivelEndeudamiento: boolean; comprasSemanales: boolean; antiguedadComprasSemanales: boolean; ventasMensuales: boolean; activos: boolean; declarante: boolean; codigoDepartamentoNegocio: boolean; descripcionDepartamentoNegocio: boolean; codigoCiudadNegocio: boolean; descripcionCiudadNegocio: boolean; codigoBarrioNegocio: boolean; descripcionBarrioNegocio: boolean; direccionNegocio: boolean; telefonoNegocio: boolean; telefono: boolean; antiguedadNegocio: boolean; camaraComercio: boolean; nitNegocio: boolean; tipo: boolean; tipoDocumento: boolean; identificacion: boolean; digitoVerificacion: boolean; nombreCompleto: boolean; nombreNegocio: boolean; fechaMatricula: boolean; primerNombre: boolean; segundoNombre: boolean; primerApellido: boolean; segundoApellido: boolean; celular: boolean; email: boolean; genero: boolean; nacionalidad: boolean; fechaNacimiento: boolean; codigoDepartamentoNacimiento: boolean; codigoCiudadNacimiento: boolean; tipoVivienda: boolean; codigoDepartamento: boolean; descripcionDepartamento: boolean; codigoCiudad: boolean; descripcionCiudad: boolean; codigoBarrio: boolean; descripcionBarrio: boolean; direccionResidencial: boolean; nivelEstudio: boolean; viveEnNegocio: boolean; descripcionTipo: boolean; };
+
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -298,6 +300,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           // console.log(data);
           this.form.patchValue(data);
           this.agenda_fabrica = data.agenda;
+          this.createValidacion()
           if (data.tipoDocumento === 'NIT') {
               const digitoVerificacion: string = this.calcularDigitoVerificacion(data.identificacion);
               const diitoString: string = digitoVerificacion.toString();
@@ -544,7 +547,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       return ( y > 1 ) ? 11 - y : y ;
   }
 
-
+  /**
+   * @description :creando el formulario
+   */
   private createFormulario(): void {
       this.form = this.fb.group({
           id:                             undefined,
@@ -610,6 +615,147 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
 
       });
   }
+
+   /**
+   * @description :creando el validaciones
+   */
+    private createValidacion(): void {
+        switch (this.agenda_fabrica) {
+            case 'CM':
+                this.redeonlyForm = {
+                    id:                            true,
+                    numeroSolicitud:               true,
+                    emision:                       true,
+                    fechaIngresoFabrica:           true,
+                    descripcionEstado:             true,
+                    descripcionOrigen:             true,
+                    codigoSubEstado:               true,
+                    cupoTotal:                     true,
+                    cupoReservado:                 true,
+                    cupoDisponible:                true,
+                    score:                         true,
+                    descripcionSubestado:          true,
+                    descripcionScore:              true,
+                    nivelEndeudamiento:            true,
+                    comprasSemanales:              true,
+                    antiguedadComprasSemanales:    true,
+                    ventasMensuales:               true,
+                    activos:                       true,
+                    declarante:                    true,
+                    codigoDepartamentoNegocio:     true,
+                    descripcionDepartamentoNegocio:true,
+                    codigoCiudadNegocio:           true,
+                    descripcionCiudadNegocio:      true,
+                    codigoBarrioNegocio:           true,
+                    descripcionBarrioNegocio:      true,
+                    direccionNegocio:              true,
+                    telefonoNegocio:               true,
+                    telefono:                      true,
+                    antiguedadNegocio:             true,
+                    camaraComercio:                true,
+                    nitNegocio:                    true,
+                    tipo:                          true,
+                    tipoDocumento:                 true,
+                    identificacion:                true,
+                    digitoVerificacion:            true,
+                    nombreCompleto:                true,
+                    nombreNegocio:                 true,
+                    fechaMatricula:                true,
+                    primerNombre:                  true,
+                    segundoNombre:                 true,
+                    primerApellido:                true,
+                    segundoApellido:               true,
+                    celular:                       true,
+                    email:                         true,
+                    genero:                        true,
+                    nacionalidad:                  true,
+                    fechaNacimiento:               true,
+                    codigoDepartamentoNacimiento:  true,
+                    codigoCiudadNacimiento:        true,
+                    tipoVivienda:                  false,
+                    codigoDepartamento:            false,
+                    descripcionDepartamento:       false,
+                    codigoCiudad:                  false,
+                    descripcionCiudad:             false,
+                    codigoBarrio:                  false,
+                    descripcionBarrio:             false,
+                    direccionResidencial:          false,
+                    nivelEstudio:                  false,
+                    viveEnNegocio:                 false,
+                    descripcionTipo:               false,
+          
+                };
+                break;
+        
+            default:
+                this.redeonlyForm = {
+                    id:                            true,
+                    numeroSolicitud:               true,
+                    emision:                       true,
+                    fechaIngresoFabrica:           true,
+                    descripcionEstado:             true,
+                    descripcionOrigen:             true,
+                    codigoSubEstado:               true,
+                    cupoTotal:                     true,
+                    cupoReservado:                 true,
+                    cupoDisponible:                true,
+                    score:                         true,
+                    descripcionSubestado:          true,
+                    descripcionScore:              true,
+                    nivelEndeudamiento:            false,
+                    comprasSemanales:              false,
+                    antiguedadComprasSemanales:    false,
+                    ventasMensuales:               false,
+                    activos:                       false,
+                    declarante:                    false,
+                    codigoDepartamentoNegocio:     false,
+                    descripcionDepartamentoNegocio:false,
+                    codigoCiudadNegocio:           false,
+                    descripcionCiudadNegocio:      false,
+                    codigoBarrioNegocio:           false,
+                    descripcionBarrioNegocio:      false,
+                    direccionNegocio:              false,
+                    telefonoNegocio:               false,
+                    telefono:                      false,
+                    antiguedadNegocio:             false,
+                    camaraComercio:                true,
+                    nitNegocio:                    true,
+                    tipo:                          true,
+                    tipoDocumento:                 true,
+                    identificacion:                true,
+                    digitoVerificacion:            true,
+                    nombreCompleto:                true,
+                    nombreNegocio:                 false,
+                    fechaMatricula:                false,
+                    primerNombre:                  false,
+                    segundoNombre:                 false,
+                    primerApellido:                true,
+                    segundoApellido:               false,
+                    celular:                       false,
+                    email:                         false,
+                    genero:                        false,
+                    nacionalidad:                  false,
+                    fechaNacimiento:               true,
+                    codigoDepartamentoNacimiento:  false,
+                    codigoCiudadNacimiento:        false,
+                    tipoVivienda:                  false,
+                    codigoDepartamento:            false,
+                    descripcionDepartamento:       false,
+                    codigoCiudad:                  false,
+                    descripcionCiudad:             false,
+                    codigoBarrio:                  false,
+                    descripcionBarrio:             false,
+                    direccionResidencial:          false,
+                    nivelEstudio:                  false,
+                    viveEnNegocio:                 false,
+                    descripcionTipo:               false,
+          
+                };
+            break;
+        }
+        
+
+    }
   /**
    * @description: Escucha los cambios del formulario
    */
@@ -621,6 +767,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           }
       });
   }
+
+
+
   /**
    * @description: Valida que el campo solo sea numeros
    */

@@ -2,12 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import {AgendaReferenciacionService} from '../../../../../../core/services/agenda-referenciacion.service';
+import { AgendaReferenciacionService } from '../../../../../../core/services/agenda-referenciacion.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AgendaComercialService } from '../../../../../../core/services/agenda-comercial.service';
-import {FormDialogReprogramarComponent} from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
+import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
+import { FormDialogDevolverFabricaComponent } from '../form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 
 @Component({
   selector: 'app-grid-agenda-comercial',
@@ -40,16 +41,17 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
+    debugger;
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaComercialService.getAgendaComercial().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
+      Swal.close();
       if (res.status === 200) {
         this.datos = res.data;
         this.mostrar = false;
-        Swal.close();
+       
       } else {
-        Swal.close();
       }
     });
   }
@@ -57,11 +59,11 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   /**
      * @description: Guarda la reprogramacion
      */
-  public onReprogramar(): void {
+  public onReprogramar(data): void {
     const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
-      width: '100%',
+      width: '30%',
       data: {
-         numeroSolicitud: '185445'
+        numeroSolicitud: data.numeroSolicitud
       },
       disableClose: true
     });
@@ -69,12 +71,41 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
         console.log(res);
-        this.agendaReferenciaService.refrescarListado$.next({ estado: true });
+        this.getAgendaComercial();
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();
       }
     });
   }
-//    public onCerrar(): void {
-//      this._matDialogRef.close(true);
-//  }
+
+  /**
+   * @description: abre la agenda
+   */
+  public onGetAgenda(data: any): void {
+    //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+    const { numeroSolicitud, identificacion } = data;
+    this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
+  }
+
+  /**
+   * @description: Guarda el comentario para devolvee
+   */
+  public onComentario(data): void {
+    //  debugger
+    const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
+      width: '30%',
+      data: {
+        numeroSolicitud: data.numeroSolicitud
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+
+      this.getAgendaComercial();
+      this.agendaComercialService.refrescarListado$.next({ estado: true });
+
+    });
+  }
+
 }

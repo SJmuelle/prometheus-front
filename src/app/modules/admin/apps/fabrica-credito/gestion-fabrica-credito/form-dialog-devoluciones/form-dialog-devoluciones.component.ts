@@ -7,7 +7,7 @@ import { DevolucionesService } from "../../../../../../core/services/devolucione
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 import { Observable } from "rxjs";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-form-dialog-devoluciones',
@@ -18,7 +18,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public unsubscribe$: Subject<any> = new Subject<any>();
   public listCausales$: Observable<any>;
-  public agendaFabrica:string='';
+  public agendaFabrica: string = '';
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogRef<FormDialogDevolucionesComponent>,
@@ -31,13 +31,15 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.crearFormulario();
     this.agendaFabrica = this.data.agenda;
+    console.log(this.data)
     this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
     this.form.controls.agenda.setValue(this.data.agenda);
     // console.log('sdsdsdsds->'+this.data.agenda)
-    this.getCausales();
     if (this.data.idDevolucion) {
-      this.form.controls.observacion.setValue(this.data.observacion);
-      this.form.controls.idCausal.setValue(this.data.idCausal);
+      this.form.controls.observacion.setValue(this.data.descripcionDevolucion);
+      this.form.controls.descripcionCausal.setValue(this.data.descripcionCausal);
+    } else {
+      this.getCausales();
     }
   }
   /**
@@ -76,7 +78,8 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
       recurso: ['ingresar-devolucion-agenda'],
       numeroSolicitud: [''],
       agenda: [''],
-      idCausal: ['',[Validators.required]],
+      descripcionCausal:[],
+      idCausal: ['', [Validators.required]],
       observacion: ['', [Validators.required, Validators.minLength(10)]]
     });
   }
@@ -84,7 +87,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   private postDevolucion(data: any): void {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.devolucionesService.postDevoluciones(data).pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {        
+      .subscribe(() => {
         Swal.close();
         this.onCerrar();
       });
@@ -93,16 +96,13 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   get requeridoObservacion(): any {
     return (this.form.controls.observacion.dirty || this.form.controls.observacion.touched);
   }
-  
+
   get minimoObservacion(): any {
     return (this.form.controls.observacion.errors?.minlength);
   }
 
   get requeridoCausal(): any {
     return (this.form.controls.idCausal.dirty || this.form.controls.idCausal.touched);
-  }
-  ngOnDestroy(): void {
-    this.unsubscribe$.unsubscribe();
   }
 
   /**
@@ -111,7 +111,16 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   private getCausales(): void {
     this.listCausales$ = this.devolucionesService.getCausalesDevoluciones(this.agendaFabrica);
   }
+
+  /**
+   * @description: redireciona a la grilla de completacion
+   */
   private redireccionar() {
     this.router.navigate(['/credit-factory/agenda-completion']);
   }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
+  }
+
 }
