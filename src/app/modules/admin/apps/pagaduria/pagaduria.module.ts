@@ -26,6 +26,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
+import {Ng2SearchPipeModule} from "ng2-search-filter";
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/ges
     MatDialogModule,
     MatExpansionModule,
     MatTooltipModule,
-    FuseAlertModule
+    FuseAlertModule,
+    Ng2SearchPipeModule
   ]
 })
 export class PagaduriaModule { }

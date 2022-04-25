@@ -6,11 +6,11 @@
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Confirmar el valor de las deduciones del empleado:</mat-label>
-                    <input type="number" matInput formControlName="confirmar">
-                    <mat-error *ngIf="frm.confirmar.errors?.required">
+                    <input type="number" matInput formControlName="valorDeduccionEmpleado">
+                    <mat-error *ngIf="frm.valorDeduccionEmpleado.errors?.required">
                       Campo requerido.
                     </mat-error>
-                    <mat-error *ngIf="frm.confirmar.errors?.min">
+                    <mat-error *ngIf="frm.valorDeduccionEmpleado.errors?.min">
                         Solo valores mayores a 0.
                     </mat-error>
                 </mat-form-field>
@@ -21,11 +21,11 @@
                 
                 <mat-form-field class="w-full">
                     <mat-label>¿Presenta el trabajador un proceso disciplinario?:</mat-label>
-                    <mat-select formControlName="proceso">
-                        <mat-option value="1">Si</mat-option>
-                        <mat-option value="0">No</mat-option>
+                    <mat-select formControlName="procesoDiciplinario">
+                        <mat-option value="SI">Si</mat-option>
+                        <mat-option value="NO">No</mat-option>
                     </mat-select>
-                    <mat-error *ngIf="frm.proceso.errors?.required">
+                    <mat-error *ngIf="frm.procesoDiciplinario.errors?.required">
                         Campo requerido.
                       </mat-error>
                 </mat-form-field>
@@ -58,6 +58,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button id="guardar" class="text-white" color="color-fintra" [disabled]="AprobarForm.invalid">Guardar</button>
+    <button mat-button id="guardar" class="color_fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

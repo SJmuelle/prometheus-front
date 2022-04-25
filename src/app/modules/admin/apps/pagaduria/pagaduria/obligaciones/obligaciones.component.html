@@ -14,12 +14,12 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <tr class="text-gray-700 example-item">
-                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize"></td>
-                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize"></td>
-                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize"></td>
-                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize"></td>
-                        <td class="px-2 py-2 text-right text-md text-gray-600 capitalize"></td>
+                    <tr class="text-gray-700" *ngFor="let item of obligaciones">
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.entidad}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.nit_entidad}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.tipo_cuenta}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.numero_cuenta}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">$ {{item.valor_recoger | number}}</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -28,7 +28,7 @@
                         <th class="px-4 py-2 text-center"></th>
                         <th class="px-4 py-2 text-center"></th>
                         <th class="px-4 py-2 text-center text-base">Total:</th>
-                        <th class="px-4 py-2 text-right">$ </th>
+                        <th class="px-4 py-2 text-center">$ {{ total | number}}</th>
                     </tr>
                 </tfoot>
             </table>

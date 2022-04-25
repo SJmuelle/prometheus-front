@@ -17,7 +17,7 @@ export const environment = {
     urlApi5: 'https://tefi.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://tefi.ngrok.io/api-fintra/api/archivos/guardar/',
 
-    urlPagaduria: 'http://demo.fintra.co:8010/api-fintra/',
+    urlPagaduria: 'http://demo.fintra.co:8010/pagadurias/',
 
     urlprometheus:
         'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
