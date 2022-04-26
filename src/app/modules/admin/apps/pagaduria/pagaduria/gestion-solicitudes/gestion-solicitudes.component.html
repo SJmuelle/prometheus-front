@@ -1,3 +1,4 @@
+<h2 mat-dialog-title>Reactivar solicitud</h2>
 <mat-dialog-content>
     <form [formGroup]="ReactivarForm">
 
@@ -7,13 +8,13 @@
     
                 <mat-form-field class="w-full">
                     <mat-label>Comentario: </mat-label>
-                    <textarea matInput formControlName="comentario" cdkTextareaAutosize 
+                    <textarea matInput formControlName="detalle" cdkTextareaAutosize 
                     #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" 
                     (keyup)="contarCaracteres($event)"></textarea>
-                    <mat-error *ngIf="frm.comentario.errors?.required">
+                    <mat-error *ngIf="frm.detalle.errors?.required">
                         Campo requerido.
                       </mat-error>
-                      <mat-error *ngIf="frm.comentario.errors?.maxlength">
+                      <mat-error *ngIf="frm.detalle.errors?.maxlength">
                           Maximo 500 caracteres.
                       </mat-error>
                 </mat-form-field>
@@ -29,6 +30,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button id="guardar" class="text-white" color="color-fintra" [disabled]="ReactivarForm.invalid">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="ReactivarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

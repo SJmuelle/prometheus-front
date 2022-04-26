@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
+import { PdfViewerModule } from "ng2-pdf-viewer";
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
     MatExpansionModule,
     MatTooltipModule,
     FuseAlertModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    PdfViewerModule
   ]
 })
 export class PagaduriaModule { }

@@ -35,5 +35,13 @@ export class PagaduriaService {
     return this._http.post(this._appSettings.pagaduria.url.baseUpdate, datos);
   }
 
+  public descargarArchivos(data: any): Observable<any> {
+    console.log(data)
+    // debugger;
+    return this._http.get(`${this._appSettings.pagaduria.url.baseArchivo}/${data}`)
+    // return this._http.post(this._appSettings.pagaduria.url.baseArchivo, data);
+}
+
+
 
 }

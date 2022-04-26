@@ -96,18 +96,18 @@
                         <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='P'">
                             <div *ngIf="item.destino!='SANEAMIENTO FINANCIERO' && item.destino!='COMPRA DE CARTERA'">
-                                <a class="cursor-pointer"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
+                                <a class="cursor-pointer" (click)="descargarArchivo()"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
                             </div>
                             <div *ngIf="item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA DE CARTERA'">
-                                <a (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
+                                <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
                             </div>
                         </td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='A'">
-                            <a class="cursor-pointer"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
+                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
                         </td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='R'">
-                            <a class="cursor-pointer"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
+                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
                         </td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='P'">
     

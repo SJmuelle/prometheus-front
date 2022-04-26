@@ -28,6 +28,8 @@ export class PagaduriaComponent implements OnInit {
   filtrarTabla:string=''; // filtrar la tabla
   solicitudForm: FormGroup; //formulario para hacer las validaciones requeridas
 
+  id:any = 'LB0053294';
+
   /**
    * @description: control del formulario creado.
    */
@@ -50,13 +52,41 @@ export class PagaduriaComponent implements OnInit {
     // this.consultaSolicitudes();
   }
 
+  descargarArchivo(){
+
+    this.pagaduria.descargarArchivos(this.id).subscribe((response:any)=>{
+
+        console.log('Toda la data: ', response.data)
+        console.log('Nombre: ', response.data.filename)
+        console.log('Direccion: ', response.data.filepath)
+        // if(response) {
+        //     // console.log("Aqui estoy... Si estoy entrando")
+        //     // console.log(response.data)
+        //     // const archivo = response.data.filename.split('.');
+        //     // console.log(archivo)
+        //     const extension = 'pdf'
+        //     // console.log(response)
+        //     const link = document.createElement('a');
+        //     document.body.appendChild(link);
+        //     link.href = `data:application/${extension};base64,${response.data.filepath}`;
+        //     console.log(link.href)
+        //     link.target = '_self';
+        //     link.download = response.data.filename
+        //     link.click();
+        //     Swal.close();
+        // }
+
+    }) 
+
+}
+
+
   /**
    * @description: metodo para filtrar por tipo las solicitudes
    */
   buscarPorTipo(){
     const {tipo} = this.solicitudForm.getRawValue();
     this.tipo = tipo;
-    console.log('Aqui tu tipo: ', this.tipo)
     this.mostrar = true;
     this.consultaSolicitudes();
   }
@@ -68,10 +98,8 @@ export class PagaduriaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pagaduria.getSolicitudesFilter(this.tipo, this.estado).subscribe((response: any) => {
       Swal.close();
-      // console.log(response)
       if (response) {
         this.solicitudes = response.data;
-        // console.log(this.solicitudes)
       }
     });
   }
@@ -81,7 +109,6 @@ export class PagaduriaComponent implements OnInit {
    */
   pendiente(estado){
     this.estado = estado;
-    console.log('Aqui tu estado: ', this.estado)
     this.consultaSolicitudes();
   }
 
@@ -90,7 +117,6 @@ export class PagaduriaComponent implements OnInit {
    */
    aprobada(estado){
     this.estado = estado;
-    console.log('Aqui tu estado: ', this.estado)
     this.consultaSolicitudes();
   }
 
@@ -99,18 +125,20 @@ export class PagaduriaComponent implements OnInit {
    */
    rechazada(estado){
     this.estado = estado;
-    console.log('Aqui tu estado: ', this.estado)
     this.consultaSolicitudes();
   }
 
   /**
    * @description: metodo para abrir el modal para reactivar solicitud
    */
-   AbrirReactivar(){
+   AbrirReactivar(id:any, tipo:any){
     const dialogRef = this.dialog.open(GestionSolicitudesComponent, {
-      width: '60%'
+      width: '60%',
+      data: {id:id, tipo:tipo}
     });
-    dialogRef.afterClosed().toPromise();
+    dialogRef.afterClosed().subscribe(result =>{
+      this.consultaSolicitudes();
+    })
   }
 
 

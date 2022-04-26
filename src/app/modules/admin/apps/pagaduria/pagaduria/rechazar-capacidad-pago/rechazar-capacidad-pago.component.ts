@@ -16,7 +16,7 @@ export class RechazarCapacidadPagoComponent implements OnInit {
   contador = 0; //contar los caracteres restantes en el textarea
   id: any = this.data.id; // almacenar el codigo de solicitud
   tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
-  estado:any = 'R'; // almacenar estado de aprobado
+  estado:any = 'R'; // almacenar estado de rechazado
   valor:any = ''; // almacenar el valor de deduccion que sera 0
   proceso:any = ''; // almacenar el valor del proceso disciplinario que sera NO
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api

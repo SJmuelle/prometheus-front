@@ -1,6 +1,9 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PagaduriaService } from 'app/core/services/pagaduria.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-gestion-solicitudes',
@@ -11,6 +14,12 @@ export class GestionSolicitudesComponent implements OnInit {
 
   ReactivarForm: FormGroup; //formulario para hacer las validaciones requeridas
   contador = 0; //contar los caracteres restantes en el textarea
+  id: any = this.data.id; // almacenar el codigo de solicitud
+  tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
+  estado:any = 'P'; // almacenar estado de pendiente
+  valor:any = ''; // almacenar el valor de deduccion que sera 0
+  proceso:any = ''; // almacenar el valor del proceso disciplinario que sera NO
+  actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
   /**
    * @description: control del formulario creado.
@@ -19,15 +28,38 @@ export class GestionSolicitudesComponent implements OnInit {
     return this.ReactivarForm.controls;
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private pagaduria: PagaduriaService, private dialog: MatDialogRef<GestionSolicitudesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) {
     this.ReactivarForm = this.fb.group({
-      comentario: ['', [Validators.required, Validators.maxLength(500)]]
+      detalle: ['', [Validators.required, Validators.maxLength(500)]]
     })
   }
 
   @ViewChild('autosize') autosize: CdkTextareaAutosize; //controlar el tamaño del textarea a medida que se escribe.
 
   ngOnInit(): void {
+  }
+
+  /**
+   * @description: realiza el proceso de actualizar enviando los datos requeridos
+   */
+   actualizarSolicitud(codigoNegocio, tipo, estado, valorDeduccionEmpleado, procesoDiciplinario){
+    codigoNegocio = this.id
+    tipo = this.tipo
+    estado = this.estado
+    valorDeduccionEmpleado = 0
+    procesoDiciplinario = 'NO'
+    const { detalle } = this.ReactivarForm.getRawValue();
+    this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
+    this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
+      console.log("Aqui tus datos: ", response)
+    })
+    Swal.fire(
+      '¡Correcto!',
+      `La solicitud ha sido reactivada.`,
+      'success'
+    )
+    // console.log("Aqui tus datos: ", this.actualizacion)
   }
 
   /**
