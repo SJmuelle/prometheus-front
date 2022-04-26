@@ -165,6 +165,13 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
 
         ]
+    },
+    {
+        id: 'pagaduria',
+        title: 'Pagaduria',
+        type: 'basic',
+        link: '/pagaduria/par',
+        icon: 'heroicons_outline:cash'
     }
     // {
     //     id: 'calendario',

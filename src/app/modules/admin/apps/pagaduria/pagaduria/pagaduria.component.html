@@ -102,7 +102,7 @@
                                 <a (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
                             </div>
                         </td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_solicitud}}</td>
+                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='A'">
                             <a class="cursor-pointer"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
                         </td>
@@ -126,19 +126,19 @@
                             </div>
                             <div class="flex flex-row w-1/2 gap-3 justify-between" *ngIf="item.tipo=='CP'">
                                 <div>
-                                    <button mat-raised-button class="bg-green-400"  (click)="AprobarCapacidadPago()">
+                                    <button mat-raised-button class="bg-green-400"  (click)="AprobarCapacidadPago(item.numero_solicitud, item.tipo)">
                                         <mat-icon>check</mat-icon>
                                     </button>
                                 </div>
     
                                 <div>
-                                    <button mat-raised-button class="bg-red-400" (click)="RechazarCapacidadPago()">
+                                    <button mat-raised-button class="bg-red-400" (click)="RechazarCapacidadPago(item.numero_solicitud, item.tipo)">
                                         <mat-icon [svgIcon]="'heroicons_solid:x'"></mat-icon>
                                     </button>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_solicitud}}</td>
+                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_estado}}</td>
                     </tr>
                 </tbody>
             </table>

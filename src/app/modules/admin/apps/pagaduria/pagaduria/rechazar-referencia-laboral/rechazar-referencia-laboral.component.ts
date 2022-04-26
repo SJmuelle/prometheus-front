@@ -3,6 +3,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PagaduriaService } from 'app/core/services/pagaduria.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rechazar-referencia-laboral',
@@ -16,6 +17,8 @@ export class RechazarReferenciaLaboralComponent implements OnInit {
   id: any = this.data.id; // almacenar el codigo de solicitud
   tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
   estado:any = 'R'; // almacenar estado de aprobado
+  valor:any = ''; // almacenar el valor de deduccion que sera 0
+  proceso:any = ''; // almacenar el valor del proceso disciplinario que sera NO
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
   /**
@@ -40,15 +43,22 @@ export class RechazarReferenciaLaboralComponent implements OnInit {
   /**
    * @description: realiza el proceso de actualizar enviando los datos requeridos
    */
-  actualizarSolicitud(codigoNegocio, tipo, estado){
+  actualizarSolicitud(codigoNegocio, tipo, estado, valorDeduccionEmpleado, procesoDiciplinario){
     codigoNegocio = this.id
     tipo = this.tipo
     estado = this.estado
+    valorDeduccionEmpleado = 0
+    procesoDiciplinario = 'NO'
     const { detalle } = this.RechazarForm.getRawValue();
-    this.actualizacion={codigoNegocio, estado, detalle, tipo}
+    this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
     this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
       // console.log("Aqui tus datos: ", response)
     })
+    Swal.fire(
+      '¡Correcto!',
+      `La solicitud ha sido rechazada.`,
+      'success'
+    )
     // console.log("Aqui tus datos: ", this.actualizacion)
   }
 

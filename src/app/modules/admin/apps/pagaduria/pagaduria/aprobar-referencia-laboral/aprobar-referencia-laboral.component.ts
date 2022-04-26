@@ -55,6 +55,11 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
       // console.log("Aqui tus datos: ", response)
     })
+    Swal.fire(
+      '¡Correcto!',
+      `La solicitud ha sido aprobada.`,
+      'success'
+    )
     // console.log("Aqui tus datos: ", this.actualizacion)
   }
 

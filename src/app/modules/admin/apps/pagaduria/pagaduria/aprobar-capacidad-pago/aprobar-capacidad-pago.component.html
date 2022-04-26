@@ -6,7 +6,7 @@
             <div class="w-full">
     
                 <mat-form-field class="w-full">
-                    <mat-label>Detalle de aprobacion: </mat-label>
+                    <mat-label>Detalle de aprobacion (CP): </mat-label>
                     <textarea matInput formControlName="detalle" cdkTextareaAutosize 
                     #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" 
                     (keyup)="contarCaracteres($event)"></textarea>
@@ -29,6 +29,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button id="guardar" class="color-fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado)">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

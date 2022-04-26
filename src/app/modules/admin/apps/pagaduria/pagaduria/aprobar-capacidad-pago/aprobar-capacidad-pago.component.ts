@@ -3,6 +3,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PagaduriaService } from 'app/core/services/pagaduria.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-aprobar-capacidad-pago',
@@ -15,7 +16,9 @@ export class AprobarCapacidadPagoComponent implements OnInit {
   contador = 0; //contar los caracteres restantes en el textarea
   id: any = this.data.id; // almacenar el codigo de solicitud
   tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
-  estado:any = 'R'; // almacenar estado de aprobado
+  estado:any = 'A'; // almacenar estado de aprobado
+  valor:any = ''; // almacenar el valor de deduccion que sera 0
+  proceso:any = ''; // almacenar el valor del proceso disciplinario que sera NO
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
   /**
@@ -40,15 +43,22 @@ export class AprobarCapacidadPagoComponent implements OnInit {
   /**
    * @description: realiza el proceso de actualizar enviando los datos requeridos
    */
-   actualizarSolicitud(codigoNegocio, tipo, estado){
+   actualizarSolicitud(codigoNegocio, tipo, estado, valorDeduccionEmpleado, procesoDiciplinario){
     codigoNegocio = this.id
     tipo = this.tipo
     estado = this.estado
+    valorDeduccionEmpleado = 0
+    procesoDiciplinario = 'NO'
     const { detalle } = this.AprobarForm.getRawValue();
-    this.actualizacion={codigoNegocio, estado, detalle, tipo}
+    this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
     this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
       // console.log("Aqui tus datos: ", response)
     })
+    Swal.fire(
+      '¡Correcto!',
+      `La solicitud ha sido aprobada.`,
+      'success'
+    )
     // console.log("Aqui tus datos: ", this.actualizacion)
   }
 

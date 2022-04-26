@@ -11,6 +11,7 @@ import { GestionSolicitudesComponent } from './gestion-solicitudes/gestion-solic
 import { PagaduriaService } from 'app/core/services/pagaduria.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { result } from 'lodash';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pagaduria',
@@ -46,9 +47,12 @@ export class PagaduriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.consultaSolicitudes();
+    // this.consultaSolicitudes();
   }
 
+  /**
+   * @description: metodo para filtrar por tipo las solicitudes
+   */
   buscarPorTipo(){
     const {tipo} = this.solicitudForm.getRawValue();
     this.tipo = tipo;
@@ -61,11 +65,13 @@ export class PagaduriaComponent implements OnInit {
    * @description: metodo para cargar todas las solicitudes
    */
    consultaSolicitudes(){
+    Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pagaduria.getSolicitudesFilter(this.tipo, this.estado).subscribe((response: any) => {
-      console.log(response)
+      Swal.close();
+      // console.log(response)
       if (response) {
         this.solicitudes = response.data;
-        console.log(this.solicitudes)
+        // console.log(this.solicitudes)
       }
     });
   }
@@ -163,11 +169,14 @@ export class PagaduriaComponent implements OnInit {
   /**
    * @description: metodo para abrir el modal para rechazar solicitud de tipo capacidad de pago
    */
-   RechazarCapacidadPago(){
+   RechazarCapacidadPago(id:any, tipo:any){
     const dialogRef = this.dialog.open(RechazarCapacidadPagoComponent, {
-      width: '60%'
+      width: '60%',
+      data: {id:id, tipo:tipo}
     });
-    dialogRef.afterClosed().toPromise();
+    dialogRef.afterClosed().subscribe(result =>{
+      this.consultaSolicitudes();
+    })
   }
 
 }
