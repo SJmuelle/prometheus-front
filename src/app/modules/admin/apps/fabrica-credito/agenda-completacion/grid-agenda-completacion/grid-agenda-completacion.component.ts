@@ -32,15 +32,11 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.cambiarEstado(true);
         this.getAgendaCompletacion();
+        this.getTotalesAgendaCompletacion()
     }
 
     public cambiarEstado(estado) {
-        //   debugger;
-        if (estado) {
-            this.getTotalesAgendaCompletacion()
-        }
         this.mostrarTotales = estado;
-       
     }
 
     public onGetAgenda(data: any): void {

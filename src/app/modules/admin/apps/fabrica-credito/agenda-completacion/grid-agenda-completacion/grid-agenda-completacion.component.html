@@ -10,7 +10,7 @@
                         <img src="assets/images/agendas/Completacion.png" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 mx-3">
-                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda fábrica completacion </div>
+                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda fábrica completación </div>
                         <div class="flex items-center">
                             <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                             <div class="font-medium tracking-tight text-secondary">
@@ -59,10 +59,22 @@
                     (click)="cambiarEstado(false)">
                     <mat-icon svgIcon="heroicons_solid:chevron-down"></mat-icon>
                 </div>
+
                 <div class="flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
                     (click)="cambiarEstado(true)">
-                    <mat-icon svgIcon="heroicons_solid:chevron-up"></mat-icon>
+                    <mat-icon svgIcon="heroicons_solid:chevron-right"></mat-icon>
                 </div>
+
+                <ng-container *ngFor="let item of totales">
+                    <div class="mr-3 flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
+                        (click)="cambiarEstado(false)">
+                        <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
+                        [svgIcon]="'heroicons_solid:exclamation-circle'">
+                        </mat-icon>
+                        {{item.nombre_unidad_negocio}}:   {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}}
+                    </div>
+                </ng-container>
+
             </div>
         </div>
 
@@ -102,8 +114,9 @@
                 <div class="flex items-center justify-between">
 
                     <div class="text-secondary font-medium"> <input
-                            class="border rounded p-2 bg-gray-100 mr-4 text-xs sm:w-120" type="text" autocomplete="off"
-                            name="filtrarTablaHG" [formControl]="filtrarTabla" placeholder="Filtrar..."></div>
+                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                            autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                            placeholder="Filtrar..."></div>
 
                     <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
                         (change)="page=1">
@@ -121,12 +134,9 @@
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                                 <tr class="text-gray-700 border-t border-b ">
                                     <td class="px-2 py-3 text-sm header_fijo my-3">
-
                                         <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
                                             <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                         </button>
-
-
                                     </td>
                                     <td class="px-2 py-3">
                                         <div class="flex flex-column ">
@@ -137,9 +147,8 @@
                                     </td>
                                     <td class="px-2 py-3">
                                         <div class="flex flex-column ">
-                                            <div class="flex-0 w-12 overflow-hidden" >
-                                                <img [src]="item.urlIconoUnidad"
-                                                    class="w-full h-full object-cover">
+                                            <div class="flex-0 w-12 overflow-hidden">
+                                                <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
                                             </div>
                                         </div>
                                     </td>
@@ -147,7 +156,8 @@
                                         <div class="flex flex-column ">
                                             <small class="text-accent-600 text-xs">Cliente: </small>
                                             <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
-                                            <span class="text-md text-black font-medium line-clamp-1">  {{ item.nombreCompleto}}</span>
+                                            <span class="text-md text-black font-medium line-clamp-1"> {{
+                                                item.nombreCompleto}}</span>
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">
@@ -160,20 +170,21 @@
                                     </td>
                                     <td class="px-2 py-3">
                                         <div class="flex flex-column ">
-                                            
+
                                             <span class="text-md text-black font-medium" matTooltip="Agencia">
-                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:location-marker"></mat-icon>
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
-                                            
+
                                             <span class="text-md text-black font-medium" matTooltip="Asesor">
-                                                <mat-icon class="icon-size-3"  svgIcon="heroicons_solid:user"></mat-icon>
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{ item.asesor}}
                                             </span>
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">
-                                        <div class="flex w-30">
+                                        <div class="flex w-24">
 
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
@@ -196,10 +207,10 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">
-                                        <div class="flex w-30">
+                                        <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
-                                                    Fecha Fabrica
+                                                    Fecha Fábrica
                                                 </small>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
@@ -217,10 +228,10 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">
-                                        <div class="flex w-30">
+                                        <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
-                                                    Fecha agenda 
+                                                    Fecha agenda
                                                 </small>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
@@ -238,16 +249,123 @@
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">
-                                        <div class="flex-column flex items-center justify-center w-14 h-14 rounded  "
-                                            [ngClass]="item.numeroIntentos<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                                            <small class="text-xs">Devolución</small>
-                                            <span class="text-current">
-                                                {{ item.numeroIntentos}}
-                                            </span>
-                                            <small class="text-xs">{{ item.fechaDevolucion}}</small>
-
+                                        <div class="flex justify-between">
+                                            <div class="flex-column flex items-center justify-center w-14 h-14 rounded  "
+                                                [ngClass]="item.numeroIntentos<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                                <small class="text-xs">Devolución</small>
+                                                <span class="text-current">
+                                                    {{ item.numeroIntentos}}
+                                                </span>
+                                                <small class="text-xs">{{ item.fechaDevolucion}}</small>
+                                            </div>
+                                            <button mat-icon-button matTooltip="ver devolución"
+                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
+                                                <mat-icon
+                                                    [svgIcon]="item.mostrarDevolucion=='f'?'heroicons_solid:chevron-down':'heroicons_solid:chevron-up'">
+                                                </mat-icon>
+                                            </button>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="item.mostrarDevolucion=='v'">
+                                    <td class="p-3 bg-hover" colspan="10">
+                                        <div class="flex justify-between">
+                                            <div class="relative flex border-t first:border-0 bg-white  text-md mr-10">
+                                                <!-- Item content -->
+                                                <div
+                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
+                                                    <!-- titulo -->
+                                                    <div class="text-end">
+                                                        <div
+                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
+                                                            Ultima devolución
+                                                        </div>
+                                                    </div>
 
+                                                    <!-- Info -->
+                                                    <div class="flex items-center w-full">
+                                                        <!-- name -->
+                                                        <div class="mr-2 font-semibold truncate">
+                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
+                                                        </div>
+
+                                                        <!-- Date -->
+                                                        <div
+                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                            {{ cambiarFecha(item.fechaDevolucion) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Subject -->
+                                                    <div class="flex items-center w-full mt-1">
+                                                        <span class="leading-4 truncate">
+                                                            {{item.causalDevolucion}}
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- observacion -->
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+                                                        expedita
+                                                        aliquam itaque eveniet quos porro ex officiis magnam quaerat
+                                                        ipsam
+                                                        ut
+                                                        quo reprehenderit doloremque asperiores, facere quis.
+                                                        Voluptatibus,
+                                                        minima consectetur.
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="relative flex border-t first:border-0 bg-white  text-md">
+                                                <!-- Item content -->
+                                                <div
+                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
+                                                    <!-- titulo -->
+                                                    <div class="text-end">
+                                                        <div
+                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
+                                                            Ultimo integro
+                                                        </div>
+                                                    </div>
+                                                    <!-- Info -->
+                                                    <div class="flex items-center w-full">
+                                                        <!-- Sender name -->
+                                                        <div class="mr-2 font-semibold truncate">
+                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
+                                                        </div>
+
+                                                        <!-- Date -->
+                                                        <div
+                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                            {{ cambiarFecha(item.fechaDevolucion) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Subject -->
+                                                    <div class="flex items-center w-full mt-1">
+                                                        <span class="leading-4 truncate">
+                                                            {{item.causalDevolucion}}
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- observacion -->
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
+                                                        expedita
+                                                        aliquam itaque eveniet quos porro ex officiis magnam quaerat
+                                                        ipsam
+                                                        ut
+                                                        quo reprehenderit doloremque asperiores, facere quis.
+                                                        Voluptatibus,
+                                                        minima consectetur.
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </ng-container>
