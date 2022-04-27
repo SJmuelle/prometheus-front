@@ -12,6 +12,7 @@ import { PagaduriaService } from 'app/core/services/pagaduria.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { result } from 'lodash';
 import Swal from 'sweetalert2';
+import { JsonpClientBackend } from '@angular/common/http';
 
 @Component({
   selector: 'app-pagaduria',
@@ -53,32 +54,20 @@ export class PagaduriaComponent implements OnInit {
   }
 
   descargarArchivo(){
-
     this.pagaduria.descargarArchivos(this.id).subscribe((response:any)=>{
-
-        console.log('Toda la data: ', response.data)
-        console.log('Nombre: ', response.data.filename)
-        console.log('Direccion: ', response.data.filepath)
-        // if(response) {
-        //     // console.log("Aqui estoy... Si estoy entrando")
-        //     // console.log(response.data)
-        //     // const archivo = response.data.filename.split('.');
-        //     // console.log(archivo)
-        //     const extension = 'pdf'
-        //     // console.log(response)
-        //     const link = document.createElement('a');
-        //     document.body.appendChild(link);
-        //     link.href = `data:application/${extension};base64,${response.data.filepath}`;
-        //     console.log(link.href)
-        //     link.target = '_self';
-        //     link.download = response.data.filename
-        //     link.click();
-        //     Swal.close();
-        // }
-
+      if(response) {
+        const archivo = response.data[0].filepath.split(',');
+        const extension = 'pdf'
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.href = `data:application/${extension};base64,${archivo}`;
+        link.target = '_self';
+        link.download = response.data[0].filename
+        link.click();
+        Swal.close();
+      }
     }) 
-
-}
+  }
 
 
   /**
