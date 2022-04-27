@@ -8,7 +8,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class FormDialogListErrorDialogComponent implements OnInit {
 
-
+  tipoD=0
+  tipoT=0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -17,6 +18,14 @@ export class FormDialogListErrorDialogComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data)
+  
+    this.data.forEach(element => {
+      if(element.tipo=='D'){
+        this.tipoD++;
+      }else{
+        this.tipoT++;
+      }
+    });
   }
 
 }

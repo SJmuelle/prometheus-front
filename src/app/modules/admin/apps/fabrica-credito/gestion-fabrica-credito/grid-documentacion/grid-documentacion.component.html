@@ -41,6 +41,7 @@
                     <th class="px-4 py-3"></th>
                     <th class="px-4 py-3">No. Doc</th>
                     <th class="px-4 py-3">Nombre del documento</th>
+                    <th class="px-4 py-3">Usuario</th>
                     <th class="px-4 py-3">Requerido</th>
                     <th class="px-4 py-3">Cargado</th>
                     <th class="px-4 py-3">Acción</th>
@@ -62,6 +63,7 @@
                             </td>
                             <td class="px-2 text-sm border">{{ item.idArchivo}}</td>
                             <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                            <td class="px-2 text-sm border">{{ item.usuarioCreacion}}</td>
                             <td class="px-2 text-sm border">{{ item.requerido? 'Si' : 'No'}}</td>
                             <td class="px-2 text-sm border">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}</td>
                             <td class="px-2 text-sm border text-center">

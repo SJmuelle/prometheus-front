@@ -11,6 +11,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
+import { FuseCardModule } from '@fuse/components/card';
+import {MatTableModule} from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatBadgeModule} from '@angular/material/badge';
 
 
 @NgModule({
@@ -30,6 +34,10 @@ import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
         MatPaginatorModule,
         NgxPaginationModule,
         FuseAlertModule,
+        FuseCardModule,
+        MatTableModule,
+        MatTooltipModule,
+        MatBadgeModule
     ]
 })
 export class AgendaCompletacionModule { }

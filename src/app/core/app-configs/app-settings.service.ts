@@ -8,7 +8,8 @@ export class AppSettingsService {
      */
     public agendaCompletacion = {
         url: {
-            base: EndPoints.uri('/generic/qry/agendas-credito/CO')
+            base: EndPoints.uri('/generic/qry/agendas-credito/CO'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CO')
         }
     };
     /**
@@ -16,7 +17,8 @@ export class AppSettingsService {
      */
     public agendaReferenciacion = {
         url: {
-            base: EndPoints.uri('/generic/qry/agenda-credito/RE')
+            base: EndPoints.uri('/generic/qry/agenda-credito/RE'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE')
         }
     };
     /**
