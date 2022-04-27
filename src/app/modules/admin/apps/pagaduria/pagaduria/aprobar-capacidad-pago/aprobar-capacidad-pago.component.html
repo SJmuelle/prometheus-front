@@ -6,10 +6,8 @@
             <div class="w-full">
     
                 <mat-form-field class="w-full">
-                    <mat-label>Detalle de aprobacion (CP): </mat-label>
-                    <textarea matInput formControlName="detalle" cdkTextareaAutosize 
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" 
-                    (keyup)="contarCaracteres($event)"></textarea>
+                    <mat-label>Detalle de aprobacion: </mat-label>
+                    <textarea class="tamano" matInput formControlName="detalle" rows="4" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
                     <mat-error *ngIf="frm.detalle.errors?.required">
                         Campo requerido.
                       </mat-error>

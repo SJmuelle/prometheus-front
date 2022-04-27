@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import { PdfViewerModule } from "ng2-pdf-viewer";
+import { NgxCurrencyModule } from "ngx-currency";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
     MatTooltipModule,
     FuseAlertModule,
     Ng2SearchPipeModule,
-    PdfViewerModule
+    PdfViewerModule,
+    NgxCurrencyModule
   ]
 })
 export class PagaduriaModule { }

@@ -53,8 +53,8 @@ export class PagaduriaComponent implements OnInit {
     // this.consultaSolicitudes();
   }
 
-  descargarArchivo(){
-    this.pagaduria.descargarArchivos(this.id).subscribe((response:any)=>{
+  descargarArchivo(id:any){
+    this.pagaduria.descargarArchivos(id).subscribe((response:any)=>{
       if(response) {
         const archivo = response.data[0].filepath.split(',');
         const extension = 'pdf'
@@ -147,10 +147,10 @@ export class PagaduriaComponent implements OnInit {
   /**
    * @description: metodo para abrir el modal para aprobar solicitud de tipo referencia laboral
    */
-  AprobarReferenciaLaboral(id:any, tipo:any){
+  AprobarReferenciaLaboral(id:any, tipo:string, monto:number){
     const dialogRef = this.dialog.open(AprobarReferenciaLaboralComponent, {
       width: '60%',
-      data: {id:id, tipo:tipo}
+      data: {id:id, tipo:tipo, monto:monto}
     });
     dialogRef.afterClosed().subscribe(result =>{
       this.consultaSolicitudes();

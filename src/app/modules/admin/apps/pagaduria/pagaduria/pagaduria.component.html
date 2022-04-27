@@ -96,7 +96,7 @@
                         <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='P'">
                             <div *ngIf="item.destino!='SANEAMIENTO FINANCIERO' && item.destino!='COMPRA DE CARTERA'">
-                                <a class="cursor-pointer" (click)="descargarArchivo()"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
+                                <a class="cursor-pointer" (click)="descargarArchivo(item.numero_solicitud)"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
                             </div>
                             <div *ngIf="item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA DE CARTERA'">
                                 <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
@@ -113,7 +113,7 @@
     
                             <div class="flex flex-row w-1/2 gap-3 justify-between" *ngIf="item.tipo=='RL'">
                                 <div>
-                                    <button mat-raised-button class="bg-green-400"  (click)="AprobarReferenciaLaboral(item.numero_solicitud, item.tipo)">
+                                    <button mat-raised-button class="bg-green-400"  (click)="AprobarReferenciaLaboral(item.numero_solicitud, item.tipo, item.monto)">
                                         <mat-icon>check</mat-icon>
                                     </button>
                                 </div>

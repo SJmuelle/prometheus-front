@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import { PagaduriaService } from 'app/core/services/pagaduria.service';
 import Swal from 'sweetalert2';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { toNumber } from 'lodash';
 
 @Component({
   selector: 'app-aprobar-referencia-laboral',
@@ -16,6 +16,9 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   contador = 0; //contar los caracteres restantes en el textarea
   id: any = this.data.id; // almacenar el codigo de solicitud
   tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
+  monto:number = this.data.monto
+  valorDeduccionEmpleado:number;
+  escrito:string;
   estado:any = 'A'; // almacenar estado de aprobado
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
@@ -26,31 +29,35 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     return this.AprobarForm.controls;
   }
 
-  constructor(private fb: FormBuilder, private pagaduria: PagaduriaService, private dialog: MatDialogRef<AprobarReferenciaLaboralComponent>,
+  constructor(private fb: FormBuilder, public pagaduria: PagaduriaService, private dialog: MatDialogRef<AprobarReferenciaLaboralComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.AprobarForm = this.fb.group({
-      valorDeduccionEmpleado: ['', [Validators.required, Validators.min(1)]],
+      valor: ['', [Validators.required, Validators.min(1), Validators.max(this.data.monto)]],
       procesoDiciplinario: ['', [Validators.required]],
       detalle: ['', [Validators.required, Validators.maxLength(500)]]
     })
   }
 
-  @ViewChild('autosize') autosize: CdkTextareaAutosize; //controlar el tamaño del textarea a medida que se escribe.
-
   ngOnInit(): void {
-    console.log(this.data)
+    console.log(this.data.monto)
+  }
+
+  escritura(valor){
+    toNumber(this.pagaduria.formatearNumero(valor))
+    console.log('Aqui estoy: ',toNumber(valor))
   }
 
   /**
    * @description: realiza el proceso de actualizar enviando los datos requeridos
    */
-  actualizarSolicitud(codigoNegocio, tipo, estado){
+  actualizarSolicitud(codigoNegocio, tipo, estado, valorDeduccionEmpleado){
     codigoNegocio = this.id
     tipo = this.tipo
     estado = this.estado
-    const { valorDeduccionEmpleado } = this.AprobarForm.getRawValue();
-    const { procesoDiciplinario } = this.AprobarForm.getRawValue();
-    const { detalle } = this.AprobarForm.getRawValue();
+    const {valor} = this.AprobarForm.getRawValue();
+    const {procesoDiciplinario} = this.AprobarForm.getRawValue();
+    const {detalle} = this.AprobarForm.getRawValue();
+    valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor));
     this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
     this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
       // console.log("Aqui tus datos: ", response)
@@ -60,7 +67,6 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
       `La solicitud ha sido aprobada.`,
       'success'
     )
-    // console.log("Aqui tus datos: ", this.actualizacion)
   }
 
   /**

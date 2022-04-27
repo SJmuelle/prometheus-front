@@ -6,15 +6,19 @@
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Confirmar el valor de las deduciones del empleado:</mat-label>
-                    <input type="number" matInput formControlName="valorDeduccionEmpleado">
-                    <mat-error *ngIf="frm.valorDeduccionEmpleado.errors?.required">
+                    <input type="text" matInput [formControlName]="'valor'" (keyup)="escritura(frm.valor.value)">
+                    <!-- <input type="text" class="text-left" matInput currencyMask [formControlName]="'valor'" > -->
+                    <!-- <mat-hint><em>No se debe exceder el monto $ {{monto | number}}</em></mat-hint> -->
+                    <mat-error *ngIf="frm.valor.errors?.required">
                       Campo requerido.
                     </mat-error>
-                    <mat-error *ngIf="frm.valorDeduccionEmpleado.errors?.min">
+                    <mat-error *ngIf="frm.valor.errors?.min">
                         Solo valores mayores a 0.
                     </mat-error>
+                    <mat-error *ngIf="frm.valor.errors?.max">
+                        No se puede exceder el monto {{monto}}
+                    </mat-error>
                 </mat-form-field>
-    
             </div>
 
             <div class="w-full">
@@ -36,9 +40,8 @@
     
                 <mat-form-field class="w-full">
                     <mat-label>Detalle de aprobación: </mat-label>
-                    <textarea matInput formControlName="detalle" cdkTextareaAutosize 
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" 
-                    (keyup)="contarCaracteres($event)"></textarea>
+                    <textarea class="tamano" matInput formControlName="detalle" rows="5" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
+                    <mat-hint><em>{{contador}} de 500 caracteres</em></mat-hint>
                     <mat-error *ngIf="frm.detalle.errors?.required">
                         Campo requerido.
                       </mat-error>
@@ -46,9 +49,6 @@
                           Maximo 500 caracteres.
                       </mat-error>
                 </mat-form-field>
-                <div class="flex flex-row w-100 justify-end">
-                    <span> <em>{{contador}} de 500 caracteres</em> </span>
-                </div>
     
             </div>
     
@@ -58,6 +58,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado)">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valorDeduccionEmpleado)">Guardar</button>
     <button mat-button mat-dialog-close id="cancelar">Cancel</button>
 </mat-dialog-actions>
