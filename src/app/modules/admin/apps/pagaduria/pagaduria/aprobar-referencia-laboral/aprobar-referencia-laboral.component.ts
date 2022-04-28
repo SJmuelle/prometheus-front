@@ -19,6 +19,7 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   monto:number = this.data.monto
   valorDeduccionEmpleado:number;
   escrito:string;
+  valorNum:number;
   estado:any = 'A'; // almacenar estado de aprobado
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
@@ -32,7 +33,7 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   constructor(private fb: FormBuilder, public pagaduria: PagaduriaService, private dialog: MatDialogRef<AprobarReferenciaLaboralComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.AprobarForm = this.fb.group({
-      valor: ['', [Validators.required, Validators.min(1), Validators.max(this.data.monto)]],
+      valor: ['', [Validators.required, Validators.min(1), Validators.max(this.monto)]],
       procesoDiciplinario: ['', [Validators.required]],
       detalle: ['', [Validators.required, Validators.maxLength(500)]]
     })
@@ -42,9 +43,22 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     console.log(this.data.monto)
   }
 
-  escritura(valor){
-    toNumber(this.pagaduria.formatearNumero(valor))
-    console.log('Aqui estoy: ',toNumber(valor))
+  convText(valorDeduccionEmpleado){
+    const {valor} = this.AprobarForm.getRawValue();
+    valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor))
+    this.valorNum = valorDeduccionEmpleado
+    console.log('numero: ', this.valorNum)
+    if (this.valorNum>this.monto) {
+      // this.frm.valor.setValidators(Validators.max(this.monto))
+      this.frm.valor.setErrors({});
+    }
+  }
+
+  convNum(){
+    // this.convText(this.valorNum)
+    const {valor} = this.AprobarForm.getRawValue();
+    Number(valor);
+    console.log('numero: ', valor)
   }
 
   /**
@@ -59,9 +73,9 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     const {detalle} = this.AprobarForm.getRawValue();
     valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor));
     this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
-    this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
-      // console.log("Aqui tus datos: ", response)
-    })
+    // this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
+    //   // console.log("Aqui tus datos: ", response)
+    // })
     Swal.fire(
       '¡Correcto!',
       `La solicitud ha sido aprobada.`,

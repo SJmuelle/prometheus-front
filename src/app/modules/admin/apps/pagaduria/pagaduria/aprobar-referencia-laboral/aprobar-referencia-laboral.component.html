@@ -6,7 +6,7 @@
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Confirmar el valor de las deduciones del empleado:</mat-label>
-                    <input type="text" matInput [formControlName]="'valor'" (keyup)="escritura(frm.valor.value)">
+                    <input type="text" matInput [formControlName]="'valor'" value="valorNum" (keyup)="frm.valor.setValue(pagaduria.formatearNumero(frm.valor.value)); convText(frm.valor.value)">
                     <!-- <input type="text" class="text-left" matInput currencyMask [formControlName]="'valor'" > -->
                     <!-- <mat-hint><em>No se debe exceder el monto $ {{monto | number}}</em></mat-hint> -->
                     <mat-error *ngIf="frm.valor.errors?.required">

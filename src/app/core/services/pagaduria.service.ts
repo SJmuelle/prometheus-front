@@ -51,8 +51,7 @@ export class PagaduriaService {
    * @description: Asegurar que los campos de valor tengan formato de numero
    */
   public formatearNumero(value: string){
-    const valor: string = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    console.log(valor)
+    const valor: string = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     return valor;
   }
 
@@ -64,6 +63,7 @@ export class PagaduriaService {
         return 0;
     }else {
         const valor = value.replace(/,/g, '');
+        // console.log(valor)
         return valor;
     }
   }
