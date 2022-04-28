@@ -8,9 +8,7 @@
     
                 <mat-form-field class="w-full">
                     <mat-label>Comentario: </mat-label>
-                    <textarea matInput formControlName="detalle" cdkTextareaAutosize 
-                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="10" 
-                    (keyup)="contarCaracteres($event)"></textarea>
+                    <textarea matInput formControlName="detalle" rows="4" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
                     <mat-error *ngIf="frm.detalle.errors?.required">
                         Campo requerido.
                       </mat-error>
@@ -30,6 +28,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="ReactivarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="ReactivarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

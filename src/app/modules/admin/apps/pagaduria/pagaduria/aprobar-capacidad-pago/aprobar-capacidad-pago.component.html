@@ -27,6 +27,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

@@ -1,4 +1,3 @@
-import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -34,9 +33,7 @@ export class RechazarReferenciaLaboralComponent implements OnInit {
       detalle: ['', [Validators.required, Validators.maxLength(500)]]
     })
   }
-
-  @ViewChild('autosize') autosize: CdkTextareaAutosize; //controlar el tamaño del textarea a medida que se escribe.
-
+  
   ngOnInit(): void {
   }
 

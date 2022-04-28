@@ -16,11 +16,10 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   contador = 0; //contar los caracteres restantes en el textarea
   id: any = this.data.id; // almacenar el codigo de solicitud
   tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
-  monto:number = this.data.monto
-  valorDeduccionEmpleado:number;
-  escrito:string;
-  valorNum:number;
+  monto:number = this.data.monto // almacenar el monto para validacion
+  valorNum:number; // almacenar el valor digitado en el input de valor
   estado:any = 'A'; // almacenar estado de aprobado
+  numPattern: any = /^(0|[1-9][0-9]*)$/
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
   /**
@@ -33,32 +32,25 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   constructor(private fb: FormBuilder, public pagaduria: PagaduriaService, private dialog: MatDialogRef<AprobarReferenciaLaboralComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.AprobarForm = this.fb.group({
-      valor: ['', [Validators.required, Validators.min(1), Validators.max(this.monto)]],
+      valor: ['', [Validators.required, Validators.pattern(this.numPattern), Validators.min(1), Validators.max(this.monto)]],
       procesoDiciplinario: ['', [Validators.required]],
       detalle: ['', [Validators.required, Validators.maxLength(500)]]
     })
   }
 
   ngOnInit(): void {
-    console.log(this.data.monto)
   }
 
+  /**
+   * @description: convertir a numero el texto que se va digitando
+   */
   convText(valorDeduccionEmpleado){
     const {valor} = this.AprobarForm.getRawValue();
     valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor))
     this.valorNum = valorDeduccionEmpleado
-    console.log('numero: ', this.valorNum)
     if (this.valorNum>this.monto) {
-      // this.frm.valor.setValidators(Validators.max(this.monto))
-      this.frm.valor.setErrors({});
+      this.frm.valor.setErrors({max: true});
     }
-  }
-
-  convNum(){
-    // this.convText(this.valorNum)
-    const {valor} = this.AprobarForm.getRawValue();
-    Number(valor);
-    console.log('numero: ', valor)
   }
 
   /**
@@ -73,14 +65,13 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     const {detalle} = this.AprobarForm.getRawValue();
     valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor));
     this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
-    // this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
-    //   // console.log("Aqui tus datos: ", response)
-    // })
+    this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{})
     Swal.fire(
       '¡Correcto!',
       `La solicitud ha sido aprobada.`,
       'success'
     )
+    // console.log(this.actualizacion)
   }
 
   /**

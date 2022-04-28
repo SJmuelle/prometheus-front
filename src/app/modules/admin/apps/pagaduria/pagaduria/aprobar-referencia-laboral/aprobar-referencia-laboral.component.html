@@ -7,8 +7,7 @@
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Confirmar el valor de las deduciones del empleado:</mat-label>
                     <input type="text" matInput [formControlName]="'valor'" value="valorNum" (keyup)="frm.valor.setValue(pagaduria.formatearNumero(frm.valor.value)); convText(frm.valor.value)">
-                    <!-- <input type="text" class="text-left" matInput currencyMask [formControlName]="'valor'" > -->
-                    <!-- <mat-hint><em>No se debe exceder el monto $ {{monto | number}}</em></mat-hint> -->
+                    <mat-hint><em>No se debe exceder el monto: {{monto | currency}}</em></mat-hint>
                     <mat-error *ngIf="frm.valor.errors?.required">
                       Campo requerido.
                     </mat-error>
@@ -16,7 +15,10 @@
                         Solo valores mayores a 0.
                     </mat-error>
                     <mat-error *ngIf="frm.valor.errors?.max">
-                        No se puede exceder el monto {{monto}}
+                        No se puede exceder el monto {{monto | number}}
+                    </mat-error>
+                    <mat-error *ngIf="frm.valor.errors?.pattern">
+                        Solo numeros.
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -58,6 +60,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="color_fintra text-white" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valorDeduccionEmpleado)">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="text-white w-30 permitir bloquear" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valorNum)">Guardar</button>
     <button mat-button mat-dialog-close id="cancelar">Cancel</button>
 </mat-dialog-actions>
