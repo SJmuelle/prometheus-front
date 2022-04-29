@@ -10,10 +10,10 @@ export class FormDialogoChecklistComponent implements OnInit {
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   constructor(
     private fabricaCreditoService: FabricaCreditoService,
-  ) { }
+  ) { } 
 
   ngOnInit(): void {
-    // this.consulta()
+    this.consulta()
   }
 
 
