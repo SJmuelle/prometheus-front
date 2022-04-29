@@ -35,7 +35,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
 import { GridDevolucionesComponent } from './grid-devoluciones/grid-devoluciones.component';
 import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form-dialog-devoluciones.component';
-
+import { FuseDrawerModule } from '@fuse/components/drawer';
 
 
 @NgModule({
@@ -77,6 +77,7 @@ import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form
         Ng2SearchPipeModule,
         PdfViewerModule,
         NgxPaginationModule,
+        FuseDrawerModule
 
     ],
 

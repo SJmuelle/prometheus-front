@@ -27,6 +27,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public documentoComparado: FormControl = new FormControl('seleccione');
   public numeroSolicitud: string;
   public habilitarComparar: boolean = false;
+  public datosDocumentosHistorico: any[] = [];
   // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
   constructor(
       private route: ActivatedRoute,
@@ -49,14 +50,18 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
               this.getDocumentos(data);
               this.datosDocumentos = data;
           }
+          
+          console.log('eses'+this.datosDocumentos);
       });
   }
+
   /**
    * @description: Metodo para descargar documentos
    */
   public onDescargar(item: any): void {
       this.getDocumento(item);
   }
+
   /**
    * @description: Seleccion de check
    */
@@ -68,6 +73,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
               }
               return x;
           });
+          console.log('hola'+this.documentos);
           const datos: any = {
               numeroSolicitud: this.numeroSolicitud,
               idAdjunto: item.idArchivoCargado
@@ -97,9 +103,17 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
   public onEliminarDocumento(item: any): void {
       const datos: any = {
           numeroSolicitud: Number(this.numeroSolicitud),
-          idArchivoCargado: Number(item.idArchivoCargado)
+          idArchivoCargado: Number(item.idArchivoCargado),
+          aplicaHistorial:'S'
       };
       this.eliminarDocumentos(datos);
+  }
+  
+  /**
+   * @description: Metodo para descargar documentos
+   */
+  public onHistorico(item: any): void {
+      this.getDocumentoHistorico(item);
   }
 
   public subirArchivo(input: any, item: any): void {
@@ -260,6 +274,32 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
           );
       });
   }
+
+  private getDocumentoHistorico(datos: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    const datosHistorico = {
+        numeroSolicitud: this.numeroSolicitud,
+        idTipoArchivo: datos.idArchivo,
+        unidadNegocio: datos.idUnidNegocio.toString(),
+        tipoUltracem: this.datosDocumentos.tipoDocumento
+    };
+    this.documentosServices.getDocumentoHistorico(datosHistorico).subscribe((res) => {
+        this.datosDocumentosHistorico = res.data;
+        console.log('aqui'+res.data);
+        Swal.close();
+    });
+}
+private getDownloadHistorico(data: any){
+    const archivo = data.base64.split(',')[1];
+    const extension = data.nombreArchivo.split('.')[1];
+    // console.log(extension);
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    link.href = `data:application/${extension};base64,${archivo}`;
+    link.target = '_self';
+    link.download = data.nombreArchivo;
+    link.click();
+}
 
     ngOnDestroy(): void {
       this.unsubscribe$.unsubscribe();
