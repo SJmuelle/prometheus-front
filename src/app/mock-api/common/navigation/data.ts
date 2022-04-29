@@ -168,7 +168,7 @@ export const compactNavigation: FuseNavigationItem[] = [
     },
     {
         id: 'pagaduria',
-        title: 'Pagaduria',
+        title: 'Pagadurías',
         type: 'basic',
         link: '/pagaduria/par',
         icon: 'heroicons_outline:cash'

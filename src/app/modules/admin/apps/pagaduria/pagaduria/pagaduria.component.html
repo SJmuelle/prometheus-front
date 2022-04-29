@@ -1,11 +1,11 @@
 <div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
     <div class="grid grid-cols-12 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Gestion de solicitudes</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Gestión  de solicitudes</h2>
     </div>
 
     <form [formGroup]="solicitudForm">
 
-        <div class="flex flex-row w-100 justify-start gap-4">
+        <div class="flex flex-row w-100 justify-start gap-4 mb-4">
             <div>
                 <p class="text-xl font-medium">Tipo: </p>
             </div>
@@ -29,7 +29,7 @@
 
     </form>
 
-    <hr class="w-full" [hidden]="mostrar==false">
+    <!-- <hr class="w-full" [hidden]="mostrar==false"> -->
 
         <div class="inline-flex w-full justify-between" [hidden]="mostrar==false">
 
@@ -47,7 +47,7 @@
             
             <div>
                 <input
-                    class="border rounded p-2 bg-gray-100"
+                    class="border rounded p-2 bg-gray-100 w-96"
                     style="font-size: 10px; margin-right: 1em"
                     type="text"
                     autocomplete="off"
@@ -61,22 +61,22 @@
             <table class="w-full shadow p-1">
                 <thead style="background-color: #F9FAFB;">
                     <tr
-                        class=" text-md font-semibold
+                        class="text-md font-semibold
                             tracking-wide text-left text-gray-400
                             capitalize border-b border-gray-600">
-                        <th class="px-4 py-3 text-center">N°de identificacion</th>
-                        <th class="px-4 py-3 text-center">Nombres</th>
-                        <th class="px-4 py-3 text-center">Apellidos</th>
-                        <th class="px-4 py-3 text-center">#de solicitud</th>
-                        <th class="px-4 py-3 text-center">Fecha de solicitud</th>
-                        <th class="px-4 py-3 text-center">Monto</th>
-                        <th class="px-4 py-3 text-center">Plazo(meses)</th>
-                        <th class="px-4 py-3 text-center">Valor cuota</th>
-                        <th class="px-4 py-3 text-center">Destino</th>
-                        <th class="px-4 py-3 text-center" *ngIf="estado=='P'">Anexo</th>
-                        <th class="px-4 py-3 text-center" *ngIf="estado=='R'">Fecha de rechazo</th>
-                        <th class="px-4 py-3 text-center">Accion</th>
-                        <th class="px-4 py-3 text-center" *ngIf="estado=='A'">Fecha de aprobacion</th>
+                        <th class="px-4 py-3 text-center text-base"><div class="w-36">N°de identificación</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Nombres</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Apellidos</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">#de solicitud</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Fecha de solicitud</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Monto ($)</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Plazo (meses)</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Valor cuota</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-40">Destino</div></th>
+                        <th class="px-4 py-3 text-center" *ngIf="estado=='P'"><div class="w-30">Anexo</div></th>
+                        <th class="px-4 py-3 text-center" *ngIf="estado=='R'"><div class="w-30">Fecha de rechazo</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Acción</div></th>
+                        <th class="px-4 py-3 text-center" *ngIf="estado=='A'"><div class="w-36">Fecha de aprobacion</div></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
@@ -95,10 +95,10 @@
                         </td>
                         <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
                         <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='P'">
-                            <div *ngIf="item.destino!='SANEAMIENTO FINANCIERO' && item.destino!='COMPRA DE CARTERA'">
+                            <div *ngIf="item.tipo=='RL'">
                                 <a class="cursor-pointer" (click)="descargarArchivo(item.numero_solicitud)"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
                             </div>
-                            <div *ngIf="item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA DE CARTERA'">
+                            <div *ngIf="item.tipo=='CP' && (item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA CARTERA')">
                                 <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
                             </div>
                         </td>

@@ -89,6 +89,7 @@ export class PagaduriaComponent implements OnInit {
       Swal.close();
       if (response) {
         this.solicitudes = response.data;
+        console.log(this.solicitudes)
       }
     });
   }

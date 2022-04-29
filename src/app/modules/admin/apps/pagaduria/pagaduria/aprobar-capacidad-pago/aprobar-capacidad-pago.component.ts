@@ -31,7 +31,7 @@ export class AprobarCapacidadPagoComponent implements OnInit {
   constructor(private fb: FormBuilder, private pagaduria: PagaduriaService, private dialog: MatDialogRef<AprobarCapacidadPagoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.AprobarForm = this.fb.group({
-      detalle: ['', [Validators.required, Validators.maxLength(500)]]
+      detalle: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(500)]]
     })
   }
 

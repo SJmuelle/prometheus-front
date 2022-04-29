@@ -16,10 +16,9 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   contador = 0; //contar los caracteres restantes en el textarea
   id: any = this.data.id; // almacenar el codigo de solicitud
   tipo: any = this.data.tipo; // almacenar el tipo de la solicitud
-  monto:number = this.data.monto // almacenar el monto para validacion
   valorNum:number; // almacenar el valor digitado en el input de valor
   estado:any = 'A'; // almacenar estado de aprobado
-  numPattern: any = /^(0|[1-9][0-9]*)$/
+  numPattern: any = /(0|[1-9][0-9]*)$/; // expresion regular para validar que solo se digitan numeros.
   actualizacion:any = {}; // almacenar toda la data que sera enviada a la api
 
   /**
@@ -32,9 +31,9 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
   constructor(private fb: FormBuilder, public pagaduria: PagaduriaService, private dialog: MatDialogRef<AprobarReferenciaLaboralComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.AprobarForm = this.fb.group({
-      valor: ['', [Validators.required, Validators.pattern(this.numPattern), Validators.min(1), Validators.max(this.monto)]],
+      valor: ['', [Validators.required, Validators.pattern(this.numPattern), Validators.min(1)]],
       procesoDiciplinario: ['', [Validators.required]],
-      detalle: ['', [Validators.required, Validators.maxLength(500)]]
+      detalle: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(500)]]
     })
   }
 
@@ -48,9 +47,6 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     const {valor} = this.AprobarForm.getRawValue();
     valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor))
     this.valorNum = valorDeduccionEmpleado
-    if (this.valorNum>this.monto) {
-      this.frm.valor.setErrors({max: true});
-    }
   }
 
   /**
@@ -71,7 +67,7 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
       `La solicitud ha sido aprobada.`,
       'success'
     )
-    // console.log(this.actualizacion)
+    console.log(this.actualizacion)
   }
 
   /**
