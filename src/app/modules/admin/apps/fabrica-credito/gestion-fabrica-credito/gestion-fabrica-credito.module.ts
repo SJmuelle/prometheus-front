@@ -35,9 +35,13 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
 import { GridDevolucionesComponent } from './grid-devoluciones/grid-devoluciones.component';
 import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form-dialog-devoluciones.component';
+<<<<<<< HEAD
 import { FormDialogoChecklistComponent } from './form-dialogo-checklist/form-dialogo-checklist.component';
 import { MatListModule } from '@angular/material/list';
 
+=======
+import { FuseDrawerModule } from '@fuse/components/drawer';
+>>>>>>> 091ba5fb3f68a9b8bd136c801d393427445c687d
 
 
 @NgModule({
@@ -80,7 +84,11 @@ import { MatListModule } from '@angular/material/list';
         Ng2SearchPipeModule,
         PdfViewerModule,
         NgxPaginationModule,
+<<<<<<< HEAD
         MatListModule
+=======
+        FuseDrawerModule
+>>>>>>> 091ba5fb3f68a9b8bd136c801d393427445c687d
 
     ],
 
