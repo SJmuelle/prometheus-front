@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 
 @Component({
@@ -8,22 +9,25 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 })
 export class FormDialogoChecklistComponent implements OnInit {
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
+
   constructor(
     private fabricaCreditoService: FabricaCreditoService,
-  ) { } 
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) { }
 
   ngOnInit(): void {
-    this.consulta()
+    console.log(this.data)
+    // this.consulta()
   }
 
 
-  consulta(){
-     this.fabricaCreditoService.getCheckList('data')
-            .subscribe(({ data }) => {
-                if (data) {
-                  
-                }
-        });
+  consulta() {
+    this.fabricaCreditoService.getCheckList(this.data)
+      .subscribe(({ data }) => {
+        if (data) {
+
+        }
+      });
   }
 
 
