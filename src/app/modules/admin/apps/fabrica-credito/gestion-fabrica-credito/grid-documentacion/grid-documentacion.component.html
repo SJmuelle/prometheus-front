@@ -81,12 +81,13 @@
                         </td>
                         <td class="px-2 text-sm border text-center">
                             <ng-container *ngIf="item.historico !== 'N'">
-                                <button mat-icon-button matTooltip="Ver Versiones anteriores" (click)="onHistorico(item);settingsDrawer.toggle()">
+                                <button mat-icon-button matTooltip="Ver Versiones anteriores"
+                                    (click)="onHistorico(item);settingsDrawer.toggle()">
                                     <mat-icon svgIcon="format_list_numbered"></mat-icon>
                                 </button>
                             </ng-container>
                         </td>
-                       
+
                         <!--<ng-container *ngIf="longitudArchivos && item.archivoCargado !== 'N'">
                                 <td class="px-2 py-2 text-sm border text-center">
                                     &lt;!&ndash;<ng-container *ngIf="item.archivoCargado !== 'N'">
@@ -142,7 +143,7 @@
             <!-- <file-manager-details class="ng-star-inserted" style=""> -->
             <ng-container *ngFor="let item of datosDocumentosHistorico; let  i = index">
                 <div class="flex flex-col flex-auto p-6 md:p-8">
-                    <div class="flex items-center justify-end">
+                    <!-- <div class="flex items-center justify-end">
                         <button mat-icon-button=""
                                 class="mat-focus-indicator mat-icon-button mat-button-base" tabindex="0">
                             <span class="mat-button-wrapper">
@@ -166,34 +167,51 @@
                                   class="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
                             <span class="mat-button-focus-overlay"></span>
                         </button>
+                    </div> -->
+                    <div class="flex flex-col items-start mt-1">
+                        <div class="text-xl font-medium">{{item.referenciaArchivo}}</div>
                     </div>
-                    <div class="aspect-w-9 aspect-h-6 mt-8">
+                    <div class="aspect-w-9 aspect-h-6 mt-8">                       
                         <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">
                             <!---->
-                            <mat-icon role="img"
-                                class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
-                                aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
-                                data-mat-icon-namespace="iconsmind"><svg width="100%" height="100%" viewBox="0 0 32 32"
-                                    x="280" y="1624" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
-                                    <path
-                                        d="M27.733 32h-23.467c-0.294 0-0.533-0.24-0.533-0.533v-23.467c0-0.142 0.057-0.277 0.156-0.378l7.467-7.467c0.1-0.1 0.236-0.156 0.378-0.156h16c0.293 0 0.533 0.239 0.533 0.533v30.933c0 0.293-0.24 0.533-0.533 0.533zM4.8 30.933h22.4v-29.867h-15.246l-7.154 7.154v22.713z">
-                                    </path>
-                                    <path
-                                        d="M11.733 8.533h-6.933c-0.294 0-0.533-0.239-0.533-0.533s0.239-0.533 0.533-0.533h6.4v-6.4c0-0.294 0.239-0.533 0.533-0.533s0.533 0.239 0.533 0.533v6.933c0 0.294-0.239 0.533-0.533 0.533z">
-                                    </path>
-                                </svg>
-                            </mat-icon>
+                            <ng-container *ngIf="item.extension === 'pdf'">
+                                <pdf-viewer [src]="item.base64" [render-text]="true" [original-size]="false"
+                                    [show-all]="true" style="width: 98%; height: 37vh">
+                                </pdf-viewer>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="item.extension === 'jpeg' || item.extension === 'jpg' || item.extension === 'png'">
+                                <img [src]="item.base64" alt="" style="width: 98%; height: 37vh">
+                            </ng-container>
+                            <ng-container
+                                *ngIf="item.extension !== 'pdf' && item.extension !== 'jpeg' && item.extension !== 'jpg' && item.extension !== 'png'">
+                                <mat-icon role="img"
+                                    class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
+                                    aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
+                                    data-mat-icon-namespace="iconsmind"><svg width="100%" height="100%"
+                                        viewBox="0 0 32 32" x="280" y="1624" fit="" preserveAspectRatio="xMidYMid meet"
+                                        focusable="false">
+                                        <path
+                                            d="M27.733 32h-23.467c-0.294 0-0.533-0.24-0.533-0.533v-23.467c0-0.142 0.057-0.277 0.156-0.378l7.467-7.467c0.1-0.1 0.236-0.156 0.378-0.156h16c0.293 0 0.533 0.239 0.533 0.533v30.933c0 0.293-0.24 0.533-0.533 0.533zM4.8 30.933h22.4v-29.867h-15.246l-7.154 7.154v22.713z">
+                                        </path>
+                                        <path
+                                            d="M11.733 8.533h-6.933c-0.294 0-0.533-0.239-0.533-0.533s0.239-0.533 0.533-0.533h6.4v-6.4c0-0.294 0.239-0.533 0.533-0.533s0.533 0.239 0.533 0.533v6.933c0 0.294-0.239 0.533-0.533 0.533z">
+                                        </path>
+                                    </svg>
+                                </mat-icon>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="flex flex-col items-start mt-2">
                         <div class="text-xl font-medium">{{item.nombreCategoria}}</div>
-                        
-                        <ng-container *ngIf="item.extension !== 'PDF'">
-                            <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600"> XLS
+
+                        <ng-container *ngIf="item.extension !== 'pdf'">
+                            <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                {{item.extension | uppercase}}
                             </div>
                         </ng-container>
-                       
-                        <ng-container *ngIf="item.extension == 'PDF'">
+
+                        <ng-container *ngIf="item.extension === 'pdf'">
                             <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600"> PDF
                             </div>
                         </ng-container>
@@ -215,16 +233,16 @@
                         <div class="flex items-center justify-between py-1">
                             <div class="text-secondary">Fecha de Anulacion</div>
                             <div>June 02, 2020</div>
-                        </div>                   
+                        </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 w-full mt-8">
-                        <button mat-flat-button=""
-                                class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary">
+                    <div class="grid grid-cols-2 gap-4 w-full mt-5">
+                        <button mat-flat-button="" matTooltip="Descargar documento"
+                            class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary"
+                            (click)="getDownloadHistorico(item)">
                             <span class="mat-button-wrapper"> Descargar </span>
-                            <span matripple=""
-                                  class="mat-ripple mat-button-ripple"></span>
+                            <span matripple="" class="mat-ripple mat-button-ripple"></span>
                             <span class="mat-button-focus-overlay"></span>
-                        </button>                        
+                        </button>
                     </div>
                 </div>
             </ng-container>
