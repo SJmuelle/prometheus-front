@@ -148,7 +148,7 @@ export const compactNavigation: FuseNavigationItem[] = [
         title: 'Crédito',
         type: 'aside',
         icon: 'mat_outline:attach_money',
-        children: [ 
+        children: [
             {
                 id: 'agenda-comercial.list',
                 title: 'Agenda de comercial',
@@ -162,13 +162,28 @@ export const compactNavigation: FuseNavigationItem[] = [
                 type: 'basic',
                 link: '/credit-factory/agenda-completion',
                 icon: 'heroicons_outline:document-text',
-            }, 
+            },
             {
                 id: 'agenda-referenciacion.list',
-                title: 'Agenda de referenciación y desición',
+                title: 'Agenda de referenciación y decisión',
                 type: 'basic',
                 link: '/credit-factory/agenda-referencing',
                 icon: 'heroicons_outline:document',
+            },
+            {
+                id: 'parametria',
+                title: 'Parametria',
+                type: 'collapsable',
+                icon: 'heroicons_outline:check-circle',
+                children: [
+                    {
+                        id: 'parametria.fabrica',
+                        title: 'Listado de Chequeo',
+                        // icon: 'heroicons_outline:minus-sm',
+                        type: 'basic',
+                        link: '/credit-factory/parametria',
+                    },
+                ],
             },
 
         ]

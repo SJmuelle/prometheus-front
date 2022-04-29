@@ -21,10 +21,10 @@
 
                 </div>
                 <div class="flex items-center ml-6">
-                    <button class="hidden sm:inline-flex ml-3" mat-flat-button [color]="'primary'">
+                    <!-- <button class="hidden sm:inline-flex ml-3" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:save'"></mat-icon>
                         <span class="ml-2">Exportar</span>
-                    </button>
+                    </button> -->
 
                     <!-- Actions menu (visible on xs) -->
                     <div class="sm:hidden">
@@ -68,7 +68,7 @@
                     <div class="mr-3 flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
                         (click)="cambiarEstado(false)">
                         <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
-                        [svgIcon]="'heroicons_solid:exclamation-circle'">
+                        [svgIcon]="'radio_button_checked'">
                         </mat-icon>
                         {{item.nombre_unidad_negocio}}:   {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}}
                     </div>
@@ -260,7 +260,7 @@
                                                 </span>
                                                 <small class="text-xs">{{ item.fechaDevolucion}}</small>
                                             </div>
-                                            <button mat-icon-button matTooltip="ver devolución"
+                                            <button mat-icon-button matTooltip="ver devolución" *ngIf="item.numeroIntentos>0"
                                                 (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
                                                 <mat-icon
                                                     [svgIcon]="item.mostrarDevolucion=='f'?'heroicons_solid:chevron-down':'heroicons_solid:chevron-up'">
@@ -308,14 +308,7 @@
 
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
-                                                        expedita
-                                                        aliquam itaque eveniet quos porro ex officiis magnam quaerat
-                                                        ipsam
-                                                        ut
-                                                        quo reprehenderit doloremque asperiores, facere quis.
-                                                        Voluptatibus,
-                                                        minima consectetur.
+                                                        {{item.observacionDevolucion}}
                                                     </div>
 
                                                 </div>
@@ -336,33 +329,26 @@
                                                     <div class="flex items-center w-full">
                                                         <!-- Sender name -->
                                                         <div class="mr-2 font-semibold truncate">
-                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
+                                                            <span>Usuario: </span> {{ item.usuarioReintegroDevolucion}}
                                                         </div>
 
                                                         <!-- Date -->
                                                         <div
                                                             class="ml-auto text-xs text-right whitespace-nowrap text-hint">
-                                                            {{ cambiarFecha(item.fechaDevolucion) }}
+                                                            {{ cambiarFecha(item.fechaReintegroDevolucion) }}
                                                         </div>
                                                     </div>
 
                                                     <!-- Subject -->
                                                     <div class="flex items-center w-full mt-1">
                                                         <span class="leading-4 truncate">
-                                                            {{item.causalDevolucion}}
+                                                            {{item.causalReintegroDevolucion}}
                                                         </span>
                                                     </div>
 
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
-                                                        expedita
-                                                        aliquam itaque eveniet quos porro ex officiis magnam quaerat
-                                                        ipsam
-                                                        ut
-                                                        quo reprehenderit doloremque asperiores, facere quis.
-                                                        Voluptatibus,
-                                                        minima consectetur.
+                                                        {{item.observacionReintegroDevolucion}}
                                                     </div>
 
                                                 </div>

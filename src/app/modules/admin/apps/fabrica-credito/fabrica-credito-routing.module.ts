@@ -4,12 +4,17 @@ import {AgendaCompletacionModule} from './agenda-completacion/agenda-completacio
 import {GestionFabricaCreditoModule} from './gestion-fabrica-credito/gestion-fabrica-credito.module';
 import {AgendaReferenciacionModule} from "./agenda-referenciacion/agenda-referenciacion.module";
 import {AgendaComercialModule} from "./agenda-comercial/agenda-comercial.module";
+import { ParametriaModule } from './parametria/parametria.module';
 
 
 const routes: Routes = [
     {
         path: '',
         children: [
+            {
+                path: 'parametria',
+                loadChildren: () => ParametriaModule
+            },
             {
                 path: 'agenda-comercial',
                 loadChildren: () => AgendaComercialModule
