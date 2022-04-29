@@ -1,4 +1,4 @@
-<div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+<div class="py-2 px-3 w-100 bg-white rounded-lg">
     <div class="grid grid-cols-12 w-100 mb-2">
         <h2 class="text-gray-900 col-span-12 mb-4">Gestión  de solicitudes</h2>
     </div>
@@ -31,7 +31,7 @@
 
     <!-- <hr class="w-full" [hidden]="mostrar==false"> -->
 
-        <div class="inline-flex w-full justify-between" [hidden]="mostrar==false">
+        <div class="mb-4 inline-flex w-full justify-between" [hidden]="mostrar==false">
 
             <div class="flex flex-row justify-between w-1/3 xl:w-1/4">
                 <button mat-button class="text-white w-30 permitir bloquear" (click)="pendiente('P')" [disabled]="estado=='P'">
@@ -57,44 +57,69 @@
             </div>
         </div>
 
-        <div class="mt-4 h-60 xl:overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160" [hidden]="mostrar==false">
+        <div [hidden]="mostrar==false">
             <table class="w-full shadow p-1">
                 <thead style="background-color: #F9FAFB;">
                     <tr
                         class="text-md font-semibold
                             tracking-wide text-left text-gray-400
-                            capitalize border-b border-gray-600">
-                        <th class="px-4 py-3 text-center text-base"><div class="w-36">N°de identificación</div></th>
-                        <th class="px-4 py-3 text-center"><div class="w-30">Nombres</div></th>
-                        <th class="px-4 py-3 text-center"><div class="w-30">Apellidos</div></th>
-                        <th class="px-4 py-3 text-center"><div class="w-30">#de solicitud</div></th>
-                        <th class="px-4 py-3 text-center"><div class="w-30">Fecha de solicitud</div></th>
+                             border-b border-gray-600">
+                        <th class="px-4 py-3 text-center text-base"><div class="w-36">Acciones</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Solicitud</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Fecha solicitud</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Identificacion</div></th>
+                        <th class="px-4 py-3 text-center"><div class="w-30">Nombre</div></th>
                         <th class="px-4 py-3 text-center"><div class="w-30">Monto ($)</div></th>
                         <th class="px-4 py-3 text-center"><div class="w-30">Plazo (meses)</div></th>
                         <th class="px-4 py-3 text-center"><div class="w-30">Valor cuota</div></th>
                         <th class="px-4 py-3 text-center"><div class="w-40">Destino</div></th>
                         <th class="px-4 py-3 text-center" *ngIf="estado=='P'"><div class="w-30">Anexo</div></th>
                         <th class="px-4 py-3 text-center" *ngIf="estado=='R'"><div class="w-30">Fecha de rechazo</div></th>
-                        <th class="px-4 py-3 text-center"><div class="w-30">Acción</div></th>
                         <th class="px-4 py-3 text-center" *ngIf="estado=='A'"><div class="w-36">Fecha de aprobacion</div></th>
                     </tr>
                 </thead>
                 <tbody class="bg-white">
                     <tr class="text-gray-700" *ngFor="let item of solicitudes | filter: filtrarTabla">
-                        <td class="px-2 py-2 text-sm border text-center">{{item.identificacion}}</td>
-                        <td class="px-2 py-2 text-sm border text-center">{{item.nombres}}</td>
-                        <td class="px-2 py-2 text-sm border text-center">{{item.apellidos}}</td>
-                        <td class="px-2 py-2 text-sm border text-center">{{item.numero_solicitud}}</td>
-                        <td class="px-2 py-2 text-sm border text-center">{{item.fecha_solicitud}}</td>
-                        <td class="px-2 py-2 text-sm border text-center">$ {{item.monto | number}}</td>
-                        <td class="px-2 py-2 text-sm border text-center">{{item.plazo}}</td>
-                        <td class="px-2 py-2 text-sm border text-center" matTooltip="El
+                        <td class="text-sm border text-center" *ngIf="estado=='P'">
+    
+                            <div class="flex flex-row justify-center" *ngIf="item.tipo=='RL'">
+                                <div>
+                                    <mat-icon class="rounded-2xl hover:bg-green-400 hover:text-white text-green-400 cursor-pointer" (click)="AprobarReferenciaLaboral(item.numero_solicitud, item.tipo, item.monto)" ></mat-icon>
+                                </div>
+    
+                                <div>
+                                    <mat-icon class="rounded-2xl hover:bg-red-400 hover:text-white text-red-400 cursor-pointer" (click)="RechazarReferenciaLaboral(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                </div>
+                            </div>
+                            <div class="flex flex-row w-1/2 gap-3 justify-between" *ngIf="item.tipo=='CP'">
+                                <div>
+                                    <mat-icon class="rounded-2xl hover:bg-green-400 hover:text-white text-green-400 cursor-pointer" (click)="AprobarCapacidadPago(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                </div>
+    
+                                <div>
+                                    <mat-icon class="rounded-2xl hover:bg-red-400 hover:text-white text-red-400 cursor-pointer" (click)="RechazarCapacidadPago(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-sm border text-center" *ngIf="estado=='A'">
+                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
+                        </td>
+                        <td class="text-sm border text-center" *ngIf="estado=='R'">
+                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
+                        </td>
+                        <td class="text-sm border text-center">{{item.numero_solicitud}}</td>
+                        <td class="text-sm border text-center">{{item.fecha_solicitud}}</td>
+                        <td class="text-sm border text-center">{{item.identificacion}}</td>
+                        <td class="text-sm border text-center">{{item.nombres}} {{item.apellidos}}</td>
+                        <td class="text-sm border text-center">$ {{item.monto | number}}</td>
+                        <td class="text-sm border text-center">{{item.plazo}}</td>
+                        <td class="text-sm border text-center" matTooltip="El
                         valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
                             [matTooltipPosition]="posicion">
                             {{item.valor_cuota | currency}}
                         </td>
-                        <td class="px-2 py-2 text-sm border text-center">{{item.destino}}</td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='P'">
+                        <td class="text-sm border text-center">{{item.destino}}</td>
+                        <td class="text-sm border text-center" *ngIf="estado=='P'">
                             <div *ngIf="item.tipo=='RL'">
                                 <a class="cursor-pointer" (click)="descargarArchivo(item.numero_solicitud)"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
                             </div>
@@ -102,43 +127,9 @@
                                 <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
                             </div>
                         </td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='A'">
-                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
-                        </td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='R'">
-                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
-                        </td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='P'">
-    
-                            <div class="flex flex-row w-1/2 gap-3 justify-between" *ngIf="item.tipo=='RL'">
-                                <div>
-                                    <button mat-raised-button class="bg-green-400"  (click)="AprobarReferenciaLaboral(item.numero_solicitud, item.tipo, item.monto)">
-                                        <mat-icon>check</mat-icon>
-                                    </button>
-                                </div>
-    
-                                <div>
-                                    <button mat-raised-button class="bg-red-400" (click)="RechazarReferenciaLaboral(item.numero_solicitud, item.tipo)">
-                                        <mat-icon [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="flex flex-row w-1/2 gap-3 justify-between" *ngIf="item.tipo=='CP'">
-                                <div>
-                                    <button mat-raised-button class="bg-green-400"  (click)="AprobarCapacidadPago(item.numero_solicitud, item.tipo)">
-                                        <mat-icon>check</mat-icon>
-                                    </button>
-                                </div>
-    
-                                <div>
-                                    <button mat-raised-button class="bg-red-400" (click)="RechazarCapacidadPago(item.numero_solicitud, item.tipo)">
-                                        <mat-icon [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-2 py-2 text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_estado}}</td>
+                        <td class="text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
+                        
+                        <td class="text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_estado}}</td>
                     </tr>
                 </tbody>
             </table>
