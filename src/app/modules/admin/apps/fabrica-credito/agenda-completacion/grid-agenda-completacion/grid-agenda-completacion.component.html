@@ -21,10 +21,10 @@
 
                 </div>
                 <div class="flex items-center ml-6">
-                    <button class="hidden sm:inline-flex ml-3" mat-flat-button [color]="'primary'">
+                    <!-- <button class="hidden sm:inline-flex ml-3" mat-flat-button [color]="'primary'">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:save'"></mat-icon>
                         <span class="ml-2">Exportar</span>
-                    </button>
+                    </button> -->
 
                     <!-- Actions menu (visible on xs) -->
                     <div class="sm:hidden">
@@ -68,7 +68,7 @@
                     <div class="mr-3 flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
                         (click)="cambiarEstado(false)">
                         <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
-                        [svgIcon]="'heroicons_solid:exclamation-circle'">
+                        [svgIcon]="'radio_button_checked'">
                         </mat-icon>
                         {{item.nombre_unidad_negocio}}:   {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}}
                     </div>
