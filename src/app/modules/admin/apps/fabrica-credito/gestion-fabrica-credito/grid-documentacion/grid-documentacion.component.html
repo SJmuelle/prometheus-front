@@ -141,47 +141,40 @@
         <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
             <router-outlet class="ng-tns-c126-23"></router-outlet>
             <!-- <file-manager-details class="ng-star-inserted" style=""> -->
+            <div class="flex items-center justify-end">
+                <button mat-icon-button="" class="mat-focus-indicator mat-icon-button mat-button-base" tabindex="0">
+                    <span class="mat-button-wrapper">
+                        <mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true"
+                            data-mat-icon-type="svg" data-mat-icon-name="x" data-mat-icon-namespace="heroicons_outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" fit="" height="100%" width="100%"
+                                preserveAspectRatio="xMidYMid meet" focusable="false">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </mat-icon>
+                    </span>
+                    <span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                    <span class="mat-button-focus-overlay"></span>
+                </button>
+            </div>
             <ng-container *ngFor="let item of datosDocumentosHistorico; let  i = index">
-                <div class="flex flex-col flex-auto p-6 md:p-8">
-                    <!-- <div class="flex items-center justify-end">
-                        <button mat-icon-button=""
-                                class="mat-focus-indicator mat-icon-button mat-button-base" tabindex="0">
-                            <span class="mat-button-wrapper">
-                                <mat-icon role="img" 
-                                          class="mat-icon notranslate mat-icon-no-color" 
-                                          aria-hidden =  "true"
-                                          data-mat-icon-type="svg" 
-                                          data-mat-icon-name="x"
-                                          data-mat-icon-namespace="heroicons_outline">
-                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                         fill="none" viewBox="0 0 24 24" stroke="currentColor" fit="" height="100%"
-                                         width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
-                                        <path stroke-linecap="round" 
-                                              stroke-linejoin="round" 
-                                              stroke-width="2"
-                                              d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </mat-icon>
-                            </span>
-                            <span matripple=""
-                                  class="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
-                            <span class="mat-button-focus-overlay"></span>
-                        </button>
-                    </div> -->
+                <div class="flex flex-col flex-auto p-6 md:p-6">
+
                     <div class="flex flex-col items-start mt-1">
-                        <div class="text-xl font-medium">{{item.referenciaArchivo}}</div>
+                        <div class="text-xl font-medium">{{item.nombreCategoria}}</div>
                     </div>
-                    <div class="aspect-w-9 aspect-h-6 mt-8">                       
+                    <div class="aspect-w-9 aspect-h-6 mt-1">
                         <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">
                             <!---->
                             <ng-container *ngIf="item.extension === 'pdf'">
                                 <pdf-viewer [src]="item.base64" [render-text]="true" [original-size]="false"
-                                    [show-all]="true" style="width: 98%; height: 37vh">
+                                    [show-all]="true" style="width: 98%; height: 98%">
                                 </pdf-viewer>
                             </ng-container>
                             <ng-container
                                 *ngIf="item.extension === 'jpeg' || item.extension === 'jpg' || item.extension === 'png'">
-                                <img [src]="item.base64" alt="" style="width: 98%; height: 37vh">
+                                <img [src]="item.base64" alt="" style="width: 98%; height: 98%">
                             </ng-container>
                             <ng-container
                                 *ngIf="item.extension !== 'pdf' && item.extension !== 'jpeg' && item.extension !== 'jpg' && item.extension !== 'png'">
@@ -203,8 +196,6 @@
                         </div>
                     </div>
                     <div class="flex flex-col items-start mt-2">
-                        <div class="text-xl font-medium">{{item.nombreCategoria}}</div>
-
                         <ng-container *ngIf="item.extension !== 'pdf'">
                             <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
                                 {{item.extension | uppercase}}
@@ -224,7 +215,7 @@
                         </div>
                         <div class="flex items-center justify-between py-1">
                             <div class="text-secondary">Fecha Creacion</div>
-                            <div>June 02, 2020</div>
+                            <div>{{ cambiarFecha(item.fechaCreacion) }}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
                             <div class="text-secondary">Usuario Actualización</div>
@@ -232,7 +223,7 @@
                         </div>
                         <div class="flex items-center justify-between py-1">
                             <div class="text-secondary">Fecha de Anulacion</div>
-                            <div>June 02, 2020</div>
+                            <div> {{ cambiarFecha(item.fechaActualizacion) }}</div>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 w-full mt-5">
@@ -244,6 +235,7 @@
                             <span class="mat-button-focus-overlay"></span>
                         </button>
                     </div>
+                    <hr>
                 </div>
             </ng-container>
             <!-- </file-manager-details> -->
