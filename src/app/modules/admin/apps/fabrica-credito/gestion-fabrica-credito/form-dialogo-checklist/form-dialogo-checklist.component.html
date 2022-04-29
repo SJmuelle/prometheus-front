@@ -1,18 +1,24 @@
 <h2 mat-dialog-title>Seleccione las actividades ya realizadas</h2>
 <mat-dialog-content class="mat-typography">
 
-    <mat-selection-list #shoes>
-        <mat-list-option *ngFor="let shoe of typesOfShoes">
-            {{shoe}}
-        </mat-list-option>
-    </mat-selection-list>
 
+
+    <div class="w-3/12 text-center" *ngIf="listado.length==0">
+        <img src="assets/images/animaciones/nodata.gif">
+    </div>
+    <form [formGroup]="form" *ngIf="listado.length">
+        <mat-selection-list formControlName="selectedTech">
+          <mat-list-option *ngFor="let data of listado" [value]="data.idItem" >
+            {{data.nombre}}
+          </mat-list-option>
+        </mat-selection-list>
+      </form> 
     <p>
-        Total seleccionadas: {{shoes.selectedOptions.selected.length}}
+        Total seleccionado: {{form.value.selectedTech.length}}
     </p>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Cerrar</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Guardar</button>
+    <!-- <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Guardar</button> -->
 </mat-dialog-actions>
