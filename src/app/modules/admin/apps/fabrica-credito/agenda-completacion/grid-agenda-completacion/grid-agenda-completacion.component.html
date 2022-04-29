@@ -260,7 +260,7 @@
                                                 </span>
                                                 <small class="text-xs">{{ item.fechaDevolucion}}</small>
                                             </div>
-                                            <button mat-icon-button matTooltip="ver devolución"
+                                            <button mat-icon-button matTooltip="ver devolución" *ngIf="item.numeroIntentos>0"
                                                 (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
                                                 <mat-icon
                                                     [svgIcon]="item.mostrarDevolucion=='f'?'heroicons_solid:chevron-down':'heroicons_solid:chevron-up'">

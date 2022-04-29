@@ -23,7 +23,7 @@ export class ListadoChequeoFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger;
+    // debugger;
     this.datos = this.data;
     if (this.datos.titulo != 'N') {
       this.datos.tipoIdentificacion = this.datos.tipoIdentificacion == 'CC' ? 'Persona natural' : 'Persona jurica'

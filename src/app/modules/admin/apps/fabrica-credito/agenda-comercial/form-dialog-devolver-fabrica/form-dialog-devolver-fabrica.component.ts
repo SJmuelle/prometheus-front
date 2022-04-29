@@ -71,7 +71,7 @@ export class FormDialogDevolverFabricaComponent implements OnInit {
   }
 
   private postDevolverFabrica(data: any): void {
-    debugger;
+    // debugger;
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.comentariosService.postComentarioDevolver(data)
       .subscribe((res) => {
