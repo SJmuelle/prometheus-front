@@ -308,14 +308,7 @@
 
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
-                                                        expedita
-                                                        aliquam itaque eveniet quos porro ex officiis magnam quaerat
-                                                        ipsam
-                                                        ut
-                                                        quo reprehenderit doloremque asperiores, facere quis.
-                                                        Voluptatibus,
-                                                        minima consectetur.
+                                                        {{item.observacionDevolucion}}
                                                     </div>
 
                                                 </div>
@@ -336,33 +329,26 @@
                                                     <div class="flex items-center w-full">
                                                         <!-- Sender name -->
                                                         <div class="mr-2 font-semibold truncate">
-                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
+                                                            <span>Usuario: </span> {{ item.usuarioReintegroDevolucion}}
                                                         </div>
 
                                                         <!-- Date -->
                                                         <div
                                                             class="ml-auto text-xs text-right whitespace-nowrap text-hint">
-                                                            {{ cambiarFecha(item.fechaDevolucion) }}
+                                                            {{ cambiarFecha(item.fechaReintegroDevolucion) }}
                                                         </div>
                                                     </div>
 
                                                     <!-- Subject -->
                                                     <div class="flex items-center w-full mt-1">
                                                         <span class="leading-4 truncate">
-                                                            {{item.causalDevolucion}}
+                                                            {{item.causalReintegroDevolucion}}
                                                         </span>
                                                     </div>
 
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo
-                                                        expedita
-                                                        aliquam itaque eveniet quos porro ex officiis magnam quaerat
-                                                        ipsam
-                                                        ut
-                                                        quo reprehenderit doloremque asperiores, facere quis.
-                                                        Voluptatibus,
-                                                        minima consectetur.
+                                                        {{item.observacionReintegroDevolucion}}
                                                     </div>
 
                                                 </div>
