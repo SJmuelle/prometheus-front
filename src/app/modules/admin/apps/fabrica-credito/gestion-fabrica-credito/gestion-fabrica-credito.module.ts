@@ -35,6 +35,8 @@ import {NgxPaginationModule} from "ngx-pagination";
 import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
 import { GridDevolucionesComponent } from './grid-devoluciones/grid-devoluciones.component';
 import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form-dialog-devoluciones.component';
+import { FormDialogoChecklistComponent } from './form-dialogo-checklist/form-dialogo-checklist.component';
+import { MatListModule } from '@angular/material/list';
 
 
 
@@ -52,7 +54,8 @@ import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form
         FormDialogComentariosComponent,
         GridPoliticasComponent,
         GridDevolucionesComponent,
-        FormDialogDevolucionesComponent
+        FormDialogDevolucionesComponent,
+        FormDialogoChecklistComponent
     ],
     imports: [
         CommonModule,
@@ -77,6 +80,7 @@ import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form
         Ng2SearchPipeModule,
         PdfViewerModule,
         NgxPaginationModule,
+        MatListModule
 
     ],
 

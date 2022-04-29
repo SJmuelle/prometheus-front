@@ -18,6 +18,7 @@ import { GridDocumentacionComponent } from '../grid-documentacion/grid-documenta
 import { UtilityService } from 'app/resources/services/utility.service';
 import { FormDialogDecisionComponent } from '../form-dialog-decision/form-dialog-decision.component';
 import { DirectionsComponent } from "../../../../../../shared/modal/directions/directions.component";
+import { FormDialogoChecklistComponent } from '../form-dialogo-checklist/form-dialogo-checklist.component';
 
 @Component({
     selector: 'app-form-gestion-fabrica-credito',
@@ -132,15 +133,30 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
      * @description: Modal de decision
      */
     public onDialogoDecision(): void {
-        const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-            minWidth: '30%',
-            minHeight: '30%',
+        // this.fabricaCreditoService.getCantidadDatos('data')
+        //     .subscribe(({ data }) => {
+        //         if (data) {
+                  
+        //         }
+        // });
+        const dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
+            minWidth: '60%',
+            maxHeight: '80%',
             data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
             disableClose: false,
         });
         dialogRef.afterClosed().toPromise().then(() => {
             this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
         });
+        // const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
+        //     minWidth: '30%',
+        //     minHeight: '30%',
+        //     data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
+        //     disableClose: false,
+        // });
+        // dialogRef.afterClosed().toPromise().then(() => {
+        //     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+        // });
     }
 
     public openModalDirection(): void {
