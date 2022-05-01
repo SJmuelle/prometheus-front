@@ -8,8 +8,11 @@ import { AprobarReferenciaLaboralComponent } from './pagaduria/aprobar-referenci
 import { RechazarReferenciaLaboralComponent } from './pagaduria/rechazar-referencia-laboral/rechazar-referencia-laboral.component';
 import { AprobarCapacidadPagoComponent } from './pagaduria/aprobar-capacidad-pago/aprobar-capacidad-pago.component';
 import { RechazarCapacidadPagoComponent } from './pagaduria/rechazar-capacidad-pago/rechazar-capacidad-pago.component';
+import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
 
 import { FuseAlertModule } from '@fuse/components/alert';
+import { Ng2SearchPipeModule } from "ng2-search-filter";
+import { PdfViewerModule } from "ng2-pdf-viewer";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
@@ -25,9 +28,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
-import {Ng2SearchPipeModule} from "ng2-search-filter";
-import { PdfViewerModule } from "ng2-pdf-viewer";
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -57,6 +58,7 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
     MatDialogModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatButtonToggleModule,
     FuseAlertModule,
     Ng2SearchPipeModule,
     PdfViewerModule

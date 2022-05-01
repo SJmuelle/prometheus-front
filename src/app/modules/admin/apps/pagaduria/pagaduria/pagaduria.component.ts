@@ -22,9 +22,9 @@ import { JsonpClientBackend } from '@angular/common/http';
 export class PagaduriaComponent implements OnInit {
 
   solicitudes:any =[]; //para almacenar las solicitudes consultadas
-  posicion:any = 'above'; //posicion del texto para el tooltip
-  tipo:any; // cargar el tipo de solicitudes
-  estado:any = 'P'; // cargar por defecto las solicitudes en estado pendiente
+  posicion:string = 'above'; //posicion del texto para el tooltip
+  tipo:string; // cargar el tipo de solicitudes
+  estado:string = 'P'; // cargar por defecto las solicitudes en estado pendiente
   mostrar:boolean = false; // mostrar la tabla y botones una vez se selecciones un tipo.
   filtrarTabla:string=''; // filtrar la tabla
   solicitudForm: FormGroup; //formulario para hacer las validaciones requeridas
@@ -73,8 +73,8 @@ export class PagaduriaComponent implements OnInit {
   /**
    * @description: metodo para filtrar por tipo las solicitudes
    */
-  buscarPorTipo(){
-    const {tipo} = this.solicitudForm.getRawValue();
+   buscarPorTipo(tipo){
+    // const {tipo} = this.solicitudForm.getRawValue();
     this.tipo = tipo;
     this.mostrar = true;
     this.consultaSolicitudes();
