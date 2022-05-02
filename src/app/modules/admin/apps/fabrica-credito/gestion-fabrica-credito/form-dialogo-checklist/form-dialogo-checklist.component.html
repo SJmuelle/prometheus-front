@@ -8,13 +8,13 @@
     </div>
     <form [formGroup]="form" *ngIf="listado.length">
         <mat-selection-list formControlName="selectedTech">
-          <mat-list-option *ngFor="let data of listado;let indice=index" value="{{index}}" >
+          <mat-list-option  *ngFor="let data of listado;let indice=index" value="{{data.idItem}}" >
             {{data.nombre}}
           </mat-list-option>
         </mat-selection-list>
       </form> 
     <p>
-        Total seleccionado: {{form.value.selectedTech.length}}
+        Total seleccionado: {{form.value.selectedTech | json}}
     </p>
 
 </mat-dialog-content>

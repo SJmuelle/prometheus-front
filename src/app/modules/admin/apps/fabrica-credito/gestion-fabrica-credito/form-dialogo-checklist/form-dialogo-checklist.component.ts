@@ -30,15 +30,17 @@ export class FormDialogoChecklistComponent implements OnInit {
   consulta() {
     this.fabricaCreditoService.getCheckList(this.data)
       .subscribe(({ data }) => {
+        debugger;
         if (data) {
           console.log(data)
           this.listado=data;
-
+          let selecionado=[]; 
           for (let index = 0; index < this.listado.length; index++) {
-            if(this.listado[index].seleccionado=='f'){
-              this.form.controls.selectedTech.setValue(this.listado[index].idItem)
+            if(this.listado[index].seleccionado!='f'){
+              selecionado.push(this.listado[index].idItem)
             }
           }
+          this.form.controls.selectedTech.setValue(selecionado)
         }
       });
   }

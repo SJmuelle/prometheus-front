@@ -10,7 +10,8 @@
                         <img src="assets/images/agendas/Completacion.png" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 mx-3">
-                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda fábrica completación </div>
+                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda completación de crédito
+                        </div>
                         <div class="flex items-center">
                             <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                             <div class="font-medium tracking-tight text-secondary">
@@ -68,10 +69,10 @@
                     <div class="mr-3 flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
                         (click)="cambiarEstado(false)">
                         <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
-                        [svgIcon]="'radio_button_checked'">
+                            [svgIcon]="'radio_button_checked'">
                         </mat-icon>
-                        {{item.nombre_unidad_negocio}}:   {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}}
-                    </div>
+                        {{item.nombre_unidad_negocio}}: {{item.cantidad_solicitud
+                        <10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}} </div>
                 </ng-container>
 
             </div>
@@ -89,21 +90,27 @@
                         </div>
                     </div>
                     <div class="flex flex-col items-center ">
-                        <div class="text-7xl sm:text-8xl mt-2 font-bold tracking-tight leading-none"
+                        <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none"
                             [ngStyle]="{'color': item.color}">
                             {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} </div>
-                                <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
+                                <div class="text-md font-medium truncate"  [ngStyle]="{'color': item.color}">
                                     ${{item.total_solicitud | number:0}}
                                 </div>
-                                <div class="flex items-center justify-center w-full text-secondary">
-                                    <div class="text-md font-medium truncate">Devolución:</div>
-                                    <div class="ml-1.5 text-lg font-semibold">{{item.cantidad_devolucion}}</div>
-                                </div>
-                                <div class="flex items-center justify-center w-full text-secondary title-secundary">
-                                    <div class="ml-1.5 text-lg font-semibold">${{item.total_devolucio| number:0}}</div>
+                                <div class="text-md font-medium truncate">Devolución</div>
+                                <div class="text-3xl sm:text-3xl font-bold tracking-tight leading-none"
+                                    [ngStyle]="{'color': item.color}">
+                                    {{item.cantidad_devolucion
+                                    <10?'0'+item.cantidad_devolucion:item.cantidad_devolucion}} </div>
+                                        <div class="flex items-center justify-center w-full text-secondary mt-1">
+                                            <!-- <div class="ml-1.5 text-lg font-semibold">{{item.cantidad_devolucion}}</div> -->
+                                        </div>
+                                        <div
+                                            class="flex items-center justify-center w-full text-secondary title-secundary">
+                                            <div class="ml-1.5 text-lg font-semibold mt-1">${{item.total_devolucion|
+                                                number:0}}</div>
+                                        </div>
                                 </div>
                         </div>
-                    </div>
             </ng-container>
         </div>
 
@@ -201,8 +208,10 @@
                                                     {{ cambiarHora(item.fechaEmision) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline"></mat-icon>
-                                                    {{item.diasTotalesCredito}} dias</span>
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline">
+                                                    </mat-icon>
+                                                    {{item.diasTotalesCredito}} dias
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
@@ -223,8 +232,10 @@
                                                     {{ cambiarHora(item.fechaIngresoFabrica) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline"></mat-icon>
-                                                    {{item.diasEnFabrica}} dias</span>
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline">
+                                                    </mat-icon>
+                                                    {{item.diasEnFabrica}} dias
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
@@ -245,22 +256,25 @@
                                                     {{ cambiarHora(item.fechaIngresoAgendaActual) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline"></mat-icon>
-                                                    {{item.diasEnAgendaActual}} dias </span>
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline">
+                                                    </mat-icon>
+                                                    {{item.diasEnAgendaActual}} dias
+                                                </span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">
                                         <div class="flex justify-between">
                                             <div class="flex-column flex items-center justify-center w-14 h-14 rounded  "
-                                                [ngClass]="item.numeroIntentos<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                                [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                                                 <small class="text-xs">Devolución</small>
                                                 <span class="text-current">
-                                                    {{ item.numeroIntentos}}
+                                                    {{ item.cantidadDevolucion}}
                                                 </span>
                                                 <small class="text-xs">{{ item.fechaDevolucion}}</small>
                                             </div>
-                                            <button mat-icon-button matTooltip="ver devolución" *ngIf="item.numeroIntentos>0"
+                                            <button mat-icon-button matTooltip="ver devolución"
+                                                *ngIf="item.cantidadDevolucion>0"
                                                 (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
                                                 <mat-icon
                                                     [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
@@ -272,7 +286,8 @@
                                 <tr *ngIf="item.mostrarDevolucion=='v'">
                                     <td class="p-3 bg-hover" colspan="10">
                                         <div class="flex justify-between">
-                                            <div class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
+                                            <div
+                                                class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
                                                 <!-- Item content -->
                                                 <div
                                                     class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
