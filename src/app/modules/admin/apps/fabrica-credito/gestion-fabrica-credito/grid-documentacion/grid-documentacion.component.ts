@@ -300,7 +300,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         document.body.appendChild(link);
         link.href = `data:application/${extension};base64,${archivo}`;
         link.target = '_self';
-        link.download = data.nombreArchivo;
+        link.download = data.nombreArchivo+'.'+data.extension;
         link.click();
     }
 

@@ -110,10 +110,11 @@
                 </tr>
             </tbody>
         </table>
+        <div class="grid ">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
     </div>
 
-    <div class="grid ">
-        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
-            nextLabel="Siguiente"></pagination-controls>
-    </div>
+
 </div>
