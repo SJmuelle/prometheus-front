@@ -5,129 +5,125 @@
 
     <div class="flex flex-row w-100 justify-start gap-4 mb-4">
         <div>
-            <p class="text-xl font-medium">Tipo: </p>
+            <p class="text-xl font-medium mt-2">Tipo: </p>
         </div>
-        <div class="flex flex-row w-1/2 xl:w-1/5 justify-between">
+        <!-- <div class="flex flex-row w-1/2 xl:w-1/5 justify-between">
             <div>
                 <mat-radio-group class="flex flex-row gap-4 justify-between">
                     <mat-radio-button value="RL" (click)="buscarPorTipo('RL')">Referencia laboral</mat-radio-button>
                     <mat-radio-button value="CP" (click)="buscarPorTipo('CP')">Capacidad de pago</mat-radio-button>
                 </mat-radio-group>
             </div>
+        </div> -->
+        <div>
+            <mat-form-field appearance="fill" class="w-52">
+                <mat-select>
+                  <mat-option value="RL" (click)="buscarPorTipo('RL')">Referencia laboral</mat-option>
+                  <mat-option value="CP" (click)="buscarPorTipo('CP')">Capacidad de pago</mat-option>
+                </mat-select>
+              </mat-form-field>
         </div>
     </div>
 
-    <!-- <hr class="w-full" [hidden]="mostrar==false"> -->
-
-        <div class="mb-4 inline-flex w-full justify-between" [hidden]="mostrar==false">
-
-            <!-- <div class="flex flex-row justify-between w-1/3 xl:w-1/4">
-                <button mat-button class="text-white w-30 permitir bloquear" (click)="pendiente('P')" [disabled]="estado=='P'">
-                    Pendiente
-                </button>
-                <button mat-button class="text-white w-30 permitir bloquear" (click)="aprobada('A')" [disabled]="estado=='A'">
-                    Aprobada
-                </button>
-                <button mat-button class="text-white w-30 permitir bloquear" (click)="rechazada('R')" [disabled]="estado=='R'">
-                    Rechazada
-                </button>
-            </div> -->
-            <div>
-                <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-                    <mat-button-toggle class="text-white w-30 permitir bloquear" (click)="pendiente('P')" [disabled]="estado=='P'">Pendiente</mat-button-toggle>
-                    <mat-button-toggle class="text-white w-30 permitir bloquear" (click)="aprobada('A')" [disabled]="estado=='A'">Aprobada</mat-button-toggle>
-                    <mat-button-toggle class="text-white w-30 permitir bloquear" (click)="rechazada('R')" [disabled]="estado=='R'">Rechazada</mat-button-toggle>
-                </mat-button-toggle-group>
-            </div>
-
-            <div>
-                <input
-                    class="border rounded p-2 bg-gray-100 w-96"
-                    style="font-size: 10px; margin-right: 1em"
-                    type="text"
-                    autocomplete="off"
-                    name="filtrarTabla"
-                    [(ngModel)]="filtrarTabla"
-                    placeholder="Filtrar..." />
-            </div>
+    <div class="mb-4 inline-flex w-full justify-between" [hidden]="mostrar==false">
+        <div>
+            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle class="rounded-none" (change)="pendiente('P')" [disabled]="estado=='P'">Pendiente</mat-button-toggle>
+                <mat-button-toggle class="rounded-none" (change)="aprobada('A')" [disabled]="estado=='A'">Aprobada</mat-button-toggle>
+                <mat-button-toggle class="rounded-none" (change)="rechazada('R')" [disabled]="estado=='R'">Rechazada</mat-button-toggle>
+            </mat-button-toggle-group>
         </div>
 
-        <div class="overflow-y-auto overflow-x-hidden" [hidden]="mostrar==false">
-            <table class="w-full shadow p-1">
-                <thead style="background-color: #F9FAFB;">
-                    <tr
-                        class="text-md font-semibold
-                            tracking-wide text-left text-gray-400
-                             border-b border-gray-600">
-                        <th class="px-2 py-3 text-center text-base">Acciones</th>
-                        <th class="px-3 py-3 text-center">Solicitud</th>
-                        <th class="px-2 py-3 text-center">Fecha solicitud</th>
-                        <th class="px-3 py-3 text-center">Identificacion</th>
-                        <th class="px-4 py-3 text-center">Nombre</th>
-                        <th class="px-2 py-3 text-center">Monto ($)</th>
-                        <th class="px-2 py-3 text-center">Plazo (meses)</th>
-                        <th class="px-2 py-3 text-center">Valor cuota</th>
-                        <th class="px-2 py-3 text-center">Destino</th>
-                        <th class="px-2 py-3 text-center" *ngIf="estado=='P'">Anexo</th>
-                        <th class="px-2 py-3 text-center" *ngIf="estado=='R'">Fecha de rechazo</th>
-                        <th class="px-2 py-3 text-center" *ngIf="estado=='A'">Fecha de aprobacion</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    <tr class="text-gray-700" *ngFor="let item of solicitudes | filter: filtrarTabla">
-                        <td class="text-sm border text-center" *ngIf="estado=='P'">
-    
-                            <div class="flex flex-row justify-center" *ngIf="item.tipo=='RL'">
-                                <div>
-                                    <mat-icon class="rounded-2xl hover:bg-green-400 hover:text-white text-green-400 cursor-pointer" (click)="AprobarReferenciaLaboral(item.numero_solicitud, item.tipo, item.monto)" [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                </div>
-    
-                                <div>
-                                    <mat-icon class="rounded-2xl hover:bg-red-400 hover:text-white text-red-400 cursor-pointer" (click)="RechazarReferenciaLaboral(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                </div>
-                            </div>
-                            <div class="flex flex-row justify-center" *ngIf="item.tipo=='CP'">
-                                <div>
-                                    <mat-icon class="rounded-2xl hover:bg-green-400 hover:text-white text-green-400 cursor-pointer" (click)="AprobarCapacidadPago(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:check'"></mat-icon>
-                                </div>
-    
-                                <div>
-                                    <mat-icon class="rounded-2xl hover:bg-red-400 hover:text-white text-red-400 cursor-pointer" (click)="RechazarCapacidadPago(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="text-sm border text-center" *ngIf="estado=='A'">
-                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
-                        </td>
-                        <td class="text-sm border text-center" *ngIf="estado=='R'">
-                            <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
-                        </td>
-                        <td class="text-sm border text-center">{{item.numero_solicitud}}</td>
-                        <td class="text-sm border text-center">{{item.fecha_solicitud}}</td>
-                        <td class="text-sm border text-center">{{item.identificacion}}</td>
-                        <td class="text-sm border text-center">{{item.nombres}} {{item.apellidos}}</td>
-                        <td class="text-sm border text-center">$ {{item.monto | number}}</td>
-                        <td class="text-sm border text-center">{{item.plazo}}</td>
-                        <td class="text-sm border text-center" matTooltip="El
-                        valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
-                            [matTooltipPosition]="posicion">
-                            $ {{item.valor_cuota | number}}
-                        </td>
-                        <td class="text-sm border text-center">{{item.destino}}</td>
-                        <td class="text-sm border text-center" *ngIf="estado=='P'">
-                            <div *ngIf="item.tipo=='RL'">
-                                <a class="cursor-pointer" (click)="descargarArchivo(item.numero_solicitud)"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
-                            </div>
-                            <div *ngIf="item.tipo=='CP' && (item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA CARTERA')">
-                                <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
-                            </div>
-                        </td>
-                        <td class="text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
-                        
-                        <td class="text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_estado}}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div>
+            <input
+                class="border rounded p-2 bg-gray-100 w-96 mr-0"
+                style="font-size: 10px; margin-right: 1em"
+                type="text"
+                autocomplete="off"
+                name="filtrarTabla"
+                [(ngModel)]="filtrarTabla"
+                placeholder="Buscar..." />
         </div>
+    </div>
+
+    <div class="w-full shadow overflow-y-auto overflow-x-hidden" [hidden]="mostrar==false">
+        <table>
+            <thead class="bg-gray-100">
+                <tr
+                    class="text-md font-semibold
+                        tracking-wide text-left text-gray-400
+                            border-b border-gray-600">
+                    <th class="px-2 py-3 text-center text-base sticky left-0 bg-gray-100">Acciones</th>
+                    <th class="px-3 py-3 text-center">Solicitud</th>
+                    <th class="px-2 py-3 text-center">Fecha solicitud</th>
+                    <th class="px-2 py-3 text-center">Estado credito</th>
+                    <th class="px-3 py-3 text-center">Identificacion</th>
+                    <th class="px-4 py-3 text-center">Nombre</th>
+                    <th class="px-2 py-3 text-center">Monto ($)</th>
+                    <th class="px-2 py-3 text-center">Plazo (meses)</th>
+                    <th class="px-2 py-3 text-center">Valor cuota</th>
+                    <th class="px-2 py-3 text-center">Destino</th>
+                    <th class="px-2 py-3 text-center" *ngIf="estado=='P'">Anexo</th>
+                    <th class="px-2 py-3 text-center" *ngIf="estado=='R'">Fecha de rechazo</th>
+                    <th class="px-2 py-3 text-center" *ngIf="estado=='A'">Fecha de aprobacion</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700" *ngFor="let item of solicitudes | filter: filtrarTabla">
+                    <td class="text-sm border text-center sticky left-0 bg-white" *ngIf="estado=='P'">
+
+                        <div class="flex flex-row justify-center" *ngIf="item.tipo=='RL'">
+                            <div>
+                                <mat-icon class="rounded-2xl hover:bg-green-400 hover:text-white text-green-400 cursor-pointer" (click)="AprobarReferenciaLaboral(item.numero_solicitud, item.tipo, item.monto)" [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                            </div>
+
+                            <div>
+                                <mat-icon class="rounded-2xl hover:bg-red-400 hover:text-white text-red-400 cursor-pointer" (click)="RechazarReferenciaLaboral(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                            </div>
+                        </div>
+                        <div class="flex flex-row justify-center" *ngIf="item.tipo=='CP'">
+                            <div>
+                                <mat-icon class="rounded-2xl hover:bg-green-400 hover:text-white text-green-400 cursor-pointer" (click)="AprobarCapacidadPago(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                            </div>
+
+                            <div>
+                                <mat-icon class="rounded-2xl hover:bg-red-400 hover:text-white text-red-400 cursor-pointer" (click)="RechazarCapacidadPago(item.numero_solicitud, item.tipo)" [svgIcon]="'heroicons_solid:x'"></mat-icon>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="text-sm border text-center" *ngIf="estado=='A'">
+                        <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
+                    </td>
+                    <td class="text-sm border text-center" *ngIf="estado=='R'">
+                        <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
+                    </td>
+                    <td class="text-sm border text-center" [ngClass]="{'reactivar': item.estado_pagaduria=='RA'}">{{item.numero_solicitud}}</td>
+                    <td class="text-sm border text-center">{{item.fecha_solicitud}}</td>
+                    <td class="text-sm border text-center">{{item.estado_solicitud}}</td>
+                    <td class="text-sm border text-center">{{item.identificacion}}</td>
+                    <td class="text-sm border text-center">{{item.nombres}} {{item.apellidos}}</td>
+                    <td class="text-sm border text-center">$ {{item.monto | number}}</td>
+                    <td class="text-sm border text-center">{{item.plazo}}</td>
+                    <td class="text-sm border text-center" matTooltip="El
+                    valor de la cuota es estimado de acuerdo a las condiciones actuales del crédito" 
+                        [matTooltipPosition]="posicion">
+                        $ {{item.valor_cuota | number}}
+                    </td>
+                    <td class="text-sm border text-center">{{item.destino}}</td>
+                    <td class="text-sm border text-center" *ngIf="estado=='P'">
+                        <div *ngIf="item.tipo=='RL'">
+                            <a class="cursor-pointer" (click)="descargarArchivo(item.numero_solicitud)"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
+                        </div>
+                        <div *ngIf="item.tipo=='CP' && (item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA CARTERA')">
+                            <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
+                        </div>
+                    </td>
+                    <td class="text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
+                    
+                    <td class="text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_estado}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>

@@ -24,12 +24,10 @@ export class PagaduriaComponent implements OnInit {
   solicitudes:any =[]; //para almacenar las solicitudes consultadas
   posicion:string = 'above'; //posicion del texto para el tooltip
   tipo:string; // cargar el tipo de solicitudes
-  estado:string = 'P'; // cargar por defecto las solicitudes en estado pendiente
+  estado:string = 'P'; // cargar por defecto las solicitudes de pagaduria en estado pendiente
   mostrar:boolean = false; // mostrar la tabla y botones una vez se selecciones un tipo.
   filtrarTabla:string=''; // filtrar la tabla
   solicitudForm: FormGroup; //formulario para hacer las validaciones requeridas
-
-  id:any = 'LB0053294';
 
   /**
    * @description: control del formulario creado.
