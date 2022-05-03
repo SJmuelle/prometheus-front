@@ -1,4 +1,4 @@
-<div class="py-2 px-3 w-100 bg-white rounded-lg">
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100 mb-2">
         <h2 class="text-gray-900 col-span-12 mb-4">Gestión  de solicitudes</h2>
     </div>
@@ -7,14 +7,6 @@
         <div>
             <p class="text-xl font-medium mt-2">Tipo: </p>
         </div>
-        <!-- <div class="flex flex-row w-1/2 xl:w-1/5 justify-between">
-            <div>
-                <mat-radio-group class="flex flex-row gap-4 justify-between">
-                    <mat-radio-button value="RL" (click)="buscarPorTipo('RL')">Referencia laboral</mat-radio-button>
-                    <mat-radio-button value="CP" (click)="buscarPorTipo('CP')">Capacidad de pago</mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div> -->
         <div>
             <mat-form-field appearance="fill" class="w-52">
                 <mat-select>
@@ -25,9 +17,9 @@
         </div>
     </div>
 
-    <div class="mb-4 inline-flex w-full justify-between" [hidden]="mostrar==false">
-        <div>
-            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+    <div class="flex flex-col sm:flex-row mb-4 w-full justify-between" [hidden]="mostrar==false">
+        <div class="mb-4 sm:mb-0">
+            <mat-button-toggle-group class="w-90" appearance="legacy" name="fontStyle" aria-label="Font Style">
                 <mat-button-toggle class="rounded-none" (change)="pendiente('P')" [disabled]="estado=='P'">Pendiente</mat-button-toggle>
                 <mat-button-toggle class="rounded-none" (change)="aprobada('A')" [disabled]="estado=='A'">Aprobada</mat-button-toggle>
                 <mat-button-toggle class="rounded-none" (change)="rechazada('R')" [disabled]="estado=='R'">Rechazada</mat-button-toggle>
@@ -36,7 +28,7 @@
 
         <div>
             <input
-                class="border rounded p-2 bg-gray-100 w-96 mr-0"
+                class="border rounded p-2 bg-gray-100 w-72 xl:w-80 mr-0"
                 style="font-size: 10px; margin-right: 1em"
                 type="text"
                 autocomplete="off"
@@ -46,14 +38,11 @@
         </div>
     </div>
 
-    <div class="w-full shadow overflow-y-auto overflow-x-hidden" [hidden]="mostrar==false">
+    <div class="h-80 w-full shadow overflow-y-scroll overflow-x-scroll lg:overflow-x-hidden" [hidden]="mostrar==false">
         <table>
             <thead class="bg-gray-100">
-                <tr
-                    class="text-md font-semibold
-                        tracking-wide text-left text-gray-400
-                            border-b border-gray-600">
-                    <th class="px-2 py-3 text-center text-base sticky left-0 bg-gray-100">Acciones</th>
+                <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
+                    <th class="px-2 py-3 text-center text-base izquierda">Acciones</th>
                     <th class="px-3 py-3 text-center">Solicitud</th>
                     <th class="px-3 py-3 text-center">Reactivada</th>
                     <th class="px-2 py-3 text-center">Fecha solicitud</th>
@@ -71,7 +60,7 @@
             </thead>
             <tbody class="bg-white">
                 <tr class="text-gray-700" *ngFor="let item of solicitudes | filter: filtrarTabla">
-                    <td class="text-sm border text-center sticky left-0 bg-white" *ngIf="estado=='P'">
+                    <td class="text-sm border text-center izquierda_infe" *ngIf="estado=='P'">
 
                         <div class="flex flex-row justify-center" *ngIf="item.tipo=='RL'">
                             <div>
@@ -105,7 +94,7 @@
                             </span>
                         </div>
 
-                        <div *ngIf="item.estado_pagaduria!='RA'" [ngClass]="{'reactivar': item.estado_pagaduria=='RA'}"> 
+                        <div *ngIf="item.estado_pagaduria!='RA'"> 
                             {{item.numero_solicitud}}
                         </div>
                     </td>
