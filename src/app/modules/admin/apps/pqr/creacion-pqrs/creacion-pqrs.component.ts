@@ -74,16 +74,15 @@ export class CreacionPQRSComponent implements OnInit {
                 this.EstadoSagicc = true;
 
                 this._authService
-                    .signIn({
-                        userName: environment.userName,
-                        password: environment.password,
+                    .signSagicc({
+                        userName: this.UsuarioSaggics
                     })
                     .subscribe(
                         () => {
                             // this.insertadjunti();
                             this.tabMostrar = 1;
                             this.buscarListados();
-
+                            this.buscarUsuarioSagicc()
                             setTimeout(() => {
                                 this.datos.canpana = this.campana;
                                 this.datos.origen = this.tipo;
@@ -201,6 +200,21 @@ export class CreacionPQRSComponent implements OnInit {
                 this.listadoTipoPQRS = [];
             }
         });
+    }
+
+    buscarUsuarioSagicc() {
+        //datos ingreso
+        let urlOrigenCliente = `/generic/qry/obtener-usuario-prometheus/${this.UsuarioSaggics}`;
+        this._pqrService
+            .getListadosUnico(urlOrigenCliente)
+            .subscribe((response: any) => {
+                if (response) {
+                   console.log(response)
+                   this.UsuarioSaggics=response.respuesta
+                } else {
+                    console.log(response)
+                }
+            });
     }
 
     validaForm(tab) {
@@ -388,6 +402,7 @@ export class CreacionPQRSComponent implements OnInit {
                 } else {
                     let data = {
                         empresa: 'FINV',
+                        identificador:'pqrs',
                         campanha:
                             this.datos.campana == undefined
                                 ? ''
@@ -423,7 +438,7 @@ export class CreacionPQRSComponent implements OnInit {
                         idPqrspadre: '',
                         fechaSolucion: this.datos.fechaParaSolucion,
                         primerContacto: this.datos.primerContacto,
-                        adjuntos: this.crearJsonAdjuntos(),
+                        file: this.crearJsonAdjuntos(),
                         hijos: this.crearJsonHijas(),
                         user: this.UsuarioSaggics,
                     };
@@ -739,7 +754,12 @@ export class CreacionPQRSComponent implements OnInit {
                 dataModal.descripcion != undefined &&
                 dataModal.descripcion != null
             ) {
-                this.evidencia.push(dataModal);
+                this.evidencia.push({
+                    "nombreArchivo": dataModal.nombre,
+                    "extension": dataModal.ext,
+                    "base64": dataModal.file,
+                    "descripcion": dataModal.descripcion
+                });
             }
         });
     }
@@ -787,20 +807,20 @@ export class CreacionPQRSComponent implements OnInit {
 
     crearJsonAdjuntos(): Array<JSON> {
         let data = [];
-        this.evidencia.forEach((element) => {
-            if (element.file != null) {
-                let nombre = element.filename.split('.');
-                data.push({
-                    idComentario: '',
-                    nombreArchivo: nombre[0].toLowerCase(),
-                    extension: nombre[1].toLowerCase(),
-                    fuente: 'registro-pqrs',
-                    identificador: 'pqrs',
-                    base64: element.file,
-                    descripcion: element.descripcion,
-                });
-            }
-        });
-        return data;
+        // this.evidencia.forEach((element) => {
+        //     if (element.file != null) {
+        //         let nombre = element.filename.split('.');
+        //         data.push({
+        //             idComentario: '',
+        //             nombreArchivo: nombre[0].toLowerCase(),
+        //             extension: nombre[1].toLowerCase(),
+        //             fuente: 'registro-pqrs',
+        //             identificador: 'pqrs',
+        //             base64: element.file,
+        //             descripcion: element.descripcion,
+        //         });
+        //     }
+        // });
+        return  this.evidencia;
     }
 }
