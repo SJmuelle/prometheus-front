@@ -793,6 +793,30 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         return this.form.controls[field].hasError('pattern');
     }
 
+    /**
+     * @description: Valida que el campo solo sea numeros
+     */
+    public irAtras(){
+        switch (this.agenda_fabrica) {
+            case 'CO':
+                this.redireccionar('agenda-completion');
+                break;
+            case 'RE':
+                this.redireccionar('agenda-referencing');
+                break;                
+            default:
+                this.redireccionar('agenda-comercial');
+                break;
+        }
+    }
+
+    /**
+     * @description: Redireciona a la grid de cada agenda
+     */
+    private redireccionar(data:any) {
+        this.router.navigate(['/credit-factory/'+data]);
+    }
+
     ngOnDestroy(): void {
         this.unSubscribe$.unsubscribe();
         // this.agendaCompletacionService.resetSeleccionAgenda();

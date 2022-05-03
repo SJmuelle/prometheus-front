@@ -10,7 +10,10 @@
 
                 <!-- >>>aqui -->
                 <div class="menu ">
-                    
+                    <button mat-fab class="mx-1 bg-blue-500 roll-in-blurred-right" (click)="irAtras()"
+                        [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atras">
+                        <mat-icon svgIcon="heroicons_outline:table"></mat-icon>
+                    </button>
                     <ng-container *ngIf="agenda_fabrica !== 'CM'">
                         <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
                             [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Centrales">
@@ -32,10 +35,9 @@
                             </mat-icon> -->
                             <mat-icon svgIcon="next_plan"></mat-icon>
                         </button>
-                    
+
                         <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
-                            [ngClass]="animacionVer==true?'show':'hidden'" (click)="verDevoluciones = !verDevoluciones"
-                            >
+                            [ngClass]="animacionVer==true?'show':'hidden'" (click)="verDevoluciones = !verDevoluciones">
                             <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
                         </button>
                     </ng-container>

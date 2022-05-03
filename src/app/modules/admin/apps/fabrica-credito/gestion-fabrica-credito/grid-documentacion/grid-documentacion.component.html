@@ -142,7 +142,7 @@
             <router-outlet class="ng-tns-c126-23"></router-outlet>
             <!-- <file-manager-details class="ng-star-inserted" style=""> -->
             <div class="flex items-center justify-end">
-                <button mat-icon-button="" class="mat-focus-indicator mat-icon-button mat-button-base" tabindex="0">
+                <button mat-icon-button=""  (click)="settingsDrawer.close()" class="mat-focus-indicator mat-icon-button mat-button-base" tabindex="0">
                     <span class="mat-button-wrapper">
                         <mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true"
                             data-mat-icon-type="svg" data-mat-icon-name="x" data-mat-icon-namespace="heroicons_outline">
@@ -214,7 +214,7 @@
                             <div>{{item.usuarioCreacion}}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
-                            <div class="text-secondary">Fecha Creacion</div>
+                            <div class="text-secondary">Fecha Creación</div>
                             <div>{{ cambiarFecha(item.fechaCreacion) }}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
@@ -222,7 +222,7 @@
                             <div>{{item.usuarioActualizacion}}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
-                            <div class="text-secondary">Fecha de Anulacion</div>
+                            <div class="text-secondary">Fecha de Anulación</div>
                             <div> {{ cambiarFecha(item.fechaActualizacion) }}</div>
                         </div>
                     </div>
