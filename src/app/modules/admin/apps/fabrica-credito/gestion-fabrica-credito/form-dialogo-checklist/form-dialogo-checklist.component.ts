@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { UtilityService } from 'app/resources/services/utility.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-dialogo-checklist',
@@ -17,6 +19,7 @@ export class FormDialogoChecklistComponent implements OnInit {
   constructor(
     private fabricaCreditoService: FabricaCreditoService,
     private formBuilder: FormBuilder,
+    private _utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { 
     this.consulta()
@@ -30,7 +33,6 @@ export class FormDialogoChecklistComponent implements OnInit {
   consulta() {
     this.fabricaCreditoService.getCheckList(this.data)
       .subscribe(({ data }) => {
-        debugger;
         if (data) {
           console.log(data)
           this.listado=data;
@@ -47,9 +49,62 @@ export class FormDialogoChecklistComponent implements OnInit {
 
 
 
-  onListSelectionChange(ob: any) {
-    console.log("Selected Item: " + ob.source.selectedOptions.selected.length);
- }
+  guardar(item) {
+    let data, url;
+  
+      url = 'registro-chequeo-credito';
+      data = {
+        v_numeroSolicitud:this.data.numeroSolicitud,
+        v_nombre:this.data.numeroSolicitud,
+        i_idItem:this.data.numeroSolicitud,
+        b_valorItem:this.data.numeroSolicitud,
+        v_user:this.data.numeroSolicitud
+      };
+   
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._utility.postQuery(url, data).subscribe((response: any) => {
+      Swal.close();
+      if (response) {
+        if (response.status == 200) {
+          if (!response.data.respuesta.includes('OK')) {
+            Swal.fire(
+              'Información',
+              response.data.respuesta,
+              'error'
+            );
+            return;
+          }
+          Swal.fire(
+            '¡Información!',
+            `Se guardó el registro con éxito`,
+            'success'
+          ).then((resultado) => {
+            if (resultado) {
+            }
+          });
+        } else {
+          Swal.fire(
+            '¡Información!',
+            `Hubo un error en los datos enviados, favor evaluar`,
+            'success'
+          );
+        }
+      } else {
+        Swal.fire(
+          '¡Advertencia!',
+          'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+          'error'
+        );
+      }
+    });
+  }
 
 
 }

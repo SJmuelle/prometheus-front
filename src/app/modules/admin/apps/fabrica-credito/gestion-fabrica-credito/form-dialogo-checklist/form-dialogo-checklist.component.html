@@ -3,21 +3,32 @@
 
 
 
-    <div class="w-3/12 text-center" *ngIf="listado.length==0">
-        <img src="assets/images/animaciones/nodata.gif">
+  <div class="w-3/12 text-center" class="flex justify-center text-center w-100" *ngIf="!listado.length">
+    <img src="assets/images/animaciones/nodata.gif" class="w-60">
+  </div>
+
+  <div class="divide-y" *ngFor="let data of listado;let indice=index">
+    <div class="w-full select-none hover:bg-gray-100  h-16" (click)="guardar(item)">
+      <div class="relative flex items-center h-full ml-3 border-t border-b">
+        <mat-icon svgIcon="mat_outline:check_circle" [ngClass]="selecciona=='f'?'text-base':'text-blue-600'"></mat-icon>
+        <span class="flex flex-auto items-center min-w-0 h-full pl-7">
+          {{data.nombre}}
+        </span>
+      </div>
     </div>
-    <form [formGroup]="form" *ngIf="listado.length">
+  </div>
+  <!-- <form [formGroup]="form" *ngIf="listado.length" style="display: none;">
         <mat-selection-list formControlName="selectedTech">
           <mat-list-option  *ngFor="let data of listado;let indice=index" value="{{data.idItem}}" >
             {{data.nombre}}
           </mat-list-option>
         </mat-selection-list>
-      </form> 
-    <p>
-        Total seleccionado: {{form.value.selectedTech | json}}
-    </p>
+      </form>  -->
+  <p>
+    <!-- Total seleccionado: {{form.value.control.selectedTech.value}} / {{listado.length}} -->
+  </p>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cerrar</button>
+  <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>

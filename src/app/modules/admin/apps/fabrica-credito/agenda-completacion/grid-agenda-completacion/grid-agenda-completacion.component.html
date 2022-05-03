@@ -208,7 +208,7 @@
                                                     {{ cambiarHora(item.fechaEmision) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline">
+                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasTotalesCredito}} dias
                                                 </span>
@@ -232,7 +232,7 @@
                                                     {{ cambiarHora(item.fechaIngresoFabrica) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"  class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasEnFabrica}} dias
                                                 </span>
@@ -256,7 +256,7 @@
                                                     {{ cambiarHora(item.fechaIngresoAgendaActual) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="mat_solid:timeline">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasEnAgendaActual}} dias
                                                 </span>
