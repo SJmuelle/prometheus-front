@@ -8,9 +8,10 @@
   </div>
 
   <div class="divide-y" *ngFor="let data of listado;let indice=index">
-    <div class="w-full select-none hover:bg-gray-100  h-16" (click)="guardar(item)">
+    <div class="w-full select-none hover:bg-gray-100  h-16" (click)="guardar(data)">
       <div class="relative flex items-center h-full ml-3 border-t border-b">
-        <mat-icon svgIcon="mat_outline:check_circle" [ngClass]="selecciona=='f'?'text-base':'text-blue-600'"></mat-icon>
+        <mat-icon [svgIcon]="data.seleccionado=='f'?'mat_outline:radio_button_unchecked':'mat_outline:check_circle'"
+                  [ngClass]="data.seleccionado=='f'?'text-base':'text-blue-600'"></mat-icon>
         <span class="flex flex-auto items-center min-w-0 h-full pl-7">
           {{data.nombre}}
         </span>
@@ -25,10 +26,11 @@
         </mat-selection-list>
       </form>  -->
   <p>
-    <!-- Total seleccionado: {{form.value.control.selectedTech.value}} / {{listado.length}} -->
+    Total seleccionado: {{total}} / {{listado.length}}
   </p>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
+  <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="SiguienteEtapa()">Siguiente Etapa </button>
   <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>
