@@ -10,7 +10,7 @@
 
                 <!-- >>>aqui -->
                 <div class="menu ">
-                    <button mat-fab class="mx-1 bg-blue-500 roll-in-blurred-right" (click)="irAtras()"
+                    <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" (click)="irAtras()"
                         [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atras">
                         <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
                     </button>
@@ -28,12 +28,12 @@
                     </button>
                     <ng-container *ngIf="agenda_fabrica !== 'CM'">
                         <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
-                            [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Siguiente">
-                            <!-- cantidadCheckList
+                                [ngClass]="animacionVer==true?'show':'hidden'" 
+                                matTooltip="{{dialog_a_mostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
                             <mat-icon
-                            [svgIcon]="item.cantidadCheckList=='v'?'next_plan':'heroicons_solid:chevron-down'">
-                            </mat-icon> -->
-                            <mat-icon svgIcon="next_plan"></mat-icon>
+                                [svgIcon]="dialog_a_mostrar=='SIGUIENTE'?'next_plan':'check_circle'">
+                            </mat-icon>
+                            <!-- <mat-icon svgIcon="next_plan"></mat-icon> -->
                         </button>
 
                         <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
