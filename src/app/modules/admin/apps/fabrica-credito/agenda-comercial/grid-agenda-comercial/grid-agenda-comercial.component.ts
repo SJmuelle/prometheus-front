@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { AgendaComercialService } from '../../../../../../core/services/agenda-comercial.service';
 import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 import { FormDialogDevolverFabricaComponent } from '../form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-grid-agenda-comercial',
@@ -22,6 +23,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   public page: number = 1;
   public tamanoTabl = new FormControl("5");
   public filtrarTabla = new FormControl('');
+  public mostrarTotales : boolean = true;
+  public totales: any[];
   constructor(
     private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
@@ -35,6 +38,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAgendaComercial();
+    this.getTotalesAgendaCompletacion()
   }
 
   /**
@@ -49,7 +53,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
       if (res.status === 200) {
         this.datos = res.data;
         this.mostrar = false;
-       
+
       } else {
       }
     });
@@ -105,6 +109,36 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
       this.agendaComercialService.refrescarListado$.next({ estado: true });
 
     });
-  }
+}
+        /**
+   * @description: Obtiene el listado de agenda de comercial
+  */
+         private getTotalesAgendaCompletacion(): void {
+            Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+            this.agendaComercialService.getTotalesAgendaComercial().pipe(
+                takeUntil(this.unsubscribe$)
+            ).subscribe((res) => {
+                if (res.status === 200) {
+                    this.totales = res.data;
+                    Swal.close();
+                } else {
+                    Swal.close();
+                    this.totales = []
+                }
+            });
+        }
+
+        cambiarFecha(date){
+            moment.locale('es');
+            return moment(date).format('MMMM D YYYY')
+        }
+
+        cambiarHora(date){
+            moment.locale('es');
+            return moment(date).format('h:mm a')
+        }
+
+
+
 
 }
