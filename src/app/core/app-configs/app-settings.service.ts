@@ -152,7 +152,8 @@ export class AppSettingsService {
      */
          public agendaComercial = {
             url: {
-                base: EndPoints.uri('/generic/qry/agendas-credito/CM')
+                base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
+                totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CO')
             }
         };
 }
