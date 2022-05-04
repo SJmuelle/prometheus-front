@@ -140,23 +140,31 @@
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                                 
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td class="py-3 text-sm header_fijo my-3" rowspan="2">
-                                        <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
-                                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
-                                        </button>
-                                    <!-- </td>   
-                                    <td class="py-3 text-sm header_fijo my-2"> -->
-                                        <button mat-icon-button (click)="onComentario(item)"
-                                            matTooltip="Devolver a Fabrica">
-                                            <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
-                                        </button>
-                                    <!-- </td>  
-                                    <td class="py-3 text-sm header_fijo my-3"> -->
-                                        <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
-                                            <mat-icon svgIcon="wifi_calling_3"></mat-icon>
-                                        </button>
-                                    </td>
-                                    
+                                    <td rowspan="2" class="py-3 text-sm my-3">                                        
+                                        <div class="text-gray-700 grid-cols-2 grid">
+                                            <div class="py-0 text-sm">
+                                                <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
+                                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                                </button>
+                                            </div> 
+                                            <div class="py-0 text-sm">
+                                                <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
+                                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                                </button>
+                                            </div>                                      
+                                            <div class="py-0 text-sm ">
+                                                <button mat-icon-button (click)="onComentario(item)"
+                                                    matTooltip="Devolver a Fabrica">
+                                                    <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
+                                                </button>
+                                            </div>  
+                                            <div class="py-0 text-sm ">
+                                                <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
+                                                    <mat-icon svgIcon="wifi_calling_3"></mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>     
                                     <td class="px-2 pb-0 pt-1" rowspan="2">
                                         <div class="flex flex-column " rowspan="2">
                                             <div class="flex-0 w-12 overflow-hidden">
@@ -171,11 +179,16 @@
                                                 item.numeroSolicitud}}</span>
                                         </div>
                                     </td>
-                                    <td class="px-2 pb-0 pt-1"  colspan="4">
+                                    <td class="px-2 pb-0 pt-1" >
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Identificación: </small>
+                                            <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 pb-0 pt-1"  colspan="3">
                                         <div class="flex flex-column ">
                                             <small class="text-accent-600 text-xs">Cliente: </small>
-                                            <span class="text-md text-black font-medium"> {{item.identificacion}}  {{
-                                                item.nombreCompleto}}</span>
+                                            <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-0 pt-1">
@@ -189,7 +202,7 @@
                                                            
                                 </tr>
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td class="px-2 py-2">
+                                    <td class="px-2  pb-1 pt-1">
                                         <div class="flex flex-column ">
 
                                             <span class="text-md text-black font-medium" matTooltip="Agencia">
@@ -204,9 +217,8 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="px-2 py-2">
+                                    <td class="px-2 pb-1 pt-1">
                                         <div class="flex w-24">
-
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
                                                     Fecha solicitud
@@ -230,7 +242,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-2 py-2">
+                                    <td class="px-2 pb-1 pt-1">
                                         <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
@@ -254,7 +266,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-2 py-2">
+                                    <td class="px-2 pb-1 pt-1">
                                         <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
@@ -278,7 +290,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-2 py-2">
+                                    <td class="px-2 pb-1 pt-1">
                                         <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
@@ -302,7 +314,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-2 py-3">
+                                    <td class="px-2 pb-1 pt-1">
                                         <div class="flex justify-between">
                                             <div class="flex-column flex items-center justify-center w-14 h-14 rounded  "
                                                 [ngClass]="item.numeroIntentos<=2?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
@@ -314,7 +326,7 @@
                                             </div>                                            
                                         </div>
                                     </td>
-                                    <td class="px-2 py-3">
+                                    <td class="px-2 pb-1 pt-1">
                                         <div class="flex justify-between">
                                             <div class="flex-column flex items-center justify-center w-14 h-14 rounded  "
                                                 [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">

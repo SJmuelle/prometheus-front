@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {EndPoints} from './end-points';
+import { EndPoints } from './end-points';
 
 @Injectable()
 export class AppSettingsService {
@@ -36,7 +36,7 @@ export class AppSettingsService {
     /**
      * @description: End-point departamentos
      */
-    public departamentos =  {
+    public departamentos = {
         url: {
             base: EndPoints.uri('/generic/qry/departamentos')
         }
@@ -83,14 +83,14 @@ export class AppSettingsService {
      */
     public comentarios = {
         url: {
-            baseComentario:  EndPoints.uri('/generic/qry/cre-consulta-comentarios'),
+            baseComentario: EndPoints.uri('/generic/qry/cre-consulta-comentarios'),
             baseComentarioCrear: EndPoints.uri('/generic/cre-agregar-comentario')
         }
     };
-     /**
-     * @description: End-point comentarios para devolver Fabrica
-     */
-      public comentariosDevolverFabrica = {
+    /**
+    * @description: End-point comentarios para devolver Fabrica
+    */
+    public comentariosDevolverFabrica = {
         url: {
             baseComentarioCrear: EndPoints.uri('/credito/tk/formulario-solicitud-tabs')
         }
@@ -140,20 +140,20 @@ export class AppSettingsService {
     /**
      * @description: End-point devoluciones
      */
-     public devoluciones = {
+    public devoluciones = {
         url: {
-            baseDevolucion:  EndPoints.uri('/generic/qry/obtener-devoluciones'),
+            baseDevolucion: EndPoints.uri('/generic/qry/obtener-devoluciones'),
             baseDevolucionCrear: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             baseDevolucionCausal: EndPoints.uri('/generic/qry/causales-devolucion')
         }
     };
-        /**
+    /**
      * @description: End-point agenda comercial
      */
-         public agendaComercial = {
-            url: {
-                base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
-                totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CO')
-            }
-        };
+    public agendaComercial = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM')
+        }
+    };
 }
