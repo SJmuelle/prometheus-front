@@ -108,7 +108,15 @@ export class GestionPQRSComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this._pqrService.getListados(url).subscribe((data: any) => {
-                    this.listadoHistorial = data;
+                    let unicos = [];
+                    for (const iterator of data) {
+                        const resultado = unicos.find( u => u.id === iterator.id );
+                        if(resultado==undefined){
+                            unicos.push(iterator)
+                        }
+                    }
+                    console.log(unicos);
+                    this.listadoHistorial = unicos;
                     Swal.close();
                 });
                 break;
