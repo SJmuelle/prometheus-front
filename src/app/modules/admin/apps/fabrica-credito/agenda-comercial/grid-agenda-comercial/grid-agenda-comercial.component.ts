@@ -38,7 +38,13 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getAgendaComercial();
-    this.getTotalesAgendaCompletacion()
+    this.getTotalesAgendaCompletacion();
+    this.cambiarEstado(true)
+  }
+
+
+  public cambiarEstado(estado) {
+    this.mostrarTotales = estado;
   }
 
   /**
