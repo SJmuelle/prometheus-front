@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 import { AdjuntosComponent } from './adjuntos/adjuntos.component';
+import { AgregarComentarioComponent } from './agregar-comentario/agregar-comentario.component';
+import { VerComentarioComponent } from './ver-comentario/ver-comentario.component';
 
 @Component({
     selector: 'app-gestion-pqrs',
@@ -17,15 +19,18 @@ export class GestionPQRSComponent implements OnInit {
     datos: any = {};
     tab: any;
     listadoSoluciones: any = 0;
-    listadoHistorial: any = [];
+    listadoGestion: any = [];
+    listadoSeguimiento: any = [];
     listadoAsignaciones: any = [];
     listadoNotificaciones: any = [];
     filtrarTablaAlertas: string;
     tamanoTablaAlertas: number = 5;
     filtrarTablaAsignaciones: string;
     tamanoTablaAsignaciones: number = 5;
-    filtrarTablaHistorial: string;
-    tamanoTablaHistorial: number = 5;
+    filtrarTablaGestion: string;
+    filtrarTablaSeguimiento: string;
+    tamanoTablaGestion: number = 5;
+    tamanoTablaSeguimiento: number = 5;
     seguimiento: {
         idPqrs: any;
         idPqrsPadre: number;
@@ -51,6 +56,22 @@ export class GestionPQRSComponent implements OnInit {
             this.pqrid = param.idPQR;
             this.buscarDatos();
         });
+    }
+
+    vercomentario(){
+        const dialogRef = this.dialog.open(VerComentarioComponent, {
+            height: '35%',
+            width: '60%'
+        })
+        dialogRef.afterClosed().toPromise();
+    }
+
+    agregarcomentario(){
+        const dialogRef = this.dialog.open(AgregarComentarioComponent, {
+            height: '35%',
+            width: '60%'
+        })
+        dialogRef.afterClosed().toPromise();
     }
 
     insertadjunti() {
@@ -139,8 +160,8 @@ export class GestionPQRSComponent implements OnInit {
 
         switch (index) {
             case 2:
-                this.filtrarTablaHistorial = '';
-                this.tamanoTablaHistorial = 5;
+                this.filtrarTablaGestion = '';
+                this.tamanoTablaGestion = 5;
                 url = `/informacion-historial-seguimiento/${this.pqrid}/0`;
                 Swal.fire({
                     title: 'Cargando',
@@ -159,7 +180,7 @@ export class GestionPQRSComponent implements OnInit {
                         }
                     }
                     console.log(unicos);
-                    this.listadoHistorial = unicos;
+                    this.listadoGestion = unicos;
                     Swal.close();
                 });
                 break;
@@ -333,8 +354,8 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     verAdjunto(id) {
-        this.filtrarTablaHistorial = '';
-        this.tamanoTablaHistorial = 5;
+        this.filtrarTablaGestion = '';
+        this.tamanoTablaGestion = 5;
         let data = {
             idAdjunto: id,
         };

@@ -45,6 +45,8 @@ import { FormProcedimientosComponent } from './procedimientos-pqrs/form-procedim
 import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.component';
 import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 import { AdjuntosComponent } from './gestion-pqrs/adjuntos/adjuntos.component';
+import { AgregarComentarioComponent } from './gestion-pqrs/agregar-comentario/agregar-comentario.component';
+import { VerComentarioComponent } from './gestion-pqrs/ver-comentario/ver-comentario.component';
 // import { CreacionComponent } from './creacion/creacion.component';
 // import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
@@ -71,7 +73,9 @@ import { AdjuntosComponent } from './gestion-pqrs/adjuntos/adjuntos.component';
         SolucionComponent,
         MensajeCreacionComponent,
         MensajeErrorComponent,
-        AdjuntosComponent
+        AdjuntosComponent,
+        AgregarComentarioComponent,
+        VerComentarioComponent
         // CreacionComponent
     ],
     imports: [

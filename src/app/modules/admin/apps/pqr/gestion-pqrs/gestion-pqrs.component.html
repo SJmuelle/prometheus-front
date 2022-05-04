@@ -315,15 +315,15 @@
                                     </app-solucion>
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Historial de seguimiento">
+                            <mat-tab label="Historial de gestión">
                                 <div class="row items-center">
                                     <span class="leading-none col-lg-6 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
+                                        <div class="leading-tight titulo_tabs">Historial de gestión</div>
                                     </span>
                                     <div class="leading-tight col-lg-6 col-sm-12 text-end">
                                         <input class="border rounded p-2 bg-gray-100"
                                             style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                                            name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaHistorial"
+                                            name="filtrarTablaGestion" [(ngModel)]="filtrarTablaGestion"
                                             placeholder="Filtrar...">
                                         <!-- <select name="tamanoTablaHistorial" id="tamanoTablaHistorial"
                                             class="border rounded  bg-gray-100" (change)="pageHistorial=1"
@@ -339,18 +339,18 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
-                                            *ngIf="listadoHistorial.length==0">
+                                            *ngIf="listadoGestion.length==0">
                                             <div class="w-3/12">
                                                 <img src="assets/images/animaciones/nodata.gif">
                                             </div>
                                         </fuse-card>
                                     </div>
-                                    <div class="col-lg-12" *ngIf="listadoHistorial.length!=0">
+                                    <div class="col-lg-12" *ngIf="listadoGestion.length!=0">
                                         <div class="">
                                             <ol>
                                                 <!-- Activities -->
                                                 <ng-container
-                                                    *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial">
+                                                    *ngFor="let item of listadoGestion | filter: filtrarTablaGestion">
                                                     <!-- Activity -->
                                                     <li class="relative flex">
                                                         <!-- Line -->
@@ -556,6 +556,66 @@
 
                                 </div>
                             </mat-tab>
+                            <mat-tab label="Historial de seguimiento">
+                                <div class="flex flex-col sm:flex-row sm:justify-between">
+                                    <span class="sm:mt-4 leading-none">
+                                        <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
+                                    </span>
+                                </div>
+                                <hr>
+                                <div class="flex flex-col">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between mb-2">
+                                        <div>
+                                            <button mat-button class="color_fintra text-white w-100 sm:w-36" (click)="agregarcomentario()" [hidden]="datos.estado=='Cerrado'">Agregar Comentario</button>
+                                        </div>
+                                        <div class="mt-2 leading-tight sm:text-end sm:mt-0">
+                                            <input class="border rounded p-2 bg-gray-100"
+                                                style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                                name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaHistorial"
+                                                placeholder="Filtrar...">
+                                            <select name="tamanoTablaAsignaciones" id="tamanoTablaAsignaciones"
+                                                class="border rounded bg-gray-100" (change)="pageAsignaciones=1"
+                                                [(ngModel)]="tamanoTablaAsignaciones"
+                                                style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                                <option value="5"> 5</option>
+                                                <option value="10"> 10</option>
+                                                <option value="20"> 20</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="h-72 overflow-x-scroll overflow-y-scroll sm:overflow-x-hidden">
+                                        <table class="w-full shadow">
+                                            <thead>
+                                                <tr
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                    <th class="px-4 py-3 bg-white"></th>
+                                                    <th class="px-4 py-3 text-center">Cod</th>
+                                                    <th class="px-4 py-3 text-center">Descripción</th>
+                                                    <th class="px-4 py-3 text-center">Usuario</th>
+                                                    <th class="px-4 py-3 text-center">Fecha y hora</th>
+                                                    <th class="px-4 py-3 text-center">Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                <tr class="text-gray-700">
+                                                    <td class="px-4 py-1 text-sm border text-center"><mat-icon class="cursor-pointer" (click)="vercomentario()">remove_red_eye</mat-icon></td>
+                                                    <td class="px-4 py-1 text-sm border text-center"></td>
+                                                    <td class="px-4 py-1 text-sm border text-center"></td>
+                                                    <td class="px-4 py-1 text-sm border text-center"></td>
+                                                    <td class="px-4 py-1 text-sm border text-center"></td>
+                                                    <td class="px-4 py-1 text-sm border text-center"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="grid">
+                                            <pagination-controls (pageChange)="pageAsignaciones = $event"
+                                                previousLabel="Anterior" nextLabel="Siguiente" class="justify-self-end">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                        </mat-tab>
                             <mat-tab label="Alertas y notificaciones">
                                 <div class="row items-center">
                                     <span class="leading-none col-lg-4 col-sm-12">
