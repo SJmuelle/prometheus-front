@@ -149,13 +149,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     return moment(date).format('h:mm a')
   }
 
-  /**
-   * 
-   * @param estado 
-   */
-  public cambiarEstado(estado) {
-    this.mostrarTotales = estado;
-  }
+
 
 
   ngOnDestroy(): void {
