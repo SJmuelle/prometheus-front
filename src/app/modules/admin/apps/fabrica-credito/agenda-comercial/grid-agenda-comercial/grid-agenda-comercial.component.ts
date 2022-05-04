@@ -23,7 +23,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   public page: number = 1;
   public tamanoTabl = new FormControl("5");
   public filtrarTabla = new FormControl('');
-  public mostrarTotales : boolean = true;
+  public mostrarTotales: boolean = true;
   public totales: any[];
   constructor(
     private agendaComercialService: AgendaComercialService,
@@ -32,11 +32,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.unsubscribe();
-  }
-
   ngOnInit(): void {
+    this.cambiarEstado(true);
     this.getAgendaComercial();
     this.getTotalesAgendaCompletacion()
   }
@@ -109,36 +106,54 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
       this.agendaComercialService.refrescarListado$.next({ estado: true });
 
     });
-}
-        /**
+  }
+  /**
    * @description: Obtiene el listado de agenda de comercial
-  */
-         private getTotalesAgendaCompletacion(): void {
-            Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-            this.agendaComercialService.getTotalesAgendaComercial().pipe(
-                takeUntil(this.unsubscribe$)
-            ).subscribe((res) => {
-                if (res.status === 200) {
-                    this.totales = res.data;
-                    Swal.close();
-                } else {
-                    Swal.close();
-                    this.totales = []
-                }
-            });
-        }
+   */
+  private getTotalesAgendaCompletacion(): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    this.agendaComercialService.getTotalesAgendaComercial().pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe((res) => {
+      if (res.status === 200) {
+        this.totales = res.data;
+        Swal.close();
+      } else {
+        Swal.close();
+        this.totales = []
+      }
+    });
+  }
+  /**
+ * 
+ * @param date 
+ * @returns 
+ */
+  cambiarFecha(date) {
+    moment.locale('es');
+    return moment(date).format('MMMM D YYYY')
+  }
+  /**
+   * 
+   * @param date 
+   * @returns 
+   */
+  cambiarHora(date) {
+    moment.locale('es');
+    return moment(date).format('h:mm a')
+  }
 
-        cambiarFecha(date){
-            moment.locale('es');
-            return moment(date).format('MMMM D YYYY')
-        }
-
-        cambiarHora(date){
-            moment.locale('es');
-            return moment(date).format('h:mm a')
-        }
+  /**
+   * 
+   * @param estado 
+   */
+  public cambiarEstado(estado) {
+    this.mostrarTotales = estado;
+  }
 
 
-
+  ngOnDestroy(): void {
+    this.unsubscribe$.unsubscribe();
+  }
 
 }
