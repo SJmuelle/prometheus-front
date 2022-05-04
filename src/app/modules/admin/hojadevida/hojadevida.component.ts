@@ -101,9 +101,9 @@ export class HojadevidaComponent implements OnInit {
         // if (this.formHv.invalid) {
         //     return;
         // }
-      
+
         // Disable the form
-       
+
         const busqueda=formS.search;
         this.clienteID=busqueda==1?formS.cedula:formS.codigoNegocio;
         this.formHv.disable();
@@ -117,7 +117,7 @@ export class HojadevidaComponent implements OnInit {
     }
 
     ngOnInit(): void {
-       
+
         this.formHv.get('search').valueChanges.subscribe((value) => {
             if (value === '1') {
                 this.formHv.addControl(
@@ -133,7 +133,7 @@ export class HojadevidaComponent implements OnInit {
     }
 
     buscarInfo(form: any) {
-    
+
         this.codNegocio=form=="0"?this.clienteID:form.codigoNegocio;
         this.codNegocio=this.codNegocio=="0"?this.clienteID:this.codNegocio;
         this._hojadevidaService
@@ -142,7 +142,7 @@ export class HojadevidaComponent implements OnInit {
                 this.datosClientesVal = true;
                 this.datosCliente.patchValue(response.data);
                 this.getCreditoData(this.codNegocio);
-              
+
             });
     }
 

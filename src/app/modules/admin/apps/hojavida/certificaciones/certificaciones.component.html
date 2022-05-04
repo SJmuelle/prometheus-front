@@ -1,0 +1,85 @@
+<div class="bg-white h-full overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
+    <div class="flex flew-row items-center justify-content-between sm:justify-between w-280">
+
+        <h2 class="mb-2  text-gray-900">Certificaciones vinculo no comercial</h2>
+
+    </div>
+
+    <br>
+
+    <form [formGroup]="form">
+
+        <div class="flex flew-row items-center justify-content-between sm:justify-between w-240">
+
+            <mat-form-field class="w-90">
+                <mat-label>Tipo doumento</mat-label>
+                <mat-select formControlName="typeDocumento">
+                    <mat-option value="C">Cedula</mat-option>
+                    <mat-option value="N">Nit</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-90">
+                <mat-label>Número documento</mat-label>
+                <input matInput type="text" formControlName="documento">
+            </mat-form-field>
+
+            <div>
+                <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="filtrarDatos()">
+                    <mat-icon>search</mat-icon>Buscar 
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div *ngIf="mostrar==true">
+        <div class="row pl-3">
+            <div class="col-sm-12 col-lg-12 mt-2.5">
+                <fuse-card class="card pr-2 pl-2 shadow row mr-2">
+
+                    <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+                        <table>
+                            <thead>
+                                <tr
+                                    class="text-md border-b font-semibold tracking-wide text-left text-gray-900 capitalize">
+                                    <th class="px-4 py-2 text-center text-base">Código del negocio</th>
+                                    <th class="px-4 py-2 text-center text-base">Afiliado</th>
+                                    <th class="px-4 py-2 text-center text-base">Tipo de cliente</th>
+                                    <th class="px-4 py-2 text-center text-base">Nombre del cliente</th>
+                                    <th class="px-4 py-2 text-center text-base">Identificación</th>
+                                    <th class="px-4 py-2 text-center text-base">Estado del credito</th>
+                                    <th class="px-4 py-2 text-center text-base">Fecha de solicitud</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white">
+                                <tr class="text-gray-700" *ngFor="let item of listado">
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.codigoNegocio}}</td>
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.afiliado}}</td>
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.tipoCliente}}</td>
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.cliente}}</td>
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.cedula}}</td>
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.id}}</td>
+                                    <td class="px-2 py-2 text-sm text-cente">{{item.identificacion}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </cdk-virtual-scroll-viewport>
+
+                </fuse-card>
+                <!-- <div class="grid">
+                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente" class="justify-self-end"></pagination-controls>
+                </div> -->
+            </div>
+        </div>
+        <div class="pt-4 text-center">
+            <button mat-raised-button class="bg-accent text-white" [disabled]="form.invalid" (click)="generarCertificado()">
+                <mat-icon svgIcon="local_printshop" class="pr-2"></mat-icon>Generar 
+            </button>
+        </div>
+
+    </div>
+
+
+</div>

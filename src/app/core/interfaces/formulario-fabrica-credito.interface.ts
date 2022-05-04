@@ -9,7 +9,7 @@ export interface FormularioCreditoInterface {
     cupoTotal:                      number;
     cupoReservado:                  number;
     cupoDisponible:                 number;
-    descripcionScore:               string;
+    nivelRiesgo:                    string;
     nivelEndeudamiento:             number;
     tipoDocumento:                  string;
     identificacion:                 string;
@@ -61,6 +61,7 @@ export interface FormularioCreditoInterface {
     descripcionCamaraComercio:      string;
     nitNegocio:                     string;
     digitoVerificacion?:            number;
+    score?:                         number;
 }
 
 export interface FormularioDatosTitularInterface {
@@ -73,7 +74,7 @@ export interface FormularioDatosTitularInterface {
     cupoTotal?:                     number;
     cupoReservado?:                 number;
     cupoDisponible?:                number;
-    score?:                         string;
+    score?:                         number;
     descripcionScore?:              string;
     nivelEndeudamiento?:            number;
     comprasSemanales?:              number;

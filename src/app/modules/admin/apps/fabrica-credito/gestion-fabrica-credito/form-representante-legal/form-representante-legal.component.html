@@ -23,15 +23,15 @@
         <div class="-mx-3 md:flex mb-2">
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nombre / Razón social</mat-label>
-                <input matInput type="text" placeholder="Nombre / Razón de social" [formControlName]="'nombreCompleto'" [readonly]="true">
+                <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true">
             </mat-form-field>
         </div>
-        <mat-divider></mat-divider>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Primer nombre</mat-label>
-                <input matInput type="text" placeholder="Primer nombre" [formControlName]="'primerNombre'"
+                <input matInput type="text"  [formControlName]="'primerNombre'"
                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
+                       [required]="true"
                 >
                 <mat-icon
                     class="icon-size-5"
@@ -40,7 +40,7 @@
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Segundo nombre</mat-label>
-                <input matInput type="text" placeholder="Segundo nombre" [formControlName]="'segundoNombre'"
+                <input matInput type="text" [formControlName]="'segundoNombre'"
                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
                 >
                 <mat-icon
@@ -50,8 +50,9 @@
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Primer apellido</mat-label>
-                <input matInput type="text" placeholder="Primer apellido" [formControlName]="'primerApellido'"
+                <input matInput type="text" [formControlName]="'primerApellido'"
                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
+                       [required]="true"
                 >
                 <mat-icon
                     class="icon-size-5"
@@ -60,7 +61,7 @@
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Segundo apellido</mat-label>
-                <input matInput type="text" placeholder="Segundo apellido" [formControlName]="'segundoApellido'"
+                <input matInput type="text" [formControlName]="'segundoApellido'"
                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)"
                 >
                 <mat-icon
@@ -72,7 +73,10 @@
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Fecha de nacimiento </mat-label>
-                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'">
+                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
+                       (click)="fechaNacimiento.open()"
+                       (keydown)="fechaNacimiento.open()"
+                >
                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"></mat-datepicker-toggle>
                 <mat-datepicker #fechaNacimiento></mat-datepicker>
                 <mat-icon
@@ -101,15 +105,21 @@
             </ng-container>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Teléfono / Celular </mat-label>
-                <input matInput type="text" placeholder="Teléfono / Celular" [formControlName]="'celular'">
+                <input matInput type="text" [formControlName]="'celular'" [required]="true">
                 <mat-icon
                     class="icon-size-5"
                     matSuffix
                     [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
+                        <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                        <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                        <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                        <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+                    </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Teléfono</mat-label>
-                <input matInput type="text" placeholder="Teléfono / Celular" [formControlName]="'telefono'">
+                <input matInput type="text" [formControlName]="'telefono'">
                 <mat-icon
                     class="icon-size-5"
                     matSuffix
@@ -119,7 +129,7 @@
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Email</mat-label>
-                <input matInput type="text" placeholder="Email" [formControlName]="'email'">
+                <input matInput type="text" [formControlName]="'email'">
                 <mat-icon
                     class="icon-size-5"
                     matSuffix
@@ -127,7 +137,7 @@
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Nacionalidad</mat-label>
-                <input matInput type="text" placeholder="Nacionalidad" [formControlName]="'nacionalidad'">
+                <input matInput type="text" [formControlName]="'nacionalidad'">
                 <mat-icon
                     class="icon-size-5"
                     matSuffix
@@ -154,7 +164,13 @@
             </ng-container>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
-            <ng-container *ngIf="departamentos$ | async as departamentos">
+            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Departamento residencia</mat-label>
+                <input matInput type="text" [formControlName]="'descripcionDepartamento'"
+                       (keydown)="openModalDirection()" (click)="openModalDirection()"
+                >
+            </mat-form-field>
+            <!--<ng-container *ngIf="departamentos$ | async as departamentos">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Departamento de residencia</mat-label>
                         <mat-select (selectionChange)="seleccionDepartamento($event)"
@@ -172,8 +188,8 @@
                             matSuffix
                             [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
-            </ng-container>
-            <ng-container *ngIf="ciudades$ | async as ciudades">
+            </ng-container>-->
+            <!--<ng-container *ngIf="ciudades$ | async as ciudades">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Ciudad / municipio de residencia</mat-label>
                     <mat-select (selectionChange)="seleccionCiudad($event)"
@@ -191,8 +207,14 @@
                         matSuffix
                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
-            </ng-container>
-            <ng-container *ngIf="barrios$ | async as barrios">
+            </ng-container>-->
+            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Ciudad / municipio de residencia</mat-label>
+                <input matInput type="text" [formControlName]="'descripcionCiudad'"
+                       (keydown)="openModalDirection()" (click)="openModalDirection()"
+                >
+            </mat-form-field>
+            <!--<ng-container *ngIf="barrios$ | async as barrios">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Barrio</mat-label>
                     <mat-select
@@ -210,10 +232,16 @@
                         matSuffix
                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
-            </ng-container>
+            </ng-container>-->
+            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Barrio</mat-label>
+                <input matInput type="text" [formControlName]="'descripcionBarrio'"
+                       (keydown)="openModalDirection()" (click)="openModalDirection()"
+                >
+            </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Dirección de residencia</mat-label>
-                <input matInput type="text" placeholder="Dirección de residencia" [formControlName]="'direccionResidencial'">
+                <input matInput type="text"  [formControlName]="'direccionResidencial'">
                 <mat-icon
                     class="icon-size-5"
                     matSuffix
