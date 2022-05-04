@@ -7,9 +7,9 @@ export const environment = {
 
     userName: 'APPWEB',
     password: btoa('123456'),
-    urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
-    urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/',
-    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
+    urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
+    urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
 
     //eñiminar -----------------------------------------------
     urlApi7: 'http://tefi.ngrok.io/api-fintra/api/',
@@ -20,17 +20,24 @@ export const environment = {
     urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto: 'https://prometheus.fintra.co:8443/api-fintra/api/pqrs',
     // adjunto:'https://tefi.ngrok.io/api-fintra/api/pqrs',
+    // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
+    // urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
+    urlApi4: 'http://demo.fintra.co:8010/api-fintra/api/credito/tk/recursos/',
+    urlApi5: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
+    urlApi6: 'http://demo.fintra.co:8010/api-fintra/api/archivos/guardar/',
+    // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     // envioCorreo:"http://192.168.140.197:8084"
-    envioCorreo: 'http://prometheus.fintra.co:8443/apicredit',
-    urlUltracem: 'https://prometheus.fintra.co:8443/api-fintra/api',
+    envioCorreo: 'http://demo.fintra.co:8010/apicredit',
+    urlUltracem: 'http://demo.fintra.co:8010/api-fintra/api',
 
     // NGROK
-    // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
-    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',<
-    // urlApi3: 'https://tefi.ngrok.io/api-fintra/api/generic',
+    // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry',<
+    // urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic',
 
     // urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    // adjunto:'https://tefi.ngrok.io/api-fintra/api/pqrs',
+    // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     // // envioCorreo:"http://192.168.140.197:8084"
     // envioCorreo:"http://prometheus.fintra.co:8443/apicredit"
 };

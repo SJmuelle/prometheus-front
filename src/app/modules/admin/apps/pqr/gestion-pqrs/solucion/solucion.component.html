@@ -16,7 +16,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-lg-6 col-sm-12" *ngIf="idTipoComentario == 2 && listadoSoluciones.length > 0">
+        <div class="col-lg-6 col-sm-6" *ngIf="idTipoComentario == 2 && listadoSoluciones.length > 0">
             <mat-form-field class="flex-auto w-100">
                 <mat-label>Solución</mat-label>
                 <mat-select [(ngModel)]="solucionCausal" name="solucionCausal" required>
@@ -24,56 +24,61 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-lg-12 col-sm-12">
-            <form class="mt-2 mb-2">
-                <div>
-                    <label for="filep" class="w-100">
-                        <span mat-button class="bg-gray-100 text-white cursor-pointer" >
-                            <mat-icon svgIcon="attach_file"></mat-icon>
-                        </span>
-                        {{filename}}
-                    </label>
-                    <input type="file"
-                        name="filep"
-                        id="filep"
-                        #filep
-                        class="col-12"
-                        (change)="onCharge($event.target)"
-                        [required]="idTipoComentario == '2'"
-                        style="display:none" />
-                </div>
-            </form>
-            <div class="row" *ngIf="idTipoComentario == '2'; else validarAdjuntosData">
-                <!-- Success -->
-                <fuse-alert [type]="'success'">
-                    <span fuseAlertTitle>Condiciones del archivo</span>
-                    * Archivos permitidos ( .pdf). <br>
-                    * Tamaño máximo del archivo  (10mb). <br>
-                    * El nombre del archivo no debe contener puntos.
-                </fuse-alert>
-            </div>
-            <ng-template #validarAdjuntosData class="row">
-                <!-- Success -->
-                <fuse-alert [type]="'success'">
-                    <span fuseAlertTitle>Condiciones del archivo</span>
-                    * Archivos permitidos ( .pdf, .docx, .xlsx, .jpg, .png). <br>
-                    * Tamaño máximo del archivo  (10mb). <br>
-                    * El nombre del archivo no debe contener puntos.
-                </fuse-alert>
-            </ng-template>
+        <div class="col-lg-12 text-center">
+                <button mat-button class="color_fintra text-white " (click)="insertadjunti()">
+                    Subir adjuntos
+                </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="w-full shadow p-1  h-50 mt-5" *ngIf="evidencia.length!=0">
+                <thead style="background-color: #F9FAFB;">
+                    <tr
+                        class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                        <th class="px-4 py-3 text-center"></th>
+                        <th class="px-4 py-3 text-center">Nombre</th>
+                        <th class="px-4 py-3 text-center">Archivo</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <tr class="text-gray-700" *ngFor="let item of evidencia;let indexOfelement=index; ">
+                        <td class="px-2 text-sm border text-center pointer">
+                            <mat-icon svgIcon="heroicons_outline:backspace"
+                                (click)="eliminarEvidencia(indexOfelement)"></mat-icon>
+                        </td>
+                        <td class="px-2 text-sm border text-center">{{ item.descripcion}}</td>
+                        <td class="px-2 text-sm border text-center capitalize">{{ item.nombreArchivo}}</td>
+                    </tr>
+                    <tr class="text-gray-700" *ngIf="evidencia.length==0">
+                        <td class="px-2 text-sm border text-center" colspan="6">No hay resultados</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12 mt-2 mb-10">
             <div style="height: 7em;">
-                <quill-editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="seguimiento.detalle"
+                <quill-editor #editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="seguimiento.detalle" (contentChanged)="logChange($event);"
                     [modules]="quillModules"></quill-editor>
             </div>
         </div>
+        <div class="col-lg-12 mt-1.5" *ngIf="editor.editorElem">
+            <small [ngClass]="(envioCorreo==true&&editor.editorElem.outerText.length>650)?'text-red-600':'text-green-600'" class="text-sm"
+             *ngIf="editor.editorElem.outerText.length>1">
+             Caracteres: {{ editor.editorElem.outerText.length }}
+              {{ (envioCorreo==true)?'/ 650':'' }}
+            </small>
+        </div>
     </div>
     <div class="row mt-3">
-        <div class="col-sm-12 text-end"  *ngIf="nada==false">
+        <div class="col-lg-6">
+                <mat-checkbox class="example-margin" [(ngModel)]="envioCorreo" *ngIf="idTipoComentario == 2" >¿Desea incluir esta respuesta en el correo?</mat-checkbox>
+        </div>
+        <div class="col-sm-6 text-end" >
             <button mat-button  class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
         </div>
     </div>

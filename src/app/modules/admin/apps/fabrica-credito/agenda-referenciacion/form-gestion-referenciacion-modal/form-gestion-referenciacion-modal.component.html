@@ -338,7 +338,7 @@
     </mat-tab>
     <ng-container *ngIf="form.controls.tipoDocumento.value === 'CC'">
         <mat-tab>
-            <ng-template matTabLabel>Referencias personales</ng-template>
+            <ng-template matTabLabel>Referencias</ng-template>
             <ng-container *ngIf="(data | json) != undefined">
                 <app-grid-referencias [datos]="data">
                 </app-grid-referencias>
