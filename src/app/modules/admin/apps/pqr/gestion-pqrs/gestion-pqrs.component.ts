@@ -1,8 +1,10 @@
 import { Component, DebugElement, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
+import { AdjuntosComponent } from './adjuntos/adjuntos.component';
 
 @Component({
     selector: 'app-gestion-pqrs',
@@ -33,11 +35,15 @@ export class GestionPQRSComponent implements OnInit {
     };
     aprobarComentario: boolean;
     listarAdjuntos: any[];
+    mostrarEditor: boolean = false;
+    mostrarDescripcion: boolean = true;
+    evidencia: any = [];
 
     constructor(
         private _pqrService: PqrService,
         private _activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        public dialog: MatDialog
     ) {}
 
     ngOnInit(): void {
@@ -45,6 +51,43 @@ export class GestionPQRSComponent implements OnInit {
             this.pqrid = param.idPQR;
             this.buscarDatos();
         });
+    }
+
+    insertadjunti() {
+        const dialogRef = this.dialog.open(AdjuntosComponent, {
+            height: '40%',
+            width: '60%',
+            data: {evidencia: this.evidencia},
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+                let dataModal = result;
+                if (
+                    dataModal.file != '' &&
+                    dataModal.file != undefined &&
+                    dataModal.file != null &&
+                    dataModal.descripcion != '' &&
+                    dataModal.descripcion != undefined &&
+                    dataModal.descripcion != null
+                ) {
+                    this.evidencia.push(dataModal);
+                    console.log(this.evidencia)
+                }
+        });
+
+}
+
+    editarDescripcion(){
+        if (this.mostrarEditor==false && this.mostrarDescripcion==true) {
+            this.mostrarEditor=true;
+            this.mostrarDescripcion=false;
+        }
+    }
+
+    guardarDescripcion(){
+        if (this.mostrarEditor==true && this.mostrarDescripcion==false) {
+            this.mostrarEditor=false;
+            this.mostrarDescripcion=true;
+        }
     }
 
     buscarDatos() {

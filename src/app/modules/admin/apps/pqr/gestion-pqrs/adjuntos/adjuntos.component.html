@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Nuevos Adjuntos</h2>
+
+<div class="bg-white flex flex-col">
+    <div class="flex flex-row">
+        <div class="flex flex-col w-50">
+            <mat-form-field class="flex-auto w-full">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" autocomplete="off" name="area" [(ngModel)]="evidencia.descripcion" required>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col">
+            <form class="mt-4">
+                <label  for="filen">
+                    <span mat-button class="bg-gray-100 text-white cursor-pointer"> <mat-icon svgIcon="attach_file"></mat-icon></span>
+                        {{ evidencia.filename}}
+                </label>
+                <input type="file" name="filen" id="filen" class="col-12" (change)="onCharge($event.target,0)" style="display:none"/>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+            <!-- Success -->
+            <fuse-alert [type]="'success'">
+                <span fuseAlertTitle>Condiciones del archivo</span>
+                * Archivos permitidos ( .pdf, .docx, .xlsx, .jpg, .png). <br>
+                * Tamaño máximo del archivo  (10mb). <br>
+                * El nombre del archivo no debe contener puntos.
+            </fuse-alert>
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <div class="flex flex-col sm:flex-row sm:justify-end sm:gap-2 w-full">
+        <div class="sm:py-2">
+            <button mat-button [mat-dialog-close]="evidencia" class="text-white w-100" [disabled]="evidencia.descripcion==''">Guardar </button>
+        </div>
+        <div class="py-2">
+            <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white w-100">Cerrar </button>
+        </div>
+    </div> 
+</mat-dialog-actions>

@@ -1,4 +1,4 @@
-<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="!no_mostrar==true">
+<div class=" bg-white h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="!no_mostrar==true">
     <div class="row justify-between" *ngIf="datos!={}">
         <div class="text-left col l12">
             <h2 class="mb-2  text-gray-900">Gestión de PQRS ({{pqrid}})</h2>
@@ -10,7 +10,7 @@
         <div class="col-sm-12 col-lg-3 pb-3">
             <fuse-card class="card p-3 shadow row mr-3 mb-4 ">
                 <div
-                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0">
                     Datos del cliente
                 </div>
                 <hr class="w-full border-t col-lg-12 col-sm-12">
@@ -64,9 +64,13 @@
                 </div>
             </fuse-card>
             <fuse-card class="card p-3 shadow row mr-3 ">
-                <div
-                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tigh col-lg-12 col-sm-12 pl-0">
-                    Adjuntos
+                <div class="flex flex-col">
+                    <div>Adjuntos</div>
+                    <div class="mt-2">
+                        <div>
+                            <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon svgIcon="heroicons_outline:document-add"></mat-icon></a>
+                        </div>
+                    </div>
                 </div>
 
                 <hr class="w-full border-t col-lg-12 col-sm-12">
@@ -140,6 +144,18 @@
                                         <div class="capitalize" style="font-size: 16px;">{{datos.tipoCliente}}
                                         </div>
                                     </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm text-secondary font-bold">Tipo de solicitante
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm text-secondary font-bold">Segmento actual
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">
+                                        </div>
+                                    </div>                
                                     <div class="col-sm-6 col-lg-2">
                                         <div class="text-sm text-secondary font-bold">Línea negocio
                                         </div>
@@ -249,13 +265,46 @@
                     <div>
                         <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
                             <mat-tab label="Descripción">
-                                <div class="row">
-                                    <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted"
-                                        style="    overflow: auto;height: 16em;">
+                                <div class="flex flex-col">
+                                    <div [hidden]="mostrarDescripcion==false" class="flex flex-col mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted" style="overflow: auto;height: 16em;">
+                                        
+                                        <div>
+                                            <p><strong>Detalle de la PQRS</strong></p>
+                                        </div>
+    
+                                        <div>
+                                            <div [innerHTML]="datos.detalle"></div>
+                                        </div>
+                                        
+                                        <br>
+                                        <div class="flex flex-col sm:flex-row sm:justify-start sm:gap-3">
+                                            <div>
+                                                <button mat-button id="btnEditar" class="color_fintra text-white w-100 sm:w-36" (click)="editarDescripcion()" [hidden]="datos.estado!='Sin resolver'"><mat-icon>edit</mat-icon></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div [hidden]="mostrarEditor==false" class="flex flex-row">
+                                    <div class="flex flex-col mt-2 mb-10 w-100">
+                                        <div class="h-28">
+                                            <quill-editor class="mb-2" placeholder="Editar la descripcion" [(ngModel)]="datos.detalle" [modules]="quillModules"></quill-editor>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div [hidden]="mostrarEditor==false" class="flex flex-row mt-3 justify-end">
+                                    <div class="flex flex-col">
+                                        <button mat-button  class="btn color_fintra text-white" (click)="guardarDescripcion()">Guardar</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="row">
+                                    <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted" style="overflow: auto;height: 16em;">
                                         <p><strong>Detalle de la PQRS</strong></p><br>
                                         <div [innerHTML]=" datos.detalle"></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </mat-tab>
 
                             <mat-tab label="Solución" [disabled]="datos.estado=='Cerrado'">
