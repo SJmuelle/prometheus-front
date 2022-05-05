@@ -16,8 +16,8 @@ export class AgendaComercialService {
   ) { }
 
   /**
-* @description: Listado de agendas comercial
-*/
+   * @description: Listado de agendas comercial
+   */
   public getAgendaComercial(): Observable<any> {
     return this._http.get(this._appSettings.agendaComercial.url.base);
   }
@@ -29,10 +29,10 @@ export class AgendaComercialService {
     this.seleccionAgenda.next({ selected: '', show: false });
   }
 
-      /**
+  /**
    * @description: totales de agendas de completacion
    */
-       public getTotalesAgendaComercial(): Observable<any> {
-        return this._http.get(this._appSettings.agendaComercial.url.totales);
-    }
+  public getTotalesAgendaComercial(): Observable<any> {
+    return this._http.get(this._appSettings.agendaComercial.url.totales);
+  }
 }

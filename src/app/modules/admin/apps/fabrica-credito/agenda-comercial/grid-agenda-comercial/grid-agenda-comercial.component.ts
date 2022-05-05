@@ -35,14 +35,11 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.cambiarEstado(true);
     this.getAgendaComercial();
-    this.getTotalesAgendaCompletacion();
-    this.cambiarEstado(true)
+    this.getTotalesAgendaComercial();
   }
 
 
-  public cambiarEstado(estado) {
-    this.mostrarTotales = estado;
-  }
+ 
 
   /**
      * @description: Obtiene el listado de agenda de completacion
@@ -116,7 +113,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   /**
    * @description: Obtiene el listado de agenda de comercial
    */
-  private getTotalesAgendaCompletacion(): void {
+  private getTotalesAgendaComercial(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaComercialService.getTotalesAgendaComercial().pipe(
       takeUntil(this.unsubscribe$)
@@ -131,10 +128,10 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     });
   }
   /**
- * 
- * @param date 
- * @returns 
- */
+   * 
+   * @param date 
+   * @returns 
+   */
   cambiarFecha(date) {
     moment.locale('es');
     return moment(date).format('MMMM D YYYY')
@@ -149,7 +146,13 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     return moment(date).format('h:mm a')
   }
 
-
+  /**
+   * 
+   * @param estado 
+   */
+  public cambiarEstado(estado) {
+    this.mostrarTotales = estado;
+  }
 
 
   ngOnDestroy(): void {
