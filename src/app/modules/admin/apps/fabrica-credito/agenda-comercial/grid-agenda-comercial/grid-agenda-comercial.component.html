@@ -147,11 +147,13 @@
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                                 </button>
                                             </div> 
-                                            <div class="py-0 text-sm">
-                                                <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
-                                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
-                                                </button>
-                                            </div>                                      
+                                            <ng-container *ngIf="item.clienteDesistio === 'S'">
+                                                <div class="py-0 text-sm">
+                                                    <button mat-icon-button matTooltip="Desistir" (click)="onGetAgenda(item)">
+                                                        <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
+                                                    </button>
+                                                </div>    
+                                            </ng-container>                                                                              
                                             <div class="py-0 text-sm ">
                                                 <button mat-icon-button (click)="onComentario(item)"
                                                     matTooltip="Devolver a Fabrica">
