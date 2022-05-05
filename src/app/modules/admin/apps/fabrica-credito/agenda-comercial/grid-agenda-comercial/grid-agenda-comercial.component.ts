@@ -98,7 +98,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
-        numeroSolicitud: data.numeroSolicitud
+        numeroSolicitud: data.numeroSolicitud,
+        tipo:'C'
       },
       disableClose: true
     });
@@ -110,6 +111,28 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
     });
   }
+
+    /**
+   * @description: Guarda el comentario para devolvee
+   */
+    public onComentarioRechazar(data): void {
+      //  debugger
+      const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
+        width: '30%',
+        data: {
+          numeroSolicitud: data.numeroSolicitud,
+          tipo:'R'
+        },
+        disableClose: true
+      });
+  
+      dialogRef.afterClosed().subscribe((res) => {
+  
+        this.getAgendaComercial();
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
+  
+      });
+    }
   /**
    * @description: Obtiene el listado de agenda de comercial
    */

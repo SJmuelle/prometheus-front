@@ -128,7 +128,7 @@
                                             </div>
                                             <ng-container *ngIf="item.clienteDesistio === 'S'">
                                                 <div class="py-0 text-sm">
-                                                    <button mat-icon-button *ngIf="item.estado!='Aprobado'"
+                                                    <button mat-icon-button 
                                                         (click)="onOpenDialog(item)"
                                                         matTooltip="Ver información referencia">
                                                         <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
@@ -340,7 +340,7 @@
                                                     <div class="text-end">
                                                         <div
                                                             class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
-                                                            Ultima devolución
+                                                            Última devolución
                                                         </div>
                                                     </div>
 

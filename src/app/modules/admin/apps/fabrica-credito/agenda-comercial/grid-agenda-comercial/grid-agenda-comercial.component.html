@@ -15,7 +15,7 @@
                         <div class="flex items-center">
                             <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                             <div class="font-medium tracking-tight text-secondary">
-                                Tener en cuenta el Check-list
+                                Realizar la gestión y completación del crédito
                             </div>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                                             </div> 
                                             <ng-container *ngIf="item.clienteDesistio === 'S'">
                                                 <div class="py-0 text-sm">
-                                                    <button mat-icon-button matTooltip="Desistir" (click)="onGetAgenda(item)">
+                                                    <button mat-icon-button matTooltip="Rechazar" (click)="onComentarioRechazar(item)">
                                                         <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
                                                     </button>
                                                 </div>    
@@ -160,7 +160,7 @@
                                             </div>  
                                             <div class="py-0 text-sm ">
                                                 <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
-                                                    <mat-icon svgIcon="wifi_calling_3"></mat-icon>
+                                                    <mat-icon svgIcon="mat_outline:timer"></mat-icon>
                                                 </button>
                                             </div>
                                         </div>
@@ -358,7 +358,7 @@
                                                     <div class="text-end">
                                                         <div
                                                             class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
-                                                            Ultima devolución
+                                                            Última devolución
                                                         </div>
                                                     </div>
 
