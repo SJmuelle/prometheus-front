@@ -12,9 +12,9 @@ export const environment = {
     urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
 
     //eñiminar -----------------------------------------------
-    urlApi7: 'http://tefi.ngrok.io/api-fintra/api/',
+    urlApi7: 'http://demo.fintra.co:8010/api-fintra/api/',
 
-    urlDonwloadFile: "http://tefi.ngrok.io/api-fintra/api/transferencia/",
+    urlDonwloadFile: "http://demo.fintra.co:8010/api-fintra/api/transferencia/",
 
     // ----------------
     urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',

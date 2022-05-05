@@ -15,7 +15,7 @@ export class FacturaComponent implements OnInit {
 
   banco: any = [];
 
-  proveedor: any = [];
+  listproveedor: any = [];
 
   total:number;
 
@@ -62,12 +62,12 @@ export class FacturaComponent implements OnInit {
 
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
-      vencimiento: [this.fechaActual, [Validators.required]]
+      vencimiento: [this.fechaActual, [Validators.required]],
+      filtro: [this.filterproveedor]
     });
   }
 
   ngOnInit(): void {
-    // console.log('Aqui tu usuario: ', this.ArrayUser)
     const currentYear = new Date().getFullYear();
     this.minFecha = new Date(currentYear - 20, 0, 1);
     this.maxFecha = new Date(this.fechaActual);
@@ -80,19 +80,15 @@ export class FacturaComponent implements OnInit {
     const {nit, vencimiento} = this.proveedorForm.getRawValue();
 
     this.formatofecha = moment(vencimiento).format("YYYY-MM-DD");
-    // console.log(nit, this.formatofecha);
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      // console.log(nit)
-      // console.log(this.myUser)
       if (response) {
         this.listadoFacturas = response.data;
       } else {
         this.listadoFacturas = [];
       }
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-      // console.log(this.total)
       this.mostrar=true
     })
    
@@ -205,9 +201,8 @@ export class FacturaComponent implements OnInit {
 
   consultaProveedor(){
     this.cuentaService.getProveedor().subscribe((response: any) => {
-      // console.log(response)
       if (response) {
-        this.proveedor = response.data;
+        this.listproveedor = response.data;
       }
     });
   }
