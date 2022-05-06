@@ -9,19 +9,6 @@
     <form [formGroup]="proveedorForm">
 
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:gap-3">
-            <!-- <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
-                <mat-label>Proveedor</mat-label>
-                <input matInput class="w-full" [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}"
-                    placeholder="Filtrar opciones...">
-                <mat-select formControlName="nit">
-                    <mat-option
-                        *ngFor="let item of listproveedor | search: filterproveedor"
-                        [value]="item.nit">{{ item.proveedor }}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
-                    Debe elegir un proveedor.
-                </mat-error>
-            </mat-form-field> -->
             <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
                 <mat-label>Proveedor</mat-label>
                 <input matInput class="w-full" formControlName="nit" [(ngModel)]="filterproveedor" [matAutocomplete]="auto">

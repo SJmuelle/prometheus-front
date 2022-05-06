@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import moment from 'moment';
 
 @Component({
@@ -33,6 +31,8 @@ export class FacturaComponent implements OnInit {
   public fechaActual = new Date();
   minFecha: Date;
   maxFecha: Date;
+
+  filterData;
 
   get frm() {
     return this.bancoForm.controls;
