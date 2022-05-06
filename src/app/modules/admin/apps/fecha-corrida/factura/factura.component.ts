@@ -14,41 +14,25 @@ import moment from 'moment';
 export class FacturaComponent implements OnInit {
 
   listadoFacturas: any=[];
-
   banco: any = [];
-
   listproveedor: any=[];
-
   total:number;
-
   bancoForm: FormGroup;
-
   proveedorForm: FormGroup;
-
   allComplete: boolean = false;
-
   filterproveedor: String = '';
-  
   public detailsFacture:any=[];
-
   public valores:number=0;
-
   transferencia={
     proveedor:"",
     banco:"",
     details:[]
   }
-
   mostrar:boolean;
-
   formatofecha:any;
-
   public fechaActual = new Date();
-
   minFecha: Date;
   maxFecha: Date;
-
-  // filteredOptions;
 
   get frm() {
     return this.bancoForm.controls;
@@ -76,33 +60,11 @@ export class FacturaComponent implements OnInit {
     this.maxFecha = new Date(this.fechaActual);
     this.consultaBanco();
     this.consultaProveedor();
-    // this.getProveedor();
-    // this.formcontrol();
   }
 
-  // formcontrol(){
-  //   this.proveedorForm.get('nit').valueChanges.subscribe((response:any) =>{
-  //     console.log('Aqui tu info: ', response)
-  //     this.filterSelect(response)
-  //   })
-  // }
-
-  // filterSelect(data){
-  //   this.filteredOptions = this.listproveedor.filter(item =>{
-  //     return item.toLowerCase().indexOf(data.toLowerCase()) > -1
-  //   })
-  // }
-
-  // getProveedor(){
-  //   this.cuentaService.getProveedorFilter().subscribe((response:any) => {
-  //     this.listproveedor = response.data
-  //   })
-  // }
-
   filtrarDatos(){
-    
     const {nit, vencimiento} = this.proveedorForm.getRawValue();
-
+    const {nombreBanco, totaltransferencia} = this.bancoForm.getRawValue();
     this.formatofecha = moment(vencimiento).format("YYYY-MM-DD");
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
@@ -115,11 +77,16 @@ export class FacturaComponent implements OnInit {
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
       this.mostrar=true
     })
+
+    if (totaltransferencia!=0 || nombreBanco!='') {
+      this.bancoForm.reset();
+      this.detailsFacture=[];
+      this.valores=0;
+    }
    
   }
 
   pagarFacturas(){
-
     const {nit} = this.proveedorForm.getRawValue();
     const { nombreBanco } = this.bancoForm.getRawValue();
     this.transferencia={
@@ -127,7 +94,6 @@ export class FacturaComponent implements OnInit {
       banco:nombreBanco,
       details:this.detailsFacture
     }
-
     if (this.transferencia.details.length <= 0) {
       Swal.fire(
         '¡Información!',
@@ -135,7 +101,6 @@ export class FacturaComponent implements OnInit {
         'error'
       ).then();
     }else{
-
       this.cuentaService.postTransferencia(this.transferencia).subscribe((response: any)=>{
         console.log( this.transferencia)
         console.log("Aqui tus datos: ", response)
@@ -154,10 +119,9 @@ export class FacturaComponent implements OnInit {
         ).then();
         this.mostrar=false
         this.bancoForm.reset();
+        this.proveedorForm.reset();
         this.detailsFacture=[];
-        // console.log("Tus facturas: ",this.detailsFacture)
         this.valores=0;
-        // console.log("Tus valores de facturas: ",this.valores)
       })
 
     }
@@ -165,21 +129,16 @@ export class FacturaComponent implements OnInit {
   }
 
   acumular(item){
-
     if(item.completed){
-
       this.detailsFacture.push({documentoCxp:item.documentoCxp})   
       this.valores=this.valores+item.valorFactura;
     }else{
-
       let idx =  this.detailsFacture.indexOf({
         documentoCxp:item.documentoCxp
       });
       this.detailsFacture.splice(idx, 1)
       this.valores=this.valores-item.valorFactura;
     }
-    // console.log( this.detailsFacture)
-    // console.log( this.valores)
   }
 
   updateAllComplete() {
@@ -210,13 +169,11 @@ export class FacturaComponent implements OnInit {
       this.detailsFacture=[];
       this.valores=0;
     }
-    // console.log("Detalle factura", this.detailsFacture)
     this.listadoFacturas.forEach(t => (t.completed = completed));
   }
 
   consultaBanco(){
     this.cuentaService.getBanco().subscribe((response: any) => {
-      // console.log(response)
       if (response) {
         this.banco = response.data;
       }
@@ -226,8 +183,7 @@ export class FacturaComponent implements OnInit {
   consultaProveedor(){
     this.cuentaService.getProveedor().subscribe((response: any) => {
       if (response) {
-        this.listproveedor = response.data;
-        // this.filteredOptions = response.data;       
+        this.listproveedor = response.data;  
       }
     });
   }
