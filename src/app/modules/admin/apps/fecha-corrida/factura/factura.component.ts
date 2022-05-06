@@ -48,7 +48,7 @@ export class FacturaComponent implements OnInit {
   minFecha: Date;
   maxFecha: Date;
 
-  filteredOptions;
+  // filteredOptions;
 
   get frm() {
     return this.bancoForm.controls;
@@ -76,21 +76,28 @@ export class FacturaComponent implements OnInit {
     this.maxFecha = new Date(this.fechaActual);
     this.consultaBanco();
     this.consultaProveedor();
-    this.formcontrol();
+    // this.getProveedor();
+    // this.formcontrol();
   }
 
-  formcontrol(){
-    this.proveedorForm.get('nit').valueChanges.subscribe(response =>{
-      console.log('Aqui tu info: ', response)
-      this.filterSelect(response)
-    })
-  }
+  // formcontrol(){
+  //   this.proveedorForm.get('nit').valueChanges.subscribe((response:any) =>{
+  //     console.log('Aqui tu info: ', response)
+  //     this.filterSelect(response)
+  //   })
+  // }
 
-  filterSelect(data){
-    this.filteredOptions = this.listproveedor.filter(item =>{
-      return item.toLowerCase().indexOf(data.toLowerCase()) > -1
-    })
-  }
+  // filterSelect(data){
+  //   this.filteredOptions = this.listproveedor.filter(item =>{
+  //     return item.toLowerCase().indexOf(data.toLowerCase()) > -1
+  //   })
+  // }
+
+  // getProveedor(){
+  //   this.cuentaService.getProveedorFilter().subscribe((response:any) => {
+  //     this.listproveedor = response.data
+  //   })
+  // }
 
   filtrarDatos(){
     
@@ -220,7 +227,7 @@ export class FacturaComponent implements OnInit {
     this.cuentaService.getProveedor().subscribe((response: any) => {
       if (response) {
         this.listproveedor = response.data;
-        this.filteredOptions = response.data;
+        // this.filteredOptions = response.data;       
       }
     });
   }

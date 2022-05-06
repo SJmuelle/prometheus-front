@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppSettingsService } from '../app-configs/app-settings.service';
 import {Observable} from "rxjs";
+import {map, skipWhile, tap} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,12 @@ export class CuentasxcobrarService {
 
   public  getProveedor(): Observable<any> {
     return this._http.get(`${this._appSettings.transferencias.url.baseProveedor}`);
+  }
+
+  public  getProveedorFilter(): Observable<any> {
+    return this._http.get(`${this._appSettings.transferencias.url.baseProveedor}`).pipe(
+      map((response:[]) => response.map(item => item['proveedor']))
+    )
   }
 
   public postTransferencia(datosTransferencia: any): Observable<any> {

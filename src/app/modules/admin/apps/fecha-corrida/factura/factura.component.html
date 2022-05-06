@@ -24,9 +24,9 @@
             </mat-form-field> -->
             <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
                 <mat-label>Proveedor</mat-label>
-                <input type="text" formControlName="nit" matInput [matAutocomplete]="auto">
+                <input matInput class="w-full" formControlName="nit" [(ngModel)]="filterproveedor" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let item of filteredOptions" [value]="item.nit">
+                    <mat-option *ngFor="let item of listproveedor | search: filterproveedor" [value]="item.nit">
                         {{item.proveedor}} - {{item.nit}}
                     </mat-option>
                 </mat-autocomplete>
