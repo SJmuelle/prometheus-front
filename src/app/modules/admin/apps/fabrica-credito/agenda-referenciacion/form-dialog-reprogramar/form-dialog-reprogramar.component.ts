@@ -56,7 +56,7 @@ export class FormDialogReprogramarComponent implements OnInit, OnDestroy {
     public onCerrar(): void {
         this._matDialog.close(true);
         setTimeout(() => {
-            location.reload();
+            // location.reload();
         }, 1000);
     }
     /**

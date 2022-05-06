@@ -121,24 +121,22 @@
                                     <td rowspan="2" class="py-3 text-sm my-3">
                                         <div class="text-gray-700 grid-cols-2 grid">
                                             <div class="py-0 text-sm">
-                                                <button mat-icon-button matTooltip="Gestionar"
+                                                <button mat-icon-button matTooltip="Ver información en fabrica"
                                                     (click)="onGetAgenda(item)">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                                 </button>
+
                                             </div>
-                                            <ng-container *ngIf="item.clienteDesistio === 'S'">
-                                                <div class="py-0 text-sm">
-                                                    <button mat-icon-button 
-                                                        (click)="onOpenDialog(item)"
-                                                        matTooltip="Ver información referencia">
-                                                        <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
-                                                    </button>
-                                                </div>
-                                            </ng-container>
+                                            <div class="py-0 text-sm">
+                                                <button mat-icon-button matTooltip="Ver información referencia"
+                                                    (click)="onOpenDialog(item)">
+                                                    <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
+                                                </button>
+                                            </div>
                                             <div class="py-0 text-sm ">
                                                 <button mat-icon-button matTooltip="Reprogramar"
                                                     (click)="onReprogramar(item)">
-                                                    <mat-icon svgIcon="wifi_calling_3"></mat-icon>
+                                                    <mat-icon svgIcon="mat_outline:timer"></mat-icon>
                                                 </button>
                                             </div>
                                         </div>

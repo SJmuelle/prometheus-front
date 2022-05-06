@@ -60,8 +60,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   }
 
   /**
-     * @description: Guarda la reprogramacion
-     */
+   * @description: Guarda la reprogramacion
+   */
   public onReprogramar(data): void {
     const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
       width: '30%',
@@ -166,7 +166,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
    */
   cambiarHora(date) {
     moment.locale('es');
-    return moment(date).format('h:mm a')
+    return moment(date).format('H:MM a')
   }
 
   /**

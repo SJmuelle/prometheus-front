@@ -10,6 +10,7 @@ import {
 import Swal from "sweetalert2";
 import { takeUntil } from "rxjs/operators";
 import moment from 'moment';
+import { FormDialogReprogramarComponent } from '../form-dialog-reprogramar/form-dialog-reprogramar.component';
 
 @Component({
     selector: 'app-grid-agenda-referenciacion',
@@ -97,6 +98,28 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
             }
         });
     }
+    /**
+     * @description: Guarda la reprogramacion
+     */
+    public onReprogramar(data): void {
+        const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
+            width: '30%',
+            data: {
+                numeroSolicitud: data.numeroSolicitud
+            },
+            disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe((res) => {
+            if (res) {
+                console.log(res);
+                // this.getAgendaReferenciacion();
+                // this.agendaReferenciaService.refrescarListado$.next({ estado: true });
+                //  this.onCerrar();
+            }
+        });
+    }
+
     /**
      * 
      * @param date 
