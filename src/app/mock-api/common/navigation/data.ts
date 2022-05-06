@@ -172,7 +172,7 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'parametria',
-                title: 'Parametria',
+                title: 'Configuración',
                 type: 'collapsable',
                 icon: 'heroicons_outline:check-circle',
                 children: [
