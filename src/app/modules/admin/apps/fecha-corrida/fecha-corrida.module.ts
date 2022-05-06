@@ -19,6 +19,7 @@ import {MatIconModule} from "@angular/material/icon";
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { SearchPipe } from './factura/filterproveedor.pipe';
 // import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 // import { MatSelectSearchModule } from 'mat-select-search';
@@ -48,6 +49,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         MatCheckboxModule,
         MatDatepickerModule,
         MatMomentDateModule,
+        MatAutocompleteModule,
         FuseScrollbarModule,
         ScrollingModule,
         // NgxMatSelectSearchModule,

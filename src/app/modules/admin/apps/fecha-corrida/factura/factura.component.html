@@ -9,40 +9,41 @@
     <form [formGroup]="proveedorForm">
 
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center sm:gap-3">
+            <!-- <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Proveedor</mat-label>
+                <input matInput class="w-full" [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}"
+                    placeholder="Filtrar opciones...">
+                <mat-select formControlName="nit">
+                    <mat-option
+                        *ngFor="let item of listproveedor | search: filterproveedor"
+                        [value]="item.nit">{{ item.proveedor }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
+                    Debe elegir un proveedor.
+                </mat-error>
+            </mat-form-field> -->
+            <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Proveedor</mat-label>
+                <input type="text" formControlName="nit" matInput [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let item of filteredOptions" [value]="item.nit">
+                        {{item.proveedor}} - {{item.nit}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
+                    Debe elegir un proveedor.
+                </mat-error>
+            </mat-form-field>
 
-            <div class="samesize w-3/4 sm:w-2/4 md:w-2/5">
-                <mat-form-field class="w-full">
-                    <mat-label>Proveedor</mat-label>
-                    <input matInput class="w-full" [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}"
-                        placeholder="Filtrar opciones...">
-                    <mat-select formControlName="nit">
-                        <!-- <mat-option>
-                            <ngx-mat-select-search [(ngModel)]="filterproveedor" [ngModelOptions]="{standalone: true}" placeholderLabel="Buscar proveedor" noEntriesFoundLabel="Proveedor no encontrado"></ngx-mat-select-search>
-                        </mat-option> -->
-                        <!-- <mat-option>
-                            <lib-mat-select-search [list]="proveedores" [searchProperties]="['proveedor']" (filtered)="filteredProveedores = $event"></lib-mat-select-search>
-                        </mat-option> -->
-                        <mat-option
-                            *ngFor="let item of listproveedor | search: filterproveedor"
-                            [value]="item.nit">{{ item.proveedor }}</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="proveedorForm.get('nit').hasError('required')">
-                        Debe elegir un proveedor.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-
-            <div class="w-3/4 sm:w-2/4 md:w-2/5">
-                <mat-form-field class="w-full">
-                    <mat-label>Fecha de vencimiento</mat-label>
-                    <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker disabled="false"></mat-datepicker>
-                    <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
-                        Debe digitar una fecha.
-                    </mat-error>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Fecha de vencimiento</mat-label>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker" formControlName="vencimiento" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                <mat-error *ngIf="proveedorForm.get('vencimiento').hasError('required')">
+                    Debe digitar una fecha.
+                </mat-error>
+            </mat-form-field>
 
             <div>
                 <button mat-raised-button color="primary" [disabled]="proveedorForm.invalid" (click)="filtrarDatos()" class="sm:w-40"><mat-icon>search</mat-icon>Buscar facturas</button>

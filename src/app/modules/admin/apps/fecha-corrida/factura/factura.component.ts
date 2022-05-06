@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CuentasxcobrarService } from 'app/core/services/cuentasxcobrar.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import moment from 'moment';
 
 @Component({
@@ -15,7 +17,7 @@ export class FacturaComponent implements OnInit {
 
   banco: any = [];
 
-  listproveedor: any = [];
+  listproveedor: any=[];
 
   total:number;
 
@@ -46,6 +48,8 @@ export class FacturaComponent implements OnInit {
   minFecha: Date;
   maxFecha: Date;
 
+  filteredOptions;
+
   get frm() {
     return this.bancoForm.controls;
   }
@@ -62,8 +66,7 @@ export class FacturaComponent implements OnInit {
 
     this.proveedorForm = this.fb.group({
       nit: ['', [Validators.required]],
-      vencimiento: [this.fechaActual, [Validators.required]],
-      filtro: [this.filterproveedor]
+      vencimiento: [this.fechaActual, [Validators.required]]
     });
   }
 
@@ -73,6 +76,20 @@ export class FacturaComponent implements OnInit {
     this.maxFecha = new Date(this.fechaActual);
     this.consultaBanco();
     this.consultaProveedor();
+    this.formcontrol();
+  }
+
+  formcontrol(){
+    this.proveedorForm.get('nit').valueChanges.subscribe(response =>{
+      console.log('Aqui tu info: ', response)
+      this.filterSelect(response)
+    })
+  }
+
+  filterSelect(data){
+    this.filteredOptions = this.listproveedor.filter(item =>{
+      return item.toLowerCase().indexOf(data.toLowerCase()) > -1
+    })
   }
 
   filtrarDatos(){
@@ -203,6 +220,7 @@ export class FacturaComponent implements OnInit {
     this.cuentaService.getProveedor().subscribe((response: any) => {
       if (response) {
         this.listproveedor = response.data;
+        this.filteredOptions = response.data;
       }
     });
   }
