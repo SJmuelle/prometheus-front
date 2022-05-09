@@ -26,7 +26,7 @@ export class ListadoChequeoFormComponent implements OnInit {
     // debugger;
     this.datos = this.data;
     if (this.datos.titulo != 'N') {
-      this.datos.tipoIdentificacion = this.datos.tipoIdentificacion == 'CC' ? 'Persona natural' : 'Persona jurica'
+      this.datos.tipoIdentificacion = this.datos.tipoIdentificacion == 'CC' ? 'Persona natural' : 'Persona juridica'
     }
     this.consulta();
   }
@@ -35,7 +35,7 @@ export class ListadoChequeoFormComponent implements OnInit {
     this._utility
       .getFile('/generic/qry/consulta-lista-generica/TIPOS-AGENDA')
       .subscribe((response: any) => {
-     
+
         if (response) {
           this.listadoAgenda = response.data;
         } else {
@@ -45,7 +45,7 @@ export class ListadoChequeoFormComponent implements OnInit {
       this._utility
       .getFile('/generic/qry/consulta-lista-generica/UNIDAD-NEGOCIO')
       .subscribe((response: any) => {
-     
+
         if (response) {
           this.listadoUnidad = response.data;
         } else {
