@@ -69,13 +69,21 @@ export class FacturaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      if (response) {
-        this.listadoFacturas = response.data;
+      console.log(response)
+      if (response.data.length==0) {
+        console.log(response.data)
+        Swal.fire(
+          'Error!',
+          `El nit no coincide.`,
+          'error'
+        ).then();
+        this.mostrar=false;
       } else {
-        this.listadoFacturas = [];
+        console.log(response.data)
+        this.listadoFacturas = response.data;
+        this.mostrar=true;
       }
       this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valorFactura), 0);
-      this.mostrar=true
     })
 
     if (totaltransferencia!=0 || nombreBanco!='') {
