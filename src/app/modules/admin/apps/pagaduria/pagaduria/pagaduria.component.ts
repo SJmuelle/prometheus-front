@@ -85,7 +85,15 @@ export class PagaduriaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pagaduria.getSolicitudesFilter(this.tipo, this.estado).subscribe((response: any) => {
       Swal.close();
-      if (response) {
+      console.log(response.data)
+      if (response.data.length==0) {
+        Swal.fire(
+          '¡Error!',
+          `No existen pagadurias.`,
+          'error'
+        ).then();
+        this.solicitudes = response.data;
+      }else{
         this.solicitudes = response.data;
       }
     });
