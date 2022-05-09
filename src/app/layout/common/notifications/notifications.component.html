@@ -8,7 +8,7 @@
             <span class="flex items-center justify-center flex-shrink-0 min-w-4 h-4 px-1 ml-4 mt-2.5 rounded-full bg-teal-600 text-indigo-50 text-xs font-medium">
                 {{unreadCount}}
             </span>
-        </span> 
+        </span>
     </ng-container>
     <mat-icon [svgIcon]="'heroicons_outline:bell'"></mat-icon>
 </button>
@@ -126,9 +126,15 @@
                     <!-- Title, description & time -->
                     <div class="flex flex-col flex-auto">
                         <ng-container *ngIf="notification.title">
-                            <div
+                            <!-- <div
                                 class="font-semibold line-clamp-3"
-                                [innerHTML]="notification.title"></div>
+                                [innerHTML]="notification.title"></div> -->
+                                <h5 [innerHTML]="notification.title"></h5>
+                        </ng-container>
+                        <ng-container *ngIf="notification.id">
+                            <div
+                                class="font-semibold line-clamp-3">
+                            hola {{ notification.id }}</div>
                         </ng-container>
                         <ng-container *ngIf="notification.description">
                             <div

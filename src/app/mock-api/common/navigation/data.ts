@@ -185,7 +185,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                     },
                     {
                         id: 'parametria.fabrica',
-                        title: 'Listado de Preguntas',
+                        title: 'Preguntas de Referenciación',
                         // icon: 'heroicons_outline:minus-sm',
                         type: 'basic',
                         link: '/credit-factory/parametria/listadoPreguntasReferenciacion'

@@ -79,6 +79,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         setTimeout(() => {
             this.consulta();
         }, 1000);
+        console.log(this.consulta())
     }
 
     consulta() {
@@ -88,7 +89,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
             .getQuery(url, true)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: any) => {
-                
+
                 this.notifications = notifications.data;
                 console.log(this.notifications);
                 this._calculateUnreadCount();
@@ -165,7 +166,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: any) => {
                 this.consulta();
-               
+
             });
     }
 
