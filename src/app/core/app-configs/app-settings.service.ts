@@ -18,7 +18,8 @@ export class AppSettingsService {
     public agendaReferenciacion = {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/RE'),
-            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE')
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE'),
+            tipoReferenciacion: EndPoints.uri('/credito/tk/property/cards-informacion-refenciacion')
         }
     };
     /**

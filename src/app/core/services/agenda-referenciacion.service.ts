@@ -24,4 +24,12 @@ export class AgendaReferenciacionService {
   public getTotalesAgendaReferenciacion(): Observable<any> {
     return this._http.get(this._appSettings.agendaReferenciacion.url.totales);
   }
+  /**
+   * @description: Listado de tipo de referenciacion
+   */
+  public getTipoReferenciacion(datos): Observable<any> {
+    // return this._http.get(this._appSettings.agendaReferenciacion.url.tipoReferenciacion);
+    return this._http.post(this._appSettings.agendaReferenciacion.url.tipoReferenciacion, datos);
+
+  }
 }

@@ -28,6 +28,7 @@ import {
 import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
 import { FormDialogListErrorDialogComponent } from './form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
 import { MatListModule } from '@angular/material/list';
+import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid-tipo-referenciacion.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { MatListModule } from '@angular/material/list';
     FormGestionReferenciacionModalComponent,
     FormDialogReprogramarComponent,
     FormDialogComentarioReferenciaComponent,
-    FormDialogListErrorDialogComponent
+    FormDialogListErrorDialogComponent,
+    GridTipoReferenciacionComponent
   ],
     imports: [
         CommonModule,
