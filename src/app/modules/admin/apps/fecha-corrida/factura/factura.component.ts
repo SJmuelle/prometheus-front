@@ -69,7 +69,6 @@ export class FacturaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando facturas por pagar', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.cuentaService.getFacturesFilter(nit, this.formatofecha).subscribe((response: any)=>{
       Swal.close();
-      console.log(response)
       if (response.data.length==0) {
         console.log(response.data)
         Swal.fire(
@@ -79,7 +78,6 @@ export class FacturaComponent implements OnInit {
         ).then();
         this.mostrar=false;
       } else {
-        console.log(response.data)
         this.listadoFacturas = response.data;
         this.mostrar=true;
       }
@@ -110,8 +108,8 @@ export class FacturaComponent implements OnInit {
       ).then();
     }else{
       this.cuentaService.postTransferencia(this.transferencia).subscribe((response: any)=>{
-        console.log( this.transferencia)
-        console.log("Aqui tus datos: ", response)
+        // console.log( this.transferencia)
+        // console.log("Aqui tus datos: ", response)
         if (response.msg != "OK") {
           Swal.fire(
             '¡Información!',
