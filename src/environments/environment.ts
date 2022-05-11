@@ -4,29 +4,34 @@
 
 export const environment = {
     production: false,
-    // urlApi: 'http://192.168.190.237:8010/api-fintra/api',
-    urlApi: 'https://ultracem.ngrok.io/api-fintra/api',
-    // urlApi: 'http://192.168.140.241:8010/api-fintra/api',
-    urlApi2: 'https://ultracem.ngrok.io/api-fintra/api/generic/qry/',
-   //  urlApi2: 'http://192.168.190.237:8010/api-fintra/api/generic/qry/',
-    urlApi3: 'http://192.168.140.241:8010/api-fintra/api/generic',
-    urlApi4: 'https://ultracem.ngrok.io/api-fintra/api/credito/tk/recursos/',
-    urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
-    urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
+    userName: 'APPWEB',
+    password: btoa('123456'),
+    urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
+    urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
 
-    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto:'http://192.168.140.241:8010/api-fintra/api/pqrs',
+    // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
+    // urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
+    urlApi4: 'http://demo.fintra.co:8010/api-fintra/api/credito/tk/recursos/',
+    urlApi5: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
+    urlApi6: 'http://demo.fintra.co:8010/api-fintra/api/archivos/guardar/',
+
+    urlprometheus:
+        'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    adjunto: 'http://demo.fintra.co:8010/api-fintra/api/pqrs',
+    // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     // envioCorreo:"http://192.168.140.197:8084"
-    envioCorreo:"http://prometheus.fintra.co:8443/apicredit"
-
+    envioCorreo: 'http://demo.fintra.co:8010/apicredit',
+    urlUltracem: 'http://demo.fintra.co:8010/api-fintra/api',
 
     // NGROK
-    // urlApi: 'https://tefi.ngrok.io/api-fintra/api',
-    // urlApi2: 'https://tefi.ngrok.io/api-fintra/api/generic/qry',
-    // urlApi3: 'https://tefi.ngrok.io/api-fintra/api/generic',
+    // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry',<
+    // urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic',
 
     // urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    // adjunto:'https://tefi.ngrok.io/api-fintra/api/pqrs',
+    // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     // // envioCorreo:"http://192.168.140.197:8084"
     // envioCorreo:"http://prometheus.fintra.co:8443/apicredit"
 };

@@ -50,11 +50,42 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
   public openModalDirection(): void {
       const dialogRef = this.matDialog.open(DirectionsComponent, {
           // width: '250px',
+          width: '60%',
+            data: {
+                departamento: '',
+                municipio: '',
+                barrio: '',
+                direccion: '',
+            },
           disableClose: false
       });
 
       dialogRef.afterClosed().subscribe((res) => {
-          // this.formTab1.controls['direccionNegocio'].setValue(res);
+          let dataModal = res;
+            if (dataModal.departamentoNombre != undefined) {
+                this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
+                this.form.controls.departamentoNombre.setValue(dataModal.departamentoNombre);
+                this.form.controls.codigoCiudad.setValue(dataModal.municipio);
+                this.form.controls.ciudadNombre.setValue(dataModal.municipioNombre);
+                 this.form.controls.codigoBarrio.setValue(parseInt(dataModal.codigoBarrio));
+                 this.form.controls.nombreBarrio.setValue(dataModal.barrio);
+                 this.form.controls.direccion.setValue(
+                    (dataModal.viaNombre == undefined
+                        ? ''
+                        : `${dataModal.viaNombre}`) +
+                    (dataModal.callePrincipal == undefined
+                        ? ''
+                        : ` ${dataModal.callePrincipal}`) +
+                    (dataModal.numero == undefined
+                        ? ''
+                        : ` # ${dataModal.numero}`) +
+                    (dataModal.numero2 == undefined
+                        ? ''
+                        : ` - ${dataModal.numero2}`) +
+                    (dataModal.complemento == undefined
+                        ? ''
+                        : ` ${dataModal.complemento}`));
+            }
       });
   }
 
@@ -73,11 +104,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
           }).then((result) => {
               if (result.isConfirmed) {
                   this.postReferencia(datos);
-                  Swal.fire(
-                      'Completado',
-                      'Información guardada con éxito',
-                      'success'
-                  );
               }
           });
 
@@ -130,12 +156,15 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             nombreCompleto:     [''],
             tipo:               ['seleccione',],
             parentesco:         [''],
-            telefono:           ['', [Validators.pattern(/^[0-9]*$/)]],
-            celular:            ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
+            telefono:           ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+            celular:            ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
             codigoPais:         [''],
-            codigoDepartamento: ['seleccione'],
-            codigoCiudad:       ['seleccione'],
-            codigoBarrio:       ['seleccione'],
+            codigoDepartamento: [''],
+            departamentoNombre: [''],
+            codigoCiudad:       [''],
+            ciudadNombre:       [''],
+            codigoBarrio:       [''],
+            nombreBarrio:       [],
             direccion:          [''],
             antiguedad:         [''],
         });
@@ -144,7 +173,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
      * @description: Crea una referencia
      */
     private postReferencia(datos: any): void {
-        const {tipo,
+        const {
+            tipo,
             numeroSolicitud,
             identificacion,
             primerNombre,
@@ -178,10 +208,11 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoPais:      codigoPais,
             codigoDepartamento: codigoDepartamento,
             codigoCiudad:       codigoCiudad,
-            codigoBarrio:       codigoBarrio,
+            codigoBarrio:       Number(codigoBarrio),
             direccion:          direccion,
-            antiguedad:         antiguedad,
+            antiguedad:         Number(antiguedad),
         };
+        console.log(formPersonal);
         const formComercial = {
             numeroSolicitud: Number(numeroSolicitud),
             identificacion:  identificacion,
@@ -199,17 +230,28 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad:       codigoCiudad,
             codigoBarrio:       codigoBarrio,
             direccion:          direccion,
-            antiguedad:         antiguedad,
+            antiguedad:         Number(antiguedad),
         };
+        console.log(formComercial);
         if (tipo === 'P') {
             this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
                 this.onCerrar();
                 this.referenciasService.eventos$.emit(true);
+                Swal.fire(
+                    'Completado',
+                    'Información guardada con éxito',
+                    'success'
+                );
             });
         }else {
             this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
                 this.onCerrar();
                 this.referenciasService.eventos$.emit(true);
+                Swal.fire(
+                    'Completado',
+                    'Información guardada con éxito',
+                    'success'
+                );
             });
         }
     }
@@ -262,6 +304,10 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
      */
     public soloNumero(field: string) {
         return this.form.controls[field].hasError('pattern');
+    }
+
+    public campoRequerido(field: string) {
+        return this.form.controls[field].errors && this.form.controls[field].touched;
     }
 
     ngOnDestroy(): void {

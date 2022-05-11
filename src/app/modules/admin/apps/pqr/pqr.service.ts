@@ -71,13 +71,23 @@ export class PqrService {
         );
     }
 
+    permisoCreacion(url: string): Observable<any> {
+        return this._utility.getQuery(url, true).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
     // NUEVO METODO PARA ENVIAR CORREOS
-    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '') {
+    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '', mensaje?,envioCorreo?) {
         let data = {
             pqrs: parseInt(pqrs),
             tipo: tipo,
             descripcion: descripcion,
-            adjuntos: adjuntos
+            adjuntos: adjuntos,
+            mensaje:mensaje,
+            envioCorreo:envioCorreo
         };
         return this._utility.postQueryCorreo(url, data).subscribe((res) => {
             // debugger;
@@ -142,6 +152,13 @@ export class PqrService {
             })
         );
     }
+    getListadosUnico(url: string) {
+        return this._utility.getQueryUnico(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
 
     getSolucionesCausales(url: string) {
         return this._utility.getQuery(url, true).pipe(
@@ -158,8 +175,11 @@ export class PqrService {
             })
         );
     }
-
-    generarCertificados(url: string) {
-
+    generarCertificados(url: string, data:any) {
+        return this._utility.postFile(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
     }
 }
