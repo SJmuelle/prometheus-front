@@ -82,6 +82,23 @@ export class UtilityService {
         }
     }
 
+    getQueryUnico(query: string, sendHeaders: boolean) {
+        // console.log(this.readToken());
+        const URL = this.server + query;
+        const headers = new HttpHeaders({
+            Authentication: `${this.readToken()}`,
+            'Content-Type': 'application/json; charset=utf-8',
+        });
+        if (sendHeaders) {
+            // console.log(headers);
+            return this._httpClient
+                .get(URL, { headers })
+                .pipe(catchError(this.handleError));
+        } else {
+            return this._httpClient.get(URL).pipe(catchError(this.handleError));
+        }
+    }
+
     getFile(query: string) {
         const URL = this.server + query;
         const headers = new HttpHeaders({

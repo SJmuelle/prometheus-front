@@ -30,7 +30,7 @@ export class AppSettingsService {
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
-            checklist: EndPoints.uri('/generic/qry/obtener-items-chequeo-credito')
+            checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito')
         }
     };
     /**
@@ -113,7 +113,7 @@ export class AppSettingsService {
     public decision = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
-            baseDecision: EndPoints.uri('/generic/cre-decision'),
+            baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausal: EndPoints.uri('/generic/qry/cau-rechazo'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud')

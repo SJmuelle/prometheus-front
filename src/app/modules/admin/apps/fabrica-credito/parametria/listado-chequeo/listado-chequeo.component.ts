@@ -19,6 +19,7 @@ export class ListadoChequeoComponent implements OnInit {
   mostrar_form: boolean = true;
   datos: any = {};
 
+
   constructor(
     public dialog: MatDialog,
     private _utility: UtilityService) { }

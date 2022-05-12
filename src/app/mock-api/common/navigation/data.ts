@@ -183,6 +183,13 @@ export const compactNavigation: FuseNavigationItem[] = [
                         type: 'basic',
                         link: '/credit-factory/parametria',
                     },
+                    {
+                        id: 'parametria.fabrica',
+                        title: 'Preguntas de Referenciación',
+                        // icon: 'heroicons_outline:minus-sm',
+                        type: 'basic',
+                        link: '/credit-factory/parametria/listadoPreguntasReferenciacion'
+                    }
                 ],
             },
 

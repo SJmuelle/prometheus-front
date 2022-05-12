@@ -9,12 +9,16 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FuseCardModule } from '@fuse/components/card';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ListadoPreguntasReferenciacionComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion.component';
+import { ListadoPreguntasReferenciacionFormComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion-form/listado-preguntas-referenciacion-form.component';
 
 
 @NgModule({
   declarations: [
     ListadoChequeoComponent,
-    ListadoChequeoFormComponent
+    ListadoChequeoFormComponent,
+    ListadoPreguntasReferenciacionComponent,
+    ListadoPreguntasReferenciacionFormComponent
   ],
   imports: [
     CommonModule,

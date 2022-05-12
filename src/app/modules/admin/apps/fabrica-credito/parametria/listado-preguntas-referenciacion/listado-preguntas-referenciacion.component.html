@@ -1,6 +1,6 @@
 <div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
     <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Listado de chequeo</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Preguntas de referenciación</h2>
         <div class="col-span-12 grid grid-cols-12">
             <div class="col-span-6">
                 <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
@@ -44,7 +44,7 @@
                     <th class="px-4 py-3 text-center">Agenda</th>
                     <th class="px-4 py-3 text-center">Tipo de persona</th>
                     <th class="px-4 py-3 text-center">Unidad negocio</th>
-                    <th class="px-4 py-3 text-center">Descripción</th>
+                    <th class="px-4 py-3 text-center">Pregunta</th>
                     <th class="px-4 py-3 text-center">Estado</th>
                 </tr>
             </thead>
@@ -82,7 +82,7 @@
                         {{ item.unidadNegocio }}
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item.nombre }}
+                        {{ item.tituloPregunta }}
                     </td>
                     <td class="px-2 text-sm border text-center w-0">
                         <div

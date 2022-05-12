@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { InsertarAdjuntosComponent } from '../../creacion-pqrs/insertar-adjuntos/insertar-adjuntos.component';
 import { PqrService } from '../../pqr.service';
 
 @Component({
@@ -19,7 +21,7 @@ export class SolucionComponent implements OnInit {
             ['clean'],
         ],
     };
-
+    @ViewChild('editor') editor;
     seguimiento: any = {};
     pqrid: any;
     datos: any = {};
@@ -34,8 +36,12 @@ export class SolucionComponent implements OnInit {
     @Input() idSolucion: number = 0;
     listadoSoluciones: any = [];
     ext: string;
+    evidencia: any=[];
+    envioCorreo: boolean=false;
+    mensajeQuill: string;
     constructor(
         private _pqrService: PqrService,
+        public dialog: MatDialog,
         private _activatedRoute: ActivatedRoute
     ) {}
 
@@ -131,12 +137,69 @@ export class SolucionComponent implements OnInit {
         }
     }
 
+    insertadjunti() {
+        const dialogRef = this.dialog.open(InsertarAdjuntosComponent, {
+            width: '60%',
+            data: {},
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+            // console.log('The dialog was closed');
+            console.log(result);
+            let dataModal = result;
+            if (
+                dataModal.file != '' &&
+                dataModal.file != undefined &&
+                dataModal.file != null &&
+                dataModal.descripcion != '' &&
+                dataModal.descripcion != undefined &&
+                dataModal.descripcion != null
+            ) {
+                if (this.idTipoComentario == "2") {
+
+                        if (dataModal.ext !== 'pdf') {
+                            Swal.fire(
+                                'Información',
+                                `Para soluciones del cliente solo es posible, subir archivos PDF .`,
+                                'error'
+                            );
+                            return;
+                        }
+
+                }
+                // this.evidencia.push(this.evidencia)
+                this.evidencia.push({
+                    "nombreArchivo": dataModal.nombre,
+                    "extension": dataModal.ext,
+                    "base64": dataModal.file,
+                    "descripcion": dataModal.descripcion
+                });
+            }
+        });
+    }
+    logChange($event) {
+        console.log(this.editor);
+        //console.log($event);
+        this.mensajeQuill=$event.text;
+    }
     guardar() {
+        if(this.envioCorreo==true){
+            if(this.editor.editorElem.outerText.length>650){
+                Swal.fire(
+                    'Información',
+                    `La cantidad de caracteres máxima del comentario para ser enviada por correo es de: (650).
+                    Su cantidad de caracteres actual es de: (${this.editor.editorElem.outerText.length})`,
+                    'warning'
+                );
+                return
+            }
+        }
+
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal
             ? this.solucionCausal
             : 0;
-
+        let mensaje=this.editor.editorElem.outerText
         if (this.listadoSoluciones.length > 0) {
             if (
                 this.seguimiento.idTipoComentario == 2 &&
@@ -151,9 +214,9 @@ export class SolucionComponent implements OnInit {
             }
         }
 
-        if (this.seguimiento.idTipoComentario == 2) {
+        if (this.seguimiento.idTipoComentario === 2) {
             if (this.file != null) {
-                if (this.ext != 'pdf') {
+                if (this.ext !== 'pdf') {
                     Swal.fire(
                         'Información',
                         `Verificar las condiciones antes de subir un archivo.`,
@@ -161,14 +224,12 @@ export class SolucionComponent implements OnInit {
                     );
                     return;
                 }
-            } else {
-                Swal.fire(
-                    'Información',
-                    `Debe agregar un archivo PDF para dar una respuesta al cliente.`,
-                    'error'
-                );
-                return;
             }
+            // let url1="/generic/qry/obtener_info_comentario";
+            // this._pqrService
+            // .getListadosUnico(url1)
+            // .subscribe((response: any) => {
+            // });
         }
 
         let url = '/agregar-solucion-comentario';
@@ -185,7 +246,7 @@ export class SolucionComponent implements OnInit {
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {
-                    if (response.status == 200) {
+                    if (response.status === 200) {
                         console.log(response.data.respuesta);
                         if (response.data.respuesta.includes('Error')) {
                             Swal.fire(
@@ -195,16 +256,13 @@ export class SolucionComponent implements OnInit {
                             );
                             return;
                         }
-                        if (this.file != null) {
-                            let nombre = this.filename.split('.');
+                        if (this.evidencia.length > 0) {
+
                             let data = {
                                 idComentario: response.data.respuesta,
-                                nombreArchivo: `solucion${this.pqrid}_${response.data.respuesta}`,
-                                extension: nombre[1].toLowerCase(),
                                 fuente: 'registro-pqrs',
                                 identificador: 'pqrs' + this.pqrid,
-                                base64: this.file,
-                                descripcion: this.filename,
+                                file:this.evidencia
                             };
 
                             url = '/file/cargar-archivo-pqrs';
@@ -243,8 +301,11 @@ export class SolucionComponent implements OnInit {
                                                         this.pqrid,
                                                         5,
                                                         response.data.nombre,
-                                                        response.data.ubicacion
+                                                        response.data.archivos,
+                                                        mensaje,
+                                                        this.envioCorreo==true?'S':'N'
                                                     );
+
                                                 }
 
                                                 this.limpiar();
@@ -260,6 +321,21 @@ export class SolucionComponent implements OnInit {
                                 'success'
                             ).then((resultado) => {
                                 if (resultado) {
+                                    if (
+                                        this.idTipoComentario == '2'
+                                    ) {
+                                        url = `/sendmail/notificacion-crear-pqrs`;
+                                        this._pqrService.envioCorreos(
+                                            url,
+                                            this.pqrid,
+                                            5,
+                                            response.data.nombre,
+                                            response.data.archivos,
+                                            mensaje,
+                                            this.envioCorreo==true?'S':'N'
+                                        );
+
+                                    }
                                     this.limpiar();
                                     this.recargarData();
                                 }
@@ -288,6 +364,9 @@ export class SolucionComponent implements OnInit {
     }
 
     limpiar() {
+        setTimeout(() => {
+            location.reload();
+        }, 10000);
         this.seguimiento = {
             idPqrs: parseInt(this.pqrid),
             idPqrsPadre: this.datos.idPadre,
@@ -296,9 +375,14 @@ export class SolucionComponent implements OnInit {
             idSolucion: null,
             detalle: '',
         };
+        this.evidencia=[]
         this.filename = '';
         this.file = undefined;
         this.fileP.nativeElement.value = '';
+    }
+
+    eliminarEvidencia(dato) {
+        this.evidencia.splice(dato, 1);
     }
 
     recargarData() {
