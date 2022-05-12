@@ -5,7 +5,7 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormDialogDecisionComponent } from '../form-dialog-decision/form-dialog-decision.component';
-
+import 'moment/locale/es';
 @Component({
   selector: 'app-form-dialogo-checklist',
   templateUrl: './form-dialogo-checklist.component.html',
@@ -36,7 +36,12 @@ export class FormDialogoChecklistComponent implements OnInit {
 
   consulta() {
     this.total = 0;
-    this.fabricaCreditoService.getCheckList(this.data)
+    let data= {
+      "numeroSolicitud": Number(this.data.numeroSolicitud),
+      "unidadNegocio":32,
+      "tipoIdentificacion": this.data.tipoDocumento
+    }
+    this.fabricaCreditoService.getCheckList(data)
       .subscribe(({ data }) => {
         if (data) {
           console.log(data)
@@ -100,15 +105,7 @@ export class FormDialogoChecklistComponent implements OnInit {
 
             return;
           }
-          Swal.fire(
-            '¡Información!',
-            `Se guardó el registro con éxito`,
-            'success'
-          ).then((result) => {
-            if (result) {
-              this.consulta();
-            }
-          });;
+          this.consulta();
         } else {
           Swal.fire(
             '¡Información!',
