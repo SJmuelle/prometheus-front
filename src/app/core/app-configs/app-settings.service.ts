@@ -113,7 +113,7 @@ export class AppSettingsService {
     public decision = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
-            baseDecision: EndPoints.uri('/generic/cre-decision'),
+            baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausal: EndPoints.uri('/generic/qry/cau-rechazo'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud')
