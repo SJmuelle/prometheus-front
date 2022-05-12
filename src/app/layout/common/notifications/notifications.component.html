@@ -125,17 +125,22 @@
                     </ng-container>
                     <!-- Title, description & time -->
                     <div class="flex flex-col flex-auto">
+                        <ng-container *ngIf="notification.id">
+                            <div
+                                class="font-semibold line-clamp-3 mb-1.5">
+                            {{ notification.agenda }}</div>
+                        </ng-container>
                         <ng-container *ngIf="notification.title">
                             <!-- <div
                                 class="font-semibold line-clamp-3"
                                 [innerHTML]="notification.title"></div> -->
                                 <h5 [innerHTML]="notification.title"></h5>
                         </ng-container>
-                        <ng-container *ngIf="notification.id">
+                        <!-- <ng-container *ngIf="notification.id">
                             <div
                                 class="font-semibold line-clamp-3">
-                            hola {{ notification.id }}</div>
-                        </ng-container>
+                            {{ notification.agenda }}</div>
+                        </ng-container> -->
                         <ng-container *ngIf="notification.description">
                             <div
                                 class="line-clamp-4"

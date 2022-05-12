@@ -40,7 +40,7 @@
                         tracking-wide text-left text-gray-400
                          border-b border-gray-600" >
                     <th class="px-4 py-3 text-center w-0">Editar</th>
-                    <th class="px-4 py-3 text-center" *ngIf="mostrar_colId==true">ID</th>
+                    <th class="px-4 py-3 text-center">ID</th>
                     <th class="px-4 py-3 text-center">Agenda</th>
                     <th class="px-4 py-3 text-center">Tipo de persona</th>
                     <th class="px-4 py-3 text-center">Unidad negocio</th>
@@ -69,7 +69,7 @@
                             svgIcon="heroicons_outline:pencil-alt"
                         ></mat-icon>
                     </td>
-                    <td *ngIf="mostrar_colId==true" class="px-2 text-sm border text-center">
+                    <td class="px-2 text-sm border text-center">
                         {{ item.id }}
                     </td>
                     <td class="px-2 text-sm border text-center">

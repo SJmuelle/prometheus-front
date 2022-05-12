@@ -35,7 +35,10 @@ export class FabricaCreditoService {
  */
     public getCheckList(datos): Observable<any> {
         const { numeroSolicitud, tipoDocumento } = datos;
-        return this._http.get(`${this._appSettings.fabricaDatos.url.checklist}/${numeroSolicitud}/32/${tipoDocumento}`);
+        let data = `{"numeroSolicitud": "${numeroSolicitud}", "unidadNegocio": ${32},"tipoIdentificacion": "${tipoDocumento}"}`;
+
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.checklist}/${numeroSolicitud}/32/${tipoDocumento}`);
+        return this._http.post(this._appSettings.fabricaDatos.url.checklist, data);
     }
 
 

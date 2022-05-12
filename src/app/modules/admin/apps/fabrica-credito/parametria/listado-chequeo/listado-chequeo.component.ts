@@ -17,7 +17,6 @@ export class ListadoChequeoComponent implements OnInit {
   tamanoTabl: number = 10;
   filtrarTabla: string = '';
   mostrar_form: boolean = true;
-  mostrar_colId: boolean = false;
   datos: any = {};
 
 
