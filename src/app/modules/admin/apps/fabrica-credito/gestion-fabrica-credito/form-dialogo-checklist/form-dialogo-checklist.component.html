@@ -18,12 +18,13 @@
         </span>
 
 
-
-        <span class="etiqueta1" >
-          {{data.usuarioCreacion}}
-          /
-          {{data.fechaCreacion | date:'MMMM dd, h:mm a' }}
-        </span>
+        <ng-container *ngIf="data.usuarioCreacion!=''">
+          <span class="etiqueta1" >
+            {{data.usuarioCreacion}}
+            /
+            {{data.fechaCreacion | date:'MMM dd, h:mm a' }}
+          </span>
+        </ng-container>
       </div>
 
     </div>
