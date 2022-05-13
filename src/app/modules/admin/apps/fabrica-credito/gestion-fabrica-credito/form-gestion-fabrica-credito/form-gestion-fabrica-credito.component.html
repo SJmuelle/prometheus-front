@@ -22,16 +22,16 @@
                     </ng-container>
 
                     <button mat-fab class="mx-1 bg-amber-500 roll-in-blurred-right"
-                        (click)="verComentarios = !verComentarios" [disabled]="verComentarios"
-                        [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Comentario">
+                        (click)="verComentarios = true;settingsDrawer.toggle();"
+                        [ngClass]="[animacionVer==true?'show':'hidden',(verComentarios==true?'bounce-top':'')]"
+                        matTooltip="Comentario">
                         <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
                     </button>
                     <ng-container *ngIf="agenda_fabrica !== 'CM'">
                         <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
-                                [ngClass]="animacionVer==true?'show':'hidden'" 
-                                matTooltip="{{dialog_a_mostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
-                            <mat-icon
-                                [svgIcon]="dialog_a_mostrar=='SIGUIENTE'?'next_plan':'check_circle'">
+                            [ngClass]="animacionVer==true?'show':'hidden'"
+                            matTooltip="{{dialog_a_mostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
+                            <mat-icon [svgIcon]="dialog_a_mostrar=='SIGUIENTE'?'next_plan':'check_circle'">
                             </mat-icon>
                             <!-- <mat-icon svgIcon="next_plan"></mat-icon> -->
                         </button>
@@ -602,15 +602,18 @@
 
 </div>
 <div class="sm:mt-13"></div>
-<ng-container *ngIf="verComentarios">
-    <div class="fixed z-999 sm:ml-30 top-18">
-        <app-grid-comentarios (cerrarComponente)="onCerrar($event)" (minimizarComponente)="onMinimiza($event)">
-        </app-grid-comentarios>
-    </div>
-</ng-container>
+<fuse-drawer class="w-150 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
+    [position]="'right'" #settingsDrawer>
+    <ng-container *ngIf="verComentarios">
+        <div class="fixed z-999 w-full">
+            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()" (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
+            </app-grid-comentarios>
+        </div>
+    </ng-container>
+</fuse-drawer>
 <ng-container *ngIf="minimizarComentarios">
     <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" [matTooltip]="'Restaura ventana comentarios'"
-        (click)="verComentarios = !verComentarios">
+        (click)="verComentarios = true;settingsDrawer.toggle()">
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>
