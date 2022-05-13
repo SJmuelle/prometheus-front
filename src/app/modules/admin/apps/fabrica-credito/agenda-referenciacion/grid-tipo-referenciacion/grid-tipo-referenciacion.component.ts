@@ -30,6 +30,7 @@ export class GridTipoReferenciacionComponent implements OnInit {
   public esVerComentarios: boolean = false;
   public minimizarComentarios: boolean = false;
   public minimizarDevoluciones: boolean = false;
+  listado: any;
 
   constructor(
     private agendaCompletacionService: AgendaCompletacionService,
@@ -112,6 +113,14 @@ export class GridTipoReferenciacionComponent implements OnInit {
 
 
   /**
+   * @description:aqui va algo
+   */
+  public onGetFormRefrenciacion(tipo: any): void {
+    this.router.navigate([`../agenda/${this.numeroSolicitud}/${this.identificacion}/${tipo}`]);
+  }
+
+
+  /**
    * @description: Redireciona a la grid de cada agenda
    */
   private redireccionar(data: any) {
@@ -119,19 +128,21 @@ export class GridTipoReferenciacionComponent implements OnInit {
   }
 
   private getTipoReferenciacion(data): void {
-    let datos={
-        "numeroSolicitud":data
+    this.listado = {};
+    let datos = {
+      "numeroSolicitud": data
     }
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaReferenciaService.getTipoReferenciacion(datos).pipe().subscribe((res) => {
-        if (res.status === 200) {
-           
-            Swal.close();
-        } else {
-            Swal.close();
-        }
+      if (res.status === 200) {
+        console.log(res.data)
+        this.listado = res.data;
+        Swal.close();
+      } else {
+        Swal.close();
+      }
     });
-}
+  }
 
   ngOnDestroy(): void {
     this.unSubscribe$.unsubscribe();

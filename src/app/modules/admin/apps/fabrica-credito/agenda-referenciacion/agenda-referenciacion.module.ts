@@ -29,6 +29,12 @@ import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
 import { FormDialogListErrorDialogComponent } from './form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
 import { MatListModule } from '@angular/material/list';
 import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid-tipo-referenciacion.component';
+import { FormAgendaReferenciacionComponent } from './form-agenda-referenciacion/form-agenda-referenciacion.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
@@ -38,7 +44,8 @@ import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid
     FormDialogReprogramarComponent,
     FormDialogComentarioReferenciaComponent,
     FormDialogListErrorDialogComponent,
-    GridTipoReferenciacionComponent
+    GridTipoReferenciacionComponent,
+    FormAgendaReferenciacionComponent
   ],
     imports: [
         CommonModule,
@@ -63,6 +70,11 @@ import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid
         FormsModule,
         MatListModule,
         FuseAlertModule,
+        MatProgressBarModule,
+        MatSidenavModule,
+        FuseFindByKeyPipeModule,
+        SharedModule,
+        MatRadioModule
     ]
 })
 export class AgendaReferenciacionModule { }
