@@ -2,7 +2,7 @@
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
         <div class="flex flex-col">
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end">
-                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza()">
+                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza();">
                     <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
                 </button>
                 <button mat-icon-button matTooltip="Cerrar" (click)="onCerrar()">
@@ -13,75 +13,86 @@
     </div>
     <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full">
         <!-- Main -->
-        <div class="flex flex-col flex-auto px-6 py-3 sm:pb-20">
-
+        <div class="flex flex-col flex-auto px-0 py-2 sm:pb-20">
             <!-- Activity feed -->
             <div class="w-full max-w-3xl">
-
                 <!-- Title -->
-                <div class="text-4xl font-extrabold tracking-tight leading-none">Comentatios</div>
+                <div class="mb-2 text-gray-900 h5">Comentatios</div>
                 <div class="mt-1.5 text-lg text-secondary">Trazabilida de la solicitud desde los comentarios.</div>
             </div>
-            <ng-container *ngIf="(comentarios$ | async) as comentar; else loading">
+            <ng-container class="py-2.5" *ngIf="(comentarios$ | async) as comentar; else loading">
                 <ng-container *ngIf="comentar.data.length; else noActivity">
                     <div class="mt-8">
                         <ol>
                             <!-- Activities -->
                             <ng-container
-                                *ngFor="let activity of comentar.data; let i = index; let first = first; let last = last; trackBy: trackByFn">
+                                *ngFor="let item of comentar.data; let i = index; let first = first; let last = last; trackBy: trackByFn">
+
+
 
                                 <!-- Date separator -->
                                 <ng-container
-                                    *ngIf="first || !isSameDay(activity.fechaCreacion, comentar.data[i - 1].fechaCreacion)">
+                                    *ngIf="first || !isSameDay(item.fechaCreacion, comentar.data[i - 1].fechaCreacion)">
                                     <li class="relative flex py-7">
                                         <div
                                             class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
-                                            {{getRelativeFormat(activity.fechaCreacion)}}
+                                            {{getRelativeFormat(item.fechaCreacion)}}
                                         </div>
                                     </li>
                                 </ng-container>
 
                                 <!-- Activity -->
-                                <li class="relative flex py-7">
+                                <li class="relative flex">
                                     <!-- Line -->
-                                    <ng-container
-                                        *ngIf="!last && isSameDay(activity.fechaCreacion, comentar.data[i + 1].fechaCreacion)">
+                                    <ng-container>
                                         <div
                                             class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600">
                                         </div>
                                     </ng-container>
-                                </li>
 
-                                <div class="relative flex flex-auto">
-                                    <!-- Icon -->
-                                    <!-- <ng-container *ngIf="activity.icon && !activity.image"> -->
-                                        <div
-                                            class="flex shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
-                                            <mat-icon class="icon-size-5 text-white" [svgIcon]="'star'">
-                                            </mat-icon>
-                                        </div>
-                                    <!-- </ng-container> -->
-
-                                    <!-- Content -->
-                                    <div class="flex flex-col flex-auto items-start">
-                                        <!-- Description -->
-                                        <ng-container *ngIf="activity.comentario">
-                                            <div [innerHTML]="activity.comentario"></div>
-                                        </ng-container>
-                                        <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md leading-5">
-                                            <!--Agenda-->
-                                            <div class="text-blue-500">
-                                                Agenda Comercial
+                                    <div class="relative flex flex-auto">
+                                        <!-- Icon -->
+                                        <ng-container>
+                                            <div
+                                                class="flex flex-shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
+                                                <mat-icon class="icon-size-5 text-white" svgIcon="heroicons_solid:star">
+                                                </mat-icon>
                                             </div>
-                                            <div class="hidden sm:block">&bull;</div>
-                                            <!-- Date -->
-                                            <div class="text-secondary">
-                                                {{activity.fechaCreacion | date:'MMM dd, h:mm a'}}
-                                            </div>                                            
+                                        </ng-container>
+
+                                        <!-- Content -->
+                                        <div class="flex flex-col flex-auto items-start mb-4">
+                                            <!-- Description -->
+                                            <ng-container>
+                                                <div class="row w-100">
+                                                    <div class="col-lg-auto">
+                                                        <div class="text-secondary">
+                                                            {{ item.descripcionAgenda}}
+                                                        </div>
+                                                        <strong class="capitalize">
+                                                            {{ item.nombreUsuario}}
+                                                        </strong>
+                                                        <div class="text-secondary text-xs">
+                                                            ({{item.usuarioCreacion}})
+                                                        </div>
+                                                    </div>
+                                                    <!-- Date -->
+                                                    <div class="text-secondary">
+                                                        {{item.fechaCreacion | date:'MMM dd, h:mm a'}}
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <div class="row items-center mt-3"
+                                                style="border-left: 5px solid #b6ce1d; padding-left: 4px;">
+                                                <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0"
+                                                [innerHTML]="item.comentario">                                                    
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </li>
                             </ng-container>
+
                         </ol>
                     </div>
                 </ng-container>
