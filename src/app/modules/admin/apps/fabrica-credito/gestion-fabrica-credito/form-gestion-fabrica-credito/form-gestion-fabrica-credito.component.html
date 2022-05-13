@@ -606,14 +606,14 @@
     [position]="'right'" #settingsDrawer>
     <ng-container *ngIf="verComentarios">
         <div class="fixed z-999 w-full">
-            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()" (minimizarComponente)="onMinimiza($event);settingsDrawer.close()">
+            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()" (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
             </app-grid-comentarios>
         </div>
     </ng-container>
 </fuse-drawer>
 <ng-container *ngIf="minimizarComentarios">
     <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" [matTooltip]="'Restaura ventana comentarios'"
-        (click)="verComentarios = true">
+        (click)="verComentarios = true;settingsDrawer.toggle()">
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>
