@@ -21,6 +21,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 // COMPONENTES
 import { PqrComponent } from './pqr.component';
@@ -47,6 +48,8 @@ import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
 import { AdjuntosComponent } from './gestion-pqrs/adjuntos/adjuntos.component';
 import { AgregarComentarioComponent } from './gestion-pqrs/agregar-comentario/agregar-comentario.component';
 import { VerComentarioComponent } from './gestion-pqrs/ver-comentario/ver-comentario.component';
+import { HistorialPqrComponent } from './historial-pqr/historial-pqr.component';
+import { DetalleHistorialComponent } from './historial-pqr/detalle-historial/detalle-historial.component';
 // import { CreacionComponent } from './creacion/creacion.component';
 // import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
@@ -75,7 +78,9 @@ import { VerComentarioComponent } from './gestion-pqrs/ver-comentario/ver-coment
         MensajeErrorComponent,
         AdjuntosComponent,
         AgregarComentarioComponent,
-        VerComentarioComponent
+        VerComentarioComponent,
+        HistorialPqrComponent,
+        DetalleHistorialComponent
         // CreacionComponent
     ],
     imports: [
@@ -97,6 +102,7 @@ import { VerComentarioComponent } from './gestion-pqrs/ver-comentario/ver-coment
         MatSelectModule,
         MatStepperModule,
         MatExpansionModule,
+        MatDatepickerModule,
         FuseAlertModule,
     ],
 })

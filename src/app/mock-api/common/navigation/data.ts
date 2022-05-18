@@ -83,6 +83,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                         type: 'basic',
                         link: '/pqr/list',
                     },
+                    {
+                        id: 'dashboard.pqr.historial',
+                        title: 'Historial de PQRS',
+                        type: 'basic',
+                        icon: 'heroicons_outline:clipboard-list',
+                        link: '/pqr/historial',
+                    },
                 ],
             },
         ],
