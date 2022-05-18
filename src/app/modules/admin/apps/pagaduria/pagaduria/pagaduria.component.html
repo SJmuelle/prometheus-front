@@ -46,7 +46,7 @@
                     <th class="px-3 py-3 text-center">Solicitud</th>
                     <th class="px-3 py-3 text-center" *ngIf="estado=='P'">Reactivada</th>
                     <th class="px-2 py-3 text-center">Fecha solicitud</th>
-                    <th class="px-2 py-3 text-center">Estado credito</th>
+                    <th class="px-2 py-3 text-center hidden">Estado credito</th>
                     <th class="px-3 py-3 text-center">Identificacion</th>
                     <th class="px-4 py-3 text-center">Nombre</th>
                     <th class="px-2 py-3 text-center">Monto ($)</th>
@@ -101,7 +101,7 @@
                     <td class="text-sm border text-center" *ngIf="item.estado_pagaduria=='RA' && estado=='P'">Si</td>
                     <td class="text-sm border text-center" *ngIf="item.estado_pagaduria!='RA' && estado=='P'">No</td>
                     <td class="text-sm border text-center">{{item.fecha_solicitud}}</td>
-                    <td class="text-sm border text-center">{{item.estado_solicitud}}</td>
+                    <td class="text-sm border text-center hidden">{{item.estado_solicitud}}</td>
                     <td class="text-sm border text-center">{{item.identificacion}}</td>
                     <td class="text-sm border text-center">{{item.nombres}} {{item.apellidos}}</td>
                     <td class="text-sm border text-center">$ {{item.monto | number}}</td>

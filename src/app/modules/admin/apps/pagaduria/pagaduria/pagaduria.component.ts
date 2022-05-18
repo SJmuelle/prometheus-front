@@ -54,6 +54,7 @@ export class PagaduriaComponent implements OnInit {
   descargarArchivo(id:any){
     this.pagaduria.descargarArchivos(id).subscribe((response:any)=>{
       if(response) {
+        console.log(response.data)
         const archivo = response.data[0].filepath.split(',');
         const extension = 'pdf'
         const link = document.createElement('a');
