@@ -148,7 +148,6 @@ export class GestionPQRSComponent implements OnInit {
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 this.listarAdjuntos = response;
-                console.log(this.listarAdjuntos)
             } else {
                 this.listarAdjuntos = [];
             }
