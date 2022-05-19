@@ -1,6 +1,6 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Gestión  de solicitudes</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Visado de solicitudes de libranza</h2>
     </div>
 
     <div class="flex flex-row w-100 justify-start gap-4 mb-4">
@@ -47,7 +47,7 @@
                     <th class="px-3 py-3 text-center" *ngIf="estado=='P'">Reactivada</th>
                     <th class="px-2 py-3 text-center">Fecha solicitud</th>
                     <th class="px-2 py-3 text-center hidden">Estado credito</th>
-                    <th class="px-3 py-3 text-center">Identificacion</th>
+                    <th class="px-3 py-3 text-center">Identificación</th>
                     <th class="px-4 py-3 text-center">Nombre</th>
                     <th class="px-2 py-3 text-center">Monto ($)</th>
                     <th class="px-2 py-3 text-center">Plazo (meses)</th>
@@ -55,7 +55,7 @@
                     <th class="px-2 py-3 text-center">Destino</th>
                     <th class="px-2 py-3 text-center" *ngIf="estado=='P'">Anexo</th>
                     <th class="px-2 py-3 text-center" *ngIf="estado=='R'">Fecha de rechazo</th>
-                    <th class="px-2 py-3 text-center" *ngIf="estado=='A'">Fecha de aprobacion</th>
+                    <th class="px-2 py-3 text-center" *ngIf="estado=='A'">Fecha de aprobación</th>
                 </tr>
             </thead>
             <tbody class="bg-white">

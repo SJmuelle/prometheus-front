@@ -48,22 +48,28 @@ export class PagaduriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.consultaSolicitudes();
   }
 
   descargarArchivo(id:any){
     this.pagaduria.descargarArchivos(id).subscribe((response:any)=>{
       if(response) {
-        console.log(response.data)
-        const archivo = response.data[0].filepath.split(',');
-        const extension = 'pdf'
-        const link = document.createElement('a');
-        document.body.appendChild(link);
-        link.href = `data:application/${extension};base64,${archivo}`;
-        link.target = '_self';
-        link.download = response.data[0].filename
-        link.click();
-        Swal.close();
+        if (response.data==null) {
+          Swal.fire(
+            '¡Error!',
+            `Esta solicitud no cuenta con archivos para descarga.`,
+            'error'
+          ).then();
+        }else{
+          const archivo = response.data[0].filepath.split(',');
+          const extension = 'pdf'
+          const link = document.createElement('a');
+          document.body.appendChild(link);
+          link.href = `data:application/${extension};base64,${archivo}`;
+          link.target = '_self';
+          link.download = response.data[0].filename
+          link.click();
+          Swal.close();
+        }
       }
     }) 
   }
@@ -88,11 +94,22 @@ export class PagaduriaComponent implements OnInit {
       Swal.close();
       console.log(response.data)
       if (response.data.length==0) {
-        Swal.fire(
-          '¡Error!',
-          `No existen pagadurias.`,
-          'error'
-        ).then();
+        if (this.estado=='A') {
+          Swal.fire(
+            '¡Error!',
+            `No existen solicitudes aprobadas.`,
+            'error'
+          ).then();
+        }
+
+        if (this.estado=='R') {
+          Swal.fire(
+            '¡Error!',
+            `No existen solicitudes rechazadas.`,
+            'error'
+          ).then();
+        }
+        
         this.solicitudes = response.data;
       }else{
         this.solicitudes = response.data;
