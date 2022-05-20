@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { FormDialogDevolucionesComponent } from "../form-dialog-devoluciones/form-dialog-devoluciones.component";
 import { FormControl } from "@angular/forms";
+import moment from 'moment';
 
 @Component({
   selector: 'app-grid-devoluciones',
@@ -30,11 +31,11 @@ export class GridDevolucionesComponent implements OnInit {
   }
 
   public onDevolucion(): void {
-    console.log('agenda->:'+this.agenda);
+    console.log('agenda->:' + this.agenda);
     const dialogRef = this._dialog.open(FormDialogDevolucionesComponent, {
       minWidth: '30%',
       minHeight: '30%',
-      data: { numeroSolicitud: this.numeroSolicitud,agenda: this.agenda}
+      data: { numeroSolicitud: this.numeroSolicitud, agenda: this.agenda }
     });
     dialogRef.afterClosed().toPromise().then((res) => {
       this.getData();
@@ -69,7 +70,46 @@ export class GridDevolucionesComponent implements OnInit {
    * @description: Obtiene los comentarios
    */
   private getDevolucion(codigo: string): void {
-    this.devolucion$ = this.devolucionesService.getDevoluciones(this.agenda,codigo);
+    this.devolucion$ = this.devolucionesService.getDevoluciones(this.agenda, codigo);
+  }
+  /**
+  * Returns whether the given dates are different days
+  *
+  * @param current
+  * @param compare
+  */
+  isSameDay(current: string, compare: string): boolean {
+    return moment(current, moment.ISO_8601).isSame(moment(compare, moment.ISO_8601), 'day');
+  }
+  /**
+   * Get the relative format of the given date
+   *
+   * @param date
+   */
+  getRelativeFormat(date: string): string {
+    const today = moment().startOf('day');
+    const yesterday = moment().subtract(1, 'day').startOf('day');
+
+    // Is today?
+    if (moment(date, moment.ISO_8601).isSame(today, 'day')) {
+      return 'Hoy';
+    }
+
+    // Is yesterday? 
+    if (moment(date, moment.ISO_8601).isSame(yesterday, 'day')) {
+      return 'Ayer';
+    }
+
+    return moment(date, moment.ISO_8601).fromNow();
   }
 
+  /**
+   * Track by function for ngFor loops
+   *
+   * @param index
+   * @param item
+   */
+  trackByFn(index: number, item: any): any {
+    return item.idComentario || index;
+  }
 }

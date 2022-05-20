@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output,ViewEncapsulation,ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
 import { ComentariosService } from "../../../../../../core/services/comentarios.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
@@ -81,11 +81,12 @@ export class GridComentariosComponent implements OnInit {
     isSameDay(current: string, compare: string): boolean {
         return moment(current, moment.ISO_8601).isSame(moment(compare, moment.ISO_8601), 'day');
     }
+    
     /**
- * Get the relative format of the given date
- *
- * @param date
- */
+     * Get the relative format of the given date
+     *
+     * @param date
+     */
     getRelativeFormat(date: string): string {
         const today = moment().startOf('day');
         const yesterday = moment().subtract(1, 'day').startOf('day');
