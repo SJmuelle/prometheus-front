@@ -27,9 +27,10 @@ export class ListadoPreguntasReferenciacionComponent implements OnInit {
       this.consulta();
     }
     consulta() {
+    let data=null;
       Swal.fire({ title: 'Cargando', html: 'Buscando informacion', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._utility
-        .getFile('/generic/qry/obtener-listado-preguntas-referenciacion')
+        .postQueryServer1('/credito/tk/array-padre-hija/recursos-preguntas-referenciacion', data)
         .subscribe((response: any) => {
           Swal.close();
           if (response) {
@@ -46,7 +47,12 @@ export class ListadoPreguntasReferenciacionComponent implements OnInit {
           estado: "",
           tituloPregunta: "",
           titulo: "N"
-        }
+        } }else if (titulo == 'NH') {
+            this.datos = {
+              titulo: "NH",
+              id: datos.id,
+              datos:datos
+            }
       } else {
         this.datos=datos
         this.datos.titulo='A'

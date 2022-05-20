@@ -53,7 +53,21 @@ export class ListadoPreguntasReferenciacionFormComponent implements OnInit {
 
     guardar() {
       let data, url;
-      if (this.datos.titulo == 'N') {
+      ///te toca hacer la condicion para cuanod son titulo=NH
+
+      if (this.datos.titulo == 'NH') {
+        //post
+        // idAgenda,unidadNegocio,nombre,tipoIdentificacion
+
+        url = 'agregar-pregunta-hija-de-referenciacion';
+        data = {
+          idAgenda:this.datos.datos.idAgenda,
+          unidadNegocio:this.datos.datos.idUnidadNegocio.toString(),
+          titulo_pregunta:this.datos.tituloPregunta,
+          tipoIdentificacion:this.datos.datos.tipoIdentificacion,
+          idPadre: parseInt(this.datos.id)
+        };
+    }else if (this.datos.titulo == 'N') {
         //post
         // idAgenda,unidadNegocio,nombre,tipoIdentificacion
 

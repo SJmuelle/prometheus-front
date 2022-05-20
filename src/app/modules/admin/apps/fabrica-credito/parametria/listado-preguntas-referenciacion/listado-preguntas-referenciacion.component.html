@@ -1,9 +1,15 @@
 <div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
     <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Preguntas de referenciación</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">
+            Preguntas de referenciación
+        </h2>
         <div class="col-span-12 grid grid-cols-12">
             <div class="col-span-6">
-                <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+                <button
+                    mat-button
+                    class="color_fintra text-white w-30"
+                    (click)="abrirModal(null, 'N')"
+                >
                     Crear nuevo
                 </button>
             </div>
@@ -16,14 +22,16 @@
                     name="filtrarTabla"
                     [(ngModel)]="filtrarTabla"
                     placeholder="Filtrar..."
-                    (ngModelChange)="page = 1" />
+                    (ngModelChange)="page = 1"
+                />
                 <select
                     name="tamanoTabl"
                     id="tamanoTabl"
                     class="border rounded bg-gray-100"
                     (change)="page = 1"
                     [(ngModel)]="tamanoTabl"
-                    style="font-size: 10px; color: #9aa8bc; padding: 7px" >
+                    style="font-size: 10px; color: #9aa8bc; padding: 7px"
+                >
                     <option value="10">10</option>
                     <option value="20">20</option>
                     <option value="30">30</option>
@@ -32,89 +40,159 @@
         </div>
     </div>
 
-    <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden">
+    <div
+        class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden"
+    >
         <table class="w-full shadow p-1">
-            <thead style="background-color: #F9FAFB;">
+            <thead style="background-color: #f9fafb">
                 <tr
-                    class="text-md font-semibold
-                        tracking-wide text-left text-gray-400
-                         border-b border-gray-600" >
+                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600"
+                >
                     <th class="px-4 py-3 text-center w-0">Editar</th>
                     <th class="px-4 py-3 text-center">ID</th>
                     <th class="px-4 py-3 text-center">Agenda</th>
                     <th class="px-4 py-3 text-center">Tipo de persona</th>
                     <th class="px-4 py-3 text-center">Unidad negocio</th>
                     <th class="px-4 py-3 text-center">Pregunta</th>
-                    <th class="px-4 py-3 text-center">Estado</th>
+                    <th class="px-4 py-3 text-center" >Estado</th>
+                    <th class="px-4 py-3 text-center" >Hijas</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <tr
-                    class="text-gray-700"
+                <ng-container
                     *ngFor="
                         let item of listado
                             | filter: filtrarTabla
                             | paginate
                                 : {
-                                        itemsPerPage: tamanoTabl,
-                                        currentPage: page
-                                    }
+                                      itemsPerPage: tamanoTabl,
+                                      currentPage: page
+                                  }
                     "
                 >
-                    <td
-                        class="px-2 text-sm border text-center"
-                        (click)="abrirModal(item, 'A')"
-                    >
-                        <mat-icon
-                            svgIcon="heroicons_outline:pencil-alt"
-                        ></mat-icon>
-                    </td>
-                    <td class="px-2 text-sm border text-center">
-                        {{ item.id }}
-                    </td>
-                    <td class="px-2 text-sm border text-center">
-                        {{ item.agenda }}
-                    </td>
-                    <td class="px-2 text-sm border text-center">
-                        {{ item.tipoIdentificacion=='CC'?'Persona natural':'Persona juridica' }}
-                    </td>
-                    <td class="px-2 text-sm border text-center">
-                        {{ item.unidadNegocio }}
-                    </td>
-                    <td class="px-2 text-sm border text-center">
-                        {{ item.tituloPregunta }}
-                    </td>
-                    <td class="px-2 text-sm border text-center w-0">
-                        <div
-                            [ngClass]="
-                                item.estado == 'Inactivo'
-                                    ? 'bg-pink-300'
-                                    : 'bg-green-300'
-                            "
+                    <tr class="text-gray-700">
+                        <td
+                            class="px-2 text-sm border text-center"
+                            (click)="abrirModal(item, 'A')"
                         >
-                            <span
-                                class="
-                                    px-2
-                                    py-1
-                                    font-semibold
-                                    leading-tight
-                                    text-gray-700
-                                    rounded-sm
-                                    w-0
+                            <mat-icon
+                                svgIcon="heroicons_outline:pencil-alt"
+                            ></mat-icon>
+                        </td>
+                        <td class="px-2 text-sm border text-center">
+                            {{ item.id }}
+                        </td>
+                        <td class="px-2 text-sm border text-center">
+                            {{ item.agenda }}
+                        </td>
+                        <td class="px-2 text-sm border text-center">
+                            {{
+                                item.tipoIdentificacion == "CC"
+                                    ? "Persona natural"
+                                    : "Persona juridica"
+                            }}
+                        </td>
+                        <td class="px-2 text-sm border text-center">
+                            {{ item.unidadNegocio }}
+                        </td>
+                        <td class="px-2 text-sm border text-center">
+                            {{ item.tituloPregunta }}
+                        </td>
+                        <td class="px-2 text-sm border-b border-t text-center w-0">
+                            <div
+                                [ngClass]="
+                                    item.estado == 'Inactivo'
+                                        ? 'bg-pink-300'
+                                        : 'bg-green-300'
                                 "
                             >
-                                {{ item.estado }}
-                            </span>
-                        </div>
-                    </td>
-                </tr>
+                                <span
+                                    class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0"
+                                >
+                                    {{ item.estado }}
+                                </span>
+                            </div>
+                        </td>
+                        <td
+                            class="px-2 text-sm border-b border-t text-center"
+                            (click)="
+                                item.monstrandoHija =
+                                    item.monstrandoHija == 'f' ? 't' : 'f'
+                            "
+                        >
+                                    <mat-icon
+                                        [svgIcon]="
+                                            item.monstrandoHija == 'f'
+                                                ? 'heroicons_outline:chevron-down'
+                                                : 'heroicons_outline:chevron-up'
+                                        "
+                                    ></mat-icon>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="item.monstrandoHija == 't'">
+                        <tr>
+                            <td colspan="8"  (click)="abrirModal(item, 'NH')" class="text-center bg-accent-200 text-accent-500 font-bold hover:bg-accent-400 hover:text-white">
+                                Crear Hijas
+                            </td>
+                        </tr>
+                        <ng-container  *ngFor="let itemHijas of item.Detalle">
+                            <tr class="text-gray-700" >
+                                <td
+                                    class="px-2 text-sm border text-center"
+                                    (click)="abrirModal(itemHijas, 'A')"
+                                >
+                                    <mat-icon
+                                        svgIcon="heroicons_outline:pencil-alt"
+                                    ></mat-icon>
+                                </td>
+                                <td class="px-2 text-sm border text-center">
+                                    {{ itemHijas.id }}
+                                </td>
+                                <td class="px-2 text-sm border text-center">
+                                    {{ itemHijas.agenda }}
+                                </td>
+                                <td class="px-2 text-sm border text-center">
+                                    {{
+                                        itemHijas.tipoIdentificacion == "CC"
+                                            ? "Persona natural"
+                                            : "Persona juridica"
+                                    }}
+                                </td>
+                                <td class="px-2 text-sm border text-center">
+                                    {{ itemHijas.unidadNegocio }}
+                                </td>
+                                <td class="px-2 text-sm border text-center">
+                                    {{ itemHijas.tituloPregunta }}
+                                </td>
+                                <td class="px-2 text-sm border-b border-t text-center w-0">
+                                    <div
+                                        [ngClass]="
+                                        itemHijas.estado == 'Inactivo'
+                                                ? 'bg-pink-300'
+                                                : 'bg-green-300'
+                                        "
+                                    >
+                                        <span
+                                            class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0"
+                                        >
+                                            {{ itemHijas.estado }}
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+
+                </ng-container>
             </tbody>
         </table>
-        <div class="grid ">
-            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
-                nextLabel="Siguiente"></pagination-controls>
+        <div class="grid">
+            <pagination-controls
+                (pageChange)="page = $event"
+                previousLabel="Anterior"
+                class="justify-self-end"
+                nextLabel="Siguiente"
+            ></pagination-controls>
         </div>
     </div>
-
-
 </div>
