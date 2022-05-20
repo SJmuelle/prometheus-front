@@ -55,6 +55,7 @@ export class GestionPQRSComponent implements OnInit {
         this._activatedRoute.params.subscribe((param) => {
             this.pqrid = param.idPQR;
             this.buscarDatos();
+            console.log(this.pqrid)
         });
     }
 
@@ -69,7 +70,8 @@ export class GestionPQRSComponent implements OnInit {
     agregarcomentario(){
         const dialogRef = this.dialog.open(AgregarComentarioComponent, {
             height: '35%',
-            width: '60%'
+            width: '60%',
+            data: {id: parseInt(this.pqrid), estado: this.datos.estado}
         })
         dialogRef.afterClosed().toPromise();
     }
@@ -150,6 +152,16 @@ export class GestionPQRSComponent implements OnInit {
                 this.listarAdjuntos = response;
             } else {
                 this.listarAdjuntos = [];
+            }
+        });
+
+        url = `/listar-comentarios-seguimiento/${this.pqrid}`;
+        this._pqrService.getListados(url).subscribe((response: any) => {
+            if (response) {
+                console.log('Aqui tus comentarios ', response)
+                this.listadoSeguimiento = response;
+            } else {
+                this.listadoSeguimiento = [];
             }
         });
     }

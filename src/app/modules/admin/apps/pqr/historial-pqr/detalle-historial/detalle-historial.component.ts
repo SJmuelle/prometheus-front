@@ -2,8 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { PqrService } from '../../pqr.service';
-import moment from 'moment';
-import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-detalle-historial',
@@ -14,23 +13,14 @@ export class DetalleHistorialComponent implements OnInit {
 
   origen:string ='';
   datos: any =[];
-  fechaForm:FormGroup;
-  formatoFecha:any;
 
   constructor(public dialogRef: MatDialogRef<DetalleHistorialComponent>,
-    @Inject(MAT_DIALOG_DATA) public data, private _pqrService: PqrService, private fb: FormBuilder
-  ) {
-    this.fechaForm = this.fb.group({
-      fecha: ['']
-    });
-
-  }
+    @Inject(MAT_DIALOG_DATA) public data, private _pqrService: PqrService
+  ) { }
 
   ngOnInit(): void {
     console.log('Estas en el modal: ', this.data)
     this.consulta();
-    const {fecha} = this.fechaForm.getRawValue();
-    this.formatoFecha = moment(fecha).format("YYYY-MM-DD");
   }
 
   consulta(){

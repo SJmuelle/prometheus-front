@@ -65,7 +65,7 @@
             </fuse-card>
             <fuse-card class="card p-3 shadow row mr-3">
                 <div class="flex flex-col">
-                    <div>Adjuntos</div>
+                    <div class="mr-1 leading-tight titulo_tabs text-2xl font-semibold">Adjuntos</div>
                     <div class="mt-2">
                         <div>
                             <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon svgIcon="heroicons_outline:document-add"></mat-icon></a>
@@ -588,11 +588,11 @@
                                         <div class="mt-2 leading-tight sm:text-end sm:mt-0">
                                             <input class="border rounded p-2 bg-gray-100"
                                                 style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                                                name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaHistorial"
+                                                name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaSeguimiento"
                                                 placeholder="Filtrar...">
                                             <select name="tamanoTablaAsignaciones" id="tamanoTablaAsignaciones"
-                                                class="border rounded bg-gray-100" (change)="pageAsignaciones=1"
-                                                [(ngModel)]="tamanoTablaAsignaciones"
+                                                class="border rounded bg-gray-100" (change)="pageSeguimiento=1"
+                                                [(ngModel)]="tamanoTablaSeguimiento"
                                                 style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                                                 <option value="5"> 5</option>
                                                 <option value="10"> 10</option>
@@ -615,18 +615,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
-                                                <tr class="text-gray-700">
+                                                <tr class="text-gray-700" 
+                                                *ngFor="let item of listadoSeguimiento | filter: filtrarTablaSeguimiento  | paginate: { itemsPerPage: tamanoTablaSeguimiento, currentPage: pageSeguimiento }">
                                                     <td class="px-4 py-1 text-sm border text-center"><mat-icon class="cursor-pointer" (click)="vercomentario()">remove_red_eye</mat-icon></td>
-                                                    <td class="px-4 py-1 text-sm border text-center"></td>
-                                                    <td class="px-4 py-1 text-sm border text-center"></td>
-                                                    <td class="px-4 py-1 text-sm border text-center"></td>
-                                                    <td class="px-4 py-1 text-sm border text-center"></td>
-                                                    <td class="px-4 py-1 text-sm border text-center"></td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.id}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.descripcion}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.usuario_creacion}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.fecha_creacion}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.estado}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                         <div class="grid">
-                                            <pagination-controls (pageChange)="pageAsignaciones = $event"
+                                            <pagination-controls (pageChange)="pageSeguimiento = $event"
                                                 previousLabel="Anterior" nextLabel="Siguiente" class="justify-self-end">
                                             </pagination-controls>
                                         </div>

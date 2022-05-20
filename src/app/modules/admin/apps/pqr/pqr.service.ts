@@ -89,6 +89,14 @@ export class PqrService {
         );
     }
 
+    CreateComentario(url: string, data: any): Observable<any> {
+        return this._utility.postQuery(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
     permisoCreacion(url: string): Observable<any> {
         return this._utility.getQuery(url, true).pipe(
             map((result: any) => {

@@ -21,6 +21,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="form.invalid">Guardar</button>
+    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="form.invalid" (click)="guardar()">Guardar</button>
     <button mat-button mat-dialog-close id="cancelar">Cancel</button>
 </mat-dialog-actions>

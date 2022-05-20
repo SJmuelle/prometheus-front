@@ -19,24 +19,22 @@
                 <input matInput type="text" [value]="item.solucion" readonly>
             </mat-form-field>
         </div>
-        <form [formGroup]="fechaForm">
-            <div class="w-full">
-                <mat-form-field class="w-full">
-                    <mat-label>Fecha de vencimiento</mat-label>
-                    <input matInput formControlName="fecha" [matDatepicker]="vence" [value]="item.fecha_vencimiento" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="vence"></mat-datepicker-toggle>
-                    <mat-datepicker #vence disabled="true"></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="w-full">
-                <mat-form-field class="w-full">
-                    <mat-label>Fecha de respuesta</mat-label>
-                    <input matInput  [matDatepicker]="res" [value]="item.fecha_respuesta" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="res"></mat-datepicker-toggle>
-                    <mat-datepicker #res disabled="true"></mat-datepicker>
-                </mat-form-field>
-            </div>
-        </form>
+        <div class="w-full">
+            <mat-form-field class="w-full">
+                <mat-label>Fecha de vencimiento</mat-label>
+                <input matInput [matDatepicker]="vence" [value]="item.fecha_vencimiento" readonly>
+                <mat-datepicker-toggle matSuffix [for]="vence"></mat-datepicker-toggle>
+                <mat-datepicker #vence disabled="true"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="w-full">
+            <mat-form-field class="w-full">
+                <mat-label>Fecha de respuesta</mat-label>
+                <input matInput  [matDatepicker]="res" [value]="item.fecha_respuesta" readonly>
+                <mat-datepicker-toggle matSuffix [for]="res"></mat-datepicker-toggle>
+                <mat-datepicker #res disabled="true"></mat-datepicker>
+            </mat-form-field>
+        </div>
         <div class="w-full">
             <mat-form-field class="w-full">
                 <mat-label>Medio de respuesta</mat-label>
