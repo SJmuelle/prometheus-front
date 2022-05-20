@@ -32,6 +32,7 @@
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr class=" text-md font-semibold tracking-wide text-left text-gray-400 capitalize border-b border-gray-600">
+                    <th class="px-4 py-3 text-center"></th>
                     <th class="px-4 py-3 text-center">Cedula</th>
                     <th class="px-4 py-3 text-center">Nombres</th>
                     <th class="px-4 py-3 text-center">Apellidos</th>
@@ -48,19 +49,23 @@
                 <tr
                     class="text-gray-700"
                     *ngFor=" let item of listado | filter: filtrarTabla | paginate : { itemsPerPage: tamanoTabl, currentPage: page }">
-                    <td class="px-2 text-sm border text-center"><mat-icon svgIcon="heroicons_outline:eye" (click)="abrirDetalle()"></mat-icon></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
-                    <td class="px-2 text-sm border text-center"></td>
+                    <td class="px-2 text-sm border text-center"><mat-icon class="cursor-pointer" svgIcon="heroicons_outline:eye" (click)="abrirDetalle(item.id)"></mat-icon></td>
+                    <td class="px-2 text-sm border text-center">{{item.identificacion}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.nombres}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.apellidos}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.linea_credito}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.negocio}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.tipo_pqrs}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.causal_pqrs}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.fecha_radicacion}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.responsable}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.estado}}</td>
                 </tr>
             </tbody>
         </table>
+        <div class="grid ">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
     </div>
 </div>

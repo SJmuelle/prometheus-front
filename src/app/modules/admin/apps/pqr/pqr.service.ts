@@ -19,6 +19,24 @@ export class PqrService {
         );
     }
 
+    setHistorial() {
+        let url: string = `select_pqrs_historico`;
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
+    setHistorialId(id: number) {
+        let url: string = `select_pqrs_historico_id/${id}`;
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
     setCausales() {
         let url: string = `/tk/informacion-causales-pqrs`;
         return this._utility.getQuery(url, true).pipe(

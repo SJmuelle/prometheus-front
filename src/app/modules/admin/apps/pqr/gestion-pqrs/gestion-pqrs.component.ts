@@ -369,8 +369,6 @@ export class GestionPQRSComponent implements OnInit {
             },
         }).then((result) => {});
         this._pqrService.postFile(url, data).subscribe((data: any) => {
-            // window.open(data.base64, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
-
             const downloadLink = document.createElement('a');
             document.body.appendChild(downloadLink);
             downloadLink.href = data.data.base64;
