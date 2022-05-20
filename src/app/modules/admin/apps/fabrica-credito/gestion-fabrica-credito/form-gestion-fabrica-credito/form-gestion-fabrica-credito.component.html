@@ -37,7 +37,8 @@
                         </button>
 
                         <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
-                            [ngClass]="animacionVer==true?'show':'hidden'" (click)="verDevoluciones = !verDevoluciones">
+                        (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
+                            [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]" >
                             <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
                         </button>
                     </ng-container>
@@ -602,11 +603,12 @@
 
 </div>
 <div class="sm:mt-13"></div>
-<fuse-drawer class="w-150 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
+<fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
     [position]="'right'" #settingsDrawer>
     <ng-container *ngIf="verComentarios">
         <div class="fixed z-999 w-full">
-            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()" (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
+            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()"
+                (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
             </app-grid-comentarios>
         </div>
     </ng-container>
@@ -617,15 +619,19 @@
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>
-<ng-container *ngIf="verDevoluciones">
-    <div class="fixed z-999 sm:ml-30 top-18">
-        <app-grid-devoluciones (cerrarComponente)="onCerrarDevolucion($event)"
-            (minimizarComponente)="onMinimizaDevolucion($event)" [agenda]="agenda_fabrica"></app-grid-devoluciones>
-    </div>
-</ng-container>
+<fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'"
+    [name]="'drawerDevoluciones'" [position]="'right'" #drawerDevoluciones>
+    <ng-container *ngIf="verDevoluciones">
+        <div class="fixed z-999 w-full">
+            <app-grid-devoluciones (cerrarComponente)="onCerrarDevolucion($event);drawerDevoluciones.close()"
+                (minimizarComponente)="onMinimizaDevolucion($event);drawerDevoluciones.close();verDevoluciones=true" [agenda]="agenda_fabrica"></app-grid-devoluciones>
+        </div>
+    </ng-container>
+</fuse-drawer>
 <ng-container *ngIf="minimizarDevoluciones">
     <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
-        [matTooltip]="'Restaura ventana devoluciones'" (click)="verDevoluciones = !verDevoluciones">
+        [matTooltip]="'Restaura ventana devoluciones'" 
+        (click)="verDevoluciones = true;drawerDevoluciones.toggle()">
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>
