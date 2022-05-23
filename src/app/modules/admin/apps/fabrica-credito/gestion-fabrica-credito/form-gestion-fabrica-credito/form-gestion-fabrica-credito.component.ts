@@ -45,9 +45,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public subscription$: Subscription;
     public verComentarios: boolean = false;
+    public verCentrales: boolean = false;
     public verDevoluciones: boolean = false;
     public minimizarComentarios: boolean = false;
     public minimizarDevoluciones: boolean = false;
+    public minimizarCentrales: boolean = false;
     public esVerComentarios: boolean = false;
     public tipoDocumento: string = '';
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -104,6 +106,20 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.minimizarComentarios = !event;
         this.verComentarios = event;
     }
+        /**
+     * @description:
+     */
+         public onCerrarCentrales(event): void {
+            this.verCentrales = event;
+            this.minimizarCentrales = event;
+        }
+        /**
+         * @description: Minimiza el componente centrales
+         */
+        public onMinimizaCentrales(event): void {
+            this.minimizarCentrales = !event;
+            this.verCentrales = event;
+        }
     /**
    * @description:Cierra el componente de devoluciones
    */
@@ -137,7 +153,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         // this.fabricaCreditoService.getCantidadDatos('data')
         //     .subscribe(({ data }) => {
         //         if (data) {
-                  
+
         //         }
         // });
         let dialogRef ;
@@ -151,7 +167,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                             });
                             dialogRef.afterClosed().toPromise().then(() => {
                                 this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-                            });                
+                            });
                 break;
             case 'SIGUIENTE':
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
@@ -163,12 +179,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                             dialogRef.afterClosed().toPromise().then(() => {
                                 this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
                             });
-                break;        
+                break;
             default:
                 break;
         }
-       
-      
+
+
     }
 
     public openModalDirection(): void {
@@ -328,7 +344,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 // console.log(data);
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
-                this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList)? 'CHECKLIST':'SIGUIENTE');               
+                this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList)? 'CHECKLIST':'SIGUIENTE');
                 this.createValidacion()
                 if (data.tipoDocumento === 'NIT') {
                     const digitoVerificacion: string = this.calcularDigitoVerificacion(data.identificacion);
@@ -816,7 +832,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 break;
             case 'RE':
                 this.redireccionar('agenda-referencing');
-                break;                
+                break;
             default:
                 this.redireccionar('agenda-comercial');
                 break;

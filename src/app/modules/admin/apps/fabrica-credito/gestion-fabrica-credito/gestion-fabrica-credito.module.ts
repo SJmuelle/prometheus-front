@@ -39,6 +39,7 @@ import { FormDialogoChecklistComponent } from './form-dialogo-checklist/form-dia
 import { MatListModule } from '@angular/material/list';
 
 import { FuseDrawerModule } from '@fuse/components/drawer';
+import { GridCentralesComponent } from './grid-centrales/grid-centrales.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
         GridPoliticasComponent,
         GridDevolucionesComponent,
         FormDialogDevolucionesComponent,
-        FormDialogoChecklistComponent
+        FormDialogoChecklistComponent,
+        GridCentralesComponent
     ],
     imports: [
         CommonModule,

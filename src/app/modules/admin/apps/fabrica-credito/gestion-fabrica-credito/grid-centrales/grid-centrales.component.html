@@ -1,0 +1,117 @@
+<div
+    class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full"
+>
+    <div
+        class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+    >
+        <div class="flex flex-col">
+            <div
+                class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end"
+            >
+                <button
+                    mat-icon-button
+                    matTooltip="Minimizar"
+                    (click)="onMinimiza()"
+                >
+                    <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
+                </button>
+                <button
+                    mat-icon-button
+                    matTooltip="Cerrar"
+                    (click)="onCerrar()"
+                >
+                    <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div
+        class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full"
+    >
+        <!-- Main -->
+        <div class="flex flex-col flex-auto px-0 py-2 sm:pb-20">
+            <!-- Activity feed -->
+            <div class="w-full">
+                <!-- Title -->
+                <h3 class="mb-2 text-gray-900">Centrales</h3>
+                <span class="font-semibold text-gray-500"
+                    >Historial crediticio del solicitante.</span
+                >
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-full overflow-auto bg-card">
+        <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
+            <div *ngFor="let item of datosDocumentosCentrales; let i = index">
+                <div class="flex flex-col flex-auto p-6 md:p-6">
+                    <div class="flex flex-col items-start mt-1">
+                        <div class="text-xl font-medium">
+                            {{ item.empresa }}
+                        </div>
+                    </div>
+                    <div class="aspect-w-9 aspect-h-6 mt-1">
+                        <div
+                            class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card"
+                        >
+                            <pdf-viewer
+                                [src]="'data:application/pdf;base64,'+item.base64"
+                                [render-text]="true"
+                                [original-size]="false"
+                                [show-all]="true"
+                                style="width: 98%; height: 98%"
+                            >
+                            </pdf-viewer>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-start mt-2">
+                        <div
+                            class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600"
+                        >
+                            PDF
+                        </div>
+                    </div>
+                    <div class="text-lg font-medium mt-3">Detalle del reporte:</div>
+                    <div
+                        class="flex flex-col mt-3 border-t border-b divide-y font-medium"
+                    >
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Id histórico</div>
+                            <div>{{ item.idHistorico }}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Fecha de consulta</div>
+                            <div>{{ cambiarFecha(item.fecha) }}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Hora de consulta</div>
+                            <div>{{ item.horaConsulta }}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Antigüedad</div>
+                            <div>{{ item.cantidadDias + " dias"}}</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 w-full mt-5">
+                        <button
+                            mat-flat-button=""
+                            matTooltip="Descargar documento"
+                            class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary"
+                            (click)="getDownloadHistorico(item)"
+                        >
+                            <span class="mat-button-wrapper"> Descargar </span>
+                            <span
+                                matripple=""
+                                class="mat-ripple mat-button-ripple"
+                            ></span>
+                            <span class="mat-button-focus-overlay"></span>
+                        </button>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+            <!-- </file-manager-details> -->
+            <!---->
+        </div>
+    </div>
+</div>

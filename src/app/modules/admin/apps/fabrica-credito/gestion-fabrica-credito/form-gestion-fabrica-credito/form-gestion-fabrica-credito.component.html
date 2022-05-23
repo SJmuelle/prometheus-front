@@ -16,6 +16,7 @@
                     </button>
                     <ng-container *ngIf="agenda_fabrica !== 'CM'">
                         <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
+                            (click)="verCentrales = true;drawerCentrales.toggle();"
                             [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Centrales">
                             <mat-icon svgIcon="heroicons_outline:chart-pie"></mat-icon>
                         </button>
@@ -630,8 +631,24 @@
 </fuse-drawer>
 <ng-container *ngIf="minimizarDevoluciones">
     <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
-        [matTooltip]="'Restaura ventana devoluciones'" 
+        [matTooltip]="'Restaura ventana devoluciones'"
         (click)="verDevoluciones = true;drawerDevoluciones.toggle()">
+        <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
+    </button>
+</ng-container>
+<fuse-drawer class="w-full sm:max-w-1/3 min-w-150" fixed transparentOverlay [mode]="'over'"
+            [name]="'drawerCentrales'"  [position]="'right'" #drawerCentrales>
+    <ng-container *ngIf="verCentrales">
+        <div class="fixed z-999 w-full">
+            <app-grid-centrales (cerrarComponente)="onCerrar($event);drawerCentrales.close()"
+                (minimizarComponente)="onMinimiza($event);drawerCentrales.close(); verCentrales = true">
+            </app-grid-centrales>
+        </div>
+    </ng-container>
+</fuse-drawer>
+<ng-container *ngIf="minimizarCentrales">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" [matTooltip]="'Restaura ventana Centrales'"
+        (click)="verComentarios = true;drawerCentrales.toggle()">
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>

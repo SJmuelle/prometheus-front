@@ -51,11 +51,11 @@
                                 [disabled]="!item.selected && longitudArchivos > 0" #checkbox
                                 (change)="onSeleccionDocumento(checkbox, item)"></mat-checkbox>
                         </td>
-                        <td class="px-2 text-sm border">{{ item.idArchivo}}</td>
+                        <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
                         <td class="px-2 text-sm border">{{ item.descripcion}}</td>
-                        <td class="px-2 text-sm border">{{ item.usuarioCreacion}}</td>
-                        <td class="px-2 text-sm border">{{ item.requerido? 'Si' : 'No'}}</td>
-                        <td class="px-2 text-sm border">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}</td>
+                        <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
+                        <td class="px-2 text-sm border text-center">{{ item.requerido? 'Si' : 'No'}}</td>
+                        <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}</td>
                         <td class="px-2 text-sm border text-center">
                             <ng-container *ngIf="item.archivoCargado === 'N'">
                                 <input type="file" #fileInput (change)="subirArchivo($event, item)" class="d-none"

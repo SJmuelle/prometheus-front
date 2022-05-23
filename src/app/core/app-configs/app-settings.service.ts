@@ -87,6 +87,14 @@ export class AppSettingsService {
             baseComentarioCrear: EndPoints.uri('/generic/cre-agregar-comentario')
         }
     };
+      /**
+     * @description: End-point comentarios
+     */
+       public centrales = {
+        url: {
+            base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
+        }
+    };
     /**
     * @description: End-point comentarios para devolver Fabrica
     */
