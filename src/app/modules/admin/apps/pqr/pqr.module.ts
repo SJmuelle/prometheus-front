@@ -22,6 +22,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // COMPONENTES
 import { PqrComponent } from './pqr.component';
@@ -103,7 +104,8 @@ import { DetalleHistorialComponent } from './historial-pqr/detalle-historial/det
         MatStepperModule,
         MatExpansionModule,
         MatDatepickerModule,
+        MatTooltipModule,
         FuseAlertModule,
-    ],
+    ]
 })
 export class PqrModule {}

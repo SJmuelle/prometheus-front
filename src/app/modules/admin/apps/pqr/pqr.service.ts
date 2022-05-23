@@ -2,12 +2,31 @@ import { Injectable } from '@angular/core';
 import { UtilityService } from 'app/resources/services/utility.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PqrService {
     constructor(private _utility: UtilityService) {}
+
+    public exportAsExcelFile(json: any[], excelFileName: string): void {
+        const myworksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+        const myworkbook: XLSX.WorkBook = { Sheets: { 'data': myworksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = XLSX.write(myworkbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, excelFileName);
+    }
+
+    private saveAsExcelFile(buffer: any, fileName: string): void {
+        const data: Blob = new Blob([buffer], {
+          type: EXCEL_TYPE
+        });
+        FileSaver.saveAs(data, fileName + '_gestion'+ EXCEL_EXTENSION);
+    }
 
     // parametrizacion
     setTipo() {
@@ -90,6 +109,14 @@ export class PqrService {
     }
 
     CreateComentario(url: string, data: any): Observable<any> {
+        return this._utility.postQuery(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
+    ActualizarDescripcion(url: string, data: any): Observable<any> {
         return this._utility.postQuery(url, data).pipe(
             map((result: any) => {
                 return result;

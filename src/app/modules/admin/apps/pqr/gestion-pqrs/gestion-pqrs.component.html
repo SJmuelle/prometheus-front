@@ -66,9 +66,12 @@
             <fuse-card class="card p-3 shadow row mr-3">
                 <div class="flex flex-col">
                     <div class="mr-1 leading-tight titulo_tabs text-2xl font-semibold">Adjuntos</div>
-                    <div class="mt-2">
+                    <div class="flex flex-row mt-2">
                         <div>
-                            <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon svgIcon="heroicons_outline:document-add"></mat-icon></a>
+                            <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Agregar adjuntos" svgIcon="heroicons_outline:document-add"></mat-icon></a>
+                        </div>
+                        <div>
+                            <a class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Eliminar adjuntos" svgIcon="heroicons_outline:document-remove"></mat-icon></a>
                         </div>
                     </div>
                 </div>
@@ -305,14 +308,22 @@
                                 <div [hidden]="mostrarEditor==false" class="flex flex-row">
                                     <div class="flex flex-col mt-2 mb-10 w-100">
                                         <div class="h-28">
-                                            <quill-editor class="mb-2" placeholder="Editar la descripcion" [(ngModel)]="datos.detalle" [modules]="quillModules"></quill-editor>
+                                            <!-- <quill-editor #editor  class="mb-2" (contentChanged)="logChange($event);" placeholder="Editar la descripcion" [(ngModel)]="datos.detalle" [modules]="quillModules"></quill-editor> -->
+                                            <quill-editor #editor2 class="mb-2" placeholder="Editar la descripcion"  [(ngModel)]="datos.detalle" (contentChanged)="logChange($event);"
+                                            [modules]="quillModules"></quill-editor>
+                                            <div class="col-lg-12 mt-1.5" *ngIf="editor2.editorElem">
+                                                <small [ngClass]="editor2.editorElem.outerText.length>650?'text-red-600':'text-green-600'" class="text-sm"
+                                                 *ngIf="editor2.editorElem.outerText.length>1">
+                                                 <!-- Caracteres: {{ editor2.editorElem.outerText.length }} -->
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <div [hidden]="mostrarEditor==false" class="flex flex-row mt-3 justify-end">
+                                
+                                <div [hidden]="mostrarEditor==false" class="flex flex-row mt-3 justify-end" *ngIf="editor2.editorElem">
                                     <div class="flex flex-col">
-                                        <button mat-button  class="btn color_fintra text-white" (click)="guardarDescripcion()">Guardar</button>
+                                        <button mat-button  class="btn color_fintra text-white" (click)="guardarDescripcion(pqrid, datos.detalle)" *ngIf="editor2.editorElem.outerText.length>1">Guardar</button>
                                     </div>
                                 </div>
                                 

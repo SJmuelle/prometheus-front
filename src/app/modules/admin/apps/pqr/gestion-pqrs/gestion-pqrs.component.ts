@@ -1,7 +1,6 @@
-import { Component, DebugElement, OnInit } from '@angular/core';
+import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 import { AdjuntosComponent } from './adjuntos/adjuntos.component';
@@ -43,6 +42,20 @@ export class GestionPQRSComponent implements OnInit {
     mostrarEditor: boolean = false;
     mostrarDescripcion: boolean = true;
     evidencia: any = [];
+    descripcion: string = '';
+    edicion={
+        id:0,
+        detalle_pqrs:this.datos.detalle
+    }
+    quillModules: any = {
+        toolbar: [
+            ['bold', 'italic', 'underline'],
+            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+            ['clean'],
+        ],
+    };
+    @ViewChild('editor') editor2;
+    mensajeQuill: string;
 
     constructor(
         private _pqrService: PqrService,
@@ -65,6 +78,13 @@ export class GestionPQRSComponent implements OnInit {
             width: '60%'
         })
         dialogRef.afterClosed().toPromise();
+    }
+
+    logChange($event) {
+        debugger;
+        console.log(this.editor2);
+        //console.log($event);
+        this.mensajeQuill=$event.text;
     }
 
     agregarcomentario(){
@@ -106,7 +126,22 @@ export class GestionPQRSComponent implements OnInit {
         }
     }
 
-    guardarDescripcion(){
+    guardarDescripcion(id, descripcion){
+        let url = 'actualizar_pqr_descripcion';
+        this.edicion={
+            id:parseInt(id),
+            detalle_pqrs:descripcion
+        }
+        console.log("Aqui tu data: ", this.edicion)
+        this._pqrService.ActualizarDescripcion(url, this.edicion).subscribe((response:any)=>{
+            console.log(response)
+            Swal.fire(
+              '¡Exito!',
+              `Detalle actualizado correctamente.`,
+              'success'
+            ).then();
+      
+          })
         if (this.mostrarEditor==true && this.mostrarDescripcion==false) {
             this.mostrarEditor=false;
             this.mostrarDescripcion=true;

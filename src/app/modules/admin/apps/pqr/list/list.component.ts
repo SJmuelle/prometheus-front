@@ -24,6 +24,11 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.consulta();
   }
+
+  exportAsXLSX():void {
+    this._pqrService.exportAsExcelFile(this.listado, 'listado');
+  }
+
   consulta(){
 
     Swal.fire({ title: 'Cargando', html: 'Buscando Informacion de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
