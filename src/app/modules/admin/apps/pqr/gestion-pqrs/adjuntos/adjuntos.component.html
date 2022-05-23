@@ -31,7 +31,7 @@
 <mat-dialog-actions align="end">
     <div class="flex flex-col sm:flex-row sm:justify-end sm:gap-2 w-full">
         <div class="sm:py-2">
-            <button mat-button [mat-dialog-close]="evidencia" class="text-white w-100 permitir bloquear" [disabled]="evidencia.descripcion==''">Guardar </button>
+            <button mat-button [mat-dialog-close]="evidencia" class="text-white w-100 permitir bloquear" [disabled]="evidencia.descripcion==''" (click)="guardar()">Guardar </button>
         </div>
         <div class="py-2">
             <button mat-button [mat-dialog-close]="[]" class="bg-gray-400 text-white w-100">Cerrar </button>

@@ -274,6 +274,7 @@ export class SolucionComponent implements OnInit {
                                     Swal.showLoading();
                                 },
                             }).then((result) => {});
+                            console.log("Aqui tus datos: ", data)
                             this._pqrService
                                 .postFile(url, data)
                                 .subscribe((response: any) => {

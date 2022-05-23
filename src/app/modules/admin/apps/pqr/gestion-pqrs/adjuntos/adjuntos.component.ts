@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { PqrService } from '../../pqr.service';
 
 @Component({
   selector: 'app-adjuntos',
@@ -18,9 +19,11 @@ export class AdjuntosComponent implements OnInit {
     peso: number;
   };
 
-  constructor(public matDialogRef: MatDialogRef<AdjuntosComponent>, public dialog: MatDialog) { }
+  constructor(private _pqrService: PqrService, public matDialogRef: MatDialogRef<AdjuntosComponent>, 
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
+    console.log(this.data.id)
     this.evidencia = {
       file: null,
       filename: '',
@@ -29,6 +32,25 @@ export class AdjuntosComponent implements OnInit {
       descripcion: '',
       peso: 0,
     };
+  }
+
+  guardar(){
+    let url = '/file/cargar-archivo-pqrs';
+
+    
+
+    let data = {
+      idComentario: 0,
+      fuente: 'registro-pqrs',
+      identificador: 'pqrs' + this.data.id,
+      file:this.evidencia
+    };
+    console.log(data)
+    // this._pqrService.postFile(url, this.evidencia).subscribe((response: any) => {
+    //   if (response) {
+    //     // console.log(response)
+    //   }
+    // });
   }
 
   onCharge(input: HTMLInputElement, ind): void {
@@ -69,6 +91,6 @@ export class AdjuntosComponent implements OnInit {
         this.evidencia.nombre = '';
       };
     }
-}
+  }
 
 }

@@ -100,7 +100,7 @@ export class GestionPQRSComponent implements OnInit {
         const dialogRef = this.dialog.open(AdjuntosComponent, {
             height: '40%',
             width: '60%',
-            data: {evidencia: this.evidencia},
+            data: {id:this.pqrid, evidencia: this.evidencia},
         });
         dialogRef.afterClosed().subscribe((result) => {
                 let dataModal = result;
@@ -132,7 +132,6 @@ export class GestionPQRSComponent implements OnInit {
             id:parseInt(id),
             detalle_pqrs:descripcion
         }
-        console.log("Aqui tu data: ", this.edicion)
         this._pqrService.ActualizarDescripcion(url, this.edicion).subscribe((response:any)=>{
             console.log(response)
             Swal.fire(
