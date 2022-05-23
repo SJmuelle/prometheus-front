@@ -53,13 +53,15 @@ export class PagaduriaComponent implements OnInit {
   descargarArchivo(id:any){
     this.pagaduria.descargarArchivos(id).subscribe((response:any)=>{
       if(response) {
-        if (response.data==null) {
+        console.log(response)
+        if (response.status==202) {
           Swal.fire(
             '¡Error!',
-            `Esta solicitud no cuenta con archivos para descarga.`,
+            `No existen adjuntos pertenecientes a esta solicitud.`,
             'error'
           ).then();
         }else{
+
           const archivo = response.data[0].filepath.split(',');
           const extension = 'pdf'
           const link = document.createElement('a');
@@ -69,6 +71,7 @@ export class PagaduriaComponent implements OnInit {
           link.download = response.data[0].filename
           link.click();
           Swal.close();
+          
         }
       }
     }) 

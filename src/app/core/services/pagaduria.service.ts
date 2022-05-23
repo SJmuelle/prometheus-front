@@ -43,7 +43,7 @@ export class PagaduriaService {
    * @description: Descargar los archivos de la columna Anexo.
    */
   public descargarArchivos(data: any): Observable<any> {
-    console.log(data)
+    console.log(`${this._appSettings.pagaduria.url.baseArchivo}/${data}`)
     return this._http.get(`${this._appSettings.pagaduria.url.baseArchivo}/${data}`)
   }
 
