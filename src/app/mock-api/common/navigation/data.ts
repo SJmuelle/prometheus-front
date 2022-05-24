@@ -177,14 +177,21 @@ export const compactNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:check-circle',
                 children: [
                     {
-                        id: 'parametria.fabrica',
+                        id: 'parametria.fabrica1',
                         title: 'Listado de Chequeo',
                         // icon: 'heroicons_outline:minus-sm',
                         type: 'basic',
                         link: '/credit-factory/parametria',
                     },
                     {
-                        id: 'parametria.fabrica',
+                        id: 'parametria.fabrica2',
+                        title: 'Listado de Comentarios',
+                        // icon: 'heroicons_outline:minus-sm',
+                        type: 'basic',
+                        link: '/credit-factory/parametria/listadoTiposComentarios'
+                    },
+                    {
+                        id: 'parametria.fabrica3',
                         title: 'Preguntas de Referenciación',
                         // icon: 'heroicons_outline:minus-sm',
                         type: 'basic',

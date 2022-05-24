@@ -11,14 +11,17 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ListadoPreguntasReferenciacionComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion.component';
 import { ListadoPreguntasReferenciacionFormComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion-form/listado-preguntas-referenciacion-form.component';
-
+import { ListadoTiposComentariosComponent } from './listado-tipos-comentarios/listado-tipos-comentarios.component';
+import { ListadoTiposComentariosFormComponent } from './listado-tipos-comentarios/listado-tipos-comentarios-form/listado-tipos-comentarios-form.component';
 
 @NgModule({
   declarations: [
     ListadoChequeoComponent,
     ListadoChequeoFormComponent,
     ListadoPreguntasReferenciacionComponent,
-    ListadoPreguntasReferenciacionFormComponent
+    ListadoPreguntasReferenciacionFormComponent,
+    ListadoTiposComentariosComponent,
+    ListadoTiposComentariosFormComponent
   ],
   imports: [
     CommonModule,
