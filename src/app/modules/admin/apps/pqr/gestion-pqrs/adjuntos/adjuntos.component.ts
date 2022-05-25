@@ -23,7 +23,6 @@ export class AdjuntosComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
-    console.log(this.data.id)
     this.evidencia = {
       file: null,
       filename: '',
@@ -32,22 +31,6 @@ export class AdjuntosComponent implements OnInit {
       descripcion: '',
       peso: 0,
     };
-  }
-
-  guardar(){
-    let url = '/file/guardar-adjunto-pqrs';
-    let data = {
-      idComentario: '1',
-      fuente: 'registro-pqrs',
-      identificador: this.data.id,
-      file:this.data.evidencia
-    };
-    console.log(data)
-    this._pqrService.postFile(url, data).subscribe((response: any) => {
-      if (response) {
-        console.log(response)
-      }
-    });
   }
 
   onCharge(input: HTMLInputElement, ind): void {
@@ -88,6 +71,25 @@ export class AdjuntosComponent implements OnInit {
         this.evidencia.nombre = '';
       };
     }
+  }
+
+  guardar(){
+    console.log(this.evidencia)
+    let url = '/file/guardar-adjunto-pqrs';
+    let data = {
+      idComentario: 1,
+      documento:this.evidencia.file,
+      filename:this.evidencia.filename,
+      extension:this.evidencia.ext,
+      descripcion:this.evidencia.descripcion
+    };
+    console.log(data)
+    this._pqrService.postFile(url, data).subscribe((response: any) => {
+      console.log(response)
+      if (response) {
+        
+      }
+    });
   }
 
 }

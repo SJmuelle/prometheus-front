@@ -103,9 +103,10 @@ export class GestionPQRSComponent implements OnInit {
         const dialogRef = this.dialog.open(AdjuntosComponent, {
             height: '40%',
             width: '60%',
-            data: {id:this.pqrid, evidencia: this.evidencia},
+            data: {id:this.pqrid},
         });
         dialogRef.afterClosed().subscribe((result) => {
+                // console.log(result)
                 let dataModal = result;
                 if (
                     dataModal.file != '' &&
@@ -116,7 +117,7 @@ export class GestionPQRSComponent implements OnInit {
                     dataModal.descripcion != null
                 ) {
                     this.evidencia.push(dataModal);
-                    console.log(this.evidencia)
+                    // console.log(this.evidencia)
                 }
         });
 
