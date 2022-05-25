@@ -95,7 +95,6 @@ export class PagaduriaComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pagaduria.getSolicitudesFilter(this.tipo, this.estado).subscribe((response: any) => {
       Swal.close();
-      console.log(response.data)
       if (response.data.length==0) {
         if (this.estado=='A') {
           Swal.fire(
