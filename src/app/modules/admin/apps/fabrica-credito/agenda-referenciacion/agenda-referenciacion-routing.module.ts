@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormAgendaReferenciacionComponent } from './form-agenda-referenciacion/form-agenda-referenciacion.component';
 import { GridAgendaReferenciacionComponent } from './grid-agenda-referenciacion/grid-agenda-referenciacion.component';
 import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid-tipo-referenciacion.component';
+import { TitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
 
 const routes: Routes = [
   {
@@ -10,12 +11,13 @@ const routes: Routes = [
     component: GridAgendaReferenciacionComponent
   },
   {
-    path: ':num/:id',
+    path: ':unidadNegocio/:num/:id',
     component: GridTipoReferenciacionComponent
   },
   {
-    path: 'agenda/:num/:id/:tipo',
+    path: ':unidadNegocio/:num/:id/:referencia',
     component: FormAgendaReferenciacionComponent
+    
   },
 ];
 

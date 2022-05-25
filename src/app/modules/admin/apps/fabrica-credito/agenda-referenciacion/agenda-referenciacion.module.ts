@@ -36,6 +36,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
 import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-pn/ref-titular-pn.component';
+import { TitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -47,7 +49,8 @@ import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-p
     FormDialogListErrorDialogComponent,
     GridTipoReferenciacionComponent,
     FormAgendaReferenciacionComponent,
-    RefTitularPnComponent
+    RefTitularPnComponent,
+    TitularComponent
   ],
     imports: [
         CommonModule,
@@ -76,7 +79,9 @@ import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-p
         MatSidenavModule,
         FuseFindByKeyPipeModule,
         SharedModule,
-        MatRadioModule
+        MatRadioModule,
+        QuillModule.forRoot(),
+
     ]
 })
 export class AgendaReferenciacionModule { }
