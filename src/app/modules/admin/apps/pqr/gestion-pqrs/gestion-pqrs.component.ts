@@ -1,6 +1,7 @@
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { result } from 'lodash';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 import { AdjuntosComponent } from './adjuntos/adjuntos.component';
@@ -93,7 +94,9 @@ export class GestionPQRSComponent implements OnInit {
             width: '60%',
             data: {id: parseInt(this.pqrid), estado: this.datos.estado}
         })
-        dialogRef.afterClosed().toPromise();
+        dialogRef.afterClosed().subscribe((result)=>{
+            this.buscarDatos()
+        })
     }
 
     insertadjunti() {
@@ -192,7 +195,6 @@ export class GestionPQRSComponent implements OnInit {
         url = `/listar-comentarios-seguimiento/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
-                console.log('Aqui tus comentarios ', response)
                 this.listadoSeguimiento = response;
             } else {
                 this.listadoSeguimiento = [];

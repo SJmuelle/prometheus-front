@@ -35,22 +35,19 @@ export class AdjuntosComponent implements OnInit {
   }
 
   guardar(){
-    let url = '/file/cargar-archivo-pqrs';
-
-    
-
+    let url = '/file/guardar-adjunto-pqrs';
     let data = {
-      idComentario: 0,
+      idComentario: '1',
       fuente: 'registro-pqrs',
-      identificador: 'pqrs' + this.data.id,
-      file:this.evidencia
+      identificador: this.data.id,
+      file:this.data.evidencia
     };
     console.log(data)
-    // this._pqrService.postFile(url, this.evidencia).subscribe((response: any) => {
-    //   if (response) {
-    //     // console.log(response)
-    //   }
-    // });
+    this._pqrService.postFile(url, data).subscribe((response: any) => {
+      if (response) {
+        console.log(response)
+      }
+    });
   }
 
   onCharge(input: HTMLInputElement, ind): void {

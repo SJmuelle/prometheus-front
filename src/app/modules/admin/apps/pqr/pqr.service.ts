@@ -75,7 +75,7 @@ export class PqrService {
     }
 
     setSoluciones() {
-        let url: string = `/tk/informacion-pqrs-soluciones`;
+        let url: string = `informacion-pqrs-soluciones`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;
