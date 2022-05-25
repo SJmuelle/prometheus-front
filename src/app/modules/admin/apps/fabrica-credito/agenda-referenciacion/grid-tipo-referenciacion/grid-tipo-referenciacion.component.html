@@ -57,7 +57,7 @@
     <div class="flex flex-col flex-auto min-w-0">
 
         <!-- Header -->
-        <div class="relative pt-8 pb-28 px-4 sm:pt-20  sm:px-16 overflow-hidden bg-gray-800 dark">
+        <div class="relative pt-8 pb-28 px-4 sm:px-16 overflow-hidden bg-gray-800 dark">
             <!-- Background - @formatter:off -->
             <!-- Rings -->
             <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
@@ -73,51 +73,50 @@
         <div class="flex flex-col items-center pb-6 px-6 sm:pb-10 sm:px-10 mb-20">
             <!-- Cards -->
             <div
-                class="grid grid-cols-1 md:grid-cols-4 mb-2 gap-y-8 md:gap-x-12 w-full max-w-sm md:max-w-6xl -mt-16 sm:-mt-24">
+                class="-mt-16 flex flex-row gap-y-8 justify-center max-w-sm mb-2 md:gap-x-12 md:grid-cols-4 md:max-w-6xl sm:-mt-24 w-full">
                 <!-- card -->
-                <div class="div">
-                    <div
-                        class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
-                        <div class="flex flex-col flex-auto p-8">
-                            <div class="text-xl font-semibold">Referencia titular</div>
-                            <hr class="w-full border-t my-6">
-                            <div class="flex flex-col " *ngFor="let titular of listado.referenciaTitulo">
-                                <div class="capitalize">
-                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
-                                    </mat-icon> {{titular.nombreCompleto}}
-                                </div>
-                                <div class="text-secondary text-md" *ngIf="titular.telefono">
-                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
-                                    </mat-icon>{{titular.telefono}}
-                                </div>
-                                <div class="text-secondary text-md" *ngIf="titular.celular">
-                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
-                                    </mat-icon>{{titular.celular}}
-                                </div>
-                                <div class="text-secondary text-md" *ngIf="titular.direccion">
-                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:location-marker'">
-                                    </mat-icon>{{titular.direccion}}
-                                </div>
+
+                <div
+                    class="w-3/12 relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+                    <div class="flex flex-col flex-auto p-8">
+                        <div class="text-xl font-semibold">Referencia titular</div>
+                        <hr class="w-full border-t my-6">
+                        <div class="flex flex-col " *ngFor="let titular of listado.referenciaTitulo">
+                            <div class="capitalize">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                </mat-icon> {{titular.nombreCompleto}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="titular.telefono">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>{{titular.telefono}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="titular.celular">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                </mat-icon>{{titular.celular}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="titular.direccion">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:location-marker'">
+                                </mat-icon>{{titular.direccion}}
                             </div>
                         </div>
-
-
-                        <div
-                            class="flex items-center justify-center py-4 px-8 text-primary bg-gray-50 dark:bg-transparent dark:border-t">
-                            <a class="flex items-center"
-                                [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/t'">
-                                <mat-icon class="mr-2 icon-size-8 text-white" [svgIcon]="'heroicons_solid:phone'">
-                                </mat-icon>
-                                <span class="font-medium">Llamar</span>
-                               
-                            </a>
-                        </div>
-
-
                     </div>
+
+
+                    <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                        <a class="flex items-center"
+                            [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/T'">
+                            <mat-icon class="mr-2 icon-size-8 text-white" [svgIcon]="'heroicons_solid:phone'">
+                            </mat-icon>
+                            <span class="font-medium">Llamar</span>
+
+                        </a>
+                    </div>
+
+
                 </div>
 
-                <div class="div" *ngIf="listado.referenciaRepresentante.length">
+
+                <div class="w-3/12" *ngIf="listado.referenciaRepresentante.length">
                     <div
                         class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
                         <div class="flex flex-col flex-auto items-center p-8">
@@ -144,15 +143,13 @@
                         </div>
 
 
-                        <div
-                            class="flex items-center justify-center py-4 px-8 text-primary bg-gray-50 dark:bg-transparent dark:border-t">
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
                             <a class="flex items-center"
-                            [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/R'"
-                            >
+                                [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/R'">
                                 <mat-icon class="mr-2 icon-size-8 text-white" [svgIcon]="'heroicons_solid:phone'">
                                 </mat-icon>
                                 <span class="font-medium">Llamar</span>
-                               
+
                             </a>
                         </div>
 
@@ -160,7 +157,7 @@
                     </div>
                 </div>
 
-                <div class="div">
+                <div class="w-3/12">
                     <div
                         class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
                         <div class="flex flex-col flex-auto  p-8">
@@ -186,22 +183,19 @@
                             </div>
                         </div>
 
-                        <div
-                            class="flex items-center justify-center py-4 px-8 text-primary bg-gray-50 dark:bg-transparent dark:border-t">
-                            <a class="flex items-center" 
-                            [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/P'"
-                            >
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                            <a class="flex items-center"
+                                [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/P'">
                                 <mat-icon class="mr-2 icon-size-8 text-white" [svgIcon]="'heroicons_solid:phone'">
                                 </mat-icon>
                                 <span class="font-medium">Llamar</span>
-                              
+
                             </a>
                         </div>
                     </div>
                 </div>
 
-
-                <div class="div">
+                <div class="w-3/12">
                     <div
                         class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
                         <div class="flex flex-col flex-auto p-8">
@@ -227,19 +221,18 @@
                             </div>
                         </div>
 
-                        <div
-                            class="flex items-center justify-center py-4 px-8 text-primary bg-gray-50 dark:bg-transparent dark:border-t">
-                            <a class="flex items-center" 
-                            [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/C'"
-                            >
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                            <a class="flex items-center"
+                                [routerLink]="'../../agenda/'+numeroSolicitud+'/'+identificacion+'/C'">
                                 <mat-icon class="mr-2 icon-size-8 text-white" [svgIcon]="'heroicons_solid:phone'">
                                 </mat-icon>
                                 <span class="font-medium">Llamar</span>
-                               
+
                             </a>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>

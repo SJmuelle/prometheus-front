@@ -1,6 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-form-agenda-referenciacion',
@@ -8,23 +12,56 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./form-agenda-referenciacion.component.scss']
 })
 export class FormAgendaReferenciacionComponent implements OnInit {
-
-  drawerMode: 'over' | 'side' = 'side';
-  drawerOpened: boolean = true;
-  steps: { order: number; title: string; subtitle: string; }[];
-  totalsteps: number;
-  currentStep: number = 0;
+  public unSubscribe$: Subject<any> = new Subject<any>();
+  public drawerMode: 'over' | 'side' = 'side';
+  public drawerOpened: boolean = true;
+  public steps: { order: number; title: string; subtitle: string; }[];
+  public totalsteps: number;
+  public currentStep: number = 0;
+  public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
+  public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public tipo: string = this.route.snapshot.paramMap.get('tipo');
+  public fabrica_datos: any = {};
+  public tipoDocumento: string = '';
+  titulo: string;
 
   constructor(
     @Inject(DOCUMENT) private _document: Document,
     private _changeDetectorRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
-
-
-  ) { }
+    private route: ActivatedRoute,
+    private fabricaCreditoService: FabricaCreditoService,
+  ) {
+    if (!this.numeroSolicitud) {
+      return;
+    } else {
+      this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+      this.getObtenerStepsAgendaReferenciacion(this.numeroSolicitud)
+    }
+  }
 
   ngOnInit(): void {
+    debugger;
+    switch (this.tipo) {
+      case 'P':
+        this.titulo = "personal"
+        break;
+      case 'R':
+        this.titulo = "representate legal"
+        break;
+
+      case 'C':
+        this.titulo = "comercial"
+        break;
+
+      case 'T':
+        this.titulo = "titular"
+        break;
+      default:
+        break;
+    }
     this.goToStep(0);
+
     this.activatedRoute.params.subscribe(params => {
       const id: any = params['id'];
       // Código...
@@ -34,29 +71,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
 
 
 
-      this.totalsteps = 4;
-      this.steps = [
-        {
-          order: 0,
-          title: 'Datos de la llamada',
-          subtitle: 'La documentación completa',
-        },
-        {
-          order: 1,
-          title: 'Edición del formulario',
-          subtitle: 'Los datos posibles para editar la informacion del crédito',
-        },
-        {
-          order: 2,
-          title: 'Preguntas a la referencia',
-          subtitle: 'Respuesta de preguntas  ',
-        },
-        {
-          order: 3,
-          title: 'Comentario',
-          subtitle: 'Evalue la llamada',
-        }
-      ]
+
 
 
     });
@@ -152,5 +167,57 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     });
   }
 
+
+  /**
+   * Track by function for ngFor loops
+   *
+   * @param index
+   * @param item
+   */
+  private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    };
+    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+      .subscribe(({ data }) => {
+        Swal.close();
+
+        this.tipoDocumento = data.tipoDocumento;
+        const datosDocumentos: any = {
+          numeroSolicitud: datosSolicitud.numeroSolicitud,
+          tipoDocumento: this.tipoDocumento
+        };
+        this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
+        this.fabrica_datos = data;
+      });
+  }
+
+  /**
+  * Track by function for ngFor loops
+  *
+  * @param index
+  * @param item
+  */
+  private getObtenerStepsAgendaReferenciacion(numeroSolicitud: string): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+    };
+    this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+      .subscribe(({ data }) => {
+        Swal.close();
+        console.log(data)
+        this.totalsteps = 4;
+        this.steps = data
+
+      });
+  }
+
+
+  ngOnDestroy(): void {
+    this.unSubscribe$.unsubscribe();
+  }
 
 }

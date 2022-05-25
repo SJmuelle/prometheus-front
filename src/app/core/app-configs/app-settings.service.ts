@@ -31,7 +31,8 @@ export class AppSettingsService {
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
-            checklist: EndPoints.uri('/generic/qry/obtener-items-chequeo-credito')
+            checklist: EndPoints.uri('/generic/qry/obtener-items-chequeo-credito'),
+            step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
         }
     };
     /**

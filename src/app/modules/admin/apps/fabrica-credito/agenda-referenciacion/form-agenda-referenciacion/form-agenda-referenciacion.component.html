@@ -6,6 +6,7 @@
         <mat-drawer class="w-90 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened"
             #matDrawer>
             <div class="flex flex-col items-start p-8 border-b">
+
                 <!-- Back to courses -->
                 <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="['..']">
                     <span class="inline-flex items-center">
@@ -14,25 +15,29 @@
                         <span class="ml-1.5 font-medium leading-5">Volver al listado de referencias</span>
                     </span>
                 </a>
+
+                <!-- Course title & description -->
+                <div class="mt-3 text-2xl font-semibold">
+                    Referencia {{titulo}} <br>
+                    Número de solicitud: {{fabrica_datos.numeroSolicitud}}</div>
+
                 <!-- cateogoria -->
                 <div
-                    class="mt-7 py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                    estado
+                    class="mt-3 py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
+                    Monto de la solicitud: ${{fabrica_datos.cupoTotal | number }}
                 </div>
 
                 <!-- Course title & description -->
                 <div class="mt-3 text-2xl font-semibold"></div>
 
-                <!-- estado -->
                 <div class="flex items-center leading-5 text-md text-secondary">
-                    <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_solid:document-text'">
+                    <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_outline:calendar'">
                     </mat-icon>
-
-                    <div
-                        class="py-0.5 px-1  text-sm font-semibold ml-1.5 text-green-800 bg-green-100 dark:text-green-50 dark:bg-green-500">
-                        06/11/11997
+                    <div class="py-0.5 px-1  text-sm font-semibold ml-1.5 ">
+                        Fecha de la solicitud {{fabrica_datos.emision | date: "dd/mm/yyyy"}}
                     </div>
                 </div>
+
 
             </div>
 
@@ -96,34 +101,9 @@
             </mat-progress-bar>
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
-
-                <!-- Steps -->
-                <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
-                    <ng-container>
-                        <mat-tab>
-                            <div
-                                class="prose prose-sm max-w-3xl mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
-                                <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                                    hola
-                                </h2>
-
-
-                                <div>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, cumque.
-                                        Deserunt cum perferendis illum, dolor quos nesciunt at voluptatem labore impedit
-                                        adipisci, minus nihil sit molestias recusandae rem suscipit. Veniam.</p>
-                                </div>
-                            </div>
-                        </mat-tab>
-                        <mat-tab>
-
-
-                        </mat-tab>
-                    </ng-container>
-                </mat-tab-group>
-
-
-
+                <ng-container [ngSwitch]="tipo">
+                    <app-ref-titular-pn *ngSwitchCase="'T'"></app-ref-titular-pn>
+                </ng-container>
             </div>
 
 

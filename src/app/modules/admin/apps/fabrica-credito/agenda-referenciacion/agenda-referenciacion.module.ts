@@ -35,6 +35,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
+import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-pn/ref-titular-pn.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { SharedModule } from 'app/shared/shared.module';
     FormDialogComentarioReferenciaComponent,
     FormDialogListErrorDialogComponent,
     GridTipoReferenciacionComponent,
-    FormAgendaReferenciacionComponent
+    FormAgendaReferenciacionComponent,
+    RefTitularPnComponent
   ],
     imports: [
         CommonModule,
