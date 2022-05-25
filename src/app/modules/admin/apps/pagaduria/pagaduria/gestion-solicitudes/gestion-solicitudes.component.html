@@ -1,11 +1,8 @@
 <h2 mat-dialog-title>Reactivar solicitud</h2>
 <mat-dialog-content>
     <form [formGroup]="ReactivarForm">
-
         <div class="flex flex-col w-100">
-
             <div class="w-full">
-    
                 <mat-form-field class="w-full">
                     <mat-label>Comentario: </mat-label>
                     <textarea matInput class="tamano" formControlName="detalle" rows="4" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
@@ -20,15 +17,11 @@
                         Minimo 6 caracteres.
                     </mat-error>
                 </mat-form-field>
-    
             </div>
-    
         </div>
-
     </form>
-    
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="ReactivarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
+    <button mat-button id="guardar" class="text-white permitir bloquear" [disabled]="ReactivarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PagaduriaService } from 'app/core/services/pagaduria.service';
 import Swal from 'sweetalert2';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { toNumber } from 'lodash';
+import { result, toNumber } from 'lodash';
 
 @Component({
   selector: 'app-aprobar-referencia-laboral',
@@ -61,13 +61,22 @@ export class AprobarReferenciaLaboralComponent implements OnInit {
     const {detalle} = this.AprobarForm.getRawValue();
     valorDeduccionEmpleado = Number(this.pagaduria.enviarNumero(valor));
     this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
-    this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{})
-    Swal.fire(
-      '¡Correcto!',
-      `La solicitud ha sido aprobada.`,
-      'success'
-    )
-    console.log(this.actualizacion)
+    this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
+      if (response) {
+        Swal.fire(
+          '¡Correcto!',
+          'Se ha aprobado exitosamente la solicitud.',
+          'success'
+        ).then((result)=>{
+          if(result){
+            this.dialog.close();
+          }
+        })
+        setTimeout(() => {
+          this.dialog.close();
+        }, 10000);
+      }
+    })
   }
 
   /**

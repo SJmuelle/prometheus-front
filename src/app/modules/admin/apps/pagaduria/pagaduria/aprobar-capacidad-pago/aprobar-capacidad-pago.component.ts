@@ -52,14 +52,21 @@ export class AprobarCapacidadPagoComponent implements OnInit {
     const { detalle } = this.AprobarForm.getRawValue();
     this.actualizacion={codigoNegocio, estado, valorDeduccionEmpleado, procesoDiciplinario, detalle, tipo}
     this.pagaduria.UpdateSolicitud(this.actualizacion).subscribe((response: any)=>{
-      // console.log("Aqui tus datos: ", response)
+      if (response) {
+        Swal.fire(
+          '¡Correcto!',
+          'Se ha aprobado exitosamente la solicitud.',
+          'success'
+        ).then((result)=>{
+          if(result){
+            this.dialog.close();
+          }
+        })
+        setTimeout(() => {
+          this.dialog.close();
+        }, 10000);
+      }
     })
-    Swal.fire(
-      '¡Correcto!',
-      `La solicitud ha sido aprobada.`,
-      'success'
-    )
-    // console.log("Aqui tus datos: ", this.actualizacion)
   }
 
   /**

@@ -1,10 +1,7 @@
 <mat-dialog-content>
     <form [formGroup]="AprobarForm">
-
         <div class="flex flex-col w-100">
-
             <div class="w-full">
-    
                 <mat-form-field class="w-full">
                     <mat-label>Detalle de aprobacion: </mat-label>
                     <textarea class="tamano" matInput formControlName="detalle" rows="4" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
@@ -19,18 +16,11 @@
                         Minimo 6 caracteres.
                     </mat-error>
                 </mat-form-field>
-                <div class="flex flex-row w-100 justify-end">
-                    <span> <em>{{contador}} de 500 caracteres</em> </span>
-                </div>
-    
             </div>
-    
         </div>
-
     </form>
-    
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
+    <button mat-button id="guardar" class="text-white permitir bloquear" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button id="cancelar" mat-dialog-close>Cancel</button>
 </mat-dialog-actions>

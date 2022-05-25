@@ -96,19 +96,27 @@ export class PagaduriaComponent implements OnInit {
     this.pagaduria.getSolicitudesFilter(this.tipo, this.estado).subscribe((response: any) => {
       Swal.close();
       if (response.data.length==0) {
+        if (this.estado=='P' || this.estado=='RA') {
+          Swal.fire(
+            '¡Aviso!',
+            `No existen solicitudes pendientes o reactivadas.`,
+            'info'
+          ).then();
+        }
+
         if (this.estado=='A') {
           Swal.fire(
-            '¡Error!',
+            '¡Aviso!',
             `No existen solicitudes aprobadas.`,
-            'error'
+            'info'
           ).then();
         }
 
         if (this.estado=='R') {
           Swal.fire(
-            '¡Error!',
+            '¡Aviso!',
             `No existen solicitudes rechazadas.`,
-            'error'
+            'info'
           ).then();
         }
         

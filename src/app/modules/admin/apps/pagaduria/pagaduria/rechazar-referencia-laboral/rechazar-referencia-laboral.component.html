@@ -28,6 +28,6 @@
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close id="guardar" class="text-white permitir bloquear" [disabled]="RechazarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
+    <button mat-button id="guardar" class="text-white permitir bloquear" [disabled]="RechazarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
     <button mat-button mat-dialog-close id="cancelar">Cancel</button>
 </mat-dialog-actions>
