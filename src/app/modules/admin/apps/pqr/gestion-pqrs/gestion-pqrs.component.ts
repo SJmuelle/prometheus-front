@@ -69,7 +69,7 @@ export class GestionPQRSComponent implements OnInit {
         this._activatedRoute.params.subscribe((param) => {
             this.pqrid = param.idPQR;
             this.buscarDatos();
-            console.log(this.pqrid)
+            // console.log(this.pqrid)
         });
     }
 
@@ -83,7 +83,7 @@ export class GestionPQRSComponent implements OnInit {
 
     logChange($event) {
         debugger;
-        console.log(this.editor2);
+        // console.log(this.editor2);
         //console.log($event);
         this.mensajeQuill=$event.text;
     }
@@ -137,7 +137,6 @@ export class GestionPQRSComponent implements OnInit {
             detalle_pqrs:descripcion
         }
         this._pqrService.ActualizarDescripcion(url, this.edicion).subscribe((response:any)=>{
-            console.log(response)
             Swal.fire(
               '¡Exito!',
               `Detalle actualizado correctamente.`,

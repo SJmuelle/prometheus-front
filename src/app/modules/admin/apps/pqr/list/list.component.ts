@@ -37,6 +37,7 @@ export class ListComponent implements OnInit {
           .subscribe((response: any) => {
             Swal.close();
             if (response) {
+              console.log(response)
               this.listado = response;
             } else {
               this.listado = [];

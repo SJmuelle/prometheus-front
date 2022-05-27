@@ -244,6 +244,7 @@ export class SolucionComponent implements OnInit {
         this._pqrService
             .Create(url, this.seguimiento)
             .subscribe((response: any) => {
+                console.log(response)
                 Swal.close();
                 if (response) {
                     if (response.status === 200) {

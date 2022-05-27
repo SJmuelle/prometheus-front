@@ -17,6 +17,7 @@ import { environment } from 'environments/environment';
 export class CreacionPQRSComponent implements OnInit {
     mostrar_formulario: boolean = true;
     datos: any = {};
+    data: any = {};
     panelOpenState: boolean = false;
     tabMostrar: number;
     identificaiconCliente: any;
@@ -46,6 +47,7 @@ export class CreacionPQRSComponent implements OnInit {
     causalesLegales: any = [];
     campana: any;
     tipo: any;
+    idnegocio: any;
     UsuarioSaggics: string;
     EstadoSagicc: boolean = false;
 
@@ -97,8 +99,9 @@ export class CreacionPQRSComponent implements OnInit {
                         }
                     );
             }
-            // alert(this.identificaiconCliente)
         });
+        console.log(this.datos)
+        this.negociosCabeceras(this.datos.tipo)
     }
 
     buscarListados() {
@@ -281,9 +284,11 @@ export class CreacionPQRSComponent implements OnInit {
 
     //datos ingreso
     negociosCabeceras(tipo) {
-        let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
+        // let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
+        let url = `/pqrs-negocios-cabecera/31/32708516`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
+                console.log(response)
                 this.listadoNegocio = response;
             } else {
                 this.listadoNegocio = [];
@@ -292,12 +297,12 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     seleccionarNegocio(negocio) {
-        let index = this.listadoNegocio.findIndex(
-            (data) => data.codigoNegocio === negocio
-        );
+        let index = this.listadoNegocio.findIndex((data) => data.codigoNegocio === negocio);
         if (index != undefined) {
             this.datos.agencia = this.listadoNegocio[index].agencia;
             this.datos.entidad = this.listadoNegocio[index].entidad;
+            this.datos.segmento = this.listadoNegocio[index].segmento_actual;
+            this.datos.solicitante = this.listadoNegocio[index].tipo_solicitante;
         } else {
             this.datos.agencia = '';
             this.datos.entidad = '';
@@ -336,6 +341,7 @@ export class CreacionPQRSComponent implements OnInit {
                     this.datos.tipoPQRS_nombre = 'Nuevo';
                 }
             });
+            console.log(this.datos)
     }
 
     //detalles
@@ -403,24 +409,12 @@ export class CreacionPQRSComponent implements OnInit {
                     let data = {
                         empresa: 'FINV',
                         identificador:'pqrs',
-                        campanha:
-                            this.datos.campana == undefined
-                                ? ''
-                                : this.datos.campana,
+                        campanha: this.datos.campana == undefined ? '' : this.datos.campana,
                         origenPqrs: parseInt(this.datos.origen),
                         tipoCliente: parseInt(this.datos.tipo),
-                        codigoNegocio:
-                            this.datos.negocio == undefined
-                                ? ''
-                                : this.datos.negocio,
-                        sucursal:
-                            this.datos.agencia == undefined
-                                ? ''
-                                : this.datos.agencia,
-                        entidad:
-                            this.datos.entidad == undefined
-                                ? ''
-                                : this.datos.entidad,
+                        codigoNegocio:this.datos.negocio == undefined ? '' : this.datos.negocio,
+                        sucursal: this.datos.agencia == undefined ? '' : this.datos.agencia,
+                        entidad: this.datos.entidad == undefined ? '' : this.datos.entidad,
                         idCliente: this.datos.identificacion,
                         nombres: this.datos.nombres,
                         apellidos: this.datos.apellidos,
@@ -431,16 +425,15 @@ export class CreacionPQRSComponent implements OnInit {
                         celular: this.datos.telefono,
                         email: this.datos.email,
                         idProcedimiento: parseInt(this.datos.procedimiento),
-                        detallePqrs:
-                            this.datos.descripcion == undefined
-                                ? ''
-                                : this.datos.descripcion,
+                        detallePqrs: this.datos.descripcion == undefined ? '' : this.datos.descripcion,
                         idPqrspadre: '',
                         fechaSolucion: this.datos.fechaParaSolucion,
                         primerContacto: this.datos.primerContacto,
                         file: this.crearJsonAdjuntos(),
                         hijos: this.crearJsonHijas(),
-                        user: this.UsuarioSaggics,
+                        user: '',
+                        segmento_actual:this.datos.segmento,
+                        tipo_solicitante:this.datos.solicitante
                     };
                     let url = '/crear-pqrs';
 
@@ -454,7 +447,7 @@ export class CreacionPQRSComponent implements OnInit {
                         timer: 500000,
                         didOpen: () => {
                             Swal.showLoading();
-
+                            console.log('Aqui estoy...', data)
                             this._pqrService
                                 .CreatePqrs(url, data)
                                 .subscribe((response: any) => {
@@ -509,6 +502,43 @@ export class CreacionPQRSComponent implements OnInit {
                                         ).then();
                                     }
                                 });
+                                
+                            //     let dato = {
+                            //         empresa: 'FINV',
+                            //         identificador:'pqrs',
+                            //         campanha: this.datos.campana == undefined ? '' : this.datos.campana,
+                            //         origenPqrs: parseInt(this.datos.origen),
+                            //         tipoCliente: parseInt(this.datos.tipo),
+                            //         codigoNegocio:this.datos.negocio == undefined ? '' : this.datos.negocio,
+                            //         sucursal: this.datos.agencia == undefined ? '' : this.datos.agencia,
+                            //         entidad: this.datos.entidad == undefined ? '' : this.datos.entidad,
+                            //         idCliente: this.datos.identificacion,
+                            //         nombres: this.datos.nombres,
+                            //         apellidos: this.datos.apellidos,
+                            //         departamento: this.datos.departamento,
+                            //         ciudad: this.datos.ciudad,
+                            //         barrio: this.datos.barrio,
+                            //         direccion: this.datos.direccion,
+                            //         celular: this.datos.telefono,
+                            //         email: this.datos.email,
+                            //         idProcedimiento: parseInt(this.datos.procedimiento),
+                            //         detallePqrs: this.datos.descripcion == undefined ? '' : this.datos.descripcion,
+                            //         idPqrspadre: '',
+                            //         fechaSolucion: this.datos.fechaParaSolucion,
+                            //         primerContacto: this.datos.primerContacto,
+                            //         user: this.UsuarioSaggics,
+                            //     };    
+
+                            
+                            // this._pqrService.Create('agregar-informacion-pqrs', data).subscribe((response: any)=>{
+                            //     if (response) {
+                            //         Swal.fire(
+                            //             '¡Información!',
+                            //             `Informacion enviada`,
+                            //             'success'
+                            //         )
+                            //     }
+                            // })
                         },
                     }).then((result) => {});
                 }

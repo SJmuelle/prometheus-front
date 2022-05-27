@@ -80,10 +80,11 @@ export class AdjuntosComponent implements OnInit {
       idComentario: 1,
       documento:this.evidencia.file,
       filename:this.evidencia.filename,
+      filepath:'probando',
       extension:this.evidencia.ext,
       descripcion:this.evidencia.descripcion
     };
-    console.log(data)
+    console.log('Aqui tu data: ', data)
     this._pqrService.postFile(url, data).subscribe((response: any) => {
       console.log(response)
       if (response) {

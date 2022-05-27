@@ -81,7 +81,7 @@
                 <div class="flex flex-col overflow-y-scroll">
                     <div class="mb-1">Soluciones</div>
                     <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
-                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.tipo_adjunto=='Solución Cliente'">
+                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.tipo_adjunto=='Solucion Cliente'">
                             <div>
                                 <mat-icon svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>
                             </div>
@@ -167,13 +167,13 @@
                                     <div class="col-sm-6 col-lg-2">
                                         <div class="text-sm text-secondary font-bold">Tipo de solicitante
                                         </div>
-                                        <div class="capitalize" style="font-size: 16px;">
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.tipo_solicitante}}
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-2">
                                         <div class="text-sm text-secondary font-bold">Segmento actual
                                         </div>
-                                        <div class="capitalize" style="font-size: 16px;">
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.segmento_actual}}
                                         </div>
                                     </div>                
                                     <div class="col-sm-6 col-lg-2">
