@@ -36,7 +36,6 @@
                             matTooltip="{{dialog_a_mostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
                             <mat-icon [svgIcon]="dialog_a_mostrar=='SIGUIENTE'?'next_plan':'check_circle'">
                             </mat-icon>
-                            <!-- <mat-icon svgIcon="next_plan"></mat-icon> -->
                         </button>
 
                         <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
@@ -82,8 +81,21 @@
 
                         <ng-container *ngFor="let titular of listado.referenciaTitulo">
                             <div class="flex flex-col flex-auto p-8">
-                                <div class="text-xl font-semibold">Referencia titular</div>
+                                
+                                <div class="flex flex-wrap">
+                                    <span class="text-xl font-semibold">
+                                        Referencia titular
+                                    </span>
+                                    <span
+                                        class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                        [ngClass]="titular.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'"
+                                        >
+                                        {{titular.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                    </span>
+                                </div>
+
                                 <hr class="w-full border-t my-6">
+
                                 <div class="flex flex-col ">
                                     <div class="capitalize">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
@@ -122,7 +134,17 @@
                             class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
                             <ng-container *ngFor="let representante of listado.referenciaRepresentante">
                                 <div class="flex flex-col flex-auto items-center p-8">
-                                    <div class="text-xl font-semibold">Referencia representante</div>
+                                    <div class="flex flex-wrap">
+                                        <span class="text-xl font-semibold">
+                                            Referencia titular
+                                        </span>
+                                        <span
+                                            class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                            [ngClass]="representante.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'"
+                                            >
+                                            {{representante.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                        </span>
+                                    </div>
                                     <hr class="w-full border-t my-6">
                                     <div class="flex flex-col ">
                                         <div class="capitalize">
@@ -164,7 +186,17 @@
                             <ng-container
                                 *ngFor="let personal of listado.referenciaPersonal | paginate: { itemsPerPage: 1, currentPage: page }">
                                 <div class="flex flex-col flex-auto  p-8">
-                                    <div class="text-2xl font-semibold">Referencia personal</div>
+                                    <div class="flex flex-wrap">
+                                        <span class="text-xl font-semibold">
+                                            Referencia personal
+                                        </span>
+                                        <span
+                                            class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                            [ngClass]="personal.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'"
+                                            >
+                                            {{personal.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                        </span>
+                                    </div>
                                     <hr class="w-full border-t my-6">
                                     <div class="flex flex-col ">
                                         <div class="capitalize">
@@ -207,7 +239,17 @@
                             <ng-container
                                 *ngFor="let comercial of listado.referenciaComercial | paginate: { itemsPerPage: 1, currentPage: pageComercial }">
                                 <div class="flex flex-col flex-auto p-8">
-                                    <div class="text-2xl font-semibold">Referencia comercial</div>
+                                    <div class="flex flex-wrap">
+                                        <span class="text-xl font-semibold">
+                                            Referencia comercial
+                                        </span>
+                                        <span
+                                            class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                            [ngClass]="comercial.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'"
+                                            >
+                                            {{comercial.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                        </span>
+                                    </div>
                                     <hr class="w-full border-t my-6">
                                     <div class="flex flex-col ">
                                         <div class="capitalize">
