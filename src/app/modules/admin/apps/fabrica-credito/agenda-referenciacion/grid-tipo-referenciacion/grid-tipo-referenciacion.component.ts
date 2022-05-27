@@ -25,7 +25,8 @@ export class GridTipoReferenciacionComponent implements OnInit {
   public agenda_fabrica: string = '';
   public tipoDocumento: string = '';
   public estado: string = '';
-
+  public page: number = 1;
+  public pageComercial: number = 1;
   public verComentarios: boolean = false;
   public esVerComentarios: boolean = false;
   public minimizarComentarios: boolean = false;

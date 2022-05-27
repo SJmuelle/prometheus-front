@@ -22,6 +22,14 @@ export class FabricaCreditoService {
     }
 
     /**
+     * @description: Get datos fabrica Agenda referenciacion
+     */
+    public getDatosFabricaAgendaReferenciacion(datos): Observable<any> {
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.agendaReferenciacion}`);
+        return this._http.post(this._appSettings.fabricaDatos.url.agendaReferenciacion, datos);
+    }
+
+    /**
      * @description: Get step  Agendabreferenciacuoin
      */
     public obtenerStepsAgendaReferenciacion(datos): Observable<any> {

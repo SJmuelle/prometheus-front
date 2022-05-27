@@ -8,7 +8,7 @@
             <div class="flex flex-col items-start p-8 border-b">
 
                 <!-- Back to courses -->
-                <a class="inline-flex items-center leading-6 text-primary hover:underline"    [routerLink]="'../'">
+                <a class="inline-flex items-center leading-6 text-primary hover:underline"    [routerLink]="'../../'">
                     <span class="inline-flex items-center">
                         <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:arrow-sm-left'">
                         </mat-icon>
@@ -101,11 +101,10 @@
             </mat-progress-bar>
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
-                <ng-container [ngSwitch]="referencia">
-                    <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'"></ULTRACEM-NATURAL-TITULAR>
-                    <!-- <app-ref-titular-pn *ngSwitchCase="'T'"></app-ref-titular-pn> -->
-                  
-
+                <ng-container [ngSwitch]="tipoReferenciacion">
+                    <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'"></ULTRACEM-NATURAL-TITULAR>                  
+                    <ULTRACEM-NATURAL-COMERCIAL [currentStep]="currentStep" *ngSwitchCase="'C'"></ULTRACEM-NATURAL-COMERCIAL>                  
+                    <ULTRACEM-NATURAL-PERSONAL [currentStep]="currentStep" *ngSwitchCase="'P'"></ULTRACEM-NATURAL-PERSONAL>                  
                 </ng-container>
                 <!-- <router-outlet></router-outlet> -->
             </div>

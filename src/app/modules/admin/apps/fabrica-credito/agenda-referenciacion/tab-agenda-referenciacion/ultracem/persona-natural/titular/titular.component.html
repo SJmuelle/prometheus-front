@@ -25,7 +25,7 @@
                                     <div class="text-2xl font-semibold leading-tight capitalize">
                                         {{fabricaDatos.nombreCompleto}}
                                     </div>
-                                    <div class="text-md text-secondary">Nombre completo</div>
+                                    <div class="text-md text-secondary">{{fabricaDatos.correoElectronico}}.</div>
                                 </div>
                             </fuse-card>
                         </div>
@@ -33,128 +33,253 @@
                         <div class="flex justify-between items-center ">
                             <p>¿El contacto fue realizado al número del formulario?</p>
                             <div>
-                                <span class="text-xl mr-1">NO</span>
-                                <mat-slide-toggle></mat-slide-toggle>
-                                <span class="ml-1.5 text-xl mr-1">SI</span>
+                                <span class="text-xl mr-1"
+                                    [ngClass]="!form.value.telefonoContactoValida_bool?'font-bold':''">NO</span>
+                                <mat-slide-toggle formControlName="telefonoContactoValida_bool"></mat-slide-toggle>
+                                <span class="ml-1.5 text-xl mr-1"
+                                    [ngClass]="form.value.telefonoContactoValida_bool?'font-bold':''">SI</span>
                             </div>
                         </div>
-                        <div class="flex justify-between items-center ">
+                        <div class="flex justify-between items-center" *ngIf="!form.value.telefonoContactoValida_bool">
                             <p>¿El teléfono del formulario es correcto?</p>
                             <div>
-                                <span class="text-xl mr-1">NO</span>
-                                <mat-slide-toggle></mat-slide-toggle>
-                                <span class="ml-1.5 text-xl mr-1">SI</span>
+                                <span class="text-xl mr-1"
+                                    [ngClass]="!form.value.numeroFormularioValida_bool?'font-bold':''">NO</span>
+                                <mat-slide-toggle formControlName="numeroFormularioValida_bool"></mat-slide-toggle>
+                                <span class="ml-1.5 text-xl mr-1"
+                                    [ngClass]="form.value.numeroFormularioValida_bool?'font-bold':''">SI</span>
                             </div>
                         </div>
                         <hr>
-                        <div class="grid grid-cols-2 gap-2">
+                        <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.numeroFormularioValida_bool">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Ingresa el teléfono de contacto </mat-label>
-                                <input matInput type="text" [formControlName]="'celular'" [required]="true">
+                                <input matInput type="text" [formControlName]="'telefonoContacto'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
-                                    <mat-error *ngIf="form.controls.celular.errors?.required ">
+                                <mat-error
+                                    *ngIf="(form.controls.telefonoContacto.dirty || form.controls.telefonoContacto.touched)">
+                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.required ">
                                         Este campo es
                                         requerido.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.pattern">
+                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.pattern">
                                         Solo se aceptan
                                         números.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.minlength">
+                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.minlength">
                                         Longitud
                                         mínima son 7 dígitos.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.maxlength">
+                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.maxlength">
                                         Longitud
                                         máxima son 11 dígitos.</mat-error>
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Teléfono / Celular corregido: </mat-label>
-                                <input matInput type="text" [formControlName]="'celular'" [required]="true">
+                                <input matInput type="text" [formControlName]="'telefonoContactoCorregido'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
-                                    <mat-error *ngIf="form.controls.celular.errors?.required ">
+                                <mat-error
+                                    *ngIf="(form.controls.telefonoContactoCorregido.dirty || form.controls.telefonoContactoCorregido.touched)">
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.required ">
                                         Este campo es
                                         requerido.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.pattern">
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.pattern">
                                         Solo se aceptan
                                         números.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.minlength">
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.minlength">
                                         Longitud
                                         mínima son 7 dígitos.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.maxlength">
+                                    <mat-error *ngIf="form.controls.telefonoContactoCorregido.errors?.maxlength">
                                         Longitud
                                         máxima son 11 dígitos.</mat-error>
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="mt-1">
-                            <quill-editor class="mb-2" placeholder=" Descripción..." name="descripcion"
-                                [modules]="quillModules"></quill-editor>
+                        <div class="mt-1" *ngIf="!form.value.numeroFormularioValida_bool">
+                            <quill-editor class="mb-2" placeholder="Observación..." name="telefonoContactoObservacio"
+                                [modules]="quillModules" [formControlName]="'telefonoContactoObservacio'">
+                            </quill-editor>
                         </div>
-    
+
                     </div>
-    
+
                 </mat-tab>
-    
+
                 <mat-tab *ngIf="currentStep==1">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            Edicion del formulario
+                            Edición del formulario
                         </h2>
                         <div class="grid grid-cols-12">
                             <div class="col-span-12">
-    
-                                <mat-accordion multi>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El titular vive en el departamento
+                                        <strong>{{fabricaDatos.descripcionDepartamentoNegocio}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.departamentoResidenciaRalida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="departamentoResidenciaRalida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.departamentoResidenciaRalida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El titular vive en la ciudad de
+                                        <strong>{{fabricaDatos.descripcionCiudadCorregida}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.ciudadResidenciaValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="ciudadResidenciaValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.ciudadResidenciaValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El titular vive en el barrio de
+                                        <strong>{{fabricaDatos.descripcionBarrio}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.barrioResidenciaValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="barrioResidenciaValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.barrioResidenciaValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El titular vive en esta dirección:
+                                        <strong>{{fabricaDatos.direccionResidencia}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.direccionResidenciaValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="direccionResidenciaValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.direccionResidenciaValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <mat-accordion multi
+                                    *ngIf="!form.value.departamentoResidenciaRalida_bool || !form.value.ciudadResidenciaValida_bool || !form.value.barrioResidenciaValida_bool || !form.value.direccionResidenciaValida_bool">
                                     <!--Panel Datos de la solicitud-->
-                                    <mat-expansion-panel expanded>
+                                    <mat-expansion-panel expanded class="mb-4">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                Datos de la Residencia
+                                                ¿Donde vive el titular?
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded">
+                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded ">
                                             <div class="-mx-3 md:flex mt-3 mb-2">
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Departamento de residencia</mat-label>
                                                     <input matInput type="text"
-                                                        [formControlName]="'descripcionDepartamento'"
+                                                        [formControlName]="'descripcionDepartamentoCorregido'"
                                                         (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Ciudad / municipio de residencia</mat-label>
-                                                    <input matInput type="text" [formControlName]="'descripcionCiudad'"
+                                                    <input matInput type="text"
+                                                        [formControlName]="'descripcionCiudadCorregida'"
                                                         (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Barrio</mat-label>
-                                                    <input matInput type="text" [formControlName]="'descripcionBarrio'"
+                                                    <input matInput type="text"
+                                                        [formControlName]="'descripcionBarrioCorregido'"
                                                         (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Dirección de residencia</mat-label>
-                                                    <input matInput type="text" [formControlName]="'direccionResidencial'"
+                                                    <input matInput type="text"
+                                                        [formControlName]="'direccionResidenciaCorregido'"
                                                         (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                             </div>
                                         </div>
                                     </mat-expansion-panel>
                                     <!--Panel datos de riesgo-->
+                                </mat-accordion>
+                                <div class="w-full bg-gray-200">
+                                    <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del
+                                        negocio</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El negocio esta ubicado en el departamento de
+                                        <strong>{{fabricaDatos.descripcionDepartamentoNegocio}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.departamentoNegocioValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="departamentoNegocioValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.departamentoNegocioValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El negocio esta ubicado en la ciudad de
+                                        <strong>{{fabricaDatos.descripcionCiudadNegocioCorregida}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.ciudadNegocioValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="ciudadNegocioValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.ciudadNegocioValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El negocio esta ubicado en el barrio de
+                                        <strong>{{fabricaDatos.descripcionBarrioNegocio}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.barrioNegocioValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="barrioNegocioValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.barrioNegocioValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿El megocio esta ubicado en la dirección:
+                                        <strong>{{fabricaDatos.direccionNegocio}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.direccionNegocioValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="direccionNegocioValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.direccionNegocioValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                </div>
+                                <mat-accordion multi
+                                    *ngIf="!form.value.departamentoNegocioValida_bool || !form.value.ciudadNegocioValida_bool || !form.value.barrioNegocioValida_bool || !form.value.direccionNegocioValida_bool">
                                     <!--Panel informacion del titular-->
                                     <mat-expansion-panel expanded>
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                Datos del negocio
+                                                ¿Donde queda el negocio?
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div class="bg-white flex flex-col ng-tns-c299-11 rounded">
@@ -162,171 +287,275 @@
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Departamento del negocio</mat-label>
                                                     <input matInput type="text"
-                                                        [formControlName]="'descripcionDepartamentoNegocio'"
+                                                        [formControlName]="'descripcionDepartamentoNegocioCorregido'"
                                                         (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Ciudad / municipio del negocio</mat-label>
                                                     <input matInput type="text"
-                                                        [formControlName]="'descripcionCiudadNegocio'"
+                                                        [formControlName]="'descripcionCiudadNegocioCorregida'"
                                                         (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Barrio</mat-label>
                                                     <input matInput type="text"
-                                                        [formControlName]="'descripcionBarrioNegocio'"
+                                                        [formControlName]="'descripcionBarrioCorregido'"
                                                         (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Dirección del negocio</mat-label>
-                                                    <input matInput type="text" [formControlName]="'direccionNegocio'"
+                                                    <input matInput type="text"
+                                                        [formControlName]="'direccionNegocioCorregido'"
                                                         (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
                                                     </mat-icon>
                                                 </mat-form-field>
                                             </div>
                                         </div>
                                     </mat-expansion-panel>
                                 </mat-accordion>
-    
-                            </div>
-                        </div>
-                    </div>
-    
-                </mat-tab>
-    
-                <mat-tab *ngIf="currentStep==2">
-                    <div
-                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
-                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            Preguntas a la referencia
-                        </h2>
-                        <div class="grid grid-cols-12">
-                            <div class="col-span-12">
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Compras semanalmente en cemento ($)</mat-label>
-                                        <input matInput type="text" [formControlName]="'comprasSemanales'"
-                                            (keyup)="form.controls['comprasSemanales'].setValue(utility.formatearNumero(form.value.comprasSemanales)); ">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Antigüedad compras (meses)</mat-label>
-                                        <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Ventas mensuales ($)</mat-label>
-                                        <input matInput type="text" [formControlName]="'ventasMensuales'"
-                                            (keyup)="form.controls['ventasMensuales'].setValue(utility.formatearNumero(form.value.ventasMensuales)); ">
+
+
+                                <div class="flex justify-between items-center">
+                                    <p>¿Está registrado en camára de comercio?</p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.camaraComercio_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="camaraComercio_bool"></mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.camaraComercio_bool?'font-bold':''">SI</span>
+                                    </div>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                                        *ngIf="!form.value.camaraComercio_bool">
+                                        <mat-label>¿Se encuentra registrado en camára de comercio?
+                                        </mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'camaraComercioCorregido'"
+                                            [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option [value]="'S'">Si
+                                            </mat-option>
+                                            <mat-option [value]="'N'">No
+                                            </mat-option>
+
+                                        </mat-select>
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                         </mat-icon>
                                     </mat-form-field>
                                 </div>
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Activo ($)</mat-label>
-                                        <input matInput type="text" placeholder="" [formControlName]="'activos'"
-                                            (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); ">
+                                <div class="flex justify-between items-center">
+                                    <p>¿Este es el NIT <strong>{{fabricaDatos.nitNegocio}}</strong>?</p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.nitNegocioValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="nitNegocioValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.nitNegocioValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense" *ngIf="!form.value.nitNegocioValida_bool">
+                                        <mat-label>Nit</mat-label>
+                                        <input matInput type="text" [formControlName]="'nitNegocioCorrido'">
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                         </mat-icon>
-                                    </mat-form-field>
-                                    <ng-container *ngIf="declarante$ | async as declarante">
-                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>¿Es declarante?</mat-label>
-                                            <mat-select [value]="'seleccione'" [formControlName]="'declarante'">
-                                                <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                <mat-option *ngFor="let item of declarante.data"
-                                                    [value]="item.codigoOpcion">{{item.descripcionOpcion}}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                            </mat-icon>
-                                        </mat-form-field>
-                                    </ng-container>
-                                </div>
-    
-    
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Teléfono del negocio</mat-label>
-                                        <input matInput type="text" [formControlName]="'telefonoNegocio'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                        <mat-error *ngIf="soloNumero('telefonoNegocio')">
+                                        <mat-error *ngIf="soloNumero('nitNegocioCorrido')">
                                             Este campo solo acepta números.
                                         </mat-error>
                                     </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
-                                        <input matInput type="number" [formControlName]="'antiguedadNegocio'"
-                                            [matTooltip]="'¿Hace cuanto tiempo funciona el negocio? (meses)'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <ng-container *ngIf="camaraComercio$ | async as camara">
-                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>¿Se encuentra registrado en camára de comercio?
-                                            </mat-label>
-                                            <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
-                                                [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
-                                                <mat-option disabled [value]="'seleccione'">Seleccione
-                                                </mat-option>
-                                                <mat-option *ngFor="let item of camara.data" [value]="item.codigoOpcion">
-                                                    {{item.descripcionOpcion}}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                            </mat-icon>
-                                        </mat-form-field>
-                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>Nit</mat-label>
-                                            <input matInput type="text" [formControlName]="'nitNegocio'">
-                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                            </mat-icon>
-                                            <mat-error *ngIf="soloNumero('nitNegocio')">
-                                                Este campo solo acepta números.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </ng-container>
                                 </div>
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                <div class="flex justify-between items-center">
+                                    <p>¿El nombre del negocio es <strong>{{fabricaDatos.nombreNegocio}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.nombreNegocioValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="nombreNegocioValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.nombreNegocioValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                                        *ngIf="!form.value.nombreNegocioValida_bool">
                                         <mat-label>Razón social</mat-label>
                                         <input matInput type="text" [formControlName]="'nombreNegocio'">
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                         </mat-icon>
                                     </mat-form-field>
                                 </div>
-    
+                                <div class="flex justify-between items-center">
+                                    <p>¿Total de activos es $ <strong>{{fabricaDatos.totalActivo |number}}</strong>?
+                                    </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.totalActivoValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="totalActivoValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.totalActivoValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                                        *ngIf="!form.value.totalActivoValida_bool">
+                                        <mat-label>Activo ($)</mat-label>
+                                        <input matInput type="text" placeholder=""
+                                            [formControlName]="'totalActivoCorregidos'"
+                                            (keyup)="form.controls['totalActivoCorregidos'].setValue(utility.formatearNumero(form.value.totalActivoCorregidos)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿Tiene empleados?</p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.tieneEmpleadoValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="tieneEmpleadoValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.tieneEmpleadoValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                                        *ngIf="!form.value.tieneEmpleadoValida_bool">
+                                        <mat-label>¿Cuanto les paga ($)?</mat-label>
+                                        <input matInput type="text" placeholder="" [formControlName]="'pagoEmpleados'"
+                                            (keyup)="form.controls['pagoEmpleados'].setValue(utility.formatearNumero(form.value.pagoEmpleados)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <p>¿ Destina dinero mensual para ahorro?: </p>
+                                    <div>
+                                        <span class="text-xl mr-1"
+                                            [ngClass]="!form.value.dineroAhorradoMensualValida_bool?'font-bold':''">NO</span>
+                                        <mat-slide-toggle formControlName="dineroAhorradoMensualValida_bool">
+                                        </mat-slide-toggle>
+                                        <span class="ml-1.5 text-xl mr-1"
+                                            [ngClass]="form.value.dineroAhorradoMensualValida_bool?'font-bold':''">SI</span>
+                                    </div>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                                        *ngIf="!form.value.dineroAhorradoMensualValida_bool">
+                                        <mat-label>¿ Cuánto ahorras?</mat-label>
+                                        <input matInput type="text" placeholder=""
+                                            [formControlName]="'dineroAhorradoMensual'"
+                                            (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
-    
+
                 </mat-tab>
-    
+
+                <mat-tab *ngIf="currentStep==2">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Preguntas a la referencia
+                        </h2>
+
+                        <div class="">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Cuánto compra en cemento? ($):</mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'dineroAhorradoMensual'"
+                                    (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Cuánto paga al mes en servicios públicos del negocio? ($):</mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'dineroAhorradoMensual'"
+                                    (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿ El tipo de local es?</mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'dineroAhorradoMensual'"
+                                    (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿ Cuánto tiene de inventario en este momento ($)?: </mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'inventarioActual'"
+                                    (keyup)="form.controls['inventarioActual'].setValue(utility.formatearNumero(form.value.inventarioActual)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿ Cuánto tiene en efectivo en este momento?($) </mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'dineroEfectivoActual'"
+                                    (keyup)="form.controls['dineroEfectivoActual'].setValue(utility.formatearNumero(form.value.dineroEfectivoActual)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>En este momento, ¿Cuánto dinero le debe a proveedores?: </mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'dineroProveedores'"
+                                    (keyup)="form.controls['dineroProveedores'].setValue(utility.formatearNumero(form.value.dineroProveedores)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿ Cuánto es el valor total de las cuotas a crédito?: </mat-label>
+                                <input matInput type="text" placeholder=""
+                                    [formControlName]="'valorTotalCuotasCreditos'"
+                                    (keyup)="form.controls['valorTotalCuotasCreditos'].setValue(utility.formatearNumero(form.value.valorTotalCuotasCreditos)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+
+                            <div class="mt-1">
+                                <quill-editor class="mb-2" placeholder=" Validación en centrales de riesgos..."
+                                    name="descripcion" [modules]="quillModules"
+                                    [formControlName]="'validacionCentrales'"></quill-editor>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </mat-tab>
+
                 <mat-tab *ngIf="currentStep==3">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                           Comentario
+                            Comentario
                         </h2>
-                        
+
                         <div class="mt-1">
-                            <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..." name="descripcion"
-                                [modules]="quillModules"></quill-editor>
+                            <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
+                                name="descripcion" [modules]="quillModules"
+                                [formControlName]="'telefonoContactoObservacio'"></quill-editor>
                         </div>
-    
+
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                            <button mat-raised-button color="primary" type="button" [disabled]="!form.valid"
+                                (click)="onPostDatos()">
+                                Guardar
+                            </button>
+                        </div>
                     </div>
-    
+
                 </mat-tab>
             </ng-container>
         </form>

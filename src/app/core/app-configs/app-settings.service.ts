@@ -33,6 +33,7 @@ export class AppSettingsService {
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             checklist: EndPoints.uri('/generic/qry/obtener-items-chequeo-credito'),
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
+            agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
         }
     };
     /**

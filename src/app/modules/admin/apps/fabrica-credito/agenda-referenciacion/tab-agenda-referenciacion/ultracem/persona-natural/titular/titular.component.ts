@@ -18,8 +18,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./titular.component.scss']
 })
 export class TitularComponent implements OnInit {
-  @Input () currentStep: number; 
- 
+  @Input() currentStep: number;
+
   // currentStep = 1;
 
   public form: FormGroup;
@@ -44,14 +44,14 @@ export class TitularComponent implements OnInit {
   public declarante$: Observable<any>;
   public camaraComercio$: Observable<any>;
   public fabricaDatos: any;
-  public MostrarfabricaDatos: boolean=false;
+  public MostrarfabricaDatos: boolean = false;
   quillModules: any = {
     toolbar: [
-        ['bold', 'italic', 'underline'],
-        [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
-        ['clean'],
+      ['bold', 'italic', 'underline'],
+      [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+      ['clean'],
     ],
-};
+  };
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -80,7 +80,7 @@ export class TitularComponent implements OnInit {
     this.getViveNegocio();
     this.getDeclarante();
     this.getCamaraComercio();
-    
+
     // this.listenFormulario();
   }
 
@@ -91,8 +91,54 @@ export class TitularComponent implements OnInit {
     return this.form.controls[field].hasError('pattern');
   }
 
-
+  /**
+ * @description :modal de direcion
+ */
   public openModalDirection(): void {
+    const dialogRef = this._dialog.open(DirectionsComponent, {
+      width: '60%',
+      data: {
+        departamento: '',
+        municipio: '',
+        barrio: '',
+        direccion: '',
+      },
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      const dataModal: any = res;
+      if (dataModal.departamento != undefined) {
+        this.form.controls.departamentoResidenciaCorregido.setValue(dataModal.departamento);
+        this.form.controls.descripcionDepartamentoCorregido.setValue(dataModal.departamentoNombre);
+        this.form.controls.ciudadResidenciaCorregido.setValue(dataModal.municipio);
+        this.form.controls.descripcionCiudadCorregida.setValue(dataModal.municipioNombre);
+        this.form.controls.barrioResidenciaCorregido.setValue(Number(dataModal.codigoBarrio));
+        this.form.controls.descripcionBarrioCorregido.setValue(dataModal.barrio);
+        this.form.controls.direccionResidenciaCorregido.setValue(
+          (dataModal.viaNombre == undefined
+            ? ''
+            : `${dataModal.viaNombre}`) +
+          (dataModal.callePrincipal == undefined
+            ? ''
+            : ` ${dataModal.callePrincipal}`) +
+          (dataModal.numero == undefined
+            ? ''
+            : ` # ${dataModal.numero}`) +
+          (dataModal.numero2 == undefined
+            ? ''
+            : ` - ${dataModal.numero2}`) +
+          (dataModal.complemento == undefined
+            ? ''
+            : ` ${dataModal.complemento}`));
+      }
+    });
+  }
+
+    /**
+ * @description :modal direcionn negocio
+ */
+  public openModalNegocio(): void {
     const dialogRef = this._dialog.open(DirectionsComponent, {
         width: '60%',
         data: {
@@ -107,13 +153,13 @@ export class TitularComponent implements OnInit {
     dialogRef.afterClosed().subscribe((res) => {
         const dataModal: any = res;
         if (dataModal.departamento != undefined) {
-            this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
-            this.form.controls.descripcionDepartamento.setValue(dataModal.departamentoNombre);
-            this.form.controls.codigoCiudad.setValue(dataModal.municipio);
-            this.form.controls.descripcionCiudad.setValue(dataModal.municipioNombre);
-            this.form.controls.codigoBarrio.setValue(Number(dataModal.codigoBarrio));
-            this.form.controls.descripcionBarrio.setValue(dataModal.barrio);
-            this.form.controls.direccionResidencial.setValue(
+            this.form.controls.departamentoNegocioCorregido.setValue(dataModal.departamento);
+            this.form.controls.descripcionDepartamentoNegocioCorregido.setValue(dataModal.departamentoNombre);
+            this.form.controls.ciudadNegocioCorregido.setValue(dataModal.municipio);
+            this.form.controls.descripcionCiudadNegocioCorregida.setValue(dataModal.municipioNombre);
+            this.form.controls.barrioNegocioCorregido.setValue(dataModal.codigoBarrio);
+            this.form.controls.descripcionBarrioNegocioCorregido.setValue(dataModal.barrio);
+            this.form.controls.direccionNegocioCorregido.setValue(
                 (dataModal.viaNombre == undefined
                     ? ''
                     : `${dataModal.viaNombre}`) +
@@ -138,85 +184,132 @@ export class TitularComponent implements OnInit {
  */
   private createFormulario(): void {
     this.form = this.fb.group({
-      id: undefined,
-      numeroSolicitud: [''],
-      emision: [''],
-      fechaIngresoFabrica: [''],
-      descripcionEstado: [''],
-      descripcionOrigen: [''],
-      codigoSubEstado: [''],
-      cupoTotal: [''],
-      cupoReservado: [''],
-      cupoDisponible: [''],
-      score: [''],
-      descripcionSubestado: [''],
-      descripcionScore: [''],
-      nivelEndeudamiento: [''],
-      comprasSemanales: [''],
-      antiguedadComprasSemanales: [''],
-      ventasMensuales: [''],
-      activos: [''],
-      declarante: ['', [Validators.required]],
-      codigoDepartamentoNegocio: [''],
-      descripcionDepartamentoNegocio: [''],
-      codigoCiudadNegocio: [''],
-      descripcionCiudadNegocio: [''],
-      codigoBarrioNegocio: [''],
-      descripcionBarrioNegocio: [''],
-      direccionNegocio: [''],
-      telefonoNegocio: ['', [Validators.pattern(/^[0-9]*$/)]],
-      telefono: [''],
-      antiguedadNegocio: [''],
+      antiguedadNegocio:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      antiguedadNegocioCorregido:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      antiguedadNegocioValida: [''],
+      antiguedadNegocioValida_bool: Boolean,
+      barrioNegocio:  [''],
+      barrioNegocioValida: [''],
+      barrioNegocioValida_bool: Boolean,
+      barrioNegocioCorregido: [''],
+      barrioResidencia:  [''],
+      barrioResidenciaCorregido: [''],
+      barrioResidenciaValida: [''],
+      barrioResidenciaValida_bool: Boolean,
       camaraComercio: [''],
-      nitNegocio: ['', [Validators.pattern(/^[0-9]*$/)]],
-      tipo: [''],
-      tipoDocumento: [''],
-      identificacion: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      digitoVerificacion: [''],
-      nombreCompleto: ['', [Validators.required]],
+      camaraComercio_bool: Boolean,
+      camaraComercioCorregido: [''],
+      camaraComercioValida: [''],
+      camaraComercioValida_bool: Boolean,
+      celular: [''],
+      ciudadNegocio:  [''],
+      ciudadNegocioCorregido: [''],
+      ciudadNegocioValida: [''],
+      ciudadNegocioValida_bool: Boolean,
+      ciudadResidencia:  [''],
+      ciudadResidenciaCorregido: [''],
+      ciudadResidenciaValida: [''],
+      ciudadResidenciaValida_bool: Boolean,
+      comprasSemento:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      correoElectronico:  [''],
+      correoElectronicoCorregido: [''],
+      correoElectronicoValida: [''],
+      correoElectronicoValida_bool: Boolean,
+      departamentoNegocio:  [''],
+      departamentoNegocioCorregido: [''],
+      departamentoNegocioValida: [''],
+      departamentoNegocioValida_bool: Boolean,
+      departamentoResidencia:  [''],
+      departamentoResidenciaCorregido: [''],
+      departamentoResidenciaRalida: [''],
+      departamentoResidenciaRalida_bool: Boolean,
+      dineroAhorradoMensual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      dineroAhorradoMensualValida: [''],
+      dineroAhorradoMensualValida_bool: Boolean,
+      dineroEfectivoActual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      dineroPorCobrarActual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      dineroProveedores:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      direccionNegocio:  [''],
+      direccionNegocioCorregido: [''],
+      direccionNegocioValida: [''],
+      direccionNegocioValida_bool: Boolean,
+      direccionResidencia:  [''],
+      direccionResidenciaCorregido: [''],
+      direccionResidenciaValida: [''],
+      direccionResidenciaValida_bool: Boolean,
+      idReferencia:  [''],
+      inventarioActual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      nitNegocio: [''],
+      nitNegocioCorrido: [''],
+      nitNegocioValida: [''],
+      nitNegocioValida_bool: Boolean,
+      nombreCompleto:  [''],
       nombreNegocio: [''],
-      fechaMatricula: [''],
-      primerNombre: ['', [Validators.required]],
-      segundoNombre: [''],
-      primerApellido: ['', [Validators.required]],
-      segundoApellido: [''],
-      celular: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-      email: [''],
-      genero: [''],
-      nacionalidad: [''],
-      fechaNacimiento: [''],
-      codigoDepartamentoNacimiento: [''],
-      codigoCiudadNacimiento: [''],
-      tipoVivienda: [''],
-      codigoDepartamento: [''],
-      descripcionDepartamento: [''],
-      codigoCiudad: [''],
-      descripcionCiudad: [''],
-      codigoBarrio: [''],
+      numeroSolicitud:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      pagoEmpleados:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      pagoEnArriendo:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      pagoServicioPublico:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      tieneEmpleado: [''],
+      tipoLocal: [''],
+      tipoReferencia:  [''],
+      totalActivo:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      totalActivoValida: [''],
+      totalActivoValida_bool: Boolean,
+      unidadNegocio:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      validacionCentrales: [''],
+      valorTotalCuotasCreditos:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      vendeCredito: [''],
+      ventaMensual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      ventaMensualCorregido:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      ventaMensualValida: [''],
+      ventaMensualValida_bool: Boolean,
+      viveEnNegocio:  [''],
+      numeroFormularioValida:  [''],
+      numeroFormularioValida_bool: Boolean,
+      telefonoContactoValida:  [''],
+      telefonoContactoValida_bool: Boolean,
+      telefonoContacto:  [''],
+      telefonoContactoCorregido:  [''],	
+      telefonoContactoObservacio:  [''],
       descripcionBarrio: [''],
-      direccionResidencial: [''],
-      nivelEstudio: [''],
-      viveEnNegocio: [''],
-      descripcionTipo: [''],
-
+      descripcionBarrioCorregido: [''],
+      descripcionBarrioNegocio: [''],
+      descripcionBarrioNegocioCorregido: [''],
+      descripcionCiudad: [''],
+      descripcionCiudadCorregida: [''],
+      descripcionCiudadNegocio: [''],
+      descripcionCiudadNegocioCorregida: [''],
+      descripcionDepartamento: [''],
+      descripcionDepartamentoCorregido: [''],
+      descripcionDepartamentoNegocio: [''],
+      descripcionDepartamentoNegocioCorregido: [''],
+      totalActivoCorregidos:[''],
+      tieneEmpleadoValida_bool: Boolean,
+      nombreNegocioValida_bool:Boolean,
     });
   }
 
   /**
+   * {
+    "numeroSolicitud":185376,
+    "tipo":"T",
+    "identificacion":"1110178226"
+}
  * @description: Obtiene la data para cargar al formulario
  */
   private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     const datosSolicitud: any = {
-      numeroSolicitud: numeroSolicitud,
-      identificacion: identificacion
+      "numeroSolicitud": this.numeroSolicitud,
+      "tipo": "T",
+      "identificacion": this.identificacion
     };
-    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+    this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
         console.log(data);
-        this.MostrarfabricaDatos=true;
-        this.fabricaDatos=data
+        this.MostrarfabricaDatos = true;
+        this.fabricaDatos = data
         this.form.patchValue(data);
         if (data.codigoDepartamento) {
           this.getCiudades(data.codigoDepartamento);
@@ -233,23 +326,56 @@ export class TitularComponent implements OnInit {
         if (data.codigoCiudadNegocio) {
           this.getBarriosNegocio(data.codigoCiudadNegocio);
         }
-        if (data.comprasSemanales) {
-          this.form.controls['comprasSemanales'].setValue(this.utility.formatearNumero(String(this.form.value.comprasSemanales)));
+        if (data.antiguedadNegocio) {
+          this.form.controls['antiguedadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        if (data.ventasMensuales) {
-          this.form.controls['ventasMensuales'].setValue(this.utility.formatearNumero(String(this.form.value.ventasMensuales)));
+        if (data.antiguedadNegocioCorregido) {
+          this.form.controls['antiguedadNegocioCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        if (data.activos) {
-          this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        if (data.comprasSemento) {
+          this.form.controls['comprasSemento'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        if (data.cupoTotal) {
-          this.form.controls['cupoTotal'].setValue(this.utility.formatearNumero(String(this.form.value.cupoTotal)));
+        if (data.dineroAhorradoMensual) {
+          this.form.controls['dineroAhorradoMensual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        if (data.cupoReservado) {
-          this.form.controls['cupoReservado'].setValue(this.utility.formatearNumero(String(this.form.value.cupoReservado)));
+        if (data.dineroEfectivoActual) {
+          this.form.controls['dineroEfectivoActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        if (data.cupoDisponible) {
-          this.form.controls['cupoDisponible'].setValue(this.utility.formatearNumero(String(this.form.value.cupoDisponible)));
+        if (data.dineroPorCobrarActual) {
+          this.form.controls['dineroPorCobrarActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.dineroProveedores) {
+          this.form.controls['dineroProveedores'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.inventarioActual) {
+          this.form.controls['inventarioActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.numeroSolicitud) {
+          this.form.controls['numeroSolicitud'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.pagoEmpleados) {
+          this.form.controls['pagoEmpleados'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.pagoEnArriendo) {
+          this.form.controls['pagoEnArriendo'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.pagoServicioPublico) {
+          this.form.controls['pagoServicioPublico'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.totalActivo) {
+          this.form.controls['totalActivo'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.unidadNegocio) {
+          this.form.controls['unidadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.valorTotalCuotasCreditos) {
+          this.form.controls['valorTotalCuotasCreditos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.ventaMensual) {
+          this.form.controls['ventaMensual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
+        }
+        if (data.ventaMensualCorregido) {
+          this.form.controls['ventaMensualCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
 
       });
@@ -377,6 +503,27 @@ export class TitularComponent implements OnInit {
    */
   private getCamaraComercio(): void {
     this.camaraComercio$ = this.genericaServices.getCamaraComercio();
+  }
+
+  onPostDatos(){
+    Swal.fire({
+      title: 'Guardar información',
+      text: '¿Está seguro de guardar información?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#a3a0a0',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar'
+  }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Completado',
+          'Información guardada con éxito',
+          'success'
+      );
+      }
+  });
   }
 
 }

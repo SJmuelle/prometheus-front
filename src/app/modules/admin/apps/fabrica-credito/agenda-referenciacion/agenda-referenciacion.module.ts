@@ -38,6 +38,9 @@ import { SharedModule } from 'app/shared/shared.module';
 import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-pn/ref-titular-pn.component';
 import { TitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
 import { QuillModule } from 'ngx-quill';
+import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/comercial/comercial.component';
+import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
+import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultracem/persona-juridica/representante-legal/representante-legal.component';
 
 
 @NgModule({
@@ -50,7 +53,10 @@ import { QuillModule } from 'ngx-quill';
     GridTipoReferenciacionComponent,
     FormAgendaReferenciacionComponent,
     RefTitularPnComponent,
-    TitularComponent
+    TitularComponent,
+    ComercialComponent,
+    PersonalComponent,
+    RepresentanteLegalComponent
   ],
     imports: [
         CommonModule,

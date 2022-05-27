@@ -21,6 +21,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public referencia: string = this.route.snapshot.paramMap.get('referencia');
+  public tipoReferenciacion: string = this.route.snapshot.paramMap.get('tipoReferenciacion');
   public fabrica_datos: any = {};
   public tipoDocumento: string = '';
   titulo: string;
@@ -41,7 +42,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    switch (this.referencia) {
+    switch (this.tipoReferenciacion) {
       case 'P':
         this.titulo = "personal"
         break;
@@ -208,9 +209,9 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       .subscribe(({ data }) => {
         Swal.close();
         console.log(data)
-        this.totalsteps = 4;
+      
         this.steps = data
-
+        this.totalsteps =  this.steps.length;
       });
   }
 
