@@ -3,39 +3,36 @@
 
         <div class="flex flex-col w-100">
 
-            <div class="flex flex-row justify-between gap-4">
-                <div class="w-full">
-                    <mat-form-field class="w-full" appearance="fill">
-                        <mat-label>Confirmar el valor de las deduciones <b>mensuales</b> del empleado ($):</mat-label>
-                        <input type="text" matInput [formControlName]="'valor'" value="valorNum" (keyup)="frm.valor.setValue(pagaduria.formatearNumero(frm.valor.value)); convText(frm.valor.value)">
-                        <mat-error *ngIf="frm.valor.errors?.required">
-                          Campo requerido.
-                        </mat-error>
-                        <mat-error *ngIf="frm.valor.errors?.min">
-                            Solo valores mayores a 0.
-                        </mat-error>
-                        <mat-error *ngIf="frm.valor.errors?.pattern">
-                            Solo numeros.
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-    
-                <div class="w-full">
-                    <mat-form-field class="w-full">
-                        <mat-label>¿Presenta el trabajador un proceso disciplinario?:</mat-label>
-                        <mat-select formControlName="procesoDiciplinario">
-                            <mat-option value="SI">Si</mat-option>
-                            <mat-option value="NO">No</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="frm.procesoDiciplinario.errors?.required">
-                            Campo requerido.
-                          </mat-error>
-                    </mat-form-field>
-                </div>
+            <div class="w-full">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Confirmar el valor de las deduciones <b>mensuales</b> del empleado ($):</mat-label>
+                    <input type="text" matInput [formControlName]="'valor'" value="valorNum" (keyup)="frm.valor.setValue(pagaduria.formatearNumero(frm.valor.value)); convText(frm.valor.value)">
+                    <mat-error *ngIf="frm.valor.errors?.required">
+                      Campo requerido.
+                    </mat-error>
+                    <mat-error *ngIf="frm.valor.errors?.min">
+                        Solo valores mayores a 0.
+                    </mat-error>
+                    <mat-error *ngIf="frm.valor.errors?.pattern">
+                        Solo numeros.
+                    </mat-error>
+                </mat-form-field>
             </div>
 
             <div class="w-full">
-    
+                <mat-form-field class="w-full">
+                    <mat-label>¿Presenta el trabajador un proceso disciplinario?:</mat-label>
+                    <mat-select formControlName="procesoDiciplinario">
+                        <mat-option value="SI">Si</mat-option>
+                        <mat-option value="NO">No</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="frm.procesoDiciplinario.errors?.required">
+                        Campo requerido.
+                      </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="w-full">
                 <mat-form-field class="w-full">
                     <mat-label>Detalle de aprobación: </mat-label>
                     <textarea class="tamano" matInput formControlName="detalle" rows="5" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
@@ -50,7 +47,6 @@
                         Minimo 6 caracteres.
                     </mat-error>
                 </mat-form-field>
-    
             </div>
     
         </div>
@@ -60,5 +56,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button  id="guardar" class="text-white w-30 permitir bloquear" [disabled]="AprobarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valorNum)">Guardar</button>
-    <button mat-button mat-dialog-close id="cancelar">Cancel</button>
+    <button mat-button mat-dialog-close id="cancelar">Cancelar</button>
 </mat-dialog-actions>
