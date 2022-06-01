@@ -100,8 +100,8 @@ export class CreacionPQRSComponent implements OnInit {
                     );
             }
         });
-        console.log(this.datos)
-        this.negociosCabeceras(this.datos.tipo)
+        // console.log(this.datos)
+        // this.negociosCabeceras(this.datos.tipo)
     }
 
     buscarListados() {
@@ -392,11 +392,9 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardar() {
-        debugger;
         this._pqrService
             .permisoCreacion('tk/validar-permisos-gestion-pqrs')
             .subscribe((response: any) => {
-                debugger;
                 console.log(response.data.area);
                 if (response.data.area !== 'SAC') {
                     Swal.fire(
@@ -431,9 +429,7 @@ export class CreacionPQRSComponent implements OnInit {
                         primerContacto: this.datos.primerContacto,
                         file: this.crearJsonAdjuntos(),
                         hijos: this.crearJsonHijas(),
-                        user: '',
-                        segmento_actual:this.datos.segmento,
-                        tipo_solicitante:this.datos.solicitante
+                        user: this.UsuarioSaggics
                     };
                     let url = '/crear-pqrs';
 
