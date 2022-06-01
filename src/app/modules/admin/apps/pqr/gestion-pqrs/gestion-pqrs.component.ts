@@ -69,7 +69,6 @@ export class GestionPQRSComponent implements OnInit {
         this._activatedRoute.params.subscribe((param) => {
             this.pqrid = param.idPQR;
             this.buscarDatos();
-            // console.log(this.pqrid)
         });
     }
 
@@ -164,6 +163,7 @@ export class GestionPQRSComponent implements OnInit {
         this._pqrService.getListados(url).subscribe((response: any) => {
             Swal.close();
             if (response) {
+                console.log(response)
                 this.datos = response[0];
                 this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
