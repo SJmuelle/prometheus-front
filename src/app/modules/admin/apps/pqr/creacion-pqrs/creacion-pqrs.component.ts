@@ -103,8 +103,8 @@ export class CreacionPQRSComponent implements OnInit {
                     );
             }
         });
-        console.log(this.datos.segmento_actual)
-        this.negociosCabeceras(this.datos.tipo)
+        console.log(this.datos.lineaNegocio)
+        // this.negociosCabeceras(this.datos.tipo)
     }
 
     buscarListados() {
@@ -287,8 +287,8 @@ export class CreacionPQRSComponent implements OnInit {
 
     //datos ingreso
     negociosCabeceras(tipo) {
-        // let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
-        let url = `/pqrs-negocios-cabecera/31/32708516`;
+        let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
+        console.log('Aqui esta el tipo', tipo)
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 console.log('negocio: ', response)
@@ -444,6 +444,7 @@ export class CreacionPQRSComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 500000,
                     didOpen: () => {
+                        console.log('Aqui toy: ', data)
                         Swal.showLoading();
                         this._pqrService.CreatePqrs(url, data).subscribe((response: any) => {
                             Swal.close();
