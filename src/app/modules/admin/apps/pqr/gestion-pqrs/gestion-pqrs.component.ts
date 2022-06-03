@@ -17,6 +17,7 @@ export class GestionPQRSComponent implements OnInit {
     no_mostrar: boolean = true;
     pqrid: any;
     datos: any = {};
+    procedimientoid: any;
     tab: any;
     listadoSoluciones: any = 0;
     listadoGestion: any = [];
@@ -98,11 +99,28 @@ export class GestionPQRSComponent implements OnInit {
         })
     }
 
+    onCharge(input: HTMLInputElement, ind): void {
+        const files = input.files;
+        if (files && files.length) {
+            const fileToRead = files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(fileToRead);
+            reader.onloadend = () => {
+                const file: string | ArrayBuffer = reader.result;
+                this.evidencia[ind].file = file;
+                this.evidencia[ind].filename = fileToRead.name;
+                let nombre = this.evidencia[ind].filename.split('.');
+                this.evidencia[ind].ext = nombre[1].toLowerCase();
+                this.evidencia[ind].nombre = nombre[0];
+            };
+        }
+    }
+
     insertadjunti() {
         const dialogRef = this.dialog.open(AdjuntosComponent, {
             height: '40%',
             width: '60%',
-            data: {id:this.pqrid},
+            data: {idPadre:parseInt(this.pqrid), idProcedimiento:this.procedimientoid},
         });
         dialogRef.afterClosed().subscribe((result) => {
                 // console.log(result)
@@ -115,12 +133,19 @@ export class GestionPQRSComponent implements OnInit {
                     dataModal.descripcion != undefined &&
                     dataModal.descripcion != null
                 ) {
-                    this.evidencia.push(dataModal);
-                    // console.log(this.evidencia)
+                    this.evidencia.push({
+                        "nombreArchivo": dataModal.nombre,
+                        "extension": dataModal.ext,
+                        "base64": dataModal.file,
+                        "descripcion": dataModal.descripcion
+                    });
                 }
         });
+    }
 
-}
+    crearJsonAdjuntos(): Array<JSON> {
+        return  this.evidencia;
+    }
 
     editarDescripcion(){
         if (this.mostrarEditor==false && this.mostrarDescripcion==true) {
@@ -163,8 +188,10 @@ export class GestionPQRSComponent implements OnInit {
         this._pqrService.getListados(url).subscribe((response: any) => {
             Swal.close();
             if (response) {
-                console.log(response)
+                console.log('Aqui estoy: ', response)
                 this.datos = response[0];
+                this.procedimientoid = this.datos.id_procedimiento
+                console.log('Aqui tu procedimiento: ', this.procedimientoid)
                 this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
             } else {

@@ -103,8 +103,6 @@ export class CreacionPQRSComponent implements OnInit {
                     );
             }
         });
-        console.log(this.datos.lineaNegocio)
-        // this.negociosCabeceras(this.datos.tipo)
     }
 
     buscarListados() {
@@ -726,8 +724,6 @@ export class CreacionPQRSComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
             let dataModal = result;
             if (
                 dataModal.file != '' &&
