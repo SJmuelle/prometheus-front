@@ -28,6 +28,19 @@ import {
 import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
 import { FormDialogListErrorDialogComponent } from './form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
 import { MatListModule } from '@angular/material/list';
+import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid-tipo-referenciacion.component';
+import { FormAgendaReferenciacionComponent } from './form-agenda-referenciacion/form-agenda-referenciacion.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
+import { SharedModule } from 'app/shared/shared.module';
+import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-pn/ref-titular-pn.component';
+import { TitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
+import { QuillModule } from 'ngx-quill';
+import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/comercial/comercial.component';
+import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
+import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultracem/persona-juridica/representante-legal/representante-legal.component';
 
 
 @NgModule({
@@ -36,7 +49,14 @@ import { MatListModule } from '@angular/material/list';
     FormGestionReferenciacionModalComponent,
     FormDialogReprogramarComponent,
     FormDialogComentarioReferenciaComponent,
-    FormDialogListErrorDialogComponent
+    FormDialogListErrorDialogComponent,
+    GridTipoReferenciacionComponent,
+    FormAgendaReferenciacionComponent,
+    RefTitularPnComponent,
+    TitularComponent,
+    ComercialComponent,
+    PersonalComponent,
+    RepresentanteLegalComponent
   ],
     imports: [
         CommonModule,
@@ -61,6 +81,13 @@ import { MatListModule } from '@angular/material/list';
         FormsModule,
         MatListModule,
         FuseAlertModule,
+        MatProgressBarModule,
+        MatSidenavModule,
+        FuseFindByKeyPipeModule,
+        SharedModule,
+        MatRadioModule,
+        QuillModule.forRoot(),
+
     ]
 })
 export class AgendaReferenciacionModule { }

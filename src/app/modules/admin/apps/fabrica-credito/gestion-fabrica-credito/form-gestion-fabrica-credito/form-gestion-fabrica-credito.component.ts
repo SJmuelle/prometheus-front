@@ -846,10 +846,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.router.navigate(['/credit-factory/'+data]);
     }
 
-    ngOnDestroy(): void {
-        this.unSubscribe$.unsubscribe();
-        // this.agendaCompletacionService.resetSeleccionAgenda();
-    }
 
     get primerNombre(): ValidatorFn {
         return this.form.controls.primerNombre.errors?.required ||
@@ -860,6 +856,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         return this.form.controls.primerApellido.errors?.required ||
             (this.form.controls.primerApellido.dirty ||
                 this.form.controls.primerApellido.touched);
+    }
+
+    ngOnDestroy(): void {
+        this.unSubscribe$.unsubscribe();
+        // this.agendaCompletacionService.resetSeleccionAgenda();
     }
 
 }
