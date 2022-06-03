@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./personal.component.scss']
 })
 export class PersonalComponent implements OnInit {
-  
+
   @Input() currentStep: number;
 
   // currentStep = 1;
@@ -187,110 +187,24 @@ export class PersonalComponent implements OnInit {
  */
   private createFormulario(): void {
     this.form = this.fb.group({
-      antiguedadNegocio: ['', [Validators.pattern(/^[0-9]*$/)]],
-      antiguedadNegocioCorregido: ['', [Validators.pattern(/^[0-9]*$/)]],
-      antiguedadNegocioValida: [''],
       recurso: [''],
-      antiguedadNegocioValida_bool: Boolean,
-      barrioNegocio: [''],
-      barrioNegocioValida: [''],
-      barrioNegocioValida_bool: Boolean,
-      barrioNegocioCorregido: [''],
-      barrioResidencia: [''],
-      barrioResidenciaCorregido: [''],
-      barrioResidenciaValida: [''],
-      barrioResidenciaValida_bool: Boolean,
-      camaraComercio: [''],
-      camaraComercio_bool: Boolean,
-      camaraComercioCorregido: [''],
-      camaraComercioValida: [''],
-      camaraComercioValida_bool: Boolean,
-      celular: [''],
-      ciudadNegocio: [''],
-      ciudadNegocioCorregido: [''],
-      ciudadNegocioValida: [''],
-      ciudadNegocioValida_bool: Boolean,
-      ciudadResidencia: [''],
-      ciudadResidenciaCorregido: [''],
-      ciudadResidenciaValida: [''],
-      ciudadResidenciaValida_bool: Boolean,
-      comprasSemento: [''],
-      correoElectronico: [''],
-      correoElectronicoCorregido: [''],
-      correoElectronicoValida: [''],
-      correoElectronicoValida_bool: Boolean,
-      departamentoNegocio: [''],
-      departamentoNegocioCorregido: [''],
-      departamentoNegocioValida: [''],
-      departamentoNegocioValida_bool: Boolean,
-      departamentoResidencia: [''],
-      departamentoResidenciaCorregido: [''],
-      departamentoResidenciaValida: [''],
-      departamentoResidenciaValida_bool: Boolean,
-      dineroAhorradoMensual: [''],
-      dineroAhorradoMensualValida: [''],
-      dineroAhorradoMensualValida_bool: Boolean,
-      dineroEfectivoActual: [''],
-      dineroPorCobrarActual: [''],
-      dineroProveedores: [''],
-      direccionNegocio: [''],
-      direccionNegocioCorregido: [''],
-      direccionNegocioValida: [''],
-      direccionNegocioValida_bool: Boolean,
-      direccionResidencia: [''],
-      direccionResidenciaCorregido: [''],
-      direccionResidenciaValida: [''],
-      direccionResidenciaValida_bool: Boolean,
-      idReferencia: [''],
-      inventarioActual: [''],
-      nitNegocio: [''],
-      nitNegocioCorregido: [''],
-      comprasCemento:[''],
-      nitNegocioValida: [''],
-      nitNegocioValida_bool: Boolean,
-      nombreCompleto: [''],
-      nombreNegocio: [''],
-      numeroSolicitud: this.numeroSolicitud.toString(),
-      pagoEmpleados: [''],
-      pagoEnArriendo: [''],
-      pagoServicioPublico: [''],
-      tieneEmpleado: [''],
-      tipoLocal: [''],
+      unidadNegocio: null,
+      numeroSolicitud: [''],
       tipoReferencia: [''],
-      totalActivo: [''],
-      totalActivoValida: [''],
-      totalActivoValida_bool: Boolean,
-      unidadNegocio: [''],
-      validacionCentrales: [''],
-      valorTotalCuotasCreditos: [''],
-      vendeCredito: [''],
-      ventaMensual: [''],
-      ventaMensualCorregido: [''],
-      ventaMensualValida: [''],
-      ventaMensualValida_bool: Boolean,
-      viveEnNegocio: [''],
-      numeroFormularioValida: [''],
-      numeroFormularioValida_bool: Boolean,
-      telefonoContactoValida: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-      telefonoContactoValida_bool: Boolean,
-      telefonoContacto: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-      telefonoContactoCorregido: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-      telefonoContactoObservacion: [''],
-      descripcionBarrio: [''],
-      descripcionBarrioCorregido: [''],
-      descripcionBarrioNegocio: [''],
-      descripcionBarrioNegocioCorregido: [''],
-      descripcionCiudad: [''],
-      descripcionCiudadCorregida: [''],
-      descripcionCiudadNegocio: [''],
-      descripcionCiudadNegocioCorregida: [''],
-      descripcionDepartamento: [''],
-      descripcionDepartamentoCorregido: [''],
-      descripcionDepartamentoNegocio: [''],
-      descripcionDepartamentoNegocioCorregido: [''],
-      totalActivoCorregidos: [''],
-      tieneEmpleadoValida_bool: Boolean,
-      nombreNegocioValida_bool: Boolean,
+      idReferencia: [''],
+      nombreCompleto: [''],
+      celular: [''],
+      conoceTitularValida: [''],
+      conoceTitularValida_bool: Boolean,
+      tiempoConoceTitular: ['', [Validators.pattern(/^[0-9]*$/)]],
+      conoceProfesionTitular: [''],
+      conoceDeDondeTitular: [''],
+      tipoComentario: 1,
+      comentario: [''],
+      estadoReferencia: [''],
+      resultadoReferencia: [''],
+      refenciaValidada: [''],
+      referenciaValidada_bool:Boolean
     });
   }
 
@@ -316,73 +230,12 @@ export class PersonalComponent implements OnInit {
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = data
         this.form.patchValue(data);
-        if (data.codigoDepartamento) {
-          this.getCiudades(data.codigoDepartamento);
-        }
-        if (data.codigoDepartamentoNacimiento) {
-          this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
-        }
-        if (data.codigoDepartamentoNegocio) {
-          this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
-        }
-        if (data.codigoCiudad) {
-          this.getBarrios(data.codigoCiudad);
-        }
-        if (data.codigoCiudadNegocio) {
-          this.getBarriosNegocio(data.codigoCiudadNegocio);
-        }
-        if (data.antiguedadNegocio) {
-          this.form.controls['antiguedadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.antiguedadNegocioCorregido) {
-          this.form.controls['antiguedadNegocioCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.comprasSemento) {
-          this.form.controls['comprasSemento'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.dineroAhorradoMensual) {
-          this.form.controls['dineroAhorradoMensual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.dineroEfectivoActual) {
-          this.form.controls['dineroEfectivoActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.dineroPorCobrarActual) {
-          this.form.controls['dineroPorCobrarActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.dineroProveedores) {
-          this.form.controls['dineroProveedores'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.inventarioActual) {
-          this.form.controls['inventarioActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.pagoEmpleados) {
-          this.form.controls['pagoEmpleados'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.pagoEnArriendo) {
-          this.form.controls['pagoEnArriendo'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.pagoServicioPublico) {
-          this.form.controls['pagoServicioPublico'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.totalActivo) {
-          this.form.controls['totalActivo'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.unidadNegocio) {
-          this.form.controls['unidadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.valorTotalCuotasCreditos) {
-          this.form.controls['valorTotalCuotasCreditos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.ventaMensual) {
-          this.form.controls['ventaMensual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.ventaMensualCorregido) {
-          this.form.controls['ventaMensualCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-
       });
   }
 
+ /**
+   * @description: Departamento de 
+   */
   public seleccionDepartamento(event: MatSelectChange): void {
     const codigo: string = event.value;
     this.getCiudades(codigo);
@@ -511,145 +364,19 @@ export class PersonalComponent implements OnInit {
   /**
   * @description:
   */
-   public onPostDatos(): void {
+  public onPostDatos(): void {
     const datos: any = this.form.getRawValue();
     const { ...data } = datos;
-    const antiguedadNegocio = Number(this.utility.enviarNumero(this.form.value.antiguedadNegocio));
-    const antiguedadNegocioCorregido = Number(this.utility.enviarNumero(this.form.value.antiguedadNegocioCorregido));
-    const comprasSemento = Number(this.utility.enviarNumero(this.form.value.comprasSemento));
-    const dineroAhorradoMensual = Number(this.utility.enviarNumero(this.form.value.dineroAhorradoMensual));
-    const dineroEfectivoActual = Number(this.utility.enviarNumero(this.form.value.dineroEfectivoActual));
-    const dineroPorCobrarActual = Number(this.utility.enviarNumero(this.form.value.dineroPorCobrarActual));
-    const dineroProveedores = Number(this.utility.enviarNumero(this.form.value.dineroProveedores));
-    const inventarioActual = Number(this.utility.enviarNumero(this.form.value.inventarioActual));
-    const pagoEmpleados = Number(this.utility.enviarNumero(this.form.value.pagoEmpleados));
-    const pagoEnArriendo = Number(this.utility.enviarNumero(this.form.value.pagoEnArriendo));
-    const pagoServicioPublico = Number(this.utility.enviarNumero(this.form.value.pagoServicioPublico));
-    const totalActivo = Number(this.utility.enviarNumero(this.form.value.totalActivo));
-    const unidadNegocio = Number(this.utility.enviarNumero(this.form.value.unidadNegocio));
-    const valorTotalCuotasCreditos = Number(this.utility.enviarNumero(this.form.value.valorTotalCuotasCreditos));
-    const ventaMensual = Number(this.utility.enviarNumero(this.form.value.ventaMensual));
-    const ventaMensualCorregido = Number(this.utility.enviarNumero(this.form.value.ventaMensualCorregido));
-    const antiguedadNegocioValida = this.form.value.antiguedadNegocioValida_bool == true ? 'S' : 'N';
-    const barrioNegocioValida = this.form.value.barrioNegocioValida_bool == true ? 'S' : 'N';
-    const barrioResidenciaValida = this.form.value.barrioResidenciaValida_bool == true ? 'S' : 'N';
-    const camaraComercio = this.form.value.camaraComercio_bool == true ? 'S' : 'N';
-    const camaraComercioValida = this.form.value.camaraComercioValida_bool == true ? 'S' : 'N';
-    const ciudadNegocioValida = this.form.value.ciudadNegocioValida_bool == true ? 'S' : 'N';
-    const ciudadResidenciaValida = this.form.value.ciudadResidenciaValida_bool == true ? 'S' : 'N';
-    const correoElectronicoValida = this.form.value.correoElectronicoValida_bool == true ? 'S' : 'N';
-    const departamentoNegocioValida = this.form.value.departamentoNegocioValida_bool == true ? 'S' : 'N';
-    const departamentoResidenciaValida = this.form.value.departamentoResidenciaValida_bool == true ? 'S' : 'N';
-    const dineroAhorradoMensualValida = this.form.value.dineroAhorradoMensualValida_bool == true ? 'S' : 'N';
-    const direccionNegocioValida = this.form.value.direccionNegocioValida_bool == true ? 'S' : 'N';
-    const direccionResidenciaValida = this.form.value.direccionResidenciaValida_bool == true ? 'S' : 'N';
-    const nitNegocioValida = this.form.value.nitNegocioValida_bool == true ? 'S' : 'N';
-    const totalActivoValida = this.form.value.totalActivoValida_bool == true ? 'S' : 'N';
-    const ventaMensualValida = this.form.value.ventaMensualValida_bool == true ? 'S' : 'N';
-    const numeroFormularioValida = this.form.value.numeroFormularioValida_bool == true ? 'S' : 'N';
-    const telefonoContactoValida = this.form.value.telefonoContactoValida_bool == true ? 'S' : 'N';
-    const tieneEmpleadoValida = this.form.value.tieneEmpleadoValida_bool == true ? 'S' : 'N';
-    const nombreNegocioValida = this.form.value.nombreNegocioValida_bool == true ? 'S' : 'N';
-    const referenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
-    delete data.antiguedadNegocio;
-    delete data.antiguedadNegocioCorregido;
-    delete data.comprasSemento;
-    delete data.dineroAhorradoMensual;
-    delete data.dineroEfectivoActual;
-    delete data.dineroPorCobrarActual;
-    delete data.dineroProveedores;
-    delete data.inventarioActual;
-    delete data.numeroSolicitud;
-    delete data.pagoEmpleados;
-    delete data.pagoEnArriendo;
-    delete data.pagoServicioPublico;
-    delete data.totalActivo;
-    delete data.unidadNegocio;
-    delete data.valorTotalCuotasCreditos;
-    delete data.ventaMensual;
-    delete data.ventaMensualCorregido;
-    delete data.numeroSolicitud;
-    delete data.antiguedadNegocioValida_bool;
-    delete data.barrioNegocioValida_bool;
-    delete data.barrioResidenciaValida_bool;
-    delete data.camaraComercio_bool;
-    delete data.camaraComercioValida_bool;
-    delete data.ciudadNegocioValida_bool;
-    delete data.ciudadResidenciaValida_bool;
-    delete data.correoElectronicoValida_bool;
-    delete data.departamentoNegocioValida_bool;
-    delete data.departamentoResidenciaValida_bool;
-    delete data.dineroAhorradoMensualValida_bool;
-    delete data.direccionNegocioValida_bool;
-    delete data.direccionResidenciaValida_bool;
-    delete data.nitNegocioValida_bool;
-    delete data.totalActivoValida_bool;
-    delete data.ventaMensualValida_bool;
-    delete data.numeroFormularioValida_bool;
-    delete data.telefonoContactoValida_bool;
-    delete data.tieneEmpleadoValida_bool;
-    delete data.nombreNegocioValida_bool;
+    const conoceTitularValida = this.form.value.conoceTitularValida_bool == true ? 'S' : 'N';
+    const refenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
+    delete data.conoceTitularValida_bool;
+    delete data.refenciaValidada;
     delete data.referenciaValidada_bool;
-    delete data.antiguedadNegocioValida;
-    delete data.barrioNegocioValida;
-    delete data.barrioResidenciaValida;
-    delete data.camaraComercio;
-    delete data.camaraComercioValida;
-    delete data.ciudadNegocioValida;
-    delete data.ciudadResidenciaValida;
-    delete data.correoElectronicoValida;
-    delete data.departamentoNegocioValida;
-    delete data.departamentoResidenciaValida;
-    delete data.dineroAhorradoMensualValida;
-    delete data.direccionNegocioValida;
-    delete data.direccionResidenciaValida;
-    delete data.nitNegocioValida;
-    delete data.totalActivoValida;
-    delete data.ventaMensualValida;
-    delete data.numeroFormularioValida;
-    delete data.telefonoContactoValida;
-    delete data.tieneEmpleadoValida;
-    delete data.nombreNegocioValida;
-    delete data.referenciaValidada;
+    delete data.numeroSolicitud;
     const datosFormularios: any = {
       numeroSolicitud: this.numeroSolicitud.toString(),
-      antiguedadNegocio: antiguedadNegocio,
-      antiguedadNegocioCorregido: antiguedadNegocioCorregido,
-      comprasSemento: comprasSemento,
-      dineroAhorradoMensual: dineroAhorradoMensual,
-      dineroEfectivoActual: dineroEfectivoActual,
-      dineroPorCobrarActual: dineroPorCobrarActual,
-      dineroProveedores: dineroProveedores,
-      inventarioActual: inventarioActual,
-      pagoEmpleados: pagoEmpleados,
-      pagoEnArriendo: pagoEnArriendo,
-      pagoServicioPublico: pagoServicioPublico,
-      totalActivo: totalActivo,
-      unidadNegocio: unidadNegocio,
-      valorTotalCuotasCreditos: valorTotalCuotasCreditos,
-      ventaMensual: ventaMensual,
-      ventaMensualCorregido: ventaMensualCorregido,
-      antiguedadNegocioValida: antiguedadNegocioValida,
-      barrioNegocioValida: barrioNegocioValida,
-      barrioResidenciaValida: barrioResidenciaValida,
-      camaraComercio: camaraComercio,
-      camaraComercioValida: camaraComercioValida,
-      ciudadNegocioValida: ciudadNegocioValida,
-      ciudadResidenciaValida: ciudadResidenciaValida,
-      correoElectronicoValida: correoElectronicoValida,
-      departamentoNegocioValida: departamentoNegocioValida,
-      departamentoResidenciaValida: departamentoResidenciaValida,
-      dineroAhorradoMensualValida: dineroAhorradoMensualValida,
-      direccionNegocioValida: direccionNegocioValida,
-      direccionResidenciaValida: direccionResidenciaValida,
-      nitNegocioValida: nitNegocioValida,
-      totalActivoValida: totalActivoValida,
-      ventaMensualValida: ventaMensualValida,
-      numeroFormularioValida: numeroFormularioValida,
-      telefonoContactoValida: telefonoContactoValida,
-      tieneEmpleadoValida: tieneEmpleadoValida,
-      nombreNegocioValida: nombreNegocioValida,
-      referenciaValidada: referenciaValidada,
+      conoceTitularValida: conoceTitularValida,
+      refenciaValidada:refenciaValidada,
       ...data
     };
     Swal.fire({
@@ -682,8 +409,14 @@ export class PersonalComponent implements OnInit {
           'Completado',
           'Información guardada con éxito',
           'success'
-        );
-        this.router.navigate([`credit-factory/agenda-referencing/${this.undadNegocio}/${this.numeroSolicitud}/${this.identificacion}`]);
+        ).then((result) => {
+          if (result) {
+            this.router.navigate([`credit-factory/agenda-referencing/${this.undadNegocio}/${this.numeroSolicitud}/${this.identificacion}`]);
+          }
+        })
+        setTimeout(() => {
+          this.router.navigate([`credit-factory/agenda-referencing/${this.undadNegocio}/${this.numeroSolicitud}/${this.identificacion}`]);
+        }, 1000);
       }, (error) => {
         Swal.fire({
           icon: 'error',

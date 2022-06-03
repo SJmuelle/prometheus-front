@@ -204,6 +204,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     const datosSolicitud: any = {
       numeroSolicitud: numeroSolicitud,
+      tipo: this.tipoReferenciacion,
     };
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
