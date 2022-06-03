@@ -566,7 +566,7 @@
                             </mat-form-field>
 
                             <div class="mt-1 px-3">
-                                <label class="labelTxt">¿Cuánto es el valor total de las cuotas a crédito?: </label>
+                                <label class="labelTxt">Validación en centrales de riesgos </label>
                                 <quill-editor class="mb-2" placeholder=" Validación en centrales de riesgos..."
                                     name="descripcion" [modules]="quillModules"
                                     [formControlName]="'validacionCentrales'"></quill-editor>
@@ -578,12 +578,26 @@
                 </mat-tab>
 
                 <mat-tab *ngIf="currentStep==3">
+                   
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
                             Comentario
                         </h2>
 
+                        <div class="flex justify-between items-center ">
+                            <p>¿Referencia Validada?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="referenciaValidada_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="mt-1">
                             <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
                                 name="descripcion" [modules]="quillModules"

@@ -25,308 +25,91 @@
                                     <div class="text-2xl font-semibold leading-tight capitalize">
                                         {{fabricaDatos.nombreCompleto}}
                                     </div>
-                                    <div class="text-md text-secondary">Nombre completo</div>
+                                    <div class="text-md text-secondary">{{fabricaDatos.correoElectronico}}.</div>
                                 </div>
                             </fuse-card>
                         </div>
                         <hr>
                         <div class="flex justify-between items-center ">
-                            <p>¿El contacto fue realizado al número del formulario?</p>
-                            <div>
-                                <span class="text-xl mr-1">NO</span>
-                                <mat-slide-toggle></mat-slide-toggle>
-                                <span class="ml-1.5 text-xl mr-1">SI</span>
+                            <p>¿Usted conoce a ?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="telefonoContactoValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex justify-between items-center ">
-                            <p>¿El teléfono del formulario es correcto?</p>
-                            <div>
-                                <span class="text-xl mr-1">NO</span>
-                                <mat-slide-toggle></mat-slide-toggle>
-                                <span class="ml-1.5 text-xl mr-1">SI</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="grid grid-cols-2 gap-2">
-                            <mat-form-field class="w-full fuse-mat-dense">
-                                <mat-label>Ingresa el teléfono de contacto </mat-label>
-                                <input matInput type="text" [formControlName]="'celular'" [required]="true">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
-                                    <mat-error *ngIf="form.controls.celular.errors?.required ">
-                                        Este campo es
-                                        requerido.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.pattern">
-                                        Solo se aceptan
-                                        números.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.minlength">
-                                        Longitud
-                                        mínima son 7 dígitos.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.maxlength">
-                                        Longitud
-                                        máxima son 11 dígitos.</mat-error>
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field class="w-full fuse-mat-dense">
-                                <mat-label>Teléfono / Celular corregido: </mat-label>
-                                <input matInput type="text" [formControlName]="'celular'" [required]="true">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
-                                    <mat-error *ngIf="form.controls.celular.errors?.required ">
-                                        Este campo es
-                                        requerido.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.pattern">
-                                        Solo se aceptan
-                                        números.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.minlength">
-                                        Longitud
-                                        mínima son 7 dígitos.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.maxlength">
-                                        Longitud
-                                        máxima son 11 dígitos.</mat-error>
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="mt-1">
-                            <quill-editor class="mb-2" placeholder=" Descripción..." name="descripcion"
-                                [modules]="quillModules"></quill-editor>
-                        </div>
-    
                     </div>
-    
+
                 </mat-tab>
-    
+
+
+
                 <mat-tab *ngIf="currentStep==1">
-                    <div
-                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
-                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            Edicion del formulario
-                        </h2>
-                        <div class="grid grid-cols-12">
-                            <div class="col-span-12">
-    
-                                <mat-accordion multi>
-                                    <!--Panel Datos de la solicitud-->
-                                    <mat-expansion-panel expanded>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                Datos de la Residencia
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded">
-                                            <div class="-mx-3 md:flex mt-3 mb-2">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Departamento de residencia</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionDepartamento'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad / municipio de residencia</mat-label>
-                                                    <input matInput type="text" [formControlName]="'descripcionCiudad'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Barrio</mat-label>
-                                                    <input matInput type="text" [formControlName]="'descripcionBarrio'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Dirección de residencia</mat-label>
-                                                    <input matInput type="text" [formControlName]="'direccionResidencial'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </mat-expansion-panel>
-                                    <!--Panel datos de riesgo-->
-                                    <!--Panel informacion del titular-->
-                                    <mat-expansion-panel expanded>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                Datos del negocio
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded">
-                                            <div class="-mx-3 md:flex mt-3 mb-2">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Departamento del negocio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionDepartamentoNegocio'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad / municipio del negocio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionCiudadNegocio'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Barrio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionBarrioNegocio'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Dirección del negocio</mat-label>
-                                                    <input matInput type="text" [formControlName]="'direccionNegocio'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
-    
-                            </div>
-                        </div>
-                    </div>
-    
-                </mat-tab>
-    
-                <mat-tab *ngIf="currentStep==2">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
                             Preguntas a la referencia
                         </h2>
-                        <div class="grid grid-cols-12">
-                            <div class="col-span-12">
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Compras semanalmente en cemento ($)</mat-label>
-                                        <input matInput type="text" [formControlName]="'comprasSemanales'"
-                                            (keyup)="form.controls['comprasSemanales'].setValue(utility.formatearNumero(form.value.comprasSemanales)); ">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Antigüedad compras (meses)</mat-label>
-                                        <input matInput type="text" [formControlName]="'antiguedadComprasSemanales'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Ventas mensuales ($)</mat-label>
-                                        <input matInput type="text" [formControlName]="'ventasMensuales'"
-                                            (keyup)="form.controls['ventasMensuales'].setValue(utility.formatearNumero(form.value.ventasMensuales)); ">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                </div>
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Activo ($)</mat-label>
-                                        <input matInput type="text" placeholder="" [formControlName]="'activos'"
-                                            (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); ">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <ng-container *ngIf="declarante$ | async as declarante">
-                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>¿Es declarante?</mat-label>
-                                            <mat-select [value]="'seleccione'" [formControlName]="'declarante'">
-                                                <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                                <mat-option *ngFor="let item of declarante.data"
-                                                    [value]="item.codigoOpcion">{{item.descripcionOpcion}}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                            </mat-icon>
-                                        </mat-form-field>
-                                    </ng-container>
-                                </div>
-    
-    
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Teléfono del negocio</mat-label>
-                                        <input matInput type="text" [formControlName]="'telefonoNegocio'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                        <mat-error *ngIf="soloNumero('telefonoNegocio')">
-                                            Este campo solo acepta números.
-                                        </mat-error>
-                                    </mat-form-field>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>¿Hace cuanto tiempo funciona el negocio? (meses)</mat-label>
-                                        <input matInput type="number" [formControlName]="'antiguedadNegocio'"
-                                            [matTooltip]="'¿Hace cuanto tiempo funciona el negocio? (meses)'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                    <ng-container *ngIf="camaraComercio$ | async as camara">
-                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>¿Se encuentra registrado en camára de comercio?
-                                            </mat-label>
-                                            <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
-                                                [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
-                                                <mat-option disabled [value]="'seleccione'">Seleccione
-                                                </mat-option>
-                                                <mat-option *ngFor="let item of camara.data" [value]="item.codigoOpcion">
-                                                    {{item.descripcionOpcion}}
-                                                </mat-option>
-                                            </mat-select>
-                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                            </mat-icon>
-                                        </mat-form-field>
-                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>Nit</mat-label>
-                                            <input matInput type="text" [formControlName]="'nitNegocio'">
-                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                            </mat-icon>
-                                            <mat-error *ngIf="soloNumero('nitNegocio')">
-                                                Este campo solo acepta números.
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </ng-container>
-                                </div>
-                                <div class="-mx-3 md:flex mt-3 mb-2">
-                                    <mat-form-field class="w-full px-3 fuse-mat-dense">
-                                        <mat-label>Razón social</mat-label>
-                                        <input matInput type="text" [formControlName]="'nombreNegocio'">
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
-                                </div>
-    
+
+                        <div class="">
+                            <mat-form-field class=" fuse-mat-dense w-full px-3">
+                                <mat-label>¿Hace cuánto lo conoce? (meses)</mat-label>
+                                <input matInput type="text" [formControlName]="'telefonoContacto'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error
+                                    *ngIf="(form.controls.telefonoContacto.dirty || form.controls.telefonoContacto.touched)">
+                                   
+                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.pattern">
+                                        Solo se aceptan
+                                        números.</mat-error>
+                                   
+                                </mat-error>
+                            </mat-form-field>
+                            <div class="mt-1 px-3">
+                                <label class="labelTxt">¿ A que se dedica el titular? </label>
+                                <quill-editor class="mb-2" placeholder=""
+                                    name="descripcion" [modules]="quillModules"
+                                    [formControlName]="'validacionCentrales'"></quill-editor>
+                            </div>
+                            <div class="mt-1 px-3">
+                                <label class="labelTxt">¿De donde lo conoce?: </label>
+                                <quill-editor class="mb-2" placeholder=""
+                                    name="descripcion" [modules]="quillModules"
+                                    [formControlName]="'validacionCentrales'"></quill-editor>
                             </div>
                         </div>
                     </div>
-    
+
+
                 </mat-tab>
-    
-                <mat-tab *ngIf="currentStep==3">
+
+                <mat-tab *ngIf="currentStep==2">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                           Comentario
+                            Comentario
                         </h2>
-                        
+
                         <div class="mt-1">
-                            <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..." name="descripcion"
-                                [modules]="quillModules"></quill-editor>
+                            <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
+                                name="descripcion" [modules]="quillModules"
+                                [formControlName]="'telefonoContactoObservacion'"></quill-editor>
                         </div>
-    
+
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                            <button mat-raised-button color="primary" type="button" 
+                                (click)="onPostDatos()">
+                                Guardar
+                            </button>
+                        </div>
                     </div>
-    
+
                 </mat-tab>
             </ng-container>
         </form>

@@ -25,6 +25,7 @@ export class TitularComponent implements OnInit {
 
   public form: FormGroup;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
+  public undadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
 
   public subscription$: Subscription;
@@ -243,7 +244,7 @@ export class TitularComponent implements OnInit {
       inventarioActual: [''],
       nitNegocio: [''],
       nitNegocioCorregido: [''],
-      comprasCemento:[''],
+      comprasCemento: [''],
       nitNegocioValida: [''],
       nitNegocioValida_bool: Boolean,
       nombreCompleto: [''],
@@ -289,6 +290,8 @@ export class TitularComponent implements OnInit {
       totalActivoCorregidos: [''],
       tieneEmpleadoValida_bool: Boolean,
       nombreNegocioValida_bool: Boolean,
+      referenciaValidada: [""],
+      referenciaValidada_bool: Boolean
     });
   }
 
@@ -530,17 +533,8 @@ export class TitularComponent implements OnInit {
   * @description:
   */
   public onPostDatos(): void {
-
     const datos: any = this.form.getRawValue();
     const { ...data } = datos;
-    // const compraSemanal = Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
-    // const ventasMensuales = Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
-    // const scoreFormato = Number(this.form.value.score);
-    // const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
-    // const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
-    // const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
-    // const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
-    // const activos = Number(this.utility.enviarNumero(this.form.value.activos));
     const antiguedadNegocio = Number(this.utility.enviarNumero(this.form.value.antiguedadNegocio));
     const antiguedadNegocioCorregido = Number(this.utility.enviarNumero(this.form.value.antiguedadNegocioCorregido));
     const comprasSemento = Number(this.utility.enviarNumero(this.form.value.comprasSemento));
@@ -557,6 +551,27 @@ export class TitularComponent implements OnInit {
     const valorTotalCuotasCreditos = Number(this.utility.enviarNumero(this.form.value.valorTotalCuotasCreditos));
     const ventaMensual = Number(this.utility.enviarNumero(this.form.value.ventaMensual));
     const ventaMensualCorregido = Number(this.utility.enviarNumero(this.form.value.ventaMensualCorregido));
+    const antiguedadNegocioValida = this.form.value.antiguedadNegocioValida_bool == true ? 'S' : 'N';
+    const barrioNegocioValida = this.form.value.barrioNegocioValida_bool == true ? 'S' : 'N';
+    const barrioResidenciaValida = this.form.value.barrioResidenciaValida_bool == true ? 'S' : 'N';
+    const camaraComercio = this.form.value.camaraComercio_bool == true ? 'S' : 'N';
+    const camaraComercioValida = this.form.value.camaraComercioValida_bool == true ? 'S' : 'N';
+    const ciudadNegocioValida = this.form.value.ciudadNegocioValida_bool == true ? 'S' : 'N';
+    const ciudadResidenciaValida = this.form.value.ciudadResidenciaValida_bool == true ? 'S' : 'N';
+    const correoElectronicoValida = this.form.value.correoElectronicoValida_bool == true ? 'S' : 'N';
+    const departamentoNegocioValida = this.form.value.departamentoNegocioValida_bool == true ? 'S' : 'N';
+    const departamentoResidenciaValida = this.form.value.departamentoResidenciaValida_bool == true ? 'S' : 'N';
+    const dineroAhorradoMensualValida = this.form.value.dineroAhorradoMensualValida_bool == true ? 'S' : 'N';
+    const direccionNegocioValida = this.form.value.direccionNegocioValida_bool == true ? 'S' : 'N';
+    const direccionResidenciaValida = this.form.value.direccionResidenciaValida_bool == true ? 'S' : 'N';
+    const nitNegocioValida = this.form.value.nitNegocioValida_bool == true ? 'S' : 'N';
+    const totalActivoValida = this.form.value.totalActivoValida_bool == true ? 'S' : 'N';
+    const ventaMensualValida = this.form.value.ventaMensualValida_bool == true ? 'S' : 'N';
+    const numeroFormularioValida = this.form.value.numeroFormularioValida_bool == true ? 'S' : 'N';
+    const telefonoContactoValida = this.form.value.telefonoContactoValida_bool == true ? 'S' : 'N';
+    const tieneEmpleadoValida = this.form.value.tieneEmpleadoValida_bool == true ? 'S' : 'N';
+    const nombreNegocioValida = this.form.value.nombreNegocioValida_bool == true ? 'S' : 'N';
+    const referenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
     delete data.antiguedadNegocio;
     delete data.antiguedadNegocioCorregido;
     delete data.comprasSemento;
@@ -575,8 +590,50 @@ export class TitularComponent implements OnInit {
     delete data.ventaMensual;
     delete data.ventaMensualCorregido;
     delete data.numeroSolicitud;
+    delete data.antiguedadNegocioValida_bool;
+    delete data.barrioNegocioValida_bool;
+    delete data.barrioResidenciaValida_bool;
+    delete data.camaraComercio_bool;
+    delete data.camaraComercioValida_bool;
+    delete data.ciudadNegocioValida_bool;
+    delete data.ciudadResidenciaValida_bool;
+    delete data.correoElectronicoValida_bool;
+    delete data.departamentoNegocioValida_bool;
+    delete data.departamentoResidenciaValida_bool;
+    delete data.dineroAhorradoMensualValida_bool;
+    delete data.direccionNegocioValida_bool;
+    delete data.direccionResidenciaValida_bool;
+    delete data.nitNegocioValida_bool;
+    delete data.totalActivoValida_bool;
+    delete data.ventaMensualValida_bool;
+    delete data.numeroFormularioValida_bool;
+    delete data.telefonoContactoValida_bool;
+    delete data.tieneEmpleadoValida_bool;
+    delete data.nombreNegocioValida_bool;
+    delete data.referenciaValidada_bool;
+    delete data.antiguedadNegocioValida;
+    delete data.barrioNegocioValida;
+    delete data.barrioResidenciaValida;
+    delete data.camaraComercio;
+    delete data.camaraComercioValida;
+    delete data.ciudadNegocioValida;
+    delete data.ciudadResidenciaValida;
+    delete data.correoElectronicoValida;
+    delete data.departamentoNegocioValida;
+    delete data.departamentoResidenciaValida;
+    delete data.dineroAhorradoMensualValida;
+    delete data.direccionNegocioValida;
+    delete data.direccionResidenciaValida;
+    delete data.nitNegocioValida;
+    delete data.totalActivoValida;
+    delete data.ventaMensualValida;
+    delete data.numeroFormularioValida;
+    delete data.telefonoContactoValida;
+    delete data.tieneEmpleadoValida;
+    delete data.nombreNegocioValida;
+    delete data.referenciaValidada;
     const datosFormularios: any = {
-      numeroSolicitud:  this.numeroSolicitud.toString(),
+      numeroSolicitud: this.numeroSolicitud.toString(),
       antiguedadNegocio: antiguedadNegocio,
       antiguedadNegocioCorregido: antiguedadNegocioCorregido,
       comprasSemento: comprasSemento,
@@ -593,6 +650,27 @@ export class TitularComponent implements OnInit {
       valorTotalCuotasCreditos: valorTotalCuotasCreditos,
       ventaMensual: ventaMensual,
       ventaMensualCorregido: ventaMensualCorregido,
+      antiguedadNegocioValida: antiguedadNegocioValida,
+      barrioNegocioValida: barrioNegocioValida,
+      barrioResidenciaValida: barrioResidenciaValida,
+      camaraComercio: camaraComercio,
+      camaraComercioValida: camaraComercioValida,
+      ciudadNegocioValida: ciudadNegocioValida,
+      ciudadResidenciaValida: ciudadResidenciaValida,
+      correoElectronicoValida: correoElectronicoValida,
+      departamentoNegocioValida: departamentoNegocioValida,
+      departamentoResidenciaValida: departamentoResidenciaValida,
+      dineroAhorradoMensualValida: dineroAhorradoMensualValida,
+      direccionNegocioValida: direccionNegocioValida,
+      direccionResidenciaValida: direccionResidenciaValida,
+      nitNegocioValida: nitNegocioValida,
+      totalActivoValida: totalActivoValida,
+      ventaMensualValida: ventaMensualValida,
+      numeroFormularioValida: numeroFormularioValida,
+      telefonoContactoValida: telefonoContactoValida,
+      tieneEmpleadoValida: tieneEmpleadoValida,
+      nombreNegocioValida: nombreNegocioValida,
+      referenciaValidada: referenciaValidada,
       ...data
     };
     Swal.fire({
@@ -625,8 +703,14 @@ export class TitularComponent implements OnInit {
           'Completado',
           'Información guardada con éxito',
           'success'
-        );
-        //   this.router.navigate(['/credit-factory/agenda-completion']);
+        ).then((result) => {
+          if (result) {
+            this.router.navigate([`credit-factory/agenda-referencing/${this.undadNegocio}/${this.numeroSolicitud}/${this.identificacion}`]);
+          }
+        })
+        setTimeout(() => {
+          this.router.navigate([`credit-factory/agenda-referencing/${this.undadNegocio}/${this.numeroSolicitud}/${this.identificacion}`]);
+        }, 1000);
       }, (error) => {
         Swal.fire({
           icon: 'error',
