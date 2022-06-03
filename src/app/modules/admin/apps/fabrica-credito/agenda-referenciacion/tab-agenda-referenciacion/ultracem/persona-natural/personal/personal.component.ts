@@ -194,6 +194,7 @@ export class PersonalComponent implements OnInit {
       idReferencia: [''],
       nombreCompleto: [''],
       celular: [''],
+      nombreTitular:[''],
       conoceTitularValida: [''],
       conoceTitularValida_bool: Boolean,
       tiempoConoceTitular: ['', [Validators.pattern(/^[0-9]*$/)]],
@@ -367,8 +368,8 @@ export class PersonalComponent implements OnInit {
   public onPostDatos(): void {
     const datos: any = this.form.getRawValue();
     const { ...data } = datos;
-    const conoceTitularValida = this.form.value.conoceTitularValida_bool == true ? 'S' : 'N';
-    const refenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
+    const conoceTitularValida = this.form.value.conoceTitularValida_bool == false ? 'N' : 'S';
+    const refenciaValidada = this.form.value.referenciaValidada_bool == false ? 'N' : 'S';
     delete data.conoceTitularValida_bool;
     delete data.refenciaValidada;
     delete data.referenciaValidada_bool;
