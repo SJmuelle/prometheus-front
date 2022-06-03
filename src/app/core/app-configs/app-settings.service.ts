@@ -34,6 +34,7 @@ export class AppSettingsService {
             checklist: EndPoints.uri('/generic/qry/obtener-items-chequeo-credito'),
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
+            PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
         }
     };
     /**

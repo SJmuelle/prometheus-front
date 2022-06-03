@@ -8,7 +8,8 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 import { GenericasService } from 'app/core/services/genericas.service';
 import { UtilityService } from 'app/resources/services/utility.service';
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
-import { Subject, Observable } from 'rxjs';
+import moment from 'moment';
+import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
@@ -26,7 +27,7 @@ export class TitularComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
 
-
+  public subscription$: Subscription;
   public unSubscribe$: Subject<any> = new Subject<any>();
   public departamentos$: Observable<any>;
   public departamentosNacimiento$: Observable<any>;
@@ -135,64 +136,65 @@ export class TitularComponent implements OnInit {
     });
   }
 
-    /**
- * @description :modal direcionn negocio
- */
+  /**
+* @description :modal direcionn negocio
+*/
   public openModalNegocio(): void {
     const dialogRef = this._dialog.open(DirectionsComponent, {
-        width: '60%',
-        data: {
-            departamento: '',
-            municipio: '',
-            barrio: '',
-            direccion: '',
-        },
-        disableClose: false
+      width: '60%',
+      data: {
+        departamento: '',
+        municipio: '',
+        barrio: '',
+        direccion: '',
+      },
+      disableClose: false
     });
 
     dialogRef.afterClosed().subscribe((res) => {
-        const dataModal: any = res;
-        if (dataModal.departamento != undefined) {
-            this.form.controls.departamentoNegocioCorregido.setValue(dataModal.departamento);
-            this.form.controls.descripcionDepartamentoNegocioCorregido.setValue(dataModal.departamentoNombre);
-            this.form.controls.ciudadNegocioCorregido.setValue(dataModal.municipio);
-            this.form.controls.descripcionCiudadNegocioCorregida.setValue(dataModal.municipioNombre);
-            this.form.controls.barrioNegocioCorregido.setValue(dataModal.codigoBarrio);
-            this.form.controls.descripcionBarrioNegocioCorregido.setValue(dataModal.barrio);
-            this.form.controls.direccionNegocioCorregido.setValue(
-                (dataModal.viaNombre == undefined
-                    ? ''
-                    : `${dataModal.viaNombre}`) +
-                (dataModal.callePrincipal == undefined
-                    ? ''
-                    : ` ${dataModal.callePrincipal}`) +
-                (dataModal.numero == undefined
-                    ? ''
-                    : ` # ${dataModal.numero}`) +
-                (dataModal.numero2 == undefined
-                    ? ''
-                    : ` - ${dataModal.numero2}`) +
-                (dataModal.complemento == undefined
-                    ? ''
-                    : ` ${dataModal.complemento}`));
-        }
+      const dataModal: any = res;
+      if (dataModal.departamento != undefined) {
+        this.form.controls.departamentoNegocioCorregido.setValue(dataModal.departamento);
+        this.form.controls.descripcionDepartamentoNegocioCorregido.setValue(dataModal.departamentoNombre);
+        this.form.controls.ciudadNegocioCorregido.setValue(dataModal.municipio);
+        this.form.controls.descripcionCiudadNegocioCorregida.setValue(dataModal.municipioNombre);
+        this.form.controls.barrioNegocioCorregido.setValue(dataModal.codigoBarrio);
+        this.form.controls.descripcionBarrioNegocioCorregido.setValue(dataModal.barrio);
+        this.form.controls.direccionNegocioCorregido.setValue(
+          (dataModal.viaNombre == undefined
+            ? ''
+            : `${dataModal.viaNombre}`) +
+          (dataModal.callePrincipal == undefined
+            ? ''
+            : ` ${dataModal.callePrincipal}`) +
+          (dataModal.numero == undefined
+            ? ''
+            : ` # ${dataModal.numero}`) +
+          (dataModal.numero2 == undefined
+            ? ''
+            : ` - ${dataModal.numero2}`) +
+          (dataModal.complemento == undefined
+            ? ''
+            : ` ${dataModal.complemento}`));
+      }
     });
-}
+  }
 
   /**
  * @description :creando el formulario
  */
   private createFormulario(): void {
     this.form = this.fb.group({
-      antiguedadNegocio:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      antiguedadNegocioCorregido:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      antiguedadNegocio: ['', [Validators.pattern(/^[0-9]*$/)]],
+      antiguedadNegocioCorregido: ['', [Validators.pattern(/^[0-9]*$/)]],
       antiguedadNegocioValida: [''],
+      recurso: [''],
       antiguedadNegocioValida_bool: Boolean,
-      barrioNegocio:  [''],
+      barrioNegocio: [''],
       barrioNegocioValida: [''],
       barrioNegocioValida_bool: Boolean,
       barrioNegocioCorregido: [''],
-      barrioResidencia:  [''],
+      barrioResidencia: [''],
       barrioResidenciaCorregido: [''],
       barrioResidenciaValida: [''],
       barrioResidenciaValida_bool: Boolean,
@@ -202,75 +204,76 @@ export class TitularComponent implements OnInit {
       camaraComercioValida: [''],
       camaraComercioValida_bool: Boolean,
       celular: [''],
-      ciudadNegocio:  [''],
+      ciudadNegocio: [''],
       ciudadNegocioCorregido: [''],
       ciudadNegocioValida: [''],
       ciudadNegocioValida_bool: Boolean,
-      ciudadResidencia:  [''],
+      ciudadResidencia: [''],
       ciudadResidenciaCorregido: [''],
       ciudadResidenciaValida: [''],
       ciudadResidenciaValida_bool: Boolean,
-      comprasSemento:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      correoElectronico:  [''],
+      comprasSemento: [''],
+      correoElectronico: [''],
       correoElectronicoCorregido: [''],
       correoElectronicoValida: [''],
       correoElectronicoValida_bool: Boolean,
-      departamentoNegocio:  [''],
+      departamentoNegocio: [''],
       departamentoNegocioCorregido: [''],
       departamentoNegocioValida: [''],
       departamentoNegocioValida_bool: Boolean,
-      departamentoResidencia:  [''],
+      departamentoResidencia: [''],
       departamentoResidenciaCorregido: [''],
-      departamentoResidenciaRalida: [''],
-      departamentoResidenciaRalida_bool: Boolean,
-      dineroAhorradoMensual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      departamentoResidenciaValida: [''],
+      departamentoResidenciaValida_bool: Boolean,
+      dineroAhorradoMensual: [''],
       dineroAhorradoMensualValida: [''],
       dineroAhorradoMensualValida_bool: Boolean,
-      dineroEfectivoActual:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      dineroPorCobrarActual:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      dineroProveedores:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      direccionNegocio:  [''],
+      dineroEfectivoActual: [''],
+      dineroPorCobrarActual: [''],
+      dineroProveedores: [''],
+      direccionNegocio: [''],
       direccionNegocioCorregido: [''],
       direccionNegocioValida: [''],
       direccionNegocioValida_bool: Boolean,
-      direccionResidencia:  [''],
+      direccionResidencia: [''],
       direccionResidenciaCorregido: [''],
       direccionResidenciaValida: [''],
       direccionResidenciaValida_bool: Boolean,
-      idReferencia:  [''],
-      inventarioActual:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      idReferencia: [''],
+      inventarioActual: [''],
       nitNegocio: [''],
-      nitNegocioCorrido: [''],
+      nitNegocioCorregido: [''],
+      comprasCemento:[''],
       nitNegocioValida: [''],
       nitNegocioValida_bool: Boolean,
-      nombreCompleto:  [''],
+      nombreCompleto: [''],
       nombreNegocio: [''],
-      numeroSolicitud:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      pagoEmpleados:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      pagoEnArriendo:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      pagoServicioPublico:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      numeroSolicitud: this.numeroSolicitud.toString(),
+      pagoEmpleados: [''],
+      pagoEnArriendo: [''],
+      pagoServicioPublico: [''],
       tieneEmpleado: [''],
       tipoLocal: [''],
-      tipoReferencia:  [''],
-      totalActivo:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      tipoReferencia: [''],
+      totalActivo: [''],
       totalActivoValida: [''],
       totalActivoValida_bool: Boolean,
-      unidadNegocio:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      unidadNegocio: [''],
       validacionCentrales: [''],
-      valorTotalCuotasCreditos:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      valorTotalCuotasCreditos: [''],
       vendeCredito: [''],
-      ventaMensual:  ['', [Validators.pattern(/^[0-9]*$/)]],
-      ventaMensualCorregido:  ['', [Validators.pattern(/^[0-9]*$/)]],
+      ventaMensual: [''],
+      ventaMensualCorregido: [''],
       ventaMensualValida: [''],
       ventaMensualValida_bool: Boolean,
-      viveEnNegocio:  [''],
-      numeroFormularioValida:  [''],
+      viveEnNegocio: [''],
+      numeroFormularioValida: [''],
       numeroFormularioValida_bool: Boolean,
-      telefonoContactoValida:  [''],
+      telefonoContactoValida: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
       telefonoContactoValida_bool: Boolean,
-      telefonoContacto:  [''],
-      telefonoContactoCorregido:  [''],	
-      telefonoContactoObservacio:  [''],
+      telefonoContacto: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      telefonoContactoCorregido: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      telefonoContactoObservacion: [''],
       descripcionBarrio: [''],
       descripcionBarrioCorregido: [''],
       descripcionBarrioNegocio: [''],
@@ -283,9 +286,9 @@ export class TitularComponent implements OnInit {
       descripcionDepartamentoCorregido: [''],
       descripcionDepartamentoNegocio: [''],
       descripcionDepartamentoNegocioCorregido: [''],
-      totalActivoCorregidos:[''],
+      totalActivoCorregidos: [''],
       tieneEmpleadoValida_bool: Boolean,
-      nombreNegocioValida_bool:Boolean,
+      nombreNegocioValida_bool: Boolean,
     });
   }
 
@@ -349,9 +352,6 @@ export class TitularComponent implements OnInit {
         }
         if (data.inventarioActual) {
           this.form.controls['inventarioActual'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
-        if (data.numeroSolicitud) {
-          this.form.controls['numeroSolicitud'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
         if (data.pagoEmpleados) {
           this.form.controls['pagoEmpleados'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
@@ -505,7 +505,96 @@ export class TitularComponent implements OnInit {
     this.camaraComercio$ = this.genericaServices.getCamaraComercio();
   }
 
-  onPostDatos(){
+  // onPostDatos() {
+  //   Swal.fire({
+  //     title: 'Guardar información',
+  //     text: '¿Está seguro de guardar información?',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#a3a0a0',
+  //     confirmButtonText: 'Guardar',
+  //     cancelButtonText: 'Cancelar'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       Swal.fire(
+  //         'Completado',
+  //         'Información guardada con éxito',
+  //         'success'
+  //       );
+  //     }
+  //   });
+  // }
+
+  /**
+  * @description:
+  */
+  public onPostDatos(): void {
+
+    const datos: any = this.form.getRawValue();
+    const { ...data } = datos;
+    // const compraSemanal = Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
+    // const ventasMensuales = Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
+    // const scoreFormato = Number(this.form.value.score);
+    // const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
+    // const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
+    // const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
+    // const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
+    // const activos = Number(this.utility.enviarNumero(this.form.value.activos));
+    const antiguedadNegocio = Number(this.utility.enviarNumero(this.form.value.antiguedadNegocio));
+    const antiguedadNegocioCorregido = Number(this.utility.enviarNumero(this.form.value.antiguedadNegocioCorregido));
+    const comprasSemento = Number(this.utility.enviarNumero(this.form.value.comprasSemento));
+    const dineroAhorradoMensual = Number(this.utility.enviarNumero(this.form.value.dineroAhorradoMensual));
+    const dineroEfectivoActual = Number(this.utility.enviarNumero(this.form.value.dineroEfectivoActual));
+    const dineroPorCobrarActual = Number(this.utility.enviarNumero(this.form.value.dineroPorCobrarActual));
+    const dineroProveedores = Number(this.utility.enviarNumero(this.form.value.dineroProveedores));
+    const inventarioActual = Number(this.utility.enviarNumero(this.form.value.inventarioActual));
+    const pagoEmpleados = Number(this.utility.enviarNumero(this.form.value.pagoEmpleados));
+    const pagoEnArriendo = Number(this.utility.enviarNumero(this.form.value.pagoEnArriendo));
+    const pagoServicioPublico = Number(this.utility.enviarNumero(this.form.value.pagoServicioPublico));
+    const totalActivo = Number(this.utility.enviarNumero(this.form.value.totalActivo));
+    const unidadNegocio = Number(this.utility.enviarNumero(this.form.value.unidadNegocio));
+    const valorTotalCuotasCreditos = Number(this.utility.enviarNumero(this.form.value.valorTotalCuotasCreditos));
+    const ventaMensual = Number(this.utility.enviarNumero(this.form.value.ventaMensual));
+    const ventaMensualCorregido = Number(this.utility.enviarNumero(this.form.value.ventaMensualCorregido));
+    delete data.antiguedadNegocio;
+    delete data.antiguedadNegocioCorregido;
+    delete data.comprasSemento;
+    delete data.dineroAhorradoMensual;
+    delete data.dineroEfectivoActual;
+    delete data.dineroPorCobrarActual;
+    delete data.dineroProveedores;
+    delete data.inventarioActual;
+    delete data.numeroSolicitud;
+    delete data.pagoEmpleados;
+    delete data.pagoEnArriendo;
+    delete data.pagoServicioPublico;
+    delete data.totalActivo;
+    delete data.unidadNegocio;
+    delete data.valorTotalCuotasCreditos;
+    delete data.ventaMensual;
+    delete data.ventaMensualCorregido;
+    delete data.numeroSolicitud;
+    const datosFormularios: any = {
+      numeroSolicitud:  this.numeroSolicitud.toString(),
+      antiguedadNegocio: antiguedadNegocio,
+      antiguedadNegocioCorregido: antiguedadNegocioCorregido,
+      comprasSemento: comprasSemento,
+      dineroAhorradoMensual: dineroAhorradoMensual,
+      dineroEfectivoActual: dineroEfectivoActual,
+      dineroPorCobrarActual: dineroPorCobrarActual,
+      dineroProveedores: dineroProveedores,
+      inventarioActual: inventarioActual,
+      pagoEmpleados: pagoEmpleados,
+      pagoEnArriendo: pagoEnArriendo,
+      pagoServicioPublico: pagoServicioPublico,
+      totalActivo: totalActivo,
+      unidadNegocio: unidadNegocio,
+      valorTotalCuotasCreditos: valorTotalCuotasCreditos,
+      ventaMensual: ventaMensual,
+      ventaMensualCorregido: ventaMensualCorregido,
+      ...data
+    };
     Swal.fire({
       title: 'Guardar información',
       text: '¿Está seguro de guardar información?',
@@ -515,15 +604,36 @@ export class TitularComponent implements OnInit {
       cancelButtonColor: '#a3a0a0',
       confirmButtonText: 'Guardar',
       cancelButtonText: 'Cancelar'
-  }).then((result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
+        this.postFormularioFabrica(datosFormularios);
+        console.log(this.form.getRawValue());
+        console.log(datosFormularios);
+      }
+    });
+
+  }
+
+  /**
+ * @description: Guardado de datos fabrica
+ */
+  private postFormularioFabrica(datos: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    this.subscription$ = this.fabricaCreditoService.postDatosFabricaCreditoReferenciacion(datos)
+      .subscribe(() => {
         Swal.fire(
           'Completado',
           'Información guardada con éxito',
           'success'
-      );
-      }
-  });
+        );
+        //   this.router.navigate(['/credit-factory/agenda-completion']);
+      }, (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ha ocurrido un error',
+          text: error.error.msg,
+        });
+      });
   }
 
 }

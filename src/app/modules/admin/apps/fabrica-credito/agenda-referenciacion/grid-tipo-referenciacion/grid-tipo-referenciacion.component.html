@@ -129,57 +129,6 @@
                     </div>
 
 
-                    <div class="w-3/12" *ngIf="listado.referenciaRepresentante.length">
-                        <div
-                            class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
-                            <ng-container *ngFor="let representante of listado.referenciaRepresentante">
-                                <div class="flex flex-col flex-auto items-center p-8">
-                                    <div class="flex flex-wrap">
-                                        <span class="text-xl font-semibold">
-                                            Referencia titular
-                                        </span>
-                                        <span
-                                            class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
-                                            [ngClass]="representante.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'"
-                                            >
-                                            {{representante.referenciaValidada=='N'?'Sin validar':'Validada'}}
-                                        </span>
-                                    </div>
-                                    <hr class="w-full border-t my-6">
-                                    <div class="flex flex-col ">
-                                        <div class="capitalize">
-                                            <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
-                                            </mat-icon> {{representante.nombreCompleto}}
-                                        </div>
-                                        <div class="text-secondary text-md" *ngIf="representante.telefono">
-                                            <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
-                                            </mat-icon>{{representante.telefono}}
-                                        </div>
-                                        <div class="text-secondary text-md" *ngIf="representante.celular">
-                                            <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
-                                            </mat-icon>{{representante.celular}}
-                                        </div>
-                                        <div class="text-secondary text-md" *ngIf="representante.direccion">
-                                            <mat-icon class="icon-size-3 mr-2"
-                                                [svgIcon]="'heroicons_solid:location-marker'">
-                                            </mat-icon>{{representante.direccion}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="representante.identificacion+'/L'">
-                                        <mat-icon class="mr-2 icon-size-8 text-white"
-                                            [svgIcon]="'heroicons_solid:phone'">
-                                        </mat-icon>
-                                        <span class="font-medium">Llamar</span>
-
-                                    </a>
-                                </div>
-                            </ng-container>
-
-                        </div>
-                    </div>
-
                     <div class="w-3/12">
                         <div
                             class="relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">

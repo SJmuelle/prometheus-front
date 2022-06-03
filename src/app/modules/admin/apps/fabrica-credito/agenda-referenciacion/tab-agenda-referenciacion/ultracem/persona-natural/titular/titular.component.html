@@ -32,22 +32,29 @@
                         <hr>
                         <div class="flex justify-between items-center ">
                             <p>¿El contacto fue realizado al número del formulario?</p>
-                            <div>
-                                <span class="text-xl mr-1"
-                                    [ngClass]="!form.value.telefonoContactoValida_bool?'font-bold':''">NO</span>
-                                <mat-slide-toggle formControlName="telefonoContactoValida_bool"></mat-slide-toggle>
-                                <span class="ml-1.5 text-xl mr-1"
-                                    [ngClass]="form.value.telefonoContactoValida_bool?'font-bold':''">SI</span>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="telefonoContactoValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="flex justify-between items-center" *ngIf="!form.value.telefonoContactoValida_bool">
                             <p>¿El teléfono del formulario es correcto?</p>
-                            <div>
-                                <span class="text-xl mr-1"
-                                    [ngClass]="!form.value.numeroFormularioValida_bool?'font-bold':''">NO</span>
-                                <mat-slide-toggle formControlName="numeroFormularioValida_bool"></mat-slide-toggle>
-                                <span class="ml-1.5 text-xl mr-1"
-                                    [ngClass]="form.value.numeroFormularioValida_bool?'font-bold':''">SI</span>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="telefonoContactoValida_bool"
+                                            formControlName="numeroFormularioValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -59,13 +66,11 @@
                                 </mat-icon>
                                 <mat-error
                                     *ngIf="(form.controls.telefonoContacto.dirty || form.controls.telefonoContacto.touched)">
-                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.required ">
-                                        Este campo es
-                                        requerido.</mat-error>
+                                   
                                     <mat-error *ngIf="form.controls.telefonoContacto.errors?.pattern">
                                         Solo se aceptan
                                         números.</mat-error>
-                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.minlength">
+                                    <mat-error *ngIf="form.controls.telefonoContacto.errors?.minlength && form.controls.value.telefonoContacto.length>0">
                                         Longitud
                                         mínima son 7 dígitos.</mat-error>
                                     <mat-error *ngIf="form.controls.telefonoContacto.errors?.maxlength">
@@ -96,8 +101,8 @@
                             </mat-form-field>
                         </div>
                         <div class="mt-1" *ngIf="!form.value.numeroFormularioValida_bool">
-                            <quill-editor class="mb-2" placeholder="Observación..." name="telefonoContactoObservacio"
-                                [modules]="quillModules" [formControlName]="'telefonoContactoObservacio'">
+                            <quill-editor class="mb-2" placeholder="Observación..." name="telefonoContactoObservacion"
+                                [modules]="quillModules" [formControlName]="'telefonoContactoObservacion'">
                             </quill-editor>
                         </div>
 
@@ -109,64 +114,72 @@
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            Edición del formulario
+                            Información de residencia del titular
                         </h2>
                         <div class="grid grid-cols-12">
                             <div class="col-span-12">
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en el departamento
-                                        <strong>{{fabricaDatos.descripcionDepartamentoNegocio}}</strong>?
+                                        <strong>{{fabricaDatos.descripcionDepartamento}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.departamentoResidenciaRalida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="departamentoResidenciaRalida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.departamentoResidenciaRalida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="departamentoResidenciaValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en la ciudad de
-                                        <strong>{{fabricaDatos.descripcionCiudadCorregida}}</strong>?
+                                        <strong>{{fabricaDatos.descripcionCiudad}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.ciudadResidenciaValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="ciudadResidenciaValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.ciudadResidenciaValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="ciudadResidenciaValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en el barrio de
                                         <strong>{{fabricaDatos.descripcionBarrio}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.barrioResidenciaValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="barrioResidenciaValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.barrioResidenciaValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="barrioResidenciaValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en esta dirección:
                                         <strong>{{fabricaDatos.direccionResidencia}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.direccionResidenciaValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="direccionResidenciaValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.direccionResidenciaValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="direccionResidenciaValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <mat-accordion multi
-                                    *ngIf="!form.value.departamentoResidenciaRalida_bool || !form.value.ciudadResidenciaValida_bool || !form.value.barrioResidenciaValida_bool || !form.value.direccionResidenciaValida_bool">
+                                    *ngIf="!form.value.departamentoResidenciaValida_bool || !form.value.ciudadResidenciaValida_bool || !form.value.barrioResidenciaValida_bool || !form.value.direccionResidenciaValida_bool">
                                     <!--Panel Datos de la solicitud-->
                                     <mat-expansion-panel expanded class="mb-4">
                                         <mat-expansion-panel-header>
@@ -174,7 +187,7 @@
                                                 ¿Donde vive el titular?
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded ">
+                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded my-3">
                                             <div class="-mx-3 md:flex mt-3 mb-2">
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Departamento de residencia</mat-label>
@@ -186,7 +199,7 @@
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad / municipio de residencia</mat-label>
+                                                    <mat-label>Ciudad residencia</mat-label>
                                                     <input matInput type="text"
                                                         [formControlName]="'descripcionCiudadCorregida'"
                                                         (keydown)="openModalDirection()" (click)="openModalDirection()">
@@ -217,60 +230,68 @@
                                     </mat-expansion-panel>
                                     <!--Panel datos de riesgo-->
                                 </mat-accordion>
-                                <div class="w-full bg-gray-200">
-                                    <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del
-                                        negocio</span>
-                                </div>
+                                <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                                    Información de residencia del titular
+                                </h2>
                                 <div class="flex justify-between items-center">
                                     <p>¿El negocio esta ubicado en el departamento de
                                         <strong>{{fabricaDatos.descripcionDepartamentoNegocio}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.departamentoNegocioValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="departamentoNegocioValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.departamentoNegocioValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="departamentoNegocioValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El negocio esta ubicado en la ciudad de
-                                        <strong>{{fabricaDatos.descripcionCiudadNegocioCorregida}}</strong>?
+                                        <strong>{{fabricaDatos.descripcionCiudadNegocio}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.ciudadNegocioValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="ciudadNegocioValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.ciudadNegocioValida_bool?'font-bold':''">SI</span>
+
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="ciudadNegocioValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El negocio esta ubicado en el barrio de
                                         <strong>{{fabricaDatos.descripcionBarrioNegocio}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.barrioNegocioValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="barrioNegocioValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.barrioNegocioValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="barrioNegocioValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El megocio esta ubicado en la dirección:
                                         <strong>{{fabricaDatos.direccionNegocio}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.direccionNegocioValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="direccionNegocioValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.direccionNegocioValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="direccionNegocioValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <mat-accordion multi
@@ -282,7 +303,7 @@
                                                 ¿Donde queda el negocio?
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded">
+                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded py-3">
                                             <div class="-mx-3 md:flex mt-3 mb-2">
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                     <mat-label>Departamento del negocio</mat-label>
@@ -294,7 +315,7 @@
                                                     </mat-icon>
                                                 </mat-form-field>
                                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad / municipio del negocio</mat-label>
+                                                    <mat-label>Ciudad del negocio</mat-label>
                                                     <input matInput type="text"
                                                         [formControlName]="'descripcionCiudadNegocioCorregida'"
                                                         (keydown)="openModalNegocio()" (click)="openModalNegocio()">
@@ -328,12 +349,16 @@
 
                                 <div class="flex justify-between items-center">
                                     <p>¿Está registrado en camára de comercio?</p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.camaraComercio_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="camaraComercio_bool"></mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.camaraComercio_bool?'font-bold':''">SI</span>
+
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="camaraComercio_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                         *ngIf="!form.value.camaraComercio_bool">
@@ -355,20 +380,25 @@
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿Este es el NIT <strong>{{fabricaDatos.nitNegocio}}</strong>?</p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.nitNegocioValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="nitNegocioValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.nitNegocioValida_bool?'font-bold':''">SI</span>
+
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="nitNegocioValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense" *ngIf="!form.value.nitNegocioValida_bool">
+
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                                        *ngIf="!form.value.nitNegocioValida_bool">
                                         <mat-label>Nit</mat-label>
-                                        <input matInput type="text" [formControlName]="'nitNegocioCorrido'">
+                                        <input matInput type="text" [formControlName]="'nitNegocioCorregido'">
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                         </mat-icon>
-                                        <mat-error *ngIf="soloNumero('nitNegocioCorrido')">
+                                        <mat-error *ngIf="soloNumero('nitNegocioCorregido')">
                                             Este campo solo acepta números.
                                         </mat-error>
                                     </mat-form-field>
@@ -376,13 +406,16 @@
                                 <div class="flex justify-between items-center">
                                     <p>¿El nombre del negocio es <strong>{{fabricaDatos.nombreNegocio}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.nombreNegocioValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="nombreNegocioValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.nombreNegocioValida_bool?'font-bold':''">SI</span>
+
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="nombreNegocioValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                         *ngIf="!form.value.nombreNegocioValida_bool">
@@ -395,13 +428,16 @@
                                 <div class="flex justify-between items-center">
                                     <p>¿Total de activos es $ <strong>{{fabricaDatos.totalActivo |number}}</strong>?
                                     </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.totalActivoValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="totalActivoValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.totalActivoValida_bool?'font-bold':''">SI</span>
+
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="totalActivoValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                         *ngIf="!form.value.totalActivoValida_bool">
@@ -415,17 +451,19 @@
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿Tiene empleados?</p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.tieneEmpleadoValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="tieneEmpleadoValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.tieneEmpleadoValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="tieneEmpleadoValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
-                                        *ngIf="!form.value.tieneEmpleadoValida_bool">
-                                        <mat-label>¿Cuanto les paga ($)?</mat-label>
+                                        *ngIf="form.value.tieneEmpleadoValida_bool">
+                                        <mat-label>¿Cuanto les paga?</mat-label>
                                         <input matInput type="text" placeholder="" [formControlName]="'pagoEmpleados'"
                                             (keyup)="form.controls['pagoEmpleados'].setValue(utility.formatearNumero(form.value.pagoEmpleados)); ">
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -434,16 +472,18 @@
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿ Destina dinero mensual para ahorro?: </p>
-                                    <div>
-                                        <span class="text-xl mr-1"
-                                            [ngClass]="!form.value.dineroAhorradoMensualValida_bool?'font-bold':''">NO</span>
-                                        <mat-slide-toggle formControlName="dineroAhorradoMensualValida_bool">
-                                        </mat-slide-toggle>
-                                        <span class="ml-1.5 text-xl mr-1"
-                                            [ngClass]="form.value.dineroAhorradoMensualValida_bool?'font-bold':''">SI</span>
+                                    <div class="toggle-button-cover">
+                                        <div class="button-cover">
+                                            <div class="button r" id="button-1">
+                                                <input type="checkbox" class="checkbox"
+                                                    formControlName="dineroAhorradoMensualValida_bool">
+                                                <div class="knobs"></div>
+                                                <div class="layer"></div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
-                                        *ngIf="!form.value.dineroAhorradoMensualValida_bool">
+                                        *ngIf="form.value.dineroAhorradoMensualValida_bool">
                                         <mat-label>¿ Cuánto ahorras?</mat-label>
                                         <input matInput type="text" placeholder=""
                                             [formControlName]="'dineroAhorradoMensual'"
@@ -469,54 +509,55 @@
 
                         <div class="">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿Cuánto compra en cemento? ($):</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'dineroAhorradoMensual'"
-                                    (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                <mat-label>¿Cuánto compra en cemento?</mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'comprasCemento'"
+                                    (keyup)="form.controls['comprasCemento'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿Cuánto paga al mes en servicios públicos del negocio? ($):</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'dineroAhorradoMensual'"
-                                    (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                <mat-label>¿Cuánto paga mensual servicios públicos del negocio?</mat-label>
+                                <input matInput type="text" placeholder="" [formControlName]="'pagoServicioPublico'"
+                                    (keyup)="form.controls['pagoServicioPublico'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-
+                            <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿El tipo de local es?</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoLocal'">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of tipoViviendas.data" [value]="item.codigoOpcion">
+                                            {{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                </mat-form-field>
+                            </ng-container>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿ El tipo de local es?</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'dineroAhorradoMensual'"
-                                    (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                            </mat-form-field>
-
-                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿ Cuánto tiene de inventario en este momento ($)?: </mat-label>
+                                <mat-label>¿Cuánto tiene de inventario?  </mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'inventarioActual'"
                                     (keyup)="form.controls['inventarioActual'].setValue(utility.formatearNumero(form.value.inventarioActual)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿ Cuánto tiene en efectivo en este momento?($) </mat-label>
+                                <mat-label>¿Cuánto tiene en efectivo en este momento? </mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'dineroEfectivoActual'"
                                     (keyup)="form.controls['dineroEfectivoActual'].setValue(utility.formatearNumero(form.value.dineroEfectivoActual)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>En este momento, ¿Cuánto dinero le debe a proveedores?: </mat-label>
+                                <mat-label>¿Cuánto dinero le debe a proveedores?</mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'dineroProveedores'"
                                     (keyup)="form.controls['dineroProveedores'].setValue(utility.formatearNumero(form.value.dineroProveedores)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿ Cuánto es el valor total de las cuotas a crédito?: </mat-label>
+                                <mat-label>¿Cuánto es el valor total de las cuotas a crédito? </mat-label>
                                 <input matInput type="text" placeholder=""
                                     [formControlName]="'valorTotalCuotasCreditos'"
                                     (keyup)="form.controls['valorTotalCuotasCreditos'].setValue(utility.formatearNumero(form.value.valorTotalCuotasCreditos)); ">
@@ -524,7 +565,8 @@
                                 </mat-icon>
                             </mat-form-field>
 
-                            <div class="mt-1">
+                            <div class="mt-1 px-3">
+                                <label class="labelTxt">¿Cuánto es el valor total de las cuotas a crédito?: </label>
                                 <quill-editor class="mb-2" placeholder=" Validación en centrales de riesgos..."
                                     name="descripcion" [modules]="quillModules"
                                     [formControlName]="'validacionCentrales'"></quill-editor>
@@ -545,11 +587,11 @@
                         <div class="mt-1">
                             <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
                                 name="descripcion" [modules]="quillModules"
-                                [formControlName]="'telefonoContactoObservacio'"></quill-editor>
+                                [formControlName]="'telefonoContactoObservacion'"></quill-editor>
                         </div>
 
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-                            <button mat-raised-button color="primary" type="button" [disabled]="!form.valid"
+                            <button mat-raised-button color="primary" type="button" 
                                 (click)="onPostDatos()">
                                 Guardar
                             </button>
