@@ -98,8 +98,6 @@ export class GestionPQRSComponent implements OnInit {
 
     logChange($event) {
         debugger;
-        // console.log(this.editor2);
-        //console.log($event);
         this.mensajeQuill=$event.text;
     }
 
@@ -464,6 +462,19 @@ export class GestionPQRSComponent implements OnInit {
                 );
             }
         });
+    }
+
+    eliminarAdjunto(id){
+        let url = 'update-adjunto';
+        console.log(id)
+        let data = {
+            
+        }
+        this._pqrService.Create(url, id).subscribe((response:any)=>{
+            if (response) {
+                console.log(response)
+            }
+        })
     }
 
     verAdjunto(id) {
