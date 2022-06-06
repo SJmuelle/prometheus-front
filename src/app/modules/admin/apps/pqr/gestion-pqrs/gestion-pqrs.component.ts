@@ -166,6 +166,7 @@ export class GestionPQRSComponent implements OnInit {
                 this._pqrService.postFile(url, data).subscribe((response: any) => {
                     if (response) {
                         console.log(response)
+                        this.buscarDatos()
                     }
                 });
         });
@@ -466,13 +467,14 @@ export class GestionPQRSComponent implements OnInit {
 
     eliminarAdjunto(id){
         let url = 'update-adjunto';
-        console.log(id)
         let data = {
-            
+            id:id
         }
-        this._pqrService.Create(url, id).subscribe((response:any)=>{
+        console.log(data)
+        this._pqrService.Create(url, data).subscribe((response:any)=>{
             if (response) {
                 console.log(response)
+                this.buscarDatos()
             }
         })
     }
