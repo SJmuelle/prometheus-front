@@ -1,6 +1,7 @@
 import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'app/core/auth/auth.service';
 import { result } from 'lodash';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
@@ -18,6 +19,7 @@ export class GestionPQRSComponent implements OnInit {
     pqrid: any;
     datos: any = {};
     procedimientoid: any;
+    UsuarioSaggics: string;
     tab: any;
     listadoSoluciones: any = 0;
     listadoGestion: any = [];
@@ -63,13 +65,26 @@ export class GestionPQRSComponent implements OnInit {
         private _pqrService: PqrService,
         private _activatedRoute: ActivatedRoute,
         private router: Router,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private _authService: AuthService
     ) {}
 
     ngOnInit(): void {
         this._activatedRoute.params.subscribe((param) => {
             this.pqrid = param.idPQR;
             this.buscarDatos();
+        });
+    }
+
+    buscarUsuarioSagicc() {
+        let urlOrigenCliente = `/generic/qry/obtener-usuario-prometheus/${this.UsuarioSaggics}`;
+        this._pqrService.getListadosUnico(urlOrigenCliente).subscribe((response: any) => {
+            if (response) {
+                console.log(response)
+                this.UsuarioSaggics=response.respuesta
+            } else {
+                console.log(response)
+            }
         });
     }
 
@@ -140,6 +155,21 @@ export class GestionPQRSComponent implements OnInit {
                         "descripcion": dataModal.descripcion
                     });
                 }
+                console.log('Saliste del modal: ', this.evidencia)
+                let url = '/adjuntar-pqrs';
+                let data = {
+                    idPadre: this.pqrid,
+                    idProcedimiento: this.procedimientoid,
+                    identificador:'pqrs',
+                    file:this.evidencia,
+                    user: ""
+                };
+                console.log('Aqui tu data: ', data)
+                this._pqrService.postFile(url, data).subscribe((response: any) => {
+                    if (response) {
+                        console.log(response)
+                    }
+                });
         });
     }
 
@@ -190,8 +220,8 @@ export class GestionPQRSComponent implements OnInit {
             if (response) {
                 console.log('Aqui estoy: ', response)
                 this.datos = response[0];
-                this.procedimientoid = this.datos.id_procedimiento
-                console.log('Aqui tu procedimiento: ', this.procedimientoid)
+                // this.procedimientoid = this.datos.id_procedimiento
+                // console.log('Aqui tu procedimiento: ', this.procedimientoid)
                 this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
             } else {
@@ -228,6 +258,13 @@ export class GestionPQRSComponent implements OnInit {
                 this.listadoSeguimiento = [];
             }
         });
+        let urlproc = `/id_comentario_pqrs/${this.pqrid}`;
+        this._pqrService.getListados(urlproc).subscribe((response:any) =>{
+            if (response) {
+                console.log('id procedimiento: ', response[0].id);
+                this.procedimientoid = response[0].id;
+            }
+        })
     }
 
     onTabChanged(index): void {

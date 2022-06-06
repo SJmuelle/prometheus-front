@@ -17,9 +17,7 @@ import { environment } from 'environments/environment';
 export class CreacionPQRSComponent implements OnInit {
     mostrar_formulario: boolean = true;
     datos: any = {};
-    data: any = {
-
-    };
+    data: any = {};
     idPqr: number;
     panelOpenState: boolean = false;
     tabMostrar: number;

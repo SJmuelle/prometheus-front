@@ -77,7 +77,7 @@ export class AdjuntosComponent implements OnInit {
 }
 
   guardar(){
-    console.log(this.evidencia)
+    console.log('Estas en el modal: ', this.evidencia)
     // this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
     //   console.log(response.data.area);
     //   if (response.data.area !== 'SAC') {
