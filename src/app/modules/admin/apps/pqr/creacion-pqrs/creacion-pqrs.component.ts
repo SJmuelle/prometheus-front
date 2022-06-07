@@ -459,6 +459,16 @@ export class CreacionPQRSComponent implements OnInit {
                                         }
                                     })
 
+                                    let datos = {
+                                        idPadre:response.data.pqrs,
+                                        user:""
+                                    }
+                                    this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response:any)=>{
+                                        if (response) {
+                                            console.log('Se envio correo, revisa: ', response)
+                                        }
+                                    })
+
                                     Swal.fire({
                                         title: 'Información',
                                         html: `${response.data.descripcion} ${response.data.pqrs}.`,
@@ -487,7 +497,7 @@ export class CreacionPQRSComponent implements OnInit {
                                     'error'
                                 ).then();
                             }
-                        });        
+                        });
                     },
                 }).then((result) => {});
             }
