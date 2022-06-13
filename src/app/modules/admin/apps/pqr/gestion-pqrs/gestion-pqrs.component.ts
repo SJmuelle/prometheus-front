@@ -20,10 +20,12 @@ export class GestionPQRSComponent implements OnInit {
     datos: any = {};
     procedimientoid: any;
     comentarioid:number;
+    comentariotipoid:number;
     UsuarioSaggics: string;
     tab: any;
     listadoSoluciones: any = 0;
     listadoGestion: any = [];
+    listadoAdjuntos: any = [];
     listadoSeguimiento: any = [];
     listadoAsignaciones: any = [];
     listadoNotificaciones: any = [];
@@ -61,6 +63,14 @@ export class GestionPQRSComponent implements OnInit {
     };
     @ViewChild('editor') editor2;
     mensajeQuill: string;
+    archivo =[{
+        idComentario:0,
+        documento:'',
+        filepath:'',
+        filename:'',
+        extension:'',
+        descripcion:''
+    }];
 
     constructor(
         private _pqrService: PqrService,
@@ -228,10 +238,6 @@ export class GestionPQRSComponent implements OnInit {
                 this.datos = {};
             }
         });
-        //prueba
-        // url = `/pqrs-escalar/${this.pqrid}`;
-        // this._pqrService.getListados(url).subscribe((response: any) => {});
-
         //reposnable
         let usuario = JSON.parse(localStorage.getItem('usuario'));
         url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
@@ -258,13 +264,16 @@ export class GestionPQRSComponent implements OnInit {
                 this.listadoSeguimiento = [];
             }
         });
+
         let urlproc = `/id_comentario_pqrs/${this.pqrid}`;
         this._pqrService.getListados(urlproc).subscribe((response:any) =>{
             if (response) {
                 console.log('id procedimiento: ', response[0].id);
                 this.procedimientoid = response[0].id;
             }
-        })
+        });
+
+        
     }
 
     onTabChanged(index): void {
@@ -293,9 +302,28 @@ export class GestionPQRSComponent implements OnInit {
                         }
                     }
                     console.log(unicos);
-                    console.log('Aqui lo que buscas: ', unicos[0].id_tipo_comentario)
-                    this.comentarioid = unicos[0].id_tipo_comentario;
+                    // console.log('Aqui lo que buscas: ', unicos[0].id_tipo_comentario)
+                    this.comentariotipoid = unicos[0].id_tipo_comentario;
+                    this.comentarioid = unicos[0].id;
                     this.listadoGestion = unicos;
+                    let urlad = `/adjunto-comentario/${this.comentarioid}`;
+                    this._pqrService.getListados(urlad).subscribe((response:any) =>{
+                        console.log('Comentario: ', this.comentarioid)
+                        if (response) {
+                            this.listadoAdjuntos = response;
+                            console.log('Hello: ', this.listadoAdjuntos)
+                            this.archivo = [{
+                                idComentario:this.listadoAdjuntos[0].id_comentario,
+                                documento:this.listadoAdjuntos[0].documento,
+                                filepath:this.listadoAdjuntos[0].filepath,
+                                filename:this.listadoAdjuntos[0].filename,
+                                extension:this.listadoAdjuntos[0].extension,
+                                descripcion:this.listadoAdjuntos[0].descripcion
+                            }]
+                        } else {
+                            this.listadoAdjuntos = [];
+                        }
+                    });
                     Swal.close();
                 });
                 break;
@@ -348,75 +376,145 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
-        let url = 'pqrs-responder-solucion-cliente';
-        let data = {
-            idComentario: parseInt(item.id),
-            idPqrs: parseInt(this.pqrid),
-            respuesta: estado,
-            comentario: 'A'
-        };
-        console.log('Mirame: ', data)
-        const swalWithBootstrapButtons = Swal.mixin({});
-
-        swalWithBootstrapButtons
-            .fire({
-                text: `¿Está seguro que desea ${
-                    estado == true ? 'aprobar' : 'rechazar'
-                } la solución?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: `Si, ${
-                    estado == true ? 'aprobar' : 'rechazar'
-                } la solución`,
-                cancelButtonText: 'No, cancelar',
-                reverseButtons: true,
-            })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    if (!estado) {
-                        Swal.fire({
-                            title: 'Ingresar el motivo del rechazo',
-                            input: 'textarea',
-                            inputAttributes: {
-                                autocapitalize: 'off',
-                            },
-                            showCancelButton: true,
-                            showLoaderOnConfirm: true,
-                            confirmButtonText: 'Rechazar solicitud',
-                            cancelButtonText: 'Cancelar',
-                            allowOutsideClick: () => !Swal.isLoading(),
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                if (result.value.length == 0) {
-                                    Swal.fire(
-                                        'Información',
-                                        'El motivo es obligatorio',
-                                        'error'
-                                    );
-                                    return;
+        if (this.comentariotipoid==2) {
+            let url = 'pqrs-responder-solucion-cliente';
+            let data = {
+                idComentario: parseInt(item.id),
+                idPqrs: parseInt(this.pqrid),
+                respuesta: estado,
+                comentario: 'A'
+            };
+            console.log('Mirame: ', data)
+            const swalWithBootstrapButtons = Swal.mixin({});
+    
+            swalWithBootstrapButtons
+                .fire({
+                    text: `¿Está seguro que desea ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: `Si, ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución`,
+                    cancelButtonText: 'No, cancelar',
+                    reverseButtons: true,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        if (!estado) {
+                            Swal.fire({
+                                title: 'Ingresar el motivo del rechazo',
+                                input: 'textarea',
+                                inputAttributes: {
+                                    autocapitalize: 'off',
+                                },
+                                showCancelButton: true,
+                                showLoaderOnConfirm: true,
+                                confirmButtonText: 'Rechazar solicitud',
+                                cancelButtonText: 'Cancelar',
+                                allowOutsideClick: () => !Swal.isLoading(),
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    if (result.value.length == 0) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo es obligatorio',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    if (result.value.length > 150) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo no puede superar los 150 carácteres',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    data.comentario = result.value;
+                                    this.guardar_data(data, url);
                                 }
-                                if (result.value.length > 150) {
-                                    Swal.fire(
-                                        'Información',
-                                        'El motivo no puede superar los 150 carácteres',
-                                        'error'
-                                    );
-                                    return;
-                                }
-                                data.comentario = result.value;
-                                this.guardar_data(data, url);
-                            }
-                        });
-                    } else {
-                        this.guardar_data(data, url);
+                            });
+                        } else {
+                            this.guardar_data(data, url);
+                        }
                     }
-                }
-            });
+                });
+
+        } else {
+            let url = 'pqrs-responder-solucion';
+            let data = {
+                idComentario: parseInt(item.id),
+                idPqrs: parseInt(this.pqrid),
+                respuesta: estado,
+                comentario: 'A'
+            };
+            console.log('Mirame: ', data)
+            const swalWithBootstrapButtons = Swal.mixin({});
+    
+            swalWithBootstrapButtons
+                .fire({
+                    text: `¿Está seguro que desea ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: `Si, ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución`,
+                    cancelButtonText: 'No, cancelar',
+                    reverseButtons: true,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        if (!estado) {
+                            Swal.fire({
+                                title: 'Ingresar el motivo del rechazo',
+                                input: 'textarea',
+                                inputAttributes: {
+                                    autocapitalize: 'off',
+                                },
+                                showCancelButton: true,
+                                showLoaderOnConfirm: true,
+                                confirmButtonText: 'Rechazar solicitud',
+                                cancelButtonText: 'Cancelar',
+                                allowOutsideClick: () => !Swal.isLoading(),
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    if (result.value.length == 0) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo es obligatorio',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    if (result.value.length > 150) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo no puede superar los 150 carácteres',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    data.comentario = result.value;
+                                    this.guardar_data(data, url);
+                                }
+                            });
+                        } else {
+                            this.guardar_data(data, url);
+                        }
+                    }
+                });
+        }
+        
+       
     }
 
     guardar_data(data, url) {
-        console.log('Pilla aqui: ', this.comentarioid)
-        if (this.comentarioid==2) {
+        console.log('Pilla aqui: ', this.comentariotipoid)
+        if (this.comentariotipoid==2) {
             Swal.fire({
                 title: 'Cargando',
                 html: 'Guardando información de PQRS',
@@ -443,7 +541,11 @@ export class GestionPQRSComponent implements OnInit {
                                 url,
                                 data.idPqrs,
                                 data.respuesta == true ? 5 : 4,
-                                data.comentario
+                                data.comentario,
+                                this.listadoAdjuntos[0].filename,
+                                this.archivo,
+                                this.listadoAdjuntos[0].detalle,
+                                
                             );
                             this.buscarDatos();
                         } else {
@@ -469,7 +571,7 @@ export class GestionPQRSComponent implements OnInit {
                 }
             });   
         } else {
-
+            console.log()
             Swal.fire({
                 title: 'Cargando',
                 html: 'Guardando información de PQRS',
@@ -562,7 +664,6 @@ export class GestionPQRSComponent implements OnInit {
             downloadLink.target = '_self';
             downloadLink.download = data.data.nombreArchivo;
             downloadLink.click();
-
             Swal.close();
         });
     }
