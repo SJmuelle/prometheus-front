@@ -66,7 +66,7 @@
                                 </mat-icon>
                                 <mat-error
                                     *ngIf="(form.controls.telefonoContacto.dirty || form.controls.telefonoContacto.touched)">
-                                   
+
                                     <mat-error *ngIf="form.controls.telefonoContacto.errors?.pattern">
                                         Solo se aceptan
                                         números.</mat-error>
@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p>¿El titular vive en el barrio de
+                                    <p>¿El titular vive en el barrio
                                         <strong>{{fabricaDatos.descripcionBarrio}}</strong>?
                                     </p>
                                     <div class="toggle-button-cover">
@@ -234,7 +234,7 @@
                                     Información de residencia del titular
                                 </h2>
                                 <div class="flex justify-between items-center">
-                                    <p>¿El negocio esta ubicado en el departamento de
+                                    <p>¿El negocio está ubicado en el departamento de
                                         <strong>{{fabricaDatos.descripcionDepartamentoNegocio}}</strong>?
                                     </p>
                                     <div class="toggle-button-cover">
@@ -249,7 +249,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p>¿El negocio esta ubicado en la ciudad de
+                                    <p>¿El negocio está ubicado en la ciudad de
                                         <strong>{{fabricaDatos.descripcionCiudadNegocio}}</strong>?
                                     </p>
 
@@ -265,7 +265,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p>¿El negocio esta ubicado en el barrio de
+                                    <p>¿El negocio está ubicado en el barrio
                                         <strong>{{fabricaDatos.descripcionBarrioNegocio}}</strong>?
                                     </p>
                                     <div class="toggle-button-cover">
@@ -280,7 +280,7 @@
                                     </div>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p>¿El megocio esta ubicado en la dirección:
+                                    <p>¿El negocio está ubicado en la dirección:
                                         <strong>{{fabricaDatos.direccionNegocio}}</strong>?
                                     </p>
                                     <div class="toggle-button-cover">
@@ -348,7 +348,7 @@
 
 
                                 <div class="flex justify-between items-center">
-                                    <p>¿Está registrado en camára de comercio?</p>
+                                    <p>¿Está registrado en cámara de comercio?</p>
 
                                     <div class="toggle-button-cover">
                                         <div class="button-cover">
@@ -362,10 +362,10 @@
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                         *ngIf="!form.value.camaraComercio_bool">
-                                        <mat-label>¿Se encuentra registrado en camára de comercio?
+                                        <mat-label>¿Se encuentra registrado en cámara de comercio?
                                         </mat-label>
                                         <mat-select [value]="'seleccione'" [formControlName]="'camaraComercioCorregido'"
-                                            [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
+                                            [matTooltip]="'¿Se encuentra registrado en cámara de comercio?'">
                                             <mat-option disabled [value]="'seleccione'">Seleccione
                                             </mat-option>
                                             <mat-option [value]="'S'">Si
@@ -463,7 +463,7 @@
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                         *ngIf="form.value.tieneEmpleadoValida_bool">
-                                        <mat-label>¿Cuanto les paga?</mat-label>
+                                        <mat-label>¿Cuánto les paga?</mat-label>
                                         <input matInput type="text" placeholder="" [formControlName]="'pagoEmpleados'"
                                             (keyup)="form.controls['pagoEmpleados'].setValue(utility.formatearNumero(form.value.pagoEmpleados)); ">
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -471,7 +471,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p>¿ Destina dinero mensual para ahorro?: </p>
+                                    <p>¿Destina dinero mensual para ahorro?: </p>
                                     <div class="toggle-button-cover">
                                         <div class="button-cover">
                                             <div class="button r" id="button-1">
@@ -484,7 +484,7 @@
                                     </div>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                         *ngIf="form.value.dineroAhorradoMensualValida_bool">
-                                        <mat-label>¿ Cuánto ahorras?</mat-label>
+                                        <mat-label>¿Cuánto ahorras?</mat-label>
                                         <input matInput type="text" placeholder=""
                                             [formControlName]="'dineroAhorradoMensual'"
                                             (keyup)="form.controls['dineroAhorradoMensual'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
@@ -536,14 +536,14 @@
                                 </mat-form-field>
                             </ng-container>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿Cuánto tiene de inventario?  </mat-label>
+                                <mat-label>¿Cuánto tiene de inventario?</mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'inventarioActual'"
                                     (keyup)="form.controls['inventarioActual'].setValue(utility.formatearNumero(form.value.inventarioActual)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>¿Cuánto tiene en efectivo en este momento? </mat-label>
+                                <mat-label>¿Cuánto tiene en efectivo en este momento?</mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'dineroEfectivoActual'"
                                     (keyup)="form.controls['dineroEfectivoActual'].setValue(utility.formatearNumero(form.value.dineroEfectivoActual)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -566,7 +566,7 @@
                             </mat-form-field>
 
                             <div class="mt-1 px-3">
-                                <label class="labelTxt">Validación en centrales de riesgos </label>
+                                <label class="labelTxt">Validación en centrales de riesgos</label>
                                 <quill-editor class="mb-2" placeholder=" Validación en centrales de riesgos..."
                                     name="descripcion" [modules]="quillModules"
                                     [formControlName]="'validacionCentrales'"></quill-editor>
@@ -578,7 +578,7 @@
                 </mat-tab>
 
                 <mat-tab *ngIf="currentStep==3">
-                   
+
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
@@ -586,7 +586,7 @@
                         </h2>
 
                         <div class="flex justify-between items-center ">
-                            <p>¿Referencia Validada?</p>
+                            <p>¿Referencia validada?</p>
                             <div class="toggle-button-cover">
                                 <div class="button-cover">
                                     <div class="button r" id="button-1">
@@ -605,7 +605,7 @@
                         </div>
 
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-                            <button mat-raised-button color="primary" type="button" 
+                            <button mat-raised-button color="primary" type="button"
                                 (click)="onPostDatos()">
                                 Guardar
                             </button>
