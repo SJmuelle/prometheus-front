@@ -16,6 +16,7 @@ import { VerComentarioComponent } from './ver-comentario/ver-comentario.componen
 })
 export class GestionPQRSComponent implements OnInit {
     no_mostrar: boolean = true;
+    unicoges: any =[];
     pqrid: any;
     datos: any = {};
     procedimientoid: any;
@@ -206,7 +207,7 @@ export class GestionPQRSComponent implements OnInit {
               `Detalle actualizado correctamente.`,
               'success'
             ).then();
-      
+
           })
         if (this.mostrarEditor==true && this.mostrarDescripcion==false) {
             this.mostrarEditor=false;
@@ -273,7 +274,7 @@ export class GestionPQRSComponent implements OnInit {
             }
         });
 
-        
+
     }
 
     onTabChanged(index): void {
@@ -301,15 +302,20 @@ export class GestionPQRSComponent implements OnInit {
                             unicos.push(iterator)
                         }
                     }
-                    console.log(unicos);
-                    // console.log('Aqui lo que buscas: ', unicos[0].id_tipo_comentario)
-                    this.comentariotipoid = unicos[0].id_tipo_comentario;
-                    this.comentarioid = unicos[0].id;
                     this.listadoGestion = unicos;
+                    console.log(unicos);
+                    Swal.close();
+                    
+                    for (let index = 0; index < unicos.length; index++) {
+                        const id = unicos[index];
+                        this.comentarioid = id.id;
+                        console.log(this.comentarioid);
+                    }
+
                     let urlad = `/adjunto-comentario/${this.comentarioid}`;
                     this._pqrService.getListados(urlad).subscribe((response:any) =>{
-                        console.log('Comentario: ', this.comentarioid)
                         if (response) {
+                            console.log(response);
                             this.listadoAdjuntos = response;
                             console.log('Hello: ', this.listadoAdjuntos)
                             this.archivo = [{
@@ -324,8 +330,8 @@ export class GestionPQRSComponent implements OnInit {
                             this.listadoAdjuntos = [];
                         }
                     });
-                    Swal.close();
                 });
+                
                 break;
             case 3:
                 this.filtrarTablaAsignaciones = '';
@@ -386,7 +392,7 @@ export class GestionPQRSComponent implements OnInit {
             };
             console.log('Mirame: ', data)
             const swalWithBootstrapButtons = Swal.mixin({});
-    
+
             swalWithBootstrapButtons
                 .fire({
                     text: `¿Está seguro que desea ${
@@ -452,7 +458,7 @@ export class GestionPQRSComponent implements OnInit {
             };
             console.log('Mirame: ', data)
             const swalWithBootstrapButtons = Swal.mixin({});
-    
+
             swalWithBootstrapButtons
                 .fire({
                     text: `¿Está seguro que desea ${
@@ -508,8 +514,8 @@ export class GestionPQRSComponent implements OnInit {
                     }
                 });
         }
-        
-       
+
+
     }
 
     guardar_data(data, url) {
@@ -534,7 +540,7 @@ export class GestionPQRSComponent implements OnInit {
                                 'success'
                             );
                             this.onTabChanged(2);
-    
+
                             let url = `/sendmail/notificacion-crear-pqrs`;
                             // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
                             this._pqrService.envioCorreos(
@@ -545,7 +551,7 @@ export class GestionPQRSComponent implements OnInit {
                                 this.listadoAdjuntos[0].filename,
                                 this.archivo,
                                 this.listadoAdjuntos[0].detalle,
-                                
+
                             );
                             this.buscarDatos();
                         } else {
@@ -569,7 +575,7 @@ export class GestionPQRSComponent implements OnInit {
                         'error'
                     );
                 }
-            });   
+            });
         } else {
             console.log()
             Swal.fire({
@@ -591,7 +597,7 @@ export class GestionPQRSComponent implements OnInit {
                                 'success'
                             );
                             this.onTabChanged(2);
-    
+
                             let url = `/sendmail/notificacion-crear-pqrs`;
                             // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
                             this._pqrService.envioCorreos(
@@ -623,9 +629,9 @@ export class GestionPQRSComponent implements OnInit {
                     );
                 }
             });
-            
+
         }
-        
+
     }
 
     eliminarAdjunto(id){
