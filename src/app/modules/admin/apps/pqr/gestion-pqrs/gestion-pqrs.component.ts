@@ -309,7 +309,9 @@ export class GestionPQRSComponent implements OnInit {
                     for (let index = 0; index < unicos.length; index++) {
                         const id = unicos[index];
                         this.comentarioid = id.id;
+                        this.comentariotipoid = id.id_tipo_comentario;
                         console.log(this.comentarioid);
+                        console.log(this.comentariotipoid);
                     }
 
                     let urlad = `/adjunto-comentario/${this.comentarioid}`;
@@ -383,6 +385,8 @@ export class GestionPQRSComponent implements OnInit {
 
     cambiarEstado(item, estado) {
         if (this.comentariotipoid==2) {
+            console.log(this.comentariotipoid)
+            debugger;
             let url = 'pqrs-responder-solucion-cliente';
             let data = {
                 idComentario: parseInt(item.id),
@@ -449,6 +453,8 @@ export class GestionPQRSComponent implements OnInit {
                 });
 
         } else {
+            console.log(this.comentariotipoid)
+            debugger;
             let url = 'pqrs-responder-solucion';
             let data = {
                 idComentario: parseInt(item.id),
@@ -521,6 +527,7 @@ export class GestionPQRSComponent implements OnInit {
     guardar_data(data, url) {
         console.log('Pilla aqui: ', this.comentariotipoid)
         if (this.comentariotipoid==2) {
+            debugger;
             Swal.fire({
                 title: 'Cargando',
                 html: 'Guardando información de PQRS',
@@ -540,7 +547,7 @@ export class GestionPQRSComponent implements OnInit {
                                 'success'
                             );
                             this.onTabChanged(2);
-
+                            debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
                             // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
                             this._pqrService.envioCorreos(

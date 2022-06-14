@@ -26,6 +26,7 @@ export class SolucionComponent implements OnInit {
     };
     @ViewChild('editor') editor;
     seguimiento: any = {};
+    seguimiento_area: any = {};
     pqrid: any;
     datos: any = {};
     solucionArea: boolean = false;
@@ -59,6 +60,7 @@ export class SolucionComponent implements OnInit {
                 this.datos = response[0];
                 this.aprobado = response[0].aprobacionsol;
                 console.log('Aprobado?: ', this.aprobado)
+                
                 this.seguimiento = {
                     idPqrs: parseInt(this.pqrid),
                     idPqrsPadre: this.datos.idPadre,
@@ -67,6 +69,14 @@ export class SolucionComponent implements OnInit {
                     detalle: '',
                     idSolucion: this.solucionCausal,
                     envio: this.envio
+                };
+                this.seguimiento_area = {
+                    idPqrs: parseInt(this.pqrid),
+                    idPqrsPadre: this.datos.idPadre,
+                    motivoRechazo: '',
+                    idTipoComentario: 0,
+                    detalle: '',
+                    idSolucion: this.solucionCausal
                 };
                 url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
                 this._pqrService.getListados(url).subscribe((response: any) => {
@@ -196,11 +206,25 @@ export class SolucionComponent implements OnInit {
         }
 
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
+        this.seguimiento_area.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal ? this.solucionCausal: 0;
+        this.seguimiento_area.idSolucion = this.solucionCausal ? this.solucionCausal: 0;
         this.seguimiento.envio = this.envio;
         let mensaje=this.editor.editorElem.outerText
+
         if (this.listadoSoluciones.length > 0) {
             if (this.seguimiento.idTipoComentario == 2 && this.seguimiento.idSolucion == 0) {
+                Swal.fire(
+                    'Información',
+                    `Debe seleccionar una solución para esta PQRS.`,
+                    'error'
+                );
+                return;
+            }
+        }
+
+        if (this.listadoSoluciones.length > 0) {
+            if (this.seguimiento_area.idTipoComentario == 2 && this.seguimiento_area.idSolucion == 0) {
                 Swal.fire(
                     'Información',
                     `Debe seleccionar una solución para esta PQRS.`,
@@ -223,7 +247,21 @@ export class SolucionComponent implements OnInit {
             }
         }
 
+        if (this.seguimiento_area.idTipoComentario === 2) {
+            if (this.file != null) {
+                if (this.ext !== 'pdf') {
+                    Swal.fire(
+                        'Información',
+                        `Verificar las condiciones antes de subir un archivo.`,
+                        'error'
+                    );
+                    return;
+                }
+            }
+        }
+
         if (this.idTipoComentario=='2') {
+            debugger;
             console.log('Mira lo que envias, ', this.envioCorreo)
             if (this.aprobado=='SI') {
                 let url = 'agregar-solucion-cliente_comentario';
@@ -288,7 +326,7 @@ export class SolucionComponent implements OnInit {
                                                         response.data.nombre,
                                                         response.data.archivos,
                                                         mensaje,
-                                                        this.envioCorreo==true?'S':'N'
+                                                        this.envio='N'
                                                     );
                                                 }
                                                 // this.limpiar();
@@ -304,6 +342,8 @@ export class SolucionComponent implements OnInit {
                                     'success'
                                 ).then((resultado) => {
                                     if (resultado) {
+                                        debugger;
+                                        console.log('aqui no hay adjunto');
                                         if (this.idTipoComentario == '2') {
                                             url = `/sendmail/notificacion-crear-pqrs`;
                                             this._pqrService.envioCorreos(
@@ -313,7 +353,7 @@ export class SolucionComponent implements OnInit {
                                                 response.data.nombre,
                                                 response.data.archivos,
                                                 mensaje,
-                                                this.envioCorreo==true?'S':'N'
+                                                this.envio='N'
                                             );
                                         }
                                         // this.limpiar();
@@ -353,7 +393,7 @@ export class SolucionComponent implements OnInit {
                     },
                 }).then((result) => {});
 
-                this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
+                this._pqrService.Create(url, this.seguimiento_area).subscribe((response: any) => {
                     console.log(response)
                     Swal.close();
                     if (response) {
@@ -473,7 +513,7 @@ export class SolucionComponent implements OnInit {
                 },
             }).then((result) => {});
 
-            this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
+            this._pqrService.Create(url, this.seguimiento_area).subscribe((response: any) => {
                 console.log(response)
                 Swal.close();
                 if (response) {
