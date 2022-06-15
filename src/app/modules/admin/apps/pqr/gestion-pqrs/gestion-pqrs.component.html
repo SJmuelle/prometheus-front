@@ -633,7 +633,7 @@
                                             <tbody class="bg-white">
                                                 <tr class="text-gray-700" 
                                                 *ngFor="let item of listadoSeguimiento | filter: filtrarTablaSeguimiento  | paginate: { itemsPerPage: tamanoTablaSeguimiento, currentPage: pageSeguimiento }">
-                                                    <td class="px-4 py-1 text-sm border text-center"><mat-icon class="cursor-pointer" (click)="vercomentario()">remove_red_eye</mat-icon></td>
+                                                    <td class="px-4 py-1 text-sm border text-center"><mat-icon class="cursor-pointer" (click)="vercomentario(item.id)">remove_red_eye</mat-icon></td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.id}}</td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.descripcion}}</td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.usuario_creacion}}</td>

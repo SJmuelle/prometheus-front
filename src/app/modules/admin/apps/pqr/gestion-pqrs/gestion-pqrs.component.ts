@@ -100,11 +100,12 @@ export class GestionPQRSComponent implements OnInit {
         });
     }
 
-    vercomentario(){
+    vercomentario(id){
         const dialogRef = this.dialog.open(VerComentarioComponent, {
             height: '35%',
-            width: '60%'
-        })
+            width: '60%',
+            data: id
+        });
         dialogRef.afterClosed().toPromise();
     }
 
