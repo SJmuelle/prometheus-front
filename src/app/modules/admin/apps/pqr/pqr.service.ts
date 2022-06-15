@@ -155,6 +155,28 @@ export class PqrService {
         // );
     }
 
+    enviaCorreos(url, pqrs, tipo, descripcion = '', adjuntos:any, mensaje?,envioCorreo?) {
+        let data = {
+            pqrs: parseInt(pqrs),
+            tipo: tipo,
+            descripcion: descripcion,
+            adjuntos: adjuntos,
+            mensaje:mensaje,
+            envioCorreo:envioCorreo
+        };
+        console.log(data);
+        return this._utility.postQueryCorreo(url, data).subscribe((res) => {
+            // debugger;
+            return res;
+        });
+        // .pipe(
+        //     map((result: any) => {
+        //         console.log(result);
+        //         return result;
+        //     })
+        // );
+    }
+
     enviarCorreos(url1): void {
         this.getListados(url1).subscribe((response: any) => {
             if (response) {

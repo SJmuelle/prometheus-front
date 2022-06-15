@@ -263,7 +263,7 @@ export class SolucionComponent implements OnInit {
         if (this.idTipoComentario=='2') {
             debugger;
             console.log('Mira lo que envias, ', this.envioCorreo)
-            if (this.aprobado=='SI') {
+            if (this.aprobado=='Si' || this.aprobado=='si') {
                 let url = 'agregar-solucion-cliente_comentario';
                 Swal.fire({
                     title: 'Cargando',

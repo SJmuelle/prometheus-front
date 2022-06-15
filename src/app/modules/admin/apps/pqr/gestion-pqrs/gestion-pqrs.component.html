@@ -75,11 +75,10 @@
                 </div>
 
                 <hr class="w-full border-t">
-
-                <div class="flex flex-col overflow-y-scroll">
+                <div class="flex flex-col overflow-y-scroll h-40">
                     <div class="mb-1">Soluciones</div>
                     <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
-                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.tipo_adjunto=='Solucion Cliente'">
+                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.id_comentario=='2' || item.id_comentario=='1'">
                             <div class="flex flex-row">
                                 <div>
                                     <mat-icon class="text-sm cursor-pointer" matTooltip="Descargar adjunto" svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>
@@ -98,10 +97,10 @@
                     </div>
                 </div>
                 <hr class="w-full border-t mt-3">
-                <div class="flex flex-col overflow-y-scroll">
+                <div class="flex flex-col overflow-y-scroll h-40">
                     <div class="mb-1">Registros</div>
                     <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
-                        <div class="flex flex-row ml-1 mb-2 justify-between" *ngIf="item.tipo_adjunto=='PQRS'">
+                        <div class="flex flex-row ml-1 mb-2 justify-between" *ngIf="item.id_comentario=='3'">
                             <div class="flex flex-row">
                                 <div>
                                     <mat-icon class="text-sm cursor-pointer" matTooltip="Descargar adjunto" svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>

@@ -557,28 +557,60 @@ export class GestionPQRSComponent implements OnInit {
                             this.onTabChanged(2);
                             debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            if (data.respuesta == true) {
-                                this._pqrService.envioCorreos(
-                                    url,
-                                    data.idPqrs,
-                                    5,
-                                    data.comentario,
-                                    this.motivo,
-                                    this.archivo,
-                                    this.envio
-                                );
+                            if (this.archivo[0].idComentario==0) {
+
+                                if (data.respuesta == true) {
+                                    debugger;
+                                    this._pqrService.enviaCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        5,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        this.envio
+                                    );
+                                } else {
+                                    debugger;
+                                    this._pqrService.envioCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        4,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        "N"
+                                    );
+                                }
+                                
                             } else {
-                                debugger;
-                                this._pqrService.envioCorreos(
-                                    url,
-                                    data.idPqrs,
-                                    4,
-                                    data.comentario,
-                                    "",
-                                    this.motivo,
-                                    "N"
-                                );
+
+                                if (data.respuesta == true) {
+                                    debugger;
+                                    this._pqrService.enviaCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        5,
+                                        data.comentario,
+                                        this.archivo,
+                                        this.motivo,
+                                        this.envio
+                                    );
+                                } else {
+                                    debugger;
+                                    this._pqrService.envioCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        4,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        "N"
+                                    );
+                                }
+                                
                             }
+                            
                             
                             this.buscarDatos();
                         } else {

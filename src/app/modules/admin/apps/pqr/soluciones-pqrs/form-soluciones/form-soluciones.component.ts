@@ -77,6 +77,7 @@ export class FormSolucionesComponent implements OnInit {
                 Swal.showLoading();
             },
         }).then((result) => {});
+        console.log(data.aprobacionsol)
         this._pqrService.Create(url, data).subscribe((response: any) => {
             Swal.close();
             if (response) {
