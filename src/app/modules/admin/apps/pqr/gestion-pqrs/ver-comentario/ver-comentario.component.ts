@@ -10,7 +10,7 @@ import { PqrService } from '../../pqr.service';
 })
 export class VerComentarioComponent implements OnInit {
 
-  descripcion: string;
+  descripcion: string = '';
 
   constructor(
     private _pqrService: PqrService,
@@ -23,10 +23,10 @@ export class VerComentarioComponent implements OnInit {
   }
 
   buscarDescripcion(){
-    let url = `/informacion-pqrs/${this.data}`;
+    let url = `/select_comentario_seguimiento_id/${this.data}`;
     this._pqrService.getListados(url).subscribe((response: any) => {
       if (response) {
-          this.descripcion = response;
+          this.descripcion = response[0].descripcion;
           console.log('Aqui estoy: ', this.descripcion)
       } else {
           this.descripcion = '';

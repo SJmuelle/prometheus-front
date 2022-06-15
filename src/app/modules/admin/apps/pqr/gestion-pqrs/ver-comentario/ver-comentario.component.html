@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <mat-form-field class="w-full">
         <mat-label>Descripción:</mat-label>
-        <textarea class="tamano" matInput rows="4" readonly></textarea>
+        <textarea class="tamano" [(ngModel)]="descripcion" matInput rows="4" readonly></textarea>
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
