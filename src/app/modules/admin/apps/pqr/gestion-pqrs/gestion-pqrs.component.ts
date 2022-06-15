@@ -22,6 +22,8 @@ export class GestionPQRSComponent implements OnInit {
     procedimientoid: any;
     comentarioid:number;
     comentariotipoid:number;
+    envio:any;
+    motivo:any;
     UsuarioSaggics: string;
     tab: any;
     listadoSoluciones: any = 0;
@@ -304,15 +306,18 @@ export class GestionPQRSComponent implements OnInit {
                         }
                     }
                     this.listadoGestion = unicos;
-                    console.log(unicos);
+                    console.log('Unicos: ', unicos);
                     Swal.close();
                     
                     for (let index = 0; index < unicos.length; index++) {
                         const id = unicos[index];
                         this.comentarioid = id.id;
                         this.comentariotipoid = id.id_tipo_comentario;
+                        this.envio = id.envio;
+                        this.motivo = id.motivoRechazo;
                         console.log(this.comentarioid);
                         console.log(this.comentariotipoid);
+                        console.log(this.motivo);
                     }
 
                     let urlad = `/adjunto-comentario/${this.comentarioid}`;
@@ -414,6 +419,7 @@ export class GestionPQRSComponent implements OnInit {
                 .then((result) => {
                     if (result.isConfirmed) {
                         if (!estado) {
+                            debugger;
                             Swal.fire({
                                 title: 'Ingresar el motivo del rechazo',
                                 input: 'textarea',
@@ -527,6 +533,7 @@ export class GestionPQRSComponent implements OnInit {
 
     guardar_data(data, url) {
         console.log('Pilla aqui: ', this.comentariotipoid)
+
         if (this.comentariotipoid==2) {
             debugger;
             Swal.fire({
@@ -550,17 +557,29 @@ export class GestionPQRSComponent implements OnInit {
                             this.onTabChanged(2);
                             debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
-                            this._pqrService.envioCorreos(
-                                url,
-                                data.idPqrs,
-                                data.respuesta == true ? 5 : 4,
-                                data.comentario,
-                                this.listadoAdjuntos[0].filename,
-                                this.archivo,
-                                this.listadoAdjuntos[0].detalle,
-
-                            );
+                            if (data.respuesta == true) {
+                                this._pqrService.envioCorreos(
+                                    url,
+                                    data.idPqrs,
+                                    5,
+                                    data.comentario,
+                                    this.motivo,
+                                    this.archivo,
+                                    this.envio
+                                );
+                            } else {
+                                debugger;
+                                this._pqrService.envioCorreos(
+                                    url,
+                                    data.idPqrs,
+                                    4,
+                                    data.comentario,
+                                    "",
+                                    this.motivo,
+                                    "N"
+                                );
+                            }
+                            
                             this.buscarDatos();
                         } else {
                             Swal.fire(

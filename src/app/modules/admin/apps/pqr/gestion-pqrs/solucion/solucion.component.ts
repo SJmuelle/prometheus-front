@@ -318,13 +318,13 @@ export class SolucionComponent implements OnInit {
                                             if (resultado) {
                                                 if (this.idTipoComentario == '2') {
                                                     url = `/sendmail/notificacion-crear-pqrs`;
-                                                    
+                                                    console.log(response.data.archivos)
                                                     this._pqrService.envioCorreos(
                                                         url,
                                                         this.pqrid,
                                                         7,
-                                                        response.data.nombre,
-                                                        response.data.archivos,
+                                                        "",
+                                                        "",
                                                         mensaje,
                                                         this.envio='N'
                                                     );

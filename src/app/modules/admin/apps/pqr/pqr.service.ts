@@ -142,6 +142,7 @@ export class PqrService {
             mensaje:mensaje,
             envioCorreo:envioCorreo
         };
+        console.log(data);
         return this._utility.postQueryCorreo(url, data).subscribe((res) => {
             // debugger;
             return res;
