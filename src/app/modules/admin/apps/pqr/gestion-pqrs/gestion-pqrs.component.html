@@ -588,7 +588,7 @@
 
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Historial de seguimiento">
+                            <mat-tab label="Historial de seguimiento" [disabled]="datos.estado=='Cerrado'">
                                 <div class="flex flex-col sm:flex-row sm:justify-between">
                                     <span class="sm:mt-4 leading-none">
                                         <div class="leading-tight titulo_tabs">Historial de seguimiento</div>

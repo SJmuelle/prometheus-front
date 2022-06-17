@@ -2,6 +2,7 @@ import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
+import { ComentariosService } from 'app/core/services/comentarios.service';
 import { result } from 'lodash';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
@@ -263,6 +264,7 @@ export class GestionPQRSComponent implements OnInit {
         url = `/listar-comentarios-seguimiento/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
+                console.log(response)
                 this.listadoSeguimiento = response;
             } else {
                 this.listadoSeguimiento = [];
