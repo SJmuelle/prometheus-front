@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Obligaciones a recoger</h2>
+<mat-dialog-content>
+    <div class="flex flex-col w-100">
+        <div class="shadow overflow-x-scroll overflow-y-auto h-64 xl:h-140">
+            <table>
+                <thead>
+                    <tr
+                        class="text-md border-b font-semibold tracking-wide text-left text-gray-900" >
+                        <th class="px-4 py-2 text-center">Entidad</th>
+                        <th class="px-4 py-2 text-center">NIT</th>
+                        <th class="px-4 py-2 text-center">Tipo de cuenta</th>
+                        <th class="px-4 py-2 text-center">N° de cuenta</th>
+                        <th class="px-4 py-2 text-center">Valor a recoger</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <tr class="text-gray-700" *ngFor="let item of obligaciones">
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.entidad}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.nit_entidad}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.tipo_cuenta}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.numero_cuenta}}</td>
+                        <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">$ {{item.valor_recoger | number}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
+                        <th class="px-4 py-2 text-center"></th>
+                        <th class="px-4 py-2 text-center"></th>
+                        <th class="px-4 py-2 text-center"></th>
+                        <th class="px-4 py-2 text-center text-base">Total:</th>
+                        <th class="px-4 py-2 text-center">$ {{ total | number}}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>
