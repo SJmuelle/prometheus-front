@@ -453,11 +453,13 @@ export class CreacionPQRSComponent implements OnInit {
                                         segmento_actual:this.datos.segmento
                                     };
 
-                                    this._pqrService.Create('actualizar_pqr_tipo', dato).subscribe((response: any) => {
-                                        if (response) {
-                                            console.log('Aqui te respondo: ', response)
-                                        }
-                                    })
+                                    if (dato) {
+                                        this._pqrService.Create('actualizar_pqr_tipo', dato).subscribe((response: any) => {
+                                            if (response) {
+                                                console.log('Aqui te respondo: ', response)
+                                            }
+                                        })
+                                    }
 
                                     let datos = {
                                         idPadre:response.data.pqrs,

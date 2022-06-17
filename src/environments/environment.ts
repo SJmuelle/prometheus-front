@@ -19,7 +19,7 @@ export const environment = {
 
     urlprometheus:
         'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto: 'https://4703-181-57-229-82.ngrok.io/api-fintra/api/pqrs',
+    adjunto: 'https://31a3-181-57-229-82.ngrok.io/api-fintra/api/pqrs',
     // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     // envioCorreo:"http://192.168.140.197:8084"
     envioCorreo: 'http://demo.fintra.co:8010/apicredit',
