@@ -555,18 +555,18 @@ export class SolucionComponent implements OnInit {
                                     ).then((resultado) => {
                                         console.log(response);
                                         if (resultado) {
-                                            if (this.idTipoComentario == '1') {
-                                                url = `/sendmail/notificacion-crear-pqrs`;
-                                                this._pqrService.envioCorreos(
-                                                    url,
-                                                    this.pqrid,
-                                                    5,
-                                                    response.data.nombre,
-                                                    response.data.archivos,
-                                                    mensaje,
-                                                    this.envioCorreo==true?'S':'N'
-                                                );
-                                            }
+                                            // if (this.idTipoComentario == '2') {
+                                            //     url = `/sendmail/notificacion-crear-pqrs`;
+                                            //     this._pqrService.envioCorreos(
+                                            //         url,
+                                            //         this.pqrid,
+                                            //         5,
+                                            //         response.data.nombre,
+                                            //         response.data.archivos,
+                                            //         mensaje,
+                                            //         this.envioCorreo==true?'S':'N'
+                                            //     );
+                                            // }
                                             // this.limpiar();
                                             // this.recargarData();
                                         }
@@ -581,18 +581,18 @@ export class SolucionComponent implements OnInit {
                             ).then((resultado) => {
                                 if (resultado) {
                                     console.log('Aqui envio data: ', response.data)
-                                    if (this.idTipoComentario == '1') {
-                                        url = `/sendmail/notificacion-crear-pqrs`;
-                                        this._pqrService.envioCorreos(
-                                            url,
-                                            this.pqrid,
-                                            5,
-                                            response.data.nombre,
-                                            response.data.archivos,
-                                            mensaje,
-                                            this.envioCorreo==true?'S':'N'
-                                        );
-                                    }
+                                    // if (this.idTipoComentario == '2') {
+                                    //     url = `/sendmail/notificacion-crear-pqrs`;
+                                    //     this._pqrService.envioCorreos(
+                                    //         url,
+                                    //         this.pqrid,
+                                    //         5,
+                                    //         response.data.nombre,
+                                    //         response.data.archivos,
+                                    //         mensaje,
+                                    //         this.envioCorreo==true?'S':'N'
+                                    //     );
+                                    // }
                                     // this.limpiar();
                                     // this.recargarData();
                                 }
