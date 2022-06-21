@@ -10,25 +10,18 @@ export const environment = {
     urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
     urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
     urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
-
-    //eñiminar -----------------------------------------------
     urlApi7: 'http://demo.fintra.co:8010/api-fintra/api/',
 
     urlDonwloadFile: "http://demo.fintra.co:8010/api-fintra/api/transferencia/",
-
-    // ----------------
-    urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto: 'https://prometheus.fintra.co:8443/api-fintra/api/pqrs',
-    // adjunto:'https://tefi.ngrok.io/api-fintra/api/pqrs',
-    // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
-    // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
-    // urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
     urlApi4: 'http://demo.fintra.co:8010/api-fintra/api/credito/tk/recursos/',
     urlApi5: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
     urlApi6: 'http://demo.fintra.co:8010/api-fintra/api/archivos/guardar/',
-    // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
-    // envioCorreo:"http://192.168.140.197:8084"
-    envioCorreo: 'http://demo.fintra.co:8010/apicredit',
+
+    urlPagaduria: 'http://demo.fintra.co:8010/pagadurias/',
+
+    urlprometheus:
+        'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    adjunto: 'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     urlUltracem: 'http://demo.fintra.co:8010/api-fintra/api',
 
     // NGROK

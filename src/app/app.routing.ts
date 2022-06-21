@@ -6,8 +6,13 @@ import { InitialDataResolver } from 'app/app.resolvers';
 import { CalendarModule } from './modules/admin/apps/calendar/calendar.module';
 import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
 import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
+<<<<<<< HEAD
 import {FabricaCreditoModule} from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
+=======
+import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
+import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
+>>>>>>> 08271234f055df3e1d5e97c0f6d2107a651837ff
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -102,12 +107,17 @@ export const appRoutes: Route[] = [
                 loadChildren: () => FabricaCreditoModule
             },
             {
+<<<<<<< HEAD
                 path: 'run-date',
                 loadChildren: () => FechaCorridaModule
             },
             {
                 path: 'activities', 
                 loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule)
+=======
+                path: 'pagaduria',
+                loadChildren: () => PagaduriaModule
+>>>>>>> 08271234f055df3e1d5e97c0f6d2107a651837ff
             }
             // {
             //     path: 'act',

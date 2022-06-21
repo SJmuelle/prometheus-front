@@ -16,6 +16,8 @@ export const environment = {
     urlGetFile: "https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/tk/",
     urlDonwloadFile: "https://prometheus.fintra.co:8443/api-fintra/api/transferencia/",
 
+    urlPagaduria: 'https://prometheus.fintra.co:8443/pagadurias/',
+
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'https://prometheus.fintra.co:8443/api-fintra/api/pqrs',
     // envioCorreo:'http://192.168.140.197:8084'

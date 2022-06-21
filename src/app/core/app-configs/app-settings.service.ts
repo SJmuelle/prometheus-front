@@ -12,6 +12,18 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point pagaduria
+     */
+     public pagaduria = {
+        url: {
+            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
+            baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
+            baseUpdate: EndPoints.uriPaga('api/generic/update-solicitud-pagaduria'),
+            baseObli: EndPoints.uriPaga('api/generic/qry/obligaciones-comprar'),
+            baseArchivo: EndPoints.uriPaga('api/archivos/documentos-negocio')
+        }
+    };
+    /**
      * @description: End-point agenda de referenciacion
      */
     public agendaReferenciacion = {
@@ -66,10 +78,10 @@ export class AppSettingsService {
      */
      public transferencias = {
         url: {
-            baseTransferencia: EndPoints.uriTransferencia('transferencia/transferencia-cxp-proveedor'),
-            baseProveedor: EndPoints.uriTransferencia('generic/qry/buscar-proveedor'),
-            baseBancos: EndPoints.uriTransferencia('generic/qry/bancos-transferencia/JHSALAZAR'),
-            baseFiltro: EndPoints.uriTransferencia('generic/qry/cxp-proveedor'),
+            baseTransferencia: EndPoints.uriBase('transferencia/transferencia-cxp-proveedor'),
+            baseProveedor: EndPoints.uriBase('generic/qry/buscar-proveedor'),
+            baseBancos: EndPoints.uriBase('generic/qry/bancos-transferencia/JHSALAZAR'),
+            baseFiltro: EndPoints.uriBase('generic/qry/cxp-proveedor'),
         }
     };
     /**
@@ -77,8 +89,8 @@ export class AppSettingsService {
      */
      public archivos = {
         url: {
-            ListFiles: EndPoints.uriTransferencia('generic/qry/tk/transferencia-consultar-achivo'),
-            DownFile: EndPoints.uriTransferencia('transferencia/obtener-achivo-base64')
+            ListFiles: EndPoints.uriBase('generic/qry/tk/transferencia-consultar-achivo'),
+            DownFile: EndPoints.uriBase('transferencia/obtener-achivo-base64')
         }
     };
     /**

@@ -14,21 +14,9 @@ export class EndPoints {
         return environment.urlUltracem + url;
     }
     /**
-     * @description: URL transferencia
+     * @description: URL pagaduria
      */
-    static uriTransferencia(url: string): string {
-        return environment.urlApi7 + url;
-    }
-    /**
-     * @description: URL lista de archivos
-     */
-     static uriGetFiles(url: string): string {
-        return environment.urlApi7 + url;
-    }
-    /**
-     * @description: URL ver archivos
-     */
-     static uriShowFiles(url: string): string {
-        return environment.urlApi7 + url;
+     static uriPaga(url: string): string {
+        return environment.urlPagaduria + url;
     }
 }
