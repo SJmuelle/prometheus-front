@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Reactivar solicitud</h2>
+<mat-dialog-content>
+    <form [formGroup]="ReactivarForm">
+        <div class="flex flex-col w-100">
+            <div class="w-full">
+                <mat-form-field class="w-full">
+                    <mat-label>Comentario: </mat-label>
+                    <textarea matInput class="tamano" formControlName="detalle" rows="4" (keyup)="contarCaracteres($event)" maxlength="500"></textarea>
+                    <mat-hint><em>{{contador}} de 500 caracteres</em></mat-hint>
+                    <mat-error *ngIf="frm.detalle.errors?.required">
+                        Campo requerido.
+                    </mat-error>
+                    <mat-error *ngIf="frm.detalle.errors?.maxlength">
+                        Maximo 500 caracteres.
+                    </mat-error>
+                    <mat-error *ngIf="frm.detalle.errors?.minlength">
+                        Minimo 6 caracteres.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button id="guardar" class="text-white permitir bloquear" [disabled]="ReactivarForm.invalid" (click)="actualizarSolicitud(id, tipo, estado, valor, proceso)">Guardar</button>
+    <button mat-button id="cancelar" mat-dialog-close>Cancelar</button>
+</mat-dialog-actions>
