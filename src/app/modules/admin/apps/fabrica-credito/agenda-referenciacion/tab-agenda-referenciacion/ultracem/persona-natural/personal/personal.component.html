@@ -54,10 +54,10 @@
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
                             Preguntas a la referencia
-                        </h2> 
+                        </h2>
 
                         <div class="">
-                           
+
                             <mat-form-field class=" fuse-mat-dense w-full px-3">
                                 <mat-label>¿Hace cuánto lo conoce? (meses)</mat-label>
                                 <input matInput type="text" [formControlName]="'tiempoConoceTitular'">
@@ -65,21 +65,21 @@
                                 </mat-icon>
                                 <mat-error
                                     *ngIf="(form.controls.tiempoConoceTitular.dirty || form.controls.tiempoConoceTitular.touched)">
-                                   
+
                                     <mat-error *ngIf="form.controls.tiempoConoceTitular.errors?.pattern">
                                         Solo se aceptan
                                         números.</mat-error>
-                                   
+
                                 </mat-error>
                             </mat-form-field>
                             <div class="mt-1 px-3">
-                                <label class="labelTxt">¿ A que se dedica el titular? </label>
+                                <label class="labelTxt">¿A que se dedica el titular?</label>
                                 <quill-editor class="mb-2" placeholder=""
                                     name="descripcion" [modules]="quillModules"
                                     [formControlName]="'conoceProfesionTitular'"></quill-editor>
                             </div>
                             <div class="mt-1 px-3">
-                                <label class="labelTxt">¿De donde lo conoce?: </label>
+                                <label class="labelTxt">¿De donde lo conoce?</label>
                                 <quill-editor class="mb-2" placeholder=""
                                     name="descripcion" [modules]="quillModules"
                                     [formControlName]="'conoceDeDondeTitular'"></quill-editor>
@@ -97,7 +97,7 @@
                             Comentario
                         </h2>
                         <div class="flex justify-between items-center ">
-                            <p>¿Referencia Validada?</p>
+                            <p>¿Referencia validada?</p>
                             <div class="toggle-button-cover">
                                 <div class="button-cover">
                                     <div class="button r" id="button-1">
@@ -116,7 +116,7 @@
                         </div>
 
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-                            <button mat-raised-button color="primary" type="button" 
+                            <button mat-raised-button color="primary" type="button"
                                 (click)="onPostDatos()">
                                 Guardar
                             </button>
