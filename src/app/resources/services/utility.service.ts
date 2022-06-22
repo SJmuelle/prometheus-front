@@ -35,6 +35,9 @@ export class UtilityService {
     return valor;
   }
   enviarNumero(value: string){
+    if(value==undefined){
+        return 0;
+    }
     if (value == '0') {
         return 0;
     }else {

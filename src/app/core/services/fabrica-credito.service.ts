@@ -21,6 +21,22 @@ export class FabricaCreditoService {
         return this._http.get(`${this._appSettings.fabricaDatos.url.base}/${numeroSolicitud}/${identificacion}/T`);
     }
 
+    /**
+     * @description: Get datos fabrica Agenda referenciacion
+     */
+    public getDatosFabricaAgendaReferenciacion(datos): Observable<any> {
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.agendaReferenciacion}`);
+        return this._http.post(this._appSettings.fabricaDatos.url.agendaReferenciacion, datos);
+    }
+
+    /**
+     * @description: Get step  Agendabreferenciacuoin
+     */
+    public obtenerStepsAgendaReferenciacion(datos): Observable<any> {
+        const { numeroSolicitud,tipo } = datos;
+        return this._http.get(`${this._appSettings.fabricaDatos.url.step}/${numeroSolicitud}/${tipo}`);
+    }
+
 
     /**
      * @description: Get datos fabrica Agenda
@@ -47,6 +63,13 @@ export class FabricaCreditoService {
      */
     public postDatosFabricaCredita(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
+    }
+
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
+    public postDatosFabricaCreditoReferenciacion(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.PostagendaReferenciacion, data);
     }
     /**
      * @description: Get Datos del titular

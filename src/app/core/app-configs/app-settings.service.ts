@@ -18,7 +18,8 @@ export class AppSettingsService {
     public agendaReferenciacion = {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/RE'),
-            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE')
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE'),
+            tipoReferenciacion: EndPoints.uri('/credito/tk/property/cards-informacion-refenciacion')
         }
     };
     /**
@@ -30,7 +31,10 @@ export class AppSettingsService {
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
-            checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito')
+            checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito'),
+            step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
+            agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
+            PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
         }
     };
     /**
