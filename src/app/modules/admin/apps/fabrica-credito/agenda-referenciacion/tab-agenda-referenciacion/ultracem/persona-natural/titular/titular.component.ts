@@ -7,7 +7,7 @@ import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ci
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { UtilityService } from 'app/resources/services/utility.service';
-import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
+import { DirectionsBasicComponent } from 'app/shared/modal/directions-basic/directions-basic.component';
 import moment from 'moment';
 import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -97,12 +97,9 @@ export class TitularComponent implements OnInit {
  * @description :modal de direcion
  */
   public openModalDirection(): void {
-    const dialogRef = this._dialog.open(DirectionsComponent, {
+    const dialogRef = this._dialog.open(DirectionsBasicComponent, {
       width: '60%',
       data: {
-        departamento: '',
-        municipio: '',
-        barrio: '',
         direccion: '',
       },
       disableClose: false
@@ -110,13 +107,7 @@ export class TitularComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       const dataModal: any = res;
-      if (dataModal.departamento != undefined) {
-        this.form.controls.departamentoResidenciaCorregido.setValue(dataModal.departamento);
-        this.form.controls.descripcionDepartamentoCorregido.setValue(dataModal.departamentoNombre);
-        this.form.controls.ciudadResidenciaCorregido.setValue(dataModal.municipio);
-        this.form.controls.descripcionCiudadCorregida.setValue(dataModal.municipioNombre);
-        this.form.controls.barrioResidenciaCorregido.setValue(Number(dataModal.codigoBarrio));
-        this.form.controls.descripcionBarrioCorregido.setValue(dataModal.barrio);
+      if (dataModal.viaNombrey != undefined) {
         this.form.controls.direccionResidenciaCorregido.setValue(
           (dataModal.viaNombre == undefined
             ? ''
@@ -141,12 +132,9 @@ export class TitularComponent implements OnInit {
 * @description :modal direcionn negocio
 */
   public openModalNegocio(): void {
-    const dialogRef = this._dialog.open(DirectionsComponent, {
+    const dialogRef = this._dialog.open(DirectionsBasicComponent, {
       width: '60%',
       data: {
-        departamento: '',
-        municipio: '',
-        barrio: '',
         direccion: '',
       },
       disableClose: false
@@ -154,13 +142,7 @@ export class TitularComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       const dataModal: any = res;
-      if (dataModal.departamento != undefined) {
-        this.form.controls.departamentoNegocioCorregido.setValue(dataModal.departamento);
-        this.form.controls.descripcionDepartamentoNegocioCorregido.setValue(dataModal.departamentoNombre);
-        this.form.controls.ciudadNegocioCorregido.setValue(dataModal.municipio);
-        this.form.controls.descripcionCiudadNegocioCorregida.setValue(dataModal.municipioNombre);
-        this.form.controls.barrioNegocioCorregido.setValue(dataModal.codigoBarrio);
-        this.form.controls.descripcionBarrioNegocioCorregido.setValue(dataModal.barrio);
+      if (dataModal.viaNombre != undefined) {
         this.form.controls.direccionNegocioCorregido.setValue(
           (dataModal.viaNombre == undefined
             ? ''
@@ -368,9 +350,6 @@ export class TitularComponent implements OnInit {
         if (data.totalActivo) {
           this.form.controls['totalActivo'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        if (data.unidadNegocio) {
-          this.form.controls['unidadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
-        }
         if (data.valorTotalCuotasCreditos) {
           this.form.controls['valorTotalCuotasCreditos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
@@ -380,6 +359,27 @@ export class TitularComponent implements OnInit {
         if (data.ventaMensualCorregido) {
           this.form.controls['ventaMensualCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
+        this.form.controls['antiguedadNegocioValida_bool'].setValue(this.form.value.antiguedadNegocioValida == 'S' ? true : false)
+        this.form.controls['barrioNegocioValida_bool'].setValue(this.form.value.barrioNegocioValida == 'S' ? true : false)
+        this.form.controls['barrioResidenciaValida_bool'].setValue(this.form.value.barrioResidenciaValida == 'S' ? true : false)
+        this.form.controls['camaraComercio_bool'].setValue(this.form.value.camaraComercio == 'S' ? true : false)
+        this.form.controls['camaraComercioValida_bool'].setValue(this.form.value.camaraComercioValida == 'S' ? true : false)
+        this.form.controls['ciudadNegocioValida_bool'].setValue(this.form.value.ciudadNegocioValida == 'S' ? true : false)
+        this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'S' ? true : false)
+        this.form.controls['correoElectronicoValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['departamentoNegocioValida_bool'].setValue(this.form.value.departamentoNegocioValida == 'S' ? true : false)
+        this.form.controls['departamentoResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'S' ? true : false)
+        this.form.controls['dineroAhorradoMensualValida_bool'].setValue(this.form.value.dineroAhorradoMensualValida == 'S' ? true : false)
+        this.form.controls['direccionNegocioValida_bool'].setValue(this.form.value.direccionNegocioValida == 'S' ? true : false)
+        this.form.controls['direccionResidenciaValida_bool'].setValue(this.form.value.direccionResidenciaValida == 'S' ? true : false)
+        this.form.controls['nitNegocioValida_bool'].setValue(this.form.value.nitNegocioValida == 'S' ? true : false)
+        this.form.controls['totalActivoValida_bool'].setValue(this.form.value.totalActivoValida == 'S' ? true : false)
+        this.form.controls['ventaMensualValida_bool'].setValue(this.form.value.ventaMensualValida == 'S' ? true : false)
+        this.form.controls['numeroFormularioValida_bool'].setValue(this.form.value.numeroFormularioValida == 'S' ? true : false)
+        this.form.controls['telefonoContactoValida_bool'].setValue(this.form.value.telefonoContactoValida == 'S' ? true : false)
+        this.form.controls['tieneEmpleadoValida_bool'].setValue(this.form.value.tieneEmpleadoValida == 'S' ? true : false)
+        this.form.controls['nombreNegocioValida_bool'].setValue(this.form.value.nombreNegocioValida == 'S' ? true : false)
+        this.form.controls['referenciaValidada_bool'].setValue(this.form.value.referenciaValidada == 'S' ? true : false)
 
       });
   }
@@ -547,7 +547,7 @@ export class TitularComponent implements OnInit {
     const pagoEnArriendo = Number(this.utility.enviarNumero(this.form.value.pagoEnArriendo));
     const pagoServicioPublico = Number(this.utility.enviarNumero(this.form.value.pagoServicioPublico));
     const totalActivo = Number(this.utility.enviarNumero(this.form.value.totalActivo));
-    const unidadNegocio = Number(this.utility.enviarNumero(this.form.value.unidadNegocio));
+    const unidadNegocio =this.form.value.unidadNegocio;
     const valorTotalCuotasCreditos = Number(this.utility.enviarNumero(this.form.value.valorTotalCuotasCreditos));
     const ventaMensual = Number(this.utility.enviarNumero(this.form.value.ventaMensual));
     const ventaMensualCorregido = Number(this.utility.enviarNumero(this.form.value.ventaMensualCorregido));
@@ -572,6 +572,7 @@ export class TitularComponent implements OnInit {
     const tieneEmpleadoValida = this.form.value.tieneEmpleadoValida_bool == true ? 'S' : 'N';
     const nombreNegocioValida = this.form.value.nombreNegocioValida_bool == true ? 'S' : 'N';
     const referenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
+    debugger;
     delete data.antiguedadNegocio;
     delete data.antiguedadNegocioCorregido;
     delete data.comprasSemento;
@@ -585,7 +586,7 @@ export class TitularComponent implements OnInit {
     delete data.pagoEnArriendo;
     delete data.pagoServicioPublico;
     delete data.totalActivo;
-    delete data.unidadNegocio;
+    // delete data.unidadNegocio;
     delete data.valorTotalCuotasCreditos;
     delete data.ventaMensual;
     delete data.ventaMensualCorregido;
@@ -646,7 +647,7 @@ export class TitularComponent implements OnInit {
       pagoEnArriendo: pagoEnArriendo,
       pagoServicioPublico: pagoServicioPublico,
       totalActivo: totalActivo,
-      unidadNegocio: unidadNegocio,
+      // unidadNegocio: unidadNegoci}
       valorTotalCuotasCreditos: valorTotalCuotasCreditos,
       ventaMensual: ventaMensual,
       ventaMensualCorregido: ventaMensualCorregido,

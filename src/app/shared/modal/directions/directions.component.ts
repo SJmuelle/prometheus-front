@@ -80,7 +80,7 @@ export class DirectionsComponent implements OnInit {
             },
         }).then((result) => {});
         this._Service
-            .getQuery(`/nomenclarturas-direcciones/${data}`, true)
+            .getQuery(`/nomenclarturas`, true)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {

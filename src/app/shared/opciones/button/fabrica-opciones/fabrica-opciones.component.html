@@ -1,0 +1,31 @@
+<!-- Menu -->
+<div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
+    <div class="menu">
+        <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" [ngClass]="animacionVer==true?'show':'hidden'"
+            matTooltip="Ir atras">
+            <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
+        </button>
+        <ng-container>
+            <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
+                [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Centrales">
+                <mat-icon svgIcon="heroicons_outline:chart-pie"></mat-icon>
+            </button>
+        </ng-container>
+
+        <button mat-fab class="mx-1 bg-amber-500 roll-in-blurred-right" [ngClass]="animacionVer==true?'show':'hidden'"
+            matTooltip="Comentario">
+            <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
+        </button>
+        <ng-container>
+            <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
+                [ngClass]="animacionVer==true?'show':'hidden'">
+                <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
+            </button>
+        </ng-container>
+        <button mat-fab class="mx-3 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
+            <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
+        </button>
+
+    </div>
+
+</div>

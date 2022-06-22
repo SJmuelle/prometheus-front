@@ -36,6 +36,7 @@
                                 <div class="button-cover">
                                     <div class="button r" id="button-1">
                                         <input type="checkbox" class="checkbox"
+                                            (change)="form.controls['numeroFormularioValida_bool'].setValue(form.value.telefonoContactoValida_bool)"
                                             formControlName="telefonoContactoValida_bool">
                                         <div class="knobs"></div>
                                         <div class="layer"></div>
@@ -49,7 +50,6 @@
                                 <div class="button-cover">
                                     <div class="button r" id="button-1">
                                         <input type="checkbox" class="checkbox"
-                                            formControlName="telefonoContactoValida_bool"
                                             formControlName="numeroFormularioValida_bool">
                                         <div class="knobs"></div>
                                         <div class="layer"></div>
@@ -133,6 +133,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.departamentoResidenciaValida_bool">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Departamento de residencia</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'descripcionDepartamentoCorregido'"
+                                            (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en la ciudad de
                                         <strong>{{fabricaDatos.descripcionCiudad}}</strong>?
@@ -147,6 +158,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.ciudadResidenciaValida_bool">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ciudad residencia</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'descripcionCiudadCorregida'"
+                                            (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en el barrio de
@@ -163,6 +185,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.barrioResidenciaValida_bool">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Barrio</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'descripcionBarrioCorregido'"
+                                            (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en esta dirección:
                                         <strong>{{fabricaDatos.direccionResidencia}}</strong>?
@@ -178,60 +211,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <mat-accordion multi
-                                    *ngIf="!form.value.departamentoResidenciaValida_bool || !form.value.ciudadResidenciaValida_bool || !form.value.barrioResidenciaValida_bool || !form.value.direccionResidenciaValida_bool">
-                                    <!--Panel Datos de la solicitud-->
-                                    <mat-expansion-panel expanded class="mb-4">
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                ¿Donde vive el titular?
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded my-3">
-                                            <div class="-mx-3 md:flex mt-3 mb-2">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Departamento de residencia</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionDepartamentoCorregido'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad residencia</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionCiudadCorregida'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Barrio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionBarrioCorregido'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Dirección de residencia</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'direccionResidenciaCorregido'"
-                                                        (keydown)="openModalDirection()" (click)="openModalDirection()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </mat-expansion-panel>
-                                    <!--Panel datos de riesgo-->
-                                </mat-accordion>
                                 <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                                    Información de residencia del titular
+                                    Información del negocio
                                 </h2>
                                 <div class="flex justify-between items-center">
                                     <p>¿El negocio esta ubicado en el departamento de
@@ -248,11 +229,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" >
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Departamento del negocio</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'descripcionDepartamentoNegocioCorregido'"
+                                            (keydown)="openModalNegocio()" (click)="openModalNegocio()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El negocio esta ubicado en la ciudad de
                                         <strong>{{fabricaDatos.descripcionCiudadNegocio}}</strong>?
                                     </p>
-
                                     <div class="toggle-button-cover">
                                         <div class="button-cover">
                                             <div class="button r" id="button-1">
@@ -263,6 +254,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" >
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ciudad del negocio</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'descripcionCiudadNegocioCorregida'"
+                                            (keydown)="openModalNegocio()" (click)="openModalNegocio()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El negocio esta ubicado en el barrio de
@@ -279,6 +281,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="-mx-3 md:flex mt-3 mb-2" >
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Barrio</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'descripcionBarrioCorregido'"
+                                            (keydown)="openModalNegocio()" (click)="openModalNegocio()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El megocio esta ubicado en la dirección:
                                         <strong>{{fabricaDatos.direccionNegocio}}</strong>?
@@ -294,57 +307,17 @@
                                         </div>
                                     </div>
                                 </div>
-                                <mat-accordion multi
-                                    *ngIf="!form.value.departamentoNegocioValida_bool || !form.value.ciudadNegocioValida_bool || !form.value.barrioNegocioValida_bool || !form.value.direccionNegocioValida_bool">
-                                    <!--Panel informacion del titular-->
-                                    <mat-expansion-panel expanded>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                ¿Donde queda el negocio?
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="bg-white flex flex-col ng-tns-c299-11 rounded py-3">
-                                            <div class="-mx-3 md:flex mt-3 mb-2">
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Departamento del negocio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionDepartamentoNegocioCorregido'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Ciudad del negocio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionCiudadNegocioCorregida'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Barrio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'descripcionBarrioCorregido'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                    <mat-label>Dirección del negocio</mat-label>
-                                                    <input matInput type="text"
-                                                        [formControlName]="'direccionNegocioCorregido'"
-                                                        (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                                    <mat-icon class="icon-size-5" matSuffix
-                                                        [svgIcon]="'mat_outline:edit'">
-                                                    </mat-icon>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                    </mat-expansion-panel>
-                                </mat-accordion>
+                                <div class="-mx-3 md:flex mt-3 mb-2" >
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Dirección del negocio</mat-label>
+                                        <input matInput type="text"
+                                            [formControlName]="'direccionNegocioCorregido'"
+                                            (keydown)="openModalNegocio()" (click)="openModalNegocio()">
+                                        <mat-icon class="icon-size-5" matSuffix
+                                            [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
 
 
                                 <div class="flex justify-between items-center">
@@ -511,14 +484,14 @@
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿Cuánto compra en cemento?</mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'comprasCemento'"
-                                    (keyup)="form.controls['comprasCemento'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                    (keyup)="form.controls['comprasCemento'].setValue(utility.formatearNumero(form.value.comprasCemento)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿Cuánto paga mensual servicios públicos del negocio?</mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'pagoServicioPublico'"
-                                    (keyup)="form.controls['pagoServicioPublico'].setValue(utility.formatearNumero(form.value.dineroAhorradoMensual)); ">
+                                    (keyup)="form.controls['pagoServicioPublico'].setValue(utility.formatearNumero(form.value.pagoServicioPublico)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>

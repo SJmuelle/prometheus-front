@@ -35,9 +35,11 @@ export class AppSettingsService {
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
+            resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
         }
     };
     /**
+     * http://demo.fintra.co:8011//api-fintra/api/credito/tk/property/cards-informacion-decision
      * @description: End-point departamentos
      */
     public departamentos = {
