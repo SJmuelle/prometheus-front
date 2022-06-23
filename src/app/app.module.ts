@@ -15,6 +15,7 @@ import { appRoutes } from 'app/app.routing';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {AppSettingsService} from "./core/app-configs/app-settings.service";
+// import { FormDecisionComponent } from './modules/fabrica-credito/agenda-decision/form-decision/form-decision.component';
 // import { FormDialogoChecklistComponent } from './modules/admin/apps/gestion-fabrica-credito/form-dialogo-checklist/form-dialogo-checklist.component';
 
 

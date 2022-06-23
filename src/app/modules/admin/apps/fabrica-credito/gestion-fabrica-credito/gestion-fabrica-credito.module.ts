@@ -89,7 +89,8 @@ import { GridCentralesComponent } from './grid-centrales/grid-centrales.componen
     ],
 
     exports: [
-        GridReferenciasComponent
+        GridReferenciasComponent,
+        GridComentariosComponent
     ]
 })
 export class GestionFabricaCreditoModule { }

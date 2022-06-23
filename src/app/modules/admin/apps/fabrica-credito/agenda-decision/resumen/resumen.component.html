@@ -6,7 +6,11 @@
                     <h3 class="mb-2 text-gray-900">Resumen del crédito</h3>
                     <span class="font-semibold text-gray-500">Número solicitud: {{numeroSolicitud}}</span>
                 </div>
+                <button class="mt-2" mat-stroked-button (click)="openModalNegocio()">
+                    Decisión
+                </button>
                 <app-fabrica-opciones></app-fabrica-opciones>
+
             </div>
         </div>
     </div>
@@ -15,7 +19,7 @@
 
 
 
-        <div class="grid grid-cols-4 gap-8 mb-20">
+        <div class="grid grid-cols-4 gap-8 mb-20 mx-3">
             <!-- Card #38 -->
             <!-- <fuse-card class="flex flex-col max-w-80 w-full p-8 filter-info">
                 <div class="text-2xl font-semibold leading-tight">About Me</div>
@@ -43,7 +47,7 @@
                     See complete bio
                 </button>
             </fuse-card> -->
-            <ng-container *ngFor="let item of datos">
+            <ng-container *ngFor="let item of datos;  index as i;">
                 <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
                     <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                         <mat-icon class="icon-size-24 opacity-25 " [ngClass]="item.color" [svgIcon]="item.icono">
@@ -58,55 +62,57 @@
                                 {{item.descripcion}}
                             </div>
                         </div>
-                        <div class="ml-auto -mt-2">
-                            <button mat-icon-button [matMenuTriggerFor]="previousStatementMenu">
-                                <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:dots-vertical'">
-                                </mat-icon>
-                            </button>
-                            <mat-menu #previousStatementMenu="matMenu">
-                                <button mat-menu-item>
-                                    <span class="flex items-center">
-                                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:credit-card'">
-                                        </mat-icon>
-                                        <span>View statement</span>
-                                    </span>
-                                </button>
-                                <button mat-menu-item>
-                                    <span class="flex items-center">
-                                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:cash'">
-                                        </mat-icon>
-                                        <span>Spending breakdown</span>
-                                    </span>
-                                </button>
-                                <button mat-menu-item>
-                                    <span class="flex items-center">
-                                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:receipt-tax'">
-                                        </mat-icon>
-                                        <span>Tax breakdown</span>
-                                    </span>
-                                </button>
-                                <mat-divider class="my-2"></mat-divider>
-                                <button mat-menu-item>
-                                    <span class="flex items-center">
-                                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:printer'">
-                                        </mat-icon>
-                                        <span>Print statement</span>
-                                    </span>
-                                </button>
-                                <button mat-menu-item>
-                                    <span class="flex items-center">
-                                        <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:mail'">
-                                        </mat-icon>
-                                        <span>Email statement</span>
-                                    </span>
-                                </button>
-                            </mat-menu>
-                        </div>
                     </div>
                     <div class="flex flex-row flex-wrap mt-4 -mx-6">
-                        <div class="flex flex-col mx-6 my-2" *ngFor="let campo of item.campos">
+                        <div class="flex flex-col mx-3 my-2" *ngFor="let campo of item.campos;">
+                            <div class="flex items-center">
+                                <div class="flex items-center justify-center w-14 h-14 rounded" *ngIf="i==0"
+                                    [ngClass]="campo.color">
+                                    <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
+                                </div>
+                                <div class="flex-auto ml-4 leading-none">
+                                    <div class="text-sm font-medium text-secondary">{{campo.label}}</div>
+                                    <div class="text-sm font-medium capitalize my-1">{{campo.valor2}}</div>
+                                    <div class="text-sm font-medium capitalize">{{campo.valor}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="flex flex-col mx-6 my-2" >
                             <div class="text-sm font-medium leading-none text-secondary">{{campo.label}}:</div>
                             <div class="mt-1 font-medium leading-none capitalize">{{campo.valor}}</div>
+                        </div> -->
+                    </div>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let item of datos2">
+                <div class="relative flex flex-col flex-auto p-6 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+                    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                        <mat-icon class="icon-size-24 opacity-25 " [ngClass]="item.color" [svgIcon]="item.icono">
+                        </mat-icon>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex flex-col">
+                            <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                                {{item.titulo}}
+                            </div>
+                            <div class=" font-medium text-sm" [ngClass]="item.color">
+                                {{item.descripcion}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-row flex-wrap -mx-6">
+
+                        <div class="flex-auto grid grid-cols-2 gap-2 mt-3 mx-3">
+                            <!-- Fixed -->
+                            <div *ngFor="let campo of item.campos"
+                                class="col-span-2 sm:col-span-1 flex flex-col items-center justify-center py-4 px-1 rounded-2xl bg-gray-100 text-secondary dark:bg-white dark:bg-opacity-5">
+                                <div class="px-2 font-semibold leading-none tracking-tight">
+                                    {{campo.valor}}
+                                </div>
+                                <div class="mt-1 text-sm font-medium text-center capitalize">{{campo.label }}</div>
+                            </div>
+                            <!-- <div class="text-sm font-medium leading-none text-secondary">{{campo.label}}:</div>
+                            <div class="mt-1 font-medium leading-none capitalize">{{campo.valor}}</div> -->
                         </div>
                     </div>
                 </div>
@@ -146,6 +152,7 @@
                 </div>
             </div>
 
+            <!-- agenda -->
             <div class="col-span-2 relative overflow-hidden flex flex-col flex-auto p-6 bg-card rounded-2xl shadow">
                 <div class="flex items-center">
                     <div class="flex flex-col">
@@ -153,47 +160,13 @@
                         </div>
                     </div>
                     <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-                        <mat-icon class="icon-size-24 opacity-25 text-blue-600" [svgIcon]="'mat_outline:bar_chart'">
+                        <mat-icon class="icon-size-24 opacity-25 text-blue-600" [svgIcon]="'heroicons_outline:chart-square-bar'">
                         </mat-icon>
-                    </div>
-                    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-                        <mat-icon class="icon-size-24 opacity-25 text-blue-600" [svgIcon]="''">
-                        </mat-icon>
-                    </div>
-                    <div class="ml-auto -mt-2 -mr-2">
-                        <button mat-icon-button [matMenuTriggerFor]="budgetMenu">
-                            <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:bar_chart'"></mat-icon>
-                        </button>
-                        <mat-menu #budgetMenu="matMenu">
-                            <button mat-menu-item>Expenses breakdown</button>
-                            <button mat-menu-item>Savings breakdown</button>
-                            <button mat-menu-item>Bills breakdown</button>
-                            <mat-divider class="my-2"></mat-divider>
-                            <button mat-menu-item>
-                                <span class="flex items-center">
-                                    <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:printer'">
-                                    </mat-icon>
-                                    <span>Print budget summary</span>
-                                </span>
-                            </button>
-                            <button mat-menu-item>
-                                <span class="flex items-center">
-                                    <mat-icon class="icon-size-5 mr-3" [svgIcon]="'heroicons_solid:mail'">
-                                    </mat-icon>
-                                    <span>Email budget summary</span>
-                                </span>
-                            </button>
-                        </mat-menu>
                     </div>
                 </div>
-                <!-- <div class="mt-6">
-                    Last month; you had <strong>223</strong> expense transactions, <strong>12</strong> savings entries and <strong>4</strong> bills.
-                </div> -->
                 <div class="my-8 space-y-8">
-
                     <div class="flex flex-col" *ngFor="let item of dataResumenTrazabilidad">
                         <div class="flex items-center">
-
                             <div class="flex items-center justify-center w-14 h-14 rounded ">
                                 <img src="assets/images/agendas/{{item.iconoAgenda}}" class="text-current">
                             </div>
@@ -220,11 +193,13 @@
 
                 </div>
                 <div class="flex items-center mt-auto">
-                    <button class="mt-2" mat-stroked-button>
+                    <button class="mt-2" mat-stroked-button (click)="verComentarios = true; settingsDrawer.toggle();">
                         Mostrar comentarios
                     </button>
                 </div>
             </div>
+
+
         </div>
 
 
@@ -232,3 +207,14 @@
     </div>
 
 </div>
+
+<fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
+    [position]="'right'" #settingsDrawer>
+    <ng-container *ngIf="true">
+        <div class="fixed z-999 w-full">
+            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()"
+                (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
+            </app-grid-comentarios>
+        </div>
+    </ng-container>
+</fuse-drawer>

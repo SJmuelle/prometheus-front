@@ -30,12 +30,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { SharedModule } from 'app/shared/shared.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
+import { FormDecisionComponent } from './form-decision/form-decision.component';
 
 
 @NgModule({
   declarations: [
     GridAgendaDecisionComponent,
-    ResumenComponent
+    ResumenComponent,
+    FormDecisionComponent
   ],
   imports: [
     CommonModule,
@@ -61,13 +65,14 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MatExpansionModule,
     AgendaReferenciacionModule,
     FuseCardModule,
-
+    FuseDrawerModule,
     MatMenuModule,
     MatProgressBarModule,
     MatSortModule,
     MatTableModule,
     NgApexchartsModule,
-    SharedModule
+    SharedModule,
+    GestionFabricaCreditoModule
   ]
 })
 export class AgendaDecisionModule { }
