@@ -316,10 +316,10 @@ export class GestionPQRSComponent implements OnInit {
                         this.comentarioid = id.id;
                         this.comentariotipoid = id.id_tipo_comentario;
                         this.envio = id.envio;
-                        this.motivo = id.motivoRechazo;
+                        this.motivo = id.detalle;
                         console.log(this.comentarioid);
                         console.log(this.comentariotipoid);
-                        console.log(this.motivo);
+                        console.log('hola ', this.motivo);
                     }
 
                     let urlad = `/adjunto-comentario/${this.comentarioid}`;
@@ -562,6 +562,15 @@ export class GestionPQRSComponent implements OnInit {
                             if (this.archivo[0].idComentario==0) {
 
                                 if (data.respuesta == true) {
+                                    console.log(
+                                        url,
+                                        data.idPqrs,
+                                        5,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        this.envio
+                                    );
                                     debugger;
                                     this._pqrService.enviaCorreos(
                                         url,

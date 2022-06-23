@@ -588,8 +588,8 @@ export class SolucionComponent implements OnInit {
                                             //         this.envioCorreo==true?'S':'N'
                                             //     );
                                             // }
-                                            // this.limpiar();
-                                            // this.recargarData();
+                                            this.limpiar();
+                                            this.recargarData();
                                         }
                                     });
                                 }
@@ -614,8 +614,8 @@ export class SolucionComponent implements OnInit {
                                     //         this.envioCorreo==true?'S':'N'
                                     //     );
                                     // }
-                                    // this.limpiar();
-                                    // this.recargarData();
+                                    this.limpiar();
+                                    this.recargarData();
                                 }
                             });
                         }
