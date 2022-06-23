@@ -66,19 +66,18 @@
             <fuse-card class="card p-3 shadow row mr-3">
                 <div class="flex flex-col">
                     <div class="mr-1 leading-tight titulo_tabs text-2xl font-semibold">Adjuntos</div>
-                    <div class="flex flex-row mt-2">
+                    
+                </div>
+                <hr class="w-full border-t mt-2">
+                <div class="flex flex-col overflow-y-scroll h-40">
+                    <div class="flex flex-row justify-between mt-2">
+                        <div class="mb-1">Registros</div>
                         <div>
                             <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Agregar adjuntos" svgIcon="heroicons_outline:document-add"></mat-icon></a>
                         </div>
-                        
                     </div>
-                </div>
-
-                <hr class="w-full border-t">
-                <div class="flex flex-col overflow-y-scroll h-40">
-                    <div class="mb-1">Soluciones</div>
                     <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
-                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.id_comentario=='2' || item.id_comentario=='1'">
+                        <div class="flex flex-row ml-1 mb-2 justify-between" *ngIf="item.id_comentario=='3'">
                             <div class="flex flex-row">
                                 <div>
                                     <mat-icon class="text-sm cursor-pointer" matTooltip="Descargar adjunto" svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>
@@ -98,9 +97,9 @@
                 </div>
                 <hr class="w-full border-t mt-3">
                 <div class="flex flex-col overflow-y-scroll h-40">
-                    <div class="mb-1">Registros</div>
+                    <div class="mb-1">Soluciones</div>
                     <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
-                        <div class="flex flex-row ml-1 mb-2 justify-between" *ngIf="item.id_comentario=='3'">
+                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.id_comentario=='2' || item.id_comentario=='1'">
                             <div class="flex flex-row">
                                 <div>
                                     <mat-icon class="text-sm cursor-pointer" matTooltip="Descargar adjunto" svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>
@@ -598,7 +597,7 @@
                                 <div class="flex flex-col">
                                     <div class="flex flex-col sm:flex-row sm:justify-between mb-2">
                                         <div>
-                                            <button mat-button class="color_fintra text-white w-100 sm:w-36" (click)="agregarcomentario()" [hidden]="datos.estado=='Cerrado'">Agregar Comentario</button>
+                                            <button mat-button class="color_fintra text-white w-100 sm:w-36" (click)="agregarcomentario()" [hidden]="datos.estado=='Cerrado'">Agregar comentario</button>
                                         </div>
                                         <div class="mt-2 leading-tight sm:text-end sm:mt-0">
                                             <input class="border rounded p-2 bg-gray-100"

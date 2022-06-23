@@ -453,12 +453,16 @@ export class CreacionPQRSComponent implements OnInit {
                                         segmento_actual:this.datos.segmento
                                     };
 
-                                    if (dato) {
+                                    if (dato.tipo_solicitante!='' && dato.segmento_actual!='') {
                                         this._pqrService.Create('actualizar_pqr_tipo', dato).subscribe((response: any) => {
-                                            if (response) {
+                                            if (response.status == 200) {
                                                 console.log('Aqui te respondo: ', response)
+                                            }else{
+                                                console.log('No hay pa actualizar.')
                                             }
                                         })
+                                    }else{
+                                        console.log('No hay para actualizar.')
                                     }
 
                                     let datos = {

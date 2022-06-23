@@ -8,7 +8,7 @@ export const environment = {
     password: btoa('123456'),
     urlApi: 'http://demo.fintra.co:8011/api-fintra/api',
     urlApi2: 'http://demo.fintra.co:8011/api-fintra/api/generic/qry/',
-    urlApi3: 'http://demo.fintra.co:8011/api-fintra/api/generic/',
+    urlApi3: 'https://4c64-181-57-229-82.ngrok.io/api-fintra/api/generic/',
 
     // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
     // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
@@ -21,7 +21,7 @@ export const environment = {
 
     urlprometheus:
         'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto: 'https://d9e4-181-57-229-82.ngrok.io/api-fintra/api/pqrs',
+    adjunto: 'https://4c64-181-57-229-82.ngrok.io/api-fintra/api/pqrs',
     // adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
     // envioCorreo:"http://192.168.140.197:8084"
     envioCorreo: 'http://demo.fintra.co:8010/apicredit',
