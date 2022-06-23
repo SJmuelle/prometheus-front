@@ -1,75 +1,68 @@
-<div class="h-full h-screen overflow-auto">
-  <div class="flex items-center">
-    <div class="flex flex-col">
-      <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Decisión
+<h2 mat-dialog-title>Decisión</h2>
+<mat-dialog-content>
+  <form [formGroup]="DecisionForm">
+    <div class="flex flex-col w-100">
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Decisión</mat-label>
+          <mat-select formControlName="decision">
+            <mat-option *ngFor="let item of listadoDeciones" value="{{item.codigoOpcion}}" (click)="ocultarCausal(item.codigoOpcion)">{{item.descripcionOpcion}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="frm.decision.errors?.required">
+            Campo requerido.
+          </mat-error>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+        </mat-form-field>
+      </div>
+      <div [hidden]="visible==false" class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Causal </mat-label>
+          <mat-select formControlName="causal" [required]="visible==true">
+            <mat-option *ngFor="let item of listadoCausales" value="{{item.idCausal}}">{{item.descripcionCausal}}</mat-option>
+          </mat-select>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Monto ($)</mat-label>
+          <input matInput type="text" autocomplete="off" [formControlName]="'monto'" value="valorNum" (keyup)="frm.monto.setValue(decision.formatearNumero(frm.monto.value)); convText(frm.monto.value)">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Plazo (Meses) </mat-label>
+          <input matInput type="text" formControlName="plazo" autocomplete="off">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Tasa </mat-label>
+          <input matInput type="text" formControlName="tasa" autocomplete="off">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Comentario</mat-label>
+          <textarea class="tamano" matInput type="text" formControlName="comentario" rows="3" autocomplete="off"></textarea>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'text_snippet'"></mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="w-full">
+        <mat-form-field class="w-full" appearance="fill">
+          <mat-label>Reliquidar</mat-label>
+          <input matInput type="text" autocomplete="off">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+        </mat-form-field>
       </div>
     </div>
-    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-      <mat-icon class="icon-size-24 opacity-25 text-pink-600" [svgIcon]="'heroicons_outline:question-mark-circle'">
-      </mat-icon>
-    </div>
-  </div>
-  <div class="my-8 space-y-8">
-    <div class="flex flex-col">
-      <div class="flex items-center">
-        <div class="row">
-          <div class="bg-white col l12">
-            <div class="row justify-start ">
-              <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                  <mat-label>Decisión</mat-label>
-                  <input matInput type="text" autocomplete="off" name="decision">
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                  <mat-label>Causal </mat-label>
-                  <input matInput type="text" autocomplete="off" name="causal">
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                  <mat-label>Monto </mat-label>
-                  <input matInput type="text" autocomplete="off" name="monto">
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                  <mat-label>Plazo </mat-label>
-                  <input matInput type="text" autocomplete="off" name="plazo">
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                  <mat-label>Tasa </mat-label>
-                  <input matInput type="text" autocomplete="off" name="tasa">
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
-                </mat-form-field>
-              </div>
-              <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                  <mat-label>Observación</mat-label>
-                  <textarea matInput type="text" autocomplete="off" name="observación" [required]="true">
-                                               </textarea>
-                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'text_snippet'">
-                  </mat-icon>
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-  <div class="flex items-center mt-auto">
-    <button class="mt-2" mat-stroked-button>
-      Guardar decisión
-    </button>
-  </div>
-</div>
-
+  </form>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button id="guardar" class="color_fintra text-white" [disabled]="DecisionForm.invalid">Guardar decisión</button>
+  <button mat-button mat-dialog-close id="cancelar">Cancelar</button>
+</mat-dialog-actions>
