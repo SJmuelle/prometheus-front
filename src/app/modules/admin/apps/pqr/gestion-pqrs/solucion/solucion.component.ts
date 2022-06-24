@@ -446,6 +446,7 @@ export class SolucionComponent implements OnInit {
                                     },
                                 }).then((result) => {});
                                 console.log("Aqui tus datos: ", data)
+                                debugger;
                                 this._pqrService.postFile(url, data).subscribe((response: any) => {
                                     Swal.close();
                                     if (response) {
@@ -458,6 +459,16 @@ export class SolucionComponent implements OnInit {
                                             if (resultado) {
                                                 if (this.idTipoComentario == '2') {
                                                     url = `/sendmail/notificacion-crear-pqrs`;
+                                                    console.log(
+                                                        url,
+                                                        this.pqrid,
+                                                        5,
+                                                        response.data.nombre,
+                                                        response.data.archivos,
+                                                        mensaje,
+                                                        this.envioCorreo==true?'S':'N'
+                                                    );
+                                                    debugger;
                                                     this._pqrService.envioCorreos(
                                                         url,
                                                         this.pqrid,
@@ -468,8 +479,8 @@ export class SolucionComponent implements OnInit {
                                                         this.envioCorreo==true?'S':'N'
                                                     );
                                                 }
-                                                this.limpiar();
-                                                this.recargarData();
+                                                // this.limpiar();
+                                                // this.recargarData();
                                             }
                                         });
                                     }
@@ -494,8 +505,8 @@ export class SolucionComponent implements OnInit {
                                                 this.envioCorreo==true?'S':'N'
                                             );
                                         }
-                                        this.limpiar();
-                                        this.recargarData();
+                                        // this.limpiar();
+                                        // this.recargarData();
                                     }
                                 });
                             }
