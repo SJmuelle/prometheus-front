@@ -11,6 +11,8 @@ export const environment = {
     urlApi5: 'http://demo.fintra.co:8011/api-fintra/api/generic/',
     urlApi6: 'http://demo.fintra.co:8011/api-fintra/api/archivos/guardar/',
 
+    urlPagaduria: 'https://prometheus.fintra.co:8443/pagadurias/',
+
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'http://demo.fintra.co:8011/api-fintra/api/pqrs',
     // envioCorreo:'http://192.168.140.197:8084'

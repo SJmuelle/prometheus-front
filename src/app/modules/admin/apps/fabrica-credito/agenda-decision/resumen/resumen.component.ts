@@ -19,7 +19,7 @@ export class ResumenComponent implements OnInit {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   dataPolicitasAdmin: any;
   datos2: any[];
-  verComentarios:boolean=false;
+  verComentarios: boolean = false;
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
     private route: ActivatedRoute,
@@ -240,33 +240,35 @@ export class ResumenComponent implements OnInit {
  * @description: Direcciona al componente comentarios
  */
   public onComentarios(): void {
-    this.verComentarios=true;
+    this.verComentarios = true;
   }
 
-      /**
-     * @description:
-     */
-       public onCerrar(event): void {
-        this.verComentarios = event;
-       
-    }
-    /**
-     * @description: Minimiza el componente comentarios
-     */
-    public onMinimiza(event): void {
-     
-        this.verComentarios = event;
-    }
+  /**
+ * @description:
+ */
+  public onCerrar(event): void {
+    this.verComentarios = event;
 
-    public openModalNegocio(): void {
-      const dialogRef = this._dialog.open(FormDecisionComponent, {
-          width: '60%',
-          data: {  },
-          disableClose: false
-      });
+  }
+  /**
+   * @description: Minimiza el componente comentarios
+   */
+  public onMinimiza(event): void {
 
+    this.verComentarios = event;
+  }
+
+  public openModalNegocio(): void {
+    const dialogRef = this._dialog.open(FormDecisionComponent, {
+      width: '60%',
+      data: {},
+      disableClose: false
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+    this.router.navigate(['/credit-factory/agenda-decision']);
+    })
 
   }
 
-  
+
 }

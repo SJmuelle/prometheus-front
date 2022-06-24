@@ -46,4 +46,12 @@ export class DecisionesService {
         return valor;
     }
   }
+
+  /**
+  * @description:post de validacion Datos
+  */
+  public postGuardado(data: any): Observable<any> {
+    return this._http.post(this._appSettings.decision.url.guardado, data);
+  }
+  
 }

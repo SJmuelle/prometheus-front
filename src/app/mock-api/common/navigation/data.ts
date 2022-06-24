@@ -208,6 +208,13 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
 
         ]
+    },
+    {
+        id: 'pagaduria',
+        title: 'Pagadurías',
+        type: 'basic',
+        link: '/pagaduria/par',
+        icon: 'heroicons_outline:cash'
     }
     // {
     //     id: 'calendario',
