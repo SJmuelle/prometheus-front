@@ -314,7 +314,7 @@ export class GestionPQRSComponent implements OnInit {
                     for (let index = 0; index < unicos.length; index++) {
                         const id = unicos[index];
                         this.comentarioid = id.id;
-                        this.comentariotipoid = id.id_tipo_comentario;
+                        this.comentariotipoid = id.tipo_comentario;
                         this.envio = id.envio;
                         this.motivo = id.detalle;
                         console.log(this.comentarioid);
@@ -559,6 +559,8 @@ export class GestionPQRSComponent implements OnInit {
                             this.onTabChanged(2);
                             debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
+                            console.log(this.archivo[0].idComentario)
+                            debugger;
                             if (this.archivo[0].idComentario==0) {
 
                                 if (data.respuesta == true) {
