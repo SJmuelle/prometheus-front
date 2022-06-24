@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
@@ -22,7 +22,7 @@ export class TitularComponent implements OnInit {
   @Input() currentStep: number;
 
   // currentStep = 1;
-
+  @ViewChild('editor') editor;
   public form: FormGroup;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public undadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
@@ -54,6 +54,7 @@ export class TitularComponent implements OnInit {
       ['clean'],
     ],
   };
+  mensajeQuill: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -162,6 +163,12 @@ export class TitularComponent implements OnInit {
       }
     });
   }
+
+  logChange($event) {
+    console.log(this.editor);
+    //console.log($event);
+    this.mensajeQuill=$event.text;
+}
 
   /**
  * @description :creando el formulario

@@ -3,10 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListadoChequeoComponent } from './listado-chequeo/listado-chequeo.component';
 import { ListadoPreguntasReferenciacionComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion.component';
 import { ListadoTiposComentariosComponent } from './listado-tipos-comentarios/listado-tipos-comentarios.component';
+import { TiempoAgendaComponent } from './tiempo-agenda/tiempo-agenda.component';
 
 const routes: Routes = [
   {
-      path: '',
+      path: 'chequeo',
       component: ListadoChequeoComponent
   },
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'listadoTiposComentarios',
     component: ListadoTiposComentariosComponent
+  },
+  {
+    path: 'tiempoAgenda',
+    component: TiempoAgendaComponent
   }
 
 ];

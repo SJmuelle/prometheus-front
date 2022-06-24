@@ -572,9 +572,16 @@
                             </div>
                         </div>
                         <div class="mt-1">
-                            <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
+                            <quill-editor #editor  (contentChanged)="logChange($event)" class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
                                 name="descripcion" [modules]="quillModules"
                                 [formControlName]="'telefonoContactoObservacion'"></quill-editor>
+                        </div>
+                        <div class="col-lg-12 mt-1.5" *ngIf="editor.editorElem">
+                            <small [ngClass]="(editor.editorElem.outerText.length<10)?'text-red-600':'text-green-600'" class="text-sm"
+                             *ngIf="editor.editorElem.outerText.length>1">
+                             Caracteres: {{ editor.editorElem.outerText.length }}
+                            
+                            </small>
                         </div>
 
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
