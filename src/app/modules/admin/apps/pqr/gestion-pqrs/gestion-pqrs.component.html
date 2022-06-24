@@ -411,8 +411,16 @@
                                                                 <ng-container>
                                                                     <div class="row w-100">
                                                                         <div class="col-lg-7">
-                                                                            <div class="text-secondary">
-                                                                                ({{pqrid}}-{{ item.id}})
+                                                                            <div class="flex flex-row gap-3">
+                                                                                <div class="text-secondary">
+                                                                                    ({{pqrid}}-{{ item.id}})
+                                                                                </div>
+                                                                                <div class="text-secondary" *ngIf="item.tipo_comentario==1">
+                                                                                    Solucion de area
+                                                                                </div>
+                                                                                <div class="text-secondary" *ngIf="item.tipo_comentario==2">
+                                                                                    Solucion de cliente
+                                                                                </div>
                                                                             </div>
                                                                             <strong class="capitalize">
                                                                                 {{ item.usuario}}

@@ -36,6 +36,7 @@ export class ListComponent implements OnInit {
           .getListados('/listar-pqrs-gestion')
           .subscribe((response: any) => {
             Swal.close();
+            console.log(response)
             if (response) {
               this.listado = response;
               // console.log(response)
