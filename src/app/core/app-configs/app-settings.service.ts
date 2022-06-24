@@ -183,4 +183,15 @@ export class AppSettingsService {
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM')
         }
     };
+
+     /**
+     * @description: End-point agenda decision
+     */
+      public agendaDecision = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/DE'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/DE')
+        }
+    };
+    
 }

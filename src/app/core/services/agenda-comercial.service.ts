@@ -23,6 +23,13 @@ export class AgendaComercialService {
   }
 
   /**
+ * @description: Listado de agendas comercial
+ */
+  public getAgendaDecision(): Observable<any> {
+    return this._http.get(this._appSettings.agendaDecision.url.base);
+  }
+
+  /**
    * @description: Establece por defecto el observable behaviorSubject
    */
   public resetSeleccionAgenda(): void {
@@ -35,4 +42,11 @@ export class AgendaComercialService {
   public getTotalesAgendaComercial(): Observable<any> {
     return this._http.get(this._appSettings.agendaComercial.url.totales);
   }
+
+    /**
+   * @description: totales de agendas de completacion
+   */
+     public getTotalesAgendaDecision(): Observable<any> {
+      return this._http.get(this._appSettings.agendaDecision.url.totales);
+    }
 }

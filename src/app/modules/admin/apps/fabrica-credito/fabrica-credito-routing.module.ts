@@ -6,6 +6,7 @@ import {AgendaReferenciacionModule} from "./agenda-referenciacion/agenda-referen
 import {AgendaComercialModule} from "./agenda-comercial/agenda-comercial.module";
 import { ParametriaModule } from './parametria/parametria.module';
 import { AgendaDecisionModule } from './agenda-decision/agenda-decision.module';
+import { TrazabilidadCreditoModule } from './trazabilidad-credito/trazabilidad-credito.module';
 
 
 const routes: Routes = [
@@ -35,6 +36,10 @@ const routes: Routes = [
             {
                 path: 'agenda-decision',
                 loadChildren: () => AgendaDecisionModule
+            },
+            {
+                path: 'trazabilidad',
+                loadChildren: () => TrazabilidadCreditoModule
             },
 
         ]

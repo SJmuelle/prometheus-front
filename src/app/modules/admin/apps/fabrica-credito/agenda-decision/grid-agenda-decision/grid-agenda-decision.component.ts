@@ -46,7 +46,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
     */
   private getAgendaComercial(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getAgendaComercial().pipe(
+    this.agendaComercialService.getAgendaDecision().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       Swal.close();
@@ -146,7 +146,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
    */
   private getTotalesAgendaComercial(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getTotalesAgendaComercial().pipe(
+    this.agendaComercialService.getTotalesAgendaDecision().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       if (res.status === 200) {

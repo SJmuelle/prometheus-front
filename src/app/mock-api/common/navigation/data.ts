@@ -177,6 +177,13 @@ export const compactNavigation: FuseNavigationItem[] = [
                 link: '/credit-factory/agenda-decision',
                 icon: 'heroicons_outline:document',
             },
+            { 
+                id: 'trazabilidad.list',
+                title: 'Trazabilidad',
+                type: 'basic',
+                link: '/credit-factory/trazabilidad',
+                icon: 'heroicons_outline:chart-square-bar',
+            },
             {
                 id: 'parametria',
                 title: 'Configuración',
