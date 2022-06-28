@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <span
-                                class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase bg-green-200 text-green-800 dark:bg-green-600 dark:text-green-50"><span
+                                class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  " [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
                                     class="leading-relaxed whitespace-nowrap">{{item.estadoAccion}}</span></span>
                         </div>
                     </ng-container>
