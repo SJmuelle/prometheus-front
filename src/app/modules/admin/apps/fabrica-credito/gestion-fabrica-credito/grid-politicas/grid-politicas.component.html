@@ -1,0 +1,41 @@
+<div class="grid grid-cols-12">
+     <span class="col-span-12 p-1.5 rounded-1 mb-3 text-dark">Administrativas</span>
+    <div class="col-span-12">
+        <table class="shadow p-0">
+            <thead class="bg-accent-50" >
+            <tr
+                class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3">Tipo</th>
+                <th class="px-4 py-3">Nombre de la politica</th>
+                <th class="px-4 py-3">Descripción de la politica</th>
+                <th class="px-4 py-3">Estado</th>
+            </tr>
+            </thead>
+            <tbody class="bg-white">
+                <ng-container *ngIf="politicas$ | async as items">
+                    <ng-container *ngFor="let item of items.data">
+                        <tr>
+                            <td class="px-2 text-sm border">{{item.tipo}}</td>
+                            <td class="px-2 text-sm border">{{item.nombre}}</td>
+                            <td class="px-2 text-sm border">{{item.descripcion}}</td>
+                            <td class="px-2 text-sm border w-0"
+                            >
+                                <div
+                                    class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 "
+                                    [ngClass]="
+                                    item.estadoAccion !== 'CUMPLE'
+                                    ? 'bg-pink-300'
+                                    : 'bg-green-300'
+                                    "
+                                >
+                                    {{item.estadoAccion | titlecase}}
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-13 sm:mt-13"></div>
+</div>

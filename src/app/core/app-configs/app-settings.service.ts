@@ -8,7 +8,19 @@ export class AppSettingsService {
      */
     public agendaCompletacion = {
         url: {
-            base: EndPoints.uri('agendas-credito/CO')
+            base: EndPoints.uri('/generic/qry/agendas-credito/CO')
+        }
+    };
+    /**
+     * @description: End-point pagaduria
+     */
+     public pagaduria = {
+        url: {
+            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
+            baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
+            baseUpdate: EndPoints.uriPaga('api/generic/update-solicitud-pagaduria'),
+            baseObli: EndPoints.uriPaga('api/generic/qry/obligaciones-comprar'),
+            baseArchivo: EndPoints.uriPaga('api/archivos/documentos-negocio')
         }
     };
     /**
@@ -16,7 +28,7 @@ export class AppSettingsService {
      */
     public agendaReferenciacion = {
         url: {
-            base: EndPoints.uri('agenda-credito/RE')
+            base: EndPoints.uri('/generic/qry/agenda-credito/RE')
         }
     };
     /**
@@ -24,9 +36,9 @@ export class AppSettingsService {
      */
     public fabricaDatos = {
         url: {
-            base: EndPoints.uri('consulta-fabrica'),
-            baseCredito: EndPoints.uriCredito('fabrica-tab-titular'),
-            baseRepresentante: EndPoints.uri('informacion-representante-legal')
+            base: EndPoints.uri('/generic/qry/consulta-fabrica'),
+            baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
+            baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal')
         }
     };
     /**
@@ -34,7 +46,7 @@ export class AppSettingsService {
      */
     public departamentos =  {
         url: {
-            base: EndPoints.uri('departamentos')
+            base: EndPoints.uri('/generic/qry/departamentos')
         }
     };
     /**
@@ -42,7 +54,7 @@ export class AppSettingsService {
      */
     public ciudades = {
         url: {
-            base: EndPoints.uri('ciudades')
+            base: EndPoints.uri('/generic/qry/ciudades')
         }
     };
     /**
@@ -50,7 +62,7 @@ export class AppSettingsService {
      */
     public barrios = {
         url: {
-            base: EndPoints.uri('barrios')
+            base: EndPoints.uri('/generic/qry/barrios')
         }
     };
     /**
@@ -58,7 +70,7 @@ export class AppSettingsService {
      */
     public genericas = {
         url: {
-            base: EndPoints.uri('consulta-lista-generica')
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica')
         }
     };
     /**
@@ -66,10 +78,12 @@ export class AppSettingsService {
      */
     public referencias = {
         url: {
-            base: EndPoints.uri('consulta-referencias'),
-            baseDetalle: EndPoints.uri('consulta-detalle-referencias'),
-            baseReferencia: EndPoints.uriGenerica('cre-actualizar-referencia'),
-            baseReferenciaCrear: EndPoints.uriGenerica('cre-agregar-referencia')
+            base: EndPoints.uri('/generic/qry/consulta-referencias'),
+            baseDetalle: EndPoints.uri('/generic/qry/consulta-detalle-referencias'),
+            baseReferencia: EndPoints.uri('/generic/cre-actualizar-referencia'),
+            baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
+            baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
+            baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
         }
     };
     /**
@@ -77,8 +91,8 @@ export class AppSettingsService {
      */
     public comentarios = {
         url: {
-            baseComentario:  EndPoints.uri('cre-consulta-comentarios'),
-            baseComentarioCrear: EndPoints.uri('cre-agregar-comentario')
+            baseComentario:  EndPoints.uri('/generic/qry/cre-consulta-comentarios'),
+            baseComentarioCrear: EndPoints.uri('/generic/cre-agregar-comentario')
         }
     };
     /**
@@ -86,10 +100,10 @@ export class AppSettingsService {
      */
     public documentos = {
         url: {
-            base: EndPoints.uri('documentos-reque'),
-            baseAdjunto: EndPoints.uriAdjuntos('adjuntar-archivo'),
-            baseConsultar: EndPoints.uriBase('/pqrs/file/load/cre-consultar-documento'),
-            baseEliminar: EndPoints.uriGenerica('cre-inactivar-doc')
+            base: EndPoints.uri('/generic/qry/documentos-requeridos-fabrica'),
+            baseAdjunto: EndPoints.uri('/archivos/guardar/adjuntar-archivo'),
+            baseConsultar: EndPoints.uri('/pqrs/file/load/cre-consultar-documento'),
+            baseEliminar: EndPoints.uri('/generic/cre-inactivar-doc')
         }
     };
     /**
@@ -97,9 +111,28 @@ export class AppSettingsService {
      */
     public decision = {
         url: {
-            base: EndPoints.uri('consulta-lista-generica/DECISION'),
-            baseDecision: EndPoints.uriGenerica('cre-decision')
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
+            baseDecision: EndPoints.uri('/credito/cre-decision'),
+            cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
+            baseCausal: EndPoints.uri('/generic/qry/cau-rechazo')
         }
     };
-
+    /**
+     * @description: End-Point
+     */
+    public politicas = {
+        url: {
+            base: EndPoints.uri('/generic/qry/cre-politicas-adm')
+        }
+    };
+    /**
+     * @description: End-point
+     */
+    public referenciaCliente = {
+        url: {
+            base: EndPoints.uri('/generic/qry/informacion-cliente-referenciar'),
+            baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
+            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud')
+        }
+    };
 }

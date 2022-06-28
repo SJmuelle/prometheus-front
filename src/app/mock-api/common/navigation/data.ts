@@ -144,10 +144,10 @@ export const compactNavigation: FuseNavigationItem[] = [
         ],
     },
     {
-        id: 'agenda-completacion',
-        title: 'Agenda de completación',
+        id: 'credito',
+        title: 'Crédito',
         type: 'aside',
-        icon: 'heroicons_outline:office-building',
+        icon: 'mat_outline:attach_money',
         children: [
             {
                 id: 'agenda-completacion.list',
@@ -156,8 +156,22 @@ export const compactNavigation: FuseNavigationItem[] = [
                 link: '/credit-factory/agenda-completion',
                 icon: 'heroicons_outline:document-text',
             },
+            {
+                id: 'agenda-referenciacion.list',
+                title: 'Agenda de referenciación y desición',
+                type: 'basic',
+                link: '/credit-factory/agenda-referencing',
+                icon: 'heroicons_outline:document',
+            },
 
         ]
+    },
+    {
+        id: 'pagaduria',
+        title: 'Pagadurías',
+        type: 'basic',
+        link: '/pagaduria/par',
+        icon: 'heroicons_outline:cash'
     }
     // {
     //     id: 'calendario',

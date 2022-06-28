@@ -10,6 +10,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         ReactiveFormsModule,
         MatPaginatorModule,
         NgxPaginationModule,
+        FuseAlertModule,
     ]
 })
 export class AgendaCompletacionModule { }

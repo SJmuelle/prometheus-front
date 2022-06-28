@@ -8,6 +8,7 @@ import { PqrModule } from './modules/admin/apps/pqr/pqr.module';
 import { HojavidaModule } from './modules/admin/apps/hojavida/hojavida.module';
 import {FabricaCreditoModule} from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { MenuModule } from './modules/admin/apps/menu/menu.module';
+import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -40,7 +41,7 @@ export const appRoutes: Route[] = [
             {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)},
             {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)},
             {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)},
-            {path: 'hv', loadChildren: () => HojavidaModule}
+            {path: 'sagicc', loadChildren: () => PqrModule}
         ]
     },
 
@@ -104,6 +105,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'credit-factory',
                 loadChildren: () => FabricaCreditoModule
+            },
+            {
+                path: 'pagaduria',
+                loadChildren: () => PagaduriaModule
             }
         ]
     },
