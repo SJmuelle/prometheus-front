@@ -21,6 +21,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 // COMPONENTES
 import { PqrComponent } from './pqr.component';
@@ -44,6 +46,11 @@ import { InsertarCausalLegalComponent } from './creacion-pqrs/insertar-causal-le
 import { FormProcedimientosComponent } from './procedimientos-pqrs/form-procedimientos/form-procedimientos.component';
 import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.component';
 import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
+import { AdjuntosComponent } from './gestion-pqrs/adjuntos/adjuntos.component';
+import { AgregarComentarioComponent } from './gestion-pqrs/agregar-comentario/agregar-comentario.component';
+import { VerComentarioComponent } from './gestion-pqrs/ver-comentario/ver-comentario.component';
+import { HistorialPqrComponent } from './historial-pqr/historial-pqr.component';
+import { DetalleHistorialComponent } from './historial-pqr/detalle-historial/detalle-historial.component';
 // import { CreacionComponent } from './creacion/creacion.component';
 // import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
@@ -69,7 +76,12 @@ import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
         TipopqrComponent,
         SolucionComponent,
         MensajeCreacionComponent,
-        MensajeErrorComponent
+        MensajeErrorComponent,
+        AdjuntosComponent,
+        AgregarComentarioComponent,
+        VerComentarioComponent,
+        HistorialPqrComponent,
+        DetalleHistorialComponent
         // CreacionComponent
     ],
     imports: [
@@ -91,7 +103,9 @@ import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
         MatSelectModule,
         MatStepperModule,
         MatExpansionModule,
+        MatDatepickerModule,
+        MatTooltipModule,
         FuseAlertModule,
-    ],
+    ]
 })
 export class PqrModule {}

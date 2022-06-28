@@ -49,6 +49,7 @@ export class SolucionesPQRSComponent implements OnInit {
                 solucion: '',
                 solucion2: '',
                 solucion3: '',
+                aprobacionsol: '',
                 titulo: 'N',
             };
         } else {

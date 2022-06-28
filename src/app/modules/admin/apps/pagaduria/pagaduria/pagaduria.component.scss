@@ -1,0 +1,45 @@
+hr {
+    border: 1px solid;
+  }
+
+  .hover_fintra{
+    background:#3e9dc5;
+  }
+
+.permitir:enabled {
+  background-color: #4ABBEC
+}
+
+.bloquear:disabled{
+  background: #cecfcf;
+}
+
+.reactivar {
+  background: #e4f9e6;
+}
+
+.noreactivar {
+  background: white;
+}
+
+.izquierda {
+  position: sticky;
+  left: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+}
+
+.izquierda_infe {
+  position: sticky;
+  left: 0px;
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
+}
+
+.arriba {
+  position: sticky;
+  top: 0px;
+  z-index: 9;
+  --tw-bg-opacity: 1;
+  background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+}

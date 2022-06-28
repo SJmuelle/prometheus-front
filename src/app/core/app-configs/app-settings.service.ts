@@ -12,6 +12,18 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point pagaduria
+     */
+     public pagaduria = {
+        url: {
+            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
+            baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
+            baseUpdate: EndPoints.uriPaga('api/generic/update-solicitud-pagaduria'),
+            baseObli: EndPoints.uriPaga('api/generic/qry/obligaciones-comprar'),
+            baseArchivo: EndPoints.uriPaga('api/archivos/documentos-negocio')
+        }
+    };
+    /**
      * @description: End-point agenda de referenciacion
      */
     public agendaReferenciacion = {
@@ -100,7 +112,7 @@ export class AppSettingsService {
     public decision = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
-            baseDecision: EndPoints.uri('/generic/cre-decision'),
+            baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausal: EndPoints.uri('/generic/qry/cau-rechazo')
         }

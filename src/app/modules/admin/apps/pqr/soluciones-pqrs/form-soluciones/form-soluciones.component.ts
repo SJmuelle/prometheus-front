@@ -54,6 +54,7 @@ export class FormSolucionesComponent implements OnInit {
                 solucion: this.datos.solucion,
                 solucion2: this.datos.solucion2,
                 solucion3: this.datos.solucion3,
+                aprobacionsol: this.datos.aprobacionsol,
             };
         } else {
             url = '/actualizar-pqrs-solucion';
@@ -76,6 +77,7 @@ export class FormSolucionesComponent implements OnInit {
                 Swal.showLoading();
             },
         }).then((result) => {});
+        console.log(data.aprobacionsol)
         this._pqrService.Create(url, data).subscribe((response: any) => {
             Swal.close();
             if (response) {

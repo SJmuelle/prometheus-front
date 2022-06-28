@@ -17,6 +17,8 @@ import { environment } from 'environments/environment';
 export class CreacionPQRSComponent implements OnInit {
     mostrar_formulario: boolean = true;
     datos: any = {};
+    data: any = {};
+    idPqr: number;
     panelOpenState: boolean = false;
     tabMostrar: number;
     identificaiconCliente: any;
@@ -46,6 +48,7 @@ export class CreacionPQRSComponent implements OnInit {
     causalesLegales: any = [];
     campana: any;
     tipo: any;
+    idnegocio: any;
     UsuarioSaggics: string;
     EstadoSagicc: boolean = false;
 
@@ -97,7 +100,6 @@ export class CreacionPQRSComponent implements OnInit {
                         }
                     );
             }
-            // alert(this.identificaiconCliente)
         });
     }
 
@@ -282,8 +284,10 @@ export class CreacionPQRSComponent implements OnInit {
     //datos ingreso
     negociosCabeceras(tipo) {
         let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
+        console.log('Aqui esta el tipo', tipo)
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
+                console.log('negocio: ', response)
                 this.listadoNegocio = response;
             } else {
                 this.listadoNegocio = [];
@@ -292,12 +296,12 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     seleccionarNegocio(negocio) {
-        let index = this.listadoNegocio.findIndex(
-            (data) => data.codigoNegocio === negocio
-        );
+        let index = this.listadoNegocio.findIndex((data) => data.codigoNegocio === negocio);
         if (index != undefined) {
             this.datos.agencia = this.listadoNegocio[index].agencia;
             this.datos.entidad = this.listadoNegocio[index].entidad;
+            this.datos.segmento = this.listadoNegocio[index].segmento_actual;
+            this.datos.solicitante = this.listadoNegocio[index].tipo_solicitante;
         } else {
             this.datos.agencia = '';
             this.datos.entidad = '';
@@ -336,6 +340,7 @@ export class CreacionPQRSComponent implements OnInit {
                     this.datos.tipoPQRS_nombre = 'Nuevo';
                 }
             });
+            console.log(this.datos)
     }
 
     //detalles
@@ -386,133 +391,125 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardar() {
-        debugger;
-        this._pqrService
-            .permisoCreacion('tk/validar-permisos-gestion-pqrs')
-            .subscribe((response: any) => {
-                debugger;
-                console.log(response.data.area);
-                if (response.data.area !== 'SAC') {
-                    Swal.fire(
-                        '¡Información!',
-                        `Este usuario no tiene permiso para crear una PQRS`,
-                        'error'
-                    ).then();
-                    return;
-                } else {
-                    let data = {
-                        empresa: 'FINV',
-                        identificador:'pqrs',
-                        campanha:
-                            this.datos.campana == undefined
-                                ? ''
-                                : this.datos.campana,
-                        origenPqrs: parseInt(this.datos.origen),
-                        tipoCliente: parseInt(this.datos.tipo),
-                        codigoNegocio:
-                            this.datos.negocio == undefined
-                                ? ''
-                                : this.datos.negocio,
-                        sucursal:
-                            this.datos.agencia == undefined
-                                ? ''
-                                : this.datos.agencia,
-                        entidad:
-                            this.datos.entidad == undefined
-                                ? ''
-                                : this.datos.entidad,
-                        idCliente: this.datos.identificacion,
-                        nombres: this.datos.nombres,
-                        apellidos: this.datos.apellidos,
-                        departamento: this.datos.departamento,
-                        ciudad: this.datos.ciudad,
-                        barrio: this.datos.barrio,
-                        direccion: this.datos.direccion,
-                        celular: this.datos.telefono,
-                        email: this.datos.email,
-                        idProcedimiento: parseInt(this.datos.procedimiento),
-                        detallePqrs:
-                            this.datos.descripcion == undefined
-                                ? ''
-                                : this.datos.descripcion,
-                        idPqrspadre: '',
-                        fechaSolucion: this.datos.fechaParaSolucion,
-                        primerContacto: this.datos.primerContacto,
-                        file: this.crearJsonAdjuntos(),
-                        hijos: this.crearJsonHijas(),
-                        user: this.UsuarioSaggics,
-                    };
-                    let url = '/crear-pqrs';
+        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
+            console.log(response.data.area);
+            if (response.data.area !== 'SAC') {
+                Swal.fire(
+                    '¡Información!',
+                    `Este usuario no tiene permiso para crear una PQRS`,
+                    'error'
+                ).then();
+                return;
+            } else {
+                let data = {
+                    empresa: 'FINV',
+                    identificador:'pqrs',
+                    campanha: this.datos.campana == undefined ? '' : this.datos.campana,
+                    origenPqrs: parseInt(this.datos.origen),
+                    tipoCliente: parseInt(this.datos.tipo),
+                    codigoNegocio:this.datos.negocio == undefined ? '' : this.datos.negocio,
+                    sucursal: this.datos.agencia == undefined ? '' : this.datos.agencia,
+                    entidad: this.datos.entidad == undefined ? '' : this.datos.entidad,
+                    idCliente: this.datos.identificacion,
+                    nombres: this.datos.nombres,
+                    apellidos: this.datos.apellidos,
+                    departamento: this.datos.departamento,
+                    ciudad: this.datos.ciudad,
+                    barrio: this.datos.barrio,
+                    direccion: this.datos.direccion,
+                    celular: this.datos.telefono,
+                    email: this.datos.email,
+                    idProcedimiento: parseInt(this.datos.procedimiento),
+                    detallePqrs: this.datos.descripcion == undefined ? '' : this.datos.descripcion,
+                    idPqrspadre: '',
+                    fechaSolucion: this.datos.fechaParaSolucion,
+                    primerContacto: true,
+                    file: this.crearJsonAdjuntos(),
+                    hijos: this.crearJsonHijas(),
+                    user: this.UsuarioSaggics
+                };
+                
+                let url = '/crear-pqrs';
 
-                    this.crearJsonHijas();
+                this.crearJsonHijas();
 
-                    Swal.fire({
-                        title: 'Cargando',
-                        html: 'Guardando información de PQRS',
-                        allowOutsideClick: false,
-                        showConfirmButton: false,
-                        timer: 500000,
-                        didOpen: () => {
-                            Swal.showLoading();
+                Swal.fire({
+                    title: 'Cargando',
+                    html: 'Guardando información de PQRS',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    timer: 500000,
+                    didOpen: () => {
+                        console.log('Aqui toy: ', data)
+                        Swal.showLoading();
+                        this._pqrService.CreatePqrs(url, data).subscribe((response: any) => {
+                            Swal.close();
+                            if (response) {
+                                if (response.status == 200) {
 
-                            this._pqrService
-                                .CreatePqrs(url, data)
-                                .subscribe((response: any) => {
-                                    Swal.close();
-                                    if (response) {
-                                        if (response.status == 200) {
-                                            Swal.fire({
-                                                title: 'Información',
-                                                html: `${response.data.descripcion} ${response.data.pqrs}.`,
-                                                icon: 'success',
-                                                showConfirmButton: true,
-                                            }).then((result) => {
-                                                debugger;
-                                                if (
-                                                    this.EstadoSagicc == false
-                                                ) {
-                                                    let url = `pqr/list`;
-                                                    this.router.navigateByUrl(
-                                                        url
-                                                    );
-                                                } else {
-                                                    this.mostrar_formulario =
-                                                        false;
-                                                }
-                                            });
-                                            setTimeout(() => {
-                                                debugger;
-                                                if (
-                                                    this.EstadoSagicc == false
-                                                ) {
-                                                    let url = `pqr/list`;
-                                                    this.router.navigateByUrl(
-                                                        url
-                                                    );
-                                                } else {
-                                                    this.mostrar_formulario =
-                                                        false;
-                                                }
-                                            }, 2000);
-                                        } else {
-                                            Swal.fire(
-                                                '¡Información!',
-                                                `Hubo un error en los datos enviados, favor validar`,
-                                                'error'
-                                            ).then();
-                                        }
-                                    } else {
-                                        Swal.fire(
-                                            '¡Advertencia!',
-                                            'Error en la respuesta del servicio, favor intente nuevamente',
-                                            'error'
-                                        ).then();
+                                    let dato = {
+                                        id:response.data.pqrs,
+                                        tipo_solicitante:this.datos.solicitante,
+                                        segmento_actual:this.datos.segmento
+                                    };
+
+                                    console.log(dato)
+                                    debugger;
+                                    if (dato.tipo_solicitante!=undefined && dato.segmento_actual!=undefined) {
+                                        this._pqrService.Create('actualizar_pqr_tipo', dato).subscribe((response: any) => {
+                                            if (response.status == 200) {
+                                                console.log('Aqui te respondo: ', response)
+                                            }else{
+                                                console.log('No hay pa actualizar.')
+                                            }
+                                        })
+                                    }else{
+                                        console.log('No hay para actualizar.')
                                     }
-                                });
-                        },
-                    }).then((result) => {});
-                }
-            });
+
+                                    let datos = {
+                                        idPadre:response.data.pqrs,
+                                        user:""
+                                    }
+                                    this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response:any)=>{
+                                        if (response) {
+                                            console.log('Se envio correo, revisa: ', response)
+                                        }
+                                    })
+
+                                    Swal.fire({
+                                        title: 'Información',
+                                        html: `${response.data.descripcion} ${response.data.pqrs}.`,
+                                        icon: 'success',
+                                        showConfirmButton: true,
+                                    }).then((result) => {});
+                                    setTimeout(() => {
+                                        if (this.EstadoSagicc == false) {
+                                            let url = `pqr/list`;
+                                            this.router.navigateByUrl(url);
+                                        } else {
+                                            this.mostrar_formulario = false;
+                                        }
+                                    }, 2000);
+                                } else {
+                                    Swal.fire(
+                                        '¡Información!',
+                                        `Hubo un error en los datos enviados, favor validar`,
+                                        'error'
+                                    ).then();
+                                }
+                            } else {
+                                Swal.fire(
+                                    '¡Advertencia!',
+                                    'Error en la respuesta del servicio, favor intente nuevamente',
+                                    'error'
+                                ).then();
+                            }
+                        });
+                    },
+                }).then((result) => {});
+            }
+        });
     }
 
     public onCharge(input: HTMLInputElement, ind): void {
@@ -743,8 +740,6 @@ export class CreacionPQRSComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
             let dataModal = result;
             if (
                 dataModal.file != '' &&

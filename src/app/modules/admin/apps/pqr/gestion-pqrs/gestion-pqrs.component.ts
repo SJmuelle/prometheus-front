@@ -1,8 +1,14 @@
-import { Component, DebugElement, OnInit } from '@angular/core';
+import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { AuthService } from 'app/core/auth/auth.service';
+import { ComentariosService } from 'app/core/services/comentarios.service';
+import { result } from 'lodash';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
+import { AdjuntosComponent } from './adjuntos/adjuntos.component';
+import { AgregarComentarioComponent } from './agregar-comentario/agregar-comentario.component';
+import { VerComentarioComponent } from './ver-comentario/ver-comentario.component';
 
 @Component({
     selector: 'app-gestion-pqrs',
@@ -11,19 +17,30 @@ import { PqrService } from '../pqr.service';
 })
 export class GestionPQRSComponent implements OnInit {
     no_mostrar: boolean = true;
+    unicoges: any =[];
     pqrid: any;
     datos: any = {};
+    procedimientoid: any;
+    comentarioid:number;
+    comentariotipoid:number;
+    envio:any;
+    motivo:any;
+    UsuarioSaggics: string;
     tab: any;
     listadoSoluciones: any = 0;
-    listadoHistorial: any = [];
+    listadoGestion: any = [];
+    listadoAdjuntos: any = [];
+    listadoSeguimiento: any = [];
     listadoAsignaciones: any = [];
     listadoNotificaciones: any = [];
     filtrarTablaAlertas: string;
     tamanoTablaAlertas: number = 5;
     filtrarTablaAsignaciones: string;
     tamanoTablaAsignaciones: number = 5;
-    filtrarTablaHistorial: string;
-    tamanoTablaHistorial: number = 5;
+    filtrarTablaGestion: string;
+    filtrarTablaSeguimiento: string;
+    tamanoTablaGestion: number = 5;
+    tamanoTablaSeguimiento: number = 5;
     seguimiento: {
         idPqrs: any;
         idPqrsPadre: number;
@@ -33,11 +50,38 @@ export class GestionPQRSComponent implements OnInit {
     };
     aprobarComentario: boolean;
     listarAdjuntos: any[];
+    mostrarEditor: boolean = false;
+    mostrarDescripcion: boolean = true;
+    evidencia: any = [];
+    descripcion: string = '';
+    edicion={
+        id:0,
+        detalle_pqrs:this.datos.detalle
+    }
+    quillModules: any = {
+        toolbar: [
+            ['bold', 'italic', 'underline'],
+            [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
+            ['clean'],
+        ],
+    };
+    @ViewChild('editor') editor2;
+    mensajeQuill: string;
+    archivo =[{
+        idComentario:0,
+        documento:'',
+        filepath:'',
+        filename:'',
+        extension:'',
+        descripcion:''
+    }];
 
     constructor(
         private _pqrService: PqrService,
         private _activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        public dialog: MatDialog,
+        private _authService: AuthService
     ) {}
 
     ngOnInit(): void {
@@ -45,6 +89,134 @@ export class GestionPQRSComponent implements OnInit {
             this.pqrid = param.idPQR;
             this.buscarDatos();
         });
+    }
+
+    buscarUsuarioSagicc() {
+        let urlOrigenCliente = `/generic/qry/obtener-usuario-prometheus/${this.UsuarioSaggics}`;
+        this._pqrService.getListadosUnico(urlOrigenCliente).subscribe((response: any) => {
+            if (response) {
+                console.log(response)
+                this.UsuarioSaggics=response.respuesta
+            } else {
+                console.log(response)
+            }
+        });
+    }
+
+    vercomentario(id){
+        const dialogRef = this.dialog.open(VerComentarioComponent, {
+            height: '35%',
+            width: '60%',
+            data: id
+        });
+        dialogRef.afterClosed().toPromise();
+    }
+
+    logChange($event) {
+        debugger;
+        this.mensajeQuill=$event.text;
+    }
+
+    agregarcomentario(){
+        const dialogRef = this.dialog.open(AgregarComentarioComponent, {
+            height: '35%',
+            width: '60%',
+            data: {id: parseInt(this.pqrid), estado: this.datos.estado}
+        })
+        dialogRef.afterClosed().subscribe((result)=>{
+            this.buscarDatos()
+        })
+    }
+
+    onCharge(input: HTMLInputElement, ind): void {
+        const files = input.files;
+        if (files && files.length) {
+            const fileToRead = files[0];
+            const reader = new FileReader();
+            reader.readAsDataURL(fileToRead);
+            reader.onloadend = () => {
+                const file: string | ArrayBuffer = reader.result;
+                this.evidencia[ind].file = file;
+                this.evidencia[ind].filename = fileToRead.name;
+                let nombre = this.evidencia[ind].filename.split('.');
+                this.evidencia[ind].ext = nombre[1].toLowerCase();
+                this.evidencia[ind].nombre = nombre[0];
+            };
+        }
+    }
+
+    insertadjunti() {
+        const dialogRef = this.dialog.open(AdjuntosComponent, {
+            height: '40%',
+            width: '60%',
+            data: {idPadre:parseInt(this.pqrid), idProcedimiento:this.procedimientoid},
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+                // console.log(result)
+                let dataModal = result;
+                if (
+                    dataModal.file != '' &&
+                    dataModal.file != undefined &&
+                    dataModal.file != null &&
+                    dataModal.descripcion != '' &&
+                    dataModal.descripcion != undefined &&
+                    dataModal.descripcion != null
+                ) {
+                    this.evidencia.push({
+                        "nombreArchivo": dataModal.nombre,
+                        "extension": dataModal.ext,
+                        "base64": dataModal.file,
+                        "descripcion": dataModal.descripcion
+                    });
+                }
+                console.log('Saliste del modal: ', this.evidencia)
+                let url = '/adjuntar-pqrs';
+                let data = {
+                    idPadre: this.pqrid,
+                    idProcedimiento: this.procedimientoid,
+                    identificador:'pqrs',
+                    file:this.evidencia,
+                    user: ""
+                };
+                console.log('Aqui tu data: ', data)
+                this._pqrService.postFile(url, data).subscribe((response: any) => {
+                    if (response) {
+                        console.log(response)
+                        this.buscarDatos()
+                    }
+                });
+        });
+    }
+
+    crearJsonAdjuntos(): Array<JSON> {
+        return  this.evidencia;
+    }
+
+    editarDescripcion(){
+        if (this.mostrarEditor==false && this.mostrarDescripcion==true) {
+            this.mostrarEditor=true;
+            this.mostrarDescripcion=false;
+        }
+    }
+
+    guardarDescripcion(id, descripcion){
+        let url = 'actualizar_pqr_descripcion';
+        this.edicion={
+            id:parseInt(id),
+            detalle_pqrs:descripcion
+        }
+        this._pqrService.ActualizarDescripcion(url, this.edicion).subscribe((response:any)=>{
+            Swal.fire(
+              '¡Exito!',
+              `Detalle actualizado correctamente.`,
+              'success'
+            ).then();
+
+          })
+        if (this.mostrarEditor==true && this.mostrarDescripcion==false) {
+            this.mostrarEditor=false;
+            this.mostrarDescripcion=true;
+        }
     }
 
     buscarDatos() {
@@ -61,17 +233,16 @@ export class GestionPQRSComponent implements OnInit {
         this._pqrService.getListados(url).subscribe((response: any) => {
             Swal.close();
             if (response) {
+                console.log('Aqui estoy: ', response)
                 this.datos = response[0];
+                // this.procedimientoid = this.datos.id_procedimiento
+                // console.log('Aqui tu procedimiento: ', this.procedimientoid)
                 this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
             } else {
                 this.datos = {};
             }
         });
-        //prueba
-        // url = `/pqrs-escalar/${this.pqrid}`;
-        // this._pqrService.getListados(url).subscribe((response: any) => {});
-
         //reposnable
         let usuario = JSON.parse(localStorage.getItem('usuario'));
         url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
@@ -83,11 +254,32 @@ export class GestionPQRSComponent implements OnInit {
         url = `/listar-adjuntos-pqrs/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
+                console.log(response)
                 this.listarAdjuntos = response;
             } else {
                 this.listarAdjuntos = [];
             }
         });
+
+        url = `/listar-comentarios-seguimiento/${this.pqrid}`;
+        this._pqrService.getListados(url).subscribe((response: any) => {
+            if (response) {
+                console.log(response)
+                this.listadoSeguimiento = response;
+            } else {
+                this.listadoSeguimiento = [];
+            }
+        });
+
+        let urlproc = `/id_comentario_pqrs/${this.pqrid}`;
+        this._pqrService.getListados(urlproc).subscribe((response:any) =>{
+            if (response) {
+                console.log('id procedimiento: ', response[0].id);
+                this.procedimientoid = response[0].id;
+            }
+        });
+
+
     }
 
     onTabChanged(index): void {
@@ -96,8 +288,8 @@ export class GestionPQRSComponent implements OnInit {
 
         switch (index) {
             case 2:
-                this.filtrarTablaHistorial = '';
-                this.tamanoTablaHistorial = 5;
+                this.filtrarTablaGestion = '';
+                this.tamanoTablaGestion = 5;
                 url = `/informacion-historial-seguimiento/${this.pqrid}/0`;
                 Swal.fire({
                     title: 'Cargando',
@@ -108,9 +300,48 @@ export class GestionPQRSComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this._pqrService.getListados(url).subscribe((data: any) => {
-                    this.listadoHistorial = data;
+                    let unicos = [];
+                    for (const iterator of data) {
+                        const resultado = unicos.find( u => u.id === iterator.id );
+                        if(resultado==undefined){
+                            unicos.push(iterator)
+                        }
+                    }
+                    this.listadoGestion = unicos;
+                    console.log('Unicos: ', unicos);
                     Swal.close();
+                    
+                    for (let index = 0; index < unicos.length; index++) {
+                        const id = unicos[index];
+                        this.comentarioid = id.id;
+                        this.comentariotipoid = id.tipo_comentario;
+                        this.envio = id.envio;
+                        this.motivo = id.detalle;
+                        console.log(this.comentarioid);
+                        console.log(this.comentariotipoid);
+                        console.log('hola ', this.motivo);
+                    }
+
+                    let urlad = `/adjunto-comentario/${this.comentarioid}`;
+                    this._pqrService.getListados(urlad).subscribe((response:any) =>{
+                        if (response) {
+                            console.log(response);
+                            this.listadoAdjuntos = response;
+                            console.log('Hello: ', this.listadoAdjuntos)
+                            this.archivo = [{
+                                idComentario:this.listadoAdjuntos[0].id_comentario,
+                                documento:this.listadoAdjuntos[0].documento,
+                                filepath:this.listadoAdjuntos[0].filepath,
+                                filename:this.listadoAdjuntos[0].filename,
+                                extension:this.listadoAdjuntos[0].extension,
+                                descripcion:this.listadoAdjuntos[0].descripcion
+                            }]
+                        } else {
+                            this.listadoAdjuntos = [];
+                        }
+                    });
                 });
+                
                 break;
             case 3:
                 this.filtrarTablaAsignaciones = '';
@@ -161,129 +392,337 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
-        let url = '/pqrs-responder-solucion';
-        let data = {
-            idComentario: parseInt(item.id),
-            idPqrs: parseInt(this.pqrid),
-            respuesta: estado,
-            comentario: 'A',
-        };
+        if (this.comentariotipoid==2) {
+            console.log(this.comentariotipoid)
+            debugger;
+            let url = 'pqrs-responder-solucion-cliente';
+            let data = {
+                idComentario: parseInt(item.id),
+                idPqrs: parseInt(this.pqrid),
+                respuesta: estado,
+                comentario: 'A'
+            };
+            console.log('Mirame: ', data)
+            const swalWithBootstrapButtons = Swal.mixin({});
 
-        const swalWithBootstrapButtons = Swal.mixin({});
-
-        swalWithBootstrapButtons
-            .fire({
-                text: `¿Está seguro que desea ${
-                    estado == true ? 'aprobar' : 'rechazar'
-                } la solución?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: `Si, ${
-                    estado == true ? 'aprobar' : 'rechazar'
-                } la solución`,
-                cancelButtonText: 'No, cancelar',
-                reverseButtons: true,
-            })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    if (!estado) {
-                        Swal.fire({
-                            title: 'Ingresar el motivo del rechazo',
-                            input: 'textarea',
-                            inputAttributes: {
-                                autocapitalize: 'off',
-                            },
-                            showCancelButton: true,
-                            showLoaderOnConfirm: true,
-                            confirmButtonText: 'Rechazar solicitud',
-                            cancelButtonText: 'Cancelar',
-                            allowOutsideClick: () => !Swal.isLoading(),
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                if (result.value.length == 0) {
-                                    Swal.fire(
-                                        'Información',
-                                        'El motivo es obligatorio',
-                                        'error'
-                                    );
-                                    return;
+            swalWithBootstrapButtons
+                .fire({
+                    text: `¿Está seguro que desea ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: `Si, ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución`,
+                    cancelButtonText: 'No, cancelar',
+                    reverseButtons: true,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        if (!estado) {
+                            debugger;
+                            Swal.fire({
+                                title: 'Ingresar el motivo del rechazo',
+                                input: 'textarea',
+                                inputAttributes: {
+                                    autocapitalize: 'off',
+                                },
+                                showCancelButton: true,
+                                showLoaderOnConfirm: true,
+                                confirmButtonText: 'Rechazar solicitud',
+                                cancelButtonText: 'Cancelar',
+                                allowOutsideClick: () => !Swal.isLoading(),
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    if (result.value.length == 0) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo es obligatorio',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    if (result.value.length > 150) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo no puede superar los 150 carácteres',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    data.comentario = result.value;
+                                    this.guardar_data(data, url);
                                 }
-                                if (result.value.length > 150) {
-                                    Swal.fire(
-                                        'Información',
-                                        'El motivo no puede superar los 150 carácteres',
-                                        'error'
-                                    );
-                                    return;
-                                }
-                                data.comentario = result.value;
-                                this.guardar_data(data, url);
-                            }
-                        });
-                    } else {
-                        this.guardar_data(data, url);
+                            });
+                        } else {
+                            this.guardar_data(data, url);
+                        }
                     }
-                }
-            });
+                });
+
+        } else {
+            console.log(this.comentariotipoid)
+            debugger;
+            let url = 'pqrs-responder-solucion';
+            let data = {
+                idComentario: parseInt(item.id),
+                idPqrs: parseInt(this.pqrid),
+                respuesta: estado,
+                comentario: 'A'
+            };
+            console.log('Mirame: ', data)
+            const swalWithBootstrapButtons = Swal.mixin({});
+
+            swalWithBootstrapButtons
+                .fire({
+                    text: `¿Está seguro que desea ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: `Si, ${
+                        estado == true ? 'aprobar' : 'rechazar'
+                    } la solución`,
+                    cancelButtonText: 'No, cancelar',
+                    reverseButtons: true,
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        if (!estado) {
+                            Swal.fire({
+                                title: 'Ingresar el motivo del rechazo',
+                                input: 'textarea',
+                                inputAttributes: {
+                                    autocapitalize: 'off',
+                                },
+                                showCancelButton: true,
+                                showLoaderOnConfirm: true,
+                                confirmButtonText: 'Rechazar solicitud',
+                                cancelButtonText: 'Cancelar',
+                                allowOutsideClick: () => !Swal.isLoading(),
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    if (result.value.length == 0) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo es obligatorio',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    if (result.value.length > 150) {
+                                        Swal.fire(
+                                            'Información',
+                                            'El motivo no puede superar los 150 carácteres',
+                                            'error'
+                                        );
+                                        return;
+                                    }
+                                    data.comentario = result.value;
+                                    this.guardar_data(data, url);
+                                }
+                            });
+                        } else {
+                            this.guardar_data(data, url);
+                        }
+                    }
+                });
+        }
+
+
     }
 
     guardar_data(data, url) {
-        Swal.fire({
-            title: 'Cargando',
-            html: 'Guardando información de PQRS',
-            timer: 500000,
-            didOpen: () => {
-                Swal.showLoading();
-            },
-        }).then((result) => {});
-        this._pqrService.Create(url, data).subscribe((response: any) => {
-            Swal.close();
-            if (response) {
-                if (response.status == 200) {
-                    if (response.data.respuesta == 'OK') {
-                        Swal.fire(
-                            'Información',
-                            `Se guardó el registro con éxito`,
-                            'success'
-                        );
-                        this.onTabChanged(2);
+        console.log('Pilla aqui: ', this.comentariotipoid)
 
-                        let url = `/sendmail/notificacion-crear-pqrs`;
-                        // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
-                        this._pqrService.envioCorreos(
-                            url,
-                            data.idPqrs,
-                            data.respuesta == true ? 3 : 4,
-                            data.comentario
-                        );
-                        this.buscarDatos();
+        if (this.comentariotipoid==2) {
+            debugger;
+            Swal.fire({
+                title: 'Cargando',
+                html: 'Guardando información de PQRS',
+                timer: 500000,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            }).then((result) => {});
+            this._pqrService.Create(url, data).subscribe((response: any) => {
+                Swal.close();
+                if (response) {
+                    if (response.status == 200) {
+                        if (response.data.respuesta == 'OK') {
+                            Swal.fire(
+                                'Información',
+                                `Se guardó el registro con éxito`,
+                                'success'
+                            );
+                            this.onTabChanged(2);
+                            debugger;
+                            let url = `/sendmail/notificacion-crear-pqrs`;
+                            console.log(this.archivo[0].idComentario)
+                            debugger;
+                            if (this.archivo[0].idComentario==0) {
+
+                                if (data.respuesta == true) {
+                                    console.log(
+                                        url,
+                                        data.idPqrs,
+                                        5,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        this.envio
+                                    );
+                                    debugger;
+                                    this._pqrService.enviaCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        5,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        this.envio
+                                    );
+                                } else {
+                                    debugger;
+                                    this._pqrService.envioCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        4,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        "N"
+                                    );
+                                }
+                                
+                            } else {
+
+                                if (data.respuesta == true) {
+                                    debugger;
+                                    this._pqrService.enviaCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        5,
+                                        data.comentario,
+                                        this.archivo,
+                                        this.motivo,
+                                        this.envio
+                                    );
+                                } else {
+                                    debugger;
+                                    this._pqrService.envioCorreos(
+                                        url,
+                                        data.idPqrs,
+                                        4,
+                                        data.comentario,
+                                        "",
+                                        this.motivo,
+                                        "N"
+                                    );
+                                }
+                                
+                            }
+                            
+                            
+                            this.buscarDatos();
+                        } else {
+                            Swal.fire(
+                                'Información',
+                                response.data.respuesta,
+                                'error'
+                            );
+                        }
                     } else {
                         Swal.fire(
                             'Información',
-                            response.data.respuesta,
+                            `Hubo un error en los datos enviados, favor validar`,
                             'error'
                         );
                     }
                 } else {
                     Swal.fire(
-                        'Información',
-                        `Hubo un error en los datos enviados, favor validar`,
+                        'Advertencia',
+                        'Error en la respuesta del servicio, favor intente nuevamente',
                         'error'
                     );
                 }
-            } else {
-                Swal.fire(
-                    'Advertencia',
-                    'Error en la respuesta del servicio, favor intente nuevamente',
-                    'error'
-                );
+            });
+        } else {
+            console.log()
+            Swal.fire({
+                title: 'Cargando',
+                html: 'Guardando información de PQRS',
+                timer: 500000,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            }).then((result) => {});
+            this._pqrService.Create(url, data).subscribe((response: any) => {
+                Swal.close();
+                if (response) {
+                    if (response.status == 200) {
+                        if (response.data.respuesta == 'OK') {
+                            Swal.fire(
+                                'Información',
+                                `Se guardó el registro con éxito`,
+                                'success'
+                            );
+                            this.onTabChanged(2);
+
+                            let url = `/sendmail/notificacion-crear-pqrs`;
+                            // /${data.idPqrs}/${data.respuesta == true ? 1 : 0}/${data.comentario}`;
+                            this._pqrService.envioCorreos(
+                                url,
+                                data.idPqrs,
+                                data.respuesta == true ? 3 : 4,
+                                data.comentario
+                            );
+                            this.buscarDatos();
+                        } else {
+                            Swal.fire(
+                                'Información',
+                                response.data.respuesta,
+                                'error'
+                            );
+                        }
+                    } else {
+                        Swal.fire(
+                            'Información',
+                            `Hubo un error en los datos enviados, favor validar`,
+                            'error'
+                        );
+                    }
+                } else {
+                    Swal.fire(
+                        'Advertencia',
+                        'Error en la respuesta del servicio, favor intente nuevamente',
+                        'error'
+                    );
+                }
+            });
+
+        }
+
+    }
+
+    eliminarAdjunto(id){
+        let url = 'update-adjunto';
+        let data = {
+            id:id
+        }
+        console.log(data)
+        this._pqrService.Create(url, data).subscribe((response:any)=>{
+            if (response) {
+                console.log(response)
+                this.buscarDatos()
             }
-        });
+        })
     }
 
     verAdjunto(id) {
-        this.filtrarTablaHistorial = '';
-        this.tamanoTablaHistorial = 5;
+        this.filtrarTablaGestion = '';
+        this.tamanoTablaGestion = 5;
         let data = {
             idAdjunto: id,
         };
@@ -297,15 +736,12 @@ export class GestionPQRSComponent implements OnInit {
             },
         }).then((result) => {});
         this._pqrService.postFile(url, data).subscribe((data: any) => {
-            // window.open(data.base64, 'Plan de pago', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=1,width=300,height=200,left = 390,top = 50');
-
             const downloadLink = document.createElement('a');
             document.body.appendChild(downloadLink);
             downloadLink.href = data.data.base64;
             downloadLink.target = '_self';
             downloadLink.download = data.data.nombreArchivo;
             downloadLink.click();
-
             Swal.close();
         });
     }

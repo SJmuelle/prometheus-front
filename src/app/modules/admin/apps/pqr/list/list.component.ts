@@ -24,6 +24,11 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.consulta();
   }
+
+  exportAsXLSX():void {
+    this._pqrService.exportAsExcelFile(this.listado, 'listado');
+  }
+
   consulta(){
 
     Swal.fire({ title: 'Cargando', html: 'Buscando Informacion de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
@@ -31,8 +36,10 @@ export class ListComponent implements OnInit {
           .getListados('/listar-pqrs-gestion')
           .subscribe((response: any) => {
             Swal.close();
+            console.log(response)
             if (response) {
               this.listado = response;
+              // console.log(response)
             } else {
               this.listado = [];
             }
