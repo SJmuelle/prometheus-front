@@ -22,89 +22,210 @@
       </div>
     </div>
   </div>
+  <!-- <div class="grid grid-cols-1  gap-8 w-full mt-8 overflow-auto">
+    <ng-container
+      *ngFor="let item of listado | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+      <div class="relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+        <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+          <mat-icon class="icon-size-24 opacity-25 text-green-500 dark:text-green-400"
+            [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
+        </div>
+        <div class="flex items-center">
+          <div class="flex flex-col">
+            <div class="text-lg font-medium tracking-tight leading-6 truncate">Previous Statement</div>
+            <div class="text-green-600 font-medium text-sm">
+              Paid on {{item.periodo}}
+            </div>
+          </div>
+          <div class="ml-auto -mt-2">
+            <button mat-icon-button [matMenuTriggerFor]="previousStatementMenu">
+              <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:dots-vertical'"></mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-row flex-wrap mt-4 -mx-6">
+          <div class="flex flex-col mx-6 my-3">
+            <div class="text-sm font-medium leading-none text-secondary">Agenda</div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              0 > {{item.rangoInicioFinAgenda}}
+            </div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              {{item.rangoMedioAgenda}} > {{item.rangoMedioFinAgenda}}
+            </div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              > {{item.rangoTotalAgenda}}
+            </div>
+          </div>
+          <div class="flex flex-col mx-6 my-3">
+            <div class="text-sm font-medium leading-none text-secondary">Fabrica</div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              0 > {{item.rangoInicioFinAgenda}}
+            </div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              {{item.rangoMedioAgenda}} > {{item.rangoMedioFinAgenda}}
+            </div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              > {{item.rangoTotalAgenda}}
+            </div>
+          </div>
+          <div class="flex flex-col mx-6 my-3">
+            <div class="text-sm font-medium leading-none text-secondary">Total</div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              0 > {{item.rangoInicioFinAgenda}}
+            </div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              {{item.rangoMedioAgenda}} > {{item.rangoMedioFinAgenda}}
+            </div>
+            <div class="mt-2 font-medium text-xl leading-none">
+              <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+              </mat-icon>
+              > {{item.rangoTotalAgenda}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div> -->
 
-  <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden">
-    <table class="w-full shadow p-1">
-      <thead style="background-color: #f9fafb">
-        <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-          <th class="px-4 py-3 text-center w-0">Editar</th>
-          <th class="px-4 py-3 text-center w-0">Id</th>
-          <th class="px-4 py-3 text-center w-0">Unidad</th>
-          <th class="px-4 py-3 text-center w-0">Periodo</th>
-          <th class="px-4 py-3 text-center w-0">Fase</th>
-          <th class="px-4 py-3 text-center w-0">Tipo de persona</th>
-          <th class="px-4 py-3 text-center w-0">Objetivo (verde) </th>
-          <th class="px-4 py-3 text-center w-0">Objetivo (naranja)</th>
-          <th class="px-4 py-3 text-center w-0">Objetivo (rojo)</th>
-          <th class="px-4 py-3 text-center w-0">Estado</th>
-          <th class="px-4 py-3 text-center w-0">Usuario</th>
-        </tr>
-      </thead>
+  <div class="w-full  overflow-auto mt-2">
+    <table class="p-0">
+
       <tbody class="bg-white">
-        <ng-container *ngFor="
-                      let item of listado
-                          | filter: filtrarTabla
-                          | paginate
-                              : {
-                                    itemsPerPage: tamanoTabl,
-                                    currentPage: page
-                                }
-                  ">
-          <tr class="text-gray-700">
-            <td class="px-2 text-sm border text-center" (click)="abrirModal(item, 'A')">
-              <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+        <ng-container
+          *ngFor="let item of listado | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+          <tr class="text-gray-700 border-t border-b ">
+            <td class="px-2 py-3 text-sm header_fijo my-3">
+              <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
+                <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+              </button>
             </td>
-            <td class="px-2 text-sm border text-center">
-              {{ item.id }}
-            </td>
-            <td class="px-2 text-sm border text-center">
-              {{ item.unidadNegocio }}
-            </td>
-            <td class="px-2 text-sm border text-center">
-              Jun-22
-            </td>
-            <td class="px-2 text-sm border text-center">
-              {{ item.agenda }}
-            </td>
-            <td class="px-2 text-sm border text-center">
-              {{
-              item.tipoIdentificacion == "CC"
-              ? "Persona natural"
-              : "Persona juridica"
-              }}
-            </td>
-            <td class="px-2 text-sm border text-center">
-             3
-            </td>
-            <td class="px-2 text-sm border text-center">
-              5
-            </td>
-            <td class="px-2 text-sm border text-center">
-              8
-            </td>
-            <td class="px-2 text-sm border-b border-t text-center w-0">
-              <div [ngClass]="
-                                  item.estado == 'Inactivo'
-                                      ? 'bg-pink-300'
-                                      : 'bg-green-300'
-                              ">
-                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
-                  {{ item.estado }}
-                </span>
+            <td class="px-2 py-3">
+              <div class="flex flex-column ">
+                <small class="text-accent-600 text-xs">Periodo:</small>
+                <span class="text-md text-black font-medium"> {{
+                  item.periodo}}</span>
               </div>
             </td>
-            <td class="px-2 text-sm border text-center">
-              Smuelle
+            <td class="px-2 py-3">
+              <div class="flex flex-column ">
+                <div class="flex-0  overflow-hidden">
+                <small class="text-accent-600 text-xs">{{item.nombreAgenda}}</small>
+                  <img src="assets/images/agendas/{{item.iconoAgenda}}" class="text-current">
+                </div>
+              </div>
+            </td>
+            <td class="px-2 py-3">
+              <div class="flex flex-column ">
+                <div class="flex-0 w-12 overflow-hidden">
+                  <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
+                </div>
+              </div>
+            </td>
+            <td class="px-2 py-3">
+              <div class="flex">
+                <div class="flex flex-column ">
+                  <small class="text-accent-600 text-xs">
+                   Agenda
+                  </small>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
+                      svgIcon="mat_solid:radio_button_checked">
+                    </mat-icon>
+                    0 > {{item.rangoInicioFinAgenda}}
+                  </span>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
+                    svgIcon="mat_solid:radio_button_checked">
+                  </mat-icon>
+                    {{item.rangoMedioAgenda}} > {{item.rangoMedioFinAgenda}}
+                  </span>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
+                      svgIcon="mat_solid:radio_button_checked">
+                    </mat-icon>
+                    > {{item.rangoTotalAgenda}}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td class="px-2 py-3">
+              <div class="flex">
+                <div class="flex flex-column ">
+                  <small class="text-accent-600 text-xs">
+                   Agenda
+                  </small>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
+                      svgIcon="mat_solid:radio_button_checked">
+                    </mat-icon>
+                    0 > {{item.rangoInicioFinAgenda}}
+                  </span>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
+                    svgIcon="mat_solid:radio_button_checked">
+                  </mat-icon>
+                    {{item.rangoMedioAgenda}} > {{item.rangoMedioFinAgenda}}
+                  </span>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
+                      svgIcon="mat_solid:radio_button_checked">
+                    </mat-icon>
+                    > {{item.rangoTotalAgenda}}
+                  </span>
+                </div>
+              </div>
+            </td>
+            <td class="px-2 py-3">
+              <div class="flex">
+                <div class="flex flex-column ">
+                  <small class="text-accent-600 text-xs">
+                   Agenda
+                  </small>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
+                      svgIcon="mat_solid:radio_button_checked">
+                    </mat-icon>
+                    0 > {{item.rangoInicioFinAgenda}}
+                  </span>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
+                    svgIcon="mat_solid:radio_button_checked">
+                  </mat-icon>
+                    {{item.rangoMedioAgenda}} > {{item.rangoMedioFinAgenda}}
+                  </span>
+                  <span class="text-xs text-black font-medium">
+                    <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
+                      svgIcon="mat_solid:radio_button_checked">
+                    </mat-icon>
+                    > {{item.rangoTotalAgenda}}
+                  </span>
+                </div>
+              </div>
             </td>
           </tr>
-
-
         </ng-container>
       </tbody>
     </table>
-    <div class="grid">
-      <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
-        nextLabel="Siguiente"></pagination-controls>
-    </div>
+  </div>
+
+  <div class="grid" *ngIf="listado.length>0">
+    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+      nextLabel="Siguiente"></pagination-controls>
   </div>
 </div>
