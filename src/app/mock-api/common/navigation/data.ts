@@ -165,10 +165,24 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'agenda-referenciacion.list',
-                title: 'Agenda de referenciación y decisión',
+                title: 'Agenda de referenciación ',
                 type: 'basic',
                 link: '/credit-factory/agenda-referencing',
                 icon: 'heroicons_outline:document',
+            },
+            { 
+                id: 'agenda-referenciacion.list',
+                title: 'Agenda de análisis y decisión',
+                type: 'basic',
+                link: '/credit-factory/agenda-decision',
+                icon: 'heroicons_outline:document',
+            },
+            { 
+                id: 'trazabilidad.list',
+                title: 'Trazabilidad',
+                type: 'basic',
+                link: '/credit-factory/trazabilidad',
+                icon: 'heroicons_outline:chart-square-bar',
             },
             {
                 id: 'parametria',
@@ -181,7 +195,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                         title: 'Listado de Chequeo',
                         // icon: 'heroicons_outline:minus-sm',
                         type: 'basic',
-                        link: '/credit-factory/parametria',
+                        link: '/credit-factory/parametria/chequeo',
                     },
                     {
                         id: 'parametria.fabrica2',
@@ -190,17 +204,31 @@ export const compactNavigation: FuseNavigationItem[] = [
                         type: 'basic',
                         link: '/credit-factory/parametria/listadoTiposComentarios'
                     },
+                    // {
+                    //     id: 'parametria.fabrica3',
+                    //     title: 'Preguntas de Referenciación',
+                    //     // icon: 'heroicons_outline:minus-sm',
+                    //     type: 'basic',
+                    //     link: '/credit-factory/parametria/listadoPreguntasReferenciacion'
+                    // },
                     {
-                        id: 'parametria.fabrica3',
-                        title: 'Preguntas de Referenciación',
+                        id: 'parametria.fabrica4',
+                        title: 'Tiempo por agendas',
                         // icon: 'heroicons_outline:minus-sm',
                         type: 'basic',
-                        link: '/credit-factory/parametria/listadoPreguntasReferenciacion'
+                        link: '/credit-factory/parametria/tiempoAgenda'
                     }
                 ],
             },
 
         ]
+    },
+    {
+        id: 'pagaduria',
+        title: 'Pagadurías',
+        type: 'basic',
+        link: '/pagaduria/par',
+        icon: 'heroicons_outline:cash'
     }
     // {
     //     id: 'calendario',

@@ -13,6 +13,8 @@ import { ListadoPreguntasReferenciacionComponent } from './listado-preguntas-ref
 import { ListadoPreguntasReferenciacionFormComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion-form/listado-preguntas-referenciacion-form.component';
 import { ListadoTiposComentariosComponent } from './listado-tipos-comentarios/listado-tipos-comentarios.component';
 import { ListadoTiposComentariosFormComponent } from './listado-tipos-comentarios/listado-tipos-comentarios-form/listado-tipos-comentarios-form.component';
+import { TiempoAgendaComponent } from './tiempo-agenda/tiempo-agenda.component';
+import { FormTiempoAgendaComponent } from './tiempo-agenda/form-tiempo-agenda/form-tiempo-agenda.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +23,8 @@ import { ListadoTiposComentariosFormComponent } from './listado-tipos-comentario
     ListadoPreguntasReferenciacionComponent,
     ListadoPreguntasReferenciacionFormComponent,
     ListadoTiposComentariosComponent,
+    TiempoAgendaComponent,
+    FormTiempoAgendaComponent,
     ListadoTiposComentariosFormComponent
   ],
   imports: [

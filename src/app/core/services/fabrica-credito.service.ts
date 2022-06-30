@@ -33,10 +33,18 @@ export class FabricaCreditoService {
      * @description: Get step  Agendabreferenciacuoin
      */
     public obtenerStepsAgendaReferenciacion(datos): Observable<any> {
-        const { numeroSolicitud,tipo } = datos;
+        const { numeroSolicitud, tipo } = datos;
         return this._http.get(`${this._appSettings.fabricaDatos.url.step}/${numeroSolicitud}/${tipo}`);
     }
 
+    /**
+    * @description: resumenes de credito
+    */
+    public getResumenCredito(datos): Observable<any> {
+        // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);
+        return this._http.post(this._appSettings.fabricaDatos.url.resumenes, datos);
+
+    }
 
     /**
      * @description: Get datos fabrica Agenda

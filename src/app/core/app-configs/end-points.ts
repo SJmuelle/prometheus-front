@@ -13,4 +13,10 @@ export class EndPoints {
     static uri(url: string): string {
         return environment.urlUltracem + url;
     }
+    /**
+     * @description: URL pagaduria
+     */
+     static uriPaga(url: string): string {
+        return environment.urlPagaduria + url;
+    }
 }

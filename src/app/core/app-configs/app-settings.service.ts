@@ -13,6 +13,18 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point pagaduria
+     */
+     public pagaduria = {
+        url: {
+            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
+            baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
+            baseUpdate: EndPoints.uriPaga('api/generic/update-solicitud-pagaduria'),
+            baseObli: EndPoints.uriPaga('api/generic/qry/obligaciones-comprar'),
+            baseArchivo: EndPoints.uriPaga('api/archivos/documentos-negocio')
+        }
+    };
+    /**
      * @description: End-point agenda de referenciacion
      */
     public agendaReferenciacion = {
@@ -35,9 +47,11 @@ export class AppSettingsService {
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
+            resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
         }
     };
     /**
+     * http://demo.fintra.co:8011//api-fintra/api/credito/tk/property/cards-informacion-decision
      * @description: End-point departamentos
      */
     public departamentos = {
@@ -128,7 +142,8 @@ export class AppSettingsService {
             baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausal: EndPoints.uri('/generic/qry/cau-rechazo'),
-            validaCampos: EndPoints.uri('/credito/validar-campos-solicitud')
+            validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
+            guardado: EndPoints.uri('/credito/cre-decision')
         }
     };
     /**
@@ -168,4 +183,15 @@ export class AppSettingsService {
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM')
         }
     };
+
+     /**
+     * @description: End-point agenda decision
+     */
+      public agendaDecision = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/DE'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/DE')
+        }
+    };
+    
 }
