@@ -1,6 +1,9 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
-    <div class="grid grid-cols-12 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Visado de solicitudes de libranza</h2>
+    <div class="grid grid-cols-12 w-100 mb-2" *ngIf="tipo=='RL'">
+        <h2 class="text-gray-900 col-span-12 mb-4">Confirmación referencia laboral - Libranza.</h2>
+    </div>
+    <div class="grid grid-cols-12 w-100 mb-2" *ngIf="tipo=='CP'">
+        <h2 class="text-gray-900 col-span-12 mb-4">Visado de solicitudes de libranza.</h2>
     </div>
 
     <div class="flex flex-row w-100 justify-start gap-4 mb-4">
