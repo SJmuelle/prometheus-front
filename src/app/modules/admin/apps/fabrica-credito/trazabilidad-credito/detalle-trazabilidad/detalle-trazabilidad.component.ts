@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
-import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
-import { FormDecisionComponent } from '../form-decision/form-decision.component';
-
+import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
+ 
 @Component({
-  selector: 'app-resumen',
-  templateUrl: './resumen.component.html',
-  styleUrls: ['./resumen.component.scss']
+  selector: 'app-detalle-trazabilidad',
+  templateUrl: './detalle-trazabilidad.component.html',
+  styleUrls: ['./detalle-trazabilidad.component.scss']
 })
-export class ResumenComponent implements OnInit {
+export class DetalleTrazabilidadComponent implements OnInit {
   public animacionVer: boolean = true;
   public datos: any = [];
   public dataResumenTrazabilidad: any = [];
@@ -40,9 +39,8 @@ export class ResumenComponent implements OnInit {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     let data = {
       "numeroSolicitud": this.numeroSolicitud,
-      "identificacion": this.identificacion
     }
-    this._fabricaCreditoService.getResumenCredito(data).pipe(
+    this._fabricaCreditoService.getrazabilidad(data).pipe(
 
     ).subscribe((res) => {
       if (res.status === 200) {

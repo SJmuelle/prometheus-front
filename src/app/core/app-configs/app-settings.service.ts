@@ -48,6 +48,7 @@ export class AppSettingsService {
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
+            trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
         }
     };
     /**

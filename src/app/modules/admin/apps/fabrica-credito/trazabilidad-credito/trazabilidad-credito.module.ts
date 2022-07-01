@@ -21,11 +21,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
+import { DetalleTrazabilidadComponent } from './detalle-trazabilidad/detalle-trazabilidad.component';
+import { FuseDrawerModule } from '@fuse/components/drawer';
 
 
 @NgModule({
   declarations: [
-    BusquedaComponent
+    BusquedaComponent,
+    DetalleTrazabilidadComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +50,8 @@ import { SharedModule } from 'app/shared/shared.module';
     MatTableModule,
     MatTooltipModule,
     FuseFindByKeyPipeModule,
-    SharedModule
+    SharedModule,
+    FuseDrawerModule
   ]
 })
 export class TrazabilidadCreditoModule { }

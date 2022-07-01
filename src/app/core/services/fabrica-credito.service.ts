@@ -47,6 +47,17 @@ export class FabricaCreditoService {
     }
 
     /**
+* @description: resumenes de credito
+*/
+    public getrazabilidad(datos): Observable<any> {
+        // const { numeroSolicitud } = datos;
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.trazabilidad}/${numeroSolicitud}`);
+        // return this._http.get(this._appSettings.fabricaDatos.url.trazabilidad);
+        return this._http.post(this._appSettings.fabricaDatos.url.trazabilidad, datos);
+
+    }
+
+    /**
      * @description: Get datos fabrica Agenda
      */
     public getCantidadDatos(datos): Observable<any> {
