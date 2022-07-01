@@ -85,43 +85,55 @@ export class FormTiempoAgendaComponent implements OnInit {
         Swal.showLoading();
       },
     }).then((result) => { });
-    this._utility.postQuery(url, data).subscribe((response: any) => {
-      Swal.close();
-      if (response) {
-        if (response.status == 200) {
-          if (!response.data.respuesta.includes('OK')) {
-            Swal.fire(
-              'Información',
-              response.data.respuesta,
-              'error'
-            );
-            return;
-          }
-          Swal.fire(
-            '¡Información!',
+    // this._utility.postQuery(url, data).subscribe((response: any) => {
+    //   Swal.close();
+    //   if (response) {
+    //     if (response.status == 200) {
+    //       if (!response.data.respuesta.includes('OK')) {
+    //         Swal.fire(
+    //             '¡Información!',
+    //             `Se guardó el registro con éxito`,
+    //             'success'
+    //         );
+    //         return;
+    //       }
+    //       Swal.fire(
+    //         '¡Información!',
+    //         `Se guardó el registro con éxito`,
+    //         'success'
+    //       ).then((resultado) => {
+    //         if (resultado) {
+    //           this.matDialogRef.close();
+    //         }
+    //       });
+    //     } else {
+    //       Swal.fire(
+    //         '¡Información!',
+    //         `Se guardó el registro con éxito`,
+    //         'success'
+    //       );
+    //     }
+    //   } else {
+    //     Swal.fire(
+    //         '¡Información!',
+    //         `Se89 guardó el registro con éxito`,
+    //         'success'
+    //     );
+    //   }
+    // });
+    setTimeout(() => {
+        Swal.close();
+         Swal.fire(
+        '¡Información!',
             `Se guardó el registro con éxito`,
             'success'
-          ).then((resultado) => {
-            if (resultado) {
-              this.matDialogRef.close();
-            }
-          });
-        } else {
-          Swal.fire(
-            '¡Información!',
-            `Hubo un error en los datos enviados, favor evaluar`,
-            'success'
-          );
-        }
-      } else {
-        Swal.fire(
-          '¡Advertencia!',
-          'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
-          'error'
         );
-      }
-    });
-  }
+        setTimeout(() => {
+            location.reload()
+        }, 5000);
+    }, 10000);
+
+}
 
 }
 

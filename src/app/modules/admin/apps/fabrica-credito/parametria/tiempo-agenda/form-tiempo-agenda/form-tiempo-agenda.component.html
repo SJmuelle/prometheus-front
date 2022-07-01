@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{datos.titulo=='N'?'Nuevo':'Actualizar'}} listado de chequeo {{ datos.id ? '('+datos.id+')' : '' }}</h2>
+<h2 mat-dialog-title>{{datos.titulo=='N'?'Nueva':'Actualizar'}} meta de tiempo de crédito {{ datos.id ? '('+datos.id+')' : '' }}</h2>
 <div class="bg-white col-lg-12 col-sm-12  5 ">
     <div class="row">
         <div class="bg-white col l12">
@@ -38,17 +38,6 @@
                         <mat-icon class="icon-size-5" matPrefix svgIcon="business_center"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-lg-12"  *ngIf="datos.titulo=='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Tipo de persona </mat-label>
-                        <mat-select [(ngModel)]="datos.tipoIdentificacion" name="legal" [required]="datos.titulo=='N'" >
-                            <mat-option value="CC">Persona Natural</mat-option>
-                            <mat-option value="NIT">Persona Juridica</mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'person'">
-                        </mat-icon>
-                    </mat-form-field>
-                </div>
                 <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'" >
                     <mat-form-field class="flex-auto w-100">
                         <mat-label>Tipo de Cliente</mat-label>
@@ -57,26 +46,50 @@
                         <mat-icon class="icon-size-5" matPrefix svgIcon="person"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-lg-12" >
+                <div class="col-sm-6 col-lg-6" >
                     <mat-form-field class="flex-auto w-100">
-                        <mat-label>Verde</mat-label>
-                        <input matInput type="number" autocomplete="off" name="verde" 
+                        <mat-label>Inicio Agenda</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="naranja"
                              >
                         <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-lg-12" >
+                <div class="col-sm-6 col-lg-6" >
                     <mat-form-field class="flex-auto w-100">
-                        <mat-label>Naranja</mat-label>
-                        <input matInput type="number" autocomplete="off" name="naranja" 
+                        <mat-label>Fin Agenda</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="rojo"
                              >
                         <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div class="col-sm-12 col-lg-12" >
+                <div class="col-sm-6 col-lg-6" >
                     <mat-form-field class="flex-auto w-100">
-                        <mat-label>Rojo</mat-label>
-                        <input matInput type="number" autocomplete="off" name="rojo" 
+                        <mat-label>Inicio Fábrica</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="verde"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Fin Fábrica</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="naranja"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Inicio Totalizador</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off"  name="verde"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Fin Totalizador</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="naranja"
                              >
                         <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
                     </mat-form-field>

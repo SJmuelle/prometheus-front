@@ -15,6 +15,7 @@ import { ListadoTiposComentariosComponent } from './listado-tipos-comentarios/li
 import { ListadoTiposComentariosFormComponent } from './listado-tipos-comentarios/listado-tipos-comentarios-form/listado-tipos-comentarios-form.component';
 import { TiempoAgendaComponent } from './tiempo-agenda/tiempo-agenda.component';
 import { FormTiempoAgendaComponent } from './tiempo-agenda/form-tiempo-agenda/form-tiempo-agenda.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { FormTiempoAgendaComponent } from './tiempo-agenda/form-tiempo-agenda/fo
     FormsModule,
     SharedModule,
     Ng2SearchPipeModule,
-
+    MatTooltipModule,
     NgxPaginationModule,
     FuseCardModule,
   ]

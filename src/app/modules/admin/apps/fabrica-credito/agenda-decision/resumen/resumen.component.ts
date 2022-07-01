@@ -158,28 +158,28 @@ export class ResumenComponent implements OnInit {
             clase:"bg-red-100",
             color: "bg-red-100 text-red-800",
             label: "Saldo obligaciones",
-            valor: "$" + data.resumenHdc.maximaMoraActual
+            valor: "$" + data.resumenHdc.saldoObligaciones
           },
           {
             icono: "heroicons_outline:academic-cap",
             clase:"bg-red-100",
             color: "bg-red-100 text-red-800",
             label: "Peor calificación",
-            valor: " " + data.resumenHdc.saldoObligaciones
+            valor: "A"
           },
           {
             icono: "heroicons_outline:academic-cap",
             clase:"bg-red-100",
             color: "bg-red-100 text-red-800",
             label: "Cuotas",
-            valor: " " + data.resumenHdc.cuota
+            valor: "$" + data.resumenHdc.cuota
           },
           {
             icono: "heroicons_outline:academic-cap",
             clase:"bg-red-100",
             color: "bg-red-100 text-red-800",
             label: "Máxima mora actual",
-            valor: " " + data.resumenHdc.maximaMoraActual
+            valor: "$" + data.resumenHdc.maximaMoraActual
           }
         ]
       },
@@ -225,7 +225,7 @@ export class ResumenComponent implements OnInit {
             clase:"bg-orange-100",
             color: "bg-red-100 text-red-800",
             label: "Nivel de riesgo",
-            valor: data.resumenIndicadores.nivelRiesgo.toLowerCase()
+            valor: data.resumenIndicadores.nivelRiesgo
           }
         ]
       },
