@@ -30,6 +30,7 @@ export class ResumenComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.openModalNegocio()
   }
 
   /**
