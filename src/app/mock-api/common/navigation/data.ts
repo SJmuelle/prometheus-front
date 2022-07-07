@@ -107,7 +107,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                 id: 'dashboard.pqrs',
                 title: 'PQRS',
                 type: 'group',
-                icon: 'heroicons_outline:check-circle',
+                icon: 'heroicons_outline:inbox-in',
                 children: [
                     {
                         id: 'dashboard.pqrs.list',
@@ -170,14 +170,14 @@ export const compactNavigation: FuseNavigationItem[] = [
                 link: '/credit-factory/agenda-referencing',
                 icon: 'heroicons_outline:document',
             },
-            { 
+            {
                 id: 'agenda-referenciacion.list',
                 title: 'Agenda de análisis y decisión',
                 type: 'basic',
                 link: '/credit-factory/agenda-decision',
                 icon: 'heroicons_outline:document',
             },
-            { 
+            {
                 id: 'trazabilidad.list',
                 title: 'Trazabilidad',
                 type: 'basic',
