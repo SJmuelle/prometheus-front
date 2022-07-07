@@ -120,7 +120,7 @@
                             <a class="cursor-pointer" (click)="descargarArchivo(item.numero_solicitud)"><mat-icon [svgIcon]="'heroicons_outline:document-download'"></mat-icon></a>
                         </div>
                         <div *ngIf="item.tipo=='CP' && (item.destino=='SANEAMIENTO FINANCIERO' || item.destino=='COMPRA CARTERA')">
-                            <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer">Ver</a>
+                            <a class="cursor-pointer" (click)="AbrirObligaciones(item.numero_solicitud)" class="cursor-pointer"><mat-icon svgIcon="heroicons_outline:eye"></mat-icon></a>
                         </div>
                     </td>
                     <td class="text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
