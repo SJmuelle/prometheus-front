@@ -1,0 +1,65 @@
+<div class="w-full max-w-3xl">
+
+    <!-- Form -->
+    <form [formGroup]="form">
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Name -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full fuse-mat-emphasized-affix">
+                    <mat-label>Empresa</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:office-building'" matPrefix></mat-icon>
+                    <!-- <input autocomplete="off" [formControlName]="'empresa'" matInput> -->
+                    <mat-select [formControlName]="'empresa'" name="tipo" matInput>
+                       
+                            <mat-option *ngFor="let item of empresa" value="{{item.codigoOpcion}}">
+                               {{item.descripcionOpcion}}
+                            </mat-option>
+                      
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- Username -->
+            <div class="sm:col-span-4">
+
+                <mat-form-field class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full">
+                    <mat-label>Nombre del modulo</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:view-grid'" matPrefix></mat-icon>
+                    <input autocomplete="off" [formControlName]="'nombreModulo'" matInput>
+                </mat-form-field>
+            </div>
+            <!-- Title -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full fuse-mat-emphasized-affix">
+                    <mat-label>Icono</mat-label>
+                    <div class="text-secondary" matPrefix>
+                        <mat-icon class="icon-size-5" [svgIcon]="form.value.icono" matPrefix></mat-icon>
+                    </div>
+                    <mat-select [formControlName]="'icono'" name="icono">
+                        <ng-container *ngIf="(icons$ | async) as icons">
+                            <mat-option *ngFor="let icon of listado | filter:filterproveedor" value="heroicons_outline:{{icon}}">
+                                <mat-icon [svgIcon]="icons.namespace + ':' + icon">
+                                </mat-icon>{{icon}}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Title -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="fuse-mat-no-subscript w-full fuse-mat-emphasized-affix">
+                    <mat-label>Componente</mat-label>
+                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_outline:adjustments'" matPrefix></mat-icon>
+                    <input autocomplete="off" [formControlName]="'componente'" matInput>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end mt-5 mb-1">
+            <button class="ml-4" mat-flat-button type="button" [color]="'primary'" (click)="guardar()">Guardar
+            </button>
+        </div>
+    </form>
+
+</div>

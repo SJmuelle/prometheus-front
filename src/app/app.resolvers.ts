@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { InitialData } from 'app/app.types';
+import { NavigationService } from './core/navigation/navigation.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ export class InitialDataResolver implements Resolve<any>
     /**
      * Constructor
      */
-    constructor(private _httpClient: HttpClient)
+    constructor(private _httpClient: HttpClient, private _navigationService:NavigationService)
     {
     }
 
@@ -32,18 +33,18 @@ export class InitialDataResolver implements Resolve<any>
         // Fork join multiple API endpoint calls to wait all of them to finish
         return forkJoin([
             this._httpClient.get<any>('api/common/messages'),
-            this._httpClient.get<any>('api/common/navigation'),
+            this._navigationService.getNavigation(),
             this._httpClient.get<any>('api/common/notifications'),
             this._httpClient.get<any>('api/common/shortcuts'),
             this._httpClient.get<any>('api/common/user')
         ]).pipe(
-            map(([messages, navigation, notifications, shortcuts, user]) => ({
+            map(([messages, navigation, notifications, shortcuts, user]) => (console.log(navigation.data), {
                     messages,
                     navigation: {
-                        compact   : navigation.compact,
-                        default   : navigation.default,
-                        futuristic: navigation.futuristic,
-                        horizontal: navigation.horizontal
+                        compact   : navigation.data,
+                        default   : navigation.data,
+                        futuristic: navigation.data,
+                        horizontal: navigation.data
                     },
                     notifications,
                     shortcuts,
