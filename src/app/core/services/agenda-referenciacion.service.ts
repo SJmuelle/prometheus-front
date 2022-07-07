@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AppSettingsService} from "../app-configs/app-settings.service";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgendaReferenciacionService {
-
+  public refrescarListado$: Subject<{ estado: boolean }> = new Subject();
   constructor(
       private _http: HttpClient,
       private _appSettings: AppSettingsService

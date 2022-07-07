@@ -17,6 +17,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {GridDocumentacionComponent} from '../grid-documentacion/grid-documentacion.component';
 import { UtilityService } from 'app/resources/services/utility.service';
 import {FormDialogDecisionComponent} from '../form-dialog-decision/form-dialog-decision.component';
+import {DirectionsComponent} from "../../../../../../shared/modal/directions/directions.component";
 
 @Component({
   selector: 'app-form-gestion-fabrica-credito',
@@ -43,9 +44,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public subscription$: Subscription;
   public verComentarios: boolean = false;
+  public minimizarComentarios:  boolean = false;
+  public esVerComentarios: boolean = false;
   public tipoDocumento: string = '';
   public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public estado: string = '';
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -83,7 +87,14 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
    * @description:
    */
   public onCerrar(event): void {
-      console.log(event);
+      this.verComentarios = event;
+      this.minimizarComentarios = event;
+  }
+  /**
+   * @description: Minimiza el componente comentarios
+   */
+  public onMinimiza(event): void {
+      this.minimizarComentarios = !event;
       this.verComentarios = event;
   }
   /**
@@ -105,13 +116,96 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
       const dialogRef = this._dialog.open(FormDialogDecisionComponent, {
           minWidth: '30%',
           minHeight: '30%',
-          data: {numeroSolicitud: this.numeroSolicitud},
+          data: {numeroSolicitud: this.numeroSolicitud, etapa:1},
           disableClose: false,
       });
       dialogRef.afterClosed().toPromise().then(() => {
           this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
       });
   }
+
+  public openModalDirection(): void {
+      const dialogRef = this._dialog.open(DirectionsComponent, {
+          width: '60%',
+          data: {
+              departamento: '',
+              municipio: '',
+              barrio: '',
+              direccion: '',
+          },
+          disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
+              this.form.controls.descripcionDepartamento.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudad.setValue(dataModal.municipio);
+              this.form.controls.descripcionCiudad.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.descripcionBarrio.setValue(dataModal.barrio);
+              this.form.controls.direccionResidencial.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
+  }
+
+  public openModalNegocio(): void {
+      const dialogRef = this._dialog.open(DirectionsComponent, {
+          width: '60%',
+          data: {
+              departamento: '',
+              municipio: '',
+              barrio: '',
+              direccion: '',
+          },
+          disableClose: false
+      });
+
+      dialogRef.afterClosed().subscribe((res) => {
+          const dataModal: any = res;
+          if (dataModal.departamento != undefined) {
+              this.form.controls.codigoDepartamentoNegocio.setValue(dataModal.departamento);
+              this.form.controls.descripcionDepartamentoNegocio.setValue(dataModal.departamentoNombre);
+              this.form.controls.codigoCiudadNegocio.setValue(dataModal.municipio);
+              this.form.controls.descripcionCiudadNegocio.setValue(dataModal.municipioNombre);
+              this.form.controls.codigoBarrioNegocio.setValue(Number(dataModal.codigoBarrio));
+              this.form.controls.descripcionBarrioNegocio.setValue(dataModal.barrio);
+              this.form.controls.direccionNegocio.setValue(
+                  (dataModal.viaNombre == undefined
+                      ? ''
+                      : `${dataModal.viaNombre}`) +
+                  (dataModal.callePrincipal == undefined
+                      ? ''
+                      : ` ${dataModal.callePrincipal}`) +
+                  (dataModal.numero == undefined
+                      ? ''
+                      : ` # ${dataModal.numero}`) +
+                  (dataModal.numero2 == undefined
+                      ? ''
+                      : ` - ${dataModal.numero2}`) +
+                  (dataModal.complemento == undefined
+                      ? ''
+                      : ` ${dataModal.complemento}`));
+          }
+      });
+  }
+
   /**
    * @description: Direcciona al componente comentarios
    */
@@ -124,16 +218,19 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
   public onPostDatos(): void {
       if (this.form.valid) {
           const datos: FormularioCreditoInterface = this.form.getRawValue();
-          const {fechaNacimiento, fechaMatricula, ...data} = datos;
+          const {fechaNacimiento, fechaMatricula, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible,  nivelEndeudamiento, ...data} = datos;
           const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
           const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
           const compraSemanal= Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
           const ventasMensuales= Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
-          const antiguedadComprasSemanales = Number(this.utility.enviarNumero(this.form.value.antiguedadComprasSemanales));
+          const scoreFormato = Number(this.form.value.score);
+          const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
+          const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
+          const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
+          const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
           const activos= Number(this.utility.enviarNumero(this.form.value.activos));
           delete data.ventasMensuales;
           delete data.comprasSemanales;
-          delete data.antiguedadComprasSemanales;
           delete data.activos;
           const datosFormularios: FormularioCreditoInterface = {
               fechaNacimiento: fechaNacimientoFormato,
@@ -141,7 +238,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               comprasSemanales: compraSemanal,
               ventasMensuales: ventasMensuales,
               activos: activos,
-              antiguedadComprasSemanales: antiguedadComprasSemanales,
+              antiguedadComprasSemanales: Number(antiguedadComprasSemanales),
+              score: Number(scoreFormato),
+              nivelEndeudamiento: Number(nivelEndeudamientoFormato),
+              cupoTotal: Number(cupoTotalFormato),
+              cupoReservado: Number(cupoReservadoFormato),
+              cupoDisponible: Number(cupoDisponbileFormato),
               ...data
           };
           Swal.fire({
@@ -157,6 +259,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               if (result.isConfirmed) {
                   this.postFormularioFabrica(datosFormularios);
                   // console.log(this.form.getRawValue());
+                  // console.log(datosFormularios);
               }
           });
       }else {
@@ -206,6 +309,15 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           if(data.activos){
             this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
           }
+          if(data.cupoTotal){
+            this.form.controls['cupoTotal'].setValue(this.utility.formatearNumero(String(this.form.value.cupoTotal)));
+          }
+          if(data.cupoReservado){
+            this.form.controls['cupoReservado'].setValue(this.utility.formatearNumero(String(this.form.value.cupoReservado)));
+          }
+          if(data.cupoDisponible){
+            this.form.controls['cupoDisponible'].setValue(this.utility.formatearNumero(String(this.form.value.cupoDisponible)));
+          }
 
           this.tipoDocumento = data.tipoDocumento;
           const datosDocumentos: any = {
@@ -213,6 +325,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
               tipoDocumento: this.tipoDocumento
           };
           this.fabricaCreditoService.seleccionDatos.next({data: datosDocumentos});
+          this.estado = data.descripcionEstado;
       });
   }
   public seleccionDepartamento(event: MatSelectChange): void {
@@ -347,10 +460,10 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           .subscribe(() => {
               Swal.fire(
                   'Completado',
-                  'Información guardada con exito',
+                  'Información guardada con éxito',
                   'success'
               );
-              this.router.navigate(['/credit-factory/agenda-completion']);
+            //   this.router.navigate(['/credit-factory/agenda-completion']);
       }, (error) => {
               Swal.fire({
                   icon: 'error',
@@ -420,7 +533,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           numeroSolicitud:               [''],
           emision:                       [''],
           descripcionEstado:             [''],
-          origen:                        [''],
+          descripcionOrigen:             [''],
           codigoSubEstado:               [''],
           cupoTotal:                     [''],
           cupoReservado:                 [''],
@@ -435,8 +548,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           activos:                       [''],
           declarante:                    ['', [Validators.required]],
           codigoDepartamentoNegocio:     [''],
+          descripcionDepartamentoNegocio:[''],
           codigoCiudadNegocio:           [''],
+          descripcionCiudadNegocio:      [''],
           codigoBarrioNegocio:           [''],
+          descripcionBarrioNegocio:      [''],
           direccionNegocio:              [''],
           telefonoNegocio:               ['', [Validators.pattern(/^[0-9]*$/)]],
           telefono:                      [''],
@@ -448,12 +564,13 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           identificacion:                ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
           digitoVerificacion:            [''],
           nombreCompleto:                ['', [Validators.required]],
+          nombreNegocio:                 [''],
           fechaMatricula:                [''],
           primerNombre:                  ['', [Validators.required]],
           segundoNombre:                 [''],
           primerApellido:                ['', [Validators.required]],
           segundoApellido:               [''],
-          celular:                       ['', [Validators.pattern(/^[0-9]*$/)]],
+          celular:                       ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
           email:                         [''],
           genero:                        [''],
           nacionalidad:                  [''],
@@ -462,11 +579,16 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
           codigoCiudadNacimiento:        [''],
           tipoVivienda:                  [''],
           codigoDepartamento:            [''],
+          descripcionDepartamento:       [''],
           codigoCiudad:                  [''],
+          descripcionCiudad:             [''],
           codigoBarrio:                  [''],
+          descripcionBarrio:             [''],
           direccionResidencial:          [''],
           nivelEstudio:                  [''],
           viveEnNegocio:                 [''],
+          descripcionTipo:               [''],
+
       });
   }
   /**

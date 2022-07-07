@@ -30,21 +30,26 @@ import {NgxExtendedPdfViewerModule} from "ngx-extended-pdf-viewer";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {PdfViewerModule} from "ng2-pdf-viewer";
 import { FormDialogDecisionComponent } from './form-dialog-decision/form-dialog-decision.component';
+import { FormDialogComentariosComponent } from './form-dialog-comentarios/form-dialog-comentarios.component';
+import {NgxPaginationModule} from "ngx-pagination";
+import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
 
 
 
 @NgModule({
-  declarations: [
-    FormGestionFabricaCreditoComponent,
-    FormRepresentanteLegalComponent,
-    GridReferenciasComponent,
-    FormDetallesReferenciasComponent,
-    FormDialogReferenciasComponent,
-    GridComentariosComponent,
-    GridDocumentacionComponent,
-    FormDialogCompararDocumentosComponent,
-    FormDialogDecisionComponent,
-  ],
+    declarations: [
+        FormGestionFabricaCreditoComponent,
+        FormRepresentanteLegalComponent,
+        GridReferenciasComponent,
+        FormDetallesReferenciasComponent,
+        FormDialogReferenciasComponent,
+        GridComentariosComponent,
+        GridDocumentacionComponent,
+        FormDialogCompararDocumentosComponent,
+        FormDialogDecisionComponent,
+        FormDialogComentariosComponent,
+        GridPoliticasComponent,
+    ],
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
@@ -67,8 +72,12 @@ import { FormDialogDecisionComponent } from './form-dialog-decision/form-dialog-
         NgxExtendedPdfViewerModule,
         Ng2SearchPipeModule,
         PdfViewerModule,
+        NgxPaginationModule,
 
     ],
 
+    exports: [
+        GridReferenciasComponent
+    ]
 })
 export class GestionFabricaCreditoModule { }
