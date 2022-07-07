@@ -88,7 +88,8 @@ export class AuthService {
                     name: response.data.nombre,
                     email: response.data.email,
                     status: 'online',
-                    user: response.data.idusuario
+                    user: response.data.idusuario,
+                    rol:0
                 });
                 localStorage.setItem("usuario", user);
                 // Return a new observable with the response
@@ -129,7 +130,8 @@ export class AuthService {
                     name: response.data.nombre,
                     email: response.data.email,
                     status: 'online',
-                    user: response.data.idusuario
+                    user: response.data.idusuario,
+                    rol:0
                 });
                 localStorage.setItem("usuario", user);
                 // Return a new observable with the response
