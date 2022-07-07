@@ -48,6 +48,9 @@ export class PagaduriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tipo = 'RL';
+    this.mostrar = true;
+    this.consultaSolicitudes();
   }
 
   descargarArchivo(id:any){
