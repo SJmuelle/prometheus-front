@@ -49,8 +49,8 @@ export class PagaduriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // let rol = localStorage.setItem('IdRol')
-    // rol=='39'? true : false;
+    let usuarios =JSON.parse(localStorage.getItem('usuario'));
+    this.columna = usuarios.rol==1? true : false;
     this.tipo = 'RL';
     this.mostrar = true;
     this.consultaSolicitudes();
