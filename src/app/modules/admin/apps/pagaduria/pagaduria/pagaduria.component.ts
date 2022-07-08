@@ -28,6 +28,7 @@ export class PagaduriaComponent implements OnInit {
   mostrar:boolean = false; // mostrar la tabla y botones una vez se selecciones un tipo.
   filtrarTabla:string=''; // filtrar la tabla
   solicitudForm: FormGroup; //formulario para hacer las validaciones requeridas
+  columna: boolean = false;
 
   /**
    * @description: control del formulario creado.
@@ -48,6 +49,8 @@ export class PagaduriaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // let rol = localStorage.setItem('IdRol')
+    // rol=='39'? true : false;
     this.tipo = 'RL';
     this.mostrar = true;
     this.consultaSolicitudes();

@@ -46,6 +46,7 @@
             <thead class="bg-gray-100">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
                     <th class="px-2 py-3 text-center text-base izquierda">Acciones</th>
+                    <th class="px-2 py-3 text-center text-base izquierda" *ngIf="columna==true">Pagaduria</th>
                     <th class="px-3 py-3 text-center">Solicitud</th>
                     <th class="px-3 py-3 text-center" *ngIf="estado=='P'">Reactivada</th>
                     <th class="px-2 py-3 text-center">Fecha de solicitud</th>
@@ -90,6 +91,7 @@
                     <td class="text-sm border text-center" *ngIf="estado=='R'">
                         <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
                     </td>
+                    <td class="text-sm border text-center" *ngIf="columna==true"></td>
                     <td class="px-2 text-sm border text-center">
                         <div *ngIf="item.estado_pagaduria=='RA'" [ngClass]="{'bg-pink-300': item.estado_pagaduria=='RA'}"> 
                             <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
