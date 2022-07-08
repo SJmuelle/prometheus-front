@@ -72,7 +72,6 @@ export class AuthService {
                 // Store the access token in the local storage
                 this.accessToken = response.data.token;
                 // this.accessToken = response.accessToken;
-
                 // Set the authenticated flag to true
                 this._authenticated = true;
 
@@ -89,7 +88,8 @@ export class AuthService {
                     email: response.data.email,
                     status: 'online',
                     user: response.data.idusuario,
-                    rol:0
+                    rol:response.data.rol_id
+
                 });
                 localStorage.setItem("usuario", user);
                 // Return a new observable with the response
@@ -131,7 +131,7 @@ export class AuthService {
                     email: response.data.email,
                     status: 'online',
                     user: response.data.idusuario,
-                    rol:0
+                    rol:response.data.rol_id
                 });
                 localStorage.setItem("usuario", user);
                 // Return a new observable with the response
