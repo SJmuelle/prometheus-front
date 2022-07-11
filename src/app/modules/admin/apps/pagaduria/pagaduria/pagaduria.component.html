@@ -45,7 +45,9 @@
         <table>
             <thead class="bg-gray-100">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
-                    <th class="px-2 py-3 text-center text-base izquierda">Acciones</th>
+                    <th class="px-2 py-3 text-center text-base izquierda" *ngIf="estado=='P'">Acciones</th>
+                    <th class="px-2 py-3 text-center text-base izquierda" *ngIf="estado=='A' && validarReactivar==true">Acciones</th>
+                    <th class="px-2 py-3 text-center text-base izquierda" *ngIf="estado=='R' && validarReactivar==true">Acciones</th>
                     <th class="px-2 py-3 text-center text-base izquierda" *ngIf="columna==true">Pagaduria</th>
                     <th class="px-3 py-3 text-center">Solicitud</th>
                     <th class="px-3 py-3 text-center" *ngIf="estado=='P'">Reactivada</th>
@@ -85,13 +87,13 @@
                             </div>
                         </div>
                     </td>
-                    <td class="text-sm border text-center" *ngIf="estado=='A'">
+                    <td class="text-sm border text-center" *ngIf="estado=='A' && validarReactivar==true">
                         <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
                     </td>
-                    <td class="text-sm border text-center" *ngIf="estado=='R'">
+                    <td class="text-sm border text-center" *ngIf="estado=='R' && validarReactivar==true">
                         <a class="cursor-pointer" (click)="AbrirReactivar(item.numero_solicitud, item.tipo)"><mat-icon [svgIcon]="'thumbs-up'"></mat-icon></a>
                     </td>
-                    <td class="text-sm border text-center" *ngIf="columna==true"></td>
+                    <td class="text-sm border text-center" *ngIf="columna==true">{{item.nombrePagaduria}}</td>
                     <td class="px-2 text-sm border text-center">
                         <div *ngIf="item.estado_pagaduria=='RA'" [ngClass]="{'bg-pink-300': item.estado_pagaduria=='RA'}"> 
                             <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
