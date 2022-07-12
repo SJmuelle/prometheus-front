@@ -11,7 +11,7 @@ export const environment = {
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
 
-    urlPagaduria: 'https://prometheus.fintra.co:8443/pagadurias/',
+    urlPagaduria: 'https://prometheus.fintra.co:8443/',
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
     adjunto:'http://demo.fintra.co:8010/api-pqrs/api/pqrs',
