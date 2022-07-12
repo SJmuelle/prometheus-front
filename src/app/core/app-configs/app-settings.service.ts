@@ -103,7 +103,8 @@ export class AppSettingsService {
     public comentarios = {
         url: {
             baseComentario: EndPoints.uri('/generic/qry/cre-consulta-comentarios'),
-            baseComentarioCrear: EndPoints.uri('/generic/cre-agregar-comentario')
+            baseComentarioCrear: EndPoints.uri('/generic/cre-agregar-comentario'),
+            tipoComentario: EndPoints.uri('/generic/qry/consulta-lista-generica/TIPO-COMENTARIO'),
         }
     };
       /**
