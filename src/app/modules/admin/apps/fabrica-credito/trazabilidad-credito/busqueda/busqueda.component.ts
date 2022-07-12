@@ -25,7 +25,7 @@ export class BusquedaComponent implements OnInit {
         let data = {
             busqueda: dato
         };
-        Swal.fire({ title: 'Cargando', html: 'Buscando informacion', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        Swal.fire({ title: 'Cargando', html: 'Buscando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._utility
             .postQueryServer1('/generic/agendas-credito-trazabilidad', data)
             .subscribe((response: any) => {

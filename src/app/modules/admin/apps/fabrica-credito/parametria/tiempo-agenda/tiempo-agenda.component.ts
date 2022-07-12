@@ -29,7 +29,7 @@ export class TiempoAgendaComponent implements OnInit {
   }
   consulta() {
   let data=null;
-    Swal.fire({ title: 'Cargando', html: 'Buscando informacion', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._utility
       .postQueryServer1('/generic/select-parametria-semaforo', data)
       .subscribe((response: any) => {
