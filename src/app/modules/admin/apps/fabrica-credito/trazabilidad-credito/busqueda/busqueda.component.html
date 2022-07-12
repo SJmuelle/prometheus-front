@@ -1,7 +1,7 @@
 <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
 
     <mat-drawer-container
-        class="flex-auto h-full bg-card dark:bg-transparent">
+        class="flex-auto bg-card dark:bg-transparent">
         <!-- Drawer -->
         <mat-drawer
             class="w-full md:w-160 dark:bg-gray-900"
@@ -19,15 +19,15 @@
                 <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
                     <!-- Title -->
                     <div>
-                        <div class="text-4xl font-extrabold tracking-tight leading-none">Creditos</div>
-                        <div class="ml-0.5 font-medium text-secondary">
+                        <div class="text-4xl font-extrabold tracking-tight leading-none">Trazabilidad de créditos</div>
+                        <div class="ml-0.5 font-bold text-secondary">
                             <ng-container *ngIf="listadoCount > 0">
                                 {{listadoCount}}
                             </ng-container>
                             {{listadoCount | i18nPlural: {
-                            '=0'   : 'No hay creditos',
-                            '=1'   : 'creditos',
-                            'other': 'creditos'
+                            '=0'   : 'No hay créditos',
+                            '=1'   : 'créditos',
+                            'other': 'créditos'
                         } }}
                         </div>
                     </div>
@@ -42,10 +42,10 @@
                                     matPrefix
                                     [svgIcon]="'heroicons_solid:search'"></mat-icon>
                                 <input
-                                    matInput                            
+                                    matInput
                                     [autocomplete]="'off'"
                                     (keyup)="onKeyUp($event)"
-                                    [placeholder]="'Busqueda de credito'">
+                                    [placeholder]="'Búsqueda de crédito'">
                             </mat-form-field>
                         </div>
                     </div>
@@ -53,12 +53,12 @@
 
                 <!-- Contacts list -->
                 <div class="relative">
-                  
+
                             <ng-container *ngFor="let contact of listados; let i = index;">
                                 <!-- Group -->
                                 <ng-container *ngIf="i === 0 || contact.nombreCompleto.charAt(0) !== listados[i - 1].nombreCompleto.charAt(0)">
-                                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
-                                        {{contact.nombreCompleto.charAt(0)}}  
+                                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-bold uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                                        {{contact.nombreCompleto.charAt(0)}}
                                     </div>
                                 </ng-container>
                                 <!-- Contact -->
@@ -70,26 +70,63 @@
                                     <div class="flex flex-0 items-center justify-center w-10 h-10  overflow-hidden" [ngClass]="!contact.urlIconoUnidad?'rounded-full':''">
                                         <ng-container *ngIf="contact.urlIconoUnidad">
                                             <img
-                                                class="object-cover w-full h-full"
+                                                class="object-cover w-full"
                                                 [src]="contact.urlIconoUnidad"
                                                 alt="Contact avatar"/>
                                         </ng-container>
                                         <ng-container *ngIf="!contact.urlIconoUnidad">
-                                            <div class="flex items-center justify-center w-full h-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                            <div class="flex items-center justify-center w-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
                                                 {{contact.undadNegocio.charAt(0)}}
                                             </div>
                                         </ng-container>
                                     </div>
+                                    <td class="min-w-0 ml-4">
+                                        <div class="flex flex-column pl-3">
+                                            <small class="text-accent-800 text-xs pl-3">Solicitud:</small>
+                                            <span class="text-md font-bold pl-3"> {{
+                                                contact.numeroSolicitud}}</span>
+                                        </div>
+                                    </td>
                                     <div class="min-w-0 ml-4">
                                         <div >
-                                            <span class="font-medium leading-5 truncate">{{contact.nombreCompleto}}</span>
-                                            <span class="font-semibold m-4 rounded text-white bg-green-500 px-3 text-sm">Estado: {{contact.subEstado}}</span>
+                                            <div class="flex flex-column pl-5">
+                                            <small class="text-accent-600 text-xs">Nombre completo:</small>
+                                            <span class="font-bold leading-5 truncate">{{contact.nombreCompleto}}</span>
+                                            <span class="font-semibold m-1 rounded text-white bg-green-500 px-3 text-sm">Estado: {{contact.subEstado}}</span>
+                                            </div>
                                         </div>
-                                        <div class="leading-5 truncate text-secondary">{{contact.numeroSolicitud}}</div>
                                     </div>
+                                    <td class="min-w-0 ml-4">
+                                        <div class="flex flex-column pl-3">
+                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
+                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
+                                                contact.agencia}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="min-w-0 ml-4">
+                                        <div class="flex flex-column pl-3">
+                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
+                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
+                                                contact.agencia}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="min-w-0 ml-4">
+                                        <div class="flex flex-column pl-3">
+                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
+                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
+                                                contact.agencia}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="min-w-0 ml-4">
+                                        <div class="flex flex-column pl-3">
+                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
+                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
+                                                contact.agencia}}</span>
+                                        </div>
+                                    </td>
                                 </a>
                             </ng-container>
-                       
+
 
                     <!-- No contacts -->
                     <ng-template #noContacts>
