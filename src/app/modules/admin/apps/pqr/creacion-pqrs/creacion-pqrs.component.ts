@@ -456,7 +456,7 @@ export class CreacionPQRSComponent implements OnInit {
                                     console.log(dato)
                                     debugger;
                                     if (dato.tipo_solicitante!=undefined && dato.segmento_actual!=undefined) {
-                                        this._pqrService.Create('actualizar_pqr_tipo', dato).subscribe((response: any) => {
+                                        this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => {
                                             if (response.status == 200) {
                                                 console.log('Aqui te respondo: ', response)
                                             }else{
