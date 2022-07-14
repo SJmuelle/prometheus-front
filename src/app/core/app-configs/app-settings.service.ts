@@ -78,10 +78,10 @@ export class AppSettingsService {
      */
      public transferencias = {
         url: {
-            baseTransferencia: EndPoints.uriBase('transferencia/transferencia-cxp-proveedor'),
-            baseProveedor: EndPoints.uriBase('generic/qry/buscar-proveedor'),
-            baseBancos: EndPoints.uriBase('generic/qry/bancos-transferencia/JHSALAZAR'),
-            baseFiltro: EndPoints.uriBase('generic/qry/cxp-proveedor'),
+            baseTransferencia: EndPoints.uriBase('/transferencia/transferencia-cxp-proveedor'),
+            baseProveedor: EndPoints.uriBase('/generic/qry/buscar-proveedor'),
+            baseBancos: EndPoints.uriBase('/generic/qry/bancos-transferencia/JHSALAZAR'),
+            baseFiltro: EndPoints.uriBase('/generic/qry/cxp-proveedor'),
         }
     };
     /**
@@ -89,8 +89,8 @@ export class AppSettingsService {
      */
      public archivos = {
         url: {
-            ListFiles: EndPoints.uriBase('generic/qry/tk/transferencia-consultar-achivo'),
-            DownFile: EndPoints.uriBase('transferencia/obtener-achivo-base64')
+            ListFiles: EndPoints.uriBase('/generic/qry/tk/transferencia-consultar-achivo'),
+            DownFile: EndPoints.uriBase('/transferencia/obtener-achivo-base64')
         }
     };
     /**
