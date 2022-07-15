@@ -263,10 +263,8 @@ export class SolucionComponent implements OnInit {
         if (this.idTipoComentario=='2') {
             console.log(this.idTipoComentario)
             console.log('Mira lo que envias, ', this.envioCorreo)
-            debugger;
             if (this.aprobado=='Si' || this.aprobado=='si') {
-                debugger;
-                let url = 'agregar-solucion-cliente_comentario';
+                let url = '/agregar-solucion-cliente_comentario';
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Guardando solución de PQRS',
@@ -275,16 +273,10 @@ export class SolucionComponent implements OnInit {
                         Swal.showLoading();
                     },
                 }).then((result) => {});
-                console.log('Aqui estoy: ', this.seguimiento)
-                debugger;
                 this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
-                    console.log(response)
-                    debugger;
                     Swal.close();
                     if (response) {
                         if (response.status === 200) {
-                            console.log('Mira aqui: ', response.data.respuesta);
-                            debugger;
                             if (response.data.respuesta.includes('Error')) {
                                 Swal.fire(
                                     'Información',
@@ -310,7 +302,6 @@ export class SolucionComponent implements OnInit {
                                         Swal.showLoading();
                                     },
                                 }).then((result) => {});
-                                console.log("Aqui tus datos: ", data)
                                 this._pqrService.postFile(url, data).subscribe((response: any) => {
                                     Swal.close();
                                     if (response) {
@@ -349,12 +340,8 @@ export class SolucionComponent implements OnInit {
                                 ).then((resultado) => {
                                     if (resultado) {
                                         console.log('aqui no hay adjunto');
-                                        debugger;
                                         if (this.idTipoComentario == '2') {
-                                            debugger;
                                             url = `/sendmail/notificacion-crear-pqrs`;
-                                            debugger;
-                                            console.log(url)
                                             this._pqrService.envioCorreos(
                                                 url,
                                                 this.pqrid,
@@ -373,7 +360,6 @@ export class SolucionComponent implements OnInit {
                                                 mensaje,
                                                 this.envio='N'
                                             );
-                                            debugger;
                                         }
                                         this.limpiar();
                                         this.recargarData();
@@ -403,7 +389,6 @@ export class SolucionComponent implements OnInit {
             
             } else {
                 let url = '/agregar-solucion-comentario';
-                debugger;
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Guardando solución de PQRS',
@@ -414,12 +399,9 @@ export class SolucionComponent implements OnInit {
                 }).then((result) => {});
 
                 this._pqrService.Create(url, this.seguimiento_area).subscribe((response: any) => {
-                    console.log(response)
-                    debugger;
                     Swal.close();
                     if (response) {
                         if (response.status === 200) {
-                            console.log('Mira aqui: ', response.data.respuesta);
                             if (response.data.respuesta.includes('Error')) {
                                 Swal.fire(
                                     'Información',
@@ -445,8 +427,6 @@ export class SolucionComponent implements OnInit {
                                         Swal.showLoading();
                                     },
                                 }).then((result) => {});
-                                console.log("Aqui tus datos: ", data)
-                                debugger;
                                 this._pqrService.postFile(url, data).subscribe((response: any) => {
                                     Swal.close();
                                     if (response) {
@@ -468,7 +448,6 @@ export class SolucionComponent implements OnInit {
                                                         mensaje,
                                                         this.envioCorreo==true?'S':'N'
                                                     );
-                                                    debugger;
                                                     this._pqrService.envioCorreos(
                                                         url,
                                                         this.pqrid,
