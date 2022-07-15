@@ -28,7 +28,7 @@ export class ListadoChequeoComponent implements OnInit {
     this.consulta();
   }
   consulta() {
-    Swal.fire({ title: 'Cargando', html: 'Buscando informacion', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._utility
       .getFile('/generic/qry/obtener-listado-items-chequeos')
       .subscribe((response: any) => {
