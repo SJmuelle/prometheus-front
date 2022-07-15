@@ -38,7 +38,7 @@ export class AgregarComentarioComponent implements OnInit {
   }
 
   guardar(){
-    let url = 'guardar-comentario-seguimiento';
+    let url = '/guardar-comentario-seguimiento';
     const { descripcion } = this.form.getRawValue();
     this.comentario={
       id_pqrs:this.data.id,

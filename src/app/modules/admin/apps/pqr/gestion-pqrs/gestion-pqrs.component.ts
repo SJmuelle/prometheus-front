@@ -200,7 +200,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     guardarDescripcion(id, descripcion){
-        let url = 'actualizar_pqr_descripcion';
+        let url = '/actualizar_pqr_descripcion';
         this.edicion={
             id:parseInt(id),
             detalle_pqrs:descripcion
@@ -310,36 +310,46 @@ export class GestionPQRSComponent implements OnInit {
                     this.listadoGestion = unicos;
                     console.log('Unicos: ', unicos);
                     Swal.close();
-                    
-                    for (let index = 0; index < unicos.length; index++) {
-                        const id = unicos[index];
-                        this.comentarioid = id.id;
-                        this.comentariotipoid = id.tipo_comentario;
-                        this.envio = id.envio;
-                        this.motivo = id.detalle;
-                        console.log(this.comentarioid);
-                        console.log(this.comentariotipoid);
-                        console.log('hola ', this.motivo);
-                    }
+                    if (unicos.length<=0) {
+                        Swal.fire({
+                            icon: 'info',
+                            title: '¡Información!',
+                            text: 'No existen soluciones por aprobar o rechazar'
+                        }).then()
+                    } else {
 
-                    let urlad = `/adjunto-comentario/${this.comentarioid}`;
-                    this._pqrService.getListados(urlad).subscribe((response:any) =>{
-                        if (response) {
-                            console.log(response);
-                            this.listadoAdjuntos = response;
-                            console.log('Hello: ', this.listadoAdjuntos)
-                            this.archivo = [{
-                                idComentario:this.listadoAdjuntos[0].id_comentario,
-                                documento:this.listadoAdjuntos[0].documento,
-                                filepath:this.listadoAdjuntos[0].filepath,
-                                filename:this.listadoAdjuntos[0].filename,
-                                extension:this.listadoAdjuntos[0].extension,
-                                descripcion:this.listadoAdjuntos[0].descripcion
-                            }]
-                        } else {
-                            this.listadoAdjuntos = [];
+                        for (let index = 0; index < unicos.length; index++) {
+                            const id = unicos[index];
+                            this.comentarioid = id.id;
+                            this.comentariotipoid = id.tipo_comentario;
+                            this.envio = id.envio;
+                            this.motivo = id.detalle;
+                            console.log(this.comentarioid);
+                            console.log(this.comentariotipoid);
+                            console.log('hola ', this.motivo);
                         }
-                    });
+    
+                        let urlad = `adjunto-comentario/${this.comentarioid}`;
+                        this._pqrService.getListados(urlad).subscribe((response:any) =>{
+                            if (response) {
+                                console.log(response);
+                                this.listadoAdjuntos = response;
+                                console.log('Hello: ', this.listadoAdjuntos)
+                                this.archivo = [{
+                                    idComentario:this.listadoAdjuntos[0].id_comentario,
+                                    documento:this.listadoAdjuntos[0].documento,
+                                    filepath:this.listadoAdjuntos[0].filepath,
+                                    filename:this.listadoAdjuntos[0].filename,
+                                    extension:this.listadoAdjuntos[0].extension,
+                                    descripcion:this.listadoAdjuntos[0].descripcion
+                                }]
+                            } else {
+                                this.listadoAdjuntos = [];
+                            }
+                        });
+                        
+                    }
+                    
                 });
                 
                 break;
@@ -395,7 +405,7 @@ export class GestionPQRSComponent implements OnInit {
         if (this.comentariotipoid==2) {
             console.log(this.comentariotipoid)
             debugger;
-            let url = 'pqrs-responder-solucion-cliente';
+            let url = '/pqrs-responder-solucion-cliente';
             let data = {
                 idComentario: parseInt(item.id),
                 idPqrs: parseInt(this.pqrid),
@@ -464,7 +474,7 @@ export class GestionPQRSComponent implements OnInit {
         } else {
             console.log(this.comentariotipoid)
             debugger;
-            let url = 'pqrs-responder-solucion';
+            let url = '/pqrs-responder-solucion';
             let data = {
                 idComentario: parseInt(item.id),
                 idPqrs: parseInt(this.pqrid),
@@ -707,7 +717,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     eliminarAdjunto(id){
-        let url = 'update-adjunto';
+        let url = '/update-adjunto';
         let data = {
             id:id
         }
@@ -721,6 +731,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     verAdjunto(id) {
+        console.log(id);
         this.filtrarTablaGestion = '';
         this.tamanoTablaGestion = 5;
         let data = {
