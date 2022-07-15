@@ -453,8 +453,6 @@ export class CreacionPQRSComponent implements OnInit {
                                         segmento_actual:this.datos.segmento
                                     };
 
-                                    console.log(dato)
-                                    debugger;
                                     if (dato.tipo_solicitante!=undefined && dato.segmento_actual!=undefined) {
                                         this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => {
                                             if (response.status == 200) {
@@ -483,7 +481,7 @@ export class CreacionPQRSComponent implements OnInit {
                                         icon: 'success',
                                         showConfirmButton: true,
                                     }).then((result) => {});
-                                    debugger;
+                                    
                                     setTimeout(() => {
                                         if (this.EstadoSagicc == false) {
                                             let url = `pqr/list`;
