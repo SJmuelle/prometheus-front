@@ -41,32 +41,21 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="flex flex-col sm:flex-row sm:justify-between sm:gap-3">
-                            
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Tipo de solicitante</mat-label>
-                                <input matInput type="text" autocomplete="off" name="tipo_solicitante" [(ngModel)]="datos.solicitante" readonly>
-                            </mat-form-field>
-
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Segmento actual</mat-label>
-                                <input matInput type="text" autocomplete="off" name="seg_actual" [(ngModel)]="datos.segmento" readonly>
-                            </mat-form-field>
-
-                            <mat-form-field class="flex-auto w-100">
-                                <mat-label>Línea de negocio</mat-label>
-                                <mat-select [(ngModel)]="datos.lineaNegocio" name="lineaNegocio"
-                                    (ngModelChange)="negociosCabeceras(datos.lineaNegocio)"
-                                    [required]="datosBasicosDisabled">
-                                    <mat-option selected disabled>Seleccionar</mat-option>
-                                    <mat-option value="{{item.id}}" *ngFor="let item of listadoLineaNegocio ">
-                                        {{item.descripcion}} ({{item.cantidad}})</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        
-                        </div>
-
                         <div class="row">
+
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Línea de negocio</mat-label>
+                                    <mat-select [(ngModel)]="datos.lineaNegocio" name="lineaNegocio"
+                                        (ngModelChange)="negociosCabeceras(datos.lineaNegocio)"
+                                        [required]="datosBasicosDisabled">
+                                        <mat-option selected disabled>Seleccionar</mat-option>
+                                        <mat-option value="{{item.id}}" *ngFor="let item of listadoLineaNegocio ">
+                                            {{item.descripcion}} ({{item.cantidad}})</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Código de negocio</mat-label>
@@ -86,6 +75,11 @@
                                         [(ngModel)]="datos.agencia" readonly>
                                 </mat-form-field>
                             </div>
+                        
+                        </div>
+
+                        <div class="row">
+                            
                             <div class="col-lg-4 col-sm-12">
                                 <mat-form-field class="flex-auto w-100">
                                     <mat-label>Entidad</mat-label>
@@ -93,6 +87,21 @@
                                         [(ngModel)]="datos.entidad" readonly>
                                 </mat-form-field>
                             </div>
+
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Tipo de solicitante</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="tipo_solicitante" [(ngModel)]="datos.solicitante" readonly>
+                                </mat-form-field>
+                            </div>
+                            
+                            <div class="col-lg-4 col-sm-12">
+                                <mat-form-field class="flex-auto w-100">
+                                    <mat-label>Segmento actual</mat-label>
+                                    <input matInput type="text" autocomplete="off" name="seg_actual" [(ngModel)]="datos.segmento" readonly>
+                                </mat-form-field>
+                            </div>
+
                         </div>
                         <div class="row">
                             <div class="col-sm-12 text-end">

@@ -423,7 +423,7 @@ export class CreacionPQRSComponent implements OnInit {
                     detallePqrs: this.datos.descripcion == undefined ? '' : this.datos.descripcion,
                     idPqrspadre: '',
                     fechaSolucion: this.datos.fechaParaSolucion,
-                    primerContacto: true,
+                    primerContacto: this.datos.primerContacto,
                     file: this.crearJsonAdjuntos(),
                     hijos: this.crearJsonHijas(),
                     user: this.UsuarioSaggics
@@ -476,13 +476,14 @@ export class CreacionPQRSComponent implements OnInit {
                                             console.log('Se envio correo, revisa: ', response)
                                         }
                                     })
-
+                                    console.log(response.data);
                                     Swal.fire({
                                         title: 'Información',
-                                        html: `${response.data.descripcion} ${response.data.pqrs}.`,
+                                        html: `Se ha creado correctamente la PQRS N° ${response.data.pqrs}.`,
                                         icon: 'success',
                                         showConfirmButton: true,
                                     }).then((result) => {});
+                                    debugger;
                                     setTimeout(() => {
                                         if (this.EstadoSagicc == false) {
                                             let url = `pqr/list`;
