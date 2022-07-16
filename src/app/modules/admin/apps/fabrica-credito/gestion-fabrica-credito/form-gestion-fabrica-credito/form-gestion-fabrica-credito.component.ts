@@ -162,7 +162,9 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
                                 minWidth: '60%',
                                 maxHeight: '80%',
-                                data: { numeroSolicitud: this.numeroSolicitud,  tipoDocumento: this.tipoDocumento },
+                                data: { numeroSolicitud: this.numeroSolicitud,  tipoDocumento: this.tipoDocumento,
+                                agenda:this.agenda_fabrica
+                                },
                                 disableClose: false,
                             });
                             dialogRef.afterClosed().toPromise().then(() => {

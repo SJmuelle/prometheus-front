@@ -39,6 +39,7 @@ export class FormDialogoChecklistComponent implements OnInit {
     let data= {
       "numeroSolicitud": Number(this.data.numeroSolicitud),
       "unidadNegocio":32,
+      "idAgenda":this.data.agenda,
       "tipoIdentificacion": this.data.tipoDocumento
     }
     this.fabricaCreditoService.getCheckList(data)
