@@ -44,8 +44,7 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
             let envioData = {
                 comentario: data.comentario,
                 numeroSolicitud: data.numeroSolicitud,
-                tipoComentario: data.tipoComentario,
-                user:"smuelle"
+                tipoComentario: Number(data.tipoComentario),
             }
             Swal.fire({
                 title: 'Guardar información',
@@ -58,7 +57,7 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.postComentario(data);
+                    this.postComentario(envioData);
                 }
             });
         } else {

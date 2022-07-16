@@ -23,7 +23,7 @@
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Texto</mat-label>
-                            <textarea matInput [formControlName]="'comentario'" [readonly]="data.idComentario">
+                            <textarea class="h-60" matInput [formControlName]="'comentario'" [readonly]="data.idComentario">
                             </textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                             <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>

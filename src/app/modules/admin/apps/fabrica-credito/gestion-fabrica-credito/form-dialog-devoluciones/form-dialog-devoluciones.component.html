@@ -36,7 +36,7 @@
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Observación</mat-label>
-                            <textarea matInput [formControlName]="'observacion'" [readonly]="data.idDevolucion">
+                            <textarea class="h-60" matInput [formControlName]="'observacion'" [readonly]="data.idDevolucion">
                             </textarea>
                             <mat-error *ngIf="requeridoObservacion">Este campo es requerido.</mat-error>
                             <mat-error *ngIf="minimoObservacion">Se requiere mínimo 10 caracteres.</mat-error>
