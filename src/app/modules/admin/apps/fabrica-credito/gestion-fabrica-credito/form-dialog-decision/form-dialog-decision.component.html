@@ -49,7 +49,7 @@
                     <div class="md:flex">
                         <mat-form-field class="w-full mr-2 fuse-mat-dense h-70">
                             <mat-label>Comentario: </mat-label>
-                            <textarea matInput [formControlName]="'comentario'" class="resize-none" rows="12"></textarea>
+                            <textarea class="h-60" matInput [formControlName]="'comentario'" class="resize-none" rows="12"></textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                         </mat-form-field>
                     </div>
