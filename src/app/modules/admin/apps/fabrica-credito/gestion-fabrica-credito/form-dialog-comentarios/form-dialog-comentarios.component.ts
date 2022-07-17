@@ -46,9 +46,10 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
                 numeroSolicitud: data.numeroSolicitud,
                 tipoComentario: Number(data.tipoComentario),
             }
+            let mensaje=data.tipoComentario=='1'?'¿está seguro de agregar este comentario en la gestión del crédito? Recuerde que este comentario será visible para todos los usuarios.':'¿está seguro de agregar este comentario en la gestión del crédito? Recuerde que este comentario no será visible para todos los usuarios';
             Swal.fire({
                 title: 'Guardar información',
-                text: '¿Está seguro de guardar información?',
+                text: mensaje,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
