@@ -24,7 +24,7 @@
 
         <form [formGroup]="fileForm">
 
-            <div *ngFor="let file of listFile | filter:value; let i = index; let first = first; trackBy: trackByFn">
+            <div *ngFor="let file of listFile | filter: value; let i = index; let first = first; trackBy: trackByFn">
 
                 <ng-container *ngIf="first || !isSameDay(file.fecha_creacion, listFile[i - 1].fecha_creacion)">
                     <li class="relative flex py-4 bottom-6">

@@ -13,13 +13,14 @@ import { PreviewComponent } from './preview/preview.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { InfofileComponent } from './infofile/infofile.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
-    declarations: [
+    declarations: [	
         ActivitiesComponent,
         PreviewComponent,
-        InfofileComponent
-    ],
+        InfofileComponent,
+   ],
     imports: [
         RouterModule.forChild(activitiesRoutes),
         MatIconModule,
@@ -30,6 +31,7 @@ import { InfofileComponent } from './infofile/infofile.component';
         PdfViewerModule,
         MatDialogModule,
         MatTooltipModule,
+        Ng2SearchPipeModule,
         CommonModule
     ]
 })

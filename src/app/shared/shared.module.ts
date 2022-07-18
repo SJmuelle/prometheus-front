@@ -59,9 +59,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
         MatDialogModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatCardModule,
-        Ng2SearchPipeModule,
+        MatCardModule
     ],
-    declarations: [],
+    declarations: [
+  ],
 })
 export class SharedModule {}

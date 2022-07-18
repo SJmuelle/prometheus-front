@@ -16,11 +16,11 @@ export class AppSettingsService {
      */
      public pagaduria = {
         url: {
-            base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
-            baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
-            baseUpdate: EndPoints.uriPaga('api/generic/update-solicitud-pagaduria'),
-            baseObli: EndPoints.uriPaga('api/generic/qry/obligaciones-comprar'),
-            baseArchivo: EndPoints.uriPaga('api/archivos/documentos-negocio')
+            base: EndPoints.uriPaga('api-fintra/api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
+            baseSoli: EndPoints.uriPaga('api-fintra/api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
+            baseUpdate: EndPoints.uriPaga('api-fintra/api/generic/update-solicitud-pagaduria'),
+            baseObli: EndPoints.uriPaga('api-fintra/api/generic/qry/obligaciones-comprar'),
+            baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/documentos-negocio')
         }
     };
     /**
