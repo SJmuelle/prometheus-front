@@ -136,35 +136,35 @@
                         <tbody class="bg-white">
                             <ng-container
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
-                                
+
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td rowspan="2" class="py-3 text-sm my-3">                                        
+                                    <td rowspan="2" class="py-3 text-sm my-3">
                                         <div class="text-gray-700 grid-cols-2 grid">
                                             <div class="py-0 text-sm">
                                                 <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                                 </button>
-                                            </div> 
+                                            </div>
                                             <ng-container *ngIf="item.clienteDesistio === 'S'">
                                                 <div class="py-0 text-sm">
                                                     <button mat-icon-button matTooltip="Rechazar" (click)="onComentarioRechazar(item)">
                                                         <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
                                                     </button>
-                                                </div>    
-                                            </ng-container>                                                                              
+                                                </div>
+                                            </ng-container>
                                             <div class="py-0 text-sm ">
                                                 <button mat-icon-button (click)="onComentario(item)"
                                                     matTooltip="Devolver a Fabrica">
                                                     <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
                                                 </button>
-                                            </div>  
+                                            </div>
                                             <div class="py-0 text-sm ">
                                                 <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
                                                     <mat-icon svgIcon="mat_outline:timer"></mat-icon>
                                                 </button>
                                             </div>
                                         </div>
-                                    </td>     
+                                    </td>
                                     <td class="px-2 pb-0 pt-1" rowspan="2">
                                         <div class="flex flex-column " rowspan="2">
                                             <div class="flex-0 w-12 overflow-hidden">
@@ -199,7 +199,7 @@
                                             </span>
                                         </div>
                                     </td>
-                                                           
+
                                 </tr>
                                 <tr class="text-gray-700 border-t border-b ">
                                     <td class="px-2  pb-1 pt-1">
@@ -319,7 +319,7 @@
                                                     {{ item.numeroIntentos}}
                                                 </span>
                                                 <small class="text-xs">{{ item.fechaUltimaReprogramacion}}</small>
-                                            </div>                                            
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-1 pt-1">
@@ -340,7 +340,7 @@
                                                 </mat-icon>
                                             </button>
                                         </div>
-                                    </td>                                    
+                                    </td>
                                 </tr>
                                 <tr *ngIf="item.mostrarDevolucion=='v'">
                                     <td class="p-3 bg-hover" colspan="10">
@@ -374,15 +374,15 @@
 
 
                                                     <!-- Subject -->
-                                                    <div class="flex items-center w-full mt-1">
-                                                        <span class="leading-4 truncate">
-                                                            {{item.causalDevolucion}}
+                                                    <div class="flex items-center w-full">
+                                                        <span class="mr-2 font-semibold truncate">
+                                                            <span>Causal: </span> {{item.causalDevolucion}}
                                                         </span>
                                                     </div>
 
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        {{item.observacionDevolucion}}
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>   {{item.observacionDevolucion}}
                                                     </div>
 
                                                 </div>
@@ -414,17 +414,15 @@
                                                     </div>
 
                                                     <!-- Subject -->
-                                                    <div class="flex items-center w-full mt-1">
-                                                        <span class="leading-4 truncate">
-                                                            {{item.causalReintegroDevolucion}}
+                                                    <div class="flex items-center w-full">
+                                                        <span class="mr-2 font-semibold truncate">
+                                                            <span>Concepto: </span> {{item.causalReintegroDevolucion}}
                                                         </span>
                                                     </div>
-
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        {{item.observacionReintegroDevolucion}}
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>   {{item.observacionReintegroDevolucion}}
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>

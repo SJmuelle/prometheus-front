@@ -2,7 +2,7 @@
 <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
     <ng-container [ngSwitch]="currentStep">
         <mat-tab *ngIf="currentStep==1">
-            <div 
+            <div
                 class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                 <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
                     Datos de la llamada
@@ -38,7 +38,7 @@
                                             </mat-form-field>
                                         </div>
                                         <div class="-mx-3 md:flex mb-2">
-            
+
                                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                                 <mat-label>Fecha de ingreso a fábrica</mat-label>
                                                 <input matInput type="text" [formControlName]="'fechaIngresoFabrica'"
@@ -118,7 +118,7 @@
                                                         </mat-form-field>
                                                     </ng-container>
                                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                                        <mat-label>No. de identificacion</mat-label>
+                                                        <mat-label>No. de identificación</mat-label>
                                                         <input matInput type="text" [formControlName]="'identificacion'"
                                                             [readonly]="true">
                                                         <mat-error *ngIf="soloNumero('identificacion')">
