@@ -138,7 +138,9 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
   
         this.getAgendaComercial();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
-  
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
       });
     }
   /**
