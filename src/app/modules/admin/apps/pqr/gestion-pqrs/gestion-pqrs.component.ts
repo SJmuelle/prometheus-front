@@ -105,7 +105,6 @@ export class GestionPQRSComponent implements OnInit {
 
     vercomentario(id){
         const dialogRef = this.dialog.open(VerComentarioComponent, {
-            height: '35%',
             width: '60%',
             data: id
         });
@@ -119,7 +118,6 @@ export class GestionPQRSComponent implements OnInit {
 
     agregarcomentario(){
         const dialogRef = this.dialog.open(AgregarComentarioComponent, {
-            height: '35%',
             width: '60%',
             data: {id: parseInt(this.pqrid), estado: this.datos.estado}
         })
@@ -147,7 +145,6 @@ export class GestionPQRSComponent implements OnInit {
 
     insertadjunti() {
         const dialogRef = this.dialog.open(AdjuntosComponent, {
-            height: '40%',
             width: '60%',
             data: {idPadre:parseInt(this.pqrid), idProcedimiento:this.procedimientoid},
         });
