@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilityService } from 'app/resources/services/utility.service';
+import moment from 'moment';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -60,5 +61,13 @@ export class BusquedaComponent implements OnInit {
         this.router.navigate(['/credit-factory/trazabilidad/detalle-trazabilidad/', numeroSolicitud, identificacion]);
     }
 
-
+    cambiarFecha(date){
+        moment.locale('es');
+        return moment(date).format('MMMM D YYYY')
+    }
+    
+    cambiarHora(date){
+        moment.locale('es');
+        return moment(date).format('h:mm a')
+    }
 }

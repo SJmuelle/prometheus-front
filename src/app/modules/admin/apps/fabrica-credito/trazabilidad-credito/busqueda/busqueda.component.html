@@ -1,13 +1,8 @@
 <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
 
-    <mat-drawer-container
-        class="flex-auto bg-card dark:bg-transparent">
+    <mat-drawer-container class="flex-auto bg-card dark:bg-transparent">
         <!-- Drawer -->
-        <mat-drawer
-            class="w-full md:w-160 dark:bg-gray-900"
-            [opened]="false"
-            [position]="'end'"
-            [disableClose]="true"
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [opened]="false" [position]="'end'" [disableClose]="true"
             #matDrawer>
             <router-outlet></router-outlet>
         </mat-drawer>
@@ -19,16 +14,22 @@
                 <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
                     <!-- Title -->
                     <div>
-                        <div class="text-4xl font-extrabold tracking-tight leading-none">Trazabilidad de créditos</div>
-                        <div class="ml-0.5 font-bold text-secondary">
-                            <ng-container *ngIf="listadoCount > 0">
-                                {{listadoCount}}
-                            </ng-container>
-                            {{listadoCount | i18nPlural: {
-                            '=0'   : 'No hay créditos',
-                            '=1'   : 'créditos',
-                            'other': 'créditos'
-                        } }}
+                        <div class="flex-1 mx-3">
+                            <div class="text-3xl font-semibold tracking-tight leading-8">Busqueda de crédito
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                                <div class="font-medium tracking-tight text-secondary">
+                                    <ng-container *ngIf="listadoCount > 0">
+                                        {{listadoCount}}
+                                    </ng-container>
+                                    {{listadoCount | i18nPlural: {
+                                    '=0' : 'No hay créditos',
+                                    '=1' : 'créditos',
+                                    'other': 'créditos'
+                                    } }}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -36,15 +37,10 @@
                     <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
                         <!-- Search -->
                         <div class="flex-auto">
-                            <mat-form-field class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matPrefix
-                                    [svgIcon]="'heroicons_solid:search'"></mat-icon>
-                                <input
-                                    matInput
-                                    [autocomplete]="'off'"
-                                    (keyup)="onKeyUp($event)"
+                            <mat-form-field
+                                class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded w-full min-w-50">
+                                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'"></mat-icon>
+                                <input matInput [autocomplete]="'off'" (keyup)="onKeyUp($event)"
                                     [placeholder]="'Búsqueda de crédito'">
                             </mat-form-field>
                         </div>
@@ -53,84 +49,273 @@
 
                 <!-- Contacts list -->
                 <div class="relative">
-
-                            <ng-container *ngFor="let contact of listados; let i = index;">
+                    <table class="p-0">
+                        <tbody class="bg-white">
+                            <ng-container *ngFor="let item of listados; let i = index;">
                                 <!-- Group -->
-                                <ng-container *ngIf="i === 0 || contact.nombreCompleto.charAt(0) !== listados[i - 1].nombreCompleto.charAt(0)">
-                                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-bold uppercase text-secondary bg-gray-50 dark:bg-gray-900">
-                                        {{contact.nombreCompleto.charAt(0)}}
-                                    </div>
+                                <ng-container
+                                    *ngIf="i === 0 || item.nombreCompleto.charAt(0) !== listados[i - 1].nombreCompleto.charAt(0)">
+                                    <tr
+                                        class="z-10 sticky  top-0 -mt-px  py-1  border-t border-b font-bold uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                                        <td colspan="10" class="px-3"> {{item.nombreCompleto.charAt(0)}}</td>
+
+                                    </tr>
                                 </ng-container>
-                                <!-- Contact -->
-                                <a
-                                    class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
-                                    [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedContact || selectedContact.id !== contact.id,
-                                                'bg-primary-50 dark:bg-hover': selectedContact && selectedContact.id === contact.id}"
-                                   (click)="goResumen(contact)">
-                                    <div class="flex flex-0 items-center justify-center w-10 h-10  overflow-hidden" [ngClass]="!contact.urlIconoUnidad?'rounded-full':''">
-                                        <ng-container *ngIf="contact.urlIconoUnidad">
-                                            <img
-                                                class="object-cover w-full"
-                                                [src]="contact.urlIconoUnidad"
-                                                alt="Contact avatar"/>
-                                        </ng-container>
-                                        <ng-container *ngIf="!contact.urlIconoUnidad">
-                                            <div class="flex items-center justify-center w-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                                {{contact.undadNegocio.charAt(0)}}
-                                            </div>
-                                        </ng-container>
-                                    </div>
-                                    <td class="min-w-0 ml-4">
-                                        <div class="flex flex-column pl-3">
-                                            <small class="text-accent-800 text-xs pl-3">Solicitud:</small>
-                                            <span class="text-md font-bold pl-3"> {{
-                                                contact.numeroSolicitud}}</span>
+
+
+
+
+                                <tr class="text-gray-700 border-t border-b ">
+                                    <td class="px-2 py-3 text-sm header_fijo my-3">
+                                        <button mat-icon-button matTooltip="Gestionar" (click)="goResumen(item)">
+                                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                        </button>
+                                    </td>
+                                    <td class="px-2 py-3">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Solicitud:</small>
+                                            <span class="text-md text-black font-medium"> {{
+                                                item.numeroSolicitud}}</span>
                                         </div>
                                     </td>
-                                    <div class="min-w-0 ml-4">
-                                        <div >
-                                            <div class="flex flex-column pl-5">
-                                            <small class="text-accent-600 text-xs">Nombre completo:</small>
-                                            <span class="font-bold leading-5 truncate">{{contact.nombreCompleto}}</span>
-                                            <span class="font-semibold m-1 rounded text-white bg-green-500 px-3 text-sm">Estado: {{contact.subEstado}}</span>
+                                    <td class="px-2 py-3">
+                                        <div class="flex flex-column ">
+                                            <div class="flex-0 w-12 overflow-hidden">
+                                                <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
                                             </div>
                                         </div>
-                                    </div>
-                                    <td class="min-w-0 ml-4">
-                                        <div class="flex flex-column pl-3">
-                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
-                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
-                                                contact.agencia}}</span>
+                                    </td>
+                                    <td class="px-2 py-3">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Cliente: </small>
+                                            <span class="text-md text-black font-medium">
+                                                {{item.identificacion}}</span>
+                                            <span class="text-md text-black font-medium line-clamp-1"> {{
+                                                item.nombreCompleto}}</span>
                                         </div>
                                     </td>
-                                    <td class="min-w-0 ml-4">
-                                        <div class="flex flex-column pl-3">
-                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
-                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
-                                                contact.agencia}}</span>
+                                    <td class="px-2 py-3">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Monto: </small>
+                                            <span class="text-lg text-black font-medium">
+                                                ${{ item.monto | number:0}}
+                                            </span>
                                         </div>
                                     </td>
-                                    <td class="min-w-0 ml-4">
-                                        <div class="flex flex-column pl-3">
-                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
-                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
-                                                contact.agencia}}</span>
+                                    <td class="px-2 py-3">
+                                        <div class="flex flex-column ">
+
+                                            <span class="text-md text-black font-medium" matTooltip="Agencia">
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:location-marker"></mat-icon>
+                                                {{ item.agencia}}
+                                            </span>
+
+                                            <span class="text-md text-black font-medium" matTooltip="Asesor">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user">
+                                                </mat-icon>
+                                                {{ item.asesor}}
+                                            </span>
                                         </div>
                                     </td>
-                                    <td class="min-w-0 ml-4">
-                                        <div class="flex flex-column pl-3">
-                                            <small class="text-accent-800 text-xs pl-3">Agencia:</small>
-                                            <span class="text-md font-bold pl-3">  <mat-icon class="icon-size-3 m-1" svgIcon="heroicons_solid:user"></mat-icon>{{
-                                                contact.agencia}}</span>
+                                    <td class="px-2 py-3">
+                                        <div class="flex w-24">
+
+                                            <div class="flex flex-column ">
+                                                <small class="text-accent-600 text-xs">
+                                                    Fecha solicitud
+                                                </small>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                    </mat-icon>
+
+                                                    {{ cambiarFecha(item.fechaEmision) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                    </mat-icon>
+                                                    {{ cambiarHora(item.fechaEmision) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    </mat-icon>
+                                                    {{item.diasTotalesCredito}} horas
+                                                </span>
+                                            </div>
                                         </div>
                                     </td>
-                                </a>
+                                    <td class="px-2 py-3">
+                                        <div class="flex w-24">
+                                            <div class="flex flex-column ">
+                                                <small class="text-accent-600 text-xs">
+                                                    Fecha Fábrica
+                                                </small>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                    </mat-icon>
+                                                    {{ cambiarFecha(item.fechaIngresoFabrica) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                    </mat-icon>
+                                                    {{ cambiarHora(item.fechaIngresoFabrica) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    </mat-icon>
+                                                    {{item.diasEnFabrica}} horas
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 py-3">
+                                        <div class="flex w-24">
+                                            <div class="flex flex-column ">
+                                                <small class="text-accent-600 text-xs">
+                                                    Fecha agenda
+                                                </small>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                    </mat-icon>
+                                                    {{ cambiarFecha(item.fechaIngresoAgendaActual) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                    </mat-icon>
+                                                    {{ cambiarHora(item.fechaIngresoAgendaActual) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    </mat-icon>
+                                                    {{item.diasEnAgendaActual}} horas
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 py-3">
+                                        <div class="flex justify-between">
+                                            <div class="flex-column flex items-center justify-center  h-14 rounded  "
+                                                [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                                <small class="text-xs">Devolución</small>
+                                                <span class="text-current">
+                                                    {{ item.cantidadDevolucion}}
+                                                </span>
+                                                <small class="text-xs">{{
+                                                    cambiarFecha(item.fechaDevolucion)}}</small>
+                                            </div>
+                                            <button mat-icon-button matTooltip="ver devolución"
+                                                *ngIf="item.cantidadDevolucion>0"
+                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
+                                                <mat-icon
+                                                    [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                                </mat-icon>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="item.mostrarDevolucion=='v'">
+                                    <td class="p-3 bg-hover" colspan="10">
+                                        <div class="flex justify-between">
+                                            <div
+                                                class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
+                                                <!-- Item content -->
+                                                <div
+                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
+                                                    <!-- titulo -->
+                                                    <div class="text-end">
+                                                        <div
+                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
+                                                            Última devolución
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Info -->
+                                                    <div class="flex items-center w-full">
+                                                        <!-- name -->
+                                                        <div class="mr-2 font-semibold truncate">
+                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
+                                                        </div>
+
+                                                        <!-- Date -->
+                                                        <div
+                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                            {{ cambiarFecha(item.fechaDevolucion) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Subject -->
+                                                    <div class="flex items-center w-full">
+                                                        <span class="mr-2 font-semibold truncate">
+                                                            <span>Causal: </span> {{item.causalDevolucion}}
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- observacion -->
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                        <span class="mr-2 font-semibold truncate">Observación:
+                                                        </span> {{item.observacionDevolucion}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="relative flex border-t w-100 first:border-0 bg-white  text-md">
+                                                <!-- Item content -->
+                                                <div
+                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
+                                                    <!-- titulo -->
+                                                    <div class="text-end">
+                                                        <div
+                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
+                                                            Último Reintegro
+                                                        </div>
+                                                    </div>
+                                                    <!-- Info -->
+                                                    <div class="flex items-center w-full">
+                                                        <!-- Sender name -->
+                                                        <div class="mr-2 font-semibold truncate">
+                                                            <span>Usuario: </span> {{
+                                                            item.usuarioReintegroDevolucion}}
+                                                        </div>
+
+                                                        <!-- Date -->
+                                                        <div
+                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                            {{ cambiarFecha(item.fechaReintegroDevolucion) }}
+                                                        </div>
+                                                    </div>
+                                                    <!-- Subject -->
+                                                    <div class="flex items-center w-full">
+                                                        <span class="mr-2 font-semibold truncate">
+                                                            <span>Concepto: </span>
+                                                            {{item.causalReintegroDevolucion}}
+                                                        </span>
+                                                    </div>
+                                                    <!-- observacion -->
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                        <span class="mr-2 font-semibold truncate">Observación:
+                                                        </span> {{item.observacionReintegroDevolucion}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
                             </ng-container>
+                        </tbody>
+                    </table>
 
 
                     <!-- No contacts -->
                     <ng-template #noContacts>
-                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no contacts!</div>
+                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no
+                            contacts!</div>
                     </ng-template>
 
                 </div>
