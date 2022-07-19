@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <div>
-                                <a class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item.idComentario)"></mat-icon></a>
+                                <a class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
                     </div>
@@ -416,10 +416,10 @@
                                                                                     ({{pqrid}}-{{ item.id}})
                                                                                 </div>
                                                                                 <div class="text-secondary" *ngIf="item.tipo_comentario==1">
-                                                                                    Solucion de area
+                                                                                    Solución de area
                                                                                 </div>
                                                                                 <div class="text-secondary" *ngIf="item.tipo_comentario==2">
-                                                                                    Solucion de cliente
+                                                                                    Solución de cliente
                                                                                 </div>
                                                                             </div>
                                                                             <strong class="capitalize">

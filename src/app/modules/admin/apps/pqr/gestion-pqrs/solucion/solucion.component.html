@@ -78,8 +78,8 @@
         <div class="col-lg-6">
                 <mat-checkbox class="example-margin" [(ngModel)]="envioCorreo" *ngIf="idTipoComentario == 2 && (aprobado=='Si' || aprobado=='si')" >¿Desea incluir esta respuesta en el correo?</mat-checkbox>
         </div>
-        <div class="col-sm-6 text-end" >
-            <button mat-button  class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
+        <div class="col-sm-6 text-end" *ngIf="editor.editorElem">
+            <button mat-button  class="btn color_fintra text-white" (click)="guardar()" *ngIf="editor.editorElem.outerText.length>1 || evidencia.length!=0">Guardar </button>
         </div>
     </div>
 </div>

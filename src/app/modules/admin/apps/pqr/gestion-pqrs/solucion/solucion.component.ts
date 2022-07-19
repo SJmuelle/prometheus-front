@@ -309,27 +309,24 @@ export class SolucionComponent implements OnInit {
                                             '¡Información!',
                                             `Se guardó el registro con éxito`,
                                             'success'
-                                        ).then((resultado) => {
-                                            console.log(response);
-                                            if (resultado) {
-                                                if (this.idTipoComentario == '2') {
-                                                    url = `/sendmail/notificacion-crear-pqrs`;
-                                                    console.log(response.data.archivos)
-                                                    this._pqrService.envioCorreos(
-                                                        url,
-                                                        this.pqrid,
-                                                        7,
-                                                        response.data.nombre,
-                                                        response.data.archivos,
-                                                        mensaje,
-                                                        this.envio='N'
-                                                    );
-                                                    
-                                                }
-                                                this.limpiar();
-                                                this.recargarData();
-                                            }
-                                        });
+                                        ).then((resultado) => {});
+                                        console.log(response)
+                                        if (this.idTipoComentario == '2') {
+                                            url = `/sendmail/notificacion-crear-pqrs`;
+                                            console.log(response.data.archivos)
+                                            this._pqrService.envioCorreos(
+                                                url,
+                                                this.pqrid,
+                                                7,
+                                                response.data.nombre,
+                                                response.data.archivos,
+                                                mensaje,
+                                                this.envio='N'
+                                            );
+                                            
+                                        }
+                                        this.limpiar();
+                                        this.recargarData();
                                     }
                                 });
                             } else {
@@ -337,34 +334,31 @@ export class SolucionComponent implements OnInit {
                                     '¡Información!',
                                     `Se guardó el registro con éxito`,
                                     'success'
-                                ).then((resultado) => {
-                                    if (resultado) {
-                                        console.log('aqui no hay adjunto');
-                                        if (this.idTipoComentario == '2') {
-                                            url = `/sendmail/notificacion-crear-pqrs`;
-                                            this._pqrService.envioCorreos(
-                                                url,
-                                                this.pqrid,
-                                                7,
-                                                "",
-                                                "",
-                                                mensaje,
-                                                this.envio='N'
-                                            );
-                                            console.log(
-                                                url,
-                                                this.pqrid,
-                                                7,
-                                                "",
-                                                "",
-                                                mensaje,
-                                                this.envio='N'
-                                            );
-                                        }
-                                        this.limpiar();
-                                        this.recargarData();
-                                    }
-                                });
+                                ).then((resultado) => {})
+                                console.log('aqui no hay adjunto');
+                                if (this.idTipoComentario == '2') {
+                                    url = `/sendmail/notificacion-crear-pqrs`;
+                                    this._pqrService.envioCorreos(
+                                        url,
+                                        this.pqrid,
+                                        7,
+                                        "",
+                                        "",
+                                        mensaje,
+                                        this.envio='N'
+                                    );
+                                    console.log(
+                                        url,
+                                        this.pqrid,
+                                        7,
+                                        "",
+                                        "",
+                                        mensaje,
+                                        this.envio='N'
+                                    );
+                                }
+                                this.limpiar();
+                                this.recargarData();
                             }
         
                             if (this.idTipoComentario == '1') {
@@ -434,34 +428,31 @@ export class SolucionComponent implements OnInit {
                                             '¡Información!',
                                             `Se guardó el registro con éxito`,
                                             'success'
-                                        ).then((resultado) => {
-                                            console.log(response);
-                                            if (resultado) {
-                                                if (this.idTipoComentario == '2') {
-                                                    url = `/sendmail/notificacion-crear-pqrs`;
-                                                    console.log(
-                                                        url,
-                                                        this.pqrid,
-                                                        5,
-                                                        response.data.nombre,
-                                                        response.data.archivos,
-                                                        mensaje,
-                                                        this.envioCorreo==true?'S':'N'
-                                                    );
-                                                    this._pqrService.envioCorreos(
-                                                        url,
-                                                        this.pqrid,
-                                                        5,
-                                                        response.data.nombre,
-                                                        response.data.archivos,
-                                                        mensaje,
-                                                        this.envioCorreo==true?'S':'N'
-                                                    );
-                                                }
-                                                // this.limpiar();
-                                                // this.recargarData();
-                                            }
-                                        });
+                                        ).then((resultado) => {});
+                                        console.log(response);
+                                        if (this.idTipoComentario == '2') {
+                                            url = `/sendmail/notificacion-crear-pqrs`;
+                                            console.log(
+                                                url,
+                                                this.pqrid,
+                                                5,
+                                                response.data.nombre,
+                                                response.data.archivos,
+                                                mensaje,
+                                                this.envioCorreo==true?'S':'N'
+                                            );
+                                            this._pqrService.envioCorreos(
+                                                url,
+                                                this.pqrid,
+                                                5,
+                                                response.data.nombre,
+                                                response.data.archivos,
+                                                mensaje,
+                                                this.envioCorreo==true?'S':'N'
+                                            );
+                                        }
+                                        this.limpiar();
+                                        this.recargarData();
                                     }
                                 });
                             } else {
@@ -469,25 +460,22 @@ export class SolucionComponent implements OnInit {
                                     '¡Información!',
                                     `Se guardó el registro con éxito`,
                                     'success'
-                                ).then((resultado) => {
-                                    if (resultado) {
-                                        console.log('Aqui envio data: ', response.data)
-                                        if (this.idTipoComentario == '2') {
-                                            url = `/sendmail/notificacion-crear-pqrs`;
-                                            this._pqrService.envioCorreos(
-                                                url,
-                                                this.pqrid,
-                                                5,
-                                                "",
-                                                "",
-                                                mensaje,
-                                                this.envioCorreo==true?'S':'N'
-                                            );
-                                        }
-                                        // this.limpiar();
-                                        // this.recargarData();
-                                    }
-                                });
+                                ).then((resultado) => {});
+                                console.log('Aqui envio data: ', response.data)
+                                if (this.idTipoComentario == '2') {
+                                    url = `/sendmail/notificacion-crear-pqrs`;
+                                    this._pqrService.envioCorreos(
+                                        url,
+                                        this.pqrid,
+                                        5,
+                                        "",
+                                        "",
+                                        mensaje,
+                                        this.envioCorreo==true?'S':'N'
+                                    );
+                                }
+                                this.limpiar();
+                                this.recargarData();
                             }
         
                             if (this.idTipoComentario == '1') {
@@ -563,35 +551,8 @@ export class SolucionComponent implements OnInit {
                                         '¡Información!',
                                         `Se guardó el registro con éxito`,
                                         'success'
-                                    ).then((resultado) => {
-                                        console.log(response);
-                                        if (resultado) {
-                                            // if (this.idTipoComentario == '2') {
-                                            //     url = `/sendmail/notificacion-crear-pqrs`;
-                                            //     this._pqrService.envioCorreos(
-                                            //         url,
-                                            //         this.pqrid,
-                                            //         5,
-                                            //         response.data.nombre,
-                                            //         response.data.archivos,
-                                            //         mensaje,
-                                            //         this.envioCorreo==true?'S':'N'
-                                            //     );
-                                            // }
-                                            this.limpiar();
-                                            this.recargarData();
-                                        }
-                                    });
-                                }
-                            });
-                        } else {
-                            Swal.fire(
-                                '¡Información!',
-                                `Se guardó el registro con éxito`,
-                                'success'
-                            ).then((resultado) => {
-                                if (resultado) {
-                                    console.log('Aqui envio data: ', response.data)
+                                    ).then((resultado) => {});
+                                    console.log(response);
                                     // if (this.idTipoComentario == '2') {
                                     //     url = `/sendmail/notificacion-crear-pqrs`;
                                     //     this._pqrService.envioCorreos(
@@ -608,6 +569,27 @@ export class SolucionComponent implements OnInit {
                                     this.recargarData();
                                 }
                             });
+                        } else {
+                            Swal.fire(
+                                '¡Información!',
+                                `Se guardó el registro con éxito`,
+                                'success'
+                            ).then((resultado) => {});
+                            console.log('Aqui envio data: ', response.data)
+                            // if (this.idTipoComentario == '2') {
+                            //     url = `/sendmail/notificacion-crear-pqrs`;
+                            //     this._pqrService.envioCorreos(
+                            //         url,
+                            //         this.pqrid,
+                            //         5,
+                            //         response.data.nombre,
+                            //         response.data.archivos,
+                            //         mensaje,
+                            //         this.envioCorreo==true?'S':'N'
+                            //     );
+                            // }
+                            this.limpiar();
+                            this.recargarData();
                         }
     
                         if (this.idTipoComentario == '1') {
