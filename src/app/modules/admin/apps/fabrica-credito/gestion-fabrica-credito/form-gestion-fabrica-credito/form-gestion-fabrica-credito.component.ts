@@ -277,6 +277,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     public onComentarios(): void {
         this.router.navigate(['/credit-factory/credit-management/commentaries', this.numeroSolicitud]);
     }
+
     /**
      * @description:
      */
@@ -331,6 +332,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
             this.form.markAllAsTouched();
         }
     }
+
     /**
      * @description: Obtiene la data para cargar al formulario
      */
@@ -396,10 +398,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 this.estado = data.descripcionEstado;
             });
     }
+
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
     }
+
     /**
      * @description: Departamento de nacimiento
      */
@@ -407,6 +411,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         const codigo: string = event.value;
         this.getCiudadesNacimiento(codigo);
     }
+
     /**
      * @description: Departamento de negocio
      */
@@ -414,6 +419,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         const codigo: string = event.value;
         this.getCiudadesNegocio(codigo);
     }
+
     /**
      * @description: Selecciona el codigo para cargar el api barrios
      *
@@ -422,6 +428,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         const codigo: string = event.value;
         this.getBarrios(codigo);
     }
+
     /**
      * @description: Selecciona el codigo para cargar el api barrios
      */
@@ -429,96 +436,112 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         const codigo: string = event.value;
         this.getBarriosNegocio(codigo);
     }
+
     /**
      * @description: Obtiene el listado de departamento
      */
     private getDepartamentos(): void {
         this.departamentos$ = this.departamentosCiudadesService.getDepartamentos();
     }
+
     /**
      * @description: Obtiene listado de departamento nacimiento
      */
     private getDepartamentoNacimiento(): void {
         this.departamentosNacimiento$ = this.departamentosCiudadesService.getDepartamentos();
     }
+
     /**
      * @description:
      */
     private getDepartamentoNegocio(): void {
         this.departamentosNegocio$ = this.departamentosCiudadesService.getDepartamentos();
     }
+
     /**
      * @description: Obtiene el listado de ciudades
      */
     private getCiudades(codigo: string): void {
         this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
     }
+
     /**
      * @description: Obtiene listado de ciudades nacimiento
      */
     private getCiudadesNacimiento(codigo: string): void {
         this.ciudadesNacimiento$ = this.departamentosCiudadesService.getCiudades(codigo);
     }
+
     /**
      * @description: Obtiene listado de ciudades negocio
      */
     private getCiudadesNegocio(codigo: string): void {
         this.ciudadesNegocio$ = this.departamentosCiudadesService.getCiudades(codigo);
     }
+
     /**
      * @description: Obtiene el listado de barrios
      */
     private getBarrios(codigo: string): void {
         this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
     }
+
     /**
      * @description: Obtiene el listado de barrios del negocio
      */
     private getBarriosNegocio(codigo: string): void {
         this.barriosNegocio$ = this.departamentosCiudadesService.getBarrios(codigo);
     }
+
     /**
      * @description: Obtiene los tipos de documentos
      */
     private getTiposDocumentos(): void {
         this.tipoDocumentos$ = this.genericaServices.getTiposDocumentos();
     }
+
     /**
      * @description: Obtiene los generos
      */
     private getGeneros(): void {
         this.generos$ = this.genericaServices.getGeneros();
     }
+
     /**
      * @description: Obtiene los tipos de vivienda
      */
     private getTiposVivienda(): void {
         this.tipoVivienda$ = this.genericaServices.getTipoViviendas();
     }
+
     /**
      * @description: Obtiene el nivel de estudio
      */
     private getNivelEstudio(): void {
         this.nivelEstudio$ = this.genericaServices.getNivelEstudio();
     }
+
     /**
      * @description: Obtiene listado de vive en negocio
      */
     private getViveNegocio(): void {
         this.viveNegocio$ = this.genericaServices.getViveNegocio();
     }
+
     /**
      * @description: Obtiene el listado de declarantes
      */
     private getDeclarante(): void {
         this.declarante$ = this.genericaServices.getDeclarante();
     }
+
     /**
      * @description:
      */
     private getCamaraComercio(): void {
         this.camaraComercio$ = this.genericaServices.getCamaraComercio();
     }
+
     /**
      * @description: Guardado de datos fabrica
      */
@@ -540,6 +563,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 });
             });
     }
+
     /**
      * @description: Calcula el digito de verificacion
      */
@@ -803,6 +827,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
 
 
     }
+
     /**
      * @description: Escucha los cambios del formulario
      */
@@ -864,5 +889,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.unSubscribe$.unsubscribe();
         // this.agendaCompletacionService.resetSeleccionAgenda();
     }
+    
 
 }

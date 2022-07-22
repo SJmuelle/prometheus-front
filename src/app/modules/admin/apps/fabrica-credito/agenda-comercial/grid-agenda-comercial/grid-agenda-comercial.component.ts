@@ -39,7 +39,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
   }
 
 
- 
+
 
   /**
      * @description: Obtiene el listado de agenda de completacion
@@ -99,7 +99,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
       width: '30%',
       data: {
         numeroSolicitud: data.numeroSolicitud,
-        tipo:'C'
+        tipo: 'C'
       },
       disableClose: true
     });
@@ -112,27 +112,27 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     });
   }
 
-    /**
-   * @description: Guarda el comentario para devolvee
-   */
-    public onComentarioRechazar(data): void {
-      //  debugger
-      const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
-        width: '30%',
-        data: {
-          numeroSolicitud: data.numeroSolicitud,
-          tipo:'R'
-        },
-        disableClose: true
-      });
-  
-      dialogRef.afterClosed().subscribe((res) => {
-  
-        this.getAgendaComercial();
-        this.agendaComercialService.refrescarListado$.next({ estado: true });
-  
-      });
-    }
+  /**
+ * @description: Guarda el comentario para devolvee
+ */
+  public onComentarioRechazar(data): void {
+    //  debugger
+    const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
+      width: '30%',
+      data: {
+        numeroSolicitud: data.numeroSolicitud,
+        tipo: 'R'
+      },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+
+      this.getAgendaComercial();
+      this.agendaComercialService.refrescarListado$.next({ estado: true });
+
+    });
+  }
   /**
    * @description: Obtiene el listado de agenda de comercial
    */
@@ -156,8 +156,12 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
    * @returns 
    */
   cambiarFecha(date) {
-    moment.locale('es');
-    return moment(date).format('MMMM D YYYY')
+    
+    if (date) {
+      moment.locale('es');
+      return moment(date).format('MMMM D YYYY')
+    }
+    return 'No registra';
   }
   /**
    * 
@@ -165,8 +169,11 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
    * @returns 
    */
   cambiarHora(date) {
-    moment.locale('es');
-    return moment(date).format('H:MM a')
+    if(date){
+      moment.locale('es');
+      return moment(date).format('H:MM a')
+    }
+    return 'No registra';
   }
 
   /**

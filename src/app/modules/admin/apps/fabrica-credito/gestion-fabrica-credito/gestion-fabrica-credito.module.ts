@@ -40,6 +40,7 @@ import { MatListModule } from '@angular/material/list';
 
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { GridCentralesComponent } from './grid-centrales/grid-centrales.component';
+import { FormGestionFabricaUltracemComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-ultracem/form-gestion-fabrica-ultracem.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { GridCentralesComponent } from './grid-centrales/grid-centrales.componen
         GridDevolucionesComponent,
         FormDialogDevolucionesComponent,
         FormDialogoChecklistComponent,
-        GridCentralesComponent
+        GridCentralesComponent,
+        FormGestionFabricaUltracemComponent
     ],
     imports: [
         CommonModule,
