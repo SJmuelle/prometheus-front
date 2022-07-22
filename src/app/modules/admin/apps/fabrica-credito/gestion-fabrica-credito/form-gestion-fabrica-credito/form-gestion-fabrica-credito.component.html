@@ -51,7 +51,16 @@
     </div>
     <div class="grid grid-cols-12">
         <div class="col-span-12">
-            <app-form-gestion-fabrica-ultracem></app-form-gestion-fabrica-ultracem>
+            <div [ngSwitch]="unidadNegocio">
+                <div *ngSwitchCase="22">
+                   <app-form-gestion-fabrica-libranza></app-form-gestion-fabrica-libranza>
+                </div>
+                <div *ngSwitchCase="32">
+                    <app-form-gestion-fabrica-ultracem></app-form-gestion-fabrica-ultracem>
+                </div>
+                <div *ngSwitchDefault>
+                </div>
+            </div>
         </div>
     </div>
 </div>

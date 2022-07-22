@@ -4,7 +4,7 @@
       <mat-expansion-panel expanded>
           <mat-expansion-panel-header>
               <mat-panel-title>
-                  Datos de la solicitud de Ultracem
+                  Datos de la solicitud de Libranza
               </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -76,6 +76,30 @@
                           [required]="true">
                       <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                   </mat-form-field>
+              </div>
+              <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Información del crédito</span>
+              <div class="-mx-3 md:flex mb-2">
+                  <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                      <mat-label>Tipo de crédito</mat-label>
+                      <input matInput type="text" [formControlName]="'tipoCredito'" [readonly]="true">
+                  </mat-form-field>
+                  <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                      <mat-label>Destino del crédito</mat-label>
+                      <input matInput type="text" [formControlName]="'destinoCredito'"
+                          [readonly]="true">
+                  </mat-form-field>
+                  <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                      <mat-label>Monto</mat-label>
+                      <input matInput type="text" [formControlName]="'valorSolicitado'"
+                          [required]="true">
+                      <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                  </mat-form-field>
+                  <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                    <mat-label>Plazo</mat-label>
+                    <input matInput type="text" [formControlName]="'plazo'"
+                        [required]="true">
+                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                </mat-form-field>
               </div>
           </div>
       </mat-expansion-panel>

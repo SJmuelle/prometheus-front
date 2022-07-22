@@ -90,6 +90,10 @@ export interface FormularioDatosTitularInterface {
     antiguedadNegocio?:             number;
     camaraComercio?:                string;
     nitNegocio?:                    string;
+    valorSolicitado?:               string;
+    tipoCredito?:                   string;
+    destinoCredito?:                string;
+    plazo?:                         string;
 }
 
 export interface FormularioRepresentanteInterface {

@@ -59,6 +59,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     public redeonlyForm: { id: boolean; numeroSolicitud: boolean; emision: boolean; fechaIngresoFabrica: boolean; descripcionEstado: boolean; descripcionOrigen: boolean; codigoSubEstado: boolean; cupoTotal: boolean; cupoReservado: boolean; cupoDisponible: boolean; score: boolean; descripcionSubestado: boolean; descripcionScore: boolean; nivelEndeudamiento: boolean; comprasSemanales: boolean; antiguedadComprasSemanales: boolean; ventasMensuales: boolean; activos: boolean; declarante: boolean; codigoDepartamentoNegocio: boolean; descripcionDepartamentoNegocio: boolean; codigoCiudadNegocio: boolean; descripcionCiudadNegocio: boolean; codigoBarrioNegocio: boolean; descripcionBarrioNegocio: boolean; direccionNegocio: boolean; telefonoNegocio: boolean; telefono: boolean; antiguedadNegocio: boolean; camaraComercio: boolean; nitNegocio: boolean; tipo: boolean; tipoDocumento: boolean; identificacion: boolean; digitoVerificacion: boolean; nombreCompleto: boolean; nombreNegocio: boolean; fechaMatricula: boolean; primerNombre: boolean; segundoNombre: boolean; primerApellido: boolean; segundoApellido: boolean; celular: boolean; email: boolean; genero: boolean; nacionalidad: boolean; fechaNacimiento: boolean; codigoDepartamentoNacimiento: boolean; codigoCiudadNacimiento: boolean; tipoVivienda: boolean; codigoDepartamento: boolean; descripcionDepartamento: boolean; codigoCiudad: boolean; descripcionCiudad: boolean; codigoBarrio: boolean; descripcionBarrio: boolean; direccionResidencial: boolean; nivelEstudio: boolean; viveEnNegocio: boolean; descripcionTipo: boolean; };
     public animacionVer: boolean = true;
     public dialog_a_mostrar: string = '';
+    unidadNegocio: any;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -106,20 +107,20 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.minimizarComentarios = !event;
         this.verComentarios = event;
     }
-        /**
-     * @description:
+    /**
+ * @description:
+ */
+    public onCerrarCentrales(event): void {
+        this.verCentrales = event;
+        this.minimizarCentrales = event;
+    }
+    /**
+     * @description: Minimiza el componente centrales
      */
-         public onCerrarCentrales(event): void {
-            this.verCentrales = event;
-            this.minimizarCentrales = event;
-        }
-        /**
-         * @description: Minimiza el componente centrales
-         */
-        public onMinimizaCentrales(event): void {
-            this.minimizarCentrales = !event;
-            this.verCentrales = event;
-        }
+    public onMinimizaCentrales(event): void {
+        this.minimizarCentrales = !event;
+        this.verCentrales = event;
+    }
     /**
    * @description:Cierra el componente de devoluciones
    */
@@ -156,31 +157,32 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
 
         //         }
         // });
-        let dialogRef ;
+        let dialogRef;
         switch (this.dialog_a_mostrar) {
             case 'CHECKLIST':
                 dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
-                                minWidth: '60%',
-                                maxHeight: '80%',
-                                data: { numeroSolicitud: this.numeroSolicitud,  tipoDocumento: this.tipoDocumento,
-                                agenda:this.agenda_fabrica
-                                },
-                                disableClose: false,
-                            });
-                            dialogRef.afterClosed().toPromise().then(() => {
-                                this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-                            });
+                    minWidth: '60%',
+                    maxHeight: '80%',
+                    data: {
+                        numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento,
+                        agenda: this.agenda_fabrica
+                    },
+                    disableClose: false,
+                });
+                dialogRef.afterClosed().toPromise().then(() => {
+                    this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+                });
                 break;
             case 'SIGUIENTE':
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-                                minWidth: '30%',
-                                minHeight: '30%',
-                                data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
-                                disableClose: false,
-                            });
-                            dialogRef.afterClosed().toPromise().then(() => {
-                                this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-                            });
+                    minWidth: '30%',
+                    minHeight: '30%',
+                    data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
+                    disableClose: false,
+                });
+                dialogRef.afterClosed().toPromise().then(() => {
+                    this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+                });
                 break;
             default:
                 break;
@@ -348,7 +350,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 // console.log(data);
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
-                this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList)? 'CHECKLIST':'SIGUIENTE');
+                this.unidadNegocio = data.unidadNegocio;
+                this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
                 this.createValidacion()
                 if (data.tipoDocumento === 'NIT') {
                     const digitoVerificacion: string = this.calcularDigitoVerificacion(data.identificacion);
@@ -852,7 +855,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     /**
      * @description: Valida que el campo solo sea numeros
      */
-    public irAtras(){
+    public irAtras() {
         switch (this.agenda_fabrica) {
             case 'CO':
                 this.redireccionar('agenda-completion');
@@ -869,8 +872,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     /**
      * @description: Redireciona a la grid de cada agenda
      */
-    private redireccionar(data:any) {
-        this.router.navigate(['/credit-factory/'+data]);
+    private redireccionar(data: any) {
+        this.router.navigate(['/credit-factory/' + data]);
     }
 
 
@@ -889,6 +892,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.unSubscribe$.unsubscribe();
         // this.agendaCompletacionService.resetSeleccionAgenda();
     }
-    
+
 
 }
