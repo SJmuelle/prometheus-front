@@ -686,6 +686,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
           tipoCredito:[''],
           destinoCredito:[''],
           plazo:[''],
+          cargo:['']
       });
   }
 
@@ -891,6 +892,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
       this.unSubscribe$.unsubscribe();
       // this.agendaCompletacionService.resetSeleccionAgenda();
   }
-  
+
 
 }

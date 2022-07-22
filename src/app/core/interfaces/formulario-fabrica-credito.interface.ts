@@ -94,6 +94,7 @@ export interface FormularioDatosTitularInterface {
     tipoCredito?:                   string;
     destinoCredito?:                string;
     plazo?:                         string;
+    cargo?:                         string;
 }
 
 export interface FormularioRepresentanteInterface {
