@@ -18,11 +18,11 @@
                       <mat-label>Fecha de solicitud</mat-label>
                       <input matInput type="text" [formControlName]="'emision'" [readonly]="true">
                   </mat-form-field>
-                  <mat-form-field class="w-full px-3 fuse-mat-dense">
+                  <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
                       <mat-label>Es preaprobado</mat-label>
                       <input matInput type="text" [formControlName]="'descripcionOrigen'"
                           [readonly]="true">
-                  </mat-form-field>
+                  </mat-form-field> -->
               </div>
               <div class="-mx-3 md:flex mb-2">
 
@@ -48,18 +48,18 @@
                       <input matInput type="text" [formControlName]="'cupoTotal'" [readonly]="true"
                           (keyup)="form.controls['cupoTotal'].setValue(utility.formatearNumero(form.value.cupoTotal)); ">
                   </mat-form-field>
-                  <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                  <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                       <mat-label>Cupo reservado $</mat-label>
                       <input matInput type="text" [formControlName]="'cupoReservado'" [readonly]="true"
                           (keyup)="form.controls['cupoReservado'].setValue(utility.formatearNumero(form.value.cupoReservado)); ">
-                  </mat-form-field>
+                  </mat-form-field> -->
                   <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                       <mat-label>Cupo disponible $</mat-label>
                       <input matInput type="text" [formControlName]="'cupoDisponible'" [readonly]="true"
                           (keyup)="form.controls['cupoDisponible'].setValue(utility.formatearNumero(form.value.cupoDisponible)); ">
                   </mat-form-field>
               </div>
-              <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos de riesgos</span>
+              <!-- <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Datos de riesgos</span>
               <div class="-mx-3 md:flex mb-2">
                   <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                       <mat-label>Score acierta</mat-label>
@@ -76,7 +76,7 @@
                           [required]="true">
                       <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                   </mat-form-field>
-              </div>
+              </div> -->
               <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Información del crédito</span>
               <div class="-mx-3 md:flex mb-2">
                   <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
@@ -155,6 +155,23 @@
                                   </mat-icon>
                               </mat-form-field>
                           </ng-container>
+                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                              <mat-label>Teléfono / Celular </mat-label>
+                              <input matInput type="text" [formControlName]="'celular'" [required]="true">
+                              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                              </mat-icon>
+                              <mat-error
+                                  *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
+                                  <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es
+                                      requerido.</mat-error>
+                                  <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan
+                                      números.</mat-error>
+                                  <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud
+                                      mínima son 7 dígitos.</mat-error>
+                                  <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud
+                                      máxima son 11 dígitos.</mat-error>
+                              </mat-error>
+                          </mat-form-field>
                       </div>
                       <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
                           <div class="-mx-3 md:flex mt-3 mb-2">
@@ -192,7 +209,22 @@
                           </div>
                       </ng-container>
                       <div class="-mx-3 md:flex mt-3 mb-2">
-                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <ng-container *ngIf="tipoEstadoCivil$ | async as tipoEstadoCivil">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Estado civil</mat-label>
+                                <mat-select [value]="'seleccione'"
+                                    [formControlName]="'estadoCivil'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of tipoEstadoCivil.data"
+                                        [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix
+                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </ng-container>
+                          <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                               <mat-label>Teléfono / Celular </mat-label>
                               <input matInput type="text" [formControlName]="'celular'" [required]="true">
                               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -208,7 +240,7 @@
                                   <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud
                                       máxima son 11 dígitos.</mat-error>
                               </mat-error>
-                          </mat-form-field>
+                          </mat-form-field> -->
                           <!--<code><pre>{{form.controls.celular.value | json}}</pre></code>-->
                           <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                               <mat-label>Email</mat-label>
@@ -281,7 +313,7 @@
                                           [svgIcon]="'mat_outline:edit'"></mat-icon>
                                   </mat-form-field>
                               </ng-container>
-                              <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
+                              <!-- <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
                                   <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                       <mat-label>Tipo de vivienda</mat-label>
                                       <mat-select [value]="'seleccione'"
@@ -295,7 +327,7 @@
                                       <mat-icon class="icon-size-5" matSuffix
                                           [svgIcon]="'mat_outline:edit'"></mat-icon>
                                   </mat-form-field>
-                              </ng-container>
+                              </ng-container>-->
                           </div>
                       </ng-container>
                       <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
@@ -305,7 +337,7 @@
                                 <input matInput [matDatepicker]="fechaNacimiento"
                                     [formControlName]="'fechaNacimiento'" [readonly]="true">
                                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento"
-                                    [disabled]="true"></mat-datepicker-toggle>
+                                    [disabled]="false"></mat-datepicker-toggle>
                                 <mat-datepicker #fechaNacimiento readonly></mat-datepicker>
                             </mat-form-field>
                             <ng-container *ngIf="departamentosNacimiento$ | async as departamentos">
@@ -340,7 +372,7 @@
                                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 </mat-form-field>
                             </ng-container>
-                            <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
+                            <!-- <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Estado civil</mat-label>
                                     <mat-select [value]="'seleccione'"
@@ -354,7 +386,7 @@
                                     <mat-icon class="icon-size-5" matSuffix
                                         [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 </mat-form-field>
-                            </ng-container>
+                            </ng-container> -->
                         </div>
                     </ng-container>
                       <div class="-mx-3 md:flex mt-3 mb-2">

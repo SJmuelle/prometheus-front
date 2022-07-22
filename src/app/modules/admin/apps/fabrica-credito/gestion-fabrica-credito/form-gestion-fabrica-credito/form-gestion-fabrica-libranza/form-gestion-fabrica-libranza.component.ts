@@ -55,9 +55,10 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public estado: string = '';
   public agenda_fabrica: string = '';
-  public redeonlyForm: { id: boolean; numeroSolicitud: boolean; emision: boolean; fechaIngresoFabrica: boolean; descripcionEstado: boolean; descripcionOrigen: boolean; codigoSubEstado: boolean; cupoTotal: boolean; cupoReservado: boolean; cupoDisponible: boolean; score: boolean; descripcionSubestado: boolean; descripcionScore: boolean; nivelEndeudamiento: boolean; comprasSemanales: boolean; antiguedadComprasSemanales: boolean; ventasMensuales: boolean; activos: boolean; declarante: boolean; codigoDepartamentoNegocio: boolean; descripcionDepartamentoNegocio: boolean; codigoCiudadNegocio: boolean; descripcionCiudadNegocio: boolean; codigoBarrioNegocio: boolean; descripcionBarrioNegocio: boolean; direccionNegocio: boolean; telefonoNegocio: boolean; telefono: boolean; antiguedadNegocio: boolean; camaraComercio: boolean; nitNegocio: boolean; tipo: boolean; tipoDocumento: boolean; identificacion: boolean; digitoVerificacion: boolean; nombreCompleto: boolean; nombreNegocio: boolean; fechaMatricula: boolean; primerNombre: boolean; segundoNombre: boolean; primerApellido: boolean; segundoApellido: boolean; celular: boolean; email: boolean; genero: boolean; nacionalidad: boolean; fechaNacimiento: boolean; codigoDepartamentoNacimiento: boolean; codigoCiudadNacimiento: boolean; tipoVivienda: boolean; codigoDepartamento: boolean; descripcionDepartamento: boolean; codigoCiudad: boolean; descripcionCiudad: boolean; codigoBarrio: boolean; descripcionBarrio: boolean; direccionResidencial: boolean; nivelEstudio: boolean; viveEnNegocio: boolean; descripcionTipo: boolean; };
+  public redeonlyForm: { id: boolean; numeroSolicitud: boolean; emision: boolean; fechaIngresoFabrica: boolean; descripcionEstado: boolean; descripcionOrigen: boolean; codigoSubEstado: boolean; cupoTotal: boolean; cupoReservado: boolean; cupoDisponible: boolean; score: boolean; descripcionSubestado: boolean; descripcionScore: boolean; nivelEndeudamiento: boolean; comprasSemanales: boolean; antiguedadComprasSemanales: boolean; ventasMensuales: boolean; activos: boolean; declarante: boolean; codigoDepartamentoNegocio: boolean; descripcionDepartamentoNegocio: boolean; codigoCiudadNegocio: boolean; descripcionCiudadNegocio: boolean; codigoBarrioNegocio: boolean; descripcionBarrioNegocio: boolean; direccionNegocio: boolean; telefonoNegocio: boolean; telefono: boolean; antiguedadNegocio: boolean; camaraComercio: boolean; nitNegocio: boolean; tipo: boolean; tipoDocumento: boolean; identificacion: boolean; digitoVerificacion: boolean; nombreCompleto: boolean; nombreNegocio: boolean; fechaMatricula: boolean; primerNombre: boolean; segundoNombre: boolean; primerApellido: boolean; segundoApellido: boolean; celular: boolean; email: boolean; genero: boolean; nacionalidad: boolean; fechaNacimiento: boolean; codigoDepartamentoNacimiento: boolean; codigoCiudadNacimiento: boolean; tipoVivienda: boolean; codigoDepartamento: boolean; descripcionDepartamento: boolean; codigoCiudad: boolean; descripcionCiudad: boolean; codigoBarrio: boolean; descripcionBarrio: boolean; direccionResidencial: boolean; nivelEstudio: boolean; viveEnNegocio: boolean; descripcionTipo: boolean; tipoEstadoCivil:boolean; };
   public animacionVer: boolean = true;
   public dialog_a_mostrar: string = '';
+  public tipoEstadoCivil$: Observable<any>;
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -90,6 +91,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
       this.getDeclarante();
       this.getCamaraComercio();
       this.listenFormulario();
+      this.getTiposEstadosCivil();
   }
   /**
    * @description:
@@ -513,6 +515,13 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
       this.tipoVivienda$ = this.genericaServices.getTipoViviendas();
   }
 
+    /**
+   * @description: Obtiene los tipos de estados civiles
+   */
+     private getTiposEstadosCivil(): void {
+        this.tipoEstadoCivil$ = this.genericaServices.getTipoEstadoCivil();
+    }
+
   /**
    * @description: Obtiene el nivel de estudio
    */
@@ -686,7 +695,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
           tipoCredito:[''],
           destinoCredito:[''],
           plazo:[''],
-          cargo:['']
+          cargo:[''],
+          estadoCivil:[''],
       });
   }
 
@@ -757,6 +767,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                   nivelEstudio: false,
                   viveEnNegocio: false,
                   descripcionTipo: false,
+                  tipoEstadoCivil:false,
 
               };
               break;
@@ -823,6 +834,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                   nivelEstudio: false,
                   viveEnNegocio: false,
                   descripcionTipo: false,
+                  tipoEstadoCivil:false,
 
               };
               break;

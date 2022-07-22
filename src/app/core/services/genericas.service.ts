@@ -42,6 +42,13 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
     /**
+     * @description: Obtiene listado tipos de estados civiles
+     */
+    public getTipoEstadoCivil(): Observable<any> {
+            const params: string = 'ESTADO-CIVIL';
+            return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
      * @description: Obtiene listado de camara de comercio
      */
     public getCamaraComercio(): Observable<any> {
