@@ -81,7 +81,8 @@ export class AppSettingsService {
      */
     public genericas = {
         url: {
-            base: EndPoints.uri('/generic/qry/consulta-lista-generica')
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
+            basetk: EndPoints.uri('/generic/qry/tk')
         }
     };
     /**

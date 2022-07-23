@@ -62,6 +62,16 @@ export interface FormularioCreditoInterface {
     nitNegocio:                     string;
     digitoVerificacion?:            number;
     score?:                         number;
+    fechaExpedicionDocumento?:      string;
+    codigoCiudadExpedicion?:        string;
+    salarioBasico?:                 number;
+    numeroCuentaBancaria?:          string;
+    descuentoNomina?:               string;
+    comisionesHorasExtras?:         string;
+    valorSolicitado?:               number;
+    fechaVinculacion?:              string;
+    fechaFinalizacionContrato?:     string;
+
 }
 
 export interface FormularioDatosTitularInterface {
@@ -96,7 +106,8 @@ export interface FormularioDatosTitularInterface {
     plazo?:                         string;
     cargo?:                         string;
     estrato?:                       string;
-    destinoCreditoOtro?:            string;
+    otroDestinoCredito?:            string;
+    fechaExpedicionDocumento?:      string;
 }
 
 export interface FormularioRepresentanteInterface {

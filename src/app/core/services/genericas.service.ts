@@ -57,6 +57,13 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
     /**
+* @description: Obtiene listado tipos de estados civiles
+*/
+    public getTipoContrato(): Observable<any> {
+        const params: string = 'TIPO-CONTRATO';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
      * @description: Obtiene listado tipos de estados civiles
      */
     public getDestinoCredito(): Observable<any> {
@@ -97,6 +104,35 @@ export class GenericasService {
      */
     public getNivelEstudio(): Observable<any> {
         const params: string = 'NIVEL-ESTUDIO';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
+     * @description: Obtiene nivel de estudii
+     */
+    public getPagadurias(): Observable<any> {
+        const params: string = 'pagadurias';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
+    /**
+        * @description: obtiene nivel de estudii
+        */
+    public getTipoCuentaBancaria(): Observable<any> {
+        const params: string = 'TIPO-CUENTA';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+    * @description: Obtiene nivel de estudii
+    */
+    public getEntidadBancaria(): Observable<any> {
+        const params: string = 'obtener-bancos';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
+    /**
+    * @description: Obtiene nivel de estudii
+    */
+    public getAplicaIngresos(): Observable<any> {
+        const params: string = 'APLICA-INGRESOS';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
     /**
