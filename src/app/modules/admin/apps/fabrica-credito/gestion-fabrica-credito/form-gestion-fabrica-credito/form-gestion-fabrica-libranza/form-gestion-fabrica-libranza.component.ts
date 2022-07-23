@@ -55,10 +55,13 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public estado: string = '';
   public agenda_fabrica: string = '';
-  public redeonlyForm: { id: boolean; numeroSolicitud: boolean; emision: boolean; fechaIngresoFabrica: boolean; descripcionEstado: boolean; descripcionOrigen: boolean; codigoSubEstado: boolean; cupoTotal: boolean; cupoReservado: boolean; cupoDisponible: boolean; score: boolean; descripcionSubestado: boolean; descripcionScore: boolean; nivelEndeudamiento: boolean; comprasSemanales: boolean; antiguedadComprasSemanales: boolean; ventasMensuales: boolean; activos: boolean; declarante: boolean; codigoDepartamentoNegocio: boolean; descripcionDepartamentoNegocio: boolean; codigoCiudadNegocio: boolean; descripcionCiudadNegocio: boolean; codigoBarrioNegocio: boolean; descripcionBarrioNegocio: boolean; direccionNegocio: boolean; telefonoNegocio: boolean; telefono: boolean; antiguedadNegocio: boolean; camaraComercio: boolean; nitNegocio: boolean; tipo: boolean; tipoDocumento: boolean; identificacion: boolean; digitoVerificacion: boolean; nombreCompleto: boolean; nombreNegocio: boolean; fechaMatricula: boolean; primerNombre: boolean; segundoNombre: boolean; primerApellido: boolean; segundoApellido: boolean; celular: boolean; email: boolean; genero: boolean; nacionalidad: boolean; fechaNacimiento: boolean; codigoDepartamentoNacimiento: boolean; codigoCiudadNacimiento: boolean; tipoVivienda: boolean; codigoDepartamento: boolean; descripcionDepartamento: boolean; codigoCiudad: boolean; descripcionCiudad: boolean; codigoBarrio: boolean; descripcionBarrio: boolean; direccionResidencial: boolean; nivelEstudio: boolean; viveEnNegocio: boolean; descripcionTipo: boolean; tipoEstadoCivil:boolean; };
+  public redeonlyForm: any;
   public animacionVer: boolean = true;
   public dialog_a_mostrar: string = '';
   public tipoEstadoCivil$: Observable<any>;
+  public tipoCredito$: Observable<any>;
+  public destinoCredito$: Observable<any>;
+  public estrato$:Observable<any>;
   constructor(
       private agendaCompletacionService: AgendaCompletacionService,
       private fabricaCreditoService: FabricaCreditoService,
@@ -92,6 +95,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
       this.getCamaraComercio();
       this.listenFormulario();
       this.getTiposEstadosCivil();
+      this.getTipoCredito();
+      this.getDestinoCredito();
+      this.getEstracto();
   }
   /**
    * @description:
@@ -522,6 +528,25 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.tipoEstadoCivil$ = this.genericaServices.getTipoEstadoCivil();
     }
 
+      /**
+   * @description: Obtiene los tipos de estados civiles
+   */
+       private getTipoCredito(): void {
+        this.tipoCredito$ = this.genericaServices.getTipoCredito();
+    }
+          /**
+   * @description: Obtiene los tipos de estados civiles
+   */
+           private getDestinoCredito(): void {
+            this.destinoCredito$ = this.genericaServices.getDestinoCredito();
+        }
+              /**
+   * @description: Obtiene los tipos de estados civiles
+   */
+       private getEstracto(): void {
+        this.estrato$ = this.genericaServices.getestrato();
+    }
+
   /**
    * @description: Obtiene el nivel de estudio
    */
@@ -697,6 +722,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
           plazo:[''],
           cargo:[''],
           estadoCivil:[''],
+          estracto:[''],
+          destinoCreditoOtro:[''],
+          estrato:[''],
       });
   }
 
@@ -768,6 +796,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                   viveEnNegocio: false,
                   descripcionTipo: false,
                   tipoEstadoCivil:false,
+                  tipoCredito:false,
 
               };
               break;
@@ -835,6 +864,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                   viveEnNegocio: false,
                   descripcionTipo: false,
                   tipoEstadoCivil:false,
+                  tipoCredito:false,
 
               };
               break;

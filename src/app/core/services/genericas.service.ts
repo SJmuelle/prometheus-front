@@ -34,6 +34,7 @@ export class GenericasService {
         const params: string = 'DECLARANTE';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
+
     /**
      * @description: Obtiene listado tipos de vivienda
      */
@@ -45,9 +46,31 @@ export class GenericasService {
      * @description: Obtiene listado tipos de estados civiles
      */
     public getTipoEstadoCivil(): Observable<any> {
-            const params: string = 'ESTADO-CIVIL';
-            return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+        const params: string = 'ESTADO-CIVIL';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
+    /**
+ * @description: Obtiene listado tipos de estados civiles
+ */
+    public getTipoCredito(): Observable<any> {
+        const params: string = 'TIPO-CREDITO';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+     * @description: Obtiene listado tipos de estados civiles
+     */
+    public getDestinoCredito(): Observable<any> {
+        const params: string = 'DESTINO-CREDITO';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+    * @description: Obtiene listado tipos de estados civiles
+    */
+    public getestrato(): Observable<any> {
+        const params: string = 'ESTRATO-CASA';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
     /**
      * @description: Obtiene listado de camara de comercio
      */
