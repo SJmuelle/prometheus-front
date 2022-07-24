@@ -63,11 +63,12 @@ export interface FormularioCreditoInterface {
     digitoVerificacion?:            number;
     score?:                         number;
     fechaExpedicionDocumento?:      string;
+    codigoDepartamentoExpedicion?:  string;
     codigoCiudadExpedicion?:        string;
     salarioBasico?:                 number;
     numeroCuentaBancaria?:          string;
-    descuentoNomina?:               string;
-    comisionesHorasExtras?:         string;
+    descuentoNomina?:               number;
+    comisionesHorasExtras?:         number;
     valorSolicitado?:               number;
     fechaVinculacion?:              string;
     fechaFinalizacionContrato?:     string;

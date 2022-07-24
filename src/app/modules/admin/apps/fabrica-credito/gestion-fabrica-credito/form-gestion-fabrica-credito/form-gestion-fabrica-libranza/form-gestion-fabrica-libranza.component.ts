@@ -304,7 +304,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
      * @description:
      */
     public onPostDatos(): void {
-        if (this.form.valid) {
+        // if (this.form.valid) {
             const datos: FormularioCreditoInterface = this.form.getRawValue();
             const { fechaNacimiento,fechaVinculacion,fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
         
@@ -323,10 +323,17 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
             const activos = Number(this.utility.enviarNumero(this.form.value.activos));
             const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
+            const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
+            const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
+            // descuentoNomina
             delete data.ventasMensuales;
             delete data.comprasSemanales;
             delete data.activos;
+            delete data.comisionesHorasExtras;
+            delete data.descuentoNomina;
             const datosFormularios: FormularioCreditoInterface = {
+                descuentoNomina:descuentoNominaFormato,
+                comisionesHorasExtras:comisionesHorasExtrasFormato,
                 fechaFinalizacionContrato:fechaFinalizacionContratoFormato,
                 fechaVinculacion:fechaVinculacionFormato,
                 valorSolicitado: valorSolicitadoFormato,
@@ -360,9 +367,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     // console.log(datosFormularios);
                 }
             });
-        } else {
-            this.form.markAllAsTouched();
-        }
+        // } else {
+        //     this.form.markAllAsTouched();
+        // }
     }
 
     /**
@@ -419,6 +426,22 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 }
                 if (data.cupoReservado) {
                     this.form.controls['cupoReservado'].setValue(this.utility.formatearNumero(String(this.form.value.cupoReservado)));
+                }
+                if (data.cupoDisponible) {
+                    this.form.controls['cupoDisponible'].setValue(this.utility.formatearNumero(String(this.form.value.cupoDisponible)));
+                }
+                if (data.salarioBasico) {
+                    this.form.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(this.form.value.salarioBasico)));
+                }
+                if (data.descuentoNomina) {
+                    this.form.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(this.form.value.descuentoNomina)));
+                }
+                if (data.valorSolicitado) {
+                    this.form.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitado)));
+                }
+                // form.value.valorSolicitado
+                if (data.comisionesHorasExtras) {
+                    this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.form.value.comisionesHorasExtras)));
                 }
                 if (data.cupoDisponible) {
                     this.form.controls['cupoDisponible'].setValue(this.utility.formatearNumero(String(this.form.value.cupoDisponible)));
@@ -843,6 +866,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             entidadBancaria: [''],
             fechaVinculacion: [''],
             fechaFinalizacionContrato: [''],
+            codigoDepartamentoExpedicion:[''],
         });
     }
 
