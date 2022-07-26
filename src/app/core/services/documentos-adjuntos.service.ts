@@ -17,8 +17,8 @@ export class DocumentosAdjuntosService {
      * @description: Get documentos requeridos
      */
     public getDocumentos(datos: any): Observable<any> {
-        const { numeroSolicitud, tipoDocumento } = datos;
-        return this._http.get(`${this._appSettings.documentos.url.base}/32/${numeroSolicitud}/${tipoDocumento}`);
+        const { numeroSolicitud, tipoDocumento,unidadNegocio } = datos;
+        return this._http.get(`${this._appSettings.documentos.url.base}/${unidadNegocio}/${numeroSolicitud}/${tipoDocumento}`);
     }
     /**
      * @description: Adjuntar documentos

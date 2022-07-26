@@ -15,7 +15,7 @@ export class AppSettingsService {
     /**
      * @description: End-point pagaduria
      */
-     public pagaduria = {
+    public pagaduria = {
         url: {
             base: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA/RL/P'),
             baseSoli: EndPoints.uriPaga('api/generic/qry/solicitudes-pagaduria/IDPAGADURIA'),
@@ -108,10 +108,10 @@ export class AppSettingsService {
             tipoComentario: EndPoints.uri('/generic/qry/consulta-lista-generica/TIPO-COMENTARIO'),
         }
     };
-      /**
-     * @description: End-point comentarios
-     */
-       public centrales = {
+    /**
+   * @description: End-point comentarios
+   */
+    public centrales = {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
         }
@@ -158,6 +158,16 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-Point
+     */
+    public listadoCartera = {
+        url: {
+            base: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras'),
+            update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
+            create: EndPoints.uri('/generic/agregar-cartera-en-mora')
+        }
+    };
+    /**
      * @description: End-point
      */
     public referenciaCliente = {
@@ -187,14 +197,14 @@ export class AppSettingsService {
         }
     };
 
-     /**
-     * @description: End-point agenda decision
-     */
-      public agendaDecision = {
+    /**
+    * @description: End-point agenda decision
+    */
+    public agendaDecision = {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/DE'),
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/DE')
         }
     };
-    
+
 }

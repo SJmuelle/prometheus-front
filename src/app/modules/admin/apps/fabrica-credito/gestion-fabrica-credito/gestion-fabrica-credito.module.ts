@@ -11,7 +11,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatDividerModule} from "@angular/material/divider";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FormRepresentanteLegalComponent } from './form-representante-legal/form-representante-legal.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
@@ -42,6 +42,11 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
 import { GridCentralesComponent } from './grid-centrales/grid-centrales.component';
 import { FormGestionFabricaUltracemComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-ultracem/form-gestion-fabrica-ultracem.component';
 import { FormGestionFabricaLibranzaComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-libranza/form-gestion-fabrica-libranza.component';
+import { GridOfertaLibranzaComponent } from './grid-oferta-libranza/grid-oferta-libranza.component';
+import { GridCarteraComponent } from './grid-cartera/grid-cartera.component';
+import { FuseCardModule } from '@fuse/components/card';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-cartera.component';
 
 
 @NgModule({
@@ -62,7 +67,10 @@ import { FormGestionFabricaLibranzaComponent } from './form-gestion-fabrica-cred
         FormDialogoChecklistComponent,
         GridCentralesComponent,
         FormGestionFabricaUltracemComponent,
-        FormGestionFabricaLibranzaComponent
+        FormGestionFabricaLibranzaComponent,
+        GridOfertaLibranzaComponent,
+        GridCarteraComponent,
+        FormDialogCarteraComponent
     ],
     imports: [
         CommonModule,
@@ -88,8 +96,11 @@ import { FormGestionFabricaLibranzaComponent } from './form-gestion-fabrica-cred
         PdfViewerModule,
         NgxPaginationModule,
         MatListModule,
-        FuseDrawerModule
-
+        FuseDrawerModule,
+        FuseCardModule,
+        MatRadioModule,
+        FormsModule,
+        
     ],
 
     exports: [

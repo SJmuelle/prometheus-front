@@ -1,0 +1,73 @@
+<ng-container>
+    <h2 mat-dialog-title>Nueva {{tipo=='N'?'obligaciones al dia':'obligaciones de mora' }}</h2>
+</ng-container>
+<mat-dialog-content>
+    <div class="grid-cols-12  ">
+        <div class="col-span-12">
+            <form [formGroup]="form">
+                <div class="bg-white flex flex-col">
+                    <div class="flex">
+                        <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
+                            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                                <mat-label>Entidad bancaria</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'entidad'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of entidadBancaria.data" [value]="item.codigo">
+                                        {{item.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngIf="tipoCuentaBancaria$ | async as tipoCuentaBancaria">
+                            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                                <mat-label>Tipo de cuenta</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoCuenta'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let item of tipoCuentaBancaria.data"
+                                        [value]="item.codigoOpcion">
+                                        {{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="flex">
+                        <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                            <mat-label>Nª de obligaciones</mat-label>
+                            <input matInput type="text" [formControlName]="'numeroCuenta'">
+                            <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon> -->
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                              <mat-label>Saldo</mat-label>
+                            <input matInput type="text" [formControlName]="'saldoActual'">
+                        </mat-form-field>
+                    </div>
+                    <div class="flex" *ngIf="tipo=='D'">
+                        <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                              <mat-label>Saldo de mora</mat-label>
+                            <input matInput type="text" [formControlName]="'saldoMora'">
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <ng-container *ngIf="!data.idComentario">
+            <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+                Guardar
+            </button>
+        </ng-container>
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

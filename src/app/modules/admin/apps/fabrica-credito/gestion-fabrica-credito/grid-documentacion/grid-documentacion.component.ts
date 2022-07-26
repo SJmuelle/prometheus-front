@@ -19,6 +19,7 @@ import 'moment/locale/es';
     styleUrls: ['./grid-documentacion.component.scss']
 })
 export class GridDocumentacionComponent implements OnInit, OnDestroy {
+    public unSubscribe$: Subject<any> = new Subject<any>();
     public documentos$: Observable<any>;
     public unsubscribe$: Subject<any> = new Subject();
     public datosDocumentos: any = {};
@@ -30,6 +31,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public numeroSolicitud: string;
     public habilitarComparar: boolean = false;
     public datosDocumentosHistorico: any[] = [];
+    public identificacion: string ;
+
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
     constructor(
         private route: ActivatedRoute,
@@ -37,8 +40,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         private fabricaCreditoService: FabricaCreditoService,
         private _dialog: MatDialog
     ) {
-        this.escuchaObservable();
+        this.identificacion = this.route.snapshot.paramMap.get('id');
         this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
+        this.escuchaObservable();
+        
     }
     ngOnInit(): void {
     }
@@ -46,15 +51,24 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     * @description: Escucha el observable
     * */
     public escuchaObservable(): void {
-        this.fabricaCreditoService.seleccionDatos.pipe(takeUntil(this.unsubscribe$))
+        const datosSolicitud: any = {
+            numeroSolicitud: this.numeroSolicitud,
+            identificacion: this.identificacion
+        };
+        this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
-                if (data) {
-                    this.getDocumentos(data);
-                    this.datosDocumentos = data;
-                }
+               
+                const datosDocumentos: any = {
+                    numeroSolicitud: datosSolicitud.numeroSolicitud,
+                    tipoDocumento: datosSolicitud.tipoDocumento,
+                    unidadNegocio:data.unidadNegocio
+                };
+                // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
 
-                console.log('eses' + this.datosDocumentos);
+                this.datosDocumentos = datosDocumentos;
+                this.getDocumentos(datosDocumentos);
             });
+
     }
 
     /**
@@ -300,7 +314,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         document.body.appendChild(link);
         link.href = `data:application/${extension};base64,${archivo}`;
         link.target = '_self';
-        link.download = data.nombreArchivo+'.'+data.extension;
+        link.download = data.nombreArchivo + '.' + data.extension;
         link.click();
     }
 
@@ -308,9 +322,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         moment.locale('es');
         return moment(date).format('MMMM D YYYY')
     }
-    
+
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();
     }
+    
 
 }

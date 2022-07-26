@@ -1,0 +1,119 @@
+<div class="min-h-60">
+
+    <fuse-card class="flex items-center w-screen  p-6 filter-info">
+        <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
+        <mat-icon  class="icon-size-12 mr-6" svgIcon="heroicons_outline:user-circle"></mat-icon>
+        <ng-container *ngIf="listadoCartera$ | async as items; else hola">
+        <div class="flex flex-col" *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
+            <div class="text-2xl font-semibold leading-tight">{{items.data[0].nombreCompleto}}</div>
+            <div class="text-1xl  text-secondary">{{items.data[0].celular}}</div>
+            <div class="text-1xl  text-green-600">{{items.data[0].tipoCredito}}</div>
+        </div>
+        </ng-container>
+
+    </fuse-card>
+
+    <ng-template #hola>
+        <div class="col-sm-12 col-lg-12">
+          
+        </div>
+    </ng-template>
+   
+    <div class="text-2xl font-semibold leading-tight text-center mt-3">Listado de obligaciones HDC</div>
+    <div class="text-lg font-semibold leading-tight text-left mb-4">Obligaciones de mora</div>
+   <div class="flex justify-end mb-4">
+        <button mat-raised-button color="accent" type="button" (click)="createCartera('D')" >
+            Nueva
+        </button>
+    </div>
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3">Gestión</th>
+                <th class="px-4 py-3">Entidad</th>
+                <th class="px-4 py-3">Nª de obligaciones</th>
+                <th class="px-4 py-3">Saldo</th>
+                <th class="px-4 py-3">Altura de mora</th>
+                <th class="px-4 py-3">Estado</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <ng-container *ngIf="listadoCartera$ | async as items">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.estadoCuenta === 'DEUDA'">
+                        <td class="px-0 text-sm border text-left">
+                            <mat-form-field appearance="fill" class="p-0 w-full mt-3">
+                                <mat-select [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Seleccionar</mat-option>
+                                    <mat-option value="NEG">Negociar</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border uppercase">{{item.nombreEntidad }}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-right">${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-right">${{item.saldoMora | number}}</td>
+                        <td class="px-2 text-sm border w-0">
+                            <div class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 " [ngClass]="
+                                    item.estadoCuenta === 'DEUDA'
+                                    ? 'bg-pink-300'
+                                    : 'bg-green-300'
+                                    ">
+                                {{item.estadoCuenta}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </tbody>
+    </table>
+    <hr class="shadow">
+    <div class="text-lg font-semibold leading-tight text-left">
+        Obligaciones al dia </div>
+    <div class="flex justify-end mb-4">
+        <button mat-raised-button color="accent" type="button" (click)="createCartera('N')">
+            Nueva
+        </button>
+    </div>
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3">Gestión</th>
+                <th class="px-4 py-3">Entidad</th>
+                <th class="px-4 py-3">Nª de obligaciones</th>
+                <th class="px-4 py-3">Saldo</th>
+                <th class="px-4 py-3">Estado</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <ng-container *ngIf="listadoCartera$ | async as items">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.estadoCuenta !== 'DEUDA'">
+                        <td class="px-0 text-sm border text-left">
+                            <mat-form-field appearance="fill" class="p-0 w-full mt-3">
+                                <mat-select [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Seleccionar</mat-option>
+                                    <mat-option value="NEG">Negociar</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border">{{item.nombreEntidad}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-right">${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border w-0 text-right">
+                            <div class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 " [ngClass]="
+                                    item.estadoCuenta === 'DEUDA'
+                                    ? 'bg-pink-300'
+                                    : 'bg-green-300'
+                                    ">
+                                {{item.estadoCuenta}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
