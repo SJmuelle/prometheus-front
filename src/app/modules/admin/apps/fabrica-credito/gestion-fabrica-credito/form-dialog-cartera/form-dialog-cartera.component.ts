@@ -36,7 +36,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.getEntidadBancaria();
     this.getTipoCuentaBancaria();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
-    this.form.controls.identificacion.setValue(this.data.identificacion);
+    this.form.controls.identificacion.setValue(this.data.identificacion.toString());
     this.form.controls.estadoCuenta.setValue( this.data.tipo=='A'?'AL DIA':'DEUDA');
     this.tipo = this.data.tipo;
   }
