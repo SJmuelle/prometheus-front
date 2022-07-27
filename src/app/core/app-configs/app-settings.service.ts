@@ -35,6 +35,15 @@ export class AppSettingsService {
         }
     };
     /**
+ * @description: End-point agenda de Decision
+ */
+    public agendaCartera = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/GC'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/GC'),
+        }
+    };
+    /**
      * @description: End-point fabrica de datos
      */
     public fabricaDatos = {
