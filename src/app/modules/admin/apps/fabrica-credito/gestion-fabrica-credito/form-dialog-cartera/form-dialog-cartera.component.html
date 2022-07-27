@@ -44,13 +44,15 @@
 
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                               <mat-label>Saldo</mat-label>
-                            <input matInput type="text" [formControlName]="'saldoActual'">
+                            <input matInput type="text" [formControlName]="'saldoActual'"
+                            (keyup)="form.controls['saldoActual'].setValue(utility.formatearNumero(form.value.saldoActual));"
+                            >
                         </mat-form-field>
                     </div>
                     <div class="flex" *ngIf="tipo=='D'">
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                               <mat-label>Saldo de mora</mat-label>
-                            <input matInput type="text" [formControlName]="'saldoMora'">
+                            <input matInput type="text" [formControlName]="'saldoMora'"  (keyup)="form.controls['saldoMora'].setValue(utility.formatearNumero(form.value.saldoMora));">
                         </mat-form-field>
                     </div>
 

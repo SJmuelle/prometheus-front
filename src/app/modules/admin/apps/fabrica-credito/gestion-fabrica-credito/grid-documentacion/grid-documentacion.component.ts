@@ -60,7 +60,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                
                 const datosDocumentos: any = {
                     numeroSolicitud: datosSolicitud.numeroSolicitud,
-                    tipoDocumento: datosSolicitud.tipoDocumento,
+                    tipoDocumento: data.tipoDocumento,
                     unidadNegocio:data.unidadNegocio
                 };
                 // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
@@ -295,7 +295,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         const datosHistorico = {
             numeroSolicitud: this.numeroSolicitud,
-            idTipoArchivo: datos.idArchivo,
+            idTipoArchivo: datos.idArchivo.toString(),
             unidadNegocio: datos.idUnidNegocio.toString(),
             tipoUltracem: this.datosDocumentos.tipoDocumento
         };

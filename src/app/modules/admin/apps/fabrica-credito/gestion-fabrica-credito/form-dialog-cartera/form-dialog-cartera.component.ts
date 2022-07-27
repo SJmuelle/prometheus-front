@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ComentariosService } from 'app/core/services/comentarios.service';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
+import { UtilityService } from 'app/resources/services/utility.service';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -29,6 +30,8 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private genericaServices: GenericasService,
     private _listadoCarteraService: ListadoCarteraService,
+    public utility: UtilityService,
+
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +40,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.getTipoCuentaBancaria();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
-    this.form.controls.estadoCuenta.setValue( this.data.tipo=='A'?'AL DIA':'DEUDA');
+    this.form.controls.estadoCuenta.setValue( this.data.tipo=='D'?'DEUDA':'AL DIA');
     this.tipo = this.data.tipo;
   }
 
@@ -64,7 +67,18 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   }
   public onGuardar(): void {
     if (this.form.valid) {
-      const data: any = this.form.getRawValue();
+      // const data: any = this.form.getRawValue();
+      const datos: any = this.form.getRawValue();
+      const {  saldoActual,...data } = datos;
+      const saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
+      const saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
+      delete data.saldoActual;
+      delete data.saldoMora;
+      const datosFormularios: any = {
+        saldoActual:saldoActualFormato,
+        saldoMora:saldoMoraFormato,
+        ...data
+      }
       console.log(data);
       let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligaciones al dia?' : '¿Desea agregar una nueva obligaciones de mora?';
       Swal.fire({
@@ -78,7 +92,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.guardadoCambio(data);
+          this.guardadoCambio(datosFormularios);
         }
         // setTimeout(() => {
         //   this.onCerrar();

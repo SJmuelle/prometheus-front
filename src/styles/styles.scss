@@ -2,7 +2,12 @@
 /*  @ Import/write your custom styles here.
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
-@import './variables.scss';
+@import "./variables.scss";
+.sinB {
+    .mat-form-field-wrapper {
+        margin: 0 !important;
+    }
+}
 
 body.light.theme-default,
 body.light.theme-brand,
@@ -63,19 +68,24 @@ table {
     max-width: 124px;
 }
 
-
-.fuse-mat-rounded .mat-tab-group .mat-tab-header .mat-tab-label-container .mat-tab-list .mat-tab-labels .mat-tab-label.mat-tab-label-active {
+.fuse-mat-rounded
+    .mat-tab-group
+    .mat-tab-header
+    .mat-tab-label-container
+    .mat-tab-list
+    .mat-tab-labels
+    .mat-tab-label.mat-tab-label-active {
     background: #4dbceb !important;
     color: #fff !important;
 }
 
-::div.mat-tab-label-content{
-color:#fff !important;
+::div.mat-tab-label-content {
+    color: #fff !important;
 }
 
-.color_fintra{
-  background:#4ABBEC !important;
+.color_fintra {
+    background: #4abbec !important;
 }
-.texto_fintra{
-    color:#4ABBEC !important;
-  }
+.texto_fintra {
+    color: #4abbec !important;
+}

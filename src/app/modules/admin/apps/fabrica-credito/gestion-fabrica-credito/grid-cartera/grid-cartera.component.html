@@ -41,9 +41,9 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.estadoCuenta === 'DEUDA'">
-                        <td class="px-0 text-sm border text-left">
-                            <mat-form-field appearance="fill" class="p-0 w-full mt-3">
-                                <mat-select [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field  class="p-0 w-full mt-0 marginInput">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Seleccionar</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
@@ -91,7 +91,7 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.estadoCuenta !== 'DEUDA'">
                         <td class="px-0 text-sm border text-left">
-                            <mat-form-field appearance="fill" class="p-0 w-full mt-3">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Seleccionar</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
