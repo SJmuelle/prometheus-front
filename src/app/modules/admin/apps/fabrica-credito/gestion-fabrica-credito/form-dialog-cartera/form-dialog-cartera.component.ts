@@ -21,7 +21,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   public unsubscribe$: Subject<any> = new Subject<any>();
   listadoTipo: any;
   tipo: string;
-  
+
   public entidadBancaria$: Observable<any>;
   public tipoCuentaBancaria$: Observable<any>;
   constructor(
@@ -80,7 +80,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
         ...data
       }
       console.log(data);
-      let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligaciones al dia?' : '¿Desea agregar una nueva obligaciones de mora?';
+      let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligación al día?' : '¿Desea agregar una nueva obligación en mora?';
       Swal.fire({
         title: 'Guardar información',
         text: mensaje,
