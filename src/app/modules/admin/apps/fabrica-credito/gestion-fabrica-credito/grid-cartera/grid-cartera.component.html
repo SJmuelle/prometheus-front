@@ -1,12 +1,12 @@
 <div class="min-h-60">
-    <div class="text-2xl font-semibold leading-tight text-center mt-3">Resumen de obligaciones HDC</div>
-    <fuse-card class="flex items-center w-screen  p-6 filter-info">
+    <fuse-card class="flex items-center justify-center  p-6 filter-info">
         <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
         <mat-icon  class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
         <ng-container *ngIf="listadoCartera$ | async as items; else hola">
         <div class="flex flex-col" *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
-            <div class="text-2xl font-semibold leading-tight text-center">{{items.data[0].nombreCompleto}}</div>
-            <div class="text-1xl  text-secondary text-center">{{items.data[0].celular}}</div>
+            <div class="text-2xl font-semibold leading-tight text-center">Resumen de obligaciones HDC</div>
+            <div class="text-2xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}</div>
+            <div class="text-1xl  text-secondary text-center" > <mat-icon svgIcon="heroicons_outline:user-circle"></mat-icon>{{items.data[0].email}}</div>
             <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
         </div>
         </ng-container>
@@ -44,14 +44,14 @@
                         <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field  class="p-0 w-full mt-0 marginInput">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
-                                    <mat-option value="">Seleccionar</mat-option>
+                                    <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </td>
                         <td class="px-2 text-sm border uppercase text-center">{{item.nombreEntidad }}</td>
-                        <td class="px-2 text-sm border text-center">No. {{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="px-2 text-sm border w-0">
