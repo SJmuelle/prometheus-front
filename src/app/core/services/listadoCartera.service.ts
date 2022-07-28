@@ -20,10 +20,26 @@ export class ListadoCarteraService {
   }
 
   /**
+ * @description:
+ */
+  public getListadoCarteraNegociacion(numeroSolicitud: number): Observable<any> {
+    return this._http.get(`${this._appSettings.listadoCartera.url.obtenerObligacion}/${numeroSolicitud}`);
+  }
+
+  /**
    * @description:
    */
   public updateCartera(data: any): Observable<any> {
     return this._http.post(this._appSettings.listadoCartera.url.update, data);
+
+    // return this._http.post(`${this._appSettings.listadoCartera.url.update}/${numeroSolicitud}`);
+  }
+
+  /**
+  * @description:
+  */
+  public pasarAgenda(data: any): Observable<any> {
+    return this._http.post(this._appSettings.listadoCartera.url.pasarAgenda, data);
 
     // return this._http.post(`${this._appSettings.listadoCartera.url.update}/${numeroSolicitud}`);
   }

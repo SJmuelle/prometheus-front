@@ -4,7 +4,7 @@
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Datos de la solicitud de Libranza
+                    Datos de la solicitud de Libranza {{agenda_fabrica}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -618,9 +618,13 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container> -->
-                <mat-tab *ngIf="(agenda_fabrica !== 'CO') && (agenda_fabrica !== 'RE')">
-                    <ng-template matTabLabel>Listado de Carteras</ng-template> 
+                <mat-tab *ngIf="agenda_fabrica == 'CM'">
+                    <ng-template matTabLabel>Listado de carteras</ng-template> 
                     <app-grid-cartera></app-grid-cartera>
+                </mat-tab>
+                <mat-tab *ngIf="agenda_fabrica == 'GC'">
+                    <ng-template matTabLabel>Listado de negociaciones</ng-template> 
+                    <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Ofertas</ng-template> 

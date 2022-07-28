@@ -26,6 +26,7 @@ export class GridTipoReferenciacionComponent implements OnInit {
   public tipoDocumento: string = '';
   public estado: string = '';
   public page: number = 1;
+  public pageFamiliar:number=1;
   public pageComercial: number = 1;
   public verComentarios: boolean = false;
   public esVerComentarios: boolean = false;

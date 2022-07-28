@@ -4,17 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
 import { Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
-import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
 
 @Component({
-  selector: 'app-grid-cartera',
-  templateUrl: './grid-cartera.component.html',
-  styleUrls: ['./grid-cartera.component.scss']
+  selector: 'app-grid-cartera-negociacion',
+  templateUrl: './grid-cartera-negociacion.component.html',
+  styleUrls: ['./grid-cartera-negociacion.component.scss']
 })
-export class GridCarteraComponent implements OnInit {
+export class GridCarteraNegociacionComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
 
@@ -36,7 +34,7 @@ export class GridCarteraComponent implements OnInit {
 
 
   private getListadoCartera(numeroSolicitud: number): void {
-    this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
+    this.listadoCartera$ = this._listadoCarteraService.getListadoCarteraNegociacion(numeroSolicitud);
     // console.table( this.listadoCartera$)
   }
 

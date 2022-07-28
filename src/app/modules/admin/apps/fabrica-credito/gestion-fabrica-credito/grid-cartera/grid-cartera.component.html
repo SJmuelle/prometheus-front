@@ -1,28 +1,34 @@
 <div class="min-h-60" *ngIf="agenda_fabrica">
     <fuse-card class="flex items-center justify-center  p-6 filter-info">
         <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
-        <mat-icon  class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
+        <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
         <ng-container *ngIf="listadoCartera$ | async as items; else hola">
-        <div class="flex flex-col" *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
-    
-    <div class="text-2xl font-semibold leading-tight text-center">{{ agenda_fabrica.tipoCredito}} Resumen de obligaciones HDC </div>
-            <div class="text-1xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}</div>
-            <div class="text-1xl  text-secondary text-center" > {{items.data[0].email}}</div>
-            <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
-        </div>
+            <div class="flex flex-col"
+                *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
+
+                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}
+                </div>
+                <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
+                <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
+            </div>
         </ng-container>
     </fuse-card>
 
     <ng-template #hola>
         <div class="col-sm-12 col-lg-12">
+            <div class="flex flex-col">
+                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center"> no hay Detalle </div>
 
+            </div>
         </div>
     </ng-template>
 
 
     <div class="text-lg font-semibold leading-tight text-left mb-4">Obligaciones de mora</div>
-   <div class="flex justify-end mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
-        <button mat-raised-button color="accent" type="button" (click)="createCartera('D')" >
+    <div class="flex justify-end mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+        <button mat-raised-button color="accent" type="button" (click)="createCartera('D')">
             Nueva
         </button>
     </div>
@@ -40,10 +46,11 @@
         <tbody class="bg-white">
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
-                    <tr *ngIf=" item.estadoCuenta === 'DEUDA'" >
+                    <tr *ngIf=" item.estadoCuenta === 'DEUDA'">
                         <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
-                            <mat-form-field  class="p-0 w-full mt-0 marginInput">
-                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
@@ -91,8 +98,9 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.estadoCuenta!=='DEUDA'">
                         <td class="px-0 text-sm border text-left" *ngIf="agenda_fabrica.tipoCredito!='LI'">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput" >
-                                <mat-select [(ngModel)]="item.gestionCartera"  (ngModelChange)="cambioEstado($event,item)">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                                <mat-select [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Seleccionar</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
@@ -116,4 +124,12 @@
             </ng-container>
         </tbody>
     </table>
+
+    <div class="my-30">
+        <div class="flex justify-center mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+            <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
+                Pasar a negociacion
+            </button>
+        </div>
+    </div>
 </div>

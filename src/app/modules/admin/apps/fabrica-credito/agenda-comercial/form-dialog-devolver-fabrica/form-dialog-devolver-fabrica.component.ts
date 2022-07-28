@@ -45,6 +45,7 @@ export class FormDialogDevolverFabricaComponent implements OnInit {
     public onCerrar(): void {
         setTimeout(() => {
             this._dialog.close(true);
+            location.reload();
         }, 1000);
     }
 

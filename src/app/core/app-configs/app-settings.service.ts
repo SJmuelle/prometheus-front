@@ -173,7 +173,12 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
-            create: EndPoints.uri('/generic/agregar-cartera-en-mora')
+            create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
+            pasarAgenda:EndPoints.uri('/generic/cre-valida-gestion-cartera'),
+            //negociacion
+            gestionCartera:EndPoints.uri('/generic/cre-valida-gestion-cartera'),
+            obtenerObligacion:EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras-a-negociar'),
+
         }
     };
     /**
