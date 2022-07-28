@@ -25,7 +25,7 @@
                         matTooltip="Comentario">
                         <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
                     </button>
-                    <ng-container *ngIf="agenda_fabrica !== 'CM'">
+                    <ng-container>
                         <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
                             [ngClass]="animacionVer==true?'show':'hidden'"
                             matTooltip="{{dialog_a_mostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">

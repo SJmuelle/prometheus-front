@@ -492,21 +492,21 @@
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Salario</mat-label>
-                                <input matInput type="text" [formControlName]="'salarioBasico'"
+                                <input matInput type="text" [formControlName]="'salarioBasico'" (change)="validacion('S')"
                                     (keyup)="form.controls['salarioBasico'].setValue(utility.formatearNumero(form.value.salarioBasico)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Descuento en nómina</mat-label>
-                                <input matInput type="text" [formControlName]="'descuentoNomina'"
+                                <input matInput type="text" [formControlName]="'descuentoNomina'" (change)="validacion('D')"
                                     (keyup)="form.controls['descuentoNomina'].setValue(utility.formatearNumero(form.value.descuentoNomina)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Comisiones horas extras</mat-label>
-                                <input matInput type="text" [formControlName]="'comisionesHorasExtras'"
+                                <input matInput type="text" [formControlName]="'comisionesHorasExtras'" (change)="validacion('C')"
                                     (keyup)="form.controls['comisionesHorasExtras'].setValue(utility.formatearNumero(form.value.comisionesHorasExtras)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>

@@ -70,6 +70,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     public pagaduria$: Observable<any>;
     public entidadBancaria$: Observable<any>;
     public aplicaIngresos$: Observable<any>;
+    public fabricaDatos;
+    unidadNegocio: any;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -185,7 +187,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     maxHeight: '80%',
                     data: {
                         numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento,
-                        agenda: this.agenda_fabrica
+                        agenda: this.agenda_fabrica,
+                        unidadNegocio:this.unidadNegocio
                     },
                     disableClose: false,
                 });
@@ -305,68 +308,68 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
      */
     public onPostDatos(): void {
         // if (this.form.valid) {
-            const datos: FormularioCreditoInterface = this.form.getRawValue();
-            const { fechaNacimiento,fechaVinculacion,fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
-        
-            const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
-            const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
-            const fechaFinalizacionContratoFormato = moment(fechaFinalizacionContrato).format('YYYY-MM-DD');
-            // const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
-            const fechaExpedicionDocumentoFormato = moment(fechaExpedicionDocumento).format('YYYY-MM-DD')
-            const compraSemanal = Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
-            const ventasMensuales = Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
-            const scoreFormato = Number(this.form.value.score);
-            const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
-            const salarioBasicoformato = Number(this.utility.enviarNumero(this.form.value.salarioBasico));
-            const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
-            const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
-            const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
-            const activos = Number(this.utility.enviarNumero(this.form.value.activos));
-            const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
-            const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
-            const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
-            // descuentoNomina
-            delete data.ventasMensuales;
-            delete data.comprasSemanales;
-            delete data.activos;
-            delete data.comisionesHorasExtras;
-            delete data.descuentoNomina;
-            const datosFormularios: FormularioCreditoInterface = {
-                descuentoNomina:descuentoNominaFormato,
-                comisionesHorasExtras:comisionesHorasExtrasFormato,
-                fechaFinalizacionContrato:fechaFinalizacionContratoFormato,
-                fechaVinculacion:fechaVinculacionFormato,
-                valorSolicitado: valorSolicitadoFormato,
-                salarioBasico: salarioBasicoformato,
-                fechaNacimiento: fechaNacimientoFormato,
-                fechaExpedicionDocumento: fechaExpedicionDocumentoFormato,
-                comprasSemanales: compraSemanal,
-                ventasMensuales: ventasMensuales,
-                activos: activos,
-                antiguedadComprasSemanales: Number(antiguedadComprasSemanales),
-                score: Number(scoreFormato),
-                nivelEndeudamiento: Number(nivelEndeudamientoFormato),
-                cupoTotal: Number(cupoTotalFormato),
-                cupoReservado: Number(cupoReservadoFormato),
-                cupoDisponible: Number(cupoDisponbileFormato),
-                ...data
-            };
-            Swal.fire({
-                title: 'Guardar información',
-                text: '¿Está seguro de guardar información?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#a3a0a0',
-                confirmButtonText: 'Guardar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.postFormularioFabrica(datosFormularios);
-                    // console.log(this.form.getRawValue());
-                    // console.log(datosFormularios);
-                }
-            });
+        const datos: FormularioCreditoInterface = this.form.getRawValue();
+        const { fechaNacimiento, fechaVinculacion, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
+
+        const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
+        const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
+        const fechaFinalizacionContratoFormato = moment(fechaFinalizacionContrato).format('YYYY-MM-DD');
+        // const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
+        const fechaExpedicionDocumentoFormato = moment(fechaExpedicionDocumento).format('YYYY-MM-DD')
+        const compraSemanal = Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
+        const ventasMensuales = Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
+        const scoreFormato = Number(this.form.value.score);
+        const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
+        const salarioBasicoformato = Number(this.utility.enviarNumero(this.form.value.salarioBasico));
+        const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
+        const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
+        const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
+        const activos = Number(this.utility.enviarNumero(this.form.value.activos));
+        const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
+        const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
+        const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
+        // descuentoNomina
+        delete data.ventasMensuales;
+        delete data.comprasSemanales;
+        delete data.activos;
+        delete data.comisionesHorasExtras;
+        delete data.descuentoNomina;
+        const datosFormularios: FormularioCreditoInterface = {
+            descuentoNomina: descuentoNominaFormato,
+            comisionesHorasExtras: comisionesHorasExtrasFormato,
+            fechaFinalizacionContrato: fechaFinalizacionContratoFormato,
+            fechaVinculacion: fechaVinculacionFormato,
+            valorSolicitado: valorSolicitadoFormato,
+            salarioBasico: salarioBasicoformato,
+            fechaNacimiento: fechaNacimientoFormato,
+            fechaExpedicionDocumento: fechaExpedicionDocumentoFormato,
+            comprasSemanales: compraSemanal,
+            ventasMensuales: ventasMensuales,
+            activos: activos,
+            antiguedadComprasSemanales: Number(antiguedadComprasSemanales),
+            score: Number(scoreFormato),
+            nivelEndeudamiento: Number(nivelEndeudamientoFormato),
+            cupoTotal: Number(cupoTotalFormato),
+            cupoReservado: Number(cupoReservadoFormato),
+            cupoDisponible: Number(cupoDisponbileFormato),
+            ...data
+        };
+        Swal.fire({
+            title: 'Guardar información',
+            text: '¿Está seguro de guardar información?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.postFormularioFabrica(datosFormularios);
+                // console.log(this.form.getRawValue());
+                // console.log(datosFormularios);
+            }
+        });
         // } else {
         //     this.form.markAllAsTouched();
         // }
@@ -387,6 +390,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 // console.log(data);
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
+                this.unidadNegocio = data.unidadNegocio;
+                this.fabricaDatos = data;
                 this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
                 this.createValidacion()
                 if (data.tipoDocumento === 'NIT') {
@@ -866,7 +871,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             entidadBancaria: [''],
             fechaVinculacion: [''],
             fechaFinalizacionContrato: [''],
-            codigoDepartamentoExpedicion:[''],
+            codigoDepartamentoExpedicion: [''],
         });
     }
 
@@ -1060,6 +1065,58 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
      */
     private redireccionar(data: any) {
         this.router.navigate(['/credit-factory/' + data]);
+    }
+
+
+    public validacion(tipo: string) {
+        let mensaje = "¿Estas seguro de editar el campo de "
+        switch (tipo) {
+            case 'S':
+                mensaje += 'salario';
+                break;
+            case 'D':
+                mensaje += 'descuento de nomina';
+                break;
+            case 'C':
+                mensaje += 'comisiones por hora extras';
+                break;
+            default:
+                break;
+        }
+        mensaje += "?. Este campo actualiza la capacidad de pago del cliente.";
+
+        Swal.fire({
+            title: 'Guardar información',
+            text: mensaje,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+            } else {
+
+
+                switch (tipo) {
+                    case 'S':
+                        this.form.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
+                        break;
+                    case 'D':
+                        this.form.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina)));
+                        break;
+                    case 'C':
+                        this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras)));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+
     }
 
 

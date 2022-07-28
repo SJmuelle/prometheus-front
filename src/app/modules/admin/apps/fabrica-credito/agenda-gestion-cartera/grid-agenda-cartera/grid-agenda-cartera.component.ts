@@ -16,7 +16,7 @@ import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form
   templateUrl: './grid-agenda-cartera.component.html',
   styleUrls: ['./grid-agenda-cartera.component.scss']
 })
-export class GridAgendaCarteraComponent  implements OnInit, OnDestroy {
+export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
@@ -156,7 +156,7 @@ export class GridAgendaCarteraComponent  implements OnInit, OnDestroy {
    * @returns 
    */
   cambiarFecha(date) {
-    
+
     if (date) {
       moment.locale('es');
       return moment(date).format('MMMM D YYYY')
@@ -169,7 +169,7 @@ export class GridAgendaCarteraComponent  implements OnInit, OnDestroy {
    * @returns 
    */
   cambiarHora(date) {
-    if(date){
+    if (date) {
       moment.locale('es');
       return moment(date).format('H:MM a')
     }

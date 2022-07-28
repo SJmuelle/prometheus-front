@@ -164,8 +164,10 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                     minWidth: '60%',
                     maxHeight: '80%',
                     data: {
-                        numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento,
-                        agenda: this.agenda_fabrica
+                        numeroSolicitud: this.numeroSolicitud, 
+                        tipoDocumento: this.tipoDocumento,
+                        agenda: this.agenda_fabrica,
+                        unidadNegocio:this.unidadNegocio
                     },
                     disableClose: false,
                 });

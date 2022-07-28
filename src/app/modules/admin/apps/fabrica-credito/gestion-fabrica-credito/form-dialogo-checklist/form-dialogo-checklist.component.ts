@@ -38,7 +38,7 @@ export class FormDialogoChecklistComponent implements OnInit {
     this.total = 0;
     let data= {
       "numeroSolicitud": Number(this.data.numeroSolicitud),
-      "unidadNegocio":32,
+      "unidadNegocio":this.data.unidadNegocio,
       "idAgenda":this.data.agenda,
       "tipoIdentificacion": this.data.tipoDocumento
     }
