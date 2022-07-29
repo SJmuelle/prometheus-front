@@ -2,23 +2,22 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { UtilityService } from 'app/resources/services/utility.service';
 import { DirectionsBasicComponent } from 'app/shared/modal/directions-basic/directions-basic.component';
-import moment from 'moment';
-import { Subject, Observable, Subscription } from 'rxjs';
+import { Subscription, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'ULTRACEM-NATURAL-TITULAR',
+  selector: 'LIBRANZA-NATURAL-TITULAR', 
   templateUrl: './titular.component.html',
   styleUrls: ['./titular.component.scss']
 })
-export class UltracemTitularComponent implements OnInit {
+export class LibranzaTitularComponent implements OnInit {
   @Input() currentStep: number;
 
   // currentStep = 1;

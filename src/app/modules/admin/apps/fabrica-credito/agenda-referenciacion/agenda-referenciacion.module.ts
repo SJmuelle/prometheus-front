@@ -35,8 +35,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
-import { RefTitularPnComponent } from './tab-agenda-referenciacion/ref-titular-pn/ref-titular-pn.component';
-import { TitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
+import { UltracemTitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
+import { LibranzaTitularComponent } from './tab-agenda-referenciacion/libranza/persona-natural/titular/titular.component';
 import { QuillModule } from 'ngx-quill';
 import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/comercial/comercial.component';
 import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
@@ -52,8 +52,8 @@ import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultrace
     FormDialogListErrorDialogComponent,
     GridTipoReferenciacionComponent,
     FormAgendaReferenciacionComponent,
-    RefTitularPnComponent,
-    TitularComponent,
+    UltracemTitularComponent,
+    LibranzaTitularComponent,
     ComercialComponent,
     PersonalComponent,
     RepresentanteLegalComponent

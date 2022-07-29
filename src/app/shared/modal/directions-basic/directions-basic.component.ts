@@ -40,7 +40,7 @@ export class DirectionsBasicComponent implements OnInit {
           },
       }).then((result) => {});
       this._Service
-          .getQuery(`/nomenclarturas`, true)
+          .getQuery(`nomenclarturas`, true)
           .subscribe((response: any) => {
               Swal.close();
               if (response) {

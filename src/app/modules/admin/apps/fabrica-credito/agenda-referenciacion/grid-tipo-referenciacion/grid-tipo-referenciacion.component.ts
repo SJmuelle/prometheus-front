@@ -33,6 +33,7 @@ export class GridTipoReferenciacionComponent implements OnInit {
   public minimizarComentarios: boolean = false;
   public minimizarDevoluciones: boolean = false;
   listado: any;
+  fabricaDatos: any;
 
   constructor(
     private agendaCompletacionService: AgendaCompletacionService,
@@ -93,6 +94,7 @@ export class GridTipoReferenciacionComponent implements OnInit {
         };
         this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
         this.estado = data.descripcionEstado;
+        this.fabricaDatos = data;
       });
   }
 
