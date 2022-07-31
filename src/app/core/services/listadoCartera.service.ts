@@ -51,6 +51,13 @@ export class ListadoCarteraService {
     return this._http.post(this._appSettings.listadoCartera.url.create, data);
   }
 
+  /**
+ * @description:
+ */
+  public gestionCartera(data: any): Observable<any> {
+    return this._http.post(this._appSettings.listadoCartera.url.gestionCartera, data);
+  }
+
 
 
 }

@@ -174,11 +174,10 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
-            pasarAgenda:EndPoints.uri('/generic/cre-valida-gestion-cartera'),
+            pasarAgenda: EndPoints.uri('/generic/cre-valida-gestion-cartera'),
             //negociacion
-            gestionCartera:EndPoints.uri('/generic/cre-valida-gestion-cartera'),
-            obtenerObligacion:EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras-a-negociar'),
-
+            gestionCartera: EndPoints.uri('/generic/agregar-negociacion-cartera'),
+            obtenerObligacion: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras-a-negociar'),
         }
     };
     /**
@@ -218,6 +217,14 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/DE'),
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/DE')
+        }
+    };
+    /**
+    * @description: End-point agenda decision
+    */
+    public oferta = {
+        url: {
+            base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza'),
         }
     };
 

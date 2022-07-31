@@ -6,6 +6,7 @@ import { ListadoCarteraService } from 'app/core/services/listadoCartera.service'
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
+import { FormDialogNegociacionComponent } from '../form-dialog-negociacion/form-dialog-negociacion.component';
 
 @Component({
   selector: 'app-grid-cartera-negociacion',
@@ -113,10 +114,29 @@ export class GridCarteraNegociacionComponent implements OnInit {
           setTimeout(() => {
             location.reload();
           }, 1000);
-        }else{
+        } else {
           Swal.fire('Error', data.verificacion, 'error');
         }
       })
+  }
+
+  public cambioEstadoNegoiciacion(event, item) {
+    if (event !== '') {
+      const dialogRef = this._dialog.open(FormDialogNegociacionComponent, {
+        minWidth: '30%',
+        minHeight: '30%',
+        data: {
+          numeroSolicitud: this.numeroSolicitud,
+          identificacion: this.identificacion,
+          evento: event,
+          item: item
+        }
+      });
+      dialogRef.afterClosed().toPromise().then((res) => {
+
+      });
+    }
+
   }
 
 

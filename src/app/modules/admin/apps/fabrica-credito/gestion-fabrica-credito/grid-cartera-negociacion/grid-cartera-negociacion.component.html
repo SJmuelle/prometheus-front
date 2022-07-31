@@ -6,7 +6,7 @@
           <div class="flex flex-col"
               *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
 
-              <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+              <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
               <div class="text-1xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}
               </div>
               <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
@@ -37,6 +37,7 @@
               <th class="px-4 py-3 text-center">Saldo</th>
               <th class="px-4 py-3 text-center">Altura de mora</th>
               <th class="px-4 py-3 text-center">Estado</th>
+              <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
           </tr>
       </thead>
       <tbody class="bg-white">
@@ -66,6 +67,16 @@
                               {{item.estadoCuenta}}
                           </div>
                       </td>
+                      <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+                        <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-select class="m-0 sinB" [(ngModel)]="item.resultadoNegociacion" [disabled]="item.gestionCartera==''"
+                                (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
+                                <mat-option value="">Sin negociación</mat-option>
+                                <mat-option value="EXITOSA">Exitosa</mat-option>
+                                <mat-option value="NO EXITOSA">No exitosa</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
                   </tr>
               </ng-container>
           </ng-container>

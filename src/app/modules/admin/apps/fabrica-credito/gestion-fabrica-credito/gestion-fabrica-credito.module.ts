@@ -48,6 +48,7 @@ import { FuseCardModule } from '@fuse/components/card';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-cartera.component';
 import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid-cartera-negociacion.component';
+import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid
         GridOfertaLibranzaComponent,
         GridCarteraComponent,
         FormDialogCarteraComponent,
-        GridCarteraNegociacionComponent
+        GridCarteraNegociacionComponent,
+        FormDialogNegociacionComponent
     ],
     imports: [
         CommonModule,
