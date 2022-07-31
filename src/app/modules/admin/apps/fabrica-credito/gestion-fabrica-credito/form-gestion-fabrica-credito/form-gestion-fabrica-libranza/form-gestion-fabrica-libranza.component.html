@@ -619,11 +619,11 @@
                     </mat-tab>
                 </ng-container> -->
                 <mat-tab *ngIf="agenda_fabrica == 'CM'">
-                    <ng-template matTabLabel>Listado de carteras</ng-template> 
+                    <ng-template matTabLabel>Listado de carteras {{agenda_fabrica}}</ng-template> 
                     <app-grid-cartera></app-grid-cartera>
                 </mat-tab>
                 <mat-tab *ngIf="agenda_fabrica == 'GC'">
-                    <ng-template matTabLabel>Listado de negociaciones</ng-template> 
+                    <ng-template matTabLabel>Listado de negociaciones {{agenda_fabrica}}</ng-template> 
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>
                 <mat-tab>

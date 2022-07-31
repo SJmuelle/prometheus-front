@@ -1,3 +1,59 @@
-<div class="min-h-60">
-  
+<div class="min-h-60 mb-30">
+    <ng-container class="py-2.5" *ngIf="(listadoOferta$ | async) as listadoOferta;">
+        <ng-container *ngFor="let item of listadoOferta.data; let i = index;">
+            <div class="flex justify-center mt-10 sm:mt-20">
+                <fuse-card class="flex flex-col lg:flex-row max-w-sm lg:max-w-240">
+                    <div class="p-6 sm:p-8 lg:p-10">
+                        <div class="text-3xl font-bold">Recogido cartera {{item.tipoOferta}}</div>
+                        <div class="flex items-center mt-10">
+                            <div class="font-medium text-secondary">Detalles de la oferta</div>
+                            <div class="flex-auto ml-2 border-b-2"></div>
+                        </div>
+                        <!-- Features -->
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 mt-6">
+                            <div class="flex items-center">
+                                <mat-icon class="icon-size-5 text-primary" [svgIcon]="'heroicons_solid:check-circle'">
+                                </mat-icon>
+                                <div class="ml-2">Monto de ${{item.monto|number}}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon class="icon-size-5 text-primary" [svgIcon]="'heroicons_solid:check-circle'">
+                                </mat-icon>
+                                <div class="ml-2">Plazo {{item.plazo}} meses</div>
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon class="icon-size-5 text-primary" [svgIcon]="'heroicons_solid:check-circle'">
+                                </mat-icon>
+                                <div class="ml-2">Cartera a pagar ${{item.carteraPagar|number}}</div>
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon class="icon-size-5 text-primary" [svgIcon]="'heroicons_solid:check-circle'">
+                                </mat-icon>
+                                <div class="ml-2">
+                                    Garantía (FGA) ${{item.garantia|number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Price -->
+                    <div
+                        class="flex flex-col items-center p-8 lg:px-10 lg:py-12 lg:min-w-80 bg-gray-100 dark:bg-black dark:bg-opacity-10">
+                        <div class="flex items-center whitespace-nowrap">
+                            <div class="text-4xl font-extrabold tracking-tight">${{item.valorDesembolsar | number}}</div>
+                            <div class="ml-2 text-2xl font-semibold text-secondary">Monto</div>
+                        </div>
+                        <div class="flex items-center whitespace-nowrap">
+                            <div class="text-xl font-extrabold tracking-tight">${{item.cuotas | number}}</div>
+                            <div class="ml-2 text-md font-semibold text-secondary">Cuota</div>
+                        </div>
+                        
+                        <button class="w-full mt-8 lg:mt-auto" mat-flat-button [color]="'primary'">
+                            Seleccionada
+                        </button>
+                    </div>
+                </fuse-card>
+            </div>
+        </ng-container>
+    </ng-container>
+
 </div>
