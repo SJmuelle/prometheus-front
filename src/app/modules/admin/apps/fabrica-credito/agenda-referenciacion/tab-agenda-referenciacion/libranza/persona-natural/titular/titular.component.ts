@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'LIBRANZA-NATURAL-TITULAR', 
+  selector: 'LIBRANZA-NATURAL-TITULAR',
   templateUrl: './titular.component.html',
   styleUrls: ['./titular.component.scss']
 })
@@ -40,6 +40,7 @@ export class LibranzaTitularComponent implements OnInit {
   public tipoDocumentos$: Observable<any>;
   public generos$: Observable<any>;
   public tipoVivienda$: Observable<any>;
+  public destinoCredito$: Observable<any>;
   public nivelEstudio$: Observable<any>;
   public viveNegocio$: Observable<any>;
   public declarante$: Observable<any>;
@@ -82,6 +83,7 @@ export class LibranzaTitularComponent implements OnInit {
     this.getViveNegocio();
     this.getDeclarante();
     this.getCamaraComercio();
+    this.getDestinoCredito();
 
     // this.listenFormulario();
   }
@@ -279,7 +281,9 @@ export class LibranzaTitularComponent implements OnInit {
       tieneEmpleadoValida_bool: Boolean,
       nombreNegocioValida_bool: Boolean,
       referenciaValidada: [""],
-      referenciaValidada_bool: Boolean
+      referenciaValidada_bool: Boolean,
+      destinoCredito : [''],
+      otroDestinoCredito : ['']
     });
   }
 
@@ -319,6 +323,12 @@ export class LibranzaTitularComponent implements OnInit {
         }
         if (data.codigoCiudadNegocio) {
           this.getBarriosNegocio(data.codigoCiudadNegocio);
+        }
+        if (data.destinoCredito) {
+            this.form.controls['destinoCredito'].setValue(data.destinoCredito);
+        }
+        if (data.otroDestinoCredito) {
+            this.form.controls['otroDestinoCredito'].setValue(data.otroDestinoCredito);
         }
         if (data.antiguedadNegocio) {
           this.form.controls['antiguedadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
@@ -513,6 +523,12 @@ export class LibranzaTitularComponent implements OnInit {
   private getCamaraComercio(): void {
     this.camaraComercio$ = this.genericaServices.getCamaraComercio();
   }
+      /**
+* @description: Obtiene los tipos de estados civiles
+*/
+private getDestinoCredito(): void {
+    this.destinoCredito$ = this.genericaServices.getDestinoCredito();
+}
 
   // onPostDatos() {
   //   Swal.fire({

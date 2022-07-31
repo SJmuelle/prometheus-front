@@ -57,6 +57,19 @@
                               </div>
                           </div>
                       </div>
+                      <div class="flex justify-between items-center">
+                        <p>¿El correo electrónico del formulario es correcto?</p>
+                        <div class="toggle-button-cover">
+                            <div class="button-cover">
+                                <div class="button r" id="button-1">
+                                    <input type="checkbox" class="checkbox"
+                                        formControlName="numeroFormularioValida_bool">
+                                    <div class="knobs"></div>
+                                    <div class="layer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                       <hr>
                       <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.numeroFormularioValida_bool">
                           <mat-form-field class="w-full fuse-mat-dense">
@@ -105,7 +118,20 @@
                               [modules]="quillModules" [formControlName]="'telefonoContactoObservacion'">
                           </quill-editor>
                       </div>
-
+                      <div class="grid grid-cols-2 gap-2" *ngIf="!form.value.numeroFormularioValida_bool">
+                        <mat-form-field class="w-full fuse-mat-dense mt-3">
+                            <mat-label>Ingresa el correo electrónico de contacto </mat-label>
+                            <input matInput type="text" [formControlName]="'telefonoContacto'">
+                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                            </mat-icon>
+                        </mat-form-field>
+                        <mat-form-field class="w-full fuse-mat-dense mt-3">
+                            <mat-label>Correo electrónico corregido: </mat-label>
+                            <input matInput type="text" [formControlName]="'telefonoContactoCorregido'">
+                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                            </mat-icon>
+                        </mat-form-field>
+                    </div>
                   </div>
 
               </mat-tab>
@@ -211,7 +237,7 @@
                                       </div>
                                   </div>
                               </div>
-                              <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                              <!-- <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
                                   Información del negocio
                               </h2>
                               <div class="flex justify-between items-center">
@@ -442,8 +468,8 @@
                                       <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                       </mat-icon>
                                   </mat-form-field>
-                              </div>
-                              <div class="flex justify-between items-center">
+                              </div> -->
+                              <!-- <div class="flex justify-between items-center">
                                   <p>¿Destina dinero mensual para ahorro?: </p>
                                   <div class="toggle-button-cover">
                                       <div class="button-cover">
@@ -464,7 +490,7 @@
                                       <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                       </mat-icon>
                                   </mat-form-field>
-                              </div>
+                              </div>-->
 
 
                           </div>
@@ -481,7 +507,7 @@
                       </h2>
 
                       <div class="">
-                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                          <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                               <mat-label>¿Cuánto compra en cemento?</mat-label>
                               <input matInput type="text" placeholder="" [formControlName]="'comprasCemento'"
                                   (keyup)="form.controls['comprasCemento'].setValue(utility.formatearNumero(form.value.comprasCemento)); ">
@@ -494,28 +520,35 @@
                                   (keyup)="form.controls['pagoServicioPublico'].setValue(utility.formatearNumero(form.value.pagoServicioPublico)); ">
                               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                               </mat-icon>
-                          </mat-form-field>
-                          <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
+                          </mat-form-field> -->
+                          <ng-container *ngIf="destinoCredito$ | async as destinoCredito">
                               <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                  <mat-label>¿El tipo de local es?</mat-label>
-                                  <mat-select [value]="'seleccione'" [formControlName]="'tipoLocal'">
+                                  <mat-label>El destino del crédito es: </mat-label>
+                                  <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'">
                                       <mat-option disabled [value]="'seleccione'">Seleccione
                                       </mat-option>
-                                      <mat-option *ngFor="let item of tipoViviendas.data" [value]="item.codigoOpcion">
+                                      <mat-option *ngFor="let item of destinoCredito.data" [value]="item.codigoOpcion">
                                           {{item.descripcionOpcion}}
                                       </mat-option>
                                   </mat-select>
                                   <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                               </mat-form-field>
                           </ng-container>
-                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
+                          *ngIf="form.controls['destinoCredito'].value=='OT'">
+                          <mat-label>¿Otro? ¿Cual?</mat-label>
+                          <input matInput type="text" [formControlName]="'otroDestinoCredito'" [required]="true">
+                          <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                          </mat-form-field>
+                          <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                               <mat-label>¿Cuánto tiene de inventario?</mat-label>
-                              <input matInput type="text" placeholder="" [formControlName]="'inventarioActual'"
+                              <input matInput type="text" placeholder="" [formControl
+                              Name]="'inventarioActual'"
                                   (keyup)="form.controls['inventarioActual'].setValue(utility.formatearNumero(form.value.inventarioActual)); ">
                               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                               </mat-icon>
-                          </mat-form-field>
-                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                          </mat-form-field> -->
+                          <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                               <mat-label>¿Cuánto tiene en efectivo en este momento?</mat-label>
                               <input matInput type="text" placeholder="" [formControlName]="'dineroEfectivoActual'"
                                   (keyup)="form.controls['dineroEfectivoActual'].setValue(utility.formatearNumero(form.value.dineroEfectivoActual)); ">
@@ -536,11 +569,11 @@
                                   (keyup)="form.controls['valorTotalCuotasCreditos'].setValue(utility.formatearNumero(form.value.valorTotalCuotasCreditos)); ">
                               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                               </mat-icon>
-                          </mat-form-field>
+                          </mat-form-field> -->
 
-                          <div class="mt-1 px-3">
-                              <label class="labelTxt">Validación en centrales de riesgos</label>
-                              <quill-editor class="mb-2" placeholder=" Validación en centrales de riesgos..."
+                          <div class="mt-3 px-3">
+                              <label class="labelTxt">¿Cuál es el motivo de las obligaciones en mora?</label>
+                              <quill-editor class="mb-2" placeholder="Motivo de las obligaciones en mora..."
                                   name="descripcion" [modules]="quillModules"
                                   [formControlName]="'validacionCentrales'"></quill-editor>
                           </div>
@@ -580,7 +613,7 @@
                           <small [ngClass]="(editor.editorElem.outerText.length<10)?'text-red-600':'text-green-600'" class="text-sm"
                            *ngIf="editor.editorElem.outerText.length>1">
                            Caracteres: {{ editor.editorElem.outerText.length }}
-                          
+
                           </small>
                       </div>
 
