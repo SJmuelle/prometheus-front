@@ -188,7 +188,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     data: {
                         numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento,
                         agenda: this.agenda_fabrica,
-                        unidadNegocio:this.unidadNegocio
+                        unidadNegocio: this.unidadNegocio
                     },
                     disableClose: false,
                 });
@@ -306,10 +306,51 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     /**
      * @description:
      */
+    public validarCampos(valor1, valor2) {
+        if(valor1==valor2){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * @description:
+     */
     public onPostDatos(): void {
         // if (this.form.valid) {
+
+        // alert(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
+        let salarioBasicoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico));
+        let descuentoNominaAnterior = this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina));
+        if (
+            
+                this.validarCampos(this.form.value.salarioBasico,salarioBasicoAnterior)
+            
+            ||
+            
+                this.validarCampos(this.form.value.descuentoNomina,descuentoNominaAnterior)
+            
+            // ||
+            // (
+            //     this.form.value.comisionesHorasExtras == this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras))
+            // )
+            // ||
+            // (
+            //     this.form.value.aplicaIngresos == this.utility.formatearNumero(String(this.fabricaDatos.aplicaIngresos))
+            // )
+            // ||
+            // (
+            //     this.form.value.otrosIngresos == this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos))
+            // )
+        ) {
+            this.form.controls['modificado'].setValue('N')
+        } else {
+            this.form.controls['modificado'].setValue('S')
+
+        }
+        //
         const datos: FormularioCreditoInterface = this.form.getRawValue();
-        const { fechaNacimiento, fechaVinculacion, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
+        const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
 
         const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
         const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
@@ -328,13 +369,19 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
         const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
         const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
+        const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
+        const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
+
         // descuentoNomina
         delete data.ventasMensuales;
         delete data.comprasSemanales;
         delete data.activos;
         delete data.comisionesHorasExtras;
         delete data.descuentoNomina;
+        // delete data.otrosIngresos;
         const datosFormularios: FormularioCreditoInterface = {
+            otrosIngresos: otrosIngresosFormato,
+            ingresos: ingresosFormato,
             descuentoNomina: descuentoNominaFormato,
             comisionesHorasExtras: comisionesHorasExtrasFormato,
             fechaFinalizacionContrato: fechaFinalizacionContratoFormato,
@@ -419,6 +466,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 }
                 if (data.comprasSemanales) {
                     this.form.controls['comprasSemanales'].setValue(this.utility.formatearNumero(String(this.form.value.comprasSemanales)));
+                }
+                if (data.otrosIngresos) {
+                    this.form.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(this.form.value.otrosIngresos)));
+                }
+                if (data.ingresos) {
+                    this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(this.form.value.ingresos)));
                 }
                 if (data.ventasMensuales) {
                     this.form.controls['ventasMensuales'].setValue(this.utility.formatearNumero(String(this.form.value.ventasMensuales)));
@@ -860,7 +913,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             numeroCuentaBancaria: [''],
             descuentoNomina: [""],
             comisionesHorasExtras: [""],
-
+            modificado: [''],
             aplicaIngresos: [''],
             descripcionOtrosIngresos: [''],
             otrosIngresos: [''],
@@ -1080,6 +1133,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             case 'C':
                 mensaje += 'comisiones por hora extras';
                 break;
+            case 'AI':
+                mensaje += 'Ingresos adicionalea';
+                break;
+            case 'IA':
+                mensaje += 'el valor de los ingresos adicionales';
+                break;
             default:
                 break;
         }
@@ -1096,6 +1155,16 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
+                let sum =
+                    Number(this.utility.enviarNumero(this.form.value.salarioBasico))
+                    +
+                    // Number(this.utility.enviarNumero(this.form.value.descuentoNomina))
+                    // +
+                    Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras))
+                    +
+                    Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
+                    ;
+                this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
 
             } else {
 
@@ -1110,6 +1179,13 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     case 'C':
                         this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras)));
                         break;
+                    case 'AI':
+                        this.form.controls['aplicaIngresos'].setValue(this.fabricaDatos.aplicaIngresos);
+                        break;
+                    case 'IA':
+                        this.form.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos)));
+                        break;
+
                     default:
                         break;
                 }

@@ -113,7 +113,7 @@
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Monto</mat-label>
-                        <input matInput type="text" [formControlName]="'valorSolicitado'" 
+                        <input matInput type="text" [formControlName]="'valorSolicitado'"
                             (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); ">
                         <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -465,7 +465,6 @@
                                     </mat-icon>
                                 </mat-form-field>
                             </ng-container>
-
                             <ng-container *ngIf="form.controls['pagaduria'].value == '999999999'">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>¿Otra? ¿Cual?</mat-label>
@@ -475,42 +474,108 @@
                                 </mat-form-field>
                             </ng-container>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>Fecha de vinculación </mat-label>
-                                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
-                                    [readonly]="true">
-                                <mat-datepicker-toggle matSuffix [for]="fechaNacimiento" [disabled]="true">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #fechaNacimiento readonly></mat-datepicker>
-                            </mat-form-field>
-                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cargo</mat-label>
                                 <input matInput type="text" [formControlName]="'cargo'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <ng-container *ngIf="tipoContrato$ | async as tipoContrato">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de contrato</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of tipoContrato.data" [value]="item.codigoOpcion">
+                                            {{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Fecha de vinculación </mat-label>
+                                <input matInput [matDatepicker]="fechaVinculacion" [formControlName]="'fechaVinculacion'"
+                                    [readonly]="true">
+                                <mat-datepicker-toggle matSuffix [for]="fechaVinculacion" >
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #fechaVinculacion readonly></mat-datepicker>
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls['tipoContrato'].value == 'F'">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Fecha desvinculación </mat-label>
+                                    <input matInput [matDatepicker]="fechaFinalizacionContrato" [formControlName]="'fechaFinalizacionContrato'"
+                                        [readonly]="true">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaFinalizacionContrato">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaFinalizacionContrato readonly></mat-datepicker>
+                                </mat-form-field>
+                            </ng-container>
+
+                          
+                        </div>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Salario</mat-label>
-                                <input matInput type="text" [formControlName]="'salarioBasico'" (change)="validacion('S')"
+                                <input matInput type="text" [formControlName]="'salarioBasico'"
+                                    (change)="validacion('S')"
                                     (keyup)="form.controls['salarioBasico'].setValue(utility.formatearNumero(form.value.salarioBasico)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Descuento en nómina</mat-label>
-                                <input matInput type="text" [formControlName]="'descuentoNomina'" (change)="validacion('D')"
+                                <input matInput type="text" [formControlName]="'descuentoNomina'"
+                                    (change)="validacion('D')"
                                     (keyup)="form.controls['descuentoNomina'].setValue(utility.formatearNumero(form.value.descuentoNomina)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Comisiones horas extras</mat-label>
-                                <input matInput type="text" [formControlName]="'comisionesHorasExtras'" (change)="validacion('C')"
+                                <input matInput type="text" [formControlName]="'comisionesHorasExtras'"
+                                    (change)="validacion('C')"
                                     (keyup)="form.controls['comisionesHorasExtras'].setValue(utility.formatearNumero(form.value.comisionesHorasExtras)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
+                        </div>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Tienen ingresos adicionales?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'aplicaIngresos'" (change)="validacion('AI')">
+                                    <mat-option disabled [value]="''">Seleccione</mat-option>
+                                    <mat-option [value]="'S'">Si</mat-option>
+                                    <mat-option [value]="'N'">No</mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'" >
+                                </mat-icon>
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls['aplicaIngresos'].value != 'N'">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Descripción de otros ingresos </mat-label>
+                                    <input matInput type="text" [formControlName]="'descripcionOtrosIngresos'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Ingresos adicionales</mat-label>
+                                    <input matInput type="text" [formControlName]="'otrosIngresos'" (change)="validacion('IA')"
+                                        (keyup)="form.controls['otrosIngresos'].setValue(utility.formatearNumero(form.value.otrosIngresos)); ">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Total de ingresos</mat-label>
+                                    <input matInput type="text" [formControlName]="'ingresos'"
+                                        (keyup)="form.controls['ingresos'].setValue(utility.formatearNumero(form.value.ingresos)); ">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'" [readonly]="true">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
                         </div>
                         <!-- <div class="-mx-3 md:flex mt-3 mb-2">
                           <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -619,15 +684,15 @@
                     </mat-tab>
                 </ng-container> -->
                 <mat-tab *ngIf="agenda_fabrica == 'CM'">
-                    <ng-template matTabLabel>Listado de carteras {{agenda_fabrica}}</ng-template> 
+                    <ng-template matTabLabel>Listado de carteras {{agenda_fabrica}}</ng-template>
                     <app-grid-cartera></app-grid-cartera>
                 </mat-tab>
                 <mat-tab *ngIf="agenda_fabrica == 'GC'">
-                    <ng-template matTabLabel>Listado de negociaciones {{agenda_fabrica}}</ng-template> 
+                    <ng-template matTabLabel>Listado de negociaciones {{agenda_fabrica}}</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>
                 <mat-tab>
-                    <ng-template matTabLabel>Ofertas</ng-template> 
+                    <ng-template matTabLabel>Ofertas</ng-template>
                     <app-grid-oferta-libranza></app-grid-oferta-libranza>
                 </mat-tab>
             </mat-tab-group>

@@ -72,7 +72,9 @@ export interface FormularioCreditoInterface {
     valorSolicitado?:               number;
     fechaVinculacion?:              string;
     fechaFinalizacionContrato?:     string;
-
+    otrosIngresos?:                 number;
+    ingresos?:                      number;
+    nodificado?:                    string;
 }
 
 export interface FormularioDatosTitularInterface {
