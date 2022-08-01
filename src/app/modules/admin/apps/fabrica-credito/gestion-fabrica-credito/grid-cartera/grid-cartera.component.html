@@ -46,7 +46,7 @@
         <tbody class="bg-white">
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
-                    <tr *ngIf=" item.estadoCuenta === 'DEUDA'">
+                    <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
@@ -61,13 +61,13 @@
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
-                        <td class="px-2 text-sm border w-0">
-                            <div class="py-0.5 px-3 rounded-full text-sm font-semibold text-white " [ngClass]="
-                                    item.estadoCuenta === 'DEUDA'
-                                    ? 'bg-pink-300'
+                        <td class="text-sm border w-0">
+                            <div class="py-0.5 px-3 text-center rounded-full text-sm font-semibold text-white " [ngClass]="
+                                item.alDia === 'f'
+                                    ? 'bg-red-600'
                                     : 'bg-green-300'
                                     ">
-                                {{item.estadoCuenta}}
+                                EN MORA
                             </div>
                         </td>
                     </tr>
@@ -96,7 +96,7 @@
         <tbody class="bg-white">
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
-                    <tr *ngIf=" item.estadoCuenta!=='DEUDA'">
+                    <tr *ngIf=" item.alDia=='t'">
                         <td class="px-0 text-sm border text-left" *ngIf="agenda_fabrica.tipoCredito!='LI'">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select [(ngModel)]="item.gestionCartera"
@@ -107,16 +107,16 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td class="px-2 text-sm border text-center">{{item.nombreEntidad}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.entidad}}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                        <td class="px-2 text-sm border w-0 text-center">
-                            <div class="py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 " [ngClass]="
-                                    item.estadoCuenta === 'DEUDA'
-                                    ? 'bg-pink-300'
-                                    : 'bg-green-300'
+                        <td class="text-sm border w-0 text-center">
+                            <div class="py-0.5 px-3 text-center rounded-full text-sm font-semibold text-blue-800 " [ngClass]="
+                                    item.alDia === 't'
+                                    ? 'bg-green-300'
+                                    : 'bg-red-600'
                                     ">
-                                {{item.estadoCuenta}}
+                                AL DIA
                             </div>
                         </td>
                     </tr>
@@ -128,7 +128,7 @@
     <div class="my-30">
         <div class="flex justify-center mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
             <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
-                Pasar a negociacion
+                Enviar a gestionar carteras
             </button>
         </div>
     </div>
