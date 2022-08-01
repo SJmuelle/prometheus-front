@@ -224,7 +224,7 @@ export class AppSettingsService {
     */
     public oferta = {
         url: {
-            base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza'),
+            base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza-seleccionada'),
         }
     };
 

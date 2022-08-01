@@ -307,9 +307,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
      * @description:
      */
     public validarCampos(valor1, valor2) {
-        if(valor1==valor2){
+        if (valor1 == valor2) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -322,33 +322,21 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         // alert(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
         let salarioBasicoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico));
         let descuentoNominaAnterior = this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina));
+        let comisionesHorasExtrasAnterior = this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras));
+        let otrosIngresosAnterior = this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos));
         if (
-            
-                this.validarCampos(this.form.value.salarioBasico,salarioBasicoAnterior)
-            
-            ||
-            
-                this.validarCampos(this.form.value.descuentoNomina,descuentoNominaAnterior)
-            
-            // ||
-            // (
-            //     this.form.value.comisionesHorasExtras == this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras))
-            // )
-            // ||
-            // (
-            //     this.form.value.aplicaIngresos == this.utility.formatearNumero(String(this.fabricaDatos.aplicaIngresos))
-            // )
-            // ||
-            // (
-            //     this.form.value.otrosIngresos == this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos))
-            // )
+            this.validarCampos(this.form.value.salarioBasico, salarioBasicoAnterior)
+            &&
+            this.validarCampos(this.form.value.comisionesHorasExtras, comisionesHorasExtrasAnterior)
+            &&
+            this.validarCampos(this.form.value.comisionesHorasExtras, comisionesHorasExtrasAnterior)
+            &&
+            this.validarCampos(this.form.value.otrosIngresos, otrosIngresosAnterior)
         ) {
             this.form.controls['modificado'].setValue('N')
         } else {
             this.form.controls['modificado'].setValue('S')
-
         }
-        //
         const datos: FormularioCreditoInterface = this.form.getRawValue();
         const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
 
