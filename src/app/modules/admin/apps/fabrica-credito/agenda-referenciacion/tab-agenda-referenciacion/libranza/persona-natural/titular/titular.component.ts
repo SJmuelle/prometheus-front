@@ -109,7 +109,7 @@ export class LibranzaTitularComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((res) => {
       const dataModal: any = res;
-      if (dataModal.viaNombrey != undefined) {
+      if (dataModal.viaNombre != undefined) {
         this.form.controls.direccionResidenciaCorregido.setValue(
           (dataModal.viaNombre == undefined
             ? ''

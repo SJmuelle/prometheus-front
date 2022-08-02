@@ -162,15 +162,23 @@
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2"
                                     *ngIf="!form.value.departamentoResidenciaValida_bool">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Departamento de residencia</mat-label>
-                                        <input matInput type="text"
-                                            [formControlName]="'descripcionDepartamentoCorregido'"
-                                          >
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
+                                    <ng-container *ngIf="departamentos$ | async as departamentos">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Departamento</mat-label>
+                                            <mat-select (selectionChange)="seleccionDepartamento($event)"
+                                                [value]="'seleccione'" [formControlName]="'codigoDepartamento'">
+                                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                                </mat-option>
+                                                <mat-option *ngFor="let departamento of departamentos.data"
+                                                    [value]="departamento.codigo">{{departamento.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </ng-container>
                                 </div>
+
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en la ciudad de
                                         <strong>{{fabricaDatos.descripcionCiudad}}</strong>?
@@ -187,13 +195,20 @@
                                     </div>
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.ciudadResidenciaValida_bool">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Ciudad residencia</mat-label>
-                                        <input matInput type="text" [formControlName]="'descripcionCiudadCorregida'"
-                                           >
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
+                                    <ng-container *ngIf="ciudades$ | async as ciudades">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Ciudad / Municipio</mat-label>
+                                            <mat-select (selectionChange)="seleccionCiudad($event)" [value]="'seleccione'" [formControlName]="'codigoCiudad'">
+                                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                                </mat-option>
+                                                <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
+                                                    {{ciudad.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </ng-container>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p>¿El titular vive en el barrio
@@ -211,18 +226,25 @@
                                     </div>
                                 </div>
                                 <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.barrioResidenciaValida_bool">
-                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label>Barrio</mat-label>
-                                        <input matInput type="text" [formControlName]="'descripcionBarrioCorregido'"
-                                           >
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
-                                    </mat-form-field>
+                                    <ng-container *ngIf="barrios$ | async as barrios">
+                                        <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                            <mat-label>Barrio</mat-label>
+                                            <mat-select  [value]="'seleccione'" [formControlName]="'codigoBarrio'">
+                                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                                </mat-option>
+                                                <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
+                                                    {{barrio.nombre}}
+                                                </mat-option>
+                                            </mat-select>
+                                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                            </mat-icon>
+                                        </mat-form-field>
+                                    </ng-container>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p>¿El titular vive en esta dirección: holi
+                                    <p>¿El titular vive en esta dirección: 
                                         <strong>{{fabricaDatos.direccionResidencia}}</strong>?
-                                    </p>
+                                    </p> 
                                     <div class="toggle-button-cover">
                                         <div class="button-cover">
                                             <div class="button r" id="button-1">
