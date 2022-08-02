@@ -283,7 +283,8 @@ export class LibranzaTitularComponent implements OnInit {
       referenciaValidada: [""],
       referenciaValidada_bool: Boolean,
       destinoCredito : [''],
-      otroDestinoCredito : ['']
+      otroDestinoCredito : [''],
+      motivoObligaciones:[''],
     });
   }
 
