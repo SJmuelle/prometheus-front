@@ -10,13 +10,15 @@
                         <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
                             <mat-form-field class="w-full ml-2 fuse-mat-dense">
                                 <mat-label>Entidad bancaria</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'entidad'">
+                                <!-- <mat-select [value]="'seleccione'" [formControlName]="'entidad'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="let item of entidadBancaria.data" [value]="item.codigo">
                                         {{item.nombre}}
                                     </mat-option>
-                                </mat-select>
+                                </mat-select> -->
+                                <input matInput type="text" [formControlName]="'entidad'">
+                            
                             </mat-form-field>
                         </ng-container>
 

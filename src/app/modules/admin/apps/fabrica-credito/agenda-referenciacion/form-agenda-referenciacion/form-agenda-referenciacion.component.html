@@ -34,7 +34,7 @@
                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_outline:calendar'">
                     </mat-icon>
                     <div class="py-0.5 px-1  text-sm font-semibold ml-1.5 ">
-                        Fecha de la solicitud {{fabrica_datos.emision | date: "dd/mm/yyyy"}}
+                        Fecha de la solicitud {{fabrica_datos.emision}}
                     </div>
                 </div>
 
@@ -102,7 +102,7 @@
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
                 <ng-container [ngSwitch]="unidadNegocio">
-                    <ng-container [currentStep]="currentStep" *ngSwitchCase="'ULTRACEM'">
+                    <ng-container  *ngSwitchCase="'ULTRACEM'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
                             </ULTRACEM-NATURAL-TITULAR>
@@ -112,7 +112,7 @@
                             </ULTRACEM-NATURAL-PERSONAL>
                         </ng-container>
                     </ng-container>
-                    <ng-container [currentStep]="currentStep" *ngSwitchCase="'LIBRANZA'">
+                    <ng-container *ngSwitchCase="'LIBRANZA'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <LIBRANZA-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
                             </LIBRANZA-NATURAL-TITULAR>

@@ -43,7 +43,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    alert(this.unidadNegocio)
+    // alert(this.unidadNegocio)
     switch (this.tipoReferenciacion) {
       case 'P':
         this.titulo = "personal"
