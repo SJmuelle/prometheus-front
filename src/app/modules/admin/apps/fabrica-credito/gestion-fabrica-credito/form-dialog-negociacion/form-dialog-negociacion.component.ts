@@ -46,9 +46,9 @@ export class FormDialogNegociacionComponent implements OnInit {
   public onGuardar(): void {
     if (this.form.valid) {
       const data: any = this.form.getRawValue();
-      const valorAComprar = this.utility.enviarNumero(this.form.value.valorAComprar);
-      const valorDescuento = this.utility.enviarNumero(this.form.value.valorDescuento);
-      const valorConsultores = this.utility.enviarNumero(this.form.value.valorConsultores);
+      const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)));
+      const valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
+      const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores)));
 
       console.log(data);
       delete data.valorAComprar;

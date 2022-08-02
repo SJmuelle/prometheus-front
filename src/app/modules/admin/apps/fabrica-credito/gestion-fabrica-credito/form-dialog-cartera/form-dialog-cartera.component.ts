@@ -41,6 +41,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
     this.form.controls.estadoCuenta.setValue( this.data.tipo=='D'?'DEUDA':'AL DIA');
+    this.form.controls.alDia.setValue( this.data.tipo=='D'?false:true);
     this.tipo = this.data.tipo;
   }
 
@@ -139,6 +140,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       saldoActual:[''],
       saldoMora:[''],
       agregadaManualmente:true,
+      alDia:Boolean,
     });
   }
 
