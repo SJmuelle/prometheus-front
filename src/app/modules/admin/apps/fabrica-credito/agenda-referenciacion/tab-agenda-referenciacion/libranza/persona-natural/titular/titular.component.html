@@ -166,7 +166,7 @@
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Departamento</mat-label>
                                             <mat-select (selectionChange)="seleccionDepartamento($event)"
-                                                [value]="'seleccione'" [formControlName]="'codigoDepartamento'">
+                                                [value]="'seleccione'" [formControlName]="'departamentoResidenciaCorregido'">
                                                 <mat-option disabled [value]="'seleccione'">Seleccione
                                                 </mat-option>
                                                 <mat-option *ngFor="let departamento of departamentos.data"
@@ -198,7 +198,7 @@
                                     <ng-container *ngIf="ciudades$ | async as ciudades">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Ciudad / Municipio</mat-label>
-                                            <mat-select (selectionChange)="seleccionCiudad($event)" [value]="'seleccione'" [formControlName]="'codigoCiudad'">
+                                            <mat-select (selectionChange)="seleccionCiudad($event)" [value]="'seleccione'" [formControlName]="'ciudadResidenciaCorregido'">
                                                 <mat-option disabled [value]="'seleccione'">Seleccione
                                                 </mat-option>
                                                 <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
@@ -229,7 +229,7 @@
                                     <ng-container *ngIf="barrios$ | async as barrios">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Barrio</mat-label>
-                                            <mat-select  [value]="'seleccione'" [formControlName]="'codigoBarrio'">
+                                            <mat-select  [value]="'seleccione'" [formControlName]="'barrioResidenciaCorregido'">
                                                 <mat-option disabled [value]="'seleccione'">Seleccione
                                                 </mat-option>
                                                 <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
