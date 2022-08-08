@@ -133,7 +133,7 @@ export class PqrService {
     }
 
     // NUEVO METODO PARA ENVIAR CORREOS
-    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos = '', mensaje?,envioCorreo?) {
+    envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos='', mensaje?,envioCorreo?) {
         let data = {
             pqrs: parseInt(pqrs),
             tipo: tipo,
@@ -142,17 +142,9 @@ export class PqrService {
             mensaje:mensaje,
             envioCorreo:envioCorreo
         };
-        console.log(data);
         return this._utility.postQueryCorreo(url, data).subscribe((res) => {
-            // debugger;
             return res;
         });
-        // .pipe(
-        //     map((result: any) => {
-        //         console.log(result);
-        //         return result;
-        //     })
-        // );
     }
 
     enviaCorreos(url, pqrs, tipo, descripcion = '', adjuntos:any, mensaje?,envioCorreo?) {
@@ -214,6 +206,8 @@ export class PqrService {
     }
 
     postFile(url: string, data: any): Observable<any> {
+        console.log(data)
+        debugger;
         return this._utility.postFile(url, data).pipe(
             map((result: any) => {
                 return result;

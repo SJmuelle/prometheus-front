@@ -62,7 +62,7 @@
     <div class="row">
         <div class="col-lg-12 mt-2 mb-10">
             <div style="height: 7em;">
-                <quill-editor #editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="seguimiento.detalle" (contentChanged)="logChange($event);"
+                <quill-editor #editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="detalleSolucion" (contentChanged)="logChange($event);"
                     [modules]="quillModules"></quill-editor>
             </div>
         </div>

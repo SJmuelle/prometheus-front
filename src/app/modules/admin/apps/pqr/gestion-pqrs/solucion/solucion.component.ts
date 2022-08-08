@@ -27,6 +27,7 @@ export class SolucionComponent implements OnInit {
     @ViewChild('editor') editor;
     seguimiento: any = {};
     seguimiento_area: any = {};
+    detalleSolucion: string = '';
     pqrid: any;
     datos: any = {};
     solucionArea: boolean = false;
@@ -274,6 +275,7 @@ export class SolucionComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
+                    console.log('Enviando solucion: ', this.seguimiento)
                     Swal.close();
                     if (response) {
                         if (response.status === 200) {
@@ -391,8 +393,8 @@ export class SolucionComponent implements OnInit {
                         Swal.showLoading();
                     },
                 }).then((result) => {});
-
                 this._pqrService.Create(url, this.seguimiento_area).subscribe((response: any) => {
+                    console.log('Enviando solucion: ', this.seguimiento_area)
                     Swal.close();
                     if (response) {
                         if (response.status === 200) {
@@ -511,9 +513,12 @@ export class SolucionComponent implements OnInit {
                     Swal.showLoading();
                 },
             }).then((result) => {});
-
+            this.seguimiento_area.detalle = this.editor.editorElem.outerText;
+            console.log(this.seguimiento_area.detalle)
             this._pqrService.Create(url, this.seguimiento_area).subscribe((response: any) => {
+                console.log('Enviando solucion: ', this.seguimiento_area)
                 console.log(response)
+                debugger;
                 Swal.close();
                 if (response) {
                     if (response.status === 200) {
@@ -526,6 +531,7 @@ export class SolucionComponent implements OnInit {
                             );
                             return;
                         }
+                        console.log(this.evidencia);
                         if (this.evidencia.length > 0) {
                             let data = {
                                 idComentario: response.data.respuesta,
@@ -533,42 +539,47 @@ export class SolucionComponent implements OnInit {
                                 identificador: 'pqrs' + this.pqrid,
                                 file:this.evidencia
                             };
-    
+                            console.log(data)
+                            debugger;
+                            
                             url = '/file/cargar-archivo-pqrs';
-                            Swal.fire({
-                                title: 'Cargando',
-                                html: 'Guardando documento de PQRS',
-                                timer: 500000,
-                                didOpen: () => {
-                                    Swal.showLoading();
-                                },
-                            }).then((result) => {});
-                            console.log("Aqui tus datos: ", data)
-                            this._pqrService.postFile(url, data).subscribe((response: any) => {
-                                Swal.close();
-                                if (response) {
-                                    Swal.fire(
-                                        '¡Información!',
-                                        `Se guardó el registro con éxito`,
-                                        'success'
-                                    ).then((resultado) => {});
+                                Swal.fire({
+                                    title: 'Cargando',
+                                    html: 'Guardando documento de PQRS',
+                                    timer: 500000,
+                                    didOpen: () => {
+                                        Swal.showLoading();
+                                    },
+                                }).then((result) => {});
+                                console.log("Aqui tus datos: ", data)
+                                debugger;
+                                this._pqrService.postFile(url, data).subscribe((response: any) => {
                                     console.log(response);
-                                    // if (this.idTipoComentario == '2') {
-                                    //     url = `/sendmail/notificacion-crear-pqrs`;
-                                    //     this._pqrService.envioCorreos(
-                                    //         url,
-                                    //         this.pqrid,
-                                    //         5,
-                                    //         response.data.nombre,
-                                    //         response.data.archivos,
-                                    //         mensaje,
-                                    //         this.envioCorreo==true?'S':'N'
-                                    //     );
-                                    // }
-                                    this.limpiar();
-                                    this.recargarData();
-                                }
-                            });
+                                    debugger;
+                                    Swal.close();
+                                    if (response) {
+                                        Swal.fire(
+                                            '¡Información!',
+                                            `Se guardó el registro con éxito`,
+                                            'success'
+                                        ).then((resultado) => {});
+                                        // if (this.idTipoComentario == '2') {
+                                        //     url = `/sendmail/notificacion-crear-pqrs`;
+                                        //     this._pqrService.envioCorreos(
+                                        //         url,
+                                        //         this.pqrid,
+                                        //         5,
+                                        //         response.data.nombre,
+                                        //         response.data.archivos,
+                                        //         mensaje,
+                                        //         this.envioCorreo==true?'S':'N'
+                                        //     );
+                                        // }
+                                        this.limpiar();
+                                        this.recargarData();
+                                    }
+                                });
+                            
                         } else {
                             Swal.fire(
                                 '¡Información!',
@@ -576,6 +587,7 @@ export class SolucionComponent implements OnInit {
                                 'success'
                             ).then((resultado) => {});
                             console.log('Aqui envio data: ', response.data)
+                            debugger;
                             // if (this.idTipoComentario == '2') {
                             //     url = `/sendmail/notificacion-crear-pqrs`;
                             //     this._pqrService.envioCorreos(

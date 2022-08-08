@@ -254,7 +254,6 @@ export class GestionPQRSComponent implements OnInit {
         this._pqrService.getListados(url).subscribe((response: any) => {
             Swal.close();
             if (response) {
-                console.log('Aqui estoy: ', response)
                 this.datos = response[0];
                 // this.procedimientoid = this.datos.id_procedimiento
                 // console.log('Aqui tu procedimiento: ', this.procedimientoid)
@@ -275,7 +274,6 @@ export class GestionPQRSComponent implements OnInit {
         url = `/listar-adjuntos-pqrs/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
-                console.log(response)
                 this.listarAdjuntos = response;
             } else {
                 this.listarAdjuntos = [];
@@ -285,7 +283,6 @@ export class GestionPQRSComponent implements OnInit {
         url = `/listar-comentarios-seguimiento/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
-                console.log(response)
                 this.listadoSeguimiento = response;
             } else {
                 this.listadoSeguimiento = [];
@@ -295,7 +292,6 @@ export class GestionPQRSComponent implements OnInit {
         let urlproc = `/id_comentario_pqrs/${this.pqrid}`;
         this._pqrService.getListados(urlproc).subscribe((response:any) =>{
             if (response) {
-                console.log('id procedimiento: ', response[0].id);
                 this.procedimientoid = response[0].id;
             }
         });
@@ -329,8 +325,8 @@ export class GestionPQRSComponent implements OnInit {
                         }
                     }
                     this.listadoGestion = unicos;
-                    console.log('Unicos: ', unicos);
                     Swal.close();
+                    console.log(unicos)
                     if (unicos.length<=0) {
                         Swal.fire({
                             icon: 'info',
@@ -345,33 +341,27 @@ export class GestionPQRSComponent implements OnInit {
                             this.comentariotipoid = id.tipo_comentario;
                             this.envio = id.envio;
                             this.motivo = id.detalle;
-                            console.log(this.comentarioid);
-                            if (this.comentariotipoid==2) {
-                                console.log('Id de cliente: ', this.comentariotipoid)
-                            } else {
-                                console.log('Id de area: ', this.comentariotipoid)
-                            }
-                            console.log('hola ', this.motivo);
+                            console.log(this.comentarioid)
+                            let urlad = `adjunto-comentario/${this.comentarioid}`;
+                            this._pqrService.getListados(urlad).subscribe((response:any) =>{
+                                if (response) {
+                                    this.listadoAdjuntos = response;
+                                    console.log(this.listadoAdjuntos)
+                                    this.archivo = [{
+                                        idComentario:this.listadoAdjuntos[0].id_comentario,
+                                        documento:this.listadoAdjuntos[0].documento,
+                                        filepath:this.listadoAdjuntos[0].filepath,
+                                        filename:this.listadoAdjuntos[0].filename,
+                                        extension:this.listadoAdjuntos[0].extension,
+                                        descripcion:this.listadoAdjuntos[0].descripcion
+                                    }]
+                                } else {
+                                    this.listadoAdjuntos = [];
+                                }
+                            });
                         }
-    
-                        let urlad = `adjunto-comentario/${this.comentarioid}`;
-                        this._pqrService.getListados(urlad).subscribe((response:any) =>{
-                            if (response) {
-                                console.log(response);
-                                this.listadoAdjuntos = response;
-                                console.log('Hello: ', this.listadoAdjuntos)
-                                this.archivo = [{
-                                    idComentario:this.listadoAdjuntos[0].id_comentario,
-                                    documento:this.listadoAdjuntos[0].documento,
-                                    filepath:this.listadoAdjuntos[0].filepath,
-                                    filename:this.listadoAdjuntos[0].filename,
-                                    extension:this.listadoAdjuntos[0].extension,
-                                    descripcion:this.listadoAdjuntos[0].descripcion
-                                }]
-                            } else {
-                                this.listadoAdjuntos = [];
-                            }
-                        });
+                        
+                        
                         
                     }
                     
