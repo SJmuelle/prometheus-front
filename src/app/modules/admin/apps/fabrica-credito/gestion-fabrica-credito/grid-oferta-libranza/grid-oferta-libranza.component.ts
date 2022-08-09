@@ -11,19 +11,25 @@ import { Observable } from 'rxjs';
 export class GridOfertaLibranzaComponent implements OnInit {
   public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
   public listadoOferta$: Observable<any>;
+  public capacidadPago$: Observable<any>;
 
-  constructor( 
+  capacidadOferta: boolean = true;
+
+  constructor(
     private route: ActivatedRoute,
     private ofertaService:OfertaService
       ) { }
 
   ngOnInit() {
     this.getListadoOferta(Number(this.numeroSolicitud));
+    this.getCapacidadPago(Number(this.numeroSolicitud));
   }
 
 
   private getListadoOferta(numeroSolicitud: number): void {
     this.listadoOferta$ = this.ofertaService.getListadoOferta(numeroSolicitud);
   }
-
+  private getCapacidadPago(numeroSolicitud: number): void {
+    this.capacidadPago$ = this.ofertaService.getCapacidadPago(numeroSolicitud);
+  }
 }

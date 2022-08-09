@@ -228,4 +228,12 @@ export class AppSettingsService {
         }
     };
 
+        /**
+    * @description: End-point agenda decision
+    */
+         public capacidad = {
+            url: {
+                base: EndPoints.uri('/generic/obtener-capacidad-pago'),
+            }
+        };
 }
