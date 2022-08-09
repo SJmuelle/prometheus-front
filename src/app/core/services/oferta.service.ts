@@ -32,4 +32,13 @@ export class OfertaService {
         }
         return this._http.post(this._appSettings.capacidad.url.base, data);
       }
+
+      
+    /**
+   * @description:
+   */
+     public SelectOferta(data: any): Observable<any> {
+      
+      return this._http.post(this._appSettings.oferta.url.postSelectOferta, data);
+    }
 }

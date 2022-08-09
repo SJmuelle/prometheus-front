@@ -225,6 +225,7 @@ export class AppSettingsService {
     public oferta = {
         url: {
             base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza-seleccionada'),
+            postSelectOferta: EndPoints.uri('/generic/actualizar-eleccion-oferta'),
         }
     };
 
@@ -234,6 +235,7 @@ export class AppSettingsService {
          public capacidad = {
             url: {
                 base: EndPoints.uri('/generic/obtener-capacidad-pago'),
+
             }
         };
 }

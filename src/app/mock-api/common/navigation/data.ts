@@ -158,7 +158,7 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'agenda-cartera.list',
-                title: 'Gestión de carteras',
+                title: 'Agenda gestión de carteras',
                 type: 'basic',
                 link: '/credit-factory/agenda-cartera',
                 icon: 'heroicons_outline:document-text',

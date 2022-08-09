@@ -1,102 +1,52 @@
 <div class="flex flex-col items-center">
     <!-- Recurring selector -->
-    <div
-        class="flex items-center mt-8 sm:mt-16 p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700"
-    >
-        <button
-            class="px-6"
-            [ngClass]="{
+    <div class="flex items-center p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+        <button class="px-6" [ngClass]="{
                 'bg-card pointer-events-none shadow': capacidadOferta,
                 'bg-transparent': !capacidadOferta
-            }"
-            mat-flat-button
-            (click)="capacidadOferta = true"
-            disableRipple
-        >
+            }" mat-flat-button (click)="capacidadOferta = true" disableRipple>
             Capacidad de pago
         </button>
-        <button
-            class="px-6"
-            [ngClass]="{
+        <button class="px-6" [ngClass]="{
                 'bg-card pointer-events-none shadow': !capacidadOferta,
                 'bg-transparent': capacidadOferta
-            }"
-            mat-flat-button
-            (click)="capacidadOferta = false"
-            disableRipple
-        >
+            }" mat-flat-button (click)="capacidadOferta = false" disableRipple>
             Ofertas
         </button>
     </div>
 </div>
-<!-- Cards --><ng-container *ngIf="capacidadOferta">
+<!-- Cards -->
+<ng-container *ngIf="capacidadOferta">
     <div class="flex flex-col items-center mb-26">
-        <div class="flex justify-center mt-10 sm:mt-20">
-            <div class="w-full max-w-sm md:max-w-7xl">
+        <div class="flex justify-center mt-10">
+            <div class="w-full max-w-screen-xl">
                 <!-- Card 1 -->
 
                 <div *ngIf="capacidadPago$ | async as capacidadPago">
-                    <ng-container
-                        *ngFor="let item of capacidadPago.data; let i = index"
-                    >
+                    <ng-container *ngFor="let item of capacidadPago.data; let i = index">
                         <fuse-card
-                            class="flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 ring-2 ring-primary overflow-visible"
-                        >
-                            <div
-                                class="absolute inset-x-0 -top-4 flex items-center justify-center"
-                            >
+                            class="flex-col w-card-capacidad px-3 py-4 ring-2 ring-primary overflow-visible">
+                            <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
                                 <div
-                                    class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none bg-primary text-on-primary"
-                                >
+                                    class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none bg-primary text-on-primary">
                                     DETALLE
                                 </div>
                             </div>
-                            <div
-                                class="text-4xl font-bold tracking-tight leading-tight text-center"
-                            >
-                                Capacidad de pago
+                            <div class="text-3xl font-bold tracking-tight leading-tight text-center ">
+                                Disponible cuota titular
                             </div>
-                            <div
-                                class="mt-2 text-lg font-medium tracking-tight text-secondary"
-                            >
-                                A continuación podrás visualizas el detalle del
-                                cálculo de la cuota disponible.
-                            </div>
-                            <div
-                                class="inset-x-0 -top-4 flex items-center justify-center"
-                            >
-                                <button
-                                    class="fuse-mat-button-large mt-10"
-                                    [disabled]="item.disponibleCuota != ''"
-                                    mat-flat-button
-                                    [color]="'primary'"
-                                >
-                                    Disponible cuota titular:
-                                </button>
-                            </div>
-                            <!-- Price -->
-
-                            <div
-                                class="flex items-baseline whitespace-nowrap justify-center text-center mt-3"
-                            >
+                            <div class="flex items-baseline whitespace-nowrap justify-center text-center mt-3">
                                 <div
-                                    class="text-6xl font-semibold leading-tight tracking-tight justify-center text-center mt-3"
-                                >
-                                    <ng-container *ngIf="capacidadOferta"
-                                        ><b
-                                            >$
+                                    class="text-4xl font-semibold leading-tight tracking-tight justify-center text-center">
+                                    <ng-container *ngIf="capacidadOferta"><b>$
                                             {{
-                                                item.disponibleCuota | number
+                                            item.disponibleCuota | number
                                             }}
-                                            pesos</b
-                                        ></ng-container
-                                    >
+                                            pesos</b></ng-container>
                                 </div>
                             </div>
                             <!-- Price details -->
-                            <div
-                                class="flex flex-col mt-2 text-secondary text-center"
-                            >
+                            <div class="flex flex-col text-secondary text-center">
                                 <div>
                                     Monto solicitado:
                                     <b> ${{ item.monto | number }}</b>
@@ -104,123 +54,96 @@
                                 <div>
                                     Plazo: <b> {{ item.plazo }} meses </b>
                                 </div>
+                                <div>
+                                    Tasa: <b> {{ item.tasa }} % </b>
+                                </div>
                             </div>
                             <!-- CTA -->
 
                             <!-- Features -->
-                            <div class="flex flex-col mt-12">
-                                <div class="font-semibold">
-                                    Detalles adicionales:
+                            <div class="flex flex-col mt-6">
+                                <div class="flex flex-col mt-2 text-secondary text-center font-bold text-xl">
+                                    <div>
+                                        Detalles adicionales 
+                                    </div>
                                 </div>
-                                <div
-                                    class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 mt-6"
-                                >
-                                    <div class="flex items-center">
-                                        <div class="mt-4 space-y-2">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4">
+                                    <div class="flex items-center justify-content-center">
+                                        <div class="space-y-2">
                                             <div class="flex">
-                                                <mat-icon
-                                                    class="icon-size-5 text-green-600"
-                                                    [svgIcon]="
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
                                                         'heroicons_solid:check'
-                                                    "
-                                                ></mat-icon>
+                                                    "></mat-icon>
                                                 <div class="ml-2 leading-5">
                                                     Salario básico:
-                                                    <b
-                                                        >${{
-                                                            item.salarioBasico
-                                                                | number
-                                                        }}</b
-                                                    >
+                                                    <b>${{
+                                                        item.salarioBasico
+                                                        | number
+                                                        }}</b>
                                                 </div>
                                             </div>
                                             <div class="flex">
-                                                <mat-icon
-                                                    class="icon-size-5 text-green-600"
-                                                    [svgIcon]="
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
                                                         'heroicons_solid:check'
-                                                    "
-                                                ></mat-icon>
+                                                    "></mat-icon>
                                                 <div class="ml-2 leading-5">
                                                     Comisiones extras:
-                                                    <b
-                                                        >${{
-                                                            item.comisionesHorasExtras
-                                                                | number
-                                                        }}</b
-                                                    >
+                                                    <b>${{
+                                                        item.comisionesHorasExtras
+                                                        | number
+                                                        }}</b>
                                                 </div>
                                             </div>
                                             <div class="flex">
-                                                <mat-icon
-                                                    class="icon-size-5 text-green-600"
-                                                    [svgIcon]="
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
                                                         'heroicons_solid:check'
-                                                    "
-                                                ></mat-icon>
+                                                    "></mat-icon>
                                                 <div class="ml-2 leading-5">
                                                     Descuentos de ley:
-                                                    <b
-                                                        >${{
-                                                            item.descuentosLey
-                                                                | number
-                                                        }}</b
-                                                    >
+                                                    <b>${{
+                                                        item.descuentosLey
+                                                        | number
+                                                        }}</b>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
-                                        <div class="mt-4 space-y-2">
+                                        <div class="space-y-2">
                                             <div class="flex">
-                                                <mat-icon
-                                                    class="icon-size-5 text-green-600"
-                                                    [svgIcon]="
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
                                                         'heroicons_solid:check'
-                                                    "
-                                                ></mat-icon>
+                                                    "></mat-icon>
                                                 <div class="ml-2 leading-5">
                                                     Ingresos brutos:
-                                                    <b
-                                                        >${{
-                                                            item.ingresosBrutos
-                                                                | number
-                                                        }}</b
-                                                    >
+                                                    <b>${{
+                                                        item.ingresosBrutos
+                                                        | number
+                                                        }}</b>
                                                 </div>
                                             </div>
                                             <div class="flex">
-                                                <mat-icon
-                                                    class="icon-size-5 text-green-600"
-                                                    [svgIcon]="
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
                                                         'heroicons_solid:check'
-                                                    "
-                                                ></mat-icon>
+                                                    "></mat-icon>
                                                 <div class="ml-2 leading-5">
                                                     50% ingresos brutos:
-                                                    <b
-                                                        >${{
-                                                            item.mitadIngresosBrutos
-                                                                | number
-                                                        }}</b
-                                                    >
+                                                    <b>${{
+                                                        item.mitadIngresosBrutos
+                                                        | number
+                                                        }}</b>
                                                 </div>
                                             </div>
                                             <div class="flex">
-                                                <mat-icon
-                                                    class="icon-size-5 text-green-600"
-                                                    [svgIcon]="
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
                                                         'heroicons_solid:check'
-                                                    "
-                                                ></mat-icon>
+                                                    "></mat-icon>
                                                 <div class="ml-2 leading-5">
                                                     Factor embargo:
-                                                    <b
-                                                        >${{
-                                                            item.factorEmbargo
-                                                                | number
-                                                        }}</b
-                                                    >
+                                                    <b>${{
+                                                        item.factorEmbargo
+                                                        | number
+                                                        }}</b>
                                                 </div>
                                             </div>
                                         </div>
@@ -232,16 +155,17 @@
                 </div>
             </div>
         </div>
-    </div></ng-container
->
+    </div>
+</ng-container>
 <ng-container *ngIf="!capacidadOferta">
     <div class="flex flex-col items-center mb-26">
-        <div class="flex justify-center mt-10 sm:mt-20">
+        <div class="flex justify-center mt-10">
             <div class="w-full max-w-sm md:max-w-7xl">
-                <div *ngIf="listadoOferta$ | async as listadoOferta" class="flex gap-10">
+                <div *ngIf="listadoOferta$ | async as listadoOferta" class="flex gap-10 zoom1">
                     <ng-container *ngFor="let item of listadoOferta.data; let i = index">
-                        <fuse-card class="flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 ring-2 ring-primary overflow-visible">
-                            <div class="absolute inset-x-0 -top-4 flex items-center justify-center" >
+                        <fuse-card
+                            class="flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 ring-2 ring-primary overflow-visible">
+                            <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
                                 <div *ngIf="item.seleccionada == 'S'"
                                     class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none bg-primary text-on-primary">
                                     SELECCIONADO
@@ -259,12 +183,12 @@
                             <div class="flex items-baseline whitespace-nowrap justify-center">
                                 <div class="text-6xl font-semibold leading-tight tracking-tight">
                                     <ng-container *ngIf="!capacidadOferta">
-                                        <b>($) {{item.valorDesembolsar | number}}</b > pesos
+                                        <b>($) {{item.valorDesembolsar | number}}</b> pesos
                                     </ng-container>
                                 </div>
                             </div>
                             <!-- Price details -->
-                            <div class="flex flex-col mt-2 text-secondary text-center" >
+                            <div class="flex flex-col mt-2 text-secondary text-center">
                                 <div>
                                     Cuotas de: <b> ${{ item.cuotas | number }} pesos </b>
                                 </div>
@@ -273,10 +197,9 @@
                                 </div>
                             </div>
                             <div class="inset-x-0 -top-4 flex items-center justify-center">
-                                <button [disabled]="item.seleccionada == 'S'"
-                                        class="fuse-mat-button-large mt-10"
-                                        mat-flat-button
-                                        [color]="'primary'">
+                                <button [disabled]="item.seleccionada == 'S'" class="fuse-mat-button-large mt-10"
+                                    mat-flat-button [color]="'primary'"
+                                    (click)="SelectOferta(item)">
                                     Seleccionar
                                 </button>
                             </div>
@@ -289,75 +212,57 @@
                                 </div>
                                 <div class="mt-4 space-y-2">
                                     <div class="flex">
-                                        <mat-icon
-                                            class="icon-size-5 text-green-600"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
+                                        <mat-icon class="icon-size-5 text-green-600"
+                                            [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                         <div class="ml-2 leading-5">
                                             Monto solicitado:
                                             <b>${{ item.monto | number }}</b>
                                         </div>
                                     </div>
                                     <div class="flex">
-                                        <mat-icon
-                                            class="icon-size-5 text-green-600"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
+                                        <mat-icon class="icon-size-5 text-green-600"
+                                            [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                         <div class="ml-2 leading-5">
                                             Garantía:
                                             <b>${{ item.garantia | number }}</b>
                                         </div>
                                     </div>
                                     <div class="flex">
-                                        <mat-icon
-                                            class="icon-size-5 text-green-600"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
+                                        <mat-icon class="icon-size-5 text-green-600"
+                                            [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                         <div class="ml-2 leading-5">
                                             Tasa:
                                             <b>{{ item.tasa | number }}%</b>
                                         </div>
                                     </div>
                                     <div class="flex">
-                                        <mat-icon
-                                            class="icon-size-5 text-green-600"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
+                                        <mat-icon class="icon-size-5 text-green-600"
+                                            [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                         <div class="ml-2 leading-5">
                                             Cartera mora:
-                                            <b
-                                                >${{
-                                                    item.carteraMora | number
-                                                }}</b
-                                            >
+                                            <b>${{
+                                                item.carteraMora | number
+                                                }}</b>
                                         </div>
                                     </div>
                                     <div class="flex">
-                                        <mat-icon
-                                            class="icon-size-5 text-green-600"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
+                                        <mat-icon class="icon-size-5 text-green-600"
+                                            [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                         <div class="ml-2 leading-5">
                                             Cartera a pagar:
-                                            <b
-                                                >${{
-                                                    item.carteraPagar | number
-                                                }}</b
-                                            >
+                                            <b>${{
+                                                item.carteraPagar | number
+                                                }}</b>
                                         </div>
                                     </div>
                                     <div class="flex">
-                                        <mat-icon
-                                            class="icon-size-5 text-green-600"
-                                            [svgIcon]="'heroicons_solid:check'"
-                                        ></mat-icon>
+                                        <mat-icon class="icon-size-5 text-green-600"
+                                            [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                         <div class="ml-2 leading-5">
                                             Saldo a recoger:
-                                            <b
-                                                >${{
-                                                    item.saldoARecoger | number
-                                                }}</b
-                                            >
+                                            <b>${{
+                                                item.saldoARecoger | number
+                                                }}</b>
                                         </div>
                                     </div>
                                 </div>
@@ -368,5 +273,4 @@
             </div>
         </div>
     </div>
-    </ng-container
->
+</ng-container>
