@@ -43,10 +43,28 @@ export class AgendaComercialService {
     return this._http.get(this._appSettings.agendaComercial.url.totales);
   }
 
-    /**
+  /**
+ * @description: totales de agendas de completacion
+ */
+  public getTotalesAgendaDecision(): Observable<any> {
+    return this._http.get(this._appSettings.agendaDecision.url.totales);
+  }
+
+  /**
+* @description: Listado de agendas Cartera
+*/
+  public getAgendaCartera(): Observable<any> {
+    return this._http.get(this._appSettings.agendaCartera.url.base);
+  }
+
+
+
+
+  /**
    * @description: totales de agendas de completacion
    */
-     public getTotalesAgendaDecision(): Observable<any> {
-      return this._http.get(this._appSettings.agendaDecision.url.totales);
-    }
+  public getTotalesAgendaCartera(): Observable<any> {
+    return this._http.get(this._appSettings.agendaCartera.url.totales);
+  }
+
 }

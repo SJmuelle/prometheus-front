@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AgendaCarteraService } from 'app/core/services/agenda-Cartera.service';
+import { AgendaComercialService } from 'app/core/services/agenda-comercial.service';
 import moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -25,6 +26,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
   public mostrarTotales: boolean = true;
   public totales: any[];
   constructor(
+    private agendaComercialService: AgendaComercialService,
     private agendaCarteraService: AgendaCarteraService,
     private _matDialog: MatDialog,
     private router: Router
@@ -44,7 +46,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
     */
   private getAgenda(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaCarteraService.getAgendaCartera().pipe(
+    this.agendaComercialService.getAgendaCartera().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       Swal.close();
@@ -73,7 +75,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
       if (res) {
         console.log(res);
         this.getAgenda();
-        this.agendaCarteraService.refrescarListado$.next({ estado: true });
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();
       }
     });
@@ -105,7 +107,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((res) => {
 
       this.getAgenda();
-      this.agendaCarteraService.refrescarListado$.next({ estado: true });
+      this.agendaComercialService.refrescarListado$.next({ estado: true });
 
     });
   }
@@ -127,7 +129,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((res) => {
 
       this.getAgenda();
-      this.agendaCarteraService.refrescarListado$.next({ estado: true });
+      this.agendaComercialService.refrescarListado$.next({ estado: true });
 
     });
   }
@@ -136,7 +138,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
    */
   private getTotalesAgendaCartera(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaCarteraService.getTotalesAgendaCartera().pipe(
+    this.agendaComercialService.getTotalesAgendaCartera().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       if (res.status === 200) {

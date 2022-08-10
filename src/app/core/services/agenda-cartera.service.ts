@@ -7,9 +7,9 @@ import { AppSettingsService } from '../app-configs/app-settings.service';
   providedIn: 'root'
 })
 export class AgendaCarteraService {
-  public refrescarListado$: Subject<{ estado: boolean }> = new Subject();
+  // public refrescarListado$: Subject<{ estado: boolean }> = new Subject();
   public seleccionAgenda: Subject<{ selected: any; show: boolean }> = new Subject<{ selected: any; show: boolean }>();
-
+ 
   constructor(
     private _http: HttpClient,
     private _appSettings: AppSettingsService
