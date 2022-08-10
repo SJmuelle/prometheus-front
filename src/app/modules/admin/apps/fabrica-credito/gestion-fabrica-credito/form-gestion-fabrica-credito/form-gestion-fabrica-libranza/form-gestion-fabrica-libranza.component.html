@@ -485,21 +485,20 @@
                             <ng-container *ngIf="tipoContrato$ | async as tipoContrato">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Tipo de contrato</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'" disabled>
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of tipoContrato.data" [value]="item.codigoOpcion">
                                             {{item.descripcionOpcion}}
                                         </mat-option>
                                     </mat-select>
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
+                                  
                                 </mat-form-field>
                             </ng-container>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Fecha de vinculación </mat-label>
                                 <input matInput [matDatepicker]="fechaVinculacion" [formControlName]="'fechaVinculacion'"
-                                    [readonly]="true">
+                                    [readonly]="true" disabled>
                                 <mat-datepicker-toggle matSuffix [for]="fechaVinculacion" >
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaVinculacion readonly></mat-datepicker>
@@ -508,7 +507,7 @@
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha desvinculación </mat-label>
                                     <input matInput [matDatepicker]="fechaFinalizacionContrato" [formControlName]="'fechaFinalizacionContrato'"
-                                        [readonly]="true">
+                                        [readonly]="true" disabled>
                                     <mat-datepicker-toggle matSuffix [for]="fechaFinalizacionContrato">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #fechaFinalizacionContrato readonly></mat-datepicker>

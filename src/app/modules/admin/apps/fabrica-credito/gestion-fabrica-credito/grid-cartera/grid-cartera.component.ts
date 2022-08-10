@@ -20,15 +20,16 @@ export class GridCarteraComponent implements OnInit {
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
-  TotalSaldo: number=0;
+  TotalSaldo: number = 0;
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
     private fabricaCreditoService: FabricaCreditoService,
     private _listadoCarteraService: ListadoCarteraService,
+
   ) {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion)
-
+    this.validadorTotalLibranza();
   }
 
   ngOnInit() {
@@ -40,8 +41,29 @@ export class GridCarteraComponent implements OnInit {
     this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
     // console.table( this.listadoCartera$.data)
   }
- 
 
+  public validadorTotalLibranza() {
+    let data = {
+      numeroSolicitud: Number(this.numeroSolicitud),
+    }
+    // debugger;
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando información',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._listadoCarteraService
+      .validadorTotalLibranza(data)
+      .subscribe((res) => {
+        Swal.close();
+        console.log(res.data)
+
+      });
+
+  }
   public cambioEstado(event, item) {
     console.log(event)
     console.log(item)
@@ -117,7 +139,7 @@ export class GridCarteraComponent implements OnInit {
           setTimeout(() => {
             location.reload();
           }, 1000);
-        }else{
+        } else {
           Swal.fire('Error', data.verificacion, 'error');
         }
       })

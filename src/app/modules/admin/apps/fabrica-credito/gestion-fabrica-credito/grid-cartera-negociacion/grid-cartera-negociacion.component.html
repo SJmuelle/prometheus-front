@@ -51,9 +51,8 @@
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
-                                    <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
-                            </mat-form-field>
+                            </mat-form-field>uu
                         </td>
                         <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
@@ -180,11 +179,11 @@
         </tbody>
         <tfoot>
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'">Gestión</th>
+                <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'"></th>
                 <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center">ss</th>
-                <th class="px-4 py-3 text-center">Altura de mora</th>
+                <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center"></th>
                 <th class="px-4 py-3 text-center"></th>
@@ -347,11 +346,11 @@
             </tbody>
             <tfoot>
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'">Gestión</th>
+                    <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'"></th>
                     <th class="px-4 py-3 text-center"></th>
                     <th class="px-4 py-3 text-center"></th>
                     <th class="px-4 py-3 text-center">ss</th>
-                    <th class="px-4 py-3 text-center">Altura de mora</th>
+                    <th class="px-4 py-3 text-center"></th>
                     <th class="px-4 py-3 text-center"></th>
                     <th class="px-4 py-3 text-center"></th>
                     <th class="px-4 py-3 text-center"></th>

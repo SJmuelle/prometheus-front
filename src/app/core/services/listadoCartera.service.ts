@@ -35,6 +35,14 @@ export class ListadoCarteraService {
     // return this._http.post(`${this._appSettings.listadoCartera.url.update}/${numeroSolicitud}`);
   }
 
+  
+  /**
+   * @description:
+   */
+   public validadorTotalLibranza(data: any): Observable<any> {
+    return this._http.post(this._appSettings.listadoCartera.url.validadorTotalLibranza, data);
+  }
+
   /**
   * @description:
   */
