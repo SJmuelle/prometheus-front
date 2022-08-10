@@ -42,7 +42,7 @@
                                             {{
                                             item.disponibleCuota | number
                                             }}
-                                            pesos</b></ng-container>
+                                            </b></ng-container>
                                 </div>
                             </div>
                             <!-- Price details -->
@@ -64,7 +64,7 @@
                             <div class="flex flex-col mt-6">
                                 <div class="flex flex-col mt-2 text-secondary text-center font-bold text-xl">
                                     <div>
-                                        Detalles adicionales 
+                                        Detalles adicionales
                                     </div>
                                 </div>
                                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4">
@@ -183,14 +183,14 @@
                             <div class="flex items-baseline whitespace-nowrap justify-center">
                                 <div class="text-6xl font-semibold leading-tight tracking-tight">
                                     <ng-container *ngIf="!capacidadOferta">
-                                        <b>($) {{item.valorDesembolsar | number}}</b> pesos
+                                        <b>${{item.valorDesembolsar | number}}</b>
                                     </ng-container>
                                 </div>
                             </div>
                             <!-- Price details -->
                             <div class="flex flex-col mt-2 text-secondary text-center">
                                 <div>
-                                    Cuotas de: <b> ${{ item.cuotas | number }} pesos </b>
+                                    Cuotas de: <b> ${{ item.cuotas | number }} </b>
                                 </div>
                                 <div>
                                     Plazo: <b> {{ item.plazo }} meses </b>
