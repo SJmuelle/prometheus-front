@@ -74,6 +74,7 @@ export interface FormularioCreditoInterface {
     fechaFinalizacionContrato?:     string;
     otrosIngresos?:                 number;
     ingresos?:                      number;
+    plazo?:                         number;
     nodificado?:                    string;
 }
 
@@ -106,7 +107,7 @@ export interface FormularioDatosTitularInterface {
     valorSolicitado?:               string;
     tipoCredito?:                   string;
     destinoCredito?:                string;
-    plazo?:                         string;
+    plazo?:                         number;
     cargo?:                         string;
     estrato?:                       string;
     otroDestinoCredito?:            string;
