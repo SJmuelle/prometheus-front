@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AgendaCarteraService } from 'app/core/services/agenda-Cartera.service';
 import { AgendaComercialService } from 'app/core/services/agenda-comercial.service';
 import moment from 'moment';
 import { Subject } from 'rxjs';
@@ -27,7 +26,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
   public totales: any[];
   constructor(
     private agendaComercialService: AgendaComercialService,
-    private agendaCarteraService: AgendaCarteraService,
+    // private agendaCarteraService: AgendaCarteraService,
     private _matDialog: MatDialog,
     private router: Router
   ) { }
