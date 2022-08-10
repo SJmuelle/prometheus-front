@@ -19,6 +19,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
+  TotalSaldo: number=0;
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
@@ -69,6 +70,10 @@ export class GridCarteraNegociacionComponent implements OnInit {
         }
       });
 
+  }
+
+  public suma(dato){
+    this.TotalSaldo+=dato;
   }
 
   /**

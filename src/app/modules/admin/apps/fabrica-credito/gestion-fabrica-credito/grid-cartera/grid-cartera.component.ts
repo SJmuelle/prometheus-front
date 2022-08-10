@@ -20,6 +20,7 @@ export class GridCarteraComponent implements OnInit {
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
+  TotalSaldo: number=0;
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
@@ -37,8 +38,9 @@ export class GridCarteraComponent implements OnInit {
 
   private getListadoCartera(numeroSolicitud: number): void {
     this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
-    // console.table( this.listadoCartera$)
+    // console.table( this.listadoCartera$.data)
   }
+ 
 
   public cambioEstado(event, item) {
     console.log(event)

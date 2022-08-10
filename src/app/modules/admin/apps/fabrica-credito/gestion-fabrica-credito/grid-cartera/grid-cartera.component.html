@@ -62,7 +62,7 @@
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="text-sm border w-0">
-                            <div class="py-0.5 px-3 text-center rounded-full text-sm font-semibold text-white " [ngClass]="
+                            <div class="py-0.5 px-3 text-center  text-sm font-semibold text-white " [ngClass]="
                                 item.alDia === 'f'
                                     ? 'bg-red-600'
                                     : 'bg-green-300'
@@ -111,7 +111,7 @@
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="text-sm border w-0 text-center">
-                            <div class="py-0.5 px-3 text-center rounded-full text-sm font-semibold text-blue-800 " [ngClass]="
+                            <div class="py-0.5 px-3 text-center  text-sm font-semibold text-blue-800 " [ngClass]="
                                     item.alDia === 't'
                                     ? 'bg-green-300'
                                     : 'bg-red-600'
