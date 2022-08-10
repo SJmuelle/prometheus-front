@@ -338,7 +338,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             this.form.controls['modificado'].setValue('S')
         }
         const datos: FormularioCreditoInterface = this.form.getRawValue();
-        const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
+        const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion,plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
 
         const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
         const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
@@ -359,6 +359,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
         const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
+        const plazoFormato = Number(this.form.value.plazo);
 
         // descuentoNomina
         delete data.ventasMensuales;
@@ -369,6 +370,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         // delete data.otrosIngresos;
         const datosFormularios: FormularioCreditoInterface = {
             otrosIngresos: otrosIngresosFormato,
+            plazo: plazoFormato,
             ingresos: ingresosFormato,
             descuentoNomina: descuentoNominaFormato,
             comisionesHorasExtras: comisionesHorasExtrasFormato,
