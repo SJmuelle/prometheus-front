@@ -1,20 +1,49 @@
 <div class="min-h-60" *ngIf="agenda_fabrica">
-    <fuse-card class="flex items-center justify-center  p-6 filter-info">
-        <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
-        <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
-        <ng-container *ngIf="listadoCartera$ | async as items;">
-            <div class="flex flex-col"
-                *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
+    <div class="grid grid-cols-6">
+        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
+            <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
+            <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
+            <ng-container *ngIf="listadoCartera$ | async as items; else hola">
+                <div class="flex flex-col"
+                    *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
 
-                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HD0C0</div>
-                <div class="text-1xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}
+                    <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                    <div class="text-1xl font-semibold leading-tight text-center mt-1.5">
+                        {{items.data[0].nombreCompleto}}
+                    </div>
+                    <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
+                    <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
                 </div>
-                <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
-                <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
+            </ng-container>
+        </fuse-card>
+        <div class="pl-2" *ngIf="totales">
+            <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
+                <div class="flex items-start justify-between">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                        Totales
+                    </div>
+                </div>
+                <div class="flex flex-col items-center ">
+                    <div class="text-2xl font-bold tracking-tight leading-none">
+                       ${{totales.suma_total|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">Sumatoria de obligaciones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-5">
+                        ${{totales.valor_disponible|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">Valor disponible</div>
+                     <!-- <div class="text-2xl font-bold tracking-tight leading-none">
+                        ${{totales.valor_solicitado|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">Valor solicitado</div> -->
+                    
+                </div>
+                <div class="flex items-center justify-center w-full text-secondary mt-1">
+                </div>
             </div>
-        </ng-container>
-    </fuse-card>
+        </div>
 
+    </div>
 
 
 
@@ -53,10 +82,10 @@
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="text-sm border w-0">
-                            <div class="text-sm border text-left m-0 p-0" [ngClass]="
+                            <div class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
                                 item.alDia === 'f'
-                                    ? 'bg-red-600'
-                                    : 'bg-green-300'
+                                    ? 'bg-red-300  text-red-900'
+                                    : 'bg-green-300 text-green-900'
                                     ">
                                 EN MORA
                             </div>
@@ -92,8 +121,7 @@
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select [(ngModel)]="item.gestionCartera"
                                     (ngModelChange)="cambioEstado($event,item)">
-                                    <mat-option value="">Seleccionar</mat-option>
-                                    <mat-option value="NEG">Negociar</mat-option>
+                                    <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -102,10 +130,10 @@
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="text-sm border w-0 text-center">
-                            <div class="py-0.5 px-3 text-center  text-sm font-semibold text-blue-800 " [ngClass]="
+                            <div class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
                                     item.alDia === 't'
-                                    ? 'bg-green-300'
-                                    : 'bg-red-600'
+                                    ? 'bg-green-300 text-green-900'
+                                    : 'bg-red-300  text-red-900'
                                     ">
                                 AL DIA
                             </div>
@@ -116,7 +144,7 @@
         </tbody>
     </table>
 
-    <div class="my-30">
+    <div class="my-30" *ngIf="totales.contadorGestiones==0">
         <div class="flex justify-center mb-4" >
             <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
                 Enviar a gestionar carteras
