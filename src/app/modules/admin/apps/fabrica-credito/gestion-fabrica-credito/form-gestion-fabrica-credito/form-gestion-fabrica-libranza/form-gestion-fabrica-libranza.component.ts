@@ -1136,6 +1136,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 mensaje += 'el valor de los ingresos adicionales';
                 break;
             case 'PL':
+                debugger;
                 mensaje += 'el valor del plazo';
                 break;
             case 'MO':

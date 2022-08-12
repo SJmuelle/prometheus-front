@@ -4,8 +4,7 @@
             <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
             <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
             <ng-container *ngIf="listadoCartera$ | async as items; else hola">
-                <div class="flex flex-col"
-                    *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
+                <div class="flex flex-col" *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
 
                     <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
                     <div class="text-1xl font-semibold leading-tight text-center mt-1.5">
@@ -25,18 +24,18 @@
                 </div>
                 <div class="flex flex-col items-center ">
                     <div class="text-2xl font-bold tracking-tight leading-none">
-                       ${{totales.suma_total|number}}
+                        ${{totales.sumaTotal|number}}
                     </div>
                     <div class="text-md font-medium truncate">Sumatoria de obligaciones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-5">
-                        ${{totales.valor_disponible|number}}
-                     </div>
-                     <div class="text-md font-medium truncate">Valor disponible</div>
-                     <!-- <div class="text-2xl font-bold tracking-tight leading-none">
+                        ${{totales.valorDisponible|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">Valor disponible</div>
+                    <!-- <div class="text-2xl font-bold tracking-tight leading-none">
                         ${{totales.valor_solicitado|number}}
                      </div>
                      <div class="text-md font-medium truncate">Valor solicitado</div> -->
-                    
+
                 </div>
                 <div class="flex items-center justify-center w-full text-secondary mt-1">
                 </div>
@@ -48,7 +47,7 @@
 
 
     <div class="text-lg font-semibold leading-tight text-left mb-4 mt-3">Obligaciones de mora</div>
-    <div class="flex justify-end mb-4" >
+    <div class="flex justify-end mb-4">
         <button mat-raised-button color="accent" type="button" (click)="createCartera('D')">
             Nueva
         </button>
@@ -56,7 +55,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" >Gestión</th>
+                <th class="px-4 py-3 text-center">Gestión</th>
                 <th class="px-4 py-3 text-center">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
@@ -68,10 +67,9 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
-                        <td class="text-sm border text-left m-0 p-0" >
+                        <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
-                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                    (ngModelChange)="cambioEstado($event,item)">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera" (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
@@ -98,7 +96,7 @@
     <hr class="shadow">
     <div class="text-lg font-semibold leading-tight text-left">
         Obligaciones al día </div>
-    <div class="flex justify-end mb-4" >
+    <div class="flex justify-end mb-4">
         <button mat-raised-button color="accent" type="button" (click)="createCartera('N')">
             Nueva
         </button>
@@ -106,7 +104,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" >Gestión</th>
+                <th class="px-4 py-3 text-center">Gestión</th>
                 <th class="px-4 py-3 text-center">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
@@ -117,10 +115,9 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
-                        <td class="px-0 text-sm border text-left" >
+                        <td class="px-0 text-sm border text-left">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
-                                <mat-select [(ngModel)]="item.gestionCartera"
-                                    (ngModelChange)="cambioEstado($event,item)">
+                                <mat-select [(ngModel)]="item.gestionCartera" (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
@@ -145,7 +142,7 @@
     </table>
 
     <div class="my-30" *ngIf="totales.contadorGestiones==0">
-        <div class="flex justify-center mb-4" >
+        <div class="flex justify-center mb-4">
             <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
                 Enviar a gestionar carteras
             </button>
