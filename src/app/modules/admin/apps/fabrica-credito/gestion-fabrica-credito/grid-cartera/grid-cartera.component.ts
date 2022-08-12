@@ -29,7 +29,7 @@ export class GridCarteraComponent implements OnInit {
 
   ) {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion)
-    this.validadorTotalLibranza();
+   
   }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class GridCarteraComponent implements OnInit {
 
   private getListadoCartera(numeroSolicitud: number): void {
     this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
-    // console.table( this.listadoCartera$.data)
+    this.validadorTotalLibranza();
   }
 
   public validadorTotalLibranza() {

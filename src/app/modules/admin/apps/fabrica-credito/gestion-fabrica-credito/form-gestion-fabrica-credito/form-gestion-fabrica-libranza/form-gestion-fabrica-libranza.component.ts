@@ -324,6 +324,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         let descuentoNominaAnterior = this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina));
         let comisionesHorasExtrasAnterior = this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras));
         let otrosIngresosAnterior = this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos));
+        let plazoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.plazo));
+        let montoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.monto));
         if (
             this.validarCampos(this.form.value.salarioBasico, salarioBasicoAnterior)
             &&
@@ -332,13 +334,17 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             this.validarCampos(this.form.value.comisionesHorasExtras, comisionesHorasExtrasAnterior)
             &&
             this.validarCampos(this.form.value.otrosIngresos, otrosIngresosAnterior)
+            &&
+            this.validarCampos(this.form.value.plazo, plazoAnterior)
+            &&
+            this.validarCampos(this.form.value.monto, montoAnterior)
         ) {
             this.form.controls['modificado'].setValue('N')
         } else {
             this.form.controls['modificado'].setValue('S')
         }
         const datos: FormularioCreditoInterface = this.form.getRawValue();
-        const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion,plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
+        const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
 
         const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
         const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
@@ -1129,6 +1135,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             case 'IA':
                 mensaje += 'el valor de los ingresos adicionales';
                 break;
+            case 'PL':
+                mensaje += 'el valor del plazo';
+                break;
+            case 'MO':
+                mensaje += 'el valor del monto';
+                break;
             default:
                 break;
         }
@@ -1175,7 +1187,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     case 'IA':
                         this.form.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos)));
                         break;
-
+                    case 'PL':
+                        this.form.controls['plazo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.plazo)));
+                        break;
+                    case 'MO':
+                        this.form.controls['monto'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
+                        break;
                     default:
                         break;
                 }

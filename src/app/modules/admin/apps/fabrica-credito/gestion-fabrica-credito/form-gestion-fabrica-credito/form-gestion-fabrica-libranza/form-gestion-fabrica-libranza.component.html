@@ -114,13 +114,13 @@
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Monto</mat-label>
                         <input matInput type="text" [formControlName]="'valorSolicitado'"
-                            (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); ">
+                            (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); " (change)="validacion('MO')">
                         <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Plazo</mat-label>
-                        <input matInput type="text" [formControlName]="'plazo'" [required]="true">
+                        <input matInput type="text" [formControlName]="'plazo'" [required]="true"  (change)="validacion('PL')">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                 </div>
