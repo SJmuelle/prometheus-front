@@ -255,15 +255,13 @@
                                 <ng-container *ngIf="generos$ | async as generos">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Género</mat-label>
-                                        <mat-select [value]="'seleccione'" [formControlName]="'genero'">
+                                        <mat-select [value]="'seleccione'" [formControlName]="'genero'" disabled>
                                             <mat-option disabled [value]="'seleccione'">Seleccione
                                             </mat-option>
                                             <mat-option *ngFor="let genero of generos.data"
                                                 [value]="genero.codigoOpcion">{{genero.descripcionOpcion}}
                                             </mat-option>
                                         </mat-select>
-                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                        </mat-icon>
                                     </mat-form-field>
                                 </ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">

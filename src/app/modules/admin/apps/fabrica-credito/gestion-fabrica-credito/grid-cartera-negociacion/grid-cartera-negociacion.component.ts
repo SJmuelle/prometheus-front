@@ -20,6 +20,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
   TotalSaldo: number=0;
+  totales: any;
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
@@ -38,6 +39,8 @@ export class GridCarteraNegociacionComponent implements OnInit {
   private getListadoCartera(numeroSolicitud: number): void {
     this.listadoCartera$ = this._listadoCarteraService.getListadoCarteraNegociacion(numeroSolicitud);
     // console.table( this.listadoCartera$)
+    this.validadorTotalLibranza()
+
   }
 
   public cambioEstado(event, item) {
@@ -123,6 +126,20 @@ export class GridCarteraNegociacionComponent implements OnInit {
           Swal.fire('Error', data.verificacion, 'error');
         }
       })
+  }
+  public validadorTotalLibranza() {
+    let data = {
+      numeroSolicitud: Number(this.numeroSolicitud),
+    }
+ 
+    this._listadoCarteraService
+      .validadorTotalLibranza(data)
+      .subscribe((res) => {
+        Swal.close();
+        this.totales=res.data
+
+      });
+
   }
 
   public cambioEstadoNegoiciacion(event, item) {

@@ -20,7 +20,7 @@ export class GridCarteraComponent implements OnInit {
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
-  TotalSaldo: number = 0;
+  totales: any;
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
@@ -59,7 +59,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
-        console.log(res.data)
+        this.totales=res.data
 
       });
 

@@ -1,19 +1,51 @@
 <div class="min-h-60" *ngIf="agenda_fabrica">
-    <fuse-card class="flex items-center justify-center  p-6 filter-info">
-        <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
-        <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
-        <ng-container *ngIf="listadoCartera$ | async as items; else hola">
-            <div class="flex flex-col"
-                *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
+    <div class="grid grid-cols-6">
+        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
+            <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
+            <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
+            <ng-container *ngIf="listadoCartera$ | async as items; else hola">
+                <div class="flex flex-col"
+                    *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
 
-                <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
-                <div class="text-1xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}
+                    <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                    <div class="text-1xl font-semibold leading-tight text-center mt-1.5">
+                        {{items.data[0].nombreCompleto}}
+                    </div>
+                    <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
+                    <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
                 </div>
-                <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
-                <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
+            </ng-container>
+        </fuse-card>
+        <div class="pl-2" *ngIf="totales">
+            <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
+                <div class="flex items-start justify-between">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                        Totales
+                    </div>
+                </div>
+                <div class="flex flex-col items-center ">
+                    <div class="text-2xl font-bold tracking-tight leading-none">
+                       ${{totales.suma_total|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">Sumatoria de obligaciones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-5">
+                        ${{totales.valor_disponible|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">Valor disponible</div>
+                     <!-- <div class="text-2xl font-bold tracking-tight leading-none">
+                        ${{totales.valor_solicitado|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">Valor solicitado</div> -->
+                    
+                </div>
+                <div class="flex items-center justify-center w-full text-secondary mt-1">
+                </div>
             </div>
-        </ng-container>
-    </fuse-card>
+        </div>
+
+    </div>
+
+
 
     <ng-template #hola>
         <div class="col-sm-12 col-lg-12">
@@ -31,7 +63,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'">Gestión</th>
+                <th class="px-4 py-3 text-center">Gestión</th>
                 <th class="px-4 py-3 text-center">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
@@ -45,14 +77,15 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
-                        <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+                        <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
-                            </mat-form-field>uu
+                            </mat-form-field>
                         </td>
                         <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
@@ -68,7 +101,7 @@
                                 EN MORA
                             </div>
                         </td>
-                        <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+                        <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
                                     [disabled]="item.gestionCartera==''"
@@ -102,28 +135,32 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor a comprar
-                                            <strong>${{item.valorAComprar|number}}</strong></div>
+                                            <strong>${{item.valorAComprar|number}}</strong>
+                                        </div>
                                     </div>
                                     <div class="flex items-center">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor a consultores
-                                            <strong>{{item.valorConsultores|number}}</strong></div>
+                                            <strong>{{item.valorConsultores|number}}</strong>
+                                        </div>
                                     </div>
                                     <div class="flex items-center">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor descuento
-                                            <strong>{{item.valorDescuento|number}}</strong></div>
+                                            <strong>{{item.valorDescuento|number}}</strong>
+                                        </div>
                                     </div>
                                     <div class="flex items-center">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Cartera a pagar
-                                            <strong>${{item.carteraPagar|number}}</strong></div>
+                                            <strong>${{item.carteraPagar|number}}</strong>
+                                        </div>
                                     </div>
                                     <div class="flex items-center">
                                         <mat-icon class="icon-size-5 text-primary"
@@ -177,186 +214,167 @@
                 </ng-container>
             </ng-container>
         </tbody>
-        <tfoot>
-            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'"></th>
-                <th class="px-4 py-3 text-center"></th>
-                <th class="px-4 py-3 text-center"></th>
-                <th class="px-4 py-3 text-center">ss</th>
-                <th class="px-4 py-3 text-center"></th>
-                <th class="px-4 py-3 text-center"></th>
-                <th class="px-4 py-3 text-center"></th>
-                <th class="px-4 py-3 text-center"></th>
-            </tr>
-        </tfoot>
     </table>
     <hr class="shadow">
     <div class="text-lg font-semibold leading-tight text-lef py-5 mt-4">
         Obligaciones al día </div>
 
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'">Gestión</th>
-                    <th class="px-4 py-3 text-center">Entidad</th>
-                    <th class="px-4 py-3 text-center">N° de obligación</th>
-                    <th class="px-4 py-3 text-center">Saldo</th>
-                    <th class="px-4 py-3 text-center">Altura de mora</th>
-                    <th class="px-4 py-3 text-center">Estado</th>
-                    <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
-                    <th class="px-4 py-3 text-center"></th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="listadoCartera$ | async as items">
-                    <ng-container *ngFor="let item of items.data">
-                        <tr *ngIf=" item.alDia !== 'f'">
-                            <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                        (ngModelChange)="cambioEstado($event,item)">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
-                                ${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
-                            <td class="text-sm border w-0 text-center px-2">
-                                <div class="py-0.5 text-xs px-2  font-semibold text-white " [ngClass]="
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3 text-center">Gestión</th>
+                <th class="px-4 py-3 text-center">Entidad</th>
+                <th class="px-4 py-3 text-center">N° de obligación</th>
+                <th class="px-4 py-3 text-center">Saldo</th>
+                <th class="px-4 py-3 text-center">Altura de mora</th>
+                <th class="px-4 py-3 text-center">Estado</th>
+                <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
+                <th class="px-4 py-3 text-center"></th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <ng-container *ngIf="listadoCartera$ | async as items">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.alDia !== 'f'">
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Sin gestión</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
+                            ${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
+                        <td class="text-sm border w-0 text-center px-2">
+                            <div class="py-0.5 text-xs px-2  font-semibold text-white " [ngClass]="
                                       item.alDia === 'f'
                                       ? 'bg-red-600'
                                       : 'bg-green-600'
                                       ">
-                                    AL DIA
+                                AL DIA
+                            </div>
+                        </td>
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                                <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
+                                    [disabled]="item.gestionCartera==''"
+                                    (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
+                                    <mat-option value="">Sin negociación</mat-option>
+                                    <mat-option value="EXITOSA">Exitosa</mat-option>
+                                    <mat-option value="NO EXITOSA">No exitosa</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="text-sm border w-0">
+                            <button mat-icon-button matTooltip="ver detalles" *ngIf="item.resultadoNegociacion!=''"
+                                (click)="item.mostrarDetalle=item.mostrarDetalle=='f'?'v':'f'">
+                                <mat-icon
+                                    [svgIcon]="item.mostrarDetalle=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                </mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="item.mostrarDetalle=='v'">
+                        <tr>
+                            <td colspan="8" class="text-sm border text-left px-3 py-2 m-0">
+                                <div class="flex items-center">
+                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
+                                    <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
-                            </td>
-                            <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput">
-                                    <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
-                                        [disabled]="item.gestionCartera==''"
-                                        (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
-                                        <mat-option value="">Sin negociación</mat-option>
-                                        <mat-option value="EXITOSA">Exitosa</mat-option>
-                                        <mat-option value="NO EXITOSA">No exitosa</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.resultadoNegociacion!=''"
-                                    (click)="item.mostrarDetalle=item.mostrarDetalle=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarDetalle=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
+                                <!-- Features -->
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 mt-2 ">
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor a comprar
+                                            <strong>${{item.valorAComprar|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor a consultores
+                                            <strong>{{item.valorConsultores|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor descuento
+                                            <strong>{{item.valorDescuento|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Cartera a pagar
+                                            <strong>${{item.carteraPagar|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Nombre del negociador <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Fecha del negociador <strong>{{item.fechaNegociacion}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Fecha de pago <strong>{{item.fechaLimitePago}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            <strong>Comentario</strong>
+                                            <br>
+                                            <p>{{item.comentario}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </td>
                         </tr>
-                        <ng-container *ngIf="item.mostrarDetalle=='v'">
-                            <tr>
-                                <td colspan="8" class="text-sm border text-left px-3 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociacion</div>
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <!-- Features -->
-                                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 mt-2 ">
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">Valor a comprar
-                                                <strong>${{item.valorAComprar|number}}</strong></div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">Valor a consultores
-                                                <strong>{{item.valorConsultores|number}}</strong></div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">Valor descuento
-                                                <strong>{{item.valorDescuento|number}}</strong></div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">Cartera a pagar
-                                                <strong>${{item.carteraPagar|number}}</strong></div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                Nombre del negociador <strong
-                                                    class="capitalize">{{item.nombreNegociador}}</strong>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                Celular del negociador <strong>{{item.celularNegociador}}</strong>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                Fecha del negociador <strong>{{item.fechaNegociacion}}</strong>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                Fecha de pago <strong>{{item.fechaLimitePago}}</strong>
-                                            </div>
-                                        </div>
-                                        <div class="flex items-center gap-2">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario</strong>
-                                                <br>
-                                                <p>{{item.comentario}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-    
-    
-                                </td>
-                            </tr>
-                        </ng-container>
                     </ng-container>
                 </ng-container>
-            </tbody>
-            <tfoot>
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'"></th>
-                    <th class="px-4 py-3 text-center"></th>
-                    <th class="px-4 py-3 text-center"></th>
-                    <th class="px-4 py-3 text-center">ss</th>
-                    <th class="px-4 py-3 text-center"></th>
-                    <th class="px-4 py-3 text-center"></th>
-                    <th class="px-4 py-3 text-center"></th>
-                    <th class="px-4 py-3 text-center"></th>
-                </tr>
-            </tfoot>
-        </table>
+            </ng-container>
+        </tbody>
+    </table>
+
+
 
 
 </div>

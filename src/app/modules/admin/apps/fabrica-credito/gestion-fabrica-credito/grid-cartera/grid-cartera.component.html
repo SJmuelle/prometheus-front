@@ -2,11 +2,11 @@
     <fuse-card class="flex items-center justify-center  p-6 filter-info">
         <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
         <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
-        <ng-container *ngIf="listadoCartera$ | async as items; else hola">
+        <ng-container *ngIf="listadoCartera$ | async as items;">
             <div class="flex flex-col"
                 *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
 
-                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HD0C0</div>
                 <div class="text-1xl font-semibold leading-tight text-center mt-1.5">{{items.data[0].nombreCompleto}}
                 </div>
                 <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
@@ -15,19 +15,11 @@
         </ng-container>
     </fuse-card>
 
-    <ng-template #hola>
-        <div class="col-sm-12 col-lg-12">
-            <div class="flex flex-col">
-                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
-                <div class="text-1xl font-semibold leading-tight text-center"> no hay Detalle </div>
 
-            </div>
-        </div>
-    </ng-template>
 
 
     <div class="text-lg font-semibold leading-tight text-left mb-4 mt-3">Obligaciones de mora</div>
-    <div class="flex justify-end mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+    <div class="flex justify-end mb-4" >
         <button mat-raised-button color="accent" type="button" (click)="createCartera('D')">
             Nueva
         </button>
@@ -35,7 +27,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'">Gestión</th>
+                <th class="px-4 py-3 text-center" >Gestión</th>
                 <th class="px-4 py-3 text-center">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
@@ -47,12 +39,11 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
-                        <td class="text-sm border text-left m-0 p-0" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+                        <td class="text-sm border text-left m-0 p-0" >
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
-                                    <mat-option value="NEG">Negociar</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -62,7 +53,7 @@
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="text-sm border w-0">
-                            <div class="py-0.5 px-3 text-center  text-sm font-semibold text-white " [ngClass]="
+                            <div class="text-sm border text-left m-0 p-0" [ngClass]="
                                 item.alDia === 'f'
                                     ? 'bg-red-600'
                                     : 'bg-green-300'
@@ -78,7 +69,7 @@
     <hr class="shadow">
     <div class="text-lg font-semibold leading-tight text-left">
         Obligaciones al día </div>
-    <div class="flex justify-end mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+    <div class="flex justify-end mb-4" >
         <button mat-raised-button color="accent" type="button" (click)="createCartera('N')">
             Nueva
         </button>
@@ -86,7 +77,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center" *ngIf="agenda_fabrica.tipoCredito!='LI'">Gestión</th>
+                <th class="px-4 py-3 text-center" >Gestión</th>
                 <th class="px-4 py-3 text-center">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
@@ -97,7 +88,7 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
-                        <td class="px-0 text-sm border text-left" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+                        <td class="px-0 text-sm border text-left" >
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
                                 <mat-select [(ngModel)]="item.gestionCartera"
                                     (ngModelChange)="cambioEstado($event,item)">
@@ -126,7 +117,7 @@
     </table>
 
     <div class="my-30">
-        <div class="flex justify-center mb-4" *ngIf="agenda_fabrica.tipoCredito!='LI'">
+        <div class="flex justify-center mb-4" >
             <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
                 Enviar a gestionar carteras
             </button>
