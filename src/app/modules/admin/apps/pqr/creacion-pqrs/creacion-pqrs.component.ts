@@ -211,10 +211,8 @@ export class CreacionPQRSComponent implements OnInit {
             .getListadosUnico(urlOrigenCliente)
             .subscribe((response: any) => {
                 if (response) {
-                   console.log(response)
                    this.UsuarioSaggics=response.respuesta
                 } else {
-                    console.log(response)
                 }
             });
     }
@@ -284,10 +282,8 @@ export class CreacionPQRSComponent implements OnInit {
     //datos ingreso
     negociosCabeceras(tipo) {
         let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
-        console.log('Aqui esta el tipo', tipo)
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
-                console.log('negocio: ', response)
                 this.listadoNegocio = response;
             } else {
                 this.listadoNegocio = [];
@@ -340,7 +336,6 @@ export class CreacionPQRSComponent implements OnInit {
                     this.datos.tipoPQRS_nombre = 'Nuevo';
                 }
             });
-            console.log(this.datos)
     }
 
     //detalles
@@ -392,7 +387,6 @@ export class CreacionPQRSComponent implements OnInit {
 
     guardar() {
         this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
-            console.log(response.data.area);
             if (response.data.area !== 'SAC') {
                 Swal.fire(
                     '¡Información!',
@@ -440,7 +434,6 @@ export class CreacionPQRSComponent implements OnInit {
                     showConfirmButton: false,
                     timer: 500000,
                     didOpen: () => {
-                        console.log('Aqui toy: ', data)
                         Swal.showLoading();
                         this._pqrService.CreatePqrs(url, data).subscribe((response: any) => {
                             Swal.close();
@@ -455,14 +448,9 @@ export class CreacionPQRSComponent implements OnInit {
 
                                     if (dato.tipo_solicitante!=undefined && dato.segmento_actual!=undefined) {
                                         this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => {
-                                            if (response.status == 200) {
-                                                console.log('Aqui te respondo: ', response)
-                                            }else{
-                                                console.log('No hay pa actualizar.')
-                                            }
+                                           
                                         })
                                     }else{
-                                        console.log('No hay para actualizar.')
                                     }
 
                                     let datos = {
@@ -471,10 +459,9 @@ export class CreacionPQRSComponent implements OnInit {
                                     }
                                     this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response:any)=>{
                                         if (response) {
-                                            console.log('Se envio correo, revisa: ', response)
+                                            
                                         }
                                     })
-                                    console.log(response.data);
                                     Swal.fire({
                                         title: 'Información',
                                         html: `Se ha creado correctamente la PQRS N° ${response.data.pqrs}.`,

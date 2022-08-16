@@ -30,6 +30,7 @@ export class GestionPQRSComponent implements OnInit {
     listadoSoluciones: any = 0;
     listadoGestion: any = [];
     listadoAdjuntos: any = [];
+    objAdjunto: any = {};
     listadoSeguimiento: any = [];
     listadoAsignaciones: any = [];
     listadoNotificaciones: any = [];
@@ -345,8 +346,8 @@ export class GestionPQRSComponent implements OnInit {
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
                                 if (response) {
-                                    this.listadoAdjuntos = response;
-                                    console.log(this.listadoAdjuntos)
+                                    this.objAdjunto = response[0];
+                                    this.listadoAdjuntos.push(this.objAdjunto)
                                     this.archivo = [{
                                         idComentario:this.listadoAdjuntos[0].id_comentario,
                                         documento:this.listadoAdjuntos[0].documento,
@@ -360,9 +361,6 @@ export class GestionPQRSComponent implements OnInit {
                                 }
                             });
                         }
-                        
-                        
-                        
                     }
                     
                 });
