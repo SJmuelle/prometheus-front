@@ -19,24 +19,28 @@
         <div class="pl-2" *ngIf="totales">
             <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
                 <div class="flex items-start justify-between">
-                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate items-center">
                         Totales
                     </div>
                 </div>
                 <div class="flex flex-col items-center ">
                     <div class="text-2xl font-bold tracking-tight leading-none">
-                       ${{totales.suma_total|number}}
+                        {{totales.contadorGestiones|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">No. de gestiones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2">
+                       ${{totales.sumaTotal|number}}
                     </div>
-                    <div class="text-md font-medium truncate">Sumatoria de obligaciones</div>
-                    <div class="text-2xl font-bold tracking-tight leading-none mt-5">
-                        ${{totales.valor_disponible|number}}
+                    <div class="text-md font-medium truncate">Total en gestiones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2">
+                        ${{totales.valorDisponible|number}}
                      </div>
                      <div class="text-md font-medium truncate">Valor disponible</div>
                      <!-- <div class="text-2xl font-bold tracking-tight leading-none">
-                        ${{totales.valor_solicitado|number}}
+                        ${{totales.valorSolicitado |number}}
                      </div>
                      <div class="text-md font-medium truncate">Valor solicitado</div> -->
-                    
+
                 </div>
                 <div class="flex items-center justify-center w-full text-secondary mt-1">
                 </div>

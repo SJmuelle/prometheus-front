@@ -54,7 +54,7 @@
                         <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
                         <td class="px-2 text-sm border">{{ item.descripcion}}</td>
                         <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
-                        <td class="px-2 text-sm border text-center">{{ item.requerido? 'Si' : 'No'}}</td>
+                        <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
                         <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}</td>
                         <td class="px-2 text-sm border text-center">
                             <ng-container *ngIf="item.archivoCargado === 'N'">
