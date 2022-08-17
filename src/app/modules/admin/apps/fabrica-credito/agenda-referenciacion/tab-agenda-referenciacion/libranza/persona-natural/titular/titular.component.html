@@ -11,7 +11,7 @@
                         </h2>
                         <div class="grid sm:grid-cols-3 grid-cols-2 mb-1">
                             <fuse-card class="flex items-center max-w-80 w-full p-6 filter-info border-2 rounded-2 ">
-                                <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:smartphone_2'"></mat-icon>
+                                <mat-icon class="icon-size-12" [svgIcon]="'iconsmind:smartphone_2'"></mat-icon>
                                 <div class="flex flex-col">
                                     <div class="text-2xl font-semibold leading-tight">{{fabricaDatos.celular}}</div>
                                     <div class="text-md text-secondary">Celular</div>
@@ -376,40 +376,68 @@
                             </div>
                             <div class="flex flex-col">
                                 <div *ngIf="capacidadPago$ | async as capacidadPago">
+                                    <div class="flex flex-col items-start mt-8">
+                                        <div class="text-xl font-medium">Capacidad de pago</div>
+                                        <!-- <div
+                                            class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-green-600">
+                                            XLS </div> -->
+                                    </div>
                                     <ng-container *ngFor="let item of capacidadPago.data; let i = index">
                                         <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Disponible cuota</div>
                                                 <div>
-                                                    <ng-container *ngIf="capacidadOferta">
-                                                        <b>
-                                                            $
-                                                            {{
-                                                            item.disponibleCuota | number
-                                                            }}
-                                                        </b>
+                                                    <ng-container *ngIf="item.disponibleCuota">
+                                                        $
+                                                        {{
+                                                        item.disponibleCuota | number
+                                                        }}
                                                     </ng-container>
                                                 </div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary"> Monto solicitado</div>
                                                 <div>${{ item.monto | number }}</div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Plazo</div>
                                                 <div>{{ item.plazo }} meses</div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Tasa</div>
                                                 <div> {{ item.tasa }} %</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Salario básico</div>
+                                                <div> ${{ item.salarioBasico | number }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Comisiones extras</div>
+                                                <div> ${{ item.comisionesHorasExtras | number}} </div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Descuentos de ley</div>
+                                                <div>$ {{ item.descuentosLey |number}}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Ingresos brutos</div>
+                                                <div> ${{ item.ingresosBrutos|number }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">50% ingresos brutos</div>
+                                                <div> ${{ item.mitadIngresosBrutos }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Factor embargo</div>
+                                                <div> ${{ item.factorEmbargo }}</div>
                                             </div>
                                         </div>
                                     </ng-container>
                                 </div>
                                 <div *ngIf="listadoOferta$ | async as listadoOferta" class="flex gap-10 zoom1">
                                     <ng-container *ngFor="let item of listadoOferta.data; let i = index">
-                                        <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
-                                            <div class="flex items-center justify-between py-3">
+                                        <div class="flex flex-col mt-2 border-t border-b divide-y font-medium">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Valor estimado a desembolsar:</div>
                                                 <div>
                                                     <ng-container *ngIf="item.valorDesembolsar">
@@ -418,23 +446,23 @@
                                                     </ng-container>
                                                 </div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary"> Cuotas</div>
                                                 <div>${{ item.cuotas | number }}</div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Plazo</div>
                                                 <div>{{ item.plazo }} meses </div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Tasa</div>
                                                 <div> {{ item.tasa }} %</div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary">Garantía:</div>
                                                 <div>${{ item.garantia | number }}</div>
                                             </div>
-                                            <div class="flex items-center justify-between py-3">
+                                            <div class="flex items-center justify-between">
                                                 <div class="text-secondary"> Cartera mora:</div>
                                                 <div>${{ item.carteraMora | number }}</div>
                                             </div>
@@ -446,6 +474,9 @@
                         </div>
 
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                            <button mat-raised-button color="secundary" type="button" (click)="onPostDatos()">
+                                Recalculae
+                            </button>
                             <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                                 Guardar
                             </button>
