@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
+import { OfertaService } from 'app/core/services/oferta.service';
 import { UtilityService } from 'app/resources/services/utility.service';
 import { DirectionsBasicComponent } from 'app/shared/modal/directions-basic/directions-basic.component';
 import { Subscription, Subject, Observable } from 'rxjs';
@@ -47,6 +48,11 @@ export class LibranzaTitularComponent implements OnInit {
   public camaraComercio$: Observable<any>;
   public fabricaDatos: any;
   public MostrarfabricaDatos: boolean = false;
+
+  //variablkes de oferta
+  // public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+  public listadoOferta$: Observable<any>;
+  public capacidadPago$: Observable<any>;
   quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline'],
@@ -64,7 +70,7 @@ export class LibranzaTitularComponent implements OnInit {
     private departamentosCiudadesService: DepartamentosCiudadesService,
     private genericaServices: GenericasService,
     private _dialog: MatDialog,
-
+    private ofertaService:OfertaService
   ) {
     this.createFormulario();
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
@@ -84,7 +90,8 @@ export class LibranzaTitularComponent implements OnInit {
     this.getDeclarante();
     this.getCamaraComercio();
     this.getDestinoCredito();
-
+    this.getListadoOferta(Number(this.numeroSolicitud));
+    this.getCapacidadPago(Number(this.numeroSolicitud));
     // this.listenFormulario();
   }
 
@@ -741,6 +748,42 @@ private getDestinoCredito(): void {
           title: 'Ha ocurrido un error',
           text: error.error.msg,
         });
+      });
+  }
+
+  // opciones de oficerta
+  
+  private getListadoOferta(numeroSolicitud: number): void {
+    this.listadoOferta$ = this.ofertaService.getListadoOferta(numeroSolicitud);
+  }
+  private getCapacidadPago(numeroSolicitud: number): void {
+    this.capacidadPago$ = this.ofertaService.getCapacidadPago(numeroSolicitud);
+  }
+  public SelectOferta(item:any): void {
+    let data={
+      numeroSolicitud: Number(this.numeroSolicitud),
+      identificacion:item.identificacion,
+      idRegistro:item.idOpcion
+    }
+
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando información',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+
+    this.ofertaService
+      .SelectOferta(data)
+      .subscribe((res) => {
+        Swal.close();
+        if (res.data.respuesta == 'OK') {
+          this.getListadoOferta(Number(this.numeroSolicitud));
+        } else {
+          Swal.fire('Error', res.data.resultado, 'error');
+        }
       });
   }
 
