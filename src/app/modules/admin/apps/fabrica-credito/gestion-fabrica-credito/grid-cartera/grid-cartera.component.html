@@ -144,12 +144,11 @@
             </ng-container>
         </tbody>
     </table>
-
-    <div class="my-30" *ngIf="totales.contadorGestiones==0">
-        <div class="flex justify-center mb-4">
-            <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
-                Enviar a gestionar carteras
-            </button>
-        </div>
-    </div>
+            <div class="my-30" *ngIf="totales.contadorGestiones!=0 || agenda_fabrica.tipoCredito =='CO'">
+                <div class="flex justify-center mb-4">
+                    <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
+                        Enviar a gestionar carteras
+                    </button>
+                </div>
+            </div>
 </div>

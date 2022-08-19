@@ -15,7 +15,7 @@
                         <div class="flex items-center">
                             <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                             <div class="font-medium tracking-tight text-secondary">
-                                Realizar la gestión y completación del crédito
+                                Realiza la gestión del crédito
                             </div>
                         </div>
                     </div>
@@ -139,11 +139,13 @@
                                                     </button>
                                                         </div>
                                                     </ng-container>
+                                                <ng-container *ngIf="item.unidadNegocioFabrica ==='32'">
                                                     <div class="py-0 text-sm ">
                                                         <button mat-icon-button (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
                                                     <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
-                                                </button>
+                                                    </button>
                                                     </div>
+                                                </ng-container>
                                                     <div class="py-0 text-sm ">
                                                         <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
                                                     <mat-icon svgIcon="mat_outline:timer"></mat-icon>
@@ -196,11 +198,12 @@
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
-
+                                            <ng-container *ngIf="item.unidadNegocioFabrica ==='32'">
                                                     <span class="text-md text-black font-medium" matTooltip="Asesor">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{ item.asesor}}
                                             </span>
+                                            </ng-container>
                                                 </div>
                                             </td>
                                             <td class="px-2 pb-1 pt-1">
