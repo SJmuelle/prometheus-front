@@ -112,7 +112,7 @@
                 </div>
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                        <mat-label>Monto</mat-label>
+                        <mat-label>Valor solicitado</mat-label>
                         <input matInput type="text" [formControlName]="'valorSolicitado'"
                             (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); " (change)="validacion('MO')">
                         <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
@@ -490,7 +490,7 @@
                                             {{item.descripcionOpcion}}
                                         </mat-option>
                                     </mat-select>
-                                  
+
                                 </mat-form-field>
                             </ng-container>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
