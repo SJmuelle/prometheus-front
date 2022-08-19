@@ -12,6 +12,7 @@ import { DirectionsBasicComponent } from 'app/shared/modal/directions-basic/dire
 import { Subscription, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+// import { runInThisContext } from 'vm';
 
 @Component({
   selector: 'LIBRANZA-NATURAL-TITULAR',
@@ -24,6 +25,7 @@ export class LibranzaTitularComponent implements OnInit {
   // currentStep = 1;
   @ViewChild('editor') editor;
   public form: FormGroup;
+  public formOferta: FormGroup;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public undadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
@@ -48,7 +50,6 @@ export class LibranzaTitularComponent implements OnInit {
   public camaraComercio$: Observable<any>;
   public fabricaDatos: any;
   public MostrarfabricaDatos: boolean = false;
-
   //variablkes de oferta
   // public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
   public listadoOferta$: Observable<any>;
@@ -61,6 +62,8 @@ export class LibranzaTitularComponent implements OnInit {
     ],
   };
   mensajeQuill: any;
+  // consulta todos los datos de la solicitud 
+  public datosCompletoSolicitud: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -70,7 +73,7 @@ export class LibranzaTitularComponent implements OnInit {
     private departamentosCiudadesService: DepartamentosCiudadesService,
     private genericaServices: GenericasService,
     private _dialog: MatDialog,
-    private ofertaService:OfertaService
+    private ofertaService: OfertaService
   ) {
     this.createFormulario();
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
@@ -92,6 +95,9 @@ export class LibranzaTitularComponent implements OnInit {
     this.getDestinoCredito();
     this.getListadoOferta(Number(this.numeroSolicitud));
     this.getCapacidadPago(Number(this.numeroSolicitud));
+    this.getTodosFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+
+    // this.getFabricaCreditoAgenda(Number(this.numeroSolicitud));
     // this.listenFormulario();
   }
 
@@ -175,8 +181,8 @@ export class LibranzaTitularComponent implements OnInit {
   logChange($event) {
     console.log(this.editor);
     //console.log($event);
-    this.mensajeQuill=$event.text;
-}
+    this.mensajeQuill = $event.text;
+  }
 
   /**
  * @description :creando el formulario
@@ -289,10 +295,19 @@ export class LibranzaTitularComponent implements OnInit {
       nombreNegocioValida_bool: Boolean,
       referenciaValidada: [""],
       referenciaValidada_bool: Boolean,
-      destinoCredito : [''],
-      otroDestinoCredito : [''],
-      motivoObligaciones:[''],
+      destinoCredito: [''],
+      otroDestinoCredito: [''],
+      motivoObligaciones: [''],
     });
+    this.formOferta = this.fb.group({
+      valorSolicitado: [''],
+      plazo: [''],
+      salarioBasico: [''],
+      otrosIngresos: [''],
+      comisionesHorasExtras: [''],
+      descuentoNomina: [''],
+      numeroSolicitud: Number(this.numeroSolicitud),
+    })
   }
 
   /**
@@ -333,10 +348,10 @@ export class LibranzaTitularComponent implements OnInit {
           this.getBarriosNegocio(data.codigoCiudadNegocio);
         }
         if (data.destinoCredito) {
-            this.form.controls['destinoCredito'].setValue(data.destinoCredito);
+          this.form.controls['destinoCredito'].setValue(data.destinoCredito);
         }
         if (data.otroDestinoCredito) {
-            this.form.controls['otroDestinoCredito'].setValue(data.otroDestinoCredito);
+          this.form.controls['otroDestinoCredito'].setValue(data.otroDestinoCredito);
         }
         if (data.antiguedadNegocio) {
           this.form.controls['antiguedadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
@@ -531,12 +546,12 @@ export class LibranzaTitularComponent implements OnInit {
   private getCamaraComercio(): void {
     this.camaraComercio$ = this.genericaServices.getCamaraComercio();
   }
-      /**
+  /**
 * @description: Obtiene los tipos de estados civiles
 */
-private getDestinoCredito(): void {
+  private getDestinoCredito(): void {
     this.destinoCredito$ = this.genericaServices.getDestinoCredito();
-}
+  }
 
   // onPostDatos() {
   //   Swal.fire({
@@ -577,7 +592,7 @@ private getDestinoCredito(): void {
     const pagoEnArriendo = Number(this.utility.enviarNumero(this.form.value.pagoEnArriendo));
     const pagoServicioPublico = Number(this.utility.enviarNumero(this.form.value.pagoServicioPublico));
     const totalActivo = Number(this.utility.enviarNumero(this.form.value.totalActivo));
-    const unidadNegocio =this.form.value.unidadNegocio;
+    const unidadNegocio = this.form.value.unidadNegocio;
     const valorTotalCuotasCreditos = Number(this.utility.enviarNumero(this.form.value.valorTotalCuotasCreditos));
     const ventaMensual = Number(this.utility.enviarNumero(this.form.value.ventaMensual));
     const ventaMensualCorregido = Number(this.utility.enviarNumero(this.form.value.ventaMensualCorregido));
@@ -752,18 +767,18 @@ private getDestinoCredito(): void {
   }
 
   // opciones de oficerta
-  
+
   private getListadoOferta(numeroSolicitud: number): void {
     this.listadoOferta$ = this.ofertaService.getListadoOferta(numeroSolicitud);
   }
   private getCapacidadPago(numeroSolicitud: number): void {
     this.capacidadPago$ = this.ofertaService.getCapacidadPago(numeroSolicitud);
   }
-  public SelectOferta(item:any): void {
-    let data={
+  public SelectOferta(item: any): void {
+    let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
-      identificacion:item.identificacion,
-      idRegistro:item.idOpcion
+      identificacion: item.identificacion,
+      idRegistro: item.idOpcion
     }
 
     Swal.fire({
@@ -786,5 +801,78 @@ private getDestinoCredito(): void {
         }
       });
   }
+  public recalcularOferta(): void {
+    let data = {
+      valorSolicitado: Number(this.utility.enviarNumero(this.formOferta.value.valorSolicitado)),
+      plazo: Number(this.utility.enviarNumero(this.formOferta.value.plazo)),
+      salarioBasico: Number(this.utility.enviarNumero(this.formOferta.value.salarioBasico)),
+      otrosIngresos: Number(this.utility.enviarNumero(this.formOferta.value.otrosIngresos)),
+      comisionesHorasExtras: Number(this.utility.enviarNumero(this.formOferta.value.comisionesHorasExtras)),
+      descuentoNomina: Number(this.utility.enviarNumero(this.formOferta.value.descuentoNomina)),
+      numeroSolicitud: Number(this.numeroSolicitud),
+    }
 
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando información',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+
+    this.ofertaService
+      .recalcularOferta(data)
+      .subscribe((res) => {
+        Swal.close();
+        if (res.data.respuesta == 'OK') {
+          this.getListadoOferta(Number(this.numeroSolicitud));
+          this.getCapacidadPago(Number(this.numeroSolicitud));
+        } else {
+          Swal.fire('Error', res.data.resultado, 'error');
+        }
+      });
+  }
+
+
+  /**
+ * Track by function for ngFor loops
+ *
+ * @param index
+ * @param item
+ */
+  private getTodosFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    };
+    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+      .subscribe(({ data }) => {
+        Swal.close();
+        this.datosCompletoSolicitud = data;
+        this.llenarDatosFormOferta(data);
+      });
+  }
+
+  private llenarDatosFormOferta(data) {
+    if (data.valorSolicitado) {
+      this.formOferta.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(data.valorSolicitado)));
+    }
+    if (data.plazo) {
+      this.formOferta.controls['plazo'].setValue(this.utility.formatearNumero(String(data.plazo)));
+    }
+    if (data.salarioBasico) {
+      this.formOferta.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(data.salarioBasico)));
+    }
+    if (data.otrosIngresos) {
+      this.formOferta.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(data.otrosIngresos)));
+    }
+    if (data.comisionesHorasExtras) {
+      this.formOferta.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(data.comisionesHorasExtras)));
+    }
+    if (data.descuentoNomina) {
+      this.formOferta.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(data.descuentoNomina)));
+    }
+  }
 }

@@ -17,28 +17,37 @@ export class OfertaService {
    * @description:
    */
   public getListadoOferta(numeroSolicitud: number): Observable<any> {
-    let data={
-      numeroSolicitud:numeroSolicitud
+    let data = {
+      numeroSolicitud: numeroSolicitud
     }
     return this._http.post(this._appSettings.oferta.url.base, data);
   }
 
-    /**
-   * @description:
-   */
-     public getCapacidadPago(numeroSolicitud: number): Observable<any> {
-        let data={
-          numeroSolicitud:numeroSolicitud
-        }
-        return this._http.post(this._appSettings.capacidad.url.base, data);
-      }
-
-      
-    /**
-   * @description:
-   */
-     public SelectOferta(data: any): Observable<any> {
-      
-      return this._http.post(this._appSettings.oferta.url.postSelectOferta, data);
+  /**
+ * @description:
+ */
+  public getCapacidadPago(numeroSolicitud: number): Observable<any> {
+    let data = {
+      numeroSolicitud: numeroSolicitud
     }
+    return this._http.post(this._appSettings.capacidad.url.base, data);
+  }
+
+
+  /**
+ * @description:
+ */
+  public SelectOferta(data: any): Observable<any> {
+
+    return this._http.post(this._appSettings.oferta.url.postSelectOferta, data);
+  }
+
+
+  /**
+ * @description:
+ */
+  public recalcularOferta(data: any): Observable<any> {
+
+    return this._http.post(this._appSettings.oferta.url.recalcularOferta, data);
+  }
 }

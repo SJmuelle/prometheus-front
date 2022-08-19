@@ -1,8 +1,10 @@
 <!-- Steps -->
 <ng-container *ngIf="MostrarfabricaDatos">
     <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
-        <form [formGroup]="form">
-            <ng-container [ngSwitch]="currentStep">
+
+        <ng-container [ngSwitch]="currentStep">
+            <!-- formulario de referencia  -->
+            <form [formGroup]="form">
                 <mat-tab *ngIf="currentStep==0">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
@@ -325,13 +327,7 @@
                               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                               </mat-icon>
                           </mat-form-field> -->
-                            <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                              <mat-label>¿Cuánto tiene en efectivo en este momento?</mat-label>
-                              <input matInput type="text" placeholder="" [formControlName]="'dineroEfectivoActual'"
-                                  (keyup)="form.controls['dineroEfectivoActual'].setValue(utility.formatearNumero(form.value.dineroEfectivoActual)); ">
-                              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                              </mat-icon>
-                          </mat-form-field>
+                            <!-- 
                           <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                               <mat-label>¿Cuánto dinero le debe a proveedores?</mat-label>
                               <input matInput type="text" placeholder="" [formControlName]="'dineroProveedores'"
@@ -359,129 +355,6 @@
 
                     </div>
 
-
-                </mat-tab>
-
-                <mat-tab *ngIf="currentStep==3">
-
-                    <div
-                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
-                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            Cálculo
-                        </h2>
-
-                        <div class="grid grid-cols-2">
-                            <div class="flex">
-                                campos
-                            </div>
-                            <div class="flex flex-col">
-                                <div *ngIf="capacidadPago$ | async as capacidadPago">
-                                    <div class="flex flex-col items-start mt-8">
-                                        <div class="text-xl font-medium">Capacidad de pago</div>
-                                        <!-- <div
-                                            class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-green-600">
-                                            XLS </div> -->
-                                    </div>
-                                    <ng-container *ngFor="let item of capacidadPago.data; let i = index">
-                                        <div class="flex flex-col mt-4 border-t border-b divide-y font-medium">
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Disponible cuota</div>
-                                                <div>
-                                                    <ng-container *ngIf="item.disponibleCuota">
-                                                        $
-                                                        {{
-                                                        item.disponibleCuota | number
-                                                        }}
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary"> Monto solicitado</div>
-                                                <div>${{ item.monto | number }}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Plazo</div>
-                                                <div>{{ item.plazo }} meses</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Tasa</div>
-                                                <div> {{ item.tasa }} %</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Salario básico</div>
-                                                <div> ${{ item.salarioBasico | number }}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Comisiones extras</div>
-                                                <div> ${{ item.comisionesHorasExtras | number}} </div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Descuentos de ley</div>
-                                                <div>$ {{ item.descuentosLey |number}}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Ingresos brutos</div>
-                                                <div> ${{ item.ingresosBrutos|number }}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">50% ingresos brutos</div>
-                                                <div> ${{ item.mitadIngresosBrutos }}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Factor embargo</div>
-                                                <div> ${{ item.factorEmbargo }}</div>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                </div>
-                                <div *ngIf="listadoOferta$ | async as listadoOferta" class="flex gap-10 zoom1">
-                                    <ng-container *ngFor="let item of listadoOferta.data; let i = index">
-                                        <div class="flex flex-col mt-2 border-t border-b divide-y font-medium">
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Valor estimado a desembolsar:</div>
-                                                <div>
-                                                    <ng-container *ngIf="item.valorDesembolsar">
-                                                        <b>${{item.valorDesembolsar | number}}
-                                                        </b>
-                                                    </ng-container>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary"> Cuotas</div>
-                                                <div>${{ item.cuotas | number }}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Plazo</div>
-                                                <div>{{ item.plazo }} meses </div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Tasa</div>
-                                                <div> {{ item.tasa }} %</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary">Garantía:</div>
-                                                <div>${{ item.garantia | number }}</div>
-                                            </div>
-                                            <div class="flex items-center justify-between">
-                                                <div class="text-secondary"> Cartera mora:</div>
-                                                <div>${{ item.carteraMora | number }}</div>
-                                            </div>
-                                        </div>
-
-                                    </ng-container>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-                            <button mat-raised-button color="secundary" type="button" (click)="onPostDatos()">
-                                Recalculae
-                            </button>
-                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
-                                Guardar
-                            </button>
-                        </div>
-                    </div>
 
                 </mat-tab>
 
@@ -528,7 +401,211 @@
                     </div>
 
                 </mat-tab>
-            </ng-container>
-        </form>
+            </form>
+            <!-- formualrio de la oferta  -->
+            <form [formGroup]="formOferta">
+                <mat-tab *ngIf="currentStep==3">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md ssm:text-xl  tracking-tight truncate font-bold">
+                            Ofertas Y capacidad de pagos
+                        </h2>
+
+                        <div class="grid grid-cols-2">
+                            <div class="flex gap-3">
+                                <div class="bg-accent-100 flex flex-col w-9/12">
+                                    <mat-form-field class="w-100 px-3 fuse-mat-dense">
+                                        <mat-label>Monto solicitido</mat-label>
+                                        <input matInput type="text" placeholder="" [formControlName]="'valorSolicitado'"
+                                            (keyup)="formOferta.controls['valorSolicitado'].setValue(utility.formatearNumero(formOferta.value.valorSolicitado)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100 px-3 fuse-mat-dense">
+                                        <mat-label>Plazo</mat-label>
+                                        <input matInput type="text" placeholder="" [formControlName]="'plazo'"
+                                            (keyup)="formOferta.controls['plazo'].setValue(utility.formatearNumero(formOferta.value.plazo)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100 px-3 fuse-mat-dense">
+                                        <mat-label>Salario básico</mat-label>
+                                        <input matInput type="text" placeholder="" [formControlName]="'salarioBasico'"
+                                            (keyup)="formOferta.controls['salarioBasico'].setValue(utility.formatearNumero(formOferta.value.salarioBasico)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100 px-3 fuse-mat-dense">
+                                        <mat-label>Otros ingresos</mat-label>
+                                        <input matInput type="text" placeholder="" [formControlName]="'otrosIngresos'"
+                                            (keyup)="formOferta.controls['otrosIngresos'].setValue(utility.formatearNumero(formOferta.value.otrosIngresos)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100 px-3 fuse-mat-dense">
+                                        <mat-label>Comisiones por horas extras</mat-label>
+                                        <input matInput type="text" placeholder=""
+                                            [formControlName]="'comisionesHorasExtras'"
+                                            (keyup)="formOferta.controls['comisionesHorasExtras'].setValue(utility.formatearNumero(formOferta.value.comisionesHorasExtras)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-100 px-3 fuse-mat-dense">
+                                        <mat-label>Descuento de nomina</mat-label>
+                                        <input matInput type="text" placeholder="" [formControlName]="'descuentoNomina'"
+                                            (keyup)="formOferta.controls['descuentoNomina'].setValue(utility.formatearNumero(formOferta.value.descuentoNomina)); ">
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="flex items-center justify-items-center">
+                                    <button mat-fab class=" bg-green-500"
+                                        (click)="recalcularOferta()" matTooltip="Recalcular oferta">
+                                        <mat-icon svgIcon="heroicons_outline:refresh"></mat-icon>
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <div class="flex flex-col">
+                                <div *ngIf="capacidadPago$ | async as capacidadPago"
+                                    class="cardBorder relative rounded-xl">
+                                    <div class="flex flex-col items-center mt-1 w-full spanFlotante">
+                                        <div class="bg-blue-700 text-xl font-medium px-3 rounded-2xl text-white">
+                                            Capacidad de pago</div>
+                                    </div>
+                                    <ng-container *ngFor="let item of capacidadPago.data; let i = index">
+                                        <div class="flex flex-col divide-y font-medium m-3">
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">
+                                                    <mat-icon class="icon-size-5 text-green-600"
+                                                        [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                    Disponible cuota
+                                                </div>
+                                                <div>
+                                                    <ng-container *ngIf="item.disponibleCuota">
+                                                        $
+                                                        {{
+                                                        item.disponibleCuota | number
+                                                        }}
+                                                    </ng-container>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">
+                                                    <mat-icon class="icon-size-5 text-green-600"
+                                                        [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                    Monto solicitado
+                                                </div>
+                                                <div>${{ item.monto | number }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Plazo</div>
+                                                <div>{{ item.plazo }} meses</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Tasa</div>
+                                                <div> {{ item.tasa | number:'1.2-2' }} %</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Salario básico</div>
+                                                <div> ${{ item.salarioBasico | number }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Comisiones extras</div>
+                                                <div> ${{ item.comisionesHorasExtras | number}} </div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Descuentos de ley</div>
+                                                <div>$ {{ item.descuentosLey |number}}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Ingresos brutos</div>
+                                                <div> ${{ item.ingresosBrutos|number }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">50% ingresos brutos</div>
+                                                <div> ${{ item.mitadIngresosBrutos }}</div>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="text-secondary">Factor embargo</div>
+                                                <div> ${{ item.factorEmbargo }}</div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div *ngIf="listadoOferta$ | async as listadoOferta">
+                                    <div class="grid grid-cols-2 gap-3 pt-4 ">
+                                        <ng-container *ngFor="let item of listadoOferta.data; let i = index ">
+                                            <div class="cardBorder relative rounded-xl">
+                                                <div class="flex flex-col items-center mt-1 w-full spanFlotante">
+                                                    <div
+                                                        class="bg-blue-700 text-xl font-medium px-3 rounded-2xl text-white">
+                                                        Oferta</div>
+                                                </div>
+
+                                                <div class="p-3 flex flex-col mt-2 divide-y font-medium">
+                                                    <div class="flex flex-col items-center justify-center">
+                                                        <button [disabled]="item.seleccionada == 'S'"
+                                                            class="fuse-mat-button" mat-flat-button [color]="'primary'"
+                                                            (click)="SelectOferta(item)">
+                                                            Seleccionar
+                                                        </button>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary">Valor estimado a desembolsar:</div>
+                                                        <div>
+                                                            <ng-container *ngIf="item.valorDesembolsar">
+                                                                <b>${{item.valorDesembolsar | number}}
+                                                                </b>
+                                                            </ng-container>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary"> Cuotas</div>
+                                                        <div>${{ item.cuotas | number }}</div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary">Plazo</div>
+                                                        <div>{{ item.plazo }} meses </div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary">Tasa</div>
+                                                        <div> {{ item.tasa | number:'1.2-2' }} %</div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary">Garantía:</div>
+                                                        <div>${{ item.garantia | number }}</div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary"> Cartera mora:</div>
+                                                        <div>${{ item.carteraMora | number }}</div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary">Cartera a pagar</div>
+                                                        <div>$ {{ item.carteraPagar }}</div>
+                                                    </div>
+                                                    <div class="flex  items-center justify-between">
+                                                        <div class="text-secondary">Saldo a recoger</div>
+                                                        <div>${{ item.garantia | number }}</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </mat-tab>
+            </form>
+
+        </ng-container>
+
+
     </mat-tab-group>
 </ng-container>
