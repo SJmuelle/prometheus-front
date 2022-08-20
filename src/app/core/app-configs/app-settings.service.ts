@@ -231,13 +231,23 @@ export class AppSettingsService {
         }
     };
 
-        /**
+    /**
+* @description: End-point agenda decision
+*/
+    public capacidad = {
+        url: {
+            base: EndPoints.uri('/generic/obtener-capacidad-pago'),
+
+        }
+    };
+
+    /**
     * @description: End-point agenda decision
     */
-         public capacidad = {
-            url: {
-                base: EndPoints.uri('/generic/obtener-capacidad-pago'),
+    public busquedaEntidadFinanciera = {
+        url: {
+            base: EndPoints.uri('/generic/obtener-nombre-entidades'),
 
-            }
-        };
+        }
+    };
 }

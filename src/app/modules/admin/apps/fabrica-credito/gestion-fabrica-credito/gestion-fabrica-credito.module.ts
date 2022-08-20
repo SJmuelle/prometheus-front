@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { GestionFabricaCreditoRoutingModule } from './gestion-fabrica-credito-routing.module';
 import { FormGestionFabricaCreditoComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-credito.component';
@@ -104,7 +105,7 @@ import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-d
         FuseCardModule,
         MatRadioModule,
         FormsModule,
-        
+        MatAutocompleteModule
     ],
 
     exports: [

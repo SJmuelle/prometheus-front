@@ -76,8 +76,9 @@
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera" (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
+                                    <mat-option value="NEG">Negociar</mat-option>
                                 </mat-select>
-                            </mat-form-field>
+                            </mat-form-field> 
                         </td>
                         <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
@@ -144,7 +145,7 @@
             </ng-container>
         </tbody>
     </table>
-            <div class="my-30" *ngIf="totales.contadorGestiones!=0 || agenda_fabrica.tipoCredito =='CO'">
+            <div class="my-30" *ngIf="agenda_fabrica.tipoCredito =='CO'">
                 <div class="flex justify-center mb-4">
                     <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
                         Enviar a gestionar carteras

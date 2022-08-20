@@ -150,12 +150,22 @@ export class GenericasService {
         const params: string = 'TIPO-COMPRA';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
-    
-      /**
-   * @description: Obtiene listado de tipos de Paretensco
-   */
-       public getParetensco(): Observable<any> {
+
+    /**
+ * @description: Obtiene listado de tipos de Paretensco
+ */
+    public getParetensco(): Observable<any> {
         const params: string = 'PARENTESCO';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
+    * @description:
+    */
+    public postBusquedaEntidadFinanciera(nombre: string): Observable<any> {
+        let data = {
+            nombreEntidad: nombre
+        }
+        return this._http.post(this._appSettings.busquedaEntidadFinanciera.url.base, data);
     }
 }

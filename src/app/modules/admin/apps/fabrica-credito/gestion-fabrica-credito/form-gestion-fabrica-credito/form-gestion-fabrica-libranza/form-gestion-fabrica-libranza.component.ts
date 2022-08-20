@@ -331,7 +331,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             &&
             this.validarCampos(this.form.value.comisionesHorasExtras, comisionesHorasExtrasAnterior)
             &&
-            this.validarCampos(this.form.value.comisionesHorasExtras, comisionesHorasExtrasAnterior)
+            this.validarCampos(this.form.value.descuentoNomina, descuentoNominaAnterior)
             &&
             this.validarCampos(this.form.value.otrosIngresos, otrosIngresosAnterior)
             &&
@@ -765,6 +765,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     'Información guardada con éxito',
                     'success'
                 );
+                    setTimeout(() => {
+                        location.reload()
+                    }, 1000);
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
                 Swal.fire({
