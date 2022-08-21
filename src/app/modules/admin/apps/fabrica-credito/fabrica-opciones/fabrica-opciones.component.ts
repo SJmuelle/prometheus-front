@@ -135,6 +135,15 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     this.minimizarComentarios = !event;
     this.verComentarios = event;
   }
+  
+  /**
+* @description:
+*/
+  public onCerrar(event): void {
+    this.verComentarios = event;
+    this.minimizarComentarios = event;
+  }
+
   /**
 * @description:
 */
