@@ -179,7 +179,11 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
                     minWidth: '30%',
                     minHeight: '30%',
-                    data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
+                    data:{ 
+                        numeroSolicitud: this.numeroSolicitud, 
+                        etapa: 1, 
+                        idAgenda:this.agenda_fabrica,     
+                      },
                     disableClose: false,
                 });
                 dialogRef.afterClosed().toPromise().then(() => {

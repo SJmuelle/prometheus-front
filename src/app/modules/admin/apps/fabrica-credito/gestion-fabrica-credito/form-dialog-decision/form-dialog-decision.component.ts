@@ -22,6 +22,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     mostrarAccion: boolean;
     mostrarCupo: boolean;
     tituloModal: string;
+    listadoAgenda: any;
     constructor(
         private fb: FormBuilder,
         private decisionService: DecisionService,
@@ -38,6 +39,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         this.getDecision();
         this.escuchaObservable();
         this.getCausal();
+        console.log(this.data)
+        this.getTipoComentario(this.data.idAgenda)
         this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
         switch (this.data.etapa) {
             case 1:
@@ -58,6 +61,22 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
 
                 break;
         }
+    }
+
+
+    /**
+* @description: Obtiene el listado de agenda de completacion
+*/
+    private getTipoComentario(agenda:string): void {
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.decisionService.getAgendasFabrica(agenda).subscribe((res) => {
+            // Swal.close();
+            if (res.status === 200) {
+                this.listadoAgenda = res.data;
+            } else {
+                this.listadoAgenda = {};
+            }
+        });
     }
     /**
      * @description: Cierra el dialogo
@@ -92,8 +111,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         case 1:
                             let data_cambioEstado = {
                                 numeroSolicitud: data.numeroSolicitud,
-                                estado: 'PA',
-                                subestado: 'FR',
+                                estado: this.listadoAgenda.estadoSgte,
+                                subestado: this.listadoAgenda.subEstadoSgte,
                                 comentario: data.comentario
                             }
                             //validacion del servicio
@@ -108,8 +127,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         case 2:
                             this.postCambioEstado({
                                 numeroSolicitud: data.numeroSolicitud,
-                                estado: 'PA',
-                                subestado: 'FC',
+                                estado: this.listadoAgenda.estadoAnterior,
+                                subestado: this.listadoAgenda.subEstadoAnterior,
                                 comentario: data.comentario
                             })
                             break;
@@ -309,7 +328,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             text: respuesta.text,
         }).then((result) => {
             if (result.isConfirmed) {
-               
+
             }
         });
         setTimeout(() => {

@@ -32,6 +32,13 @@ export class DecisionService {
   }
 
   /**
+* @description:post de cmabio de estado
+*/
+  public getAgendasFabrica(agenda: string): Observable<any> {
+    return this._http.get(`${this._appSettings.decision.url.getAgendasFabrica}/${agenda}`);
+  }
+
+  /**
   * @description:post de validacion Datos
   */
   public postValidacionDatos(data: any): Observable<any> {

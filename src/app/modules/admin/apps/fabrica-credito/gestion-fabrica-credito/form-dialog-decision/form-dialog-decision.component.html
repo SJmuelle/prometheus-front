@@ -15,7 +15,7 @@
                                     <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
                                         {{item.descripcionOpcion}}
                                     </mat-option>
-                                </mat-select>
+                                </mat-select> 
                             </mat-form-field>
                         </ng-container>
                     </div>
@@ -60,7 +60,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" (click)="onGuardar()">
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" >
             Guardar
         </button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
