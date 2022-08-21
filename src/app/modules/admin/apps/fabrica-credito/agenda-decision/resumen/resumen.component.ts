@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -20,6 +20,7 @@ export class ResumenComponent implements OnInit {
   dataPolicitasAdmin: any;
   datos2: any[];
   verComentarios: boolean = false;
+  
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
     private route: ActivatedRoute,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ComentariosService } from "../../../../../../core/services/comentarios.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
@@ -20,6 +20,7 @@ export class GridComentariosComponent implements OnInit {
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public page: number = 1;
     public tamanoTabl = new FormControl('5');
+    @Input() agenda: string;
     constructor(
         private comentariosServices: ComentariosService,
         private route: ActivatedRoute,
@@ -69,7 +70,7 @@ export class GridComentariosComponent implements OnInit {
      * @description: Obtiene los comentarios
      */
     private getComentarios(codigo: string): void {
-        this.comentarios$ = this.comentariosServices.getComentarios(codigo);
+        this.comentarios$ = this.comentariosServices.getComentarios(codigo,this.agenda);
     }
 
     /**

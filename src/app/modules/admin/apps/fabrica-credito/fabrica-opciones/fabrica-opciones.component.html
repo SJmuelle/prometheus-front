@@ -49,7 +49,8 @@
     <ng-container *ngIf="verComentarios">
         <div class="fixed z-999 w-full">
             <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()"
-                (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
+                (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true"
+                [agenda]="fabricaDatos">
             </app-grid-comentarios>
         </div>
     </ng-container>
@@ -66,7 +67,7 @@
         <div class="fixed z-999 w-full">
             <app-grid-devoluciones (cerrarComponente)="onCerrarDevolucion($event);drawerDevoluciones.close()"
                 (minimizarComponente)="onMinimizaDevolucion($event);drawerDevoluciones.close();verDevoluciones=true"
-                [agenda]="agenda_fabrica"></app-grid-devoluciones>
+                [agenda]="fabricaDatos"></app-grid-devoluciones>
         </div>
     </ng-container>
 </fuse-drawer>

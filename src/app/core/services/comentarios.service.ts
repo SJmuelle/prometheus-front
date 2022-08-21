@@ -15,8 +15,8 @@ export class ComentariosService {
   /**
    * @description: Obtiene los comentarios
    */
-  public getComentarios(codigo: string): Observable<any> {
-    return this._http.get(`${this._appSettings.comentarios.url.baseComentario}/${codigo}/CO`);
+  public getComentarios(codigo: string, agenda: string): Observable<any> {
+    return this._http.get(`${this._appSettings.comentarios.url.baseComentario}/${codigo}/${agenda}`);
   }
   /**
    * @description: Crea un comentario

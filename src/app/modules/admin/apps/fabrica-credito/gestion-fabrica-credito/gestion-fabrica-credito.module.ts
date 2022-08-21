@@ -50,6 +50,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-cartera.component';
 import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid-cartera-negociacion.component';
 import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
+import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
 @NgModule({
@@ -105,7 +106,8 @@ import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-d
         FuseCardModule,
         MatRadioModule,
         FormsModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        FabricaOpcionesModule
     ],
 
     exports: [

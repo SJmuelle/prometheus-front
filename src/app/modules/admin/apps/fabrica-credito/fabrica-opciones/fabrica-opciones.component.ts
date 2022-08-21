@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -48,7 +48,6 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     };
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
-
         this.fabricaDatos = data.agenda;
         this.dialogMostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
 
