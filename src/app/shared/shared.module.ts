@@ -20,6 +20,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DirectionsBasicComponent } from './modal/directions-basic/directions-basic.component';
 import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fabrica-opciones.component';
+import { FuseCardModule } from '@fuse/components/card';
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { MatTooltipModule } from '@angular/material/tooltip';
+// import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
 @NgModule({
     imports: [
@@ -41,6 +45,11 @@ import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fab
         MatRadioModule,
         MatFormFieldModule,
         MatCardModule,
+        FuseDrawerModule,
+        FuseCardModule,
+        MatTooltipModule,
+        // FabricaCreditoModule
+
     ],
     exports: [
         CommonModule,

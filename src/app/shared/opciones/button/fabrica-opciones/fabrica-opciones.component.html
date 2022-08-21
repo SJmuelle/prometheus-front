@@ -1,24 +1,34 @@
 <!-- Menu -->
 <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
-    <div class="menu">
-        <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" [ngClass]="animacionVer==true?'show':'hidden'"
-            matTooltip="Ir atrás">
+    <div class="menu ">
+        <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" (click)="irAtras()"
+            [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atrás">
             <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
         </button>
-        <ng-container>
-            <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
-                [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Centrales">
-                <mat-icon svgIcon="heroicons_outline:chart-pie"></mat-icon>
-            </button>
-        </ng-container>
+        <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
+            (click)="verCentrales = true;drawerCentrales.toggle();" [ngClass]="animacionVer==true?'show':'hidden'"
+            matTooltip="Centrales">
+            <mat-icon svgIcon="heroicons_outline:chart-pie"></mat-icon>
+        </button>
 
-        <button mat-fab class="mx-1 bg-amber-500 roll-in-blurred-right" [ngClass]="animacionVer==true?'show':'hidden'"
+        <button mat-fab class="mx-1 bg-amber-500 roll-in-blurred-right"
+            (click)="verComentarios = true;settingsDrawer.toggle();"
+            [ngClass]="[animacionVer==true?'show':'hidden',(verComentarios==true?'bounce-top':'')]"
             matTooltip="Comentario">
             <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
         </button>
         <ng-container>
+            <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
+                [ngClass]="animacionVer==true?'show':'hidden'"
+                matTooltip="{{dialogMostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
+                <mat-icon [svgIcon]="dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'">
+                </mat-icon>
+                <!-- <mat-icon svgIcon="next_plan"></mat-icon> -->
+            </button>
+
             <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
-                [ngClass]="animacionVer==true?'show':'hidden'">
+                (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
+                [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]">
                 <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
             </button>
         </ng-container>
@@ -29,3 +39,54 @@
     </div>
 
 </div>
+
+
+
+<fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
+    [position]="'right'" #settingsDrawer>
+    <ng-container *ngIf="verComentarios">
+        <div class="fixed z-999 w-full">
+            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()"
+                (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
+            </app-grid-comentarios>
+        </div>
+    </ng-container>
+</fuse-drawer>
+<ng-container *ngIf="minimizarComentarios">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" [matTooltip]="'Restaura ventana comentarios'"
+        (click)="verComentarios = true;settingsDrawer.toggle()">
+        <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
+    </button>
+</ng-container>
+<fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'"
+    [name]="'drawerDevoluciones'" [position]="'right'" #drawerDevoluciones>
+    <ng-container *ngIf="verDevoluciones">
+        <div class="fixed z-999 w-full">
+            <app-grid-devoluciones (cerrarComponente)="onCerrarDevolucion($event);drawerDevoluciones.close()"
+                (minimizarComponente)="onMinimizaDevolucion($event);drawerDevoluciones.close();verDevoluciones=true"
+                [agenda]="agenda_fabrica"></app-grid-devoluciones>
+        </div>
+    </ng-container>
+</fuse-drawer>
+<ng-container *ngIf="minimizarDevoluciones">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
+        [matTooltip]="'Restaura ventana devoluciones'" (click)="verDevoluciones = true;drawerDevoluciones.toggle()">
+        <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
+    </button>
+</ng-container>
+<fuse-drawer class="w-full sm:max-w-1/3 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'drawerCentrales'"
+    [position]="'right'" #drawerCentrales>
+    <ng-container *ngIf="verCentrales">
+        <div class="fixed z-999 w-full">
+            <app-grid-centrales (cerrarComponente)="onCerrar($event);drawerCentrales.close()"
+                (minimizarComponente)="onMinimiza($event);drawerCentrales.close(); verCentrales = true">
+            </app-grid-centrales>
+        </div>
+    </ng-container>
+</fuse-drawer>
+<ng-container *ngIf="minimizarCentrales">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" [matTooltip]="'Restaura ventana Centrales'"
+        (click)="verComentarios = true;drawerCentrales.toggle()">
+        <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
+    </button>
+</ng-container>
