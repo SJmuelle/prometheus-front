@@ -20,7 +20,18 @@ export class GridCarteraComponent implements OnInit {
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
-  totales: any;
+  // totales: any = {};
+  totales: {
+    contadorAlDia: number;
+    contadorGestiones: number;
+    contadorMora: number;
+    sumaTotal: number;
+    tipo: number;
+    valorDisponible: number;
+    valorRestante: number; 
+    valorSolicitado: number; 
+    verificacion: string;
+  };
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
@@ -29,7 +40,7 @@ export class GridCarteraComponent implements OnInit {
 
   ) {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion)
-   
+
   }
 
   ngOnInit() {
@@ -59,7 +70,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
-        this.totales=res.data
+        this.totales = res.data
 
       });
 

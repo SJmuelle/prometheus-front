@@ -1,19 +1,15 @@
 <div class="min-h-60" *ngIf="agenda_fabrica">
     <div class="grid grid-cols-6">
         <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
-            <!-- <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:mail'"></mat-icon> -->
             <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
-            <ng-container *ngIf="listadoCartera$ | async as items; else hola">
-                <div class="flex flex-col" *ngFor="let item of items.data | paginate: { itemsPerPage: 1, currentPage: page } ">
-
-                    <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
-                    <div class="text-1xl font-semibold leading-tight text-center mt-1.5">
-                        {{items.data[0].nombreCompleto}}
-                    </div>
-                    <div class="text-1xl  text-secondary text-center"> {{items.data[0].email}}</div>
-                    <div class="text-1xl  text-green-600 text-center">{{items.data[0].tipoCredito}}</div>
+            <div class="flex flex-col">
+                <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center mt-1.5">
+                    {{agenda_fabrica.nombreCompleto}}
                 </div>
-            </ng-container>
+                <div class="text-1xl  text-secondary text-center"> {{agenda_fabrica.email}}</div>
+                <div class="text-1xl  text-green-600 text-center">{{agenda_fabrica.tipoCredito}}</div>
+            </div>
         </fuse-card>
         <div class="pl-2" *ngIf="totales">
             <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
@@ -25,21 +21,17 @@
                 <div class="flex flex-col items-center ">
                     <div class="text-2xl font-bold tracking-tight leading-none">
                         {{totales.contadorGestiones|number}}
-                     </div>
-                     <div class="text-md font-medium truncate">No. de gestiones</div>
-                    <div class="text-2xl font-bold tracking-tight leading-none mt-2">
-                       ${{totales.sumaTotal|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">No. de gestiones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2"
+                        [ngClass]="totales.valorDisponible>totales.sumaTotal?'text-green-700':'text-red-600'">
+                        ${{totales.sumaTotal|number}}
                     </div>
                     <div class="text-md font-medium truncate">Total en gestiones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2">
                         ${{totales.valorDisponible|number}}
-                     </div>
-                     <div class="text-md font-medium truncate">Valor disponible</div>
-                     <!-- <div class="text-2xl font-bold tracking-tight leading-none">
-                        ${{totales.valorSolicitado |number}}
-                     </div>
-                     <div class="text-md font-medium truncate">Valor solicitado</div> -->
-
+                    </div>
+                    <div class="text-md font-medium truncate">Valor disponible</div>
                 </div>
                 <div class="flex items-center justify-center w-full text-secondary mt-1">
                 </div>
@@ -67,18 +59,19 @@
                 <th class="px-4 py-3 text-center">Estado</th>
             </tr>
         </thead>
-        <tbody class="bg-white">
-            <ng-container *ngIf="listadoCartera$ | async as items">
+        <tbody class="bg-white" *ngIf="totales.contadorMora!==0">
+            <ng-container *ngIf="(listadoCartera$ | async) as items;">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
-                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera" (ngModelChange)="cambioEstado($event,item)">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
                                 </mat-select>
-                            </mat-form-field> 
+                            </mat-form-field>
                         </td>
                         <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
@@ -86,16 +79,30 @@
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="text-sm border w-0">
                             <div class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
-                                item.alDia === 'f'
-                                    ? 'bg-red-300  text-red-900'
-                                    : 'bg-green-300 text-green-900'
-                                    ">
+                                    item.alDia === 'f'
+                                        ? 'bg-red-300  text-red-900'
+                                        : 'bg-green-300 text-green-900'
+                                        ">
                                 EN MORA
                             </div>
                         </td>
                     </tr>
                 </ng-container>
             </ng-container>
+        </tbody>
+        <tbody *ngIf="totales.contadorMora===0">
+            <tr>
+                <th colspan="6">
+                    <div class="flex justify-center">
+                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" class="text-center">
+                    <span>No hay obligaciones en mora</span>
+                </th>
+            </tr>
         </tbody>
     </table>
     <hr class="shadow">
@@ -116,13 +123,14 @@
                 <th class="px-4 py-3 text-center">Estado</th>
             </tr>
         </thead>
-        <tbody class="bg-white">
-            <ng-container *ngIf="listadoCartera$ | async as items">
+        <tbody class="bg-white" *ngIf="totales.contadorAlDia!==0">
+            <ng-container *ngIf="listadoCartera$ | async as items;">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
                         <td class="px-0 text-sm border text-left">
                             <mat-form-field class="p-0 w-full mt-0 marginInput">
-                                <mat-select [(ngModel)]="item.gestionCartera" (ngModelChange)="cambioEstado($event,item)">
+                                <mat-select [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
@@ -144,12 +152,26 @@
                 </ng-container>
             </ng-container>
         </tbody>
+        <tbody *ngIf="totales.contadorAlDia===0">
+            <tr>
+                <th colspan="6">
+                    <div class="flex justify-center">
+                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" class="text-center">
+                    <span>No hay obligaciones al día</span>
+                </th>
+            </tr>
+        </tbody>
     </table>
-            <div class="my-30" *ngIf="agenda_fabrica.tipoCredito =='CO'">
-                <div class="flex justify-center mb-4">
-                    <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
-                        Enviar a gestionar carteras
-                    </button>
-                </div>
-            </div>
+    <div class="my-30" *ngIf=" totales.contadorGestiones!==0 && agenda_fabrica.tipoCredito =='CO'">
+        <div class="flex justify-center mb-4">
+            <button mat-raised-button color="accent" type="button" (click)="pasar_negociar()">
+                Enviar a gestionar carteras
+            </button>
+        </div>
+    </div>
 </div>

@@ -18,9 +18,19 @@ export class GridCarteraNegociacionComponent implements OnInit {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
 
   public listadoCartera$: Observable<any>;
-  agenda_fabrica: any;
-  TotalSaldo: number=0;
-  totales: any;
+  public agenda_fabrica: any;
+  public TotalSaldo: number=0;
+  public totales: {
+    contadorAlDia: number;
+    contadorGestiones: number;
+    contadorMora: number;
+    sumaTotal: number;
+    tipo: number;
+    valorDisponible: number;
+    valorRestante: number; 
+    valorSolicitado: number; 
+    verificacion: string;
+  };
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,

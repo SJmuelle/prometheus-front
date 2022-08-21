@@ -139,7 +139,7 @@
                                                     </button>
                                                         </div>
                                                     </ng-container>
-                                                <ng-container *ngIf="item.unidadNegocioFabrica ==='32'">
+                                                <ng-container *ngIf="item.unidadNegocioFabrica ===32">
                                                     <div class="py-0 text-sm ">
                                                         <button mat-icon-button (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
                                                     <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
@@ -198,7 +198,7 @@
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
-                                            <ng-container *ngIf="item.unidadNegocioFabrica ==='32'">
+                                            <ng-container *ngIf="item.unidadNegocioFabrica ===32">
                                                     <span class="text-md text-black font-medium" matTooltip="Asesor">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{ item.asesor}}

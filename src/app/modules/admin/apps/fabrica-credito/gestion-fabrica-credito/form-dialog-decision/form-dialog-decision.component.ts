@@ -64,6 +64,10 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      */
     public onCerrar(): void {
         this._dialog.close();
+
+        // setTimeout(() => {
+        //     location.reload()
+        // }, 2000);
     }
     /**
      * @description: Guarda una decision
@@ -305,9 +309,12 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             text: respuesta.text,
         }).then((result) => {
             if (result.isConfirmed) {
-                this.onCerrar();
+               
             }
         });
+        setTimeout(() => {
+            this.onCerrar();
+        }, 1000);
     }
 
     get requeridoCupo(): any {
