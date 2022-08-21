@@ -4,6 +4,7 @@ import { FabricaCreditoRoutingModule } from './fabrica-credito-routing.module';
 import {MatListModule} from '@angular/material/list';
 import localEs from '@angular/common/locales/es';
 import {registerLocaleData} from '@angular/common';
+import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.component';
 registerLocaleData(localEs,'es')
 @NgModule({
   declarations: [

@@ -33,6 +33,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
 import { FormDecisionComponent } from './form-decision/form-decision.component';
+import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { FormDecisionComponent } from './form-decision/form-decision.component';
   ],
   imports: [
     CommonModule,
+    FabricaOpcionesModule,
     AgendaDecisionRoutingModule,
     FormsModule,
     MatTabsModule,

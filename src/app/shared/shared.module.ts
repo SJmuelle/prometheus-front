@@ -19,7 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DirectionsBasicComponent } from './modal/directions-basic/directions-basic.component';
-import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fabrica-opciones.component';
+// import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fabrica-opciones.component';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -70,11 +70,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatRadioModule,
         MatFormFieldModule,
         MatCardModule,
-        FabricaOpcionesComponent
     ],
     declarations: [
     DirectionsBasicComponent,
-    FabricaOpcionesComponent
   ],
 })
 export class SharedModule {}

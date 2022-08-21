@@ -44,6 +44,7 @@
 
 <fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
     [position]="'right'" #settingsDrawer>
+    hola
     <ng-container *ngIf="verComentarios">
         <div class="fixed z-999 w-full">
             <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()"

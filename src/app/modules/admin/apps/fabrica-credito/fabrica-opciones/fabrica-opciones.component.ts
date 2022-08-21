@@ -86,47 +86,84 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         this.redireccionar('trazabilidad');
         break;
     }
-    
-  }
-
-    /**
-     * @description: Modal de decision
-     */
-     public onDialogoDecision(): void {
-      let dialogRef;
-      switch (this.dialogMostrar) {
-          case 'CHECKLIST':
-              dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
-                  minWidth: '60%',
-                  maxHeight: '80%',
-                  data: {
-                      numeroSolicitud: this.numeroSolicitud, 
-                      tipoDocumento: this.fabricaDatos.tipoDocumento,
-                      agenda: this.fabricaDatos.agenda,
-                      unidadNegocio:this.fabricaDatos.unidadNegocio
-                  },
-                  disableClose: false,
-              });
-              dialogRef.afterClosed().toPromise().then(() => {
-                  this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-              });
-              break;
-          case 'SIGUIENTE':
-              dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-                  minWidth: '30%',
-                  minHeight: '30%',
-                  data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
-                  disableClose: false,
-              });
-              dialogRef.afterClosed().toPromise().then(() => {
-                  this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-              });
-              break;
-          default:
-              break;
-      }
 
   }
+
+  /**
+   * @description: Modal de decision
+   */
+  public onDialogoDecision(): void {
+    let dialogRef;
+    switch (this.dialogMostrar) {
+      case 'CHECKLIST':
+        dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
+          minWidth: '60%',
+          maxHeight: '80%',
+          data: {
+            numeroSolicitud: this.numeroSolicitud,
+            tipoDocumento: this.fabricaDatos.tipoDocumento,
+            agenda: this.fabricaDatos.agenda,
+            unidadNegocio: this.fabricaDatos.unidadNegocio
+          },
+          disableClose: false,
+        });
+        dialogRef.afterClosed().toPromise().then(() => {
+          this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+        });
+        break;
+      case 'SIGUIENTE':
+        dialogRef = this._dialog.open(FormDialogDecisionComponent, {
+          minWidth: '30%',
+          minHeight: '30%',
+          data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
+          disableClose: false,
+        });
+        dialogRef.afterClosed().toPromise().then(() => {
+          this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+        });
+        break;
+      default:
+        break;
+    }
+
+  }
+
+  /**
+   * @description: Minimiza el componente comentarios
+   */
+  public onMinimiza(event): void {
+    this.minimizarComentarios = !event;
+    this.verComentarios = event;
+  }
+  /**
+* @description:
+*/
+  public onCerrarCentrales(event): void {
+    this.verCentrales = event;
+    this.minimizarCentrales = event;
+  }
+  /**
+   * @description: Minimiza el componente centrales
+   */
+  public onMinimizaCentrales(event): void {
+    this.minimizarCentrales = !event;
+    this.verCentrales = event;
+  }
+  /**
+ * @description:Cierra el componente de devoluciones
+ */
+  public onCerrarDevolucion(event): void {
+    this.verDevoluciones = event;
+    this.minimizarDevoluciones = event;
+  }
+  /**
+   * @description: Minimiza el componente Devoluciones
+   */
+  public onMinimizaDevolucion(event): void {
+    this.minimizarDevoluciones = !event;
+    this.verDevoluciones = event;
+  }
+
   ngOnDestroy(): void {
     this.unSubscribe$.unsubscribe();
   }

@@ -110,7 +110,9 @@ import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-d
 
     exports: [
         GridReferenciasComponent,
-        GridComentariosComponent
+        GridComentariosComponent,
+        GridCentralesComponent,
+        GridDevolucionesComponent
     ]
 })
 export class GestionFabricaCreditoModule { }

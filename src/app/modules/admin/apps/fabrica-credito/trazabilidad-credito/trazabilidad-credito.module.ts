@@ -23,6 +23,7 @@ import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
 import { DetalleTrazabilidadComponent } from './detalle-trazabilidad/detalle-trazabilidad.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
+import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
     MatTooltipModule,
     FuseFindByKeyPipeModule,
     SharedModule,
-    FuseDrawerModule
+    FuseDrawerModule,
+    FabricaOpcionesModule
   ]
 })
 export class TrazabilidadCreditoModule { }
