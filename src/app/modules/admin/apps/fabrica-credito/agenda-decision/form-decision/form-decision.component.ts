@@ -94,24 +94,24 @@ export class FormDecisionComponent implements OnInit {
         this.dialog.close();
       }
     })
-    setTimeout(() => {
-      this.dialog.close();
-    }, 10000);
+    // setTimeout(() => {
+    //   this.dialog.close();
+    // }, 10000);
     const form = this.DecisionForm.value
-    
-    causal: "1"
-    comentario: "Comentario Comentario Comentario"
-    decision: "R"
-    monto: "9,000"
-    plazo: "89"
-    tasa: "89"
-    let datos = {
-      "numeroSolicitud": 216661,
-      "concepto": "A",
-      "cupo": 500000000,
-      "comentario": "Se aprueba credito",
-      "causal": 1
-    }
+    console.log(form)
+    // causal: "1"
+    // comentario: "Comentario Comentario Comentario"
+    // decision: "R"
+    // monto: "9,000"
+    // plazo: "89"
+    // tasa: "89"
+    // let datos = {
+    //   "numeroSolicitud": 216661,
+    //   "concepto": "A",
+    //   "cupo": 500000000,
+    //   "comentario": "Se aprueba credito",
+    //   "causal": 1
+    // }
     // this.decision.postGuardado(datos).subscribe((response: any)=>{
     //   if (response) {
     //     Swal.fire(

@@ -6,7 +6,7 @@
             <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
         </button>
         <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
-            (click)="verCentrales = true;drawerCentrales.toggle();" 
+            (click)="verCentrales = true;drawerCentrales.toggle();"
             [ngClass]="[animacionVer==true?'show':'hidden',(verCentrales==true?'bounce-top':'')]"
             matTooltip="Centrales">
             <mat-icon svgIcon="heroicons_outline:chart-pie"></mat-icon>
@@ -31,6 +31,14 @@
                 (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
                 [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]">
                 <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
+            </button>
+        </ng-container>
+        <ng-container *ngIf="fabricaDatos.agenda=='DE'">
+            <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
+                (click)="abrirDecision()"
+                [ngClass]="animacionVer==true?'show':'hidden'"
+              >
+                <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
             </button>
         </ng-container>
         <button mat-fab class="mx-3 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
@@ -77,8 +85,8 @@
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>
-<fuse-drawer class="w-full sm:max-w-1/3 min-w-150" fixed transparentOverlay [mode]="'over'" 
-    [name]="'drawerCentrales'" [position]="'right'" #drawerCentrales>
+<fuse-drawer class="w-full sm:max-w-1/3 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'drawerCentrales'"
+    [position]="'right'" #drawerCentrales>
     <ng-container *ngIf="verCentrales">
         <div class="fixed z-999 w-full">
             <app-grid-centrales (cerrarComponente)="onCerrarCentrales($event);drawerCentrales.close()"
@@ -88,8 +96,8 @@
     </ng-container>
 </fuse-drawer>
 <ng-container *ngIf="minimizarCentrales">
-    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" 
-    [matTooltip]="'Restaura ventana Centrales'" (click)="verCentrales = true;drawerCentrales.toggle()">
+    <button mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce" [matTooltip]="'Restaura ventana Centrales'"
+        (click)="verCentrales = true;drawerCentrales.toggle()">
         <mat-icon svgIcon="heroicons_outline:annotation"></mat-icon>
     </button>
 </ng-container>

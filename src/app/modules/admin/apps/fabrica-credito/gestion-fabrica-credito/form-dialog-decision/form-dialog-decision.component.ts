@@ -67,7 +67,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     /**
 * @description: Obtiene el listado de agenda de completacion
 */
-    private getTipoComentario(agenda:string): void {
+    private getTipoComentario(agenda: string): void {
         // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this.decisionService.getAgendasFabrica(agenda).subscribe((res) => {
             // Swal.close();
@@ -213,12 +213,21 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 let respuesta: any = {};
                 switch (res.status) {
                     case 200:
-                        respuesta = {
-                            icon: 'success',
-                            title: 'Mensaje',
-                            text: 'Ha guardo con exito'
-                        };
-                        this.mostrarAlerta(respuesta);
+                        if (res.data.resultado == 'OK') {
+                            respuesta = {
+                                icon: 'success',
+                                title: 'Mensaje',
+                                text: 'Ha cambiado el estado con éxito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }else{
+                            respuesta = {
+                                icon: 'warning',
+                                title: 'Mensaje',
+                                text: res.data.resultado
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }
                         break;
                     case 400:
                         respuesta = {
@@ -275,27 +284,27 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      * @description: redireciona a la grilla de completacion
      */
     private redireccionar() {
-        let agenda='';
+        let agenda = '';
         switch (this.data.idAgenda) {
             case 'CO':
-              agenda='agenda-completion';
-              break;
+                agenda = 'agenda-completion';
+                break;
             case 'CM':
-                agenda='agenda-comercial';
+                agenda = 'agenda-comercial';
                 break;
             case 'RE':
-              agenda='agenda-referencing';
-              break;
+                agenda = 'agenda-referencing';
+                break;
             case 'DE':
-              agenda='agenda-decision';
-              break;
+                agenda = 'agenda-decision';
+                break;
             case 'GC':
-              agenda='agenda-cartera';
-              break;
+                agenda = 'agenda-cartera';
+                break;
             default:
-              agenda='trazabilidad';
-              break;
-          }
+                agenda = 'trazabilidad';
+                break;
+        }
         this.router.navigate([`/credit-factory/${agenda}`]);
     }
     /**
@@ -308,15 +317,27 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 let respuesta: any = {};
                 switch (res.status) {
                     case 200:
-                        respuesta = {
-                            icon: 'success',
-                            title: 'Mensaje',
-                            text: 'Ha cambiado el estado con éxito'
-                        };
-                        this.mostrarAlerta(respuesta);
+                        if (res.data.resultado == 'OK') {
+                            respuesta = {
+                                icon: 'success',
+                                title: 'Mensaje',
+                                text: 'Ha cambiado el estado con éxito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                            setTimeout(() => {
+                                //redireccionar
+                                this.redireccionar()
+                            }, 1000);
+                        }else{
+                            respuesta = {
+                                icon: 'warning',
+                                title: 'Mensaje',
+                                text: res.data.resultado
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }
 
-                        //redireccionar
-                        this.redireccionar()
+
                         break;
                     case 400:
                         respuesta = {
@@ -349,7 +370,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             text: respuesta.text,
         }).then((result) => {
             if (result.isConfirmed) {
-
+                this.onCerrar();
             }
         });
         setTimeout(() => {

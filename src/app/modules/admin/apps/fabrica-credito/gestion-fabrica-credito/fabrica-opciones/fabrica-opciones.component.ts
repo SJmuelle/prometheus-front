@@ -6,6 +6,7 @@ import { FormDialogDecisionComponent } from 'app/modules/admin/apps/fabrica-cred
 import { FormDialogoChecklistComponent } from 'app/modules/admin/apps/fabrica-credito/gestion-fabrica-credito/form-dialogo-checklist/form-dialogo-checklist.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
 
 @Component({
   selector: 'app-fabrica-opciones',
@@ -73,8 +74,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         this.redireccionar('agenda-completion');
         break;
       case 'CM':
-          this.redireccionar('agenda-comercial');
-          break;
+        this.redireccionar('agenda-comercial');
+        break;
       case 'RE':
         this.redireccionar('agenda-referencing');
         break;
@@ -117,10 +118,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         dialogRef = this._dialog.open(FormDialogDecisionComponent, {
           minWidth: '30%',
           minHeight: '30%',
-          data: { 
-            numeroSolicitud: this.numeroSolicitud, 
-            etapa: 1, 
-            idAgenda:this.fabricaDatos.agenda,   
+          data: {
+            numeroSolicitud: this.numeroSolicitud,
+            etapa: 1,
+            idAgenda: this.fabricaDatos.agenda,
           },
           disableClose: false,
         });
@@ -135,13 +136,27 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   }
 
   /**
+     * @description: Modal de decision
+     */
+  public abrirDecision(): void {
+    const dialogRef = this._dialog.open(FormDecisionComponent, {
+      width: '60%',
+      data: {},
+      disableClose: false
+    });
+    dialogRef.afterClosed().subscribe((res) => {
+      location.reload();
+    })
+  }
+
+  /**
    * @description: Minimiza el componente comentarios
    */
   public onMinimiza(event): void {
     this.minimizarComentarios = !event;
     this.verComentarios = event;
   }
-  
+
   /**
 * @description:
 */
