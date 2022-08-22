@@ -165,7 +165,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
         }
       });
       dialogRef.afterClosed().toPromise().then((res) => {
-
+        this.getListadoCartera(Number(this.numeroSolicitud));
       });
     }
 
