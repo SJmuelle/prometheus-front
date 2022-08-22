@@ -56,7 +56,7 @@ export class FormDialogReprogramarComponent implements OnInit, OnDestroy {
     public onCerrar(): void {
         this._matDialog.close(true);
         setTimeout(() => {
-            // location.reload();
+            location.reload();
         }, 1000);
     }
     /**
@@ -87,7 +87,7 @@ export class FormDialogReprogramarComponent implements OnInit, OnDestroy {
             console.log('intentos->'+res.data.numeroIntentos);
             if((res.data.numeroIntentos>=3)&&(res.data.agenda!='CM')){
                 console.log('intentos->'+res.data.numeroIntentos);
-                this.redireccionar('agenda-referencing');
+               
                 setTimeout(() => {
                     this.onCerrar();
                 }, 1000);

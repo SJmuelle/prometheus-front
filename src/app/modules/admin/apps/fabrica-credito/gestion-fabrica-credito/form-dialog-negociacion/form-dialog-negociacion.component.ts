@@ -26,7 +26,7 @@ export class FormDialogNegociacionComponent implements OnInit {
     public utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private comentariosService: ComentariosService,
-    
+
   ) { }
 
   ngOnInit(): void {
@@ -36,9 +36,40 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.identificacion.setValue(this.data.identificacion);
     this.form.controls.idRegistro.setValue(this.data.item.id);
     this.form.controls.resultadoNegociacion.setValue(this.data.evento);
-    this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual)) 
-
+    this.form.controls.porcentajeConsultores.setValue(50);
+    this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual))
+    this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(0+''))
+    this.calcularDescuento();
   }
+
+  /**
+   * @description: 
+   */
+  public calcularDescuento() {
+    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorAComprarNoEditable)))
+    let valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)))
+    let valor = valorAComprarNoEditable - valorAComprar
+    if (valor < 0) {
+      this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(valorAComprarNoEditable + ''))
+      this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(0 + ''))
+    }else{
+      this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(valor + ''))
+    }
+    this.calcularValorConsultores();
+  }
+
+    /**
+   * @description: 
+   */
+  public calcularValorConsultores(){
+    let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
+    let porcentajeConsultores=Number((this.form.value.porcentajeConsultores));
+    let valor=(valorDescuento*(porcentajeConsultores/100));
+    this.form.controls.valorConsultores.setValue(this.utility.formatearNumero(valor + ''));
+  }
+
+
+
   /**
    * @description: Cierra el dialogo
    */
@@ -58,10 +89,11 @@ export class FormDialogNegociacionComponent implements OnInit {
       delete data.valorDescuento;
       delete data.valorConsultores;
       delete data.valorAComprarNoEditable;
+      // delete data.porcentajeConsultores;
       const datosFormularios: any = {
-        valorAComprar:valorAComprar,
-        valorDescuento:valorDescuento,
-        valorConsultores:valorConsultores,
+        valorAComprar: valorAComprar,
+        valorDescuento: valorDescuento,
+        valorConsultores: valorConsultores,
         ...data
       }
       console.log(datosFormularios);
@@ -99,7 +131,8 @@ export class FormDialogNegociacionComponent implements OnInit {
         nombreNegociador: ['', [Validators.required]],
         celularNegociador: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(11)]],
         fechaLimitePago: ['0099-01-01'],
-        valorAComprarNoEditable:[''],
+        valorAComprarNoEditable: [''],
+        porcentajeConsultores:[50],
         comentarioNegociacion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(800)]],
       });
     } else {
@@ -108,7 +141,8 @@ export class FormDialogNegociacionComponent implements OnInit {
         identificacion: [''],
         idRegistro: [''],
         resultadoNegociacion: [''],
-        valorAComprarNoEditable:[''],
+        valorAComprarNoEditable: [''],
+        porcentajeConsultores:[50],
         valorAComprar: ['', [Validators.required]],
         valorDescuento: ['', [Validators.required]],
         valorConsultores: ['', [Validators.required]],

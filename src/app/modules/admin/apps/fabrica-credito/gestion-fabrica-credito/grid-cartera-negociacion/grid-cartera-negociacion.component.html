@@ -127,7 +127,24 @@
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <!-- Features -->
-                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-y-4 mt-2 ">
+                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Nombre con quien se negoció <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
                                     <div class="flex items-center">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
@@ -150,31 +167,6 @@
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor descuento
                                             <strong>{{item.valorDescuento|number}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">Cartera a pagar
-                                            <strong>${{item.carteraPagar|number}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Nombre del negociador <strong
-                                                class="capitalize">{{item.nombreNegociador}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Celular del negociador <strong>{{item.celularNegociador}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -304,7 +296,24 @@
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
-                                        <div class="ml-2 text-1xl">Valor a comprar
+                                        <div class="ml-2 text-1xl">
+                                            Nombre con quien se negoció <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor a 
                                             <strong>${{item.valorAComprar|number}}</strong>
                                         </div>
                                     </div>
@@ -332,23 +341,7 @@
                                             <strong>${{item.carteraPagar|number}}</strong>
                                         </div>
                                     </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Nombre del negociador <strong
-                                                class="capitalize">{{item.nombreNegociador}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Celular del negociador <strong>{{item.celularNegociador}}</strong>
-                                        </div>
-                                    </div>
+                                 
                                     <div class="flex items-center">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
