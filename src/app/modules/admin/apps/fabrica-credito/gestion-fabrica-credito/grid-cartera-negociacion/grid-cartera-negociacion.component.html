@@ -4,7 +4,7 @@
             <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
             <div class="flex flex-col">
                 <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
-                <div class="text-1xl font-semibold leading-tight text-center mt-1.5">
+                <div class="text-1xl font-semibold leading-tight text-center mt-1.5 capitalize">
                     {{agenda_fabrica.nombreCompleto}}
                 </div>
                 <div class="text-1xl  text-secondary text-center"> {{agenda_fabrica.email}}</div>
@@ -71,7 +71,7 @@
                 <th class="px-4 py-3 text-center"></th>
             </tr>
         </thead>
-        <tbody class="bg-white" *ngIf="totales.contadorMora!==0"}>
+        <tbody class="bg-white" *ngIf="totales.contadorMora!==0">
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
@@ -393,7 +393,7 @@
                 </th>
             </tr>
             <tr>
-                <th colspan="/" class="text-center">
+                <th colspan="7" class="text-center">
                     <span>No hay obligaciones al día</span>
                 </th>
             </tr>

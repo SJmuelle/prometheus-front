@@ -48,7 +48,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     };
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
-        this.fabricaDatos = data.agenda;
+        this.fabricaDatos = data;
         this.dialogMostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
 
       });
@@ -70,12 +70,15 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public irAtras() {
     switch (this.fabricaDatos.agenda) {
       case 'CO':
-        this.redireccionar('agenda-comercial');
+        this.redireccionar('agenda-completion');
         break;
+      case 'CM':
+          this.redireccionar('agenda-comercial');
+          break;
       case 'RE':
         this.redireccionar('agenda-referencing');
         break;
-      case 'CM':
+      case 'DE':
         this.redireccionar('agenda-decision');
         break;
       case 'GC':

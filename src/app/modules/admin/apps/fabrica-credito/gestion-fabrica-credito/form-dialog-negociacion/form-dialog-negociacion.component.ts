@@ -30,11 +30,14 @@ export class FormDialogNegociacionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data)
     this.crearFormulario();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion);
     this.form.controls.idRegistro.setValue(this.data.item.id);
     this.form.controls.resultadoNegociacion.setValue(this.data.evento);
+    this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual)) 
+
   }
   /**
    * @description: Cierra el dialogo
@@ -54,6 +57,7 @@ export class FormDialogNegociacionComponent implements OnInit {
       delete data.valorAComprar;
       delete data.valorDescuento;
       delete data.valorConsultores;
+      delete data.valorAComprarNoEditable;
       const datosFormularios: any = {
         valorAComprar:valorAComprar,
         valorDescuento:valorDescuento,
@@ -95,6 +99,7 @@ export class FormDialogNegociacionComponent implements OnInit {
         nombreNegociador: ['', [Validators.required]],
         celularNegociador: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(11)]],
         fechaLimitePago: ['0099-01-01'],
+        valorAComprarNoEditable:[''],
         comentarioNegociacion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(800)]],
       });
     } else {
@@ -103,6 +108,7 @@ export class FormDialogNegociacionComponent implements OnInit {
         identificacion: [''],
         idRegistro: [''],
         resultadoNegociacion: [''],
+        valorAComprarNoEditable:[''],
         valorAComprar: ['', [Validators.required]],
         valorDescuento: ['', [Validators.required]],
         valorConsultores: ['', [Validators.required]],

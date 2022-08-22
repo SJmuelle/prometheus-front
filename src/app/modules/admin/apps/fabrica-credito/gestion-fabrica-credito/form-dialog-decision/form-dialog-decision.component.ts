@@ -275,7 +275,28 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      * @description: redireciona a la grilla de completacion
      */
     private redireccionar() {
-        this.router.navigate(['/credit-factory/agenda-completion']);
+        let agenda='';
+        switch (this.data.idAgenda) {
+            case 'CO':
+              agenda='agenda-completion';
+              break;
+            case 'CM':
+                agenda='agenda-comercial';
+                break;
+            case 'RE':
+              agenda='agenda-referencing';
+              break;
+            case 'DE':
+              agenda='agenda-decision';
+              break;
+            case 'GC':
+              agenda='agenda-cartera';
+              break;
+            default:
+              agenda='trazabilidad';
+              break;
+          }
+        this.router.navigate([`/credit-factory/${agenda}`]);
     }
     /**
      * @description: Guarda la decision

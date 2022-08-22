@@ -23,8 +23,14 @@
           </div>
           <div class="md:flex">
             <ng-container *ngIf="this.data.evento!='NO EXITOSA'">
-              <mat-form-field class="w-full fuse-mat-dense">
-                <mat-label>Valor a comprar</mat-label>
+              <mat-form-field class="w-1/2 fuse-mat-dense">
+                <mat-label>Valor cartera </mat-label>
+                <input matInput type="text" placeholder="" [formControlName]="'valorAComprarNoEditable'" readonly
+                 
+                >
+              </mat-form-field>
+              <mat-form-field class="w-1/2 fuse-mat-dense">
+                <mat-label>Valor a comprar    </mat-label>
                 <input matInput type="text" placeholder="" [formControlName]="'valorAComprar'"
                 (keyup)="form.controls['valorAComprar'].setValue(utility.formatearNumero(form.value.valorAComprar))" 
                 >

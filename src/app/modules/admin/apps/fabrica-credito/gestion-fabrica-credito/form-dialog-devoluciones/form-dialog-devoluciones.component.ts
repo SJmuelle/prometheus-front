@@ -47,6 +47,8 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
     */
   public onCerrar(): void {
     this._dialog.close();
+    this.redireccionar();
+
   }
 
   public onGuardar(): void {
@@ -64,7 +66,6 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
       }).then((result) => {
         if (result.isConfirmed) {
           this.postDevolucion(data);
-          this.redireccionar();
         }
       });
     } else {
@@ -78,7 +79,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
       recurso: ['ingresar-devolucion-agenda'],
       numeroSolicitud: [''],
       agenda: [''],
-      descripcionCausal:[],
+      descripcionCausal: [],
       idCausal: ['', [Validators.required]],
       observacion: ['', [Validators.required, Validators.minLength(10)]]
     });
@@ -88,7 +89,9 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.devolucionesService.postDevoluciones(data).pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
+
         Swal.close();
+
         this.onCerrar();
       });
   }
@@ -113,10 +116,31 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * @description: redireciona a la grilla de completacion
+   * @description: redireciona a la grilla de la agenda correspondiente
    */
   private redireccionar() {
-    this.router.navigate(['/credit-factory/agenda-completion']);
+    let agenda = '';
+    switch (this.data.agenda) {
+      case 'CO':
+        agenda = 'agenda-completion';
+        break;
+      case 'CM':
+        agenda = 'agenda-comercial';
+        break;
+      case 'RE':
+        agenda = 'agenda-referencing';
+        break;
+      case 'DE':
+        agenda = 'agenda-decision';
+        break;
+      case 'GC':
+        agenda = 'agenda-cartera';
+        break;
+      default:
+        agenda = 'trazabilidad';
+        break;
+    }
+    this.router.navigate([`/credit-factory/${agenda}`]);
   }
 
   ngOnDestroy(): void {
