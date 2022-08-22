@@ -50,7 +50,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-cartera.component';
 import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid-cartera-negociacion.component';
 import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
-import { FabricaOpcionesComponent } from './form-gestion-fabrica-credito/fabrica-opciones/fabrica-opciones.component';
+import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.component';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
