@@ -69,10 +69,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatDialogModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatCardModule,
+        MatCardModule
     ],
     declarations: [
-    DirectionsBasicComponent,
+    DirectionsBasicComponent
   ],
 })
 export class SharedModule {}
