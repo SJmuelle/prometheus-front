@@ -50,7 +50,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-cartera.component';
 import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid-cartera-negociacion.component';
 import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
-import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
+import { FabricaOpcionesComponent } from './form-gestion-fabrica-credito/fabrica-opciones/fabrica-opciones.component';
+// import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
 @NgModule({
@@ -76,7 +77,9 @@ import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.modu
         GridCarteraComponent,
         FormDialogCarteraComponent,
         GridCarteraNegociacionComponent,
-        FormDialogNegociacionComponent
+        FormDialogNegociacionComponent,
+        FabricaOpcionesComponent
+
     ],
     imports: [
         CommonModule,
@@ -107,14 +110,11 @@ import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.modu
         MatRadioModule,
         FormsModule,
         MatAutocompleteModule,
-        FabricaOpcionesModule
+        // FabricaOpcionesModule
     ],
 
     exports: [
-        GridReferenciasComponent,
-        GridComentariosComponent,
-        GridCentralesComponent,
-        GridDevolucionesComponent
+        FabricaOpcionesComponent
     ]
 })
 export class GestionFabricaCreditoModule { }

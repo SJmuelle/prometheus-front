@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 import { GridAgendaDecisionComponent } from './grid-agenda-decision/grid-agenda-decision.component';
 import { ResumenComponent } from './resumen/resumen.component';
 
