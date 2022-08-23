@@ -10,46 +10,9 @@
                         {{estado}}
                     </span>
                 </div>
-
-
-                <!-- >>>aqui -->
-                <div class="menu ">
-                    <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" (click)="irAtras()"
-                        [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atrás">
-                        <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
-                    </button>
-                    <ng-container *ngIf="agenda_fabrica !== 'CM'">
-                        <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
-                            [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Centrales">
-                            <mat-icon svgIcon="heroicons_outline:chart-pie"></mat-icon>
-                        </button>
-                    </ng-container>
-
-                    <button mat-fab class="mx-1 bg-amber-500 roll-in-blurred-right"
-                        (click)="verComentarios = !verComentarios" [disabled]="verComentarios"
-                        [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Comentario">
-                        <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
-                    </button>
-                    <ng-container *ngIf="agenda_fabrica !== 'CM'">
-                        <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
-                            [ngClass]="animacionVer==true?'show':'hidden'"
-                            matTooltip="{{dialog_a_mostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
-                            <mat-icon [svgIcon]="dialog_a_mostrar=='SIGUIENTE'?'next_plan':'check_circle'">
-                            </mat-icon>
-                        </button>
-
-                        <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
-                            [ngClass]="animacionVer==true?'show':'hidden'" (click)="verDevoluciones = !verDevoluciones">
-                            <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
-                        </button>
-                    </ng-container>
-                    <button mat-fab class="mx-3 bg-blue-500" matTooltip="Menú"
-                        (click)="animacionVer=animacionVer==true?false:true">
-                        <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
-                    </button>
-
-                </div>
-
+ 
+                <app-fabrica-opciones></app-fabrica-opciones>
+             
             </div>
         </div>
     </div>
@@ -74,7 +37,7 @@
                 <!-- Cards -->
                 <div
                     class="-mt-16 flex flex-row gap-y-8 justify-center max-w-sm mb-2 md:gap-x-12 md:grid-cols-4 md:max-w-6xl sm:-mt-24 w-full">
-                    <!-- card -->
+                    <!-- card Titutlar-->
                     <ng-container *ngFor="let titular of listado.referenciaTitulo">
                         <div
                             class="w-3/12 relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
@@ -135,7 +98,53 @@
                             </ng-container>
                         </div>
                     </ng-container>
-
+                    <!-- card referenciaLaboral-->
+                    <ng-container
+                        *ngFor="let laboral of listado.referenciaLaboral | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                        <div
+                            class="w-3/12 relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+                            <div class="flex flex-col flex-auto p-8">
+                                <div class="flex flex-wrap">
+                                    <span class="text-xl font-semibold w-screen">
+                                        Referencia laboral
+                                    </span>
+                                    <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                        [ngClass]="laboral.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                        {{laboral.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                    </span>
+                                </div>
+                                <hr class="w-full border-t my-6">
+                                <div class="flex flex-col ">
+                                    <div class="capitalize">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                        </mat-icon> {{laboral.nombreCompleto}}
+                                    </div>
+                                    <div class="text-secondary text-md" *ngIf="laboral.telefono">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>{{laboral.telefono}}
+                                    </div>
+                                    <div class="text-secondary text-md" *ngIf="laboral.email">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
+                                        </mat-icon>{{laboral.email}}
+                                    </div>
+                                    <div class="text-secondary text-md" *ngIf="laboral.direccion">
+                                        <mat-icon class="icon-size-3 mr-2"
+                                            [svgIcon]="'heroicons_solid:location-marker'">
+                                        </mat-icon>{{laboral.direccion}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                <a class="flex items-center" [routerLink]="laboral.identificacion+'/C'">
+                                    <mat-icon class="mr-2 bg-green-500 icon-size-8 text-white"
+                                        [svgIcon]="'heroicons_solid:phone'">
+                                    </mat-icon>
+                                    <span class="font-medium bg-green-500">Llamar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <!-- card referenciaPersonal-->
                     <ng-container
                         *ngFor="let personal of listado.referenciaPersonal | paginate: { itemsPerPage: 1, currentPage: page }">
                         <div
@@ -196,6 +205,7 @@
                             </ng-container>
                         </div>
                     </ng-container>
+                    <!-- card referenciaComercial-->                    
                     <ng-container
                         *ngFor="let comercial of listado.referenciaComercial | paginate: { itemsPerPage: 1, currentPage: pageComercial }">
                         <div
@@ -253,6 +263,7 @@
                             </ng-container>
                         </div>
                     </ng-container>
+                    <!-- card referenciaFamiliar-->                      
                     <ng-container
                         *ngFor="let familiar of listado.referenciaFamiliar | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
                         <div
@@ -290,7 +301,8 @@
                             </div>
                             <div class="bg-gray-200 flex items-center justify-center py-4 px-8 text-primary ">
                                 <a class="flex items-center" [routerLink]="familiar.identificacion+'/C'">
-                                    <mat-icon class="mr-2 bg-gray-200 icon-size-8 text-white" [svgIcon]="'heroicons_solid:phone'">
+                                    <mat-icon class="mr-2 bg-gray-200 icon-size-8 text-white"
+                                        [svgIcon]="'heroicons_solid:phone'">
                                     </mat-icon>
                                     <span class="font-medium bg-gray-200">Llamar</span>
                                 </a>

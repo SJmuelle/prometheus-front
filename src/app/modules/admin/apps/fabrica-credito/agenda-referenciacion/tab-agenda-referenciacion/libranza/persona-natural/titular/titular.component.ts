@@ -64,6 +64,9 @@ export class LibranzaTitularComponent implements OnInit {
   mensajeQuill: any;
   // consulta todos los datos de la solicitud 
   public datosCompletoSolicitud: any;
+  mostrarDepartamento: boolean;
+  mostrarCiudad: boolean;
+  mostrarBarrio: boolean;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -218,7 +221,7 @@ export class LibranzaTitularComponent implements OnInit {
       ciudadResidenciaValida_bool: Boolean,
       comprasSemento: [''],
       correoElectronico: [''],
-      correoElectronicoCorregido: [''],
+      correoElectronicoCorregido: ['', [Validators.email]],
       correoElectronicoValida: [''],
       correoElectronicoValida_bool: Boolean,
       departamentoNegocio: [''],
@@ -295,9 +298,14 @@ export class LibranzaTitularComponent implements OnInit {
       nombreNegocioValida_bool: Boolean,
       referenciaValidada: [""],
       referenciaValidada_bool: Boolean,
-      destinoCredito: [''],
+
       otroDestinoCredito: [''],
       motivoObligaciones: [''],
+
+      destinoCreditoCorregido:[''],
+      destinoCreditoCorregido_bool: Boolean,
+      destinoCredito: [''],
+      descripcionDestinoCredito: ['']
     });
     this.formOferta = this.fb.group({
       valorSolicitado: [''],
@@ -334,24 +342,43 @@ export class LibranzaTitularComponent implements OnInit {
         this.form.patchValue(data);
         if (data.codigoDepartamento) {
           this.getCiudades(data.codigoDepartamento);
+          this.form.controls['departamentoResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'S' ? true : false)
+          this.mostrarDepartamento = true;
+          if (data.ciudadResidencia) {
+            this.getBarrios(data.ciudadResidencia);
+            this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'S' ? true : false)
+            this.mostrarDepartamento = true;
+            this.mostrarCiudad = true;
+          } else {
+            this.form.controls['ciudadResidenciaValida_bool'].setValue(false);
+            this.form.controls['barrioResidenciaValida_bool'].setValue(false);
+          }
+        } else {
+          this.form.controls['departamentoResidenciaValida_bool'].setValue(false);
+          this.form.controls['ciudadResidenciaValida_bool'].setValue(false);
+          this.form.controls['barrioResidenciaValida_bool'].setValue(false);
+          this.mostrarDepartamento = false;
+          this.mostrarCiudad = false;
+          this.mostrarBarrio=false
+          this.mostrarDepartamento = false;
         }
+        if (data.departamentoResidenciaCorregido) {
+          this.getCiudades(data.departamentoResidenciaCorregido);
+          if (data.ciudadResidenciaCorregido) {
+            this.getBarrios(data.ciudadResidenciaCorregido);
+          }
+        }
+
         if (data.codigoDepartamentoNacimiento) {
           this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
         }
-        if (data.codigoDepartamentoNegocio) {
-          this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
-        }
-        if (data.codigoCiudad) {
-          this.getBarrios(data.codigoCiudad);
-        }
-        if (data.codigoCiudadNegocio) {
-          this.getBarriosNegocio(data.codigoCiudadNegocio);
-        }
+
+
         if (data.destinoCredito) {
           this.form.controls['destinoCredito'].setValue(data.destinoCredito);
         }
-        if (data.otroDestinoCredito) {
-          this.form.controls['otroDestinoCredito'].setValue(data.otroDestinoCredito);
+        if (data.destinoCreditoCorregido) {
+          this.form.controls['destinoCreditoCorregido'].setValue(data.destinoCreditoCorregido);
         }
         if (data.antiguedadNegocio) {
           this.form.controls['antiguedadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
@@ -400,14 +427,13 @@ export class LibranzaTitularComponent implements OnInit {
         }
         this.form.controls['antiguedadNegocioValida_bool'].setValue(this.form.value.antiguedadNegocioValida == 'S' ? true : false)
         this.form.controls['barrioNegocioValida_bool'].setValue(this.form.value.barrioNegocioValida == 'S' ? true : false)
-        this.form.controls['barrioResidenciaValida_bool'].setValue(this.form.value.barrioResidenciaValida == 'S' ? true : false)
+        // this.form.controls['barrioResidenciaValida_bool'].setValue(this.form.value.barrioResidenciaValida == 'S' ? true : false)
         this.form.controls['camaraComercio_bool'].setValue(this.form.value.camaraComercio == 'S' ? true : false)
         this.form.controls['camaraComercioValida_bool'].setValue(this.form.value.camaraComercioValida == 'S' ? true : false)
         this.form.controls['ciudadNegocioValida_bool'].setValue(this.form.value.ciudadNegocioValida == 'S' ? true : false)
-        this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'S' ? true : false)
+        // this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'S' ? true : false)
         this.form.controls['correoElectronicoValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
         this.form.controls['departamentoNegocioValida_bool'].setValue(this.form.value.departamentoNegocioValida == 'S' ? true : false)
-        this.form.controls['departamentoResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'S' ? true : false)
         this.form.controls['dineroAhorradoMensualValida_bool'].setValue(this.form.value.dineroAhorradoMensualValida == 'S' ? true : false)
         this.form.controls['direccionNegocioValida_bool'].setValue(this.form.value.direccionNegocioValida == 'S' ? true : false)
         this.form.controls['direccionResidenciaValida_bool'].setValue(this.form.value.direccionResidenciaValida == 'S' ? true : false)
@@ -419,6 +445,7 @@ export class LibranzaTitularComponent implements OnInit {
         this.form.controls['tieneEmpleadoValida_bool'].setValue(this.form.value.tieneEmpleadoValida == 'S' ? true : false)
         this.form.controls['nombreNegocioValida_bool'].setValue(this.form.value.nombreNegocioValida == 'S' ? true : false)
         this.form.controls['referenciaValidada_bool'].setValue(this.form.value.referenciaValidada == 'S' ? true : false)
+        this.form.controls['destinoCreditoCorregido_bool'].setValue(this.form.value.destinoCreditoValida == 'S' ? true : false)
 
       });
   }
