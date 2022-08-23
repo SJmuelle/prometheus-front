@@ -49,7 +49,7 @@ export class DecisionService {
    * @description: Obtiene el listado de causales
    */
   public getCausales(): Observable<any> {
-    return this._http.get(this._appSettings.decision.url.baseCausal);
+    return this._http.get(this._appSettings.decision.url.baseCausalRechazo);
   }
 
 }

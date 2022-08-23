@@ -1,8 +1,13 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
 import { DecisionesService } from 'app/core/services/decisiones.service';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { UtilityService } from 'app/resources/services/utility.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 
@@ -11,8 +16,8 @@ import Swal from 'sweetalert2';
   templateUrl: './form-decision.component.html',
   styleUrls: ['./form-decision.component.scss']
 })
-export class FormDecisionComponent implements OnInit {
-
+export class FormDecisionComponent implements OnInit, OnDestroy {
+  public unSubscribe$: Subject<any> = new Subject<any>();
   DecisionForm: FormGroup;//formulario para hacer las validaciones requeridas
   numPattern: any = /(0|[1-9][0-9]*)$/; // expresion regular para validar que solo se digitan numeros.
   porcenPattern: any = /^((100(\.0{1,2})?)|(\d{1,2}(\.\d{1,2})?))$/; // expresion regular para escribir valores porcentuales.
@@ -29,26 +34,29 @@ export class FormDecisionComponent implements OnInit {
   }
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public fabricaDatos: any,
     private fb: FormBuilder,
+    private router: Router,
     private dialog: MatDialogRef<FormDecisionComponent>,
-    public decision: DecisionesService) {
+    public utility: UtilityService,
+    public _decisionesService: DecisionesService) {
     this.DecisionForm = this.fb.group({
       decision: ['', [Validators.required]],
       causal: [''],
-      monto: ['', [Validators.required, Validators.pattern(this.numPattern), Validators.min(1)]],
-      plazo: ['', [Validators.required, Validators.pattern(this.numPattern), Validators.min(1)]],
-      tasa: ['', [Validators.required, Validators.pattern(this.porcenPattern), Validators.min(1)]],
+      cupo:[''],
       comentario: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(500)]]
     })
   }
 
   ngOnInit() {
     this.consultaDecisiones();
-    this.consultaCausales();
+    debugger;
+    this.DecisionForm.controls['cupo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.cupoTotal)));
   }
 
+
   consultaDecisiones() {
-    this.decision.getOpciones().subscribe((response: any) => {
+    this._decisionesService.getOpciones().subscribe((response: any) => {
       console.log(response);
       if (response) {
         this.listadoDeciones = response.data;
@@ -56,8 +64,16 @@ export class FormDecisionComponent implements OnInit {
     })
   }
 
-  consultaCausales() {
-    this.decision.getCausales().subscribe((response: any) => {
+  private consultaCausalesRechazo() {
+    this._decisionesService.getCausalesRechazo(this.fabricaDatos.numeroSolicitud).subscribe((response: any) => {
+      console.log(response);
+      if (response) {
+        this.listadoCausales = response.data;
+      }
+    })
+  }
+  private consultaCausalesAprobacion() {
+    this._decisionesService.getCausalesAprobacion(this.fabricaDatos.numeroSolicitud, this.DecisionForm.value.decision).subscribe((response: any) => {
       console.log(response);
       if (response) {
         this.listadoCausales = response.data;
@@ -65,69 +81,49 @@ export class FormDecisionComponent implements OnInit {
     })
   }
 
-  /**
-   * @description: convertir a numero el texto que se va digitando
-   */
-  convText(valor) {
-    const { monto } = this.DecisionForm.getRawValue();
-    valor = Number(this.decision.enviarNumero(monto))
-    this.valorNum = valor
-  }
-
-  ocultarCausal(valor) {
-    console.log(valor)
-    if (valor == 'A') {
-      this.visible = false;
-    } else {
-      this.visible = true;
+  public getlistadoCausales() {
+    if (this.DecisionForm.value.decision == 'R') {
+      this.consultaCausalesRechazo();
+    }else{
+      this.consultaCausalesAprobacion();
     }
-
   }
+
+
+
 
   guardar() {
-    Swal.fire(
-      '¡Correcto!',
-      'Se ha gardado exitosamente la decisión.',
-      'success'
-    ).then((result) => {
-      if (result) {
-        this.dialog.close();
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    let datos={
+      numeroSolicitud:this.fabricaDatos.numeroSolicitud,
+      concepto:this.DecisionForm.value.decision,
+      cupo:Number( this.utility.enviarNumero(String(this.DecisionForm.value.cupo))), 
+      comentario:this.DecisionForm.value.comentario,
+      causal:Number(this.DecisionForm.value.causal),
+      unidadNegocio:this.fabricaDatos.unidadNegocio,
+    }
+    this._decisionesService.postGuardado(datos).subscribe((response: any)=>{
+      Swal.close()
+      if (response) {
+        Swal.fire(
+          '¡Correcto!',
+          'Se ha aprobado exitosamente la solicitud.',
+          'success'
+        ).then((result)=>{
+          if(result){
+            this.dialog.close();
+          }
+        })
+        setTimeout(() => {
+          this.dialog.close();
+          this.router.navigate(['/credit-factory/agenda-referencing']);
+        }, 10000);
       }
     })
-    // setTimeout(() => {
-    //   this.dialog.close();
-    // }, 10000);
-    const form = this.DecisionForm.value
-    console.log(form)
-    // causal: "1"
-    // comentario: "Comentario Comentario Comentario"
-    // decision: "R"
-    // monto: "9,000"
-    // plazo: "89"
-    // tasa: "89"
-    // let datos = {
-    //   "numeroSolicitud": 216661,
-    //   "concepto": "A",
-    //   "cupo": 500000000,
-    //   "comentario": "Se aprueba credito",
-    //   "causal": 1
-    // }
-    // this.decision.postGuardado(datos).subscribe((response: any)=>{
-    //   if (response) {
-    //     Swal.fire(
-    //       '¡Correcto!',
-    //       'Se ha aprobado exitosamente la solicitud.',
-    //       'success'
-    //     ).then((result)=>{
-    //       if(result){
-    //         this.dialog.close();
-    //       }
-    //     })
-    //     setTimeout(() => {
-    //       this.dialog.close();
-    //     }, 10000);
-    //   }
-    // })
+  }
+
+  ngOnDestroy(): void {
+    this.unSubscribe$.unsubscribe();
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +17,7 @@ import Swal from 'sweetalert2';
   templateUrl: './grid-tipo-referenciacion.component.html',
   styleUrls: ['./grid-tipo-referenciacion.component.scss']
 })
-export class GridTipoReferenciacionComponent implements OnInit {
+export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
   public unSubscribe$: Subject<any> = new Subject<any>();
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');

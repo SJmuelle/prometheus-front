@@ -140,12 +140,12 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
      */
   public abrirDecision(): void {
     const dialogRef = this._dialog.open(FormDecisionComponent, {
-      width: '60%',
-      data: {},
+      width: '30%',
+      data: this.fabricaDatos,
       disableClose: false
     });
     dialogRef.afterClosed().subscribe((res) => {
-      location.reload();
+      this.irAtras();
     })
   }
 

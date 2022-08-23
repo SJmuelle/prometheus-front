@@ -336,12 +336,13 @@ export class LibranzaTitularComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
+        debugger;
         console.log(data);
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = data
         this.form.patchValue(data);
-        if (data.codigoDepartamento) {
-          this.getCiudades(data.codigoDepartamento);
+        if (data.departamentoResidencia) {
+          this.getCiudades(data.departamentoResidencia);
           this.form.controls['departamentoResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'S' ? true : false)
           this.mostrarDepartamento = true;
           if (data.ciudadResidencia) {
