@@ -122,7 +122,7 @@ export class ResumenComponent implements OnInit {
             icono: "heroicons_outline:library",
             color: "bg-green-100 text-green-800",
             label: "Nombre del negocio:",
-            valor: data.resumenCredito.nombreNegocio.toLowerCase()
+            valor: data.resumenCredito.nombreNegocio
           },
 
           {
@@ -135,7 +135,7 @@ export class ResumenComponent implements OnInit {
             icono: "mat_outline:location_on",
             color: "bg-purple-100 text-purple-800",
             label: "Ubicación del negocio:",
-            valor: data.resumenCredito.departamentoNegocio.toLowerCase() + ", " + data.resumenCredito.ciudadNegocio.toLowerCase()
+            valor: data.resumenCredito.departamentoNegocio + ", " + data.resumenCredito.ciudadNegocio.toLowerCase()
           }
         ]
       },

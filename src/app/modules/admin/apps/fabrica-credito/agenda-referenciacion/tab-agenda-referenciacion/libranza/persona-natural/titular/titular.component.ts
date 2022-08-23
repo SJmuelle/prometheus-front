@@ -305,7 +305,12 @@ export class LibranzaTitularComponent implements OnInit {
       destinoCreditoCorregido:[''],
       destinoCreditoCorregido_bool: Boolean,
       destinoCredito: [''],
-      descripcionDestinoCredito: ['']
+      descripcionDestinoCredito: [''],
+      destinoCreditoValida:[''],
+      fechaNacimiento:[''],
+      fechaNacimientoValida:[''],
+      fechaNacimientoValida_bool: Boolean,
+      fechaNacimientoCorregido:['']
     });
     this.formOferta = this.fb.group({
       valorSolicitado: [''],
