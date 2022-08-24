@@ -59,6 +59,9 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       case 'T':
         this.titulo = "titular"
         break;
+      case 'L':
+        this.titulo = "Laboral"
+        break;
       default:
         break;
     }
@@ -212,9 +215,9 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       .subscribe(({ data }) => {
         Swal.close();
         console.log(data)
-      
+
         this.steps = data
-        this.totalsteps =  this.steps.length;
+        this.totalsteps = this.steps.length;
       });
   }
 

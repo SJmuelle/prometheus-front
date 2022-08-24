@@ -24,6 +24,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
 
   public entidadBancaria$: Observable<any>;
   public tipoCuentaBancaria$: Observable<any>;
+  public estadoCuenta$: Observable<any>;
 
   //varibales d eprueba
   myControl = new FormControl('');
@@ -46,9 +47,10 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.crearFormulario();
     this.getEntidadBancaria();
     this.getTipoCuentaBancaria();
+    this.getEstadoCuenta();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
-    this.form.controls.estadoCuenta.setValue(this.data.tipo == 'D' ? 'DEUDA' : 'AL DIA');
+    // this.form.controls.estadoCuenta.setValue(this.data.tipo == 'D' ? 'DEUDA' : 'AL DIA');
     this.form.controls.alDia.setValue(this.data.tipo == 'D' ? false : true);
     this.tipo = this.data.tipo;
     this.postBusquedaEntidadFinanciera('');
@@ -85,6 +87,14 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.tipoCuentaBancaria$ = this.genericaServices.getTipoCuentaBancaria();
   }
 
+    /**
+   * @description: Obtiene los tipos de estados civiles
+   */
+     private getEstadoCuenta(): void {
+      this.estadoCuenta$ = this.genericaServices.getEstadoCuenta();
+    }
+  
+
   /**
 * @description: Obtiene los tipos de estados civiles
 */
@@ -95,16 +105,21 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       // const data: any = this.form.getRawValue();
       const datos: any = this.form.getRawValue();
-      const { saldoActual, ...data } = datos;
+      const { saldoActual,estadoCuenta, entidad,...data } = datos;
       const saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
       const saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
       delete data.saldoActual;
       delete data.saldoMora;
+      delete data.estadoCuenta;
+      delete data.entidad;
       const datosFormularios: any = {
         saldoActual: saldoActualFormato,
         saldoMora: saldoMoraFormato,
+        estadoCuenta:estadoCuenta.toUpperCase(),
+        entidad:entidad.toUpperCase(),
         ...data
       }
+      debugger;
       console.log(data);
       let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligación al día?' : '¿Desea agregar una nueva obligación en mora?';
       Swal.fire({

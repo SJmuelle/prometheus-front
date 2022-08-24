@@ -122,6 +122,17 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
     /**
+    * @description: obtiene nivel de estudii
+    */
+    public getEstadoCuenta(): Observable<any> {
+        // const params: string = 'ESTADO-CUENTA';
+        let data = {
+            
+        }
+        return this._http.post(`${this._appSettings.busquedaEstadoCuenta.url.base}`,data);
+    }
+
+    /**
     * @description: Obtiene nivel de estudii
     */
     public getEntidadBancaria(): Observable<any> {

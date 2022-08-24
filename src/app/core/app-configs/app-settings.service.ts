@@ -252,4 +252,15 @@ export class AppSettingsService {
 
         }
     };
+
+    
+    /**
+    * @description: End-point agenda decision
+    */
+     public busquedaEstadoCuenta = {
+        url: {
+            base: EndPoints.uri('/generic/obtener-estados-cuentas'),
+
+        }
+    };
 }
