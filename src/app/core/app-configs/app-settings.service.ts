@@ -13,6 +13,15 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point agenda de completacion
+     */
+         public agendaFormalizacion = {
+            url: {
+                base: EndPoints.uri('/generic/qry/agendas-credito/FO'),
+                totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FO')
+            }
+        };
+    /**
      * @description: End-point pagaduria
      */
     public pagaduria = {
