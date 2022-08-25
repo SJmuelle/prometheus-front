@@ -20,7 +20,7 @@ export class ResumenComponent implements OnInit {
   dataPolicitasAdmin: any;
   datos2: any[];
   verComentarios: boolean = false;
-  
+
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
     private route: ActivatedRoute,
@@ -82,7 +82,7 @@ export class ResumenComponent implements OnInit {
             color: "bg-green-100 text-green-800",
             label: "Crédito: ",
             valor: "$" + data.resumenCredito.cupoTotal,
-            valor2: "Plazo: " + data.resumenCredito.plazo + " meses" ,
+            valor2: "Plazo: " + data.resumenCredito.plazo + " meses",
             valor3: "Tasa: " + data.resumenCredito.tasa + "%"
 
           },
@@ -102,84 +102,92 @@ export class ResumenComponent implements OnInit {
         ]
       },
     )
-    DatosCredito.push(
-      {
-        titulo: "Información del negocio",
-        tipo: "campos",
-        icono: "heroicons_outline:briefcase",
-        color: "text-gray-400",
-        descripcion: "Actividad económica del titular",
-        campos: [
+    switch (data.resumenCredito.unidadNegocio) {
+      case 32:
+        DatosCredito.push(
           {
+            titulo: "Información del negocio",
+            tipo: "campos",
             icono: "heroicons_outline:briefcase",
-            color: "bg-blue-100 text-blue-800",
-            label: "",
-            valor: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " +data.resumenCredito.ocupacion.toLowerCase(),
-            valor2: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" +data.resumenCredito.actividadEconomica.toLowerCase(),
-            valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" +data.resumenCredito.actividadEspecifica.toLowerCase()
-          },
-          {
-            icono: "heroicons_outline:library",
-            color: "bg-green-100 text-green-800",
-            label: "Nombre del negocio:",
-            valor: data.resumenCredito.nombreNegocio
-          },
+            color: "text-gray-400",
+            descripcion: "Actividad económica del titular",
+            campos: [
+              {
+                icono: "heroicons_outline:briefcase",
+                color: "bg-blue-100 text-blue-800",
+                label: "",
+                valor: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.ocupacion.toLowerCase(),
+                valor2: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.actividadEconomica.toLowerCase(),
+                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica.toLowerCase()
+              },
+              {
+                icono: "heroicons_outline:library",
+                color: "bg-green-100 text-green-800",
+                label: "Nombre del negocio:",
+                valor: data.resumenCredito.nombreNegocio
+              },
 
-          {
-            icono: "heroicons_outline:document-text",
-            color: "bg-pink-100 text-pink-800",
-            label: "Tiene cámara del comercio:",
-            valor: data.resumenCredito.camaraNegocio == 'S' ? 'Si Tiene' : 'No Tiene'
+              {
+                icono: "heroicons_outline:document-text",
+                color: "bg-pink-100 text-pink-800",
+                label: "Tiene cámara del comercio:",
+                valor: data.resumenCredito.camaraNegocio == 'S' ? 'Si Tiene' : 'No Tiene'
+              },
+              {
+                icono: "mat_outline:location_on",
+                color: "bg-purple-100 text-purple-800",
+                label: "Ubicación del negocio:",
+                valor: data.resumenCredito.departamentoNegocio + ", " + data.resumenCredito.ciudadNegocio.toLowerCase()
+              }
+            ]
           },
-          {
-            icono: "mat_outline:location_on",
-            color: "bg-purple-100 text-purple-800",
-            label: "Ubicación del negocio:",
-            valor: data.resumenCredito.departamentoNegocio + ", " + data.resumenCredito.ciudadNegocio.toLowerCase()
-          }
-        ]
-      },
-    )
+        )
+        break;
+
+      default:
+        break;
+    }
+
     DatosCredito2.push(
       {
         titulo: "Modelo + HDC",
         tipo: "campos",
         icono: "heroicons_outline:exclamation",
-        color: "text-red-400",
+        color: "text-blue-400",
         descripcion: "Información recopilada de la consulta de historia de crédito del cliente",
         campos: [
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-red-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Cupo inicial",
             valor: "$" + data.resumenHdc.cupoInicial
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-red-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Saldo obligaciones",
             valor: "$" + data.resumenHdc.saldoObligaciones
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-red-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Peor calificación",
             valor: "A"
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-red-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Cuotas",
             valor: "$" + data.resumenHdc.cuota
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-red-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Máxima mora actual",
             valor: "$" + data.resumenHdc.maximaMoraActual
           }
@@ -191,41 +199,41 @@ export class ResumenComponent implements OnInit {
         titulo: "Indicadores",
         tipo: "campos",
         icono: "attach_money",
-        color: "text-orange-400",
+        color: "text-purple-400",
         descripcion: "Resultado de indicadores financieros y de análisis",
         campos: [
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-orange-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-purple-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Score",
             valor: data.resumenIndicadores.score
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-orange-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-purple-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Razón corriente",
             valor: "$" + data.resumenIndicadores.razonCorriente
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-orange-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-purple-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Capital de Trabajo",
             valor: "$" + data.resumenIndicadores.capitalTrabajo
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-orange-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-purple-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Endeudamiento",
             valor: "$" + data.resumenIndicadores.endeudamiento
           },
           {
             icono: "heroicons_outline:academic-cap",
-            clase:"bg-orange-100",
-            color: "bg-red-100 text-red-800",
+            clase: "bg-purple-100",
+            color: "bg-blue-100 text-blue-800",
             label: "Nivel de riesgo",
             valor: data.resumenIndicadores.nivelRiesgo
           }
@@ -254,7 +262,7 @@ export class ResumenComponent implements OnInit {
     this.verComentarios = event;
 
   }
-  
+
   /**
    * @description: Minimiza el componente comentarios
    */
@@ -270,7 +278,7 @@ export class ResumenComponent implements OnInit {
       disableClose: false
     });
     dialogRef.afterClosed().subscribe((res) => {
-    this.router.navigate(['/credit-factory/agenda-decision']);
+      this.router.navigate(['/credit-factory/agenda-decision']);
     })
 
   }

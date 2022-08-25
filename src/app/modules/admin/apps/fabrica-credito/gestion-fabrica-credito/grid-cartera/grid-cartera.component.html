@@ -22,12 +22,12 @@
                     <div class="text-2xl font-bold tracking-tight leading-none">
                         {{totales.contadorGestiones|number}}
                     </div>
-                    <div class="text-md font-medium truncate">No. de gestiones</div>
+                    <div class="text-md font-medium truncate">No. de obligaciones </div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2"
                         [ngClass]="totales.valorDisponible>totales.sumaTotal?'text-green-700':'text-red-600'">
                         ${{totales.sumaTotal|number}}
                     </div>
-                    <div class="text-md font-medium truncate">Total en gestiones</div>
+                    <div class="text-md font-medium truncate">Total en obligaciones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2">
                         ${{totales.valorDisponible|number}}
                     </div>
