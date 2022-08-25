@@ -41,6 +41,7 @@ import { QuillModule } from 'ngx-quill';
 import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/comercial/comercial.component';
 import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
 import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultracem/persona-juridica/representante-legal/representante-legal.component';
+import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/persona-natural/laboral/laboral.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultrace
     FormAgendaReferenciacionComponent,
     UltracemTitularComponent,
     LibranzaTitularComponent,
+    LibranzaLaboralComponent,
     ComercialComponent,
     PersonalComponent,
     RepresentanteLegalComponent

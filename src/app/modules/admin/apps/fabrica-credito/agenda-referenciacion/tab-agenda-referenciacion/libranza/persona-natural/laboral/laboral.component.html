@@ -1,0 +1,47 @@
+<ng-container *ngIf="fabricaDatos">
+  <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
+    <form [formGroup]="form">
+      <mat-tab>
+        <div
+          class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+          <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+            Comentario
+          </h2>
+
+          <div class="flex justify-between items-center ">
+            <p>¿Referencia validada?</p>
+            <div class="toggle-button-cover">
+              <div class="button-cover">
+                <div class="button r" id="button-1">
+                  <input type="checkbox" class="checkbox" formControlName="referenciaValidada_bool">
+                  <div class="knobs"></div>
+                  <div class="layer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-1">
+            <quill-editor #editor (contentChanged)="logChange($event)" class="mb-2"
+              placeholder=" Ingrese aquí el resumen de la referenciación..." name="descripcion" [modules]="quillModules"
+              [formControlName]="'telefonoContactoObservacion'">
+            </quill-editor>
+          </div>
+          <div class="col-lg-12 mt-1.5" *ngIf="editor.editorElem">
+            <small [ngClass]="(editor.editorElem.outerText.length<30)?'text-red-600':'text-green-600'" class="text-sm"
+              *ngIf="editor.editorElem.outerText.length>1">
+              Caracteres: {{ editor.editorElem.outerText.length }}
+
+            </small>
+          </div>
+
+          <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end"  *ngIf="editor.editorElem">
+            <button mat-raised-button color="primary" type="button"   [disabled]="editor.editorElem.outerText.length<30" (click)="onPostDatos()">
+              Guardar
+            </button>
+          </div>
+        </div>
+
+      </mat-tab>
+    </form>
+  </mat-tab-group>
+</ng-container>
