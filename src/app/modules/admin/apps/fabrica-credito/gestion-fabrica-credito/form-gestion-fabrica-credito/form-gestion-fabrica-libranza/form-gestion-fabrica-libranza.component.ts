@@ -1162,7 +1162,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#a3a0a0',
-            confirmButtonText: 'Guardar',
+            confirmButtonText: 'Aceptar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {

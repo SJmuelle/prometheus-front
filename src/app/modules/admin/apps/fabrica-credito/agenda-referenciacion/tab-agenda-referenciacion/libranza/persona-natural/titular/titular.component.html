@@ -2,7 +2,7 @@
 <ng-container *ngIf="MostrarfabricaDatos">
     <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
 
-        <ng-container [ngSwitch]="currentStep">
+        <ng-container>
             <!-- formulario de referencia  -->
             <form [formGroup]="form">
                 <mat-tab *ngIf="currentStep==0">
