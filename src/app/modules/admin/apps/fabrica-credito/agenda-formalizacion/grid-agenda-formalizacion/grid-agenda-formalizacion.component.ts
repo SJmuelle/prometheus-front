@@ -23,7 +23,7 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
     public datos: any[] = [];
     public mostrarTotales: boolean = true;
     public totales: any[];
-    public headerColums: string[] = ['numeroSolicitud', 'identificacion', 'nombreCompleto', 'monto', 'agencia','asesor'];
+    public headerColums: string[] = ['numeroSolicitud', 'identificacion', 'nombreCompleto', 'monto', 'agencia', 'asesor'];
     constructor(
         private agendaFormalizacionService: AgendaFormalizacionService,
         private router: Router
@@ -80,17 +80,25 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
         });
     }
 
-    cambiarFecha(date){
+    cambiarFecha(date) {
         moment.locale('es');
         return moment(date).format('MMMM D YYYY')
     }
 
-    cambiarHora(date){
+    cambiarHora(date) {
         moment.locale('es');
         return moment(date).format('h:mm a')
     }
 
 
+    /**
+   * @description: abre el resumen
+   */
+    public goResumen(data: any): void {
+        //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+        const { numeroSolicitud, identificacion } = data;
+        this.router.navigate(['/credit-factory/agenda-decision/resumen/', numeroSolicitud, identificacion]);
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();

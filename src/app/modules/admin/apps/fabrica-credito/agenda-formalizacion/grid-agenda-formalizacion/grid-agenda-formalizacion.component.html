@@ -139,10 +139,14 @@
                             <ng-container
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td class="px-2 py-3 text-sm header_fijo my-3">
-                                        <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
-                                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
-                                        </button>
+                                    <td  class="py-3 text-sm my-3">
+                                        <div class="text-gray-700">                                     
+                                            <div class="py-0 text-sm ">
+                                                <button mat-icon-button matTooltip="Resumen" (click)="goResumen(item)">
+                                                    <mat-icon svgIcon="manage_search"></mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </td>
                                     <td class="px-2 py-3">
                                         <div class="flex flex-column ">
