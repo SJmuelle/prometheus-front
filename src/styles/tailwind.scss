@@ -5,7 +5,7 @@
 
 /* width */
 *::-webkit-scrollbar {
-    width: 3px;
+    width: 5px;
 }
 
 /* Track */
@@ -51,4 +51,8 @@ border-radius: 7px !important;
 a.ng-star-inserted {
   
     text-decoration: none !important;
+}
+
+body.light .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb, body .light .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #03a9f4  !important;
 }

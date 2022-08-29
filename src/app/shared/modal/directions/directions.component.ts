@@ -38,7 +38,7 @@ export class DirectionsComponent implements OnInit {
             },
         }).then((result) => {});
         this._Service
-            .getQuery(`/tk/listar-departamentos`, true)
+            .getQuery(`tk/listar-departamentos`, true)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -59,7 +59,7 @@ export class DirectionsComponent implements OnInit {
             },
         }).then((result) => {});
         this._Service
-            .getQuery(`/listar-ciudades/${data}`, true)
+            .getQuery(`listar-ciudades/${data}`, true)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -80,7 +80,7 @@ export class DirectionsComponent implements OnInit {
             },
         }).then((result) => {});
         this._Service
-            .getQuery(`/nomenclarturas-direcciones/${data}`, true)
+            .getQuery(`nomenclarturas`, true)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -103,7 +103,7 @@ export class DirectionsComponent implements OnInit {
             },
         }).then((result) => {});
         this._Service
-            .getQuery(`/barrios/${data}`, true)
+            .getQuery(`barrios/${data}`, true)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {

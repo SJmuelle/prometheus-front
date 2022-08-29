@@ -24,14 +24,32 @@ export class DecisionService {
   public postDecision(data: any): Observable<any> {
     return this._http.post(this._appSettings.decision.url.baseDecision, data);
   }
+  /**
+ * @description:post de cmabio de estado
+ */
   public postCambioEstado(data: any): Observable<any> {
     return this._http.post(this._appSettings.decision.url.cambioEstado, data);
   }
+
+  /**
+* @description:post de cmabio de estado
+*/
+  public getAgendasFabrica(agenda: string): Observable<any> {
+    return this._http.get(`${this._appSettings.decision.url.getAgendasFabrica}/${agenda}`);
+  }
+
+  /**
+  * @description:post de validacion Datos
+  */
+  public postValidacionDatos(data: any): Observable<any> {
+    return this._http.post(this._appSettings.decision.url.validaCampos, data);
+  }
+
   /**
    * @description: Obtiene el listado de causales
    */
   public getCausales(): Observable<any> {
-    return this._http.get(this._appSettings.decision.url.baseCausal);
+    return this._http.get(this._appSettings.decision.url.baseCausalRechazo);
   }
 
 }

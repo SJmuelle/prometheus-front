@@ -26,7 +26,7 @@ export class SolucionesPQRSComponent implements OnInit {
     consulta() {
         Swal.fire({
             title: 'Cargando',
-            html: 'Buscando Informacion de Soluciones de PQRS',
+            html: 'Buscando información de Soluciones de PQRS',
             timer: 500000,
             didOpen: () => {
                 Swal.showLoading();

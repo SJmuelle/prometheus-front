@@ -26,6 +26,22 @@ import {
     FormDialogComentarioReferenciaComponent
 } from "./form-dialog-comentario-referencia/form-dialog-comentario-referencia.component";
 import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
+import { FormDialogListErrorDialogComponent } from './form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
+import { MatListModule } from '@angular/material/list';
+import { GridTipoReferenciacionComponent } from './grid-tipo-referenciacion/grid-tipo-referenciacion.component';
+import { FormAgendaReferenciacionComponent } from './form-agenda-referenciacion/form-agenda-referenciacion.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
+import { SharedModule } from 'app/shared/shared.module';
+import { UltracemTitularComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/titular/titular.component';
+import { LibranzaTitularComponent } from './tab-agenda-referenciacion/libranza/persona-natural/titular/titular.component';
+import { QuillModule } from 'ngx-quill';
+import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/comercial/comercial.component';
+import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
+import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultracem/persona-juridica/representante-legal/representante-legal.component';
+import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/persona-natural/laboral/laboral.component';
 
 
 @NgModule({
@@ -33,7 +49,16 @@ import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
     GridAgendaReferenciacionComponent,
     FormGestionReferenciacionModalComponent,
     FormDialogReprogramarComponent,
-    FormDialogComentarioReferenciaComponent
+    FormDialogComentarioReferenciaComponent,
+    FormDialogListErrorDialogComponent,
+    GridTipoReferenciacionComponent,
+    FormAgendaReferenciacionComponent,
+    UltracemTitularComponent,
+    LibranzaTitularComponent,
+    LibranzaLaboralComponent,
+    ComercialComponent,
+    PersonalComponent,
+    RepresentanteLegalComponent
   ],
     imports: [
         CommonModule,
@@ -56,7 +81,15 @@ import {FuseAlertModule} from "../../../../../../@fuse/components/alert";
         GestionFabricaCreditoModule,
         NgxMatDatetimePickerModule,
         FormsModule,
+        MatListModule,
         FuseAlertModule,
+        MatProgressBarModule,
+        MatSidenavModule,
+        FuseFindByKeyPipeModule,
+        SharedModule,
+        MatRadioModule,
+        QuillModule.forRoot(),
+
     ]
 })
 export class AgendaReferenciacionModule { }

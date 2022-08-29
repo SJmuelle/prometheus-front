@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{datos.titulo=='N'?'Nuevo':'Actualizar'}} tipo de comentario {{ datos.id ? '('+datos.id+')' : '' }}</h2>
+<div class="bg-white col-lg-12 col-sm-12  5 ">
+    <div class="row">
+        <div class="bg-white col l12">
+            <div class="row justify-start ">
+                <div class="col-sm-12 col-lg-12" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Tipo de visibilidad</mat-label>
+                        <textarea  matInput type="text" autocomplete="off" name="descripcion" [(ngModel)]="datos.visualizacion"
+                        [required]="true">
+                         </textarea>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'text_snippet'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Descripción</mat-label>
+                        <textarea class="h-20" matInput type="text" autocomplete="off" name="visualizacion" [(ngModel)]="datos.descripcion"
+                        [required]="true">
+                         </textarea>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'text_snippet'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Estado</mat-label>
+                        <mat-select [(ngModel)]="datos.estado" name="legal"  [required]="datos.titulo!='N'">
+                            <mat-option value="A">Activo</mat-option>
+                            <mat-option value="I">Inactivo</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions class="align-end">
+    <button mat-button class="color_fintra text-white"(click)="guardar()">Guardar </button>
+    <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
+</mat-dialog-actions>

@@ -107,7 +107,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                 id: 'dashboard.pqrs',
                 title: 'PQRS',
                 type: 'group',
-                icon: 'heroicons_outline:check-circle',
+                icon: 'heroicons_outline:inbox-in',
                 children: [
                     {
                         id: 'dashboard.pqrs.list',
@@ -150,6 +150,20 @@ export const compactNavigation: FuseNavigationItem[] = [
         icon: 'mat_outline:attach_money',
         children: [
             {
+                id: 'agenda-comercial.list',
+                title: 'Agenda de comercial',
+                type: 'basic',
+                link: '/credit-factory/agenda-comercial',
+                icon: 'heroicons_outline:document-text',
+            },
+            {
+                id: 'agenda-cartera.list',
+                title: 'Agenda gestión de carteras',
+                type: 'basic',
+                link: '/credit-factory/agenda-cartera',
+                icon: 'heroicons_outline:document-text',
+            },
+            {
                 id: 'agenda-completacion.list',
                 title: 'Agenda de completación',
                 type: 'basic',
@@ -158,10 +172,60 @@ export const compactNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'agenda-referenciacion.list',
-                title: 'Agenda de referenciación y desición',
+                title: 'Agenda de referenciación ',
                 type: 'basic',
                 link: '/credit-factory/agenda-referencing',
                 icon: 'heroicons_outline:document',
+            },
+            {
+                id: 'agenda-referenciacion.list',
+                title: 'Agenda de análisis y decisión',
+                type: 'basic',
+                link: '/credit-factory/agenda-decision',
+                icon: 'heroicons_outline:document',
+            },
+            {
+                id: 'trazabilidad.list',
+                title: 'Trazabilidad',
+                type: 'basic',
+                link: '/credit-factory/trazabilidad',
+                icon: 'heroicons_outline:chart-square-bar',
+            },
+            {
+                id: 'parametria',
+                title: 'Configuración',
+                type: 'collapsable',
+                icon: 'heroicons_outline:check-circle',
+                children: [
+                    {
+                        id: 'parametria.fabrica1',
+                        title: 'Listado de Chequeo',
+                        // icon: 'heroicons_outline:minus-sm',
+                        type: 'basic',
+                        link: '/credit-factory/parametria/chequeo',
+                    },
+                    {
+                        id: 'parametria.fabrica2',
+                        title: 'Listado de Comentarios',
+                        // icon: 'heroicons_outline:minus-sm',
+                        type: 'basic',
+                        link: '/credit-factory/parametria/listadoTiposComentarios'
+                    },
+                    // {
+                    //     id: 'parametria.fabrica3',
+                    //     title: 'Preguntas de Referenciación',
+                    //     // icon: 'heroicons_outline:minus-sm',
+                    //     type: 'basic',
+                    //     link: '/credit-factory/parametria/listadoPreguntasReferenciacion'
+                    // },
+                    {
+                        id: 'parametria.fabrica4',
+                        title: 'Tiempo por agendas',
+                        // icon: 'heroicons_outline:minus-sm',
+                        type: 'basic',
+                        link: '/credit-factory/parametria/tiempoAgenda'
+                    }
+                ],
             },
 
         ]

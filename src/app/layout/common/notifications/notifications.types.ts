@@ -1,12 +1,13 @@
 export interface Notification
 {
-    id: string;
+    id?: string;
     icon?: string;
     image?: string;
     title?: string;
     description?: string;
-    time: string;
+    time?: string;
     link?: string;
-    useRouter?: boolean;
-    read: boolean;
+    useRouter?: string;
+    read?: string;
+    tipo?:number;
 }
