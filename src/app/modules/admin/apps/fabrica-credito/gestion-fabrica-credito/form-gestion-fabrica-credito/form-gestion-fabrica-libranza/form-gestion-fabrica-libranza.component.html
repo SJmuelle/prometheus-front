@@ -9,13 +9,17 @@
             </mat-expansion-panel-header>
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                 <div class="-mx-3 md:flex mb-2">
-                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>No. de solicitud</mat-label>
                         <input matInput type="number" [formControlName]="'numeroSolicitud'" [readonly]="true">
                     </mat-form-field>
-                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Fecha de solicitud</mat-label>
                         <input matInput type="text" [formControlName]="'emision'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Fecha de ingreso a fábrica</mat-label>
+                        <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true">
                     </mat-form-field>
                     <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
                       <mat-label>Es preaprobado</mat-label>
@@ -24,11 +28,6 @@
                   </mat-form-field> -->
                 </div>
                 <div class="-mx-3 md:flex mb-2">
-
-                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                        <mat-label>Fecha de ingreso a fábrica</mat-label>
-                        <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true">
-                    </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Estado</mat-label>
                         <input matInput type="text" [formControlName]="'descripcionEstado'" [readonly]="true">
@@ -36,6 +35,12 @@
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Subestado</mat-label>
                         <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Cuentas embargadas</mat-label>
+                        <input matInput type="text" [formControlName]="'contadorEmbargos'" [readonly]="true">
+                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:scale'">
+                        </mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="-mx-3 md:flex mb-2">
@@ -153,7 +158,9 @@
                             </ng-container>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>No. de identificación</mat-label>
+
                                 <input matInput type="text" [formControlName]="'identificacion'" [readonly]="true">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'"></mat-icon>
                                 <mat-error *ngIf="soloNumero('identificacion')">
                                     Este campo solo acepta números.
                                 </mat-error>
