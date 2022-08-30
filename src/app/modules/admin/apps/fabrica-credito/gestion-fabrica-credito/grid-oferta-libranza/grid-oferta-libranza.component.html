@@ -106,6 +106,18 @@
                                                         }}</b>
                                                 </div>
                                             </div>
+                                            <div class="flex">
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
+                                                        'heroicons_solid:check'
+                                                    "></mat-icon>
+                                                <div class="ml-2 leading-5">
+                                                    Fecha primera cuota
+                                                    <b class="capitalize">{{
+                                                        cambiarFecha(item.fechaPrimeraCuota)
+                                                        
+                                                        }}</b>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -142,6 +154,18 @@
                                                     Factor embargo:
                                                     <b>${{
                                                         item.factorEmbargo
+                                                        | number
+                                                        }}</b>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <mat-icon class="icon-size-5 text-green-600" [svgIcon]="
+                                                        'heroicons_solid:check'
+                                                    "></mat-icon>
+                                                <div class="ml-2 leading-5">
+                                                   Descuento de nomina:
+                                                    <b>${{
+                                                        item.descuentoNomina
                                                         | number
                                                         }}</b>
                                                 </div>

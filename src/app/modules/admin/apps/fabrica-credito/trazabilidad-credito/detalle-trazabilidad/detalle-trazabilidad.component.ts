@@ -47,7 +47,7 @@ export class DetalleTrazabilidadComponent implements OnInit {
     ).subscribe((res) => {
       Swal.close();
       if (res.status === 200) {
-        debugger
+      //  debugger
         this.dataResumenTrazabilidad = res.data.resumenTrazabilidad;
         this.getDatos(res.data)
       } else {

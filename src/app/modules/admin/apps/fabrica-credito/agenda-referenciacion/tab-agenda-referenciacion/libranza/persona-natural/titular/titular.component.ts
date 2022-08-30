@@ -341,7 +341,7 @@ export class LibranzaTitularComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        debugger;
+        // debugger;
         console.log(data);
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = data
@@ -650,7 +650,7 @@ export class LibranzaTitularComponent implements OnInit {
     const tieneEmpleadoValida = this.form.value.tieneEmpleadoValida_bool == true ? 'S' : 'N';
     const nombreNegocioValida = this.form.value.nombreNegocioValida_bool == true ? 'S' : 'N';
     const referenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
-    debugger;
+    // debugger;
     delete data.antiguedadNegocio;
     delete data.antiguedadNegocioCorregido;
     delete data.comprasSemento;

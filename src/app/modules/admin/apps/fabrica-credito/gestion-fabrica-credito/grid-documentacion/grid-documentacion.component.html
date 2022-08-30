@@ -218,12 +218,20 @@
                             <div>{{ cambiarFecha(item.fechaCreacion) }}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Hora de creación</div>
+                            <div>{{item.horaCreacion }}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
                             <div class="text-secondary">Usuario de actualización</div>
                             <div>{{item.usuarioActualizacion}}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
                             <div class="text-secondary">Fecha de anulación</div>
                             <div> {{ cambiarFecha(item.fechaActualizacion) }}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Fecha de anulación</div>
+                            <div> {{ item.horaActualizacion}}</div>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4 w-full mt-5">

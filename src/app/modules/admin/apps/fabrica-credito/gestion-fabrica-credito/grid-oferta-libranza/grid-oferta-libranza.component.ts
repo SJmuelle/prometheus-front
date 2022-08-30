@@ -3,14 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { OfertaService } from 'app/core/services/oferta.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-
+import moment from "moment";
+import 'moment/locale/es';
 @Component({
   selector: 'app-grid-oferta-libranza',
   templateUrl: './grid-oferta-libranza.component.html',
   styleUrls: ['./grid-oferta-libranza.component.scss']
 })
 export class GridOfertaLibranzaComponent implements OnInit {
-  public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
+  public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public listadoOferta$: Observable<any>;
   public capacidadPago$: Observable<any>;
 
@@ -18,8 +19,8 @@ export class GridOfertaLibranzaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private ofertaService:OfertaService
-      ) { }
+    private ofertaService: OfertaService
+  ) { }
 
   ngOnInit() {
     this.getListadoOferta(Number(this.numeroSolicitud));
@@ -33,11 +34,11 @@ export class GridOfertaLibranzaComponent implements OnInit {
   private getCapacidadPago(numeroSolicitud: number): void {
     this.capacidadPago$ = this.ofertaService.getCapacidadPago(numeroSolicitud);
   }
-  public SelectOferta(item:any): void {
-    let data={
+  public SelectOferta(item: any): void {
+    let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
-      identificacion:item.identificacion,
-      idRegistro:item.idOpcion
+      identificacion: item.identificacion,
+      idRegistro: item.idOpcion
     }
 
     Swal.fire({
@@ -60,4 +61,10 @@ export class GridOfertaLibranzaComponent implements OnInit {
         }
       });
   }
+  
+  cambiarFecha(date) {
+    moment.locale('es');
+    return moment(date).format('MMMM D YYYY')
+  }
+
 }

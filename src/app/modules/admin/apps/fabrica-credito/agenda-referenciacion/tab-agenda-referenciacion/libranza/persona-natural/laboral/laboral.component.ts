@@ -65,7 +65,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        debugger;
+     //   debugger;
         console.log(data);
         this.fabricaDatos = data
         this.form.controls['referenciaValidada_bool'].setValue(this.fabricaDatos.referenciaValidada == 'S' ? true : false)

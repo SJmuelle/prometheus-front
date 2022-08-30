@@ -70,7 +70,7 @@ export class ListadoChequeoFormComponent implements OnInit {
         tipoIdentificacion:this.datos.tipoIdentificacion
       };
     } else {
-      url = 'actualizar-item-chequeo';
+      url = '/actualizar-item-chequeo';
       data = {
         id: parseInt(this.datos.id),
         nombre: this.datos.nombre,
