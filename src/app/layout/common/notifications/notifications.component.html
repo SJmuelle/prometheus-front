@@ -29,9 +29,9 @@
                         [svgIcon]="'heroicons_solid:x'"></mat-icon>
                 </button>
             </div>
-            <div class="text-lg font-medium leading-10">Notifications</div>
+            <div class="text-lg font-medium leading-10">Notificaciones</div>
             <div class="ml-auto">
-                <button
+                <!-- <button
                     mat-icon-button
                     [matTooltip]="'Mark all as read'"
                     [disabled]="unreadCount === 0"
@@ -39,7 +39,7 @@
                     <mat-icon
                         class="icon-size-5 text-current"
                         [svgIcon]="'heroicons_solid:mail-open'"></mat-icon>
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -49,7 +49,7 @@
             <ng-container *ngFor="let notification of notifications">
                 <div
                     class="flex group hover:bg-gray-50 dark:hover:bg-black dark:hover:bg-opacity-5"
-                    [ngClass]="{'unread': !notification.read}">
+                    [ngClass]="{'unread': notification.read=='t'}">
 
                     <!-- Notification with a link -->
                     <ng-container *ngIf="notification.link">
@@ -85,14 +85,14 @@
                             class="w-6 h-6 min-h-6"
                             mat-icon-button
                             (click)="toggleRead(notification)"
-                            [matTooltip]="notification.read ? 'Mark as unread' : 'Mark as read'">
+                            [matTooltip]="notification.read=='f' ? 'Marcar como no leido' : 'Marcar como leido'">
                             <span
                                 class="w-2 h-2 rounded-full"
-                                [ngClass]="{'bg-gray-400 dark:bg-gray-500 sm:opacity-0 sm:group-hover:opacity-100': notification.read,
-                                            'bg-primary': !notification.read}"></span>
+                                [ngClass]="{'bg-gray-400 dark:bg-gray-500 sm:opacity-0 sm:group-hover:opacity-100': (notification.read=='t'),
+                                            'bg-primary': (notification.read=='f')}"></span>
                         </button>
                         <!-- Remove -->
-                        <button
+                        <!-- <button
                             class="w-6 h-6 min-h-6 sm:opacity-0 sm:group-hover:opacity-100"
                             mat-icon-button
                             (click)="delete(notification)"
@@ -100,7 +100,7 @@
                             <mat-icon
                                 class="icon-size-4"
                                 [svgIcon]="'heroicons_solid:x'"></mat-icon>
-                        </button>
+                        </button> -->
                     </div>
 
                 </div>
@@ -125,18 +125,29 @@
                     </ng-container>
                     <!-- Title, description & time -->
                     <div class="flex flex-col flex-auto">
-                        <ng-container *ngIf="notification.title">
+                        <ng-container *ngIf="notification.id">
                             <div
-                                class="font-semibold line-clamp-1"
-                                [innerHTML]="notification.title"></div>
+                                class="font-semibold line-clamp-3 mb-1.5">
+                            {{ notification.agenda }}</div>
                         </ng-container>
+                        <ng-container *ngIf="notification.title">
+                            <!-- <div
+                                class="font-semibold line-clamp-3"
+                                [innerHTML]="notification.title"></div> -->
+                                <h5 [innerHTML]="notification.title"></h5>
+                        </ng-container>
+                        <!-- <ng-container *ngIf="notification.id">
+                            <div
+                                class="font-semibold line-clamp-3">
+                            {{ notification.agenda }}</div>
+                        </ng-container> -->
                         <ng-container *ngIf="notification.description">
                             <div
-                                class="line-clamp-2"
+                                class="line-clamp-4"
                                 [innerHTML]="notification.description"></div>
                         </ng-container>
                         <div class="mt-2 text-sm leading-none text-secondary">
-                            {{notification.time | date:'MMM dd, h:mm a'}}
+                            {{notification.time | date:'MMMM dd, h:mm a'}}
                         </div>
                     </div>
                 </ng-template>
@@ -150,8 +161,8 @@
                             class="text-primary-500-700"
                             [svgIcon]="'heroicons_outline:bell'"></mat-icon>
                     </div>
-                    <div class="mt-5 text-2xl font-semibold tracking-tight">No notifications</div>
-                    <div class="w-full max-w-60 mt-1 text-md text-center text-secondary">When you have notifications, they will appear here.</div>
+                    <div class="mt-5 text-2xl font-semibold tracking-tight">No hay notificaciones</div>
+                    <div class="w-full max-w-60 mt-1 text-md text-center text-secondary">Cuando tenga notificaciones, aparecerán aquí.</div>
                 </div>
             </ng-container>
 

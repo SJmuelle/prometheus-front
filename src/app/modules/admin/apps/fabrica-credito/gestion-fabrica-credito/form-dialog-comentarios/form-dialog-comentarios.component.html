@@ -9,12 +9,21 @@
         <div class="col-span-12">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
+                    <div class="flex">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Tipo de comentario </mat-label>
+                            <!-- lo mando el jefe lucho Tipo de visibilidad a tipo de comentario -->
+                            <mat-select formControlName="tipoComentario">
+                                <mat-option *ngFor="let item of listadoTipo" value="{{item.codigoOpcion}}">{{item.descripcionOpcion}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+                        </mat-form-field>
+                    </div>
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Texto</mat-label>
-                            <textarea  matInput [formControlName]="'comentario'"
-                                       [readonly]="data.idComentario"
-                            >
+                            <textarea class="h-60" matInput [formControlName]="'comentario'" [readonly]="data.idComentario">
                             </textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                             <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>
@@ -28,22 +37,12 @@
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
         <ng-container *ngIf="!data.idComentario">
-            <button mat-raised-button
-                    color="primary"
-                    type="button"
-                    (click)="onGuardar()"
-                    [disabled]="form.invalid"
-            >
+            <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
                 Guardar
             </button>
         </ng-container>
-        <button mat-raised-button
-                class="mr-2 bg-gray-400 text-white"
-                type="button"
-                (click)="onCerrar()"
-        >
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
             Cerrar
         </button>
     </div>
 </mat-dialog-actions>
-

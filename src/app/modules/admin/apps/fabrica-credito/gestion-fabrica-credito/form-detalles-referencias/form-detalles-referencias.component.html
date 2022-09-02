@@ -1,9 +1,12 @@
 <h2 mat-dialog-title>
-    <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
-        <span >Referencia comercial</span>
-    </ng-container>
-    <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
+    <ng-container *ngIf="form.controls['tipo'].value === 'P'">
         <span >Referencia personal</span>
+    </ng-container>
+    <ng-container *ngIf="form.controls['tipo'].value === 'C'">
+        <span >Referencia personal</span>
+    </ng-container>
+    <ng-container *ngIf="form.controls['tipo'].value === 'F'">
+        <span >Referencia Familiar</span>
     </ng-container>
 </h2>
 <mat-dialog-content>
@@ -12,7 +15,7 @@
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                         <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
+                            <ng-container *ngIf="form.controls['tipo'].value === 'CO'">
                                 <mat-form-field class="w-full fuse-mat-dense">
                                     <mat-label>Razón social</mat-label>
                                     <input matInput type="text" placeholder="Nombre completo" [formControlName]="'nombreCompleto'">
@@ -53,7 +56,7 @@
                             </mat-form-field>
                         </div>
                         <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
+                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                                 <ng-container *ngIf="departamentos$ | async as departamentos">
                                     <mat-form-field class="w-full fuse-mat-dense">
                                         <mat-label>Departamento de residencia</mat-label>
@@ -72,7 +75,7 @@
                             </ng-container>
                         </div>
                         <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
+                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                                 <ng-container *ngIf="ciudades$ | async as ciudades">
                                     <mat-form-field class="w-full fuse-mat-dense">
                                         <mat-label>Ciudad / municipio de residencia</mat-label>
@@ -91,7 +94,7 @@
                             </ng-container>
                         </div>
                         <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value !== 'P'">
+                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                                 <mat-form-field class="w-full fuse-mat-dense">
                                     <mat-label>Antigüedad de ser cliente (meses)</mat-label>
                                     <input matInput type="number" placeholder="Ingrese la antigüedad en meses" [formControlName]="'antiguedad'">
@@ -110,6 +113,19 @@
                                         <mat-option *ngFor="let item of items.data"
                                                     [value]="item.codigoOpcion"
                                         >{{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'">
+                            <!--{{form.controls.tipo.value}}-->
+                            <ng-container *ngIf="parentescos$ | async as items">
+                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                    <mat-label>Tipo de parentesco</mat-label>
+                                    <mat-select [formControlName]="'parentesco'">
+                                        <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                            {{item.descripcionOpcion}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>

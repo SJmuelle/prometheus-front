@@ -16,12 +16,13 @@ export const environment = {
     urlGetFile: "https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/tk/",
     urlDonwloadFile: "https://prometheus.fintra.co:8443/api-fintra/api/transferencia/",
 
-    urlPagaduria: 'https://prometheus.fintra.co:8443/',
+    urlPagaduria: 'http://demo.fintra.co:8011/pagadurias/',
 
-    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto:'https://prometheus.fintra.co:8443/api-fintra/api/pqrs',
+    urlprometheus:'http://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    adjunto:'http://demo.fintra.co:8011/api-fintra/api/pqrs',
+
     // envioCorreo:'http://192.168.140.197:8084'
     envioCorreo:'http://prometheus.fintra.co:8443/apicredit',
-    urlUltracem: 'https://prometheus.fintra.co:8443/api-fintra/api'
+    urlUltracem: 'http://prometheus.fintra.co:8443/api-fintra/api'
 
 };

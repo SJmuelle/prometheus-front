@@ -1,0 +1,115 @@
+<h2 mat-dialog-title>{{datos.titulo=='N'?'Nueva':'Actualizar'}} meta de tiempo de crédito {{ datos.id ? '('+datos.id+')' : '' }}</h2>
+<div class="bg-white col-lg-12 col-sm-12  5 ">
+    <div class="row">
+        <div class="bg-white col l12">
+            <div class="row justify-start ">
+                <div class="col-sm-12 col-lg-12"  *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Agenda</mat-label>
+                        <input matInput type="text" autocomplete="off" name="agenda" [(ngModel)]="datos.agenda"
+                            [required]="datos.titulo=='N'" readonly>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12"  *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Unidad negocio </mat-label>
+                        <input matInput type="text" autocomplete="off" name="unidadNegocio" [(ngModel)]="datos.unidadNegocio"
+                            [required]="datos.titulo=='N'" readonly>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo=='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Agenda</mat-label>
+                        <mat-select [(ngModel)]="datos.idAgenda" name="legal" [required]="datos.titulo=='N' ">
+                            <mat-option value="{{la.codigoOpcion}}"  *ngFor="let la of listadoAgenda">{{la.descripcionOpcion}}</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12"  *ngIf="datos.titulo=='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Unidad negocio</mat-label>
+                        <mat-select [(ngModel)]="datos.unidadNegocio" name="legal" [required]="datos.titulo=='N' ">
+                            <mat-option value="{{lu.codigoOpcion}}"  *ngFor="let lu of listadoUnidad">{{lu.descripcionOpcion}}</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="business_center"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Tipo de Cliente</mat-label>
+                        <input matInput type="text" autocomplete="off" name="tipoIdentificacion" [(ngModel)]="datos.tipoIdentificacion"
+                             readonly>
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="person"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Inicio Agenda</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="naranja"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Fin Agenda</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="rojo"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Inicio Fábrica</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="verde"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Fin Fábrica</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="naranja"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Inicio Totalizador</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off"  name="verde"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 col-lg-6" >
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Fin Totalizador</mat-label>
+                        <input matInput type="time" value="16:32:55" autocomplete="off" name="naranja"
+                             >
+                        <mat-icon class="icon-size-5" matPrefix svgIcon="number"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Estado</mat-label>
+                        <mat-select [(ngModel)]="datos.estado" name="legal"  [required]="datos.titulo!='N'">
+                            <mat-option value="A">Activo</mat-option>
+                            <mat-option value="I">Inactivo</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="align-end">
+    <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
+    <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
+</div>

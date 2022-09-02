@@ -134,6 +134,9 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
               console.log(res);
               this.agendaReferenciaService.refrescarListado$.next({estado: true});
               this.onCerrar();
+          }{
+            
+            this.onCerrar();
           }
       });
   }
@@ -313,7 +316,11 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
     const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
         minWidth: '30%',
         minHeight: '30%',
-        data: {numeroSolicitud:this.data.numeroSolicitud, etapa:2},
+        data: { 
+            numeroSolicitud: this.data.numeroSolicitud, 
+            etapa: 2, 
+            idAgenda:'RE',   
+          },
         disableClose: false,
     });
     dialogRef.afterClosed().toPromise().then(() => {
@@ -324,7 +331,12 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
     const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
         minWidth: '30%',
         minHeight: '30%',
-        data: {numeroSolicitud:this.data.numeroSolicitud, etapa:6},
+        // data: {numeroSolicitud:this.data.numeroSolicitud, etapa:6},
+        data: { 
+            numeroSolicitud: this.data.numeroSolicitud, 
+            etapa: 6, 
+            idAgenda:'RE',   
+          },
         disableClose: false,
     });
     dialogRef.afterClosed().toPromise().then(() => {

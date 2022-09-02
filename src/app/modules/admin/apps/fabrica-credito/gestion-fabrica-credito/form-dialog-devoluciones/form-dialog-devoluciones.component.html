@@ -1,0 +1,61 @@
+<ng-container *ngIf="data.idDevolucion">
+    <h2 mat-dialog-title>Detalle devolución</h2>
+</ng-container>
+<ng-container *ngIf="!data.idDevolucion">
+    <h2 mat-dialog-title>Nueva devolución</h2>
+</ng-container>
+<mat-dialog-content>
+    <div class="grid-cols-12 ">
+        <div class="col-span-12">
+            <form [formGroup]="form">
+                <div class="bg-white flex flex-col">
+                    <ng-container *ngIf="!data.idDevolucion">
+                    <div class="md:flex">
+                        <mat-form-field class="w-full fuse-mat-dense" appearance="fill">
+                            <mat-label>Motivo / causal</mat-label>
+                            <mat-select [formControlName]="'idCausal'">
+                                <ng-container *ngIf="listCausales$ | async as items;">
+                                    <mat-option matInput 
+                                        *ngFor="let item of items.data" [value]="item.codigoCausal">
+                                        {{item.DescripcionCausal}}
+                                    </mat-option>                                   
+                                </ng-container>
+                            </mat-select>
+                            <mat-error *ngIf="requeridoCausal">Este campo es requerido.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="data.idDevolucion">
+                    <div class="md:flex">
+                        <mat-form-field class="w-full fuse-mat-dense" appearance="fill">
+                            <mat-label>Motivo / causal</mat-label>
+                            <input matInput type="text" readonly [formControlName]="'descripcionCausal'" [required]="true">
+                        </mat-form-field>
+                    </div>
+                    </ng-container>
+                    <div class="md:flex">
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Observación</mat-label>
+                            <textarea class="h-60" matInput [formControlName]="'observacion'" [readonly]="data.idDevolucion">
+                            </textarea>
+                            <mat-error *ngIf="requeridoObservacion">Este campo es requerido.</mat-error>
+                            <mat-error *ngIf="minimoObservacion">Se requiere mínimo 10 caracteres.</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <ng-container *ngIf="!data.idDevolucion">
+            <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+                Guardar
+            </button>
+        </ng-container>
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

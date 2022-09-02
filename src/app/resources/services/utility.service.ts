@@ -35,6 +35,9 @@ export class UtilityService {
     return valor;
   }
   enviarNumero(value: string){
+    if(value==undefined){
+        return 0;
+    }
     if (value == '0') {
         return 0;
     }else {
@@ -131,6 +134,36 @@ export class UtilityService {
     postQuery(query: string, data: any, typeHeaders: string = 'data') {
         debugger;
         const URL = this.server3 + query;
+        let optiones: any;
+        if (typeHeaders == 'data') {
+            optiones = {
+                Authentication: `${this.readToken()}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json; charset=utf-8',
+            };
+        } else {
+            if (typeHeaders == this.notoken) {
+                optiones = {
+                    Authentication: ``,
+                    Accept: 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json; charset=utf-8',
+                };
+            } else {
+                optiones = {
+                    Authentication: `${this.readToken()}`,
+                    Accept: 'application/json',
+                };
+            }
+        }
+
+        const headers = new HttpHeaders(optiones);
+        headers.delete('Content-Type');
+        return this._httpClient
+            .post(URL, data, { headers })
+            .pipe(catchError(this.handleError));
+    }
+    postQueryServer1(query: string, data: any, typeHeaders: string = 'data') {
+        const URL = this.server + query;
         let optiones: any;
         if (typeHeaders == 'data') {
             optiones = {
