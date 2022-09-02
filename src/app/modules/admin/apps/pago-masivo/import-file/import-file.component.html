@@ -4,7 +4,7 @@
   </div>
   <div class="flex flex-row justify-between w-100">
     <div>
-      <button type="button" mat-raised-button (click)="fileInput.click()">Importar archivo</button>
+      <button class="color_fintra text-white" type="button" mat-raised-button (click)="fileInput.click()">Importar archivo</button>
       <input hidden #fileInput type="file" (change)="subirArchivo($event)" id="file" accept=".xls,.xlsx">
     </div>
     <div>
@@ -17,7 +17,7 @@
                 placeholder="Buscar..." />
     </div>
   </div>
-  <div class="mt-4 w-full max-h-160 shadow overflow-y-auto" [hidden]="listRowsExcel.length == 0">
+  <div class="mt-4 w-full max-h-160 shadow overflow-y-auto overflow-x-auto" [hidden]="listRowsExcel.length == 0">
     <table>
       <thead>
         <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
@@ -34,6 +34,6 @@
     </table>
   </div>
   <div class="mt-3 flex flex-row justify-end" [hidden]="listRowsExcel.length == 0">
-    <button type="button" mat-raised-button>Aceptar</button>
+    <button class="color_fintra text-white" type="button" mat-raised-button>Aceptar</button>
   </div>
 </div>

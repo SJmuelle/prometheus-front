@@ -24,6 +24,8 @@ export class ImportFileComponent implements OnInit {
   */
   subirArchivo(event) {
     this.listRowsExcel = [];
+    this.cabeceras = [];
+    this.listValores = [];
     const seleccionado = event.target.files[0];
     const lector = new FileReader();
     lector.readAsBinaryString(seleccionado);
