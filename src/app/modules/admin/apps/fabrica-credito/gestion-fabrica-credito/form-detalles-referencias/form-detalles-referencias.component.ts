@@ -187,7 +187,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.Parentesco,
+                parentesco:datos.parentesco,
             } 
         }else {
             formulario = {
