@@ -644,6 +644,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
             cupoDisponible: [''],
             score: [''],
             descripcionSubestado: [''],
+            contadorEmbargos: [''],
             descripcionScore: [''],
             nivelEndeudamiento: [''],
             comprasSemanales: [''],

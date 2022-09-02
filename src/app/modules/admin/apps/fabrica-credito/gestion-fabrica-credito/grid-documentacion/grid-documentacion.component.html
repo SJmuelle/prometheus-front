@@ -71,7 +71,7 @@
                                 </button>
                             </ng-container>
                         </td>
-                        <td class="px-2 text-sm border">{{item.fechaCargue}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.fechaCargue}}</td>
                         <td class="px-2 text-sm border text-center">
                             <ng-container *ngIf="item.archivoCargado !== 'N'">
                                 <button mat-icon-button matTooltip="Descargar documento" (click)="onDescargar(item)">
@@ -210,7 +210,7 @@
                     <div class="text-lg font-medium mt-3">Detalle</div>
                     <div class="flex flex-col mt-3 border-t border-b divide-y font-medium">
                         <div class="flex items-center justify-between py-1">
-                            <div class="text-secondary">Usuario de creación</div>
+                            <div class="text-secondary">Usuario creador</div>
                             <div>{{item.usuarioCreacion}}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
@@ -230,7 +230,7 @@
                             <div> {{ cambiarFecha(item.fechaActualizacion) }}</div>
                         </div>
                         <div class="flex items-center justify-between py-1">
-                            <div class="text-secondary">Fecha de anulación</div>
+                            <div class="text-secondary">Hora de anulación</div>
                             <div> {{ item.horaActualizacion}}</div>
                         </div>
                     </div>

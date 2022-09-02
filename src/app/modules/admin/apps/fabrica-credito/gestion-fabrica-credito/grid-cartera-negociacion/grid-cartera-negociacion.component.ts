@@ -18,7 +18,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
 
   public listadoCartera$: Observable<any>;
-  public agenda_fabrica: any;
+  public datoFabrica: any;
   public TotalSaldo: number=0;
   public totales: {
     contadorAlDia: number;
@@ -101,7 +101,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe()
       .subscribe(({ data }) => {
         Swal.close();
-        this.agenda_fabrica = data;
+        this.datoFabrica = data;
       })
   }
   public createCartera(tipo): void {

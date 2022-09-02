@@ -222,7 +222,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             this.mostrarAlerta(respuesta);
                         }else{
                             respuesta = {
-                                icon: 'warning',
+                                icon: 'error',
                                 title: 'Mensaje',
                                 text: res.data.resultado
                             };
@@ -231,7 +231,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         break;
                     case 400:
                         respuesta = {
-                            icon: 'warning',
+                            icon: 'error',
                             title: 'Mensaje',
                             text: 'Advertencia'
                         };

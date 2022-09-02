@@ -122,7 +122,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       }
       // debugger;
       console.log(data);
-      let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligación al día?' : '¿Desea agregar una nueva obligación en mora?';
+      let mensaje = '¿Desea agregar una nueva obligación ?'
       Swal.fire({
         title: 'Guardar información',
         text: mensaje,

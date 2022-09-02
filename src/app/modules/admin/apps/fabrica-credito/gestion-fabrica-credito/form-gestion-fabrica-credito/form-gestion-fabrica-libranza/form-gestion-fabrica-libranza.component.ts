@@ -116,6 +116,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.getEntidadBancaria();
         this.getPagaduria()
         this.getSalarioBasico()
+        // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
     }
     /**
      * @description:
@@ -168,7 +169,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             data: { numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento }
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('The dialog was closed');
+            // console.log('The dialog was closed');
         });
     }
     /**
@@ -349,6 +350,22 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             this.form.controls['modificado'].setValue('N')
         } else {
             this.form.controls['modificado'].setValue('S')
+        }
+        debugger;
+        if (
+            this.validarCampos(this.form.value.pagaduria, this.fabricaDatos.pagaduria)
+            &&
+            this.validarCampos(this.form.value.tipoContrato, this.fabricaDatos.tipoContrato)
+            &&
+            this.validarCampos(this.form.value.fechaVinculacion, this.fabricaDatos.fechaVinculacion)
+            &&
+            this.validarCampos(this.form.value.genero, this.fabricaDatos.genero)
+            &&
+            this.validarCampos(this.form.value.fechaNacimiento,  this.fabricaDatos.fechaNacimiento)
+        ) {
+            this.form.controls['modificadoPolitica'].setValue('N')
+        } else {
+            this.form.controls['modificadoPolitica'].setValue('S')
         }
         const datos: FormularioCreditoInterface = this.form.getRawValue();
         const { codigoBarrio, fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
@@ -802,7 +819,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
         // Se valida el nit
         if (isNaN(data)) {
-            console.log('El nit/cédula \'' + data + '\' no es válido(a).');
+            // console.log('El nit/cédula \'' + data + '\' no es válido(a).');
             return '';
         };
 
@@ -859,6 +876,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             cupoDisponible: [''],
             score: [''],
             descripcionSubestado: [''],
+            contadorEmbargos: [''],
             descripcionScore: [''],
             nivelEndeudamiento: [''],
             comprasSemanales: [''],
@@ -934,6 +952,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             fechaVinculacion: [''],
             fechaFinalizacionContrato: [''],
             codigoDepartamentoExpedicion: [''],
+            modificadoPolitica:[''],
+            aplicaDetalleOferta:[''],
+            aplicaCodeudor:[''],
+            creditoTitularLineas:[''],
+            creditoCodeudorLineas:[''],
+            sanamientoFinanciero:['']
         });
     }
 
@@ -1142,7 +1166,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
 
     public validacion(tipo: string) {
-
+        debugger;
         if (this.form.controls['aplicaIngresos'].value == 'N') {
             this.form.controls['otrosIngresos'].setValue("0");
             this.form.controls['ingresos'].setValue("0");
@@ -1171,11 +1195,30 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             case 'MO':
                 mensaje += ' <b> valor del monto solicitado</b>';
                 break;
+            case 'PA':
+                mensaje += ' <b> empresa en la que trabaja</b>';
+                break;
+            case 'TC':
+                mensaje += ' <b> tipo de contrato</b>';
+                break;
+            case 'FV':
+                mensaje += ' <b> fecha de vinculación</b>';
+                break;
+            case 'GEN':
+                mensaje += ' <b> género </b>';
+                break;
+            case 'FEN':
+                mensaje += ' <b> fecha de nacimiento</b>';
+                break;
             default:
                 break;
         }
-        mensaje += "?, Este campo actualiza la capacidad de pago del cliente.";
-
+        
+        if ((tipo == 'PA') || (tipo == 'TC')|| (tipo == 'FV')|| (tipo == 'GEN')|| (tipo == 'FEN')) {
+            mensaje += "?, Este campo modifica el motor de decisión y políticas SARC.";
+        }else{
+            mensaje += "?, Este campo actualiza la capacidad de pago del cliente.";
+        }
         if (tipo != 'AI' && tipo != 'IA') {
             Swal.fire({
                 title: 'Guardar información',
@@ -1231,6 +1274,21 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                             break;
                         case 'MO':
                             this.form.controls['monto'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
+                            break;
+                        case 'PA':
+                            this.form.controls['pagaduria'].setValue(String(this.fabricaDatos.pagaduria));
+                            break;
+                        case 'TC':
+                            this.form.controls['tipoContrato'].setValue(String(this.fabricaDatos.tipoContrato));
+                            break;
+                        case 'FV':
+                            this.form.controls['fechaVinculacion'].setValue(String(this.fabricaDatos.fechaVinculacion));
+                            break;
+                        case 'GEN':
+                            this.form.controls['genero'].setValue(String(this.fabricaDatos.genero));
+                            break;
+                        case 'FEN':
+                            this.form.controls['fechaNacimiento'].setValue(String(this.fabricaDatos.fechaNacimiento));
                             break;
                         default:
                             break;

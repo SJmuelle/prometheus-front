@@ -64,7 +64,7 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
@@ -73,7 +73,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
@@ -128,7 +128,7 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
                         <td class="px-0 text-sm border text-left">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select [(ngModel)]="item.gestionCartera"
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
@@ -136,7 +136,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td class="px-2 text-sm border text-center">{{item.entidad}}</td>
+                        <td class="px-2 text-sm border text-center h-12">{{item.entidad}}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                         <td class="text-sm border w-0 text-center">

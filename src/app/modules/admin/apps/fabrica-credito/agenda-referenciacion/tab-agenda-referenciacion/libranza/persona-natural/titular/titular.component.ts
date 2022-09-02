@@ -297,7 +297,7 @@ export class LibranzaTitularComponent implements OnInit {
       tieneEmpleadoValida_bool: Boolean,
       nombreNegocioValida_bool: Boolean,
       referenciaValidada: [""],
-      referenciaValidada_bool: Boolean,
+      referenciaValidada_bool:[""],
 
       otroDestinoCredito: [''],
       motivoObligaciones: [''],
@@ -431,27 +431,26 @@ export class LibranzaTitularComponent implements OnInit {
         if (data.ventaMensualCorregido) {
           this.form.controls['ventaMensualCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
         }
-        this.form.controls['antiguedadNegocioValida_bool'].setValue(this.form.value.antiguedadNegocioValida == 'S' ? true : false)
-        this.form.controls['barrioNegocioValida_bool'].setValue(this.form.value.barrioNegocioValida == 'S' ? true : false)
-        // this.form.controls['barrioResidenciaValida_bool'].setValue(this.form.value.barrioResidenciaValida == 'S' ? true : false)
-        this.form.controls['camaraComercio_bool'].setValue(this.form.value.camaraComercio == 'S' ? true : false)
-        this.form.controls['camaraComercioValida_bool'].setValue(this.form.value.camaraComercioValida == 'S' ? true : false)
-        this.form.controls['ciudadNegocioValida_bool'].setValue(this.form.value.ciudadNegocioValida == 'S' ? true : false)
-        // this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'S' ? true : false)
-        this.form.controls['correoElectronicoValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
-        this.form.controls['departamentoNegocioValida_bool'].setValue(this.form.value.departamentoNegocioValida == 'S' ? true : false)
-        this.form.controls['dineroAhorradoMensualValida_bool'].setValue(this.form.value.dineroAhorradoMensualValida == 'S' ? true : false)
-        this.form.controls['direccionNegocioValida_bool'].setValue(this.form.value.direccionNegocioValida == 'S' ? true : false)
-        this.form.controls['direccionResidenciaValida_bool'].setValue(this.form.value.direccionResidenciaValida == 'S' ? true : false)
-        this.form.controls['nitNegocioValida_bool'].setValue(this.form.value.nitNegocioValida == 'S' ? true : false)
-        this.form.controls['totalActivoValida_bool'].setValue(this.form.value.totalActivoValida == 'S' ? true : false)
-        this.form.controls['ventaMensualValida_bool'].setValue(this.form.value.ventaMensualValida == 'S' ? true : false)
-        this.form.controls['numeroFormularioValida_bool'].setValue(this.form.value.numeroFormularioValida == 'S' ? true : false)
-        this.form.controls['telefonoContactoValida_bool'].setValue(this.form.value.telefonoContactoValida == 'S' ? true : false)
-        this.form.controls['tieneEmpleadoValida_bool'].setValue(this.form.value.tieneEmpleadoValida == 'S' ? true : false)
-        this.form.controls['nombreNegocioValida_bool'].setValue(this.form.value.nombreNegocioValida == 'S' ? true : false)
-        this.form.controls['referenciaValidada_bool'].setValue(this.form.value.referenciaValidada == 'S' ? true : false)
-        this.form.controls['destinoCreditoCorregido_bool'].setValue(this.form.value.destinoCreditoValida == 'S' ? true : false)
+        this.form.controls['antiguedadNegocioValida_bool'].setValue(this.form.value.antiguedadNegocioValida == 'N' ? false : true)
+        this.form.controls['barrioNegocioValida_bool'].setValue(this.form.value.barrioNegocioValida == 'N' ? false : true)
+        // this.form.controls['barrioResidenciaValida_bool'].setValue(this.form.value.barrioResidenciaValida == 'N' ? false : true)
+        this.form.controls['camaraComercio_bool'].setValue(this.form.value.camaraComercio == 'N' ? false : true)
+        this.form.controls['camaraComercioValida_bool'].setValue(this.form.value.camaraComercioValida == 'N' ? false : true)
+        this.form.controls['ciudadNegocioValida_bool'].setValue(this.form.value.ciudadNegocioValida == 'N' ? false : true)
+        // this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'N' ? false : true)
+        this.form.controls['correoElectronicoValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? false : true)
+        this.form.controls['departamentoNegocioValida_bool'].setValue(this.form.value.departamentoNegocioValida == 'N' ? false : true)
+        this.form.controls['dineroAhorradoMensualValida_bool'].setValue(this.form.value.dineroAhorradoMensualValida == 'N' ? false : true)
+        this.form.controls['direccionNegocioValida_bool'].setValue(this.form.value.direccionNegocioValida == 'N' ? false : true)
+        this.form.controls['direccionResidenciaValida_bool'].setValue(this.form.value.direccionResidenciaValida == 'N' ? false : true)
+        this.form.controls['nitNegocioValida_bool'].setValue(this.form.value.nitNegocioValida == 'N' ? false : true)
+        this.form.controls['totalActivoValida_bool'].setValue(this.form.value.totalActivoValida == 'N' ? false : true)
+        this.form.controls['ventaMensualValida_bool'].setValue(this.form.value.ventaMensualValida == 'N' ? false : true)
+        this.form.controls['numeroFormularioValida_bool'].setValue(this.form.value.numeroFormularioValida == 'N' ? false : true)
+        this.form.controls['telefonoContactoValida_bool'].setValue(this.form.value.telefonoContactoValida == 'N' ? false : true)
+        this.form.controls['tieneEmpleadoValida_bool'].setValue(this.form.value.tieneEmpleadoValida == 'N' ? false : true)
+        this.form.controls['nombreNegocioValida_bool'].setValue(this.form.value.nombreNegocioValida == 'N' ? false : true)
+        this.form.controls['destinoCreditoCorregido_bool'].setValue(this.form.value.destinoCreditoValida == 'N' ? false : true)
 
       });
   }
@@ -649,7 +648,7 @@ export class LibranzaTitularComponent implements OnInit {
     const telefonoContactoValida = this.form.value.telefonoContactoValida_bool == true ? 'S' : 'N';
     const tieneEmpleadoValida = this.form.value.tieneEmpleadoValida_bool == true ? 'S' : 'N';
     const nombreNegocioValida = this.form.value.nombreNegocioValida_bool == true ? 'S' : 'N';
-    const referenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
+    const referenciaValidada = this.form.value.referenciaValidada_bool == 'E' ? 'S' : 'N';
     // debugger;
     delete data.antiguedadNegocio;
     delete data.antiguedadNegocioCorregido;

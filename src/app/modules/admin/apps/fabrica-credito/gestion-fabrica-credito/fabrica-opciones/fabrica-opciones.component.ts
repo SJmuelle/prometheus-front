@@ -100,41 +100,20 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
    */
   public onDialogoDecision(): void {
     let dialogRef;
-    switch (this.dialogMostrar) {
-      case 'CHECKLIST':
-        dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
-          minWidth: '60%',
-          maxHeight: '80%',
-          data: {
-            numeroSolicitud: this.numeroSolicitud,
-            tipoDocumento: this.fabricaDatos.tipoDocumento,
-            agenda: this.fabricaDatos.agenda,
-            unidadNegocio: this.fabricaDatos.unidadNegocio
-          },
-          disableClose: false,
-        });
-        dialogRef.afterClosed().toPromise().then(() => {
-          this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-        });
-        break;
-      case 'SIGUIENTE':
-        dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-          minWidth: '30%',
-          minHeight: '30%',
-          data: {
-            numeroSolicitud: this.numeroSolicitud,
-            etapa: 1,
-            idAgenda: this.fabricaDatos.agenda,
-          },
-          disableClose: false,
-        });
-        dialogRef.afterClosed().toPromise().then(() => {
-          this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-        });
-        break;
-      default:
-        break;
-    }
+    dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
+      minWidth: '60%',
+      maxHeight: '80%',
+      data: {
+        numeroSolicitud: this.numeroSolicitud,
+        tipoDocumento: this.fabricaDatos.tipoDocumento,
+        agenda: this.fabricaDatos.agenda,
+        unidadNegocio: this.fabricaDatos.unidadNegocio
+      },
+      disableClose: false,
+    });
+    dialogRef.afterClosed().toPromise().then(() => {
+      this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+    });
 
   }
 
