@@ -10,6 +10,7 @@ import { MenuModule } from './modules/admin/apps/menu/menu.module';
 import { DashboardModule } from './modules/admin/apps/dashboard/dashboard.module';
 import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
+import { PagoMasivoModule } from './modules/admin/apps/pago-masivo/pago-masivo.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -114,6 +115,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'pagaduria',
                 loadChildren: () => PagaduriaModule
+            },
+            {
+                path: 'pago-masivo',
+                loadChildren: () => PagoMasivoModule
             }
         ]
     },

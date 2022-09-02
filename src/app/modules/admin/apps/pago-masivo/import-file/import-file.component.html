@@ -1,0 +1,50 @@
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg">
+  <div class="grid grid-cols-12 w-100 mb-2">
+    <h2 class="text-gray-900 col-span-12 mb-4">Importar pagos.</h2>
+  </div>
+  <div class="flex flex-row justify-between w-100">
+    <div>
+      <button type="button" mat-raised-button (click)="fileInput.click()">Importar</button>
+      <input hidden #fileInput type="file" (change)="subirArchivo($event)" id="file" accept=".xls,.xlsx">
+    </div>
+    <div>
+      <input class="border rounded p-2 bg-gray-100 w-72 xl:w-80 mr-0"
+                style="font-size: 10px; margin-right: 1em"
+                type="text"
+                autocomplete="off"
+                name="filtrarTabla"
+                [(ngModel)]="filtrarTabla"
+                placeholder="Buscar..." />
+    </div>
+  </div>
+  <div class="mt-5 h-80 xl:h-140 w-full shadow overflow-y-auto" [hidden]="listRowsExcel.length == 0">
+    <table>
+      <thead>
+        <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
+          <th class="px-3 py-3 text-center">Identificación</th>
+          <th class="px-3 py-3 text-center">Unidad de negocio</th>
+          <th class="px-3 py-3 text-center">Tipo de pago</th>
+          <th class="px-3 py-3 text-center">Fecha de pago</th>
+          <th class="px-3 py-3 text-center">Banco</th>
+          <th class="px-3 py-3 text-center">Sucursal</th>
+          <th class="px-3 py-3 text-center">Valor neto</th>
+          <th class="px-3 py-3 text-center">Comision de recaudo</th>
+          <th class="px-3 py-3 text-center">Orden</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-gray-700" *ngFor="let item of listRowsExcel | filter: filtrarTabla">
+          <td class="px-2 text-sm border text-center">{{ item.identificacion }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.unidad_negocio }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.tipo_pago }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.Fecha_Pago }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.banco }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.sucursal }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.valor_aplicar_neto }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.comision_recaudo }}</td>
+          <td class="px-2 text-sm border text-center">{{ item.Orden }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
