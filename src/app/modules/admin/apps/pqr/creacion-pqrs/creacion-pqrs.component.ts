@@ -386,11 +386,11 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardar() {
-        debugger;
+       // debugger;
         this._pqrService
             .permisoCreacion('tk/validar-permisos-gestion-pqrs')
             .subscribe((response: any) => {
-                debugger;
+             //   debugger;
                 console.log(response.data.area);
                 if (response.data.area !== 'SAC') {
                     Swal.fire(
@@ -467,7 +467,7 @@ export class CreacionPQRSComponent implements OnInit {
                                                 icon: 'success',
                                                 showConfirmButton: true,
                                             }).then((result) => {
-                                                debugger;
+                                               // debugger;
                                                 if (
                                                     this.EstadoSagicc == false
                                                 ) {
@@ -481,7 +481,7 @@ export class CreacionPQRSComponent implements OnInit {
                                                 }
                                             });
                                             setTimeout(() => {
-                                                debugger;
+                                                //debugger;
                                                 if (
                                                     this.EstadoSagicc == false
                                                 ) {

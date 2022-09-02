@@ -272,4 +272,13 @@ export class AppSettingsService {
 
         }
     };
+        /**
+    * @description: End-point agenda decision
+    */
+         public salarioBasico = {
+            url: {
+                base: EndPoints.uri('/generic/obtener-salario-min-vigente'),
+    
+            }
+        };
 }

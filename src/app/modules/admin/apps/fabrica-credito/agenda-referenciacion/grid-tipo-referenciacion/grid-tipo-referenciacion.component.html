@@ -16,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col flex-auto min-w-0">
+    <div class="flex flex-col flex-auto min-w-0" *ngIf="fabricaDatos">
 
         <!-- Header -->
         <div class="relative pt-8 pb-28 px-4 sm:px-16 overflow-hidden bg-gray-800 dark">
@@ -61,9 +61,9 @@
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
                                         </mat-icon> {{titular.nombreCompleto}}
                                     </div>
-                                    <div class="text-secondary text-md" *ngIf="titular.telefono">
-                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
-                                        </mat-icon>{{titular.telefono}}
+                                    <div class="text-secondary text-md truncate" *ngIf="titular.email">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
+                                        </mat-icon>{{miniscula(laboral.email)}}
                                     </div>
                                     <div class="text-secondary text-md" *ngIf="titular.celular">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
@@ -123,14 +123,14 @@
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>{{laboral.telefono}}
                                     </div>
-                                    <div class="text-secondary text-md" *ngIf="laboral.email">
+                                    <div class="text-secondary text-md truncate" *ngIf="laboral.email">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
-                                        </mat-icon>{{laboral.email}}
+                                        </mat-icon>{{miniscula(laboral.email)}}
                                     </div>
-                                    <div class="text-secondary text-md" *ngIf="laboral.direccion">
+                                    <div class="text-secondary text-md capitalize" *ngIf="laboral.direccion">
                                         <mat-icon class="icon-size-3 mr-2"
                                             [svgIcon]="'heroicons_solid:location-marker'">
-                                        </mat-icon>{{laboral.direccion}}
+                                        </mat-icon>{{miniscula(laboral.direccion)}}
                                     </div>
                                 </div>
                             </div>

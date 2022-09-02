@@ -148,6 +148,15 @@ export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
     });
   }
 
+  miniscula(valor){
+    if(valor){
+      return valor.toLowerCase();
+    }
+      return '';
+    
+   
+  }
+
   ngOnDestroy(): void {
     this.unSubscribe$.unsubscribe();
     // this.agendaCompletacionService.resetSeleccionAgenda();

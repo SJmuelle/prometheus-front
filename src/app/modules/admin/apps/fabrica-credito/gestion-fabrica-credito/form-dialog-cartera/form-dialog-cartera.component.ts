@@ -47,13 +47,14 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.crearFormulario();
     this.getEntidadBancaria();
     this.getTipoCuentaBancaria();
-    this.getEstadoCuenta();
+ 
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
     // this.form.controls.estadoCuenta.setValue(this.data.tipo == 'D' ? 'DEUDA' : 'AL DIA');
     this.form.controls.alDia.setValue(this.data.tipo == 'D' ? false : true);
     this.tipo = this.data.tipo;
     this.postBusquedaEntidadFinanciera('');
+    this.getEstadoCuenta(this.data.tipo != 'D' ? "AL DIA" : "EN MORA");
     this.filteredOptions = this.form.controls.entidad.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
@@ -90,8 +91,8 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     /**
    * @description: Obtiene los tipos de estados civiles
    */
-     private getEstadoCuenta(): void {
-      this.estadoCuenta$ = this.genericaServices.getEstadoCuenta();
+     private getEstadoCuenta(tipo): void {
+      this.estadoCuenta$ = this.genericaServices.getEstadoCuenta(tipo);
     }
   
 
@@ -119,9 +120,9 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
         entidad:entidad.toUpperCase(),
         ...data
       }
-      debugger;
+      // debugger;
       console.log(data);
-      let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligación al día?' : '¿Desea agregar una nueva obligación en mora?';
+      let mensaje = '¿Desea agregar una nueva obligación ?'
       Swal.fire({
         title: 'Guardar información',
         text: mensaje,

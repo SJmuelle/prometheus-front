@@ -4,11 +4,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ComentariosService } from 'app/core/services/comentarios.service';
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
 import { UtilityService } from 'app/resources/services/utility.service';
+import moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
-
+// import { format} from 'date-fns'
 @Component({
   selector: 'app-form-dialog-negociacion',
   templateUrl: './form-dialog-negociacion.component.html',
@@ -19,6 +20,9 @@ export class FormDialogNegociacionComponent implements OnInit {
   public form: FormGroup;
   public unsubscribe$: Subject<any> = new Subject<any>();
   listadoTipo: any;
+  hoy= moment(new Date()).format("yyyy-MM-DD");
+  manana: any;
+  
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogRef<FormDialogComentariosComponent>,
@@ -30,6 +34,8 @@ export class FormDialogNegociacionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.manana= moment().add(1, 'days');
+    this.manana=moment(this.manana).format("yyyy-MM-DD");
     console.log(this.data)
     this.crearFormulario();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
@@ -65,6 +71,7 @@ export class FormDialogNegociacionComponent implements OnInit {
     let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
     let porcentajeConsultores=Number((this.form.value.porcentajeConsultores));
     let valor=(valorDescuento*(porcentajeConsultores/100));
+    valor=Math.round(valor);
     this.form.controls.valorConsultores.setValue(this.utility.formatearNumero(valor + ''));
   }
 
@@ -78,6 +85,7 @@ export class FormDialogNegociacionComponent implements OnInit {
   }
 
   public onGuardar(): void {
+    
     if (this.form.valid) {
       const data: any = this.form.getRawValue();
       const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)));
@@ -85,6 +93,12 @@ export class FormDialogNegociacionComponent implements OnInit {
       const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores)));
 
       console.log(data);
+      if(valorAComprar==0){
+        Swal.fire('Información', 'El  valor a comprar debe ser mayor a 0, para que tenga una notificación', 'warning').then((resultado) => {
+         
+        });
+        return;
+      }
       delete data.valorAComprar;
       delete data.valorDescuento;
       delete data.valorConsultores;
@@ -97,7 +111,7 @@ export class FormDialogNegociacionComponent implements OnInit {
         ...data
       }
       console.log(datosFormularios);
-      let mensaje = '¿Esta seguro de guardar el resultado de la negociación?';
+      let mensaje = '¿Está seguro de guardar el resultado de la negociación?';
       Swal.fire({
         title: 'Guardar información',
         text: mensaje,

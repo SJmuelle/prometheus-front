@@ -71,7 +71,7 @@
             <ng-container *ngIf="this.data.evento!='NO EXITOSA'">
               <mat-form-field class="w-full fuse-mat-dense">
                 <mat-label>Fecha limite de pagos</mat-label>
-                <input matInput type="date" placeholder="" [formControlName]="'fechaLimitePago'">
+                <input matInput type="date" placeholder=""  min="{{manana}}" [formControlName]="'fechaLimitePago'">
               </mat-form-field>
             </ng-container>
           </div>

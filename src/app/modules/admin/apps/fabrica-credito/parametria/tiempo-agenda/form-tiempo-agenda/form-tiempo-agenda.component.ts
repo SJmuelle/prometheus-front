@@ -61,7 +61,7 @@ export class FormTiempoAgendaComponent implements OnInit {
       //post
       // idAgenda,unidadNegocio,nombre,tipoIdentificacion
 
-      url = 'agregar-item-de-chequeo';
+      url = '/agregar-item-de-chequeo';
       data = {
         idAgenda:this.datos.idAgenda,
         unidadNegocio:this.datos.unidadNegocio,
@@ -69,7 +69,7 @@ export class FormTiempoAgendaComponent implements OnInit {
         tipoIdentificacion:this.datos.tipoIdentificacion
       };
     } else {
-      url = 'actualizar-item-chequeo';
+      url = '/actualizar-item-chequeo';
       data = {
         id: parseInt(this.datos.id),
         nombre: this.datos.nombre,
