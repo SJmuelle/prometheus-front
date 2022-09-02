@@ -124,14 +124,23 @@ export class GenericasService {
     /**
     * @description: obtiene nivel de estudii
     */
-    public getEstadoCuenta(): Observable<any> {
+    public getEstadoCuenta(tipo): Observable<any> {
         // const params: string = 'ESTADO-CUENTA';
         let data = {
-            
+            tipo:tipo
         }
         return this._http.post(`${this._appSettings.busquedaEstadoCuenta.url.base}`,data);
     }
-
+   /**
+    * @description: obtiene nivel de estudii
+    */
+    public getSalarioBasico(): Observable<any> {
+        // const params: string = 'ESTADO-CUENTA';
+        let data = {
+          
+        }
+        return this._http.post(`${this._appSettings.salarioBasico.url.base}`,data);
+    }
     /**
     * @description: Obtiene nivel de estudii
     */

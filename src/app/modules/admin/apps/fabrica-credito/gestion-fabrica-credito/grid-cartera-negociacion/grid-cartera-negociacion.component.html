@@ -1,14 +1,14 @@
-<div class="min-h-60" *ngIf="agenda_fabrica && totales">
+<div class="min-h-60" *ngIf="datoFabrica && totales">
     <div class="grid grid-cols-6">
         <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
             <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
             <div class="flex flex-col">
                 <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
                 <div class="text-1xl font-semibold leading-tight text-center mt-1.5 capitalize">
-                    {{agenda_fabrica.nombreCompleto}}
+                    {{datoFabrica.nombreCompleto}}
                 </div>
-                <div class="text-1xl  text-secondary text-center"> {{agenda_fabrica.email}}</div>
-                <div class="text-1xl  text-green-600 text-center">{{agenda_fabrica.descripcionTipoCredito}}</div>
+                <div class="text-1xl  text-secondary text-center"> {{datoFabrica.email}}</div>
+                <div class="text-1xl  text-green-600 text-center">{{datoFabrica.descripcionTipoCredito}}</div>
             </div>
         </fuse-card>
         <div class="pl-2" *ngIf="totales">
@@ -76,8 +76,9 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    [disabled]="datoFabrica.agenda!='GC'"
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
@@ -85,26 +86,26 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
                             ${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="text-sm border w-0 text-center px-2">
-                            <div class="py-0.5 text-xs px-2  font-semibold text-white " [ngClass]="
+                            <div class="py-0.5 text-xs px-2  font-semibold  " [ngClass]="
                                   item.alDia === 'f'
-                                  ? 'bg-red-600'
-                                  : 'bg-green-300'
+                                  ? 'bg-red-300  text-red-900'
+                                  : 'bg-green-300 text-green-900'
                                   ">
-                                EN MORA
+                                  {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
                             </div>
                         </td>
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
-                                    [disabled]="item.gestionCartera==''"
+                                    [disabled]="(datoFabrica.agenda!='GC') || (item.gestionCartera=='') || (item.gestionCartera=='COM')"
                                     (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
-                                    <mat-option value="">Sin negociación</mat-option>
+                                    <mat-option value="" disabled>Seleccione</mat-option>
                                     <mat-option value="EXITOSA">Exitosa</mat-option>
                                     <mat-option value="NO EXITOSA">No exitosa</mat-option>
                                 </mat-select>
@@ -295,34 +296,35 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia !== 'f'">
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                [disabled]="datoFabrica.agenda!='GC'"
                                     (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td class="px-2 text-sm border uppercase text-center">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
                             ${{item.saldoActual | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
                         <td class="text-sm border w-0 text-center px-2">
-                            <div class="py-0.5 text-xs px-2  font-semibold text-white " [ngClass]="
+                            <div class="py-0.5 text-xs px-2  font-semibold" [ngClass]="
                                       item.alDia === 'f'
-                                      ? 'bg-red-600'
-                                      : 'bg-green-600'
+                                      ? 'bg-red-300  text-red-900'
+                                      : 'bg-green-300 text-green-900'
                                       ">
-                                AL DIA
+                                      {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
                             </div>
                         </td>
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
                                     [disabled]="item.gestionCartera==''"
                                     (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
-                                    <mat-option value="">Sin negociación</mat-option>
+                                    <mat-option value="" disabled>Seleccione</mat-option>
                                     <mat-option value="EXITOSA">Exitosa</mat-option>
                                     <mat-option value="NO EXITOSA">No exitosa</mat-option>
                                 </mat-select>

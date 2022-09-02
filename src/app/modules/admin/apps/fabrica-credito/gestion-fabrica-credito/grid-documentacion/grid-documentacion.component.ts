@@ -31,7 +31,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public numeroSolicitud: string;
     public habilitarComparar: boolean = false;
     public datosDocumentosHistorico: any[] = [];
-    public identificacion: string ;
+    public identificacion: string;
 
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
     constructor(
@@ -43,7 +43,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         this.identificacion = this.route.snapshot.paramMap.get('id');
         this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
         this.escuchaObservable();
-        
+
     }
     ngOnInit(): void {
     }
@@ -57,11 +57,11 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         };
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
-               
+
                 const datosDocumentos: any = {
                     numeroSolicitud: datosSolicitud.numeroSolicitud,
                     tipoDocumento: data.tipoDocumento,
-                    unidadNegocio:data.unidadNegocio
+                    unidadNegocio: data.unidadNegocio
                 };
                 // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
 
@@ -133,11 +133,23 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
 
     public subirArchivo(input: any, item: any): void {
-        Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        //debugger;
         let formulario: {};
         const files = input.target.files;
         if (files && files.length) {
             const fileToRead = files[0];
+            let ext = fileToRead.name.split(".")
+            ext = ext[(ext.length-1)].toUpperCase();
+            if (ext != 'PDF') {
+                Swal.fire(
+                    '¡Información!',
+                    'Solo se permite PDF',
+                    'error',
+                );
+                return;
+            }
+            Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
             const reader = new FileReader();
             reader.readAsDataURL(fileToRead);
             reader.onloadend = () => {
@@ -326,6 +338,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();
     }
-    
+
 
 }

@@ -59,7 +59,7 @@ export class ListadoPreguntasReferenciacionFormComponent implements OnInit {
         //post
         // idAgenda,unidadNegocio,nombre,tipoIdentificacion
 
-        url = 'agregar-pregunta-hija-de-referenciacion';
+        url = '/agregar-pregunta-hija-de-referenciacion';
         data = {
           idAgenda:this.datos.datos.idAgenda,
           unidadNegocio:this.datos.datos.idUnidadNegocio.toString(),
@@ -71,7 +71,7 @@ export class ListadoPreguntasReferenciacionFormComponent implements OnInit {
         //post
         // idAgenda,unidadNegocio,nombre,tipoIdentificacion
 
-        url = 'agregar-pregunta-de-referenciacion';
+        url = '/agregar-pregunta-de-referenciacion';
         data = {
           idAgenda:this.datos.idAgenda,
           unidadNegocio:this.datos.unidadNegocio,
@@ -79,7 +79,7 @@ export class ListadoPreguntasReferenciacionFormComponent implements OnInit {
           tipoIdentificacion:this.datos.tipoIdentificacion
         };
       } else {
-        url = 'actualizar-pregunta-referenciacion';
+        url = '/actualizar-pregunta-referenciacion';
         data = {
           id: parseInt(this.datos.id),
           titulo_pregunta: this.datos.tituloPregunta,

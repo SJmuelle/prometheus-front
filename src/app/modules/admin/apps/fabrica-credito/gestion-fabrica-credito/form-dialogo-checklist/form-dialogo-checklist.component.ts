@@ -77,7 +77,7 @@ export class FormDialogoChecklistComponent implements OnInit {
 
   guardar(item) {
     let data, url;
-    url = 'registro-chequeo-credito';
+    url = '/registro-chequeo-credito';
     data = {
       numeroSolicitud: this.data.numeroSolicitud,
       nombre: item.nombre,

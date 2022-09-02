@@ -65,10 +65,11 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        debugger;
+     //   debugger;
         console.log(data);
         this.fabricaDatos = data
         this.form.controls['referenciaValidada_bool'].setValue(this.fabricaDatos.referenciaValidada == 'S' ? true : false)
+        this.form.controls['comentario'].setValue(this.fabricaDatos.comentario)
 
       })
   }
@@ -76,7 +77,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
   private createFormulario(): void {
     this.form = this.fb.group({
       referenciaValidada_bool: Boolean,
-      telefonoContactoObservacion: ['', [Validators.required], Validators.minLength(30)],
+      comentario: ['', [Validators.required], Validators.minLength(30)],
     })
   }
 
@@ -99,7 +100,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
       tipoReferecia: 'L',
       recurso: 'guardar-rerefencia-laboral',
       referenciaValidada: datos.referenciaValidada_bool == true ? 'S' : 'N',
-      comentario: datos.telefonoContactoObservacion
+      comentario: datos.comentario
     }
     this.postFormularioFabrica(data);
   }
