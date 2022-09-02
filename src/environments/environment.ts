@@ -25,7 +25,7 @@ export const environment = {
     // adjunto:'http://demo.fintra.co:8011/api-fintra/api/pqrs',
     // envioCorreo:"http://192.168.140.197:8084"
     envioCorreo: 'http://prometheus.fintra.co:8443/apicredit',
-    urlUltracem: 'http://demo.fintra.co:8011/api-fintra/api',
+    urlUltracem: 'https://prometheus.fintra.co:8443/api-fintra/api',
 
     // NGROK
     // urlApi: 'http://demo.fintra.co:8011/api-fintra/api',
