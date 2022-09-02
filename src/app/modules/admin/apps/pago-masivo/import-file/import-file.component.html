@@ -25,9 +25,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="text-gray-700" *ngFor="let itemlistValores of listValores; let i = index;">
-          <td class="px-2 text-sm border text-center" *ngFor="let item of itemlistValores[i];">
-            {{ item}}
+        <tr class="text-gray-700" *ngFor="let objVal of listValores">
+          <td class="px-2 text-sm border text-center" *ngFor="let itemVal of objVal">
+            {{ itemVal }}
           </td>
         </tr>
       </tbody>

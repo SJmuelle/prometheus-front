@@ -33,26 +33,12 @@ export class ImportFileComponent implements OnInit {
       let hoja = workbook.SheetNames[0];
       const data = XLSX.utils.sheet_to_json(workbook.Sheets[hoja]);
       this.listRowsExcel = data;
-      // console.log(this.listRowsExcel)
       this.cabeceras=Object.keys(this.listRowsExcel[0])
-      // console.log(this.cabeceras)
-
       for (let index = 0; index < this.listRowsExcel.length; index++) {
         const element = this.listRowsExcel[index];
         this.valores = Object.values(element)
-        // console.log(this.valores)
-        // const obj = Object.assign({}, this.valores);
-        // console.log(obj)
         this.listValores.push(this.valores)
       }
-      console.log(this.listValores)
-      console.log(this.listValores[0])
-      // workbook.SheetNames.forEach(sheet => {
-      //   const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet]);
-      //   this.createdJson = JSON.stringify(data, undefined, 4);
-      //   console.log(this.createdJson)
-      // })
-      // console.log(workbook.SheetNames[0])
     }
     this.fileInput.nativeElement.value = '';
   }
