@@ -61,8 +61,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center">Gestión</th>
-                <th class="px-4 py-3 text-center">Entidad</th>
+                <th class="px-4 py-3 text-center" colspan="2">Gestión</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
                 <th class="px-4 py-3 text-center">Altura de mora</th>
@@ -75,6 +74,9 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
+                        <td class="px-2 text-sm border uppercase text-center h-12" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                            <mat-icon svgIcon="heroicons_solid:pencil-alt"></mat-icon>
+                        </td>
                         <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
@@ -86,6 +88,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
@@ -282,7 +285,7 @@
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                 <th class="px-4 py-3 text-center">Gestión</th>
-                <th class="px-4 py-3 text-center">Entidad</th>
+                <th class="px-4 py-3 text-center" colspan="2">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
                 <th class="px-4 py-3 text-center">Saldo</th>
                 <th class="px-4 py-3 text-center">Altura de mora</th>
@@ -305,6 +308,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}

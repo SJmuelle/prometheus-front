@@ -129,7 +129,23 @@ export class GridCarteraComponent implements OnInit {
       data: {
         numeroSolicitud: Number(this.numeroSolicitud),
         identificacion: Number(this.identificacion),
-        tipo: tipo
+        tipo: tipo,
+        item:null
+      }
+    });
+    dialogRef.afterClosed().toPromise().then((res) => {
+      this.getListadoCartera(Number(this.numeroSolicitud));
+    });
+  }
+  public editarCartera(item,tipo): void {
+    const dialogRef = this._dialog.open(FormDialogCarteraComponent, {
+      minWidth: '30%',
+      minHeight: '30%',
+      data: {
+        numeroSolicitud: Number(this.numeroSolicitud),
+        identificacion: Number(this.identificacion),
+        tipo: tipo,
+        item:item
       }
     });
     dialogRef.afterClosed().toPromise().then((res) => {

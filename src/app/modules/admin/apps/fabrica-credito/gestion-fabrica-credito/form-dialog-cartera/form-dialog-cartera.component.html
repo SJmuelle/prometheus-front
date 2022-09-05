@@ -7,11 +7,15 @@
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                     <div class="flex">
-
+                        <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                            <mat-label>Nit</mat-label>
+                            <input type="text" placeholder="" matInput [formControlName]="'nit'"
+                                autocomplete="false">
+                        </mat-form-field>
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>Entidad Financiera</mat-label>
                             <input type="text" placeholder="" matInput [formControlName]="'entidad'"
-                                [matAutocomplete]="auto">
+                                [matAutocomplete]="auto" (change)="colocarNit()">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
                                     {{option.nombre}}

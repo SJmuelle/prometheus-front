@@ -52,7 +52,7 @@
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                 <th class="px-4 py-3 text-center w-2/12">Gestión</th>
-                <th class="px-4 py-3 text-center w-4/12">Entidad</th>
+                <th class="px-4 py-3 text-center w-4/12" colspan="2">Entidad</th>
                 <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
                 <th class="px-4 py-3 text-center w-1/12">Saldo</th>
                 <th class="px-4 py-3 text-center w-1/12">Altura de mora</th>
@@ -73,6 +73,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
@@ -116,8 +117,8 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center w-2/12">Gestión</th>
-                <th class="px-4 py-3 text-center w-4/12">Entidad</th>
+                <th class="px-4 py-3 text-center w-2/12" colspan="2">Gestión</th>
+                <th class="px-4 py-3 text-center w-4/12" colspan="2">Entidad</th>
                 <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
                 <th class="px-4 py-3 text-center w-1/12">Saldo</th>
                 <th class="px-4 py-3 text-center w-3/12">Estado</th>
@@ -127,6 +128,9 @@
             <ng-container *ngIf="listadoCartera$ | async as items;">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
+                        <td class="px-2 text-sm border uppercase text-center h-12">
+                            <mat-icon  class="cursor-pointer" svgIcon="heroicons_solid:pencil-alt" (click)="editarCartera(item,'N')" *ngIf="item.entidad!='CONSULTORES DE CREDITO'"></mat-icon>
+                        </td>
                         <td class="px-0 text-sm border text-left">
                             <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select [(ngModel)]="item.gestionCartera"
@@ -136,6 +140,7 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                         <td class="px-2 text-sm border text-center h-12">{{item.entidad}}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>

@@ -194,6 +194,7 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
+            editar:EndPoints.uri("/generic/actualizar-cartera	"),
             pasarAgenda: EndPoints.uri('/generic/cre-valida-gestion-cartera'),
             validadorTotalLibranza: EndPoints.uri('/generic/validador-total-libranza'),
             //negociacion

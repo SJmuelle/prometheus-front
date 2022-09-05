@@ -59,6 +59,14 @@ export class ListadoCarteraService {
     return this._http.post(this._appSettings.listadoCartera.url.create, data);
   }
 
+    /**
+   * @description:
+   */
+     public editarCartera(data: any): Observable<any> {
+      return this._http.post(this._appSettings.listadoCartera.url.editar, data);
+    }
+  
+
   /**
  * @description:
  */
