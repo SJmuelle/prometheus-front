@@ -51,6 +51,7 @@ import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-ca
 import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid-cartera-negociacion.component';
 import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
 import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.component';
+import { QuillModule } from 'ngx-quill';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
@@ -110,6 +111,7 @@ import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.co
         MatRadioModule,
         FormsModule,
         MatAutocompleteModule,
+        QuillModule,
         // FabricaOpcionesModule
     ],
 

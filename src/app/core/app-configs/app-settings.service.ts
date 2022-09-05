@@ -15,12 +15,12 @@ export class AppSettingsService {
     /**
      * @description: End-point agenda de completacion
      */
-         public agendaFormalizacion = {
-            url: {
-                base: EndPoints.uri('/generic/qry/agendas-credito/FO'),
-                totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FO')
-            }
-        };
+    public agendaFormalizacion = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/FO'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FO')
+        }
+    };
     /**
      * @description: End-point pagaduria
      */
@@ -127,8 +127,17 @@ export class AppSettingsService {
         }
     };
     /**
-   * @description: End-point comentarios
-   */
+ * @description: End-point comentarios
+ */
+    public obtenerAgendaSolicitud = {
+        url: {
+            base: EndPoints.uri('/generic/qry/obtener-agenda-solicitud'),
+        }
+    };
+    /**
+/**
+* @description: End-point comentarios
+*/
     public centrales = {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
@@ -262,23 +271,23 @@ export class AppSettingsService {
         }
     };
 
-    
+
     /**
     * @description: End-point agenda decision
     */
-     public busquedaEstadoCuenta = {
+    public busquedaEstadoCuenta = {
         url: {
             base: EndPoints.uri('/generic/obtener-estados-cuentas'),
 
         }
     };
-        /**
-    * @description: End-point agenda decision
-    */
-         public salarioBasico = {
-            url: {
-                base: EndPoints.uri('/generic/obtener-salario-min-vigente'),
-    
-            }
-        };
+    /**
+* @description: End-point agenda decision
+*/
+    public salarioBasico = {
+        url: {
+            base: EndPoints.uri('/generic/obtener-salario-min-vigente'),
+
+        }
+    };
 }

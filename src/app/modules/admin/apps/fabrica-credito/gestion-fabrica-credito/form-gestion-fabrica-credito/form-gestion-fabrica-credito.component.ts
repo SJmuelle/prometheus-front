@@ -16,9 +16,7 @@ import * as moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { GridDocumentacionComponent } from '../grid-documentacion/grid-documentacion.component';
 import { UtilityService } from 'app/resources/services/utility.service';
-import { FormDialogDecisionComponent } from '../form-dialog-decision/form-dialog-decision.component';
 import { DirectionsComponent } from "../../../../../../shared/modal/directions/directions.component";
-import { FormDialogoChecklistComponent } from '../form-dialogo-checklist/form-dialogo-checklist.component';
 
 @Component({
     selector: 'app-form-gestion-fabrica-credito',
@@ -146,55 +144,6 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result) => {
             console.log('The dialog was closed');
         });
-    }
-    /**
-     * @description: Modal de decision
-     */
-    public onDialogoDecision(): void {
-        // this.fabricaCreditoService.getCantidadDatos('data')
-        //     .subscribe(({ data }) => {
-        //         if (data) {
-
-        //         }
-        // });
-        let dialogRef;
-        switch (this.dialog_a_mostrar) {
-            case 'CHECKLIST':
-                dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
-                    minWidth: '60%',
-                    maxHeight: '80%',
-                    data: {
-                        numeroSolicitud: this.numeroSolicitud, 
-                        tipoDocumento: this.tipoDocumento,
-                        agenda: this.agenda_fabrica,
-                        unidadNegocio:this.unidadNegocio
-                    },
-                    disableClose: false,
-                });
-                dialogRef.afterClosed().toPromise().then(() => {
-                    this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-                });
-                break;
-            case 'SIGUIENTE':
-                dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-                    minWidth: '30%',
-                    minHeight: '30%',
-                    data:{ 
-                        numeroSolicitud: this.numeroSolicitud, 
-                        etapa: 1, 
-                        idAgenda:this.agenda_fabrica,     
-                      },
-                    disableClose: false,
-                });
-                dialogRef.afterClosed().toPromise().then(() => {
-                    this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-                });
-                break;
-            default:
-                break;
-        }
-
-
     }
 
     public openModalDirection(): void {
