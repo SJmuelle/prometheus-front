@@ -85,7 +85,23 @@ export const defaultNavigation: FuseNavigationItem[] = [
                     },
                 ],
             },
+            
         ],
+    },
+    {
+        id: 'prooveedores',
+        title: 'Proveedores',
+        icon: 'transfer_within_a_station',
+        type: 'aside',
+        children: [
+            {
+                id: 'transportadora.transferencia',
+                title: 'Transferencias',
+                icon: 'iconsmind:paper_plane',
+                type: 'basic',
+                link: '/run-date/factura',
+            }
+        ]
     },
 ];
 
@@ -141,6 +157,7 @@ export const compactNavigation: FuseNavigationItem[] = [
                     },
                 ],
             },
+            
         ],
     },
     {
@@ -230,6 +247,29 @@ export const compactNavigation: FuseNavigationItem[] = [
 
         ]
     },
+
+    {
+        id: 'proveedores',
+        title: 'Proveedores',
+        icon: 'transfer_within_a_station',
+        type: 'aside',
+        children: [
+            {
+                id: 'transportadora.transferencia',
+                title: 'Transferencias',
+                icon: 'iconsmind:paper_plane',
+                type: 'basic',
+                link: '/run-date/factura',
+            }
+        ]
+    },
+    {
+        id: 'agenda-referenciacion.list',
+        title: 'Agenda de referenciación y desición',
+        type: 'basic',
+        link: '/credit-factory/agenda-referencing',
+        icon: 'heroicons_outline:document',
+    },
     {
         id: 'pagaduria',
         title: 'Pagadurías',
@@ -237,6 +277,9 @@ export const compactNavigation: FuseNavigationItem[] = [
         link: '/pagaduria/par',
         icon: 'heroicons_outline:cash'
     }
+
+]
+    
     // {
     //     id: 'calendario',
     //     title: 'Calendario',
@@ -245,7 +288,7 @@ export const compactNavigation: FuseNavigationItem[] = [
     //     link: '/calendar'
 
     // }
-];
+
 export const futuristicNavigation: FuseNavigationItem[] = [
     {
         id: 'example',

@@ -1,0 +1,51 @@
+<div class="flex flex-row items-center justify-between">
+    <h2 mat-dialog-title>Vista previa</h2>
+    
+</div>
+
+<mat-dialog-content class="mat-typography">
+
+    <div class="container-fluid">
+
+        <div class="row">
+    
+            <div class="sm:col-lg-12 sm:rounded-lg sm:shadow-lg">
+    
+                <div class="flex flex-col">
+                    
+                    <ng-container>
+                        <pdf-viewer
+                            [src]="data.base64"
+                            [render-text]="true"
+                            [original-size]="false"
+                            [show-all]="true"
+                            style="width: 100%; height: 62vh"
+                            >
+                        </pdf-viewer>
+                    </ng-container>
+                    <ng-container *ngIf="data.extension === 'jpeg' || data.extension === 'jpg' || data.extension === 'png'">
+                        <img [src]="data.base64" class="w-full h-full">
+                    </ng-container>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex flex-row justify-between w-full">
+
+    <div class="text-lg font-medium line-clamp-2">Si tiene problemas para visualizar, descargue su archivo <a class="underline cursor-pointer" (click)="downloadFile()">aqui</a></div>
+
+    <div>
+        <button mat-button mat-dialog-close>Cancel</button>
+    </div>
+
+    
+</mat-dialog-actions>                
+
+
