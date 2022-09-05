@@ -18,8 +18,10 @@ import { SearchMockApi } from 'app/mock-api/common/search/api';
 import { ShortcutsMockApi } from 'app/mock-api/common/shortcuts/api';
 import { TasksMockApi } from 'app/mock-api/apps/tasks/api';
 import { UserMockApi } from 'app/mock-api/common/user/api';
+import { ActivitiesMockApi } from './pages/activities/api';
 
 export const mockApiServices = [
+    ActivitiesMockApi,
     AcademyMockApi,
     AnalyticsMockApi,
     AuthMockApi,

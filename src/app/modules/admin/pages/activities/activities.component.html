@@ -1,0 +1,124 @@
+<div class="flex flex-col px-3 py-4 h-screen overflow-y-auto overflow-x-hidden w-full">
+
+    <div class="flex flex-col sm:flex-row sm:justify-between w-full">
+
+        <div class="py-4">
+
+            <h2 class="text-4xl text-gray-900 tracking-tight leading-none">Historial de archivos</h2>
+
+        </div>
+
+        <div class="py-4">
+            <mat-form-field class="w-64">
+                <mat-icon>search</mat-icon>
+                <input matInput type="text" placeholder="Buscar en los archivos" [(ngModel)]="value">
+                <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="flex flex-col">
+
+        <form [formGroup]="fileForm">
+
+            <div *ngFor="let file of listFile | filter: value; let i = index; let first = first; trackBy: trackByFn">
+
+                <ng-container *ngIf="first || !isSameDay(file.fecha_creacion, listFile[i - 1].fecha_creacion)">
+                    <li class="relative flex py-4 bottom-6">
+                        <div class="relative py-2 px-8 text-md font-medium leading-5 rounded-full bg-primary text-on-primary">
+                            <!-- {{getRelativeFormat(file.fecha_creacion)}} -->
+                            {{file.fecha_creacion | date: 'dd/MM/yyyy'}}
+                        </div>
+                    </li>
+                </ng-container>
+
+                
+    
+                <ng-container>
+    
+                    <li class="relative flex flex-col py-4 px-2">
+    
+                        <fuse-card class="flex flex-col items-center sm:flex-row w-full bottom-11 filter-testimonial shadow">
+    
+                            <div class="flex-col w-80 sm:w-64">
+    
+                                <div class="aspect-w-5 aspect-h-2">
+    
+                                    <div class="flex flex-row items-center justify-center">
+    
+                                        <div class="relative sm:top-1.5 left-3 sm:left-0">
+    
+                                            <mat-icon class="icon-size-12 sm:icon-size-14 text-hint" [svgIcon]="'iconsmind:file'"></mat-icon>
+    
+                                            <div
+                                                class="absolute left-0 bottom-0 px-1.5 rounded text-sm font-semibold leading-5 text-white"
+                                                [class.bg-red-600]="file.extension === 'pdf'"
+                                                [class.bg-blue-600]="file.extension === 'doc'"
+                                                [class.bg-green-600]="file.extension === 'xls'"
+                                                [class.bg-gray-600]="file.extension === 'pgp'"
+                                                [class.bg-amber-600]="file.extension === 'jpg'"
+                                                [class.bg-amber-600]="file.extension === 'png'"
+                                                >
+                                                {{file.extension.toUpperCase()}}
+                                            </div>
+    
+                                        </div>
+    
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                            <div class="flex flex-col sm:flex-auto">
+        
+                                <ng-container *ngIf="file.filename">
+    
+                                    <div class="text-sm sm:text-lg font-medium line-clamp-2"><a matTooltip="{{file.filename}}">{{file.filename}}</a></div>
+                        
+                                </ng-container>
+    
+                                <div class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 sm:space-x-2 text-md">
+                                    
+                                    <div class="text-secondary line-clamp-2">
+    
+                                        {{file.fecha_creacion | date:'dd/MM/yyyy, h:mm a'}}
+                                        
+                                    </div>
+    
+                                </div>
+    
+                            </div>
+    
+                            <div class="flex flex-col sm:flex-row m-8 items-end">
+    
+                                <div class="flex flew-row relative gap-2 sm:gap-4 sm:justify-between md:top-0">
+    
+                                    <ng-container>
+                                        <a (click)="downloadFile(file.idArchivo, file.extension)"><mat-icon class="hover:bg-hover cursor-pointer" [svgIcon]="'heroicons_solid:download'"></mat-icon></a>
+                                    </ng-container>
+    
+                                    <ng-container *ngIf="file.extension != 'pgp'">
+                                        <a (click)="openDialog(file.idArchivo, file.extension, file.filename)"><mat-icon class="hover:bg-hover cursor-pointer">remove_red_eye</mat-icon></a>
+                                    </ng-container>
+    
+                                </div>
+                                
+                            </div>
+    
+                        </fuse-card>
+    
+                    </li>
+    
+                </ng-container>
+    
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
