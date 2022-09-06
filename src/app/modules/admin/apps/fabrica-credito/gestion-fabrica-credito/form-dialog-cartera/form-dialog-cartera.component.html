@@ -8,50 +8,33 @@
                 <div class="bg-white flex flex-col">
                     <div class="flex">
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
-                            <mat-label>Nit</mat-label>
-                            <input type="text" placeholder="" matInput [formControlName]="'nit'"
-                                autocomplete="false">
-                        </mat-form-field>
-                        <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>Entidad Financiera</mat-label>
                             <input type="text" placeholder="" matInput [formControlName]="'entidad'"
-                                [matAutocomplete]="auto" (change)="colocarNit()">
+                                [matAutocomplete]="auto">
                             <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
                                     {{option.nombre}}
                                 </mat-option>
                             </mat-autocomplete>
                         </mat-form-field>
-
-
-                        <!-- <ng-container *ngIf="tipoCuentaBancaria$ | async as tipoCuentaBancaria">
-                            <mat-form-field class="w-full ml-2 fuse-mat-dense">
-                                <mat-label>Tipo de cuenta</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoCuenta'">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="let item of tipoCuentaBancaria.data"
-                                        [value]="item.codigoOpcion">
-                                        {{item.descripcionOpcion}}
-                                    </mat-option>
-                                </mat-select>
-
-                            </mat-form-field>
-                        </ng-container> -->
                     </div>
                     <div class="flex">
+                        <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                            <mat-label>Nit</mat-label>
+                            <input type="text" placeholder="" matInput [formControlName]="'nit'" autocomplete="false">
+                        </mat-form-field>
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>N° de obligación</mat-label>
                             <input matInput type="text" [formControlName]="'numeroCuenta'">
                             <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon> -->
                         </mat-form-field>
+                    </div>
+                    <div class="flex">
                         <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="tipo=='D'">
                             <mat-label>Altura de mora</mat-label>
                             <input matInput type="text" [formControlName]="'maximaMora'"
                                 (keyup)="form.controls['maximaMora'].setValue(utility.formatearNumero(form.value.maximaMora));">
                         </mat-form-field>
-                    </div>
-                    <div class="flex">
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>Saldo ($)</mat-label>
                             <input matInput type="text" [formControlName]="'saldoActual'"

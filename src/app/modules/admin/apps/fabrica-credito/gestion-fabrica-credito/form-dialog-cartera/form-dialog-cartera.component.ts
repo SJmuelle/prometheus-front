@@ -48,7 +48,8 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.crearFormulario();
     this.getEntidadBancaria();
     this.getTipoCuentaBancaria();
- 
+    this.form
+    .get('entidad').valueChanges.subscribe(value => this.colocarNit(value));
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
     
@@ -61,7 +62,6 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       startWith(''),
       map(value => this._filter(value || '')),
     );
-    debugger;
     if(this.data.item!=null){
       this.nuevo=true;
       this.form.controls.entidad.setValue(this.data.item.entidad);
@@ -245,10 +245,12 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     });
   }
 
-  colocarNit(){
-    debugger;
-    if(this.form.value.entidad){
-
+  colocarNit(valor){
+    if(valor){
+      const result = this.entidadFinanciera.filter(entidadFinanciera => entidadFinanciera.nombre ==valor);
+      if(result.length==1){
+        this.form.controls.nit.setValue(result[0].nit);
+      }
     }
   }
 
