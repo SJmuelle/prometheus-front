@@ -177,6 +177,17 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Aplica embargo</mat-label>
+                        <mat-select [value]="'seleccione'" disabled [formControlName]="'aplicaEmbargo'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            </mat-option>
+                            <mat-option  value="S">Si aplica
+                            </mat-option>
+                            <mat-option  value="N">No aplica
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
             </div>
         </mat-expansion-panel>
@@ -618,14 +629,6 @@
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Descripción de otros ingresos </mat-label>
                                     <input matInput type="text" [formControlName]="'descripcionOtrosIngresos'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Ingresos adicionales</mat-label>
-                                    <input matInput type="text" [formControlName]="'otrosIngresos'"
-                                        (change)="validacion('IA')"
-                                        (keyup)="form.controls['otrosIngresos'].setValue(utility.formatearNumero(form.value.otrosIngresos)); ">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>

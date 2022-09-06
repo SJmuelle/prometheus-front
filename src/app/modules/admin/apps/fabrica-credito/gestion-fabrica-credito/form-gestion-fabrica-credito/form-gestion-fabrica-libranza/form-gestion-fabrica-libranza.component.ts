@@ -957,7 +957,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             aplicaCodeudor:[''],
             creditoTitularLineas:[''],
             creditoCodeudorLineas:[''],
-            sanamientoFinanciero:['']
+            sanamientoFinanciero:[''],
+            aplicaEmbargo:[''],
         });
     }
 
