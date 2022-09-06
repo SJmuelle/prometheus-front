@@ -53,6 +53,23 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
   }
 
+  public editarCartera(item,tipo): void {
+    const dialogRef = this._dialog.open(FormDialogCarteraComponent, {
+      minWidth: '30%',
+      minHeight: '30%',
+      data: {
+        numeroSolicitud: Number(this.numeroSolicitud),
+        identificacion: Number(this.identificacion),
+        tipo: tipo,
+        item:item
+      }
+    });
+    dialogRef.afterClosed().toPromise().then((res) => {
+      this.getListadoCartera(Number(this.numeroSolicitud));
+    });
+  }
+
+
   public cambioEstado(event, item) {
     console.log(event)
     console.log(item)

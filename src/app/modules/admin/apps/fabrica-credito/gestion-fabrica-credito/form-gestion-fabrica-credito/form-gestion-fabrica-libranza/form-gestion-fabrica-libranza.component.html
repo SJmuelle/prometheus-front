@@ -2,9 +2,9 @@
     <mat-accordion multi>
         <!--Panel Datos de la solicitud-->
         <mat-expansion-panel expanded>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header *ngIf="fabricaDatos">
                 <mat-panel-title>
-                    Datos de la solicitud de Libranza  {{agenda_fabrica}}
+                    <strong class="mr-2">Datos de la solicitud de Libranza  </strong>  |  {{fabricaDatos.nombreAgenda}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
