@@ -520,6 +520,10 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 if (data.valorSolicitado) {
                     this.form.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitado)));
                 }
+                if (data.valorSolicitado) {
+                    this.form.controls['valorSolicitadoWeb'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitadoWeb)));
+                }
+                // this.form.controls['aplicaEmbargo'].setValue(this.form.value.aplicaEmbargo=='N'?'No aplica':'Si aplica')
                 // form.value.valorSolicitado
                 if (data.comisionesHorasExtras) {
                     this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.form.value.comisionesHorasExtras)));
@@ -959,6 +963,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             creditoCodeudorLineas:[''],
             sanamientoFinanciero:[''],
             aplicaEmbargo:[''],
+            valorSolicitadoWeb:['']
         });
     }
 

@@ -51,7 +51,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center w-2/12" colspan="2">Gestión</th>
+                <th class="px-4 py-3 text-center w-2/12">Gestión</th>
                 <th class="px-4 py-3 text-center w-1/12" >Nit</th>
                 <th class="px-4 py-3 text-center w-4/12" >Entidad</th>
                 <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
@@ -64,13 +64,10 @@
             <ng-container *ngIf="(listadoCartera$ | async) as items;">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
-                        <td class="px-2 text-sm border uppercase text-center h-12">
-                            <mat-icon  class="cursor-pointer" svgIcon="heroicons_solid:pencil-alt" (click)="editarCartera(item,'D')" *ngIf="item.entidad!='CONSULTORES DE CREDITO'"></mat-icon>
-                        </td>
                         <td class="text-sm border text-left m-0 p-0">
                             <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                    (ngModelChange)="cambioEstado($event,item)">
+                                    (ngModelChange)="cambioEstado($event,item,'D')">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
@@ -104,7 +101,7 @@
                 </th>
             </tr>
             <tr>
-                <th colspan="6" class="text-center">
+                <th colspan="8" class="text-center">
                     <span>No hay obligaciones en mora</span>
                 </th>
             </tr>
@@ -121,7 +118,7 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center w-2/12" colspan="2">Gestión</th>
+                <th class="px-4 py-3 text-center w-2/12" >Gestión</th>
                 <th class="px-4 py-3 text-center w-1/12">Nit</th>
                 <th class="px-4 py-3 text-center w-4/12">Entidad</th>
                 <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
@@ -133,13 +130,10 @@
             <ng-container *ngIf="listadoCartera$ | async as items;">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
-                        <td class="px-2 text-sm border uppercase text-center h-12">
-                            <mat-icon  class="cursor-pointer" svgIcon="heroicons_solid:pencil-alt" (click)="editarCartera(item,'N')" *ngIf="item.entidad!='CONSULTORES DE CREDITO'"></mat-icon>
-                        </td>
                         <td class="px-0 text-sm border text-left">
                             <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select [(ngModel)]="item.gestionCartera"
-                                    (ngModelChange)="cambioEstado($event,item)">
+                                    (ngModelChange)="cambioEstado($event,item,'N')">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
@@ -164,14 +158,14 @@
         </tbody>
         <tbody *ngIf="totales.contadorAlDia===0">
             <tr>
-                <th colspan="6">
+                <th colspan="7">
                     <div class="flex justify-center">
                         <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
                     </div>
                 </th>
             </tr>
             <tr>
-                <th colspan="6" class="text-center">
+                <th colspan="7" class="text-center">
                     <span>No hay obligaciones al día</span>
                 </th>
             </tr>

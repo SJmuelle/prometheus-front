@@ -20,6 +20,7 @@ export class ResumenComponent implements OnInit {
   dataPolicitasAdmin: any;
   datos2: any[];
   verComentarios: boolean = false;
+  resumenCuentasMora:  any;
 
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
@@ -235,6 +236,27 @@ export class ResumenComponent implements OnInit {
             color: "bg-blue-100 text-blue-800",
             label: "Máxima mora actual",
             valor: data.resumenHdc.maximaMoraActual
+          },
+          {
+            icono: "heroicons_outline:academic-cap",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
+            label: "Contador embargos",
+            valor: data.resumenHdc.contadorEmbargos
+          },
+          {
+            icono: "heroicons_outline:academic-cap",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
+            label: "Sumatoria embargos",
+            valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
+          },
+          {
+            icono: "heroicons_outline:academic-cap",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
+            label: "Contador gestiones",
+            valor: data.resumenHdc.contadorGestiones
           }
         ]
       },
@@ -301,6 +323,13 @@ export class ResumenComponent implements OnInit {
                 icono: "heroicons_outline:academic-cap",
                 clase: "bg-purple-100",
                 color: "bg-blue-100 text-blue-800",
+                label: "Score HDC",
+                valor: data.resumenIndicadores.score
+              },
+              {
+                icono: "heroicons_outline:academic-cap",
+                clase: "bg-purple-100",
+                color: "bg-blue-100 text-blue-800",
                 label: "Disponible de cuota",
                 valor: "$" + this.separatos(data.resumenIndicadores.disponibleCuota)
               },
@@ -338,6 +367,7 @@ export class ResumenComponent implements OnInit {
 
     this.dataResumenTrazabilidad = data.resumenTrazabilidad;
     this.dataPolicitasAdmin = data.policitasAdmin;
+    this.resumenCuentasMora = data.resumenCuentasMora;
 
   }
 

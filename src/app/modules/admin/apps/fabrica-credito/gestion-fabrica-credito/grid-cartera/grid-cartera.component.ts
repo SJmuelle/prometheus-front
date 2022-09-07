@@ -76,6 +76,11 @@ export class GridCarteraComponent implements OnInit {
 
   }
   public cambioEstado(event, item) {
+ 
+    if(event=='COM'){
+      this.editarCartera(item,'N');
+      return;
+    }
     console.log(event)
     console.log(item)
     let data = {
