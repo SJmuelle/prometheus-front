@@ -5,6 +5,7 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { FormDialogCarteraComprarComponent } from '../form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
 import { FormDialogNegociacionComponent } from '../form-dialog-negociacion/form-dialog-negociacion.component';
 
@@ -53,15 +54,15 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
   }
 
-  public editarCartera(item,tipo): void {
-    const dialogRef = this._dialog.open(FormDialogCarteraComponent, {
-      minWidth: '30%',
-      minHeight: '30%',
+  public editarCartera(item, tipo): void {
+    const dialogRef = this._dialog.open(FormDialogCarteraComprarComponent, {
+      minWidth: '40%',
+      minHeight: '40%',
       data: {
         numeroSolicitud: Number(this.numeroSolicitud),
         identificacion: Number(this.identificacion),
         tipo: tipo,
-        item:item
+        item: item
       }
     });
     dialogRef.afterClosed().toPromise().then((res) => {
@@ -73,6 +74,11 @@ export class GridCarteraNegociacionComponent implements OnInit {
   public cambioEstado(event, item) {
     console.log(event)
     console.log(item)
+    
+    if (event == 'COM') {
+      this.editarCartera(item, 'N');
+      return;
+    }
     let data = {
       id: item.id,
       numeroSolicitud: Number(this.numeroSolicitud),

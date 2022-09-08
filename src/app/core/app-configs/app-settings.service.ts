@@ -211,7 +211,7 @@ export class AppSettingsService {
      */
     public listadoCartera = {
         url: {
-            base: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras'),
+            base: EndPoints.uri('/credito/tk/array-padre-hija/recursos-obligaciones-carteras'),
             baseCompradas: EndPoints.uri('/generic/qry/tk/obligaciones-compradas-hijas'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
