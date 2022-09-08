@@ -16,7 +16,16 @@ export class ListadoCarteraService {
    * @description:
    */
   public getListadoCartera(numeroSolicitud: number): Observable<any> {
-    return this._http.get(`${this._appSettings.listadoCartera.url.base}/${numeroSolicitud}`);
+    let data={
+      numeroSolicitud:numeroSolicitud
+    }
+    return this._http.post(`${this._appSettings.listadoCartera.url.base}`,data);
+  }
+  /**
+ * @description:
+ */
+  public getListadoCarteraDetalleCompra(numeroSolicitud: number,idObligacion:number ): Observable<any> {
+    return this._http.get(`${this._appSettings.listadoCartera.url.baseCompradas}/${numeroSolicitud}/${idObligacion}`);
   }
 
   /**
@@ -35,11 +44,11 @@ export class ListadoCarteraService {
     // return this._http.post(`${this._appSettings.listadoCartera.url.update}/${numeroSolicitud}`);
   }
 
-  
+
   /**
    * @description:
    */
-   public validadorTotalLibranza(data: any): Observable<any> {
+  public validadorTotalLibranza(data: any): Observable<any> {
     return this._http.post(this._appSettings.listadoCartera.url.validadorTotalLibranza, data);
   }
 
@@ -59,13 +68,20 @@ export class ListadoCarteraService {
     return this._http.post(this._appSettings.listadoCartera.url.create, data);
   }
 
-    /**
-   * @description:
-   */
-     public editarCartera(data: any): Observable<any> {
-      return this._http.post(this._appSettings.listadoCartera.url.editar, data);
-    }
-  
+  /**
+ * @description:
+ */
+  public editarCartera(data: any): Observable<any> {
+    return this._http.post(this._appSettings.listadoCartera.url.editar, data);
+  }
+
+  /**
+* @description:
+*/
+  public guardarGestionCompra(data: any): Observable<any> {
+    return this._http.post(this._appSettings.listadoCartera.url.guardarGestionCompra, data);
+  }
+
 
   /**
  * @description:

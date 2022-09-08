@@ -6,6 +6,7 @@ import { ListadoCarteraService } from 'app/core/services/listadoCartera.service'
 import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { FormDialogCarteraComprarComponent } from '../form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
 
@@ -28,10 +29,12 @@ export class GridCarteraComponent implements OnInit {
     sumaTotal: number;
     tipo: number;
     valorDisponible: number;
-    valorRestante: number; 
-    valorSolicitado: number; 
+    valorRestante: number;
+    valorSolicitado: number;
     verificacion: string;
   };
+  informacionCompra: { idMostrar: number;  };
+  // informacionCompra: any;
 
   constructor(private route: ActivatedRoute,
     private _dialog: MatDialog,
@@ -76,9 +79,9 @@ export class GridCarteraComponent implements OnInit {
 
   }
   public cambioEstado(event, item) {
- 
-    if(event=='COM'){
-      this.editarCartera(item,'N');
+
+    if (event == 'COM') {
+      this.editarCartera(item, 'N');
       return;
     }
     console.log(event)
@@ -135,22 +138,22 @@ export class GridCarteraComponent implements OnInit {
         numeroSolicitud: Number(this.numeroSolicitud),
         identificacion: Number(this.identificacion),
         tipo: tipo,
-        item:null
+        item: null
       }
     });
     dialogRef.afterClosed().toPromise().then((res) => {
       this.getListadoCartera(Number(this.numeroSolicitud));
     });
   }
-  public editarCartera(item,tipo): void {
-    const dialogRef = this._dialog.open(FormDialogCarteraComponent, {
-      minWidth: '30%',
-      minHeight: '30%',
+  public editarCartera(item, tipo): void {
+    const dialogRef = this._dialog.open(FormDialogCarteraComprarComponent, {
+      minWidth: '40%',
+      minHeight: '40%',
       data: {
         numeroSolicitud: Number(this.numeroSolicitud),
         identificacion: Number(this.identificacion),
         tipo: tipo,
-        item:item
+        item: item
       }
     });
     dialogRef.afterClosed().toPromise().then((res) => {
@@ -175,6 +178,17 @@ export class GridCarteraComponent implements OnInit {
           Swal.fire('Error', data.verificacion, 'error');
         }
       })
+  }
+
+  public buscandoDatosCompra(item) {
+
+
+    this._listadoCarteraService.getListadoCarteraDetalleCompra(Number(this.numeroSolicitud), Number(item.idPadre)).subscribe((res) => {
+      console.log(res)
+      this.informacionCompra=res.data;
+      console.log(this.informacionCompra)
+      return res.data;
+    });
   }
 
 

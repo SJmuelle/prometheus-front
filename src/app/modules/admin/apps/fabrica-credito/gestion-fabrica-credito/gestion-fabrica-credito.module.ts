@@ -52,6 +52,8 @@ import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid
 import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
 import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.component';
 import { QuillModule } from 'ngx-quill';
+import { FormDialogCarteraComprarComponent } from './form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
+import { MatMenuModule } from '@angular/material/menu';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
@@ -79,8 +81,8 @@ import { QuillModule } from 'ngx-quill';
         FormDialogCarteraComponent,
         GridCarteraNegociacionComponent,
         FormDialogNegociacionComponent,
-        FabricaOpcionesComponent
-
+        FabricaOpcionesComponent,
+        FormDialogCarteraComprarComponent
     ],
     imports: [
         CommonModule,
@@ -112,6 +114,7 @@ import { QuillModule } from 'ngx-quill';
         FormsModule,
         MatAutocompleteModule,
         QuillModule,
+        MatMenuModule
         // FabricaOpcionesModule
     ],
 
