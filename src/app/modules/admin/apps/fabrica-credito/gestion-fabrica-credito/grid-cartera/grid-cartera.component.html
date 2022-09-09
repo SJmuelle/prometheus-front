@@ -55,7 +55,8 @@
                 <th class="px-4 py-3 text-center w-1/12" >Nit</th>
                 <th class="px-4 py-3 text-center w-4/12" >Entidad</th>
                 <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
-                <th class="px-4 py-3 text-center w-1/12">Saldo</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo HDC</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo real</th>
                 <th class="px-4 py-3 text-center w-1/12">Altura de mora</th>
                 <th class="px-4 py-3 text-center w-3/12">Estado</th>
                 <th class="px-4 py-3 text-center w-3/12"></th>
@@ -79,6 +80,7 @@
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
                         <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
                         <td class="text-sm border text-center">
                             <span class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
@@ -100,7 +102,7 @@
                     </tr>
                     <ng-container *ngIf="item.mostrarEstado=='v'">
                         <tr>
-                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0" >
+                            <td colspan="9" class="text-sm border text-left px-4 py-2 m-0" >
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
                                  
@@ -129,14 +131,14 @@
         </tbody>
         <tbody *ngIf="totales.contadorMora===0">
             <tr>
-                <th colspan="8">
+                <th colspan="9">
                     <div class="flex justify-center">
                         <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
                     </div>
                 </th>
             </tr>
             <tr>
-                <th colspan="8" class="text-center">
+                <th colspan="9" class="text-center">
                     <span>No hay obligaciones en mora</span>
                 </th>
             </tr>
@@ -157,7 +159,8 @@
                 <th class="px-4 py-3 text-center w-1/12">Nit</th>
                 <th class="px-4 py-3 text-center w-4/12">Entidad</th>
                 <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
-                <th class="px-4 py-3 text-center w-1/12">Saldo</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo HDC</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo real</th>
                 <th class="px-4 py-3 text-center w-3/12">Estado</th>
                 <th class="px-4 py-3 text-center w-3/12"></th>
             </tr>
@@ -179,6 +182,7 @@
                         <td class="px-2 text-sm border text-center h-12">{{item.entidad}}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
                         <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
                         <td class="text-sm border w-0 text-center">
                             <span class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
                                     item.alDia === 'f'
@@ -215,7 +219,7 @@
                                             <br>
                                             <p>
                                                 Esta obligación proviene de la entidad <strong>{{item.Detalle.entidad}}</strong>
-                                                {{item.Detalle.nit==''?'':'con el nit'}} <strong>{{item.Detalle.nit}}</strong> con el Saldo de <strong>{{item.Detalle.saldoActual | number}}</strong> por el usuario  <strong class="uppercase">{{item.usuarioCreacion}}</strong> el día  <strong>{{item.fechaCreacion}}</strong>
+                                                {{item.Detalle.nit==''?'':'con el nit'}} <strong>{{item.Detalle.nit}}</strong> con el saldo de <strong>${{item.Detalle.saldoActual | number}}</strong> por el usuario  <strong class="uppercase">{{item.usuarioCreacion}}</strong> el día  <strong>{{item.fechaCreacion}}</strong>
                                             </p>
                                         </div>
                                     </div>
@@ -228,14 +232,14 @@
         </tbody>
         <tbody *ngIf="totales.contadorAlDia===0">
             <tr>
-                <th colspan="7">
+                <th colspan="8">
                     <div class="flex justify-center">
                         <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
                     </div>
                 </th>
             </tr>
             <tr>
-                <th colspan="7" class="text-center">
+                <th colspan="8" class="text-center">
                     <span>No hay obligaciones al día</span>
                 </th>
             </tr>

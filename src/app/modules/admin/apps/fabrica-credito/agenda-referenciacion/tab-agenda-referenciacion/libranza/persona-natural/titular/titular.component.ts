@@ -310,7 +310,8 @@ export class LibranzaTitularComponent implements OnInit {
       fechaNacimiento:[''],
       fechaNacimientoValida:[''],
       fechaNacimientoValida_bool: Boolean,
-      fechaNacimientoCorregido:['']
+      fechaNacimientoCorregido:[''],
+      comentarioValidacion:['']
     });
     this.formOferta = this.fb.group({
       valorSolicitado: [''],
@@ -648,7 +649,7 @@ export class LibranzaTitularComponent implements OnInit {
     const telefonoContactoValida = this.form.value.telefonoContactoValida_bool == true ? 'S' : 'N';
     const tieneEmpleadoValida = this.form.value.tieneEmpleadoValida_bool == true ? 'S' : 'N';
     const nombreNegocioValida = this.form.value.nombreNegocioValida_bool == true ? 'S' : 'N';
-    const referenciaValidada = this.form.value.referenciaValidada_bool == 'E' ? 'S' : 'N';
+    // const referenciaValidada = this.form.value.referenciaValidada_bool;
     // debugger;
     delete data.antiguedadNegocio;
     delete data.antiguedadNegocioCorregido;
@@ -709,7 +710,6 @@ export class LibranzaTitularComponent implements OnInit {
     delete data.telefonoContactoValida;
     delete data.tieneEmpleadoValida;
     delete data.nombreNegocioValida;
-    delete data.referenciaValidada;
     const datosFormularios: any = {
       numeroSolicitud: this.numeroSolicitud.toString(),
       antiguedadNegocio: antiguedadNegocio,
@@ -748,7 +748,6 @@ export class LibranzaTitularComponent implements OnInit {
       telefonoContactoValida: telefonoContactoValida,
       tieneEmpleadoValida: tieneEmpleadoValida,
       nombreNegocioValida: nombreNegocioValida,
-      referenciaValidada: referenciaValidada,
       ...data
     };
     Swal.fire({

@@ -21,18 +21,18 @@
                 <div class="flex flex-col items-center ">
                     <div class="text-2xl font-bold tracking-tight leading-none">
                         {{totales.contadorGestiones|number}}
-                     </div>
-                     <div class="text-md font-medium truncate">No. de obligaciones</div>
+                    </div>
+                    <div class="text-md font-medium truncate">No. de obligaciones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2"
-                    [ngClass]="totales.valorDisponible>totales.sumaTotal?'text-green-700':'text-red-600'">
-                       ${{totales.sumaTotal|number}}
+                        [ngClass]="totales.valorDisponible>totales.sumaTotal?'text-green-700':'text-red-600'">
+                        ${{totales.sumaTotal|number}}
                     </div>
                     <div class="text-md font-medium truncate">Total en obligaciones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2">
                         ${{totales.valorDisponible|number}}
-                     </div>
-                     <div class="text-md font-medium truncate">Valor disponible</div>
-                     <!-- <div class="text-2xl font-bold tracking-tight leading-none">
+                    </div>
+                    <div class="text-md font-medium truncate">Valor disponible</div>
+                    <!-- <div class="text-2xl font-bold tracking-tight leading-none">
                         ${{totales.valorSolicitado |number}}
                      </div>
                      <div class="text-md font-medium truncate">Valor solicitado</div> -->
@@ -61,14 +61,16 @@
     <table class="shadow p-0 mb-5">
         <thead class="bg-accent-50">
             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                <th class="px-4 py-3 text-center">Gestión</th>
-                <th class="px-4 py-3 text-center">Nit</th>
-                <th class="px-4 py-3 text-center">N° de obligación</th>
-                <th class="px-4 py-3 text-center">Saldo</th>
-                <th class="px-4 py-3 text-center">Altura de mora</th>
-                <th class="px-4 py-3 text-center">Estado</th>
-                <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
-                <th class="px-4 py-3 text-center"></th>
+                <th class="px-4 py-3 text-center w-2/12">Gestión</th>
+                <th class="px-4 py-3 text-center w-1/12">Nit</th>
+                <th class="px-4 py-3 text-center w-4/12">Entidad</th>
+                <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo HDC</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo real</th>
+                <th class="px-4 py-3 text-center w-1/12">Altura de mora</th>
+                <th class="px-4 py-3 text-center w-3/12">Estado</th>
+                <th class="px-4 py-3 text-center w-3/12">Gestión</th>
+                <th class="px-4 py-3 text-center w-3/12"></th>
             </tr>
         </thead>
         <tbody class="bg-white" *ngIf="totales.contadorMora!==0">
@@ -76,10 +78,10 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                    [disabled]="datoFabrica.agenda!='GC'"
-                                    (ngModelChange)="cambioEstado($event,item)">
+                                    [disabled]="datoFabrica.agenda!='GC'" (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="NEG">Negociar</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
@@ -89,20 +91,21 @@
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                        <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
-                            ${{item.saldoActual | number}}</td>
-                        <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
+                        <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.maximaMora}}</td>
                         <td class="text-sm border w-0 text-center px-2">
                             <div class="py-0.5 text-xs px-2  font-semibold  " [ngClass]="
                                   item.alDia === 'f'
                                   ? 'bg-red-300  text-red-900'
                                   : 'bg-green-300 text-green-900'
                                   ">
-                                  {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
                             </div>
                         </td>
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
                                     [disabled]="(datoFabrica.agenda!='GC') || (item.gestionCartera=='') || (item.gestionCartera=='COM')"
                                     (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
@@ -123,10 +126,10 @@
                     </tr>
                     <ng-container *ngIf="item.mostrarDetalle=='v'">
                         <tr *ngIf="item.resultadoNegociacion=='EXITOSA'">
-                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                            <td colspan="10" class="text-sm border text-left px-4 py-2 m-0">
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociacion</div>
-                                 
+
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <!-- Features -->
@@ -146,6 +149,14 @@
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
                                             Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor cartera real:
+                                            <strong>${{item.saldoValidado|number}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -204,7 +215,7 @@
                                             Fecha de negociación: <strong>{{item.fechaNegociacion}}</strong>
                                         </div>
                                     </div>
-                                    <div class="flex items-center col-span-3">
+                                    <div class="flex items-center col-span-2">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
@@ -220,7 +231,7 @@
                             </td>
                         </tr>
                         <tr *ngIf="item.resultadoNegociacion=='NO EXITOSA'">
-                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                            <td colspan="10" class="text-sm border text-left px-4 py-2 m-0">
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociacion</div>
                                     <div class="flex-auto ml-2 border-b-2"></div>
@@ -263,14 +274,14 @@
         </tbody>
         <tbody *ngIf="totales.contadorMora===0">
             <tr>
-                <th colspan="7">
+                <th colspan="10">
                     <div class="flex justify-center">
                         <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
                     </div>
                 </th>
             </tr>
             <tr>
-                <th colspan="7" class="text-center">
+                <th colspan="10" class="text-center">
                     <span>No hay obligaciones en mora</span>
                 </th>
             </tr>
@@ -287,7 +298,8 @@
                 <th class="px-4 py-3 text-center">Nit</th>
                 <th class="px-4 py-3 text-center">Entidad</th>
                 <th class="px-4 py-3 text-center">N° de obligación</th>
-                <th class="px-4 py-3 text-center">Saldo</th>
+                <th class="px-4 py-3 text-center">Saldo HDC</th>
+                <th class="px-4 py-3 text-center">Saldo real</th>
                 <th class="px-4 py-3 text-center">Altura de mora</th>
                 <th class="px-4 py-3 text-center">Estado</th>
                 <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
@@ -299,10 +311,10 @@
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia !== 'f'">
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                [disabled]="datoFabrica.agenda!='GC'"
-                                    (ngModelChange)="cambioEstado($event,item)">
+                                    [disabled]="datoFabrica.agenda!='GC'" (ngModelChange)="cambioEstado($event,item)">
                                     <mat-option value="">Sin gestión</mat-option>
                                     <mat-option value="COM">Comprar</mat-option>
                                 </mat-select>
@@ -311,20 +323,23 @@
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                         <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                         <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                        <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
+                        <td class="px-2 text-sm border text-center">
                             ${{item.saldoActual | number}}</td>
-                        <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
+                        <td class="px-2 text-sm border text-center">
+                            ${{item.saldoValidado | number}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.maximaMora}}</td>
                         <td class="text-sm border w-0 text-center px-2">
                             <div class="py-0.5 text-xs px-2  font-semibold" [ngClass]="
                                       item.alDia === 'f'
                                       ? 'bg-red-300  text-red-900'
                                       : 'bg-green-300 text-green-900'
                                       ">
-                                      {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
+                                {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
                             </div>
                         </td>
                         <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
                                     [disabled]="item.gestionCartera==''"
                                     (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
@@ -367,6 +382,14 @@
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
                                             Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor cartera real:
+                                            <strong>${{item.saldoValidado|number}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
