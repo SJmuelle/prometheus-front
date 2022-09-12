@@ -2,7 +2,73 @@
     <div class="grid grid-cols-12 w-100 mb-2">
         <h2 class="text-gray-900 col-span-12 mb-4">Asignación de solicitudes de crédito.</h2>
     </div>
-    <div class="flex flex-col w-100 mb-2">
-
+    <div class="flex flex-row w-full mt-2">
+        <div class="flex flex-col columna-1">
+            <div class="w-56">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Analista</mat-label>
+                    <mat-select>
+                      <mat-option value="DMONTES">DMONTES</mat-option>
+                      <mat-option value="GSALAS">GSALAS</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+            </div>
+            <div class="w-56">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Periodo</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="Fecha inicial">
+                        <input matEndDate placeholder="Fecha final">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+                </mat-form-field>
+            </div>
+            <div class="w-56">
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Unidad de negocio</mat-label>
+                    <mat-select>
+                      <mat-option value="Libranza">Libranza</mat-option>
+                      <mat-option value="Capacidad de pago">Capacidad de pago</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="flex flex-col columna-2">
+            <div class="flex flex-col w-full">
+                <div class="flex items-start justify-between">
+                    <div class="text-xl font-medium tracking-tight leading-6 truncate">
+                        Negocios asignados
+                    </div>
+                </div>
+                <div class="flex flex-row w-full gap-4 mt-2">
+                    <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                        <div class="flex flex-col items-center">
+                            <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
+                                {{item.cantidad}}
+                            </div>
+                            <div class="text-md font-medium truncate">{{item.agenda}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col w-full m-row">
+                <div class="flex items-start justify-between">
+                    <div class="text-xl font-medium tracking-tight leading-6 truncate">
+                        Negocios reasignados
+                    </div>
+                </div>
+                <div class="flex flex-row w-full gap-4 mt-2">
+                    <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                        <div class="flex flex-col items-center">
+                            <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
+                                {{item.cantidad}}
+                            </div>
+                            <div class="text-md font-medium truncate">{{item.agenda}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
