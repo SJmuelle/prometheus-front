@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import { AsignarComponent } from './asignar/asignar.component';
+import { ReasignarComponent } from './reasignar/reasignar.component';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -10,7 +13,7 @@ export class ListSolicitudesComponent implements OnInit {
   asignados: any[] = []
   angenda: any = {}
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.asignados = [
@@ -43,6 +46,20 @@ export class ListSolicitudesComponent implements OnInit {
         "agenda":"Trazabilidad"
       }
     ]
+  }
+
+  asignar() {
+    const dialogRef = this.dialog.open(AsignarComponent, {
+      width: '20%'
+    });
+    dialogRef.afterClosed().subscribe(result => {});
+  }
+
+  reasignar() {
+    const dialogRef = this.dialog.open(ReasignarComponent, {
+      width: '20%'
+    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
 }

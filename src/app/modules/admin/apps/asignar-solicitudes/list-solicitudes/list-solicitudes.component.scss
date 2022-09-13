@@ -1,5 +1,11 @@
 .columna-1 {
-    width: 15%;
+    @media (min-width: 1280px) {
+        width: 25%;
+    }
+
+    @media (min-width: 1440px) {
+        width: 15%;
+    }
 }
 
 .columna-2 {

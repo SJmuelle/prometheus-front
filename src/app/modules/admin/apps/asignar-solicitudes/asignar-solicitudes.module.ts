@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { AsignarSolicitudesRoutingModule } from './asignar-solicitudes-routing.module';
 import { ListSolicitudesComponent } from './list-solicitudes/list-solicitudes.component';
+import { AsignarComponent } from './list-solicitudes/asignar/asignar.component';
+import { ReasignarComponent } from './list-solicitudes/reasignar/reasignar.component';
 
 import { FuseAlertModule } from '@fuse/components/alert';
 import { Ng2SearchPipeModule } from "ng2-search-filter";
@@ -26,7 +28,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
-    ListSolicitudesComponent
+    ListSolicitudesComponent,
+    AsignarComponent,
+    ReasignarComponent
   ],
   imports: [
     CommonModule,

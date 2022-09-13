@@ -1,74 +1,175 @@
-<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg">
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100 mb-2">
         <h2 class="text-gray-900 col-span-12 mb-4">Asignación de solicitudes de crédito.</h2>
     </div>
-    <div class="flex flex-row w-full mt-2">
-        <div class="flex flex-col columna-1">
-            <div class="w-56">
-                <mat-form-field appearance="fill" class="w-full">
-                    <mat-label>Analista</mat-label>
-                    <mat-select>
-                      <mat-option value="DMONTES">DMONTES</mat-option>
-                      <mat-option value="GSALAS">GSALAS</mat-option>
-                    </mat-select>
-                  </mat-form-field>
+    <div class="flex flex-col w-full">
+        <div class="flex flex-row w-full mt-2">
+            <div class="flex flex-col columna-1">
+                <div class="w-56">
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-label>Analista</mat-label>
+                        <mat-select>
+                          <mat-option value="DMONTES">DMONTES</mat-option>
+                          <mat-option value="GSALAS">GSALAS</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                </div>
+                <div class="w-56">
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-label>Periodo</mat-label>
+                        <mat-date-range-input [rangePicker]="picker">
+                            <input matStartDate placeholder="Fecha inicial">
+                            <input matEndDate placeholder="Fecha final">
+                        </mat-date-range-input>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+                    </mat-form-field>
+                </div>
+                <div class="w-56">
+                    <mat-form-field appearance="fill" class="w-full ">
+                        <mat-label>Unidad de negocio</mat-label>
+                        <mat-select>
+                          <mat-option value="Libranza">Libranza</mat-option>
+                          <mat-option value="Capacidad de pago">Capacidad de pago</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="w-56">
-                <mat-form-field appearance="fill" class="w-full">
-                    <mat-label>Periodo</mat-label>
-                    <mat-date-range-input [rangePicker]="picker">
-                        <input matStartDate placeholder="Fecha inicial">
-                        <input matEndDate placeholder="Fecha final">
-                    </mat-date-range-input>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-date-range-picker #picker></mat-date-range-picker>
-                </mat-form-field>
-            </div>
-            <div class="w-56">
-                <mat-form-field appearance="fill" class="w-full">
-                    <mat-label>Unidad de negocio</mat-label>
-                    <mat-select>
-                      <mat-option value="Libranza">Libranza</mat-option>
-                      <mat-option value="Capacidad de pago">Capacidad de pago</mat-option>
-                    </mat-select>
-                </mat-form-field>
+            <div class="flex flex-col columna-2">
+                <div class="flex flex-col w-full">
+                    <div class="flex items-start justify-between">
+                        <div class="text-xl font-medium tracking-tight leading-6 truncate">
+                            Negocios asignados
+                        </div>
+                    </div>
+                    <div class="flex flex-row w-full gap-4 mt-2">
+                        <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                            <div class="flex flex-col items-center">
+                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
+                                    {{item.cantidad}}
+                                </div>
+                                <div class="text-md font-medium truncate">{{item.agenda}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full m-row">
+                    <div class="flex items-start justify-between">
+                        <div class="text-xl font-medium tracking-tight leading-6 truncate">
+                            Negocios reasignados
+                        </div>
+                    </div>
+                    <div class="flex flex-row w-full gap-4 mt-2">
+                        <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                            <div class="flex flex-col items-center">
+                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
+                                    {{item.cantidad}}
+                                </div>
+                                <div class="text-md font-medium truncate">{{item.agenda}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="flex flex-col columna-2">
-            <div class="flex flex-col w-full">
-                <div class="flex items-start justify-between">
-                    <div class="text-xl font-medium tracking-tight leading-6 truncate">
-                        Negocios asignados
-                    </div>
-                </div>
-                <div class="flex flex-row w-full gap-4 mt-2">
-                    <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
-                        <div class="flex flex-col items-center">
-                            <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
-                                {{item.cantidad}}
+        <div class="w-full overflow-auto mt-2">
+            <table class="p-0">
+                <tbody class="bg-white">
+                    <tr class="text-gray-700 border-t border-b ">
+                        <td rowspan="2" class="py-3 text-sm my-3">
+                            <div>
+                                <mat-checkbox></mat-checkbox>
                             </div>
-                            <div class="text-md font-medium truncate">{{item.agenda}}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col w-full m-row">
-                <div class="flex items-start justify-between">
-                    <div class="text-xl font-medium tracking-tight leading-6 truncate">
-                        Negocios reasignados
-                    </div>
-                </div>
-                <div class="flex flex-row w-full gap-4 mt-2">
-                    <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
-                        <div class="flex flex-col items-center">
-                            <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
-                                {{item.cantidad}}
+                        </td>
+                        <td class="px-2 pb-0 pt-1" rowspan="2">
+                            <div class="flex flex-column " rowspan="2">
+                                <div class="flex-0 w-12 overflow-hidden">
+                                    <img src="https://i.ibb.co/689ZfsP/Agregar-un-t-tulo-4.png" class="w-full h-full object-cover">
+                                </div>
                             </div>
-                            <div class="text-md font-medium truncate">{{item.agenda}}</div>
-                        </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1" rowspan="2">
+                            <div class="flex flex-column " rowspan="2">
+                                <small class="text-accent-600 text-xs">Solicitud:</small>
+                                <span class="text-md text-black font-medium">215656</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Identificación:</small>
+                                <span class="text-md text-black font-medium">1.045.725.458</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Nombre del cliente:</small>
+                                <span class="text-md text-black font-medium">Digna María Montes Arias</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="text-gray-700 border-t border-b">
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Valor del crédito:</small>
+                                <span class="text-md text-black font-medium">$15.000.000</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Etapa:</small>
+                                <span class="text-md text-black font-medium">Agenda completación</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Analista asignado:</small>
+                                <span class="text-md text-black font-medium">Dmontes</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Fecha de asignación:</small>
+                                <span class="text-md text-black font-medium">7/09/2022</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Analista reasignado:</small>
+                                <span class="text-md text-black font-medium">Mayala</span>
+                            </div>
+                        </td>
+                        <td class="px-2 pb-0 pt-1">
+                            <div class="flex flex-column">
+                                <small class="text-accent-600 text-xs">Fecha de últ reasignación:</small>
+                                <span class="text-md text-black font-medium">7/09/2022</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex flex-row w-full mt-2 gap-2">
+            <button mat-raised-button class="text-white color_fintra w-30" (click)="asignar()">
+                <div class="flex flex-row w-full justify-between gap-2">
+                    <div>
+                        <mat-icon svgIcon="heroicons_outline:user-add"></mat-icon>
+                    </div>
+                    <div class="mt-1.5">
+                        <span>Asignar</span>
                     </div>
                 </div>
-            </div>
+            </button>
+            <button mat-raised-button class="text-white color_fintra w-30" (click)="reasignar()">
+                <div class="flex flex-row w-full justify-between gap-2">
+                    <div>
+                        <mat-icon svgIcon="heroicons_outline:user-group"></mat-icon>
+                    </div>
+                    <div class="mt-1.5">
+                        <span>Reasignar</span>
+                    </div>
+                </div>
+            </button>
         </div>
     </div>
+    
 </div>

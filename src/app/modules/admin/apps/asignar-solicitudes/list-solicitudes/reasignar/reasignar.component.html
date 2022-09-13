@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Reasignar solicitud</h2>
+<mat-dialog-content>
+  <div class="flex flex-col w-full">
+    <div class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Analista asignado:</mat-label>
+        <input matInput type="text" readonly>
+      </mat-form-field>
+    </div>
+    <div class="w-full">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Asignar a:</mat-label>
+        <mat-select>
+          <mat-option value="DMONTES">DMONTES</mat-option>
+          <mat-option value="GSALAS">GSALAS</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true" class="color_fintra text-white">Guardar</button>
+  <button mat-button mat-dialog-close class="text-white bg-gray-500">Cancelar</button>
+</mat-dialog-actions>
