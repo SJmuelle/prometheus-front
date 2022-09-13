@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarComponent } from './asignar/asignar.component';
 import { ReasignarComponent } from './reasignar/reasignar.component';
+import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -13,7 +14,7 @@ export class ListSolicitudesComponent implements OnInit {
   asignados: any[] = []
   angenda: any = {}
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService) { }
 
   ngOnInit(): void {
     this.asignados = [
@@ -46,6 +47,20 @@ export class ListSolicitudesComponent implements OnInit {
         "agenda":"Trazabilidad"
       }
     ]
+    this.consultar()
+  }
+
+  consultar(){
+    let data = {
+      "unidadNegocio":22,
+      "entidad":"ASIGNACION_NEGOSIO",
+      "analista":"null",
+      "fechaInicial":"2022-01-01",
+      "fechaFinal":"2022-09-01"
+    }
+    this.asigService.getSolicitudes(data).subscribe((response: any) => {
+      console.log(response)
+    })
   }
 
   asignar() {

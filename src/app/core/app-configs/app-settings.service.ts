@@ -34,6 +34,14 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point asignacion de creditos
+     */
+     public asignacion = {
+        url: {
+            base: EndPoints.uriAsig('/credito/tk/property/asignacion-solicitudes-creditos')
+        }
+    };
+    /**
      * @description: End-point agenda de referenciacion
      */
     public agendaReferenciacion = {

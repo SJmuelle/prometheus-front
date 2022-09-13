@@ -19,4 +19,10 @@ export class EndPoints {
      static uriPaga(url: string): string {
         return environment.urlPagaduria + url;
     }
+    /**
+     * @description: URL asignacion de solicitudes
+     */
+     static uriAsig(url: string): string {
+        return environment.urlAsig + url;
+    }
 }

@@ -34,6 +34,11 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div>
+                    <button mat-raised-button class="text-white color_fintra w-30" (click)="consultar()">
+                        Buscar
+                    </button>
+                </div>
             </div>
             <div class="flex flex-col columna-2">
                 <div class="flex flex-col w-full">
@@ -75,100 +80,102 @@
         <div class="w-full overflow-auto mt-2">
             <table class="p-0">
                 <tbody class="bg-white">
-                    <tr class="text-gray-700 border-t border-b ">
-                        <td rowspan="2" class="py-3 text-sm my-3">
-                            <div>
-                                <mat-checkbox></mat-checkbox>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1" rowspan="2">
-                            <div class="flex flex-column " rowspan="2">
-                                <div class="flex-0 w-12 overflow-hidden">
-                                    <img src="https://i.ibb.co/689ZfsP/Agregar-un-t-tulo-4.png" class="w-full h-full object-cover">
+                    <ng-container>
+                        <tr class="text-gray-700 border-t border-b ">
+                            <td rowspan="2" class="py-3 text-sm my-3">
+                                <div class="ml-2.5">
+                                    <mat-checkbox></mat-checkbox>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1" rowspan="2">
-                            <div class="flex flex-column " rowspan="2">
-                                <small class="text-accent-600 text-xs">Solicitud:</small>
-                                <span class="text-md text-black font-medium">215656</span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Identificación:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:identification"></mat-icon>
-                                    1.045.725.458
-                                </span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Nombre del cliente:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user-circle"></mat-icon> Digna María Montes Arias
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="text-gray-700 border-t border-b">
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Valor del crédito:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="attach_money"></mat-icon>15.000.000
-                                </span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Etapa:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:book-open"></mat-icon>
-                                    Agenda completación
-                                </span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Analista asignado:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user"></mat-icon>
-                                    Dmontes
-                                </span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Fecha de asignación:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                                    </mat-icon>
-                                    7/09/2022
-                                </span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Analista reasignado:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user"></mat-icon>
-                                    Mayala
-                                </span>
-                            </div>
-                        </td>
-                        <td class="px-2 pb-0 pt-1">
-                            <div class="flex flex-column">
-                                <small class="text-accent-600 text-xs">Fecha de últ reasignación:</small>
-                                <span class="text-md text-black font-medium">
-                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                                    </mat-icon>
-                                    7/09/2022
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="px-2 pb-0 pt-1" rowspan="2">
+                                <div class="flex flex-column " rowspan="2">
+                                    <div class="flex-0 w-12 overflow-hidden">
+                                        <img src="https://i.ibb.co/689ZfsP/Agregar-un-t-tulo-4.png" class="w-full h-full object-cover">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1" rowspan="2">
+                                <div class="flex flex-column " rowspan="2">
+                                    <small class="text-accent-600 text-xs">Solicitud:</small>
+                                    <span class="text-md text-black font-medium">215656</span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Identificación:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:identification"></mat-icon>
+                                        1.045.725.458
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Nombre del cliente:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user-circle"></mat-icon> Digna María Montes Arias
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="text-gray-700 border-t border-b">
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Valor del crédito:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="attach_money"></mat-icon>15.000.000
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Etapa:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:book-open"></mat-icon>
+                                        Agenda completación
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Analista asignado:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user"></mat-icon>
+                                        Dmontes
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Fecha de asignación:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                        </mat-icon>
+                                        7/09/2022
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Analista reasignado:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user"></mat-icon>
+                                        Mayala
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Fecha de últ reasignación:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                        </mat-icon>
+                                        7/09/2022
+                                    </span>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
                 </tbody>
             </table>
         </div>
