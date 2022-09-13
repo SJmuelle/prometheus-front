@@ -142,6 +142,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       if (res.status === 200) {
         this.totales = res.data;
+        console.log(this.totales)
         Swal.close();
       } else {
         Swal.close();
