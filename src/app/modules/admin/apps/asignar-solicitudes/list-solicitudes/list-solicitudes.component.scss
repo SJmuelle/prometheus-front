@@ -19,3 +19,15 @@
 .m-row {
     margin-top: 2.5%;
 }
+
+.max-height {
+    max-height: 28em;
+}
+
+button:enabled {
+    background-color: #4ABBEC;
+}
+
+button:disabled {
+    background: #cecfcf;
+}

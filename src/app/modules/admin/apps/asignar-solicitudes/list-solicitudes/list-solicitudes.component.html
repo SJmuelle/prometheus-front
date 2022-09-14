@@ -1,45 +1,58 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
-    <div class="grid grid-cols-12 w-100 mb-2">
+    <div class="grid grid-cols-12 w-100">
         <h2 class="text-gray-900 col-span-12 mb-4">Asignación de solicitudes de crédito.</h2>
     </div>
     <div class="flex flex-col w-full">
-        <div class="flex flex-row w-full mt-2">
-            <div class="flex flex-col columna-1">
-                <div class="w-56">
-                    <mat-form-field appearance="fill" class="w-full">
-                        <mat-label>Analista</mat-label>
-                        <mat-select>
-                          <mat-option value="DMONTES">DMONTES</mat-option>
-                          <mat-option value="GSALAS">GSALAS</mat-option>
-                        </mat-select>
-                      </mat-form-field>
+        <div class="flex flex-row w-full">
+            <form [formGroup]="buscarForm" class="columna-1">
+                <div class="flex flex-col">
+                    <div class="w-56">
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-label>Analista</mat-label>
+                            <mat-select formControlName="analista">
+                                <mat-option *ngFor="let item of asesores" [value]="item.idusuario">{{ item.idusuario }}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="buscarForm.get('analista').hasError('required')">
+                                Se debe seleccionar un analista.
+                            </mat-error>
+                          </mat-form-field>
+                    </div>
+                    <div class="w-56">
+                        <mat-form-field appearance="fill" class="w-full">
+                            <mat-label>Periodo</mat-label>
+                            <mat-date-range-input [rangePicker]="picker">
+                                <input matStartDate formControlName="fechaInicial" placeholder="Fecha inicial">
+                                <input matEndDate formControlName="fechaFinal" placeholder="Fecha final">
+                            </mat-date-range-input>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                            <mat-error *ngIf="buscarForm.get('fechaInicial').hasError('required')">
+                                Se debe ingresar una fecha inicial.
+                            </mat-error>
+                            <mat-error *ngIf="buscarForm.get('fechaFinal').hasError('required')">
+                                Se debe ingresar una fecha final.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-56">
+                        <mat-form-field appearance="fill" class="w-full ">
+                            <mat-label>Unidad de negocio</mat-label>
+                            <mat-select formControlName="unidad">
+                              <mat-option value="22">Libranza</mat-option>
+                              <mat-option value="Capacidad de pago">Capacidad de pago</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="buscarForm.get('unidad').hasError('required')">
+                                Se debe elegir una unidad de negocio.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div>
+                        <button mat-raised-button class="text-white w-30" [disabled]="buscarForm.invalid" (click)="buscar()">
+                            Buscar
+                        </button>
+                    </div>
                 </div>
-                <div class="w-56">
-                    <mat-form-field appearance="fill" class="w-full">
-                        <mat-label>Periodo</mat-label>
-                        <mat-date-range-input [rangePicker]="picker">
-                            <input matStartDate placeholder="Fecha inicial">
-                            <input matEndDate placeholder="Fecha final">
-                        </mat-date-range-input>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #picker></mat-date-range-picker>
-                    </mat-form-field>
-                </div>
-                <div class="w-56">
-                    <mat-form-field appearance="fill" class="w-full ">
-                        <mat-label>Unidad de negocio</mat-label>
-                        <mat-select>
-                          <mat-option value="Libranza">Libranza</mat-option>
-                          <mat-option value="Capacidad de pago">Capacidad de pago</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div>
-                    <button mat-raised-button class="text-white color_fintra w-30" (click)="consultar()">
-                        Buscar
-                    </button>
-                </div>
-            </div>
+            </form>
             <div class="flex flex-col columna-2">
                 <div class="flex flex-col w-full">
                     <div class="flex items-start justify-between">
@@ -48,12 +61,12 @@
                         </div>
                     </div>
                     <div class="flex flex-row w-full gap-4 mt-2">
-                        <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                        <div class="flex flex-col h-18 w-44 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
                             <div class="flex flex-col items-center">
-                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
+                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none" [ngStyle]="{'color': item.colorEstado}">
                                     {{item.cantidad}}
                                 </div>
-                                <div class="text-md font-medium truncate">{{item.agenda}}</div>
+                                <div class="text-md font-medium truncate">{{item.nombreAgenda}}</div>
                             </div>
                         </div>
                     </div>
@@ -65,22 +78,22 @@
                         </div>
                     </div>
                     <div class="flex flex-row w-full gap-4 mt-2">
-                        <div class="flex flex-col h-18 w-26 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                        <div class="flex flex-col h-18 w-44 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
                             <div class="flex flex-col items-center">
-                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none">
+                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none" [ngStyle]="{'color': item.colorEstado}">
                                     {{item.cantidad}}
                                 </div>
-                                <div class="text-md font-medium truncate">{{item.agenda}}</div>
+                                <div class="text-md font-medium truncate">{{item.nombreAgenda}}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="w-full overflow-auto mt-2">
+        <div class="w-full max-height overflow-y-auto mt-2">
             <table class="p-0">
                 <tbody class="bg-white">
-                    <ng-container>
+                    <ng-container *ngFor="let item of solicitudes">
                         <tr class="text-gray-700 border-t border-b ">
                             <td rowspan="2" class="py-3 text-sm my-3">
                                 <div class="ml-2.5">
@@ -90,14 +103,14 @@
                             <td class="px-2 pb-0 pt-1" rowspan="2">
                                 <div class="flex flex-column " rowspan="2">
                                     <div class="flex-0 w-12 overflow-hidden">
-                                        <img src="https://i.ibb.co/689ZfsP/Agregar-un-t-tulo-4.png" class="w-full h-full object-cover">
+                                        <img [src]="item.urlIconoUnidad" matTooltip="{{item.undadNegocio}}" class="w-full h-full object-cover cursor-pointer">
                                     </div>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1" rowspan="2">
                                 <div class="flex flex-column " rowspan="2">
                                     <small class="text-accent-600 text-xs">Solicitud:</small>
-                                    <span class="text-md text-black font-medium">215656</span>
+                                    <span class="text-md text-black font-medium">{{item.numeroSolicitud}}</span>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1">
@@ -105,7 +118,7 @@
                                     <small class="text-accent-600 text-xs">Identificación:</small>
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:identification"></mat-icon>
-                                        1.045.725.458
+                                        {{item.identificacion}}
                                     </span>
                                 </div>
                             </td>
@@ -113,7 +126,8 @@
                                 <div class="flex flex-column">
                                     <small class="text-accent-600 text-xs">Nombre del cliente:</small>
                                     <span class="text-md text-black font-medium">
-                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user-circle"></mat-icon> Digna María Montes Arias
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user-circle"></mat-icon> 
+                                        {{item.nombreCompleto}}
                                     </span>
                                 </div>
                             </td>
@@ -123,7 +137,8 @@
                                 <div class="flex flex-column">
                                     <small class="text-accent-600 text-xs">Valor del crédito:</small>
                                     <span class="text-md text-black font-medium">
-                                        <mat-icon class="icon-size-3" svgIcon="attach_money"></mat-icon>15.000.000
+                                        <mat-icon class="icon-size-3" svgIcon="attach_money"></mat-icon>
+                                        {{item.monto | number}}
                                     </span>
                                 </div>
                             </td>
@@ -132,7 +147,7 @@
                                     <small class="text-accent-600 text-xs">Etapa:</small>
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:book-open"></mat-icon>
-                                        Agenda completación
+                                        {{item.subEstado}}
                                     </span>
                                 </div>
                             </td>
@@ -141,7 +156,7 @@
                                     <small class="text-accent-600 text-xs">Analista asignado:</small>
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user"></mat-icon>
-                                        Dmontes
+                                        {{item.asesor}}
                                     </span>
                                 </div>
                             </td>
@@ -151,7 +166,7 @@
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                         </mat-icon>
-                                        7/09/2022
+                                        {{ cambiarFecha(item.fechaEmision) }}
                                     </span>
                                 </div>
                             </td>
@@ -179,7 +194,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="flex flex-row w-full mt-2 gap-2">
+        <div class="flex flex-row w-full mt-4 gap-2">
             <button mat-raised-button class="text-white color_fintra w-30" (click)="asignar()">
                 <div class="flex flex-row w-full justify-between gap-2">
                     <div>

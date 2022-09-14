@@ -16,4 +16,11 @@ export class AsignarSolicitudesService {
    public getSolicitudes(datos: any): Observable<any> {
     return this._http.post(this._appSettings.asignacion.url.base, datos);
   }
+
+  /**
+   * @description: Obtiene listado de asesores
+   */
+   public getAsesores(): Observable<any> {
+    return this._http.get(this._appSettings.asignacion.url.baseAsesor);
+  }
 }
