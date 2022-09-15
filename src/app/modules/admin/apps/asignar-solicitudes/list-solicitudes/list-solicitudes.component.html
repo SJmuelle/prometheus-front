@@ -97,7 +97,7 @@
                         <tr class="text-gray-700 border-t border-b ">
                             <td rowspan="2" class="py-3 text-sm my-3">
                                 <div class="ml-2.5">
-                                    <mat-checkbox></mat-checkbox>
+                                    <mat-checkbox (change)="agregarSoli(item, $event)"></mat-checkbox>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1" rowspan="2">
@@ -195,7 +195,7 @@
             </table>
         </div>
         <div class="flex flex-row w-full mt-4 gap-2">
-            <button mat-raised-button class="text-white color_fintra w-30" (click)="asignar()">
+            <button mat-raised-button class="text-white w-30" [disabled]="!disBtn" (click)="asignar()">
                 <div class="flex flex-row w-full justify-between gap-2">
                     <div>
                         <mat-icon svgIcon="heroicons_outline:user-add"></mat-icon>
@@ -205,7 +205,7 @@
                     </div>
                 </div>
             </button>
-            <button mat-raised-button class="text-white color_fintra w-30" (click)="reasignar()">
+            <button mat-raised-button class="text-white w-30" (click)="reasignar()">
                 <div class="flex flex-row w-full justify-between gap-2">
                     <div>
                         <mat-icon svgIcon="heroicons_outline:user-group"></mat-icon>

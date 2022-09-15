@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-asignar',
@@ -21,7 +22,27 @@ export class AsignarComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.consultarAsesores()
+    this.consultarAsesores();
+  }
+
+  guardarAnalista(){
+    this.data.asesor_nuevo=this.asignarForm.value.analista;
+    this.asigService.postAsesores(this.data).subscribe((res: any) => {
+      if (res) {
+        Swal.fire(
+          '¡Correcto!',
+          'La solicitud N° '+this.data.numero_solicitud+' ha sido asignado al usuario '+this.data.asesor_nuevo+' de forma exitosa.',
+          'success'
+        )
+        this.dialogRef.close();
+      } else {
+        Swal.fire(
+          'Error!',
+          'La solicitud N° '+this.data.numero_solicitud+' no pudo ser asignada, porfavor intente mas tarde.',
+          'error'
+        )
+      }
+    })
   }
 
   consultarAsesores(){

@@ -23,4 +23,18 @@ export class AsignarSolicitudesService {
    public getAsesores(): Observable<any> {
     return this._http.get(this._appSettings.asignacion.url.baseAsesor);
   }
+ 
+  /**
+   * @description: Agrega asesores a las solicitudes
+   */
+   public postAsesores(data:any): Observable<any> {
+    return this._http.post(this._appSettings.asignacion.url.guardarAsesor, data);
+  }
+
+  /**
+   * @description: Actualiza asesores a las solicitudes
+   */
+   public updateAsesores(data:any): Observable<any> {
+    return this._http.post(this._appSettings.asignacion.url.actualizarAsesor, data);
+  }
 }

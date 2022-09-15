@@ -39,7 +39,9 @@ export class AppSettingsService {
      public asignacion = {
         url: {
             base: EndPoints.uriAsig('/credito/tk/property/asignacion-solicitudes-creditos'),
-            baseAsesor: EndPoints.uriAsig('/generic/qry/tk/listado-analista')
+            baseAsesor: EndPoints.uriAsig('/generic/qry/tk/listado-analista'),
+            guardarAsesor: EndPoints.uriAsig('/generic/tk/guardar-analista'),
+            actualizarAsesor: EndPoints.uriAsig('/generic/tk/actualizar-analista'),
         }
     };
     /**

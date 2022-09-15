@@ -20,6 +20,10 @@ export class ListSolicitudesComponent implements OnInit {
   buscarForm: FormGroup;
   formatoFechaInicial:any;
   formatoFechaFinal:any;
+  numSolicitud:number;
+  numIdentificacion:number;
+  dataModal= {};
+  disBtn: boolean;
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -35,6 +39,24 @@ export class ListSolicitudesComponent implements OnInit {
     this.consultarSolicitudes();
   }
 
+  agregarSoli(item, event){
+    if (!event.checked) {
+      item={}
+      let data = {}
+      this.disBtn=false;
+      this.dataModal=data
+    }else{
+      let data = {
+        "tipo_asesor":"E",
+        "asesor_nuevo":"",
+        "numero_solicitud":item.numeroSolicitud,
+        "identificacion_cliente":item.identificacion
+      }
+      this.disBtn=true;
+      this.dataModal=data
+    }
+  }
+
   consultarSolicitudes(){
     let data = {
       "unidadNegocio":22,
@@ -46,6 +68,7 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
+        console.log(this.solicitudes);
         this.asignados = res.data.solicitudAsignada;
         this.reasignados = res.data.solicitudAsignada;
       }else{
@@ -60,6 +83,7 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getAsesores().subscribe((res: any) => {
       if (res) {
         this.asesores = res.data;
+        console.log(this.asesores)
       }else{
         this.asesores = [];
       }
@@ -80,6 +104,7 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
+        console.log(this.solicitudes);
         this.asignados = res.data.solicitudAsignada;
         this.reasignados = res.data.solicitudAsignada;
       }else{
@@ -100,7 +125,8 @@ export class ListSolicitudesComponent implements OnInit {
 
   asignar() {
     const dialogRef = this.dialog.open(AsignarComponent, {
-      width: '20%'
+      width: '20%',
+      data: this.dataModal
     });
     dialogRef.afterClosed().subscribe(result => {});
   }
