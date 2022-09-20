@@ -22,8 +22,15 @@ export class ListSolicitudesComponent implements OnInit {
   formatoFechaFinal:any;
   numSolicitud:number;
   numIdentificacion:number;
-  dataModal= {};
+  dataModal: any[] = [];
+  dataModalAsignar: any[] = [];
+  dataModalReasignar: any[] = [];
+  soliAsignar: any[] = [];
+  soliReasignar: any[] = [];
+  cliAsignar: any[] = [];
+  cliReasignar: any[] = [];
   disBtn: boolean;
+  checkeados: any[] = [];
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -40,20 +47,26 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   agregarSoli(item, event){
-    if (!event.checked) {
-      item={}
-      let data = {}
-      this.disBtn=false;
-      this.dataModal=data
-    }else{
-      let data = {
-        "tipo_asesor":"E",
-        "asesor_nuevo":"",
-        "numero_solicitud":item.numeroSolicitud,
-        "identificacion_cliente":item.identificacion
+    if (item.asesor=='') {
+      if (event.checked==false) {
+        let idxSoli = this.soliAsignar.indexOf(item.numeroSolicitud);
+        let idxCli = this.cliAsignar.indexOf(item.identificacion);
+        this.soliAsignar.splice(idxSoli, 1);
+        this.cliAsignar.splice(idxCli, 1);
+      }else{
+        this.soliAsignar.push(item.numeroSolicitud);
+        this.cliAsignar.push(item.identificacion);
       }
-      this.disBtn=true;
-      this.dataModal=data
+    } else {
+      if (event.checked==false) {
+        let idxSoli = this.soliReasignar.indexOf(item.numeroSolicitud);
+        let idxCli = this.cliReasignar.indexOf(item.identificacion);
+        this.soliReasignar.splice(idxSoli, 1);
+        this.cliReasignar.splice(idxCli, 1);
+      }else{
+        this.soliReasignar.push(item.numeroSolicitud);
+        this.cliReasignar.push(item.identificacion);
+      }
     }
   }
 
@@ -68,7 +81,6 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
-        console.log(this.solicitudes);
         this.asignados = res.data.solicitudAsignada;
         this.reasignados = res.data.solicitudAsignada;
       }else{
@@ -83,7 +95,6 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getAsesores().subscribe((res: any) => {
       if (res) {
         this.asesores = res.data;
-        console.log(this.asesores)
       }else{
         this.asesores = [];
       }
@@ -100,11 +111,9 @@ export class ListSolicitudesComponent implements OnInit {
       "fechaInicial":this.formatoFechaInicial,
       "fechaFinal":this.formatoFechaFinal
     }
-    console.log(data);
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
-        console.log(this.solicitudes);
         this.asignados = res.data.solicitudAsignada;
         this.reasignados = res.data.solicitudAsignada;
       }else{
@@ -124,16 +133,30 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   asignar() {
+    let data = {
+      "tipo_asesor":"E",
+      "asesor_nuevo":"",
+      "numero_solicitud":this.soliAsignar,
+      "identificacion_cliente":this.cliAsignar
+    }
     const dialogRef = this.dialog.open(AsignarComponent, {
       width: '20%',
-      data: this.dataModal
+      data: data
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   reasignar() {
+    let data = {
+      "tipo_asesor":"E",
+      "asesor_nuevo":"",
+      "numero_solicitud":this.soliReasignar,
+      "identificacion_cliente":this.cliReasignar
+    }
     const dialogRef = this.dialog.open(ReasignarComponent, {
-      width: '20%'
+      width: '20%',
+      data: data
     });
     dialogRef.afterClosed().subscribe(result => {});
   }
