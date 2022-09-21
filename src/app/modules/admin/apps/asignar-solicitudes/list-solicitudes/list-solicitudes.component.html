@@ -46,49 +46,60 @@
                             </mat-error>
                         </mat-form-field>
                     </div>
-                    <div>
-                        <button mat-raised-button class="text-white w-30" [disabled]="buscarForm.invalid" (click)="buscar()">
-                            Buscar
-                        </button>
-                    </div>
                 </div>
             </form>
             <div class="flex flex-col columna-2">
                 <div class="flex flex-col w-full">
-                    <div class="flex items-start justify-between">
-                        <div class="text-xl font-medium tracking-tight leading-6 truncate">
-                            Negocios asignados
-                        </div>
-                    </div>
                     <div class="flex flex-row w-full gap-4 mt-2">
-                        <div class="flex flex-col h-18 w-44 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                        <div class="flex flex-col justify-center h-52 w-72 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
+                            <div class="text-lg font-medium truncate pl-2">{{item.nombreAgenda}}</div>
                             <div class="flex flex-col items-center">
                                 <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none" [ngStyle]="{'color': item.colorEstado}">
-                                    {{item.cantidad}}
+                                    {{item.asignados}}
                                 </div>
-                                <div class="text-md font-medium truncate">{{item.nombreAgenda}}</div>
+                                <div class="text-md font-medium truncate">Asignados</div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-col w-full m-row">
-                    <div class="flex items-start justify-between">
-                        <div class="text-xl font-medium tracking-tight leading-6 truncate">
-                            Negocios reasignados
-                        </div>
-                    </div>
-                    <div class="flex flex-row w-full gap-4 mt-2">
-                        <div class="flex flex-col h-18 w-44 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
-                            <div class="flex flex-col items-center">
+                            <div class="flex flex-col items-center mt-1">
                                 <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none" [ngStyle]="{'color': item.colorEstado}">
-                                    {{item.cantidad}}
+                                    {{item.re_asignados}}
                                 </div>
-                                <div class="text-md font-medium truncate">{{item.nombreAgenda}}</div>
+                                <div class="text-md font-medium truncate">Reasignados</div>
+                            </div>
+                            <div class="flex flex-col items-center mt-1">
+                                <div class="text-6xl sm:text-4xl font-bold tracking-tight leading-none" [ngStyle]="{'color': item.colorEstado}">
+                                    {{item.sin_asignar}}
+                                </div>
+                                <div class="text-md font-medium truncate">No asignados</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="flex flex-row w-1/4 gap-2">
+            <button mat-raised-button class="text-white w-30" [disabled]="buscarForm.invalid" (click)="buscar()">
+                Buscar
+            </button>
+            <button mat-raised-button class="text-white w-30" [disabled]="soliAsignar.length<1" (click)="asignar()">
+                <div class="flex flex-row w-full justify-between gap-2">
+                    <div>
+                        <mat-icon svgIcon="heroicons_outline:user-add"></mat-icon>
+                    </div>
+                    <div class="mt-1.5">
+                        <span>Asignar</span>
+                    </div>
+                </div>
+            </button>
+            <button mat-raised-button class="text-white w-30" [disabled]="soliReasignar.length<1" (click)="reasignar()">
+                <div class="flex flex-row w-full justify-between gap-2">
+                    <div>
+                        <mat-icon svgIcon="heroicons_outline:user-group"></mat-icon>
+                    </div>
+                    <div class="mt-1.5">
+                        <span>Reasignar</span>
+                    </div>
+                </div>
+            </button>
         </div>
         <div class="w-full max-height overflow-y-auto mt-2">
             <table class="p-0">
@@ -194,28 +205,5 @@
                 </tbody>
             </table>
         </div>
-        <div class="flex flex-row w-full mt-4 gap-2">
-            <button mat-raised-button class="text-white w-30" [disabled]="soliAsignar.length<1" (click)="asignar()">
-                <div class="flex flex-row w-full justify-between gap-2">
-                    <div>
-                        <mat-icon svgIcon="heroicons_outline:user-add"></mat-icon>
-                    </div>
-                    <div class="mt-1.5">
-                        <span>Asignar</span>
-                    </div>
-                </div>
-            </button>
-            <button mat-raised-button class="text-white w-30" [disabled]="soliReasignar.length<1" (click)="reasignar()">
-                <div class="flex flex-row w-full justify-between gap-2">
-                    <div>
-                        <mat-icon svgIcon="heroicons_outline:user-group"></mat-icon>
-                    </div>
-                    <div class="mt-1.5">
-                        <span>Reasignar</span>
-                    </div>
-                </div>
-            </button>
-        </div>
     </div>
-    
 </div>

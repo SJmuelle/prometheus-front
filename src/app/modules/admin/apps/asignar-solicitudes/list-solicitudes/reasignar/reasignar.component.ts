@@ -28,26 +28,26 @@ export class ReasignarComponent implements OnInit {
     }
 
     guardarAnalista(){
-      this.data.asesor_nuevo=this.reasignarForm.value.analista;
+      this.data.asesorNuevo=this.reasignarForm.value.analista;
       console.log(this.data)
       this.asigService.updateAsesores(this.data).subscribe((res: any) => {
         if (res) {
-          if (this.data.numero_solicitud.length > 1) {
+          if (this.data.details.length > 1) {
             Swal.fire(
               '¡Correcto!',
-              'Las solicitudes han sido asignadas al usuario '+this.data.asesor_nuevo+' de forma exitosa.',
+              'Las solicitudes han sido asignadas al usuario '+this.data.asesorNuevo+' de forma exitosa.',
               'success'
             )
           } else {
               Swal.fire(
                 '¡Correcto!',
-                'La solicitud N° '+this.data.numero_solicitud[0]+' ha sido asignado al usuario '+this.data.asesor_nuevo+' de forma exitosa.',
+                'La solicitud N° '+this.data.details[0].numeroSolicitud+' ha sido asignado al usuario '+this.data.asesorNuevo+' de forma exitosa.',
                 'success'
               )
           }
           this.dialogRef.close();
         } else {
-          if (this.data.numero_solicitud.length > 1) {
+          if (this.data.details.length > 1) {
             Swal.fire(
               'Error!',
               'Las solicitudes no han podido ser asignadas, porfavor intente mas tarde.',
@@ -56,7 +56,7 @@ export class ReasignarComponent implements OnInit {
           } else {
             Swal.fire(
               'Error!',
-              'La solicitud N° '+this.data.numero_solicitud[0]+' no pudo ser asignada, porfavor intente mas tarde.',
+              'La solicitud N° '+this.data.details[0].numeroSolicitud+' no pudo ser asignada, porfavor intente mas tarde.',
               'error'
             )
           }

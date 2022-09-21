@@ -14,7 +14,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ListSolicitudesComponent implements OnInit {
 
   asignados: any[] = [];
-  reasignados: any[] = [];
   solicitudes: any[] = [];
   asesores: any[] = [];
   buscarForm: FormGroup;
@@ -22,13 +21,8 @@ export class ListSolicitudesComponent implements OnInit {
   formatoFechaFinal:any;
   numSolicitud:number;
   numIdentificacion:number;
-  dataModal: any[] = [];
-  dataModalAsignar: any[] = [];
-  dataModalReasignar: any[] = [];
   soliAsignar: any[] = [];
   soliReasignar: any[] = [];
-  cliAsignar: any[] = [];
-  cliReasignar: any[] = [];
   disBtn: boolean;
   checkeados: any[] = [];
 
@@ -47,25 +41,24 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   agregarSoli(item, event){
-    if (item.asesor=='') {
+    let num = {
+      "numeroSolicitud":item.numeroSolicitud.toString()
+    }
+    if (item.asesor=='') { 
       if (event.checked==false) {
-        let idxSoli = this.soliAsignar.indexOf(item.numeroSolicitud);
-        let idxCli = this.cliAsignar.indexOf(item.identificacion);
+        const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
+        let idxSoli = this.soliAsignar.indexOf(dataBuscar[0]);
         this.soliAsignar.splice(idxSoli, 1);
-        this.cliAsignar.splice(idxCli, 1);
       }else{
-        this.soliAsignar.push(item.numeroSolicitud);
-        this.cliAsignar.push(item.identificacion);
+        this.soliAsignar.push(num);
       }
     } else {
       if (event.checked==false) {
-        let idxSoli = this.soliReasignar.indexOf(item.numeroSolicitud);
-        let idxCli = this.cliReasignar.indexOf(item.identificacion);
+        const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
+        let idxSoli = this.soliReasignar.indexOf(dataBuscar[0]);
         this.soliReasignar.splice(idxSoli, 1);
-        this.cliReasignar.splice(idxCli, 1);
       }else{
-        this.soliReasignar.push(item.numeroSolicitud);
-        this.cliReasignar.push(item.identificacion);
+        this.soliReasignar.push(num);
       }
     }
   }
@@ -74,7 +67,7 @@ export class ListSolicitudesComponent implements OnInit {
     let data = {
       "unidadNegocio":22,
       "entidad":"ASIGNACION_NEGOSIO",
-      "analista":"null",
+      "analista":"",
       "fechaInicial":"2022-01-01",
       "fechaFinal":"2022-09-01"
     }
@@ -82,11 +75,9 @@ export class ListSolicitudesComponent implements OnInit {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
-        this.reasignados = res.data.solicitudAsignada;
       }else{
         this.solicitudes = [];
         this.asignados = [];
-        this.reasignados = [];
       }
     })
   }
@@ -115,11 +106,9 @@ export class ListSolicitudesComponent implements OnInit {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
-        this.reasignados = res.data.solicitudAsignada;
       }else{
         this.solicitudes = [];
         this.asignados = [];
-        this.reasignados = [];
       }
     })
   }
@@ -134,10 +123,9 @@ export class ListSolicitudesComponent implements OnInit {
 
   asignar() {
     let data = {
-      "tipo_asesor":"E",
-      "asesor_nuevo":"",
-      "numero_solicitud":this.soliAsignar,
-      "identificacion_cliente":this.cliAsignar
+      "tipoAsesor":"E",
+      "asesorNuevo":"",
+      "details":this.soliAsignar
     }
     const dialogRef = this.dialog.open(AsignarComponent, {
       width: '20%',
@@ -149,10 +137,9 @@ export class ListSolicitudesComponent implements OnInit {
 
   reasignar() {
     let data = {
-      "tipo_asesor":"E",
-      "asesor_nuevo":"",
-      "numero_solicitud":this.soliReasignar,
-      "identificacion_cliente":this.cliReasignar
+      "tipoAsesor":"E",
+      "asesorNuevo":"",
+      "details":this.soliReasignar
     }
     const dialogRef = this.dialog.open(ReasignarComponent, {
       width: '20%',
