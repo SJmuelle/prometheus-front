@@ -177,7 +177,7 @@
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                         </mat-icon>
-                                        {{ cambiarFecha(item.fechaEmision) }}
+                                        {{ cambiarFecha(item.fecha_asigacion) }}
                                     </span>
                                 </div>
                             </td>
@@ -186,7 +186,7 @@
                                     <small class="text-accent-600 text-xs">Analista reasignado:</small>
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user"></mat-icon>
-                                        Mayala
+                                        {{item.asesor_re_asignado}}
                                     </span>
                                 </div>
                             </td>
@@ -196,7 +196,7 @@
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                         </mat-icon>
-                                        7/09/2022
+                                        {{ cambiarFecha(item.fecha_re_asigado) }}
                                     </span>
                                 </div>
                             </td>

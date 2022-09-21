@@ -68,12 +68,13 @@ export class ListSolicitudesComponent implements OnInit {
       "unidadNegocio":22,
       "entidad":"ASIGNACION_NEGOSIO",
       "analista":"",
-      "fechaInicial":"2022-01-01",
-      "fechaFinal":"2022-09-01"
+      "fechaInicial":"2021-01-01",
+      "fechaFinal":"2022-09-21"
     }
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
+        console.log(this.solicitudes)
         this.asignados = res.data.solicitudAsignada;
       }else{
         this.solicitudes = [];
@@ -106,6 +107,7 @@ export class ListSolicitudesComponent implements OnInit {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
+        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
