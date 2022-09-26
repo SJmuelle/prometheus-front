@@ -13,6 +13,7 @@ export class ReasignarComponent implements OnInit {
 
   reasignarForm: FormGroup;
   asesores: any[] = [];
+  asesorActual: any[] = [];
   dataEnviar: any[] = [];
 
   constructor(public asigService: AsignarSolicitudesService, private fb: FormBuilder, public dialogRef: MatDialogRef<ReasignarComponent>,
@@ -25,29 +26,31 @@ export class ReasignarComponent implements OnInit {
     ngOnInit() {
       this.consultarAsesores();
       console.log(this.data)
+      this.asesorActual = this.data.asesoresActuales
+      console.log(this.asesorActual)
     }
 
     guardarAnalista(){
-      this.data.asesorNuevo=this.reasignarForm.value.analista;
-      console.log(this.data)
-      this.asigService.updateAsesores(this.data).subscribe((res: any) => {
+      this.data.enviar.asesorNuevo=this.reasignarForm.value.analista;
+      console.log(this.data.enviar)
+      this.asigService.updateAsesores(this.data.enviar).subscribe((res: any) => {
         if (res) {
-          if (this.data.details.length > 1) {
+          if (this.data.enviar.details.length > 1) {
             Swal.fire(
               '¡Correcto!',
-              'Las solicitudes han sido asignadas al usuario '+this.data.asesorNuevo+' de forma exitosa.',
+              'Las solicitudes han sido asignadas al usuario '+this.data.enviar.asesorNuevo+' de forma exitosa.',
               'success'
             )
           } else {
               Swal.fire(
                 '¡Correcto!',
-                'La solicitud N° '+this.data.details[0].numeroSolicitud+' ha sido asignado al usuario '+this.data.asesorNuevo+' de forma exitosa.',
+                'La solicitud N° '+this.data.enviar.details[0].numeroSolicitud+' ha sido asignado al usuario '+this.data.enviar.asesorNuevo+' de forma exitosa.',
                 'success'
               )
           }
           this.dialogRef.close();
         } else {
-          if (this.data.details.length > 1) {
+          if (this.data.enviar.details.length > 1) {
             Swal.fire(
               'Error!',
               'Las solicitudes no han podido ser asignadas, porfavor intente mas tarde.',
@@ -56,7 +59,7 @@ export class ReasignarComponent implements OnInit {
           } else {
             Swal.fire(
               'Error!',
-              'La solicitud N° '+this.data.details[0].numeroSolicitud+' no pudo ser asignada, porfavor intente mas tarde.',
+              'La solicitud N° '+this.data.enviar.details[0].numeroSolicitud+' no pudo ser asignada, porfavor intente mas tarde.',
               'error'
             )
           }

@@ -21,7 +21,7 @@
 }
 
 .max-height {
-    max-height: 32rem;
+    max-height: 34rem;
 }
 
 button:enabled {
@@ -29,5 +29,21 @@ button:enabled {
 }
 
 button:disabled {
+    background: #cecfcf;
+}
+
+.per-asig:enabled {
+    background-color: #bbf7d0
+}
+
+.blo-asig:disabled{
+    background: #cecfcf;
+}
+
+.per-reasig:enabled {
+    background-color: #bfdbfe
+}
+
+.blo-reasig:disabled{
     background: #cecfcf;
 }

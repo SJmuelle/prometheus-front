@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarComponent } from './asignar/asignar.component';
 import { ReasignarComponent } from './reasignar/reasignar.component';
+import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.component';
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -16,6 +17,7 @@ export class ListSolicitudesComponent implements OnInit {
   asignados: any[] = [];
   solicitudes: any[] = [];
   asesores: any[] = [];
+  antiguos: any[] = [];
   buscarForm: FormGroup;
   formatoFechaInicial:any;
   formatoFechaFinal:any;
@@ -44,6 +46,11 @@ export class ListSolicitudesComponent implements OnInit {
     let num = {
       "numeroSolicitud":item.numeroSolicitud.toString()
     }
+    let asesorAntiguo = {
+      "analista":item.asesor,
+      "solicitud":item.numeroSolicitud,
+      "fecha":item.fecha_re_asigado
+    }
     if (item.asesor=='') { 
       if (event.checked==false) {
         const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
@@ -54,11 +61,13 @@ export class ListSolicitudesComponent implements OnInit {
       }
     } else {
       if (event.checked==false) {
-        const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
+        const dataBuscar = this.soliReasignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
         let idxSoli = this.soliReasignar.indexOf(dataBuscar[0]);
         this.soliReasignar.splice(idxSoli, 1);
+        this.antiguos.splice(idxSoli, 1);
       }else{
         this.soliReasignar.push(num);
+        this.antiguos.push(asesorAntiguo);
       }
     }
   }
@@ -76,6 +85,7 @@ export class ListSolicitudesComponent implements OnInit {
         this.solicitudes = res.data.listadoSolicitud;
         console.log(this.solicitudes)
         this.asignados = res.data.solicitudAsignada;
+        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -123,7 +133,7 @@ export class ListSolicitudesComponent implements OnInit {
     return 'No registra';
   }
 
-  asignar() {
+  asignarVarias() {
     let data = {
       "tipoAsesor":"E",
       "asesorNuevo":"",
@@ -137,15 +147,46 @@ export class ListSolicitudesComponent implements OnInit {
     });
   }
 
-  reasignar() {
+  asignarUna(item){
+    let data = {
+      "tipoAsesor":"E",
+      "asesorNuevo":"",
+      "details":[{
+        "numeroSolicitud":item.toString()
+      }]
+    }
+    const dialogRef = this.dialog.open(AsignarComponent, {
+      width: '20%',
+      data: data
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+
+  reasignarVarias() {
     let data = {
       "tipoAsesor":"E",
       "asesorNuevo":"",
       "details":this.soliReasignar
     }
+    const dialogRef = this.dialog.open(ReasignarVariosComponent, {
+      width: '25%',
+      data: {enviar: data, asesoresActuales: this.antiguos}
+    });
+    dialogRef.afterClosed().subscribe(result => {});
+  }
+
+  reasignarUna(item) {
+    let data = {
+      "tipoAsesor":"E",
+      "asesorNuevo":"",
+      "details":[{
+        "numeroSolicitud":item.numeroSolicitud.toString()
+      }]
+    }
     const dialogRef = this.dialog.open(ReasignarComponent, {
       width: '20%',
-      data: data
+      data: {enviar: data, asesorActual: item.asesor}
     });
     dialogRef.afterClosed().subscribe(result => {});
   }
