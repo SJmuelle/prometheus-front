@@ -21,7 +21,12 @@
 }
 
 .max-height {
-    max-height: 34rem;
+    @media (min-width:1280px) {
+        max-height: 16.5rem;
+    }
+    @media (min-width:1440px) {
+        max-height: 34rem;
+    }
 }
 
 // button:enabled {

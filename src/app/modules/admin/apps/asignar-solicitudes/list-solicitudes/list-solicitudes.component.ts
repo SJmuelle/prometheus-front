@@ -218,7 +218,7 @@ export class ListSolicitudesComponent implements OnInit {
       "details":this.soliReasignar
     }
     const dialogRef = this.dialog.open(ReasignarVariosComponent, {
-      width: '25%',
+      width: '35%',
       disableClose: true,
       data: {enviar: data, asesoresActuales: this.antiguos}
     });
