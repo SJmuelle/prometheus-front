@@ -30,6 +30,7 @@ export class ListSolicitudesComponent implements OnInit {
   maxFecha: Date;
   filtrarTabla:string='';
   chequeada: boolean = false;
+  userVacio: string = "";
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -47,14 +48,7 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   updateAllComplete() {
-    this.chequeada = this.solicitudes != null && this.solicitudes.every(t => t.chequeado);
-  }
-
-  someComplete(): boolean {
-    if (this.solicitudes == null) {
-      return false;
-    }
-    return this.solicitudes.filter(t => t.chequeado).length > 0 && !this.chequeada;
+    this.chequeada = this.solicitudes != null && this.solicitudes.every(t => (t.chequeado));
   }
 
   setAll(completed: boolean) {
@@ -63,6 +57,10 @@ export class ListSolicitudesComponent implements OnInit {
       return;
     }
     this.solicitudes.forEach(t => (t.chequeado = completed));
+    this.soliReasignar = [];
+    this.soliAsignar = [];
+    this.antiguos = [];
+
   }
 
   agregarSoli(item, event){
@@ -164,12 +162,16 @@ export class ListSolicitudesComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AsignarComponent, {
       width: '20%',
+      disableClose: true,
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.setAll(false)
-      this.soliReasignar = [];
-      this.soliAsignar = [];
+      if (result==true) {
+        this.consultarSolicitudes();
+        this.soliReasignar = [];
+        this.soliAsignar = [];
+        this.antiguos = [];
+      }
     });
   }
 
@@ -183,9 +185,16 @@ export class ListSolicitudesComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AsignarComponent, {
       width: '20%',
+      disableClose: true,
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
+      if (result==true) {
+        this.consultarSolicitudes();
+        this.soliReasignar = [];
+        this.soliAsignar = [];
+        this.antiguos = [];
+      }
     });
   }
 
@@ -197,12 +206,16 @@ export class ListSolicitudesComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ReasignarVariosComponent, {
       width: '25%',
+      disableClose: true,
       data: {enviar: data, asesoresActuales: this.antiguos}
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.setAll(false)
-      this.soliReasignar = [];
-      this.soliAsignar = [];
+      if (result==true) {
+        this.consultarSolicitudes();
+        this.soliReasignar = [];
+        this.soliAsignar = [];
+        this.antiguos = [];
+      }
     });
   }
 
@@ -216,9 +229,17 @@ export class ListSolicitudesComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(ReasignarComponent, {
       width: '20%',
+      disableClose: true,
       data: {enviar: data, asesorActual: item.asesor}
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result==true) {
+        this.consultarSolicitudes();
+        this.soliReasignar = [];
+        this.soliAsignar = [];
+        this.antiguos = [];
+      }
+    });
   }
 
 }

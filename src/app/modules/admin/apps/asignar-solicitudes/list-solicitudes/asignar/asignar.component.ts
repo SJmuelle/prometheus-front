@@ -29,7 +29,6 @@ export class AsignarComponent implements OnInit {
 
   guardarAnalista(){
     this.data.asesorNuevo=this.asignarForm.value.analista;
-    console.log(this.data)
     this.asigService.postAsesores(this.data).subscribe((res: any) => {
       if (res) {
         if (this.data.details.length > 1) {
@@ -45,7 +44,7 @@ export class AsignarComponent implements OnInit {
               'success'
             )
         }
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       } else {
         if (this.data.details.length > 1) {
           Swal.fire(
@@ -62,6 +61,29 @@ export class AsignarComponent implements OnInit {
         }
       }
     })
+  }
+
+  cerrar(){
+    if (this.data.details.length > 1) {
+      Swal.fire({
+        title: '¿Borrar las solicitudes seleccionadas?',
+        icon: 'question',
+        html:
+          'Si presiona <b>Si</b> debera seleccionar nuevamente las solicitudes ',
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: 'No',
+        allowOutsideClick: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.dialogRef.close(true);
+        } else if (result.isDenied) {
+          this.dialogRef.close(false);
+        }
+      })
+    } else {
+      this.dialogRef.close(true);
+    }
   }
 
   consultarAsesores(){

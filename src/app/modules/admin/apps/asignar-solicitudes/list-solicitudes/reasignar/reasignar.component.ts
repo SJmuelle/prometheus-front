@@ -25,9 +25,7 @@ export class ReasignarComponent implements OnInit {
 
     ngOnInit() {
       this.consultarAsesores();
-      console.log(this.data)
       this.asesorActual = this.data.asesoresActuales
-      console.log(this.asesorActual)
     }
 
     guardarAnalista(){
@@ -48,7 +46,7 @@ export class ReasignarComponent implements OnInit {
                 'success'
               )
           }
-          this.dialogRef.close();
+          this.dialogRef.close(true);
         } else {
           if (this.data.enviar.details.length > 1) {
             Swal.fire(

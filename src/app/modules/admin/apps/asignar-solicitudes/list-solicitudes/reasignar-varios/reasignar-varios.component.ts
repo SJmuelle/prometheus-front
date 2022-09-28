@@ -26,14 +26,12 @@ export class ReasignarVariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarAsesores();
-    console.log(this.data.enviar)
     this.asesorActual = this.data.asesoresActuales
     console.log(this.asesorActual)
   }
 
   guardarAnalista(){
     this.data.enviar.asesorNuevo=this.reasignarForm.value.analista;
-    console.log(this.data.enviar)
     this.asigService.updateAsesores(this.data.enviar).subscribe((res: any) => {
       if (res) {
         if (this.data.enviar.details.length > 1) {
@@ -49,7 +47,7 @@ export class ReasignarVariosComponent implements OnInit {
               'success'
             )
         }
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       } else {
         if (this.data.enviar.details.length > 1) {
           Swal.fire(
@@ -64,6 +62,25 @@ export class ReasignarVariosComponent implements OnInit {
             'error'
           )
         }
+      }
+    })
+  }
+
+  cerrar(){
+    Swal.fire({
+      title: '¿Borrar las solicitudes seleccionadas?',
+      icon: 'question',
+      html:
+        'Si presiona <b>Si</b> debera seleccionar nuevamente las solicitudes ',
+      showDenyButton: true,
+      confirmButtonText: 'Si',
+      denyButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.dialogRef.close(true);
+      } else if (result.isDenied) {
+        this.dialogRef.close(false);
       }
     })
   }

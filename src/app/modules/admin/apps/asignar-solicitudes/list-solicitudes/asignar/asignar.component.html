@@ -14,5 +14,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button [disabled]="asignarForm.invalid" class="text-white" (click)="guardarAnalista()">Guardar</button>
-  <button mat-button mat-dialog-close class="text-white bg-gray-500">Cancelar</button>
+  <button mat-button class="text-white bg-gray-500" (click)="cerrar()">Cancelar</button>
 </mat-dialog-actions>

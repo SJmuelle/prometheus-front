@@ -115,13 +115,23 @@
                         </div>
                     </div>
                 </button>
-                <button mat-raised-button class="text-white w-30 permitir bloquear" [disabled]="soliReasignar.length<1" (click)="reasignarVarias()">
+                <button mat-raised-button class="text-white w-32 permitir bloquear" [disabled]="soliReasignar.length<1" (click)="reasignarVarias()">
                     <div class="flex flex-row w-full justify-between gap-2">
                         <div>
                             <mat-icon svgIcon="heroicons_outline:refresh"></mat-icon>
                         </div>
                         <div class="mt-1.5">
                             <span>Reasignar</span>
+                        </div>
+                    </div>
+                </button>
+                <button mat-raised-button class="text-white w-32 permitir bloquear" (click)="setAll(false)">
+                    <div class="flex flex-row w-full justify-between gap-2">
+                        <div>
+                            <mat-icon svgIcon="heroicons_outline:backspace"></mat-icon>
+                        </div>
+                        <div class="mt-1.5">
+                            <span>Desmarcar</span>
                         </div>
                     </div>
                 </button>
