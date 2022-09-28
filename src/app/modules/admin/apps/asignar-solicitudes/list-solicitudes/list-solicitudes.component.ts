@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarComponent } from './asignar/asignar.component';
 import { ReasignarComponent } from './reasignar/reasignar.component';
@@ -26,7 +26,10 @@ export class ListSolicitudesComponent implements OnInit {
   soliAsignar: any[] = [];
   soliReasignar: any[] = [];
   disBtn: boolean;
-  checkeados: any[] = [];
+  fechActual: any = new Date();
+  maxFecha: Date;
+  filtrarTabla:string='';
+  chequeada: boolean = false;
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -40,6 +43,26 @@ export class ListSolicitudesComponent implements OnInit {
   ngOnInit(): void {
     this.consultarAsesores();
     this.consultarSolicitudes();
+    this.maxFecha = new Date(this.fechActual);
+  }
+
+  updateAllComplete() {
+    this.chequeada = this.solicitudes != null && this.solicitudes.every(t => t.chequeado);
+  }
+
+  someComplete(): boolean {
+    if (this.solicitudes == null) {
+      return false;
+    }
+    return this.solicitudes.filter(t => t.chequeado).length > 0 && !this.chequeada;
+  }
+
+  setAll(completed: boolean) {
+    this.chequeada = completed;
+    if (this.solicitudes == null) {
+      return;
+    }
+    this.solicitudes.forEach(t => (t.chequeado = completed));
   }
 
   agregarSoli(item, event){
@@ -78,7 +101,7 @@ export class ListSolicitudesComponent implements OnInit {
       "entidad":"ASIGNACION_NEGOSIO",
       "analista":"",
       "fechaInicial":"2021-01-01",
-      "fechaFinal":"2022-09-21"
+      "fechaFinal":moment(this.fechActual).format("YYYY-MM-DD")
     }
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
@@ -144,6 +167,9 @@ export class ListSolicitudesComponent implements OnInit {
       data: data
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.setAll(false)
+      this.soliReasignar = [];
+      this.soliAsignar = [];
     });
   }
 
@@ -173,7 +199,11 @@ export class ListSolicitudesComponent implements OnInit {
       width: '25%',
       data: {enviar: data, asesoresActuales: this.antiguos}
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+      this.setAll(false)
+      this.soliReasignar = [];
+      this.soliAsignar = [];
+    });
   }
 
   reasignarUna(item) {

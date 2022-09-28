@@ -24,20 +24,32 @@
     max-height: 34rem;
 }
 
-button:enabled {
+// button:enabled {
+//     background-color: #4ABBEC;
+// }
+
+// button:disabled {
+//     background-color: white !important;
+//     border-width: 1px !important;
+// }
+
+.permitir:enabled {
     background-color: #4ABBEC;
 }
 
-button:disabled {
-    background: #cecfcf;
+.bloquear:disabled {
+    background-color: white !important;
+    border: 1px solid rgb(212, 212, 212) !important;
 }
+
 
 .per-asig:enabled {
     background-color: #bbf7d0
 }
 
 .blo-asig:disabled{
-    background: #cecfcf;
+    background-color: white !important;
+    border: 1px solid rgb(212, 212, 212) !important;
 }
 
 .per-reasig:enabled {
@@ -45,5 +57,6 @@ button:disabled {
 }
 
 .blo-reasig:disabled{
-    background: #cecfcf;
+    background-color: white !important;
+    border: 1px solid rgb(212, 212, 212) !important;
 }
