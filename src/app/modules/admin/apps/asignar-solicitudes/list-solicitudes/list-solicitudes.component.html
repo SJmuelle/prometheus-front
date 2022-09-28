@@ -38,8 +38,7 @@
                         <mat-form-field appearance="fill" class="w-full ">
                             <mat-label>Unidad de negocio</mat-label>
                             <mat-select formControlName="unidad">
-                              <mat-option value="22">Libranza</mat-option>
-                              <mat-option value="Capacidad de pago">Capacidad de pago</mat-option>
+                              <mat-option *ngFor="let item of unidades" [value]="item.id">{{item.descripcion}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="buscarForm.get('unidad').hasError('required')">
                                 Se debe elegir una unidad de negocio.

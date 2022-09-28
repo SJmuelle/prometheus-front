@@ -23,6 +23,13 @@ export class AsignarSolicitudesService {
    public getAsesores(): Observable<any> {
     return this._http.get(this._appSettings.asignacion.url.baseAsesor);
   }
+
+  /**
+   * @description: Obtiene listado de unidades de negocio
+   */
+   public getUnidades(): Observable<any> {
+    return this._http.get(this._appSettings.asignacion.url.baseUnidades);
+  }
  
   /**
    * @description: Agrega asesores a las solicitudes

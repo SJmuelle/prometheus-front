@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarComponent } from './asignar/asignar.component';
 import { ReasignarComponent } from './reasignar/reasignar.component';
@@ -17,6 +17,7 @@ export class ListSolicitudesComponent implements OnInit {
   asignados: any[] = [];
   solicitudes: any[] = [];
   asesores: any[] = [];
+  unidades: any[] = [];
   antiguos: any[] = [];
   buscarForm: FormGroup;
   formatoFechaInicial:any;
@@ -44,6 +45,7 @@ export class ListSolicitudesComponent implements OnInit {
   ngOnInit(): void {
     this.consultarAsesores();
     this.consultarSolicitudes();
+    this.consultarUnidades();
     this.maxFecha = new Date(this.fechActual);
   }
 
@@ -120,6 +122,17 @@ export class ListSolicitudesComponent implements OnInit {
         this.asesores = res.data;
       }else{
         this.asesores = [];
+      }
+    })
+  }
+
+  consultarUnidades(){
+    this.asigService.getUnidades().subscribe((res: any) => {
+      if (res) {
+        this.unidades = res.data;
+        console.log(this.unidades)
+      }else{
+        this.unidades = [];
       }
     })
   }

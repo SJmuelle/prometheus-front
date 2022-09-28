@@ -42,6 +42,7 @@ export class AppSettingsService {
             baseAsesor: EndPoints.uriAsig('/generic/qry/tk/listado-analista'),
             guardarAsesor: EndPoints.uriAsig('/generic/tk/guardar-analista'),
             actualizarAsesor: EndPoints.uriAsig('/generic/tk/actualizar-analista'),
+            baseUnidades: EndPoints.uriAsig('/generic/qry/tk/listado-tipos-negocios'),
         }
     };
     /**
