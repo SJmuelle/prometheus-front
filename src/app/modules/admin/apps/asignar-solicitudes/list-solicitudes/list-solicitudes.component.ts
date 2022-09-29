@@ -32,8 +32,6 @@ export class ListSolicitudesComponent implements OnInit {
   maxFecha: Date;
   filtrarTabla:string='';
   chequeada: boolean = false;
-  userVacio: string = "";
-  predeterminado = "";
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -55,7 +53,7 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   limpiar(){
-    setTimeout(() => this.formGroupDirective.resetForm(), 200);
+    this.formGroupDirective.resetForm()
     this.consultarSolicitudes();
   }
 
@@ -72,7 +70,6 @@ export class ListSolicitudesComponent implements OnInit {
     this.soliReasignar = [];
     this.soliAsignar = [];
     this.antiguos = [];
-
   }
 
   agregarSoli(item, event){
