@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarComponent } from './asignar/asignar.component';
+import { AsignarVariosComponent } from './asignar-varios/asignar-varios.component';
 import { ReasignarComponent } from './reasignar/reasignar.component';
 import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.component';
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -32,6 +33,7 @@ export class ListSolicitudesComponent implements OnInit {
   filtrarTabla:string='';
   chequeada: boolean = false;
   userVacio: string = "";
+  predeterminado = "";
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -39,14 +41,22 @@ export class ListSolicitudesComponent implements OnInit {
       fechaInicial: ['', [Validators.required]],
       fechaFinal: ['', [Validators.required]],
       unidad: ['', [Validators.required]],
+      agenda: ['', [Validators.required]],
     });
   }
+
+  @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   ngOnInit(): void {
     this.consultarAsesores();
     this.consultarSolicitudes();
     this.consultarUnidades();
     this.maxFecha = new Date(this.fechActual);
+  }
+
+  limpiar(){
+    setTimeout(() => this.formGroupDirective.resetForm(), 200);
+    this.consultarSolicitudes();
   }
 
   updateAllComplete() {
@@ -101,14 +111,13 @@ export class ListSolicitudesComponent implements OnInit {
       "entidad":"ASIGNACION_NEGOSIO",
       "analista":"",
       "fechaInicial":"2021-01-01",
-      "fechaFinal":moment(this.fechActual).format("YYYY-MM-DD")
+      "fechaFinal":moment(this.fechActual).format("YYYY-MM-DD"),
+      "agenda":""
     }
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
-        console.log(this.solicitudes)
         this.asignados = res.data.solicitudAsignada;
-        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -130,7 +139,6 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getUnidades().subscribe((res: any) => {
       if (res) {
         this.unidades = res.data;
-        console.log(this.unidades)
       }else{
         this.unidades = [];
       }
@@ -145,13 +153,13 @@ export class ListSolicitudesComponent implements OnInit {
       "entidad":"ASIGNACION_NEGOSIO",
       "analista":this.buscarForm.value.analista,
       "fechaInicial":this.formatoFechaInicial,
-      "fechaFinal":this.formatoFechaFinal
+      "fechaFinal":this.formatoFechaFinal,
+      "agenda":this.buscarForm.value.agenda
     }
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
-        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -173,7 +181,7 @@ export class ListSolicitudesComponent implements OnInit {
       "asesorNuevo":"",
       "details":this.soliAsignar
     }
-    const dialogRef = this.dialog.open(AsignarComponent, {
+    const dialogRef = this.dialog.open(AsignarVariosComponent, {
       width: '20%',
       disableClose: true,
       data: data

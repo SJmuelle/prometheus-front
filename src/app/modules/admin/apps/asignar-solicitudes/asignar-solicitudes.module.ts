@@ -25,6 +25,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asignar-varios.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ListSolicitudesComponent,
     AsignarComponent,
     ReasignarComponent,
-    ReasignarVariosComponent
+    ReasignarVariosComponent,
+    AsignarVariosComponent
   ],
   imports: [
     CommonModule,

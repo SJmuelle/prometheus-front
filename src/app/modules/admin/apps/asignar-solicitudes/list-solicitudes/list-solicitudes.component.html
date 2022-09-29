@@ -41,7 +41,18 @@
                               <mat-option *ngFor="let item of unidades" [value]="item.id">{{item.descripcion}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="buscarForm.get('unidad').hasError('required')">
-                                Se debe elegir una unidad de negocio.
+                                Se debe seleccionar una unidad de negocio.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-56">
+                        <mat-form-field appearance="fill" class="w-full ">
+                            <mat-label>Agenda</mat-label>
+                            <mat-select formControlName="agenda">
+                              <mat-option *ngFor="let item of asignados" [value]="item.agenda">{{item.nombreAgenda}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="buscarForm.get('agenda').hasError('required')">
+                                Se debe seleccionar una agenda.
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -53,6 +64,18 @@
                                 </div>
                                 <div class="mt-1.5">
                                     <span>Buscar</span>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="mt-4">
+                        <button mat-raised-button class="text-white w-36 permitir bloquear" [disabled]="buscarForm.invalid" (click)="limpiar()">
+                            <div class="flex flex-row w-full justify-between gap-2">
+                                <div>
+                                    <mat-icon svgIcon="cleaning_services"></mat-icon>
+                                </div>
+                                <div class="mt-1.5">
+                                    <span>Limpiar filtro</span>
                                 </div>
                             </div>
                         </button>
@@ -124,7 +147,7 @@
                         </div>
                     </div>
                 </button>
-                <button mat-raised-button class="text-white lg:w-32 xl:w-32 permitir bloquear" (click)="setAll(false)">
+                <button mat-raised-button class="text-white lg:w-32 xl:w-32 permitir bloquear" [disabled]="soliReasignar.length<1 || soliAsignar.length<1" (click)="setAll(false)">
                     <div class="flex flex-row w-full justify-between gap-2">
                         <div>
                             <mat-icon svgIcon="heroicons_outline:backspace"></mat-icon>
@@ -166,10 +189,10 @@
                             </td>
                             <td class="px-2 pb-0 lg:pt-2 xl:pt-4">
                                 <div class="flex flex-column">
-                                    <small class="text-accent-600 text-xs">Valor del crédito:</small>
+                                    <small class="text-accent-600 text-xs">Agenda:</small>
                                     <span class="text-md text-black font-medium">
-                                        <mat-icon class="icon-size-3" svgIcon="attach_money"></mat-icon>
-                                        {{item.monto | number}}
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_outline:clipboard-list"></mat-icon>
+                                        {{item.nombreAgenda}}
                                     </span>
                                 </div>
                             </td>
@@ -247,6 +270,15 @@
                                     <span class="text-md text-black font-medium">
                                         <mat-icon class="icon-size-3" svgIcon="heroicons_outline:user-circle"></mat-icon> 
                                         {{item.nombreCompleto}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 lg:pb-2 xl:pb-4 pt-1">
+                                <div class="flex flex-column">
+                                    <small class="text-accent-600 text-xs">Valor del crédito:</small>
+                                    <span class="text-md text-black font-medium">
+                                        <mat-icon class="icon-size-3" svgIcon="attach_money"></mat-icon>
+                                        {{item.monto | number}}
                                     </span>
                                 </div>
                             </td>
