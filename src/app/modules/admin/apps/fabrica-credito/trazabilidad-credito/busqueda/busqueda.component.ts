@@ -22,6 +22,7 @@ export class BusquedaComponent implements OnInit {
     ngOnInit(): void {
         this.consulta('');
     }
+
     consulta(dato) {
         let data = {
             busqueda: dato
