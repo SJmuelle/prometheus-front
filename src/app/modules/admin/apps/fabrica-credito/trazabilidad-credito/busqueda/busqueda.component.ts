@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilityService } from 'app/resources/services/utility.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
@@ -13,14 +14,70 @@ export class BusquedaComponent implements OnInit {
     listadoCount = 0;
     /* eslint-disable */
     listados = [];
+    seleccionado: boolean = false;
+    tarjetaTitular: boolean;
+    tarjetaNegocios: boolean;
+    tarjetaPagaduria: boolean;
 
+    titularForm: FormGroup;
+    negociosForm: FormGroup;
+    pagaduriaForm: FormGroup;
 
-    constructor(private _utility: UtilityService,
-        private router: Router,
-    ) { }
+    constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
+        this.titularForm = this.fb.group({
+            documento: [''],
+            nombre: ['']
+        })
+        this.negociosForm = this.fb.group({
+            estado: [''],
+            fechaInicial: [''],
+            fechaFinal: [''],
+            codigo:[''],
+            solicitud:['']
+        })
+        this.pagaduriaForm = this.fb.group({
+            codigo: ['']
+        })
+    }
 
     ngOnInit(): void {
         this.consulta('');
+    }
+
+    abrirTitular(){
+        if ( this.tarjetaTitular) {
+            this.tarjetaTitular=false;
+            this.seleccionado=false;
+        } else {
+            this.tarjetaTitular=true;
+            this.seleccionado=true;
+        }
+        this.tarjetaNegocios=false;
+        this.tarjetaPagaduria=false;
+    }
+
+    abrirNegocios(){
+        if ( this.tarjetaNegocios) {
+            this.tarjetaNegocios=false;
+            this.seleccionado=false;
+        } else {
+            this.tarjetaNegocios=true;
+            this.seleccionado=true;
+        }
+        this.tarjetaTitular=false;
+        this.tarjetaPagaduria=false;
+    }
+
+    abrirPagaduria(){
+        if ( this.tarjetaPagaduria) {
+            this.tarjetaPagaduria=false;
+            this.seleccionado=false;
+        } else {
+            this.tarjetaPagaduria=true;
+            this.seleccionado=true;
+        }
+        this.tarjetaTitular=false;
+        this.tarjetaNegocios=false;
     }
 
     consulta(dato) {

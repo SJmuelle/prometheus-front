@@ -2,3 +2,38 @@
     margin-top: 1rem;
     margin-left: 47px;
 }
+
+.marginTarjetaNegocios {
+    margin-left: 16%;
+}
+
+.marginTarjetaPagaduria {
+    margin-left: 33%;
+}
+
+.anchoTitular {
+    width: 25%;
+}
+
+.anchoNegocios {
+    width: 25%;
+}
+
+.anchoPagaduria {
+    width: 25%;
+}
+
+.fondo {
+    content: '';
+    z-index: 99;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(107, 106, 106, 0.397)
+}
+
+.z-index {
+    z-index: 999;
+}

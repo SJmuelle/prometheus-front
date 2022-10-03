@@ -43,23 +43,131 @@
                             </mat-form-field>
                         </div>
                     </div> -->
-                   <!--Titular, negocios, pagaduria -->
                     <div class="flex flex-row w-full justify-center">
-                        <div class="flex flex-row w-1/2 h-15 justify-between bg-white rounded-full border">
-                            <div class="flex flex-col h-full justify-center bg-hover rounded-full w-1/3">
-                                <div class="flex flex-row w-full justify-center">
-                                    <p class="m-0">Titular</p>
+                        <div class="flex flex-col w-4/5 h-15">
+                            <div class="flex flex-row h-full justify-between rounded-full border" [ngClass]="{'bg-hover':seleccionado}">
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer" 
+                                (click)="abrirTitular()" [ngClass]="{'bg-white shadow':tarjetaTitular}">
+                                    <div class="flex flex-row w-full justify-center">
+                                        <div class="flex flex-col">
+                                            <div class="text-lg font-semibold leading-tight text-center capitalize">
+                                                Titular
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer" 
+                                (click)="abrirNegocios()" [ngClass]="{'bg-white shadow':tarjetaNegocios}">
+                                    <div class="flex flex-row w-full justify-center">
+                                        <div class="flex flex-col">
+                                            <div class="text-lg font-semibold leading-tight text-center capitalize">
+                                                Negocios
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer" 
+                                (click)="abrirPagaduria()" [ngClass]="{'bg-white shadow':tarjetaPagaduria}">
+                                    <div class="flex flex-row justify-center">
+                                        <div class="flex flex-col">
+                                            <div class="text-lg font-semibold leading-tight text-center capitalize">
+                                                Pagaduria
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer">
+                                    <div class="flex flex-row justify-center gap-2">
+                                        <div>
+                                            <button mat-raised-button color="primary"><mat-icon svgIcon="heroicons_outline:search"></mat-icon>Buscar</button>
+                                        </div>
+                                        <div>
+                                            <button mat-raised-button color="primary">
+                                                <div class="flex flex-row gap-2">
+                                                    <mat-icon class="mt-2.5" svgIcon="clear_all"></mat-icon>
+                                                    <p class="mt-3">Eliminar filtro</p>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col h-full justify-center bg-hover rounded-full w-1/3">
-                                <div class="flex flex-row w-full justify-center">
-                                    <p class="m-0">Negocios</p>
-                                </div>
+                            <div class="absolute z-index bg-card anchoTitular shadow rounded-xl mt-20 border" *ngIf="tarjetaTitular">
+                                <form [formGroup]="titularForm">
+                                    <div class="mt-4 mb-3 flex flex-row justify-center w-full">
+                                        <div class="flex flex-col w-3/4">
+                                            <div class="w-full">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>N° de identificacion</mat-label>
+                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento">
+                                                    <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:identification"></mat-icon>
+                                                  </mat-form-field>
+                                            </div>
+                                            <div class="w-full mt-2">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Nombre del cliente</mat-label>
+                                                    <input matInput placeholder="Nombre" formControlName="nombre">
+                                                    <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:user"></mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <div class="flex flex-col h-full justify-center bg-hover rounded-full w-1/3">
-                                <div class="flex flex-row w-full justify-center">
-                                    <p class="m-0">Pagaduria</p>
-                                </div>
+                            <div class="border absolute z-index bg-card marginTarjetaNegocios anchoNegocios shadow rounded-xl mt-20" *ngIf="tarjetaNegocios">
+                                <form [formGroup]="negociosForm">
+                                    <div class="mt-4 mb-3 flex flex-row justify-center w-full">
+                                        <div class="flex flex-col w-3/4">
+                                            <div class="w-full">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Estado</mat-label>
+                                                    <mat-select formControlName="estado">
+                                                      <mat-option>Activo</mat-option>
+                                                      <mat-option>Inactivo</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="w-full mt-2">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Fecha de aprobacion</mat-label>
+                                                    <mat-date-range-input [rangePicker]="picker">
+                                                        <input matStartDate placeholder="Fecha inicial" formControlName="fechaInicial">
+                                                        <input matEndDate placeholder="Fecha final" formControlName="fechaFinal">
+                                                    </mat-date-range-input>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    <mat-date-range-picker #picker></mat-date-range-picker>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="w-full mt-2">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Codigo</mat-label>
+                                                    <input matInput placeholder="Codigo" formControlName="codigo">
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="w-full mt-2">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>N° Solicitud</mat-label>
+                                                    <input matInput placeholder="N° Solicitud" formControlName="solicitud">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="border absolute z-index bg-card anchoPagaduria shadow rounded-xl mt-20 marginTarjetaPagaduria" *ngIf="tarjetaPagaduria">
+                                <form [formGroup]="pagaduriaForm">
+                                    <div class="mt-4 mb-3 flex flex-row justify-center w-full">
+                                        <div class="flex flex-col w-3/4">
+                                            <div class="w-full">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Pagaduria</mat-label>
+                                                    <input matInput placeholder="Cedula o Nit" formControlName="codigo">
+                                                    <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:office-building"></mat-icon>
+                                                  </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
