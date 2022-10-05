@@ -36,11 +36,8 @@
         "apexcharts": "3.26.2",
         "bootstrap": "^5.1.0",
         "crypto-js": "3.3.0",
-<<<<<<< HEAD
         "file-saver": "^2.0.5",
-=======
         "doc-viewer-angular": "^1.0.8",
->>>>>>> bdaaea09dd4f8944948e301ed50e3419f1c5aa21
         "highlight.js": "10.7.2",
         "jquery": "^3.6.0",
         "lodash-es": "4.17.21",
