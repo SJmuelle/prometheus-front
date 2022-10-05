@@ -19,4 +19,11 @@ export class EndPoints {
      static uriPaga(url: string): string {
         return environment.urlPagaduria + url;
     }
+
+    /**
+     * @description: URL pagaduria
+     */
+     static uriTranspor(url: string): string {
+        return environment.urlTransportadora + url;
+    }
 }

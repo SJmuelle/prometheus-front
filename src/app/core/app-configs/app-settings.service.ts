@@ -33,6 +33,12 @@ export class AppSettingsService {
             baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/documentos-negocio')
         }
     };
+
+    public transportadora = {
+        url: {
+            base: EndPoints.uriTranspor('api/negociacion-pronto-pago')
+        }
+    };
     /**
      * @description: End-point agenda de referenciacion
      */

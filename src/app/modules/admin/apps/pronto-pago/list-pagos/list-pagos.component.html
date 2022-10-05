@@ -1,0 +1,110 @@
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
+    <div class="grid grid-cols-12 w-100">
+        <h2 class="text-gray-900 col-span-12 mb-4">Transportadora</h2>
+    </div>
+
+    <div class="mt-2 w-full overflow-y-auto">
+        <table class="p-0">
+            <tbody class="bg-white">
+                <ng-container *ngFor="let item of listado">
+                    <tr class="text-gray-700 border-t border-b">
+                        <td rowspan="2" class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Detalles">
+                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                        <td rowspan="2" class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Aceptar" class="bg-green-200">
+                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                        <td rowspan="2" class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Rechazar" class="bg-red-200">
+                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-2 pb-1">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Identificacion del propietario:</small>
+                                <div class="flex flex-row gap-2">
+                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:identification"></mat-icon>
+                                    <span class="text-md text-black font-medium">{{item.identificacion}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-2 pb-1">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Nombre del propietario:</small>
+                                <div class="flex flex-row gap-2">
+                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:user"></mat-icon>
+                                    <span class="text-md text-black font-medium">{{item.nombrePropietario}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-2 pb-1">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Telefono del propietario:</small>
+                                <div class="flex flex-row gap-2">
+                                    <mat-icon class="icon-size-3 mt-1" svgIcon="phone_android"></mat-icon>
+                                    <span class="text-md text-black font-medium">{{item.celPropietario}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-2 pb-1">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Email del propietario:</small>
+                                <div class="flex flex-row gap-2">
+                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:mail"></mat-icon>
+                                    <span class="text-md text-black font-medium">{{item.emailPropietario}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="text-gray-700 border-t border-b">
+                        <td class="px-2 pt-1 pb-2">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Nombre de la transportadora:</small>
+                                <div class="flex flex-row gap-2">
+                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:truck"></mat-icon>
+                                    <span class="text-md text-black font-medium">{{item.transportadora}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-1 pb-2">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Codigo pronto pago:</small>
+                                <div class="flex flex-row gap-2">
+                                    <span class="text-md text-black font-medium">{{item.prontoPago}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-1 pb-2">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Valor pronto pago:</small>
+                                <div class="flex flex-row gap-2">
+                                    <span class="text-md text-black font-medium">$ {{item.valorProntoPago | number}}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-2 pt-1 pb-2">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Fecha pronto pago:</small>
+                                <div class="flex flex-row gap-2">
+                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:calendar"></mat-icon>
+                                    <span class="text-md text-black font-medium">{{cambiarFecha(item.fechaProntoPago)}}</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+
