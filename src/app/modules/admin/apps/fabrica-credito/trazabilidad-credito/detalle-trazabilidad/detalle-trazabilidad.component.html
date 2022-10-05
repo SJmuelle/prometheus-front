@@ -4,7 +4,28 @@
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-6 px-6 md:px-8 border-b">
                 <div class="grow h-14">
                     <h3 class="mb-2 text-gray-900">Detalle de trazabilidad</h3>
-                    <span class="font-semibold text-gray-500">Número solicitud: {{numeroSolicitud}}</span>
+                    <div class="flex flex-row w-full gap-5">
+                        <div class="flex flex-row gap-2">
+                            <span class="text-gray-500">Número solicitud:</span>
+                            <span class="font-semibold text-gray-500">{{numeroSolicitud}}</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="flex flex-row gap-2 mb-2">
+                                <span class="text-gray-500">Estado:</span>
+                                <div class="flex flex-row w-full gap-2">
+                                    <div class="px-2 rounded" [ngStyle]="{'background-color': color}">
+                                        <span class="font-semibold text-white uppercase tracking-wider">{{estado}}</span>
+                                    </div>
+                                    <div>
+                                        -
+                                    </div>
+                                    <div class="px-2 rounded">
+                                        <span class="font-semibold text-gray-500">{{subestado}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <app-fabrica-opciones></app-fabrica-opciones>
             </div>
@@ -38,17 +59,17 @@
                                     <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
                                 </div>
                                 <div class="flex flex-col justify-center ml-4 leading-none">
-                                    <div class="flex flex-row w-full gap-2" *ngIf="campo.descripcionUno!='' && campo.valor!=''">
+                                    <div class="flex flex-row w-full gap-2">
                                         <div class="text-sm text-secondary">{{campo.descripcionUno}}</div>
                                         <div class="text-sm font-medium capitalize">{{campo.valor}}</div>
                                     </div>
-                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionDos!='' && campo.valor2!=''">
+                                    <div class="flex flex-row w-full mt-2 gap-2">
                                         <div class="text-sm text-secondary">{{campo.descripcionDos}}</div>
                                         <div class="text-sm font-medium capitalize">{{campo.valor2}}</div>
                                     </div>
-                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionTres!='' && campo.valor3!=''">
+                                    <div class="flex flex-row w-full mt-2 gap-2">
                                         <div class="text-sm text-secondary">{{campo.descripcionTres}}</div>
-                                        <div class="text-sm font-medium capitalize">{{campo.valor3}}</div>
+                                        <div class="text-sm font-medium lowercase">{{campo.valor3}}</div>
                                     </div>
                                 </div>
                             </div>

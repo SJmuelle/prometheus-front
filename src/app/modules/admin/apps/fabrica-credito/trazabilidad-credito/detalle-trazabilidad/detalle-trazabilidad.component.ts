@@ -16,6 +16,9 @@ export class DetalleTrazabilidadComponent implements OnInit {
   public dataResumenTrazabilidad: any = [];
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public estado:string = '';
+  public color:string = '';
+  public subestado:string = '';
   dataPolicitasAdmin: any;
   datos2: any[];
   datosGeneral:any[];
@@ -50,6 +53,10 @@ export class DetalleTrazabilidadComponent implements OnInit {
       //  debugger
         this.dataResumenTrazabilidad = res.data.resumenTrazabilidad;
         this.getDatos(res.data)
+        console.log(res.data)
+        this.estado = res.data.resumenCredito.estado;
+        this.color = res.data.resumenCredito.colorEsquema;
+        this.subestado = res.data.resumenCredito.subEstado;
       } else {
         this.dataResumenTrazabilidad = [];
         this.datosGeneral=[];
@@ -98,8 +105,8 @@ export class DetalleTrazabilidadComponent implements OnInit {
             valor: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion,
             descripcionDos: "Nombre:",
             valor2: data.resumenCredito.nombreCompleto.toLowerCase(),
-            descripcionTres: "",
-            valor3:""
+            descripcionTres: "Contacto:",
+            valor3: data.resumenCredito.celular + " - " + data.resumenCredito.email
           },
           {
             icono: "feather:dollar-sign",
@@ -120,9 +127,7 @@ export class DetalleTrazabilidadComponent implements OnInit {
             descripcionUno: "Renovación:",
             valor: data.resumenCredito.renovacion,
             descripcionDos: "Segmento:",
-            valor2: data.resumenCredito.segmento,
-            descripcionTres: "",
-            valor3:""
+            valor2: data.resumenCredito.segmento
           },
           {
             icono: "heroicons_outline:office-building",
@@ -131,9 +136,7 @@ export class DetalleTrazabilidadComponent implements OnInit {
             descripcionUno: "Agenda:",
             valor: data.resumenGeneral.agenda,
             descripcionDos: "Asesor:",
-            valor2: data.resumenGeneral.asesorComercial,
-            descripcionTres: "",
-            valor3:""
+            valor2: data.resumenGeneral.asesorComercial
           },
           {
             icono: "mat_outline:location_on",
@@ -141,10 +144,8 @@ export class DetalleTrazabilidadComponent implements OnInit {
             label: "Ubicación: ",
             descripcionUno: "Ubicación:",
             valor: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase(),
-            descripcionDos: "",
-            valor2: "",
-            descripcionTres: "",
-            valor3:""
+            descripcionDos: "Dirección:",
+            valor2: data.resumenCredito.direccionVivienda
           }
         ]
       },
