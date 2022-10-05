@@ -1,78 +1,120 @@
-<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full" >
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full">
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
         <div class="flex flex-col">
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end">
-                <button mat-icon-button
-                        matTooltip="Minimizar"
-                        (click)="onMinimiza()"
-                >
+                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza();">
                     <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
                 </button>
-                <button mat-icon-button
-                        matTooltip="Cerrar"
-                        (click)="onCerrar()"
-                >
+                <button mat-icon-button matTooltip="Cerrar" (click)="onCerrar()">
                     <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
                 </button>
             </div>
-            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-start py-6 px-6 md:px-8 border-b">
-                <h3 class="mb-2 text-gray-900">Comentarios</h3>
-            </div>
-        </div>
-        <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-6 border-b h-full">
-            <button mat-raised-button
-                    matTooltip="Nuevo comentario"
-                    [color]="'primary'"
-                    (click)="onComentario()"
-            >
-                Nuevo comentario
-            </button>
         </div>
     </div>
-    <div class="grid-cols-12">
-        <div class="col-span-12" cdk-scrollable>
-            <table class="shadow p-0">
-                <thead class="bg-accent-50" >
-                <tr
-                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3"></th>
-                    <th class="px-4 py-3">N° de solicitud</th>
-                    <th class="px-4 py-3">Comentario</th>
-                    <th class="px-4 py-3">Fecha de creación</th>
-                    <th class="px-4 py-3">Descripción Estado</th>
-                    <th class="px-4 py-3">Descripción SubEstado</th>
-                    <th class="px-4 py-3">Usuario</th>
-                </tr>
-                </thead>
-                <tbody class="bg-white">
-                <ng-container *ngIf="comentarios$ | async as items;">
-                    <ng-container *ngFor="let item of items.data | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
-                        <tr class="text-gray-700" >
-                            <td class="px-2 text-sm border">
-                                <button mat-icon-button
-                                        matTooltip="Ver comentario"
-                                        (click)="onVerComentario(item)"
-                                >
-                                    <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
-                                </button>
-                            </td>
-                            <td class="px-2 text-sm border">{{ item.numeroSolicitud }}</td>
-                            <td class="px-2 text-sm border">{{ item.comentario | slice: 0: 10}}</td>
-                            <td class="px-2 text-sm border">{{ item.fechaCreacion }}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionEstado }}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionSubEstado }}</td>
-                            <td class="px-2 text-sm border">{{ item.usuarioCreacion }}</td>
-                        </tr>
-                    </ng-container>
+    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full">
+        <!-- Main -->
+        <div class="flex flex-col flex-auto px-0 py-2 sm:pb-20">
+            <!-- Activity feed -->
+            <div class="w-full">
+                <!-- Title -->
+                <h3 class="mb-2 text-gray-900">Comentarios</h3>
+                <span class="font-semibold text-gray-500">Trazabilidad de la solicitud desde los comentarios.</span>
+
+                <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
+                    <button mat-raised-button matTooltip="Nuevo comentario" [color]="'primary'"
+                        (click)="onComentario()">
+                        Nuevo comentario
+                    </button>
+                </div>
+            </div>
+
+            <ng-container class="py-2.5" *ngIf="(comentarios$ | async) as comentar; else loading">
+                <ng-container *ngIf="comentar.data.length; else noActivity">
+                    <div class="mt-8">
+                        <ol>
+                            <!-- Activities -->
+                            <ng-container
+                                *ngFor="let item of comentar.data; let i = index; let first = first; let last = last; trackBy: trackByFn">
+
+
+
+                                <!-- Date separator -->
+                                <ng-container
+                                    *ngIf="first || !isSameDay(item.fechaCreacion, comentar.data[i - 1].fechaCreacion)">
+                                    <li class="relative flex py-7">
+                                        <div
+                                            class="relative py-1 px-8 text-md font-medium leading-5 bg-primary text-on-primary">
+                                            {{getRelativeFormat(item.fechaCreacion)}}
+                                        </div>
+                                    </li>
+                                </ng-container>
+
+                                <!-- Activity -->
+                                <li class="relative flex">
+                                    <!-- Line -->
+                                    <ng-container>
+                                        <div
+                                            class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600">
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="relative flex flex-auto">
+                                        <!-- Icon -->
+                                        <ng-container>
+                                            <div
+                                                class="flex flex-shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
+                                                <mat-icon class="icon-size-5 text-white"
+                                                    svgIcon="{{item.tipoComentario==2?'heroicons_solid:star':'heroicons_solid:lock-closed'}}">
+                                                </mat-icon>
+                                            </div>
+                                        </ng-container>
+
+                                        <!-- Content -->
+                                        <div class="flex flex-col flex-auto items-start mb-4">
+                                            <!-- Description -->
+                                            <ng-container>
+                                                <div class="row w-100">
+                                                    <div class="col-lg-auto">
+                                                        <div class="text-secondary">
+                                                            {{ item.descripcionAgenda}}
+                                                        </div>
+                                                        <strong class="capitalize">
+                                                            {{ item.nombreUsuario}}
+                                                        </strong>
+                                                        <div class="text-secondary text-xs">
+                                                            ({{item.usuarioCreacion}})
+                                                        </div>
+                                                    </div>
+                                                    <!-- Date -->
+                                                    <div class="text-secondary">
+                                                        {{item.fechaCreacion | date:'MMM dd, h:mm a'}}
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <div class="row items-center mt-3"
+                                                style="border-left: 5px solid #b6ce1d; padding-left: 4px;">
+                                                <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0 w-screen"
+                                                    [innerHTML]="item.comentario">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+
+                        </ol>
+                    </div>
                 </ng-container>
-                </tbody>
-            </table>
-        </div>
-        <div class="text-end">
-            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
-                                 nextLabel="Siguiente"></pagination-controls>
+            </ng-container>
+            <!-- Loading template -->
+            <ng-template #loading>
+                Cargando...
+            </ng-template>
+
+            <!-- No Activity template -->
+            <ng-template #noActivity>
+                No hay comentarios hasta este momento...
+            </ng-template>
         </div>
     </div>
 </div>
-
-

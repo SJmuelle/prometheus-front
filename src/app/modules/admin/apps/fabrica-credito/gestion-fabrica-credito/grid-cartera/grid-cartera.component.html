@@ -1,0 +1,170 @@
+<div class="min-h-60" *ngIf="agenda_fabrica && totales">
+    <div class="grid grid-cols-6">
+        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
+            <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
+            <div class="flex flex-col">
+                <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center mt-1.5 capitalize">
+                    {{agenda_fabrica.nombreCompleto}}
+                </div>
+                <div class="text-1xl  text-secondary text-center"> {{agenda_fabrica.email}}</div>
+                <div class="text-1xl  text-green-600 text-center">{{agenda_fabrica.descripcionTipoCredito}}</div>
+            </div>
+        </fuse-card>
+        <div class="pl-2" *ngIf="totales">
+            <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
+                <div class="flex items-start justify-between">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                        Totales
+                    </div>
+                </div>
+                <div class="flex flex-col items-center ">
+                    <div class="text-2xl font-bold tracking-tight leading-none">
+                        {{totales.contadorGestiones|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">No. de obligaciones </div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2"
+                        [ngClass]="totales.valorDisponible>totales.sumaTotal?'text-green-700':'text-red-600'">
+                        ${{totales.sumaTotal|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">Total en obligaciones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2">
+                        ${{totales.valorDisponible|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">Valor disponible</div>
+                </div>
+                <div class="flex items-center justify-center w-full text-secondary mt-1">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="text-lg font-semibold leading-tight text-left mb-4 mt-3">Obligaciones de mora</div>
+    <div class="flex justify-end mb-4">
+        <button mat-raised-button color="accent" type="button" (click)="createCartera('D')">
+            Nueva
+        </button>
+    </div>
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3 text-center w-2/12">Gestión</th>
+                <th class="px-4 py-3 text-center w-4/12">Entidad</th>
+                <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo</th>
+                <th class="px-4 py-3 text-center w-1/12">Altura de mora</th>
+                <th class="px-4 py-3 text-center w-3/12">Estado</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white" *ngIf="totales.contadorMora!==0">
+            <ng-container *ngIf="(listadoCartera$ | async) as items;">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.alDia === 'f'">
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Sin gestión</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                    <mat-option value="NEG">Negociar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                        <td class="text-sm border text-center">
+                            <span class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
+                                    item.alDia === 'f'
+                                        ? 'bg-red-300  text-red-900'
+                                        : 'bg-green-300 text-green-900'
+                                        ">
+                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                            </span>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </tbody>
+        <tbody *ngIf="totales.contadorMora===0">
+            <tr>
+                <th colspan="6">
+                    <div class="flex justify-center">
+                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" class="text-center">
+                    <span>No hay obligaciones en mora</span>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    <hr class="shadow">
+    <div class="text-lg font-semibold leading-tight text-left">
+        Obligaciones al día </div>
+    <div class="flex justify-end mb-4">
+        <button mat-raised-button color="accent" type="button" (click)="createCartera('N')">
+            Nueva
+        </button>
+    </div>
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3 text-center w-2/12">Gestión</th>
+                <th class="px-4 py-3 text-center w-4/12">Entidad</th>
+                <th class="px-4 py-3 text-center w-2/12">N° de obligación</th>
+                <th class="px-4 py-3 text-center w-1/12">Saldo</th>
+                <th class="px-4 py-3 text-center w-3/12">Estado</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white" *ngIf="totales.contadorAlDia!==0">
+            <ng-container *ngIf="listadoCartera$ | async as items;">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.alDia=='t'">
+                        <td class="px-0 text-sm border text-left">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                <mat-select [(ngModel)]="item.gestionCartera"
+                                    (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Sin gestión</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border text-center h-12">{{item.entidad}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                        <td class="text-sm border w-0 text-center">
+                            <span class="py-0.5 px-3 text-center  text-sm font-semibold  " [ngClass]="
+                                    item.alDia === 'f'
+                                        ? 'bg-red-300  text-red-900'
+                                        : 'bg-green-300 text-green-900'
+                                        ">
+                                    {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
+                            </span>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </tbody>
+        <tbody *ngIf="totales.contadorAlDia===0">
+            <tr>
+                <th colspan="6">
+                    <div class="flex justify-center">
+                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" class="text-center">
+                    <span>No hay obligaciones al día</span>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</div>

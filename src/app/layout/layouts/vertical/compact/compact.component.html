@@ -27,6 +27,7 @@
     <!-- Header -->
     <div class="relative flex flex-0 items-center w-full h-16 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden">
         <!-- Navigation toggle button -->
+       
         <button
             mat-icon-button
             (click)="toggleNavigation('mainNavigation')">
@@ -34,11 +35,14 @@
         </button>
         <!-- Components -->
         <div class="flex items-center pl-2 ml-auto space-x-2">
+
+            <a matTooltip="Historial de Archivos" href="#/activities" class="mt-1"><mat-icon class="hover:bg-hover cursor-pointer" [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon></a>
+            
             <fuse-fullscreen></fuse-fullscreen>
             <!-- <search [appearance]="'bar'"></search> -->
             <!-- <shortcuts [shortcuts]="data.shortcuts"></shortcuts> -->
             <!-- <messages [messages]="data.messages"></messages> -->
-            <!-- <notifications [notifications]="data.notifications"></notifications> -->
+            <notifications [notifications]="data.notifications"></notifications>
             <user-menu></user-menu>
         </div>
     </div>

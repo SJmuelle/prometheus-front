@@ -1,0 +1,500 @@
+<div class="min-h-60" *ngIf="datoFabrica && totales">
+    <div class="grid grid-cols-6">
+        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
+            <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
+            <div class="flex flex-col">
+                <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center mt-1.5 capitalize">
+                    {{datoFabrica.nombreCompleto}}
+                </div>
+                <div class="text-1xl  text-secondary text-center"> {{datoFabrica.email}}</div>
+                <div class="text-1xl  text-green-600 text-center">{{datoFabrica.descripcionTipoCredito}}</div>
+            </div>
+        </fuse-card>
+        <div class="pl-2" *ngIf="totales">
+            <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
+                <div class="flex items-start justify-between">
+                    <div class="text-lg font-medium tracking-tight leading-6 truncate items-center">
+                        Totales
+                    </div>
+                </div>
+                <div class="flex flex-col items-center ">
+                    <div class="text-2xl font-bold tracking-tight leading-none">
+                        {{totales.contadorGestiones|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">No. de obligaciones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2"
+                    [ngClass]="totales.valorDisponible>totales.sumaTotal?'text-green-700':'text-red-600'">
+                       ${{totales.sumaTotal|number}}
+                    </div>
+                    <div class="text-md font-medium truncate">Total en obligaciones</div>
+                    <div class="text-2xl font-bold tracking-tight leading-none mt-2">
+                        ${{totales.valorDisponible|number}}
+                     </div>
+                     <div class="text-md font-medium truncate">Valor disponible</div>
+                     <!-- <div class="text-2xl font-bold tracking-tight leading-none">
+                        ${{totales.valorSolicitado |number}}
+                     </div>
+                     <div class="text-md font-medium truncate">Valor solicitado</div> -->
+
+                </div>
+                <div class="flex items-center justify-center w-full text-secondary mt-1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <ng-template #hola>
+        <div class="col-sm-12 col-lg-12">
+            <div class="flex flex-col">
+                <div class="text-2xl font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center"> no hay Detalle </div>
+            </div>
+        </div>
+    </ng-template>
+
+
+    <div class="text-lg font-semibold leading-tight text-left mb-4 py-5 mt-4">Obligaciones de mora</div>
+
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3 text-center">Gestión</th>
+                <th class="px-4 py-3 text-center">Entidad</th>
+                <th class="px-4 py-3 text-center">N° de obligación</th>
+                <th class="px-4 py-3 text-center">Saldo</th>
+                <th class="px-4 py-3 text-center">Altura de mora</th>
+                <th class="px-4 py-3 text-center">Estado</th>
+                <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
+                <th class="px-4 py-3 text-center"></th>
+            </tr>
+        </thead>
+        <tbody class="bg-white" *ngIf="totales.contadorMora!==0">
+            <ng-container *ngIf="listadoCartera$ | async as items">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.alDia === 'f'">
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    [disabled]="datoFabrica.agenda!='GC'"
+                                    (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Sin gestión</mat-option>
+                                    <mat-option value="NEG">Negociar</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
+                            ${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
+                        <td class="text-sm border w-0 text-center px-2">
+                            <div class="py-0.5 text-xs px-2  font-semibold  " [ngClass]="
+                                  item.alDia === 'f'
+                                  ? 'bg-red-300  text-red-900'
+                                  : 'bg-green-300 text-green-900'
+                                  ">
+                                  {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                            </div>
+                        </td>
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput" *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
+                                    [disabled]="(datoFabrica.agenda!='GC') || (item.gestionCartera=='') || (item.gestionCartera=='COM')"
+                                    (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
+                                    <mat-option value="" disabled>Seleccione</mat-option>
+                                    <mat-option value="EXITOSA">Exitosa</mat-option>
+                                    <mat-option value="NO EXITOSA">No exitosa</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="text-sm border w-0">
+                            <button mat-icon-button matTooltip="ver detalles" *ngIf="item.resultadoNegociacion!=''"
+                                (click)="item.mostrarDetalle=item.mostrarDetalle=='f'?'v':'f'">
+                                <mat-icon
+                                    [svgIcon]="item.mostrarDetalle=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                </mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="item.mostrarDetalle=='v'">
+                        <tr *ngIf="item.resultadoNegociacion=='EXITOSA'">
+                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                                <div class="flex items-center">
+                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
+                                    <div class="flex-auto ml-2 border-b-2"></div>
+                                </div>
+                                <!-- Features -->
+                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Nombre del negociador: <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor negociación:
+                                            <strong>${{item.valorAComprar|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor descuento:
+                                            <strong>${{item.valorDescuento|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor consultores:
+                                            <strong>{{item.valorConsultores|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Porcentaje:
+                                            <strong>{{item.porcentajeConsultores|number}}%</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Fecha límite de pago: <strong>{{item.fechaLimitePago}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Usuario negociador: <strong>{{item.usuarioCreacion}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Fecha de negociación: <strong>{{item.fechaNegociacion}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center col-span-3">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            <strong>Comentario: </strong>
+                                            <br>
+                                            <p>{{item.comentario}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        <tr *ngIf="item.resultadoNegociacion=='NO EXITOSA'">
+                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                                <div class="flex items-center">
+                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
+                                    <div class="flex-auto ml-2 border-b-2"></div>
+                                </div>
+                                <!-- Features -->
+                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Nombre del negociador: <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center col-span-2">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            <strong>Comentario: </strong>
+                                            <br>
+                                            <p>{{item.comentario}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </tbody>
+        <tbody *ngIf="totales.contadorMora===0">
+            <tr>
+                <th colspan="7">
+                    <div class="flex justify-center">
+                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7" class="text-center">
+                    <span>No hay obligaciones en mora</span>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    <hr class="shadow">
+    <div class="text-lg font-semibold leading-tight text-lef py-5 mt-4">
+        Obligaciones al día </div>
+
+    <table class="shadow p-0 mb-5">
+        <thead class="bg-accent-50">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                <th class="px-4 py-3 text-center">Gestión</th>
+                <th class="px-4 py-3 text-center">Entidad</th>
+                <th class="px-4 py-3 text-center">N° de obligación</th>
+                <th class="px-4 py-3 text-center">Saldo</th>
+                <th class="px-4 py-3 text-center">Altura de mora</th>
+                <th class="px-4 py-3 text-center">Estado</th>
+                <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
+                <th class="px-4 py-3 text-center"></th>
+            </tr>
+        </thead>
+        <tbody class="bg-white" *ngIf="totales.contadorAlDia!==0">
+            <ng-container *ngIf="listadoCartera$ | async as items">
+                <ng-container *ngFor="let item of items.data">
+                    <tr *ngIf=" item.alDia !== 'f'">
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                [disabled]="datoFabrica.agenda!='GC'"
+                                    (ngModelChange)="cambioEstado($event,item)">
+                                    <mat-option value="">Sin gestión</mat-option>
+                                    <mat-option value="COM">Comprar</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                        <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                        <td class="px-2 text-sm border text-center"> {{suma(item.saldoActual )}}
+                            ${{item.saldoActual | number}}</td>
+                        <td class="px-2 text-sm border text-center">{{item.maximaMora | number}}</td>
+                        <td class="text-sm border w-0 text-center px-2">
+                            <div class="py-0.5 text-xs px-2  font-semibold" [ngClass]="
+                                      item.alDia === 'f'
+                                      ? 'bg-red-300  text-red-900'
+                                      : 'bg-green-300 text-green-900'
+                                      ">
+                                      {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
+                            </div>
+                        </td>
+                        <td class="text-sm border text-left m-0 p-0">
+                            <mat-form-field class="p-0 w-full mt-0 marginInput"  *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
+                                    [disabled]="item.gestionCartera==''"
+                                    (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
+                                    <mat-option value="" disabled>Seleccione</mat-option>
+                                    <mat-option value="EXITOSA">Exitosa</mat-option>
+                                    <mat-option value="NO EXITOSA">No exitosa</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td class="text-sm border w-0">
+                            <button mat-icon-button matTooltip="ver detalles" *ngIf="item.resultadoNegociacion!=''"
+                                (click)="item.mostrarDetalle=item.mostrarDetalle=='f'?'v':'f'">
+                                <mat-icon
+                                    [svgIcon]="item.mostrarDetalle=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                </mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="item.mostrarDetalle=='v'">
+                        <tr *ngIf="item.resultadoNegociacion=='EXITOSA'">
+                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                                <div class="flex items-center">
+                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
+                                    <div class="flex-auto ml-2 border-b-2"></div>
+                                </div>
+                                <!-- Features -->
+                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Nombre del negociador: <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor negociación:
+                                            <strong>${{item.valorAComprar|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor descuento:
+                                            <strong>${{item.valorDescuento|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Valor consultores:
+                                            <strong>{{item.valorConsultores|number}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">Porcentaje:
+                                            <strong>{{item.porcentajeConsultores|number}}%</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Fecha límite de pago: <strong>{{item.fechaLimitePago}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Usuario negociador: <strong>{{item.usuarioCreacion}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Fecha de negociación: <strong>{{item.fechaNegociacion}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center col-span-3">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            <strong>Comentario: </strong>
+                                            <br>
+                                            <p>{{item.comentario}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        <tr *ngIf="item.resultadoNegociacion=='NO EXITOSA'">
+                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                                <div class="flex items-center">
+                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
+                                    <div class="flex-auto ml-2 border-b-2"></div>
+                                </div>
+                                <!-- Features -->
+                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Nombre del negociador: <strong
+                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center col-span-2">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            <strong>Comentario: </strong>
+                                            <br>
+                                            <p>{{item.comentario}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </tbody>
+        <tbody *ngIf="totales.contadorAlDia===0">
+            <tr>
+                <th colspan="7">
+                    <div class="flex justify-center">
+                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="7" class="text-center">
+                    <span>No hay obligaciones al día</span>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+</div>

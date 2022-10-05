@@ -1,0 +1,125 @@
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full">
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end">
+                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza();">
+                    <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Cerrar" (click)="onCerrar()">
+                    <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full">
+        <!-- Main -->
+        <div class="flex flex-col flex-auto px-0 py-2 sm:pb-20">
+            <!-- Activity feed -->
+            <div class="w-full">
+                <!-- Title -->
+                <h3 class="mb-2 text-gray-900 ">
+                    Devoluciones
+                </h3>
+                <span class="font-semibold text-gray-500">Trazabilidad de la solicitud desde las devoluciones.</span>
+                <ng-container *ngIf="agenda!=='CM'">
+                    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
+                        <button mat-raised-button matTooltip="Nuevo devolución" [color]="'primary'"
+                            (click)="onDevolucion()">
+                            Nuevo devolución
+                        </button>
+                    </div>
+                </ng-container>
+            </div>
+
+            <ng-container class="py-2.5" *ngIf="(devolucion$ | async) as devolver; else loading">
+                <ng-container *ngIf="devolver.data.length; else noActivity">
+                    <div class="mt-8">
+                        <ol>
+                            <!-- Activities -->
+                            <ng-container
+                                *ngFor="let item of devolver.data; let i = index; let first = first; let last = last; trackBy: trackByFn">
+
+                                <!-- Date separator -->
+                                <ng-container
+                                    *ngIf="first || !isSameDay(item.fechaDevolucion, devolver.data[i - 1].fechaDevolucion)">
+                                    <li class="relative flex py-7">
+                                        <div
+                                            class="relative py-1 px-8 text-md font-medium leading-5 bg-primary text-on-primary">
+                                            {{getRelativeFormat(item.fechaDevolucion)}}
+                                        </div>
+                                    </li>
+                                </ng-container>
+
+                                <!-- Activity -->
+                                <li class="relative flex">
+                                    <!-- Line -->
+                                    <ng-container>
+                                        <div
+                                            class="absolute top-7 left-5 w-0.5 h-full -ml-px bg-gray-300 dark:bg-gray-600">
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="relative flex flex-auto">
+                                        <!-- Icon -->
+                                        <ng-container>
+                                            <div
+                                                class="flex flex-shrink-0 items-center justify-center w-10 h-10 mr-4 rounded-full bg-gray-400">
+                                                <mat-icon class="icon-size-5 text-white" svgIcon="heroicons_solid:star">
+                                                </mat-icon>
+                                            </div>
+                                        </ng-container>
+
+                                        <!-- Content -->
+                                        <div class="flex flex-col flex-auto items-start mb-4">
+                                            <!-- Description -->
+                                            <ng-container>
+                                                <div class="row w-100">
+                                                    <div class="col-lg-auto">
+                                                        <div class="text-secondary">
+                                                            {{ item.descripcionAgenda}}
+                                                        </div>
+                                                        <strong class="capitalize">
+                                                            {{ item.nombreUsuario}}
+                                                        </strong>
+                                                        <div class="text-secondary text-xs">
+                                                            ({{item.usuarioCreacion}})
+                                                        </div>
+                                                    </div>
+                                                    <!-- Date -->
+                                                    <div class="text-secondary">
+                                                        {{item.fechaDevolucion | date:'MMM dd, h:mm a'}}
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <div class="mt-4 py-2 px-2 rounded-lg bg-gray-200 dark:bg-gray-800">
+                                                <div class="py-2 items-center flex ">
+                                                    <mat-icon svgIcon="heroicons_outline:bookmark" matTooltip="Causal">
+                                                    </mat-icon>
+                                                    <span class="font-medium">{{item.descripcionCausal}}</span>
+                                                </div>
+                                                <div class="text-secondary text-xl">
+                                                    {{item.descripcionDevolucion}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+
+                        </ol>
+                    </div>
+                </ng-container>
+            </ng-container>
+
+            <!-- Loading template -->
+            <ng-template #loading>
+                Cargando...
+            </ng-template>
+
+            <!-- No Activity template -->
+            <ng-template #noActivity>
+                No hay comentarios hasta este momento...
+            </ng-template>
+        </div>
+    </div>
+</div>

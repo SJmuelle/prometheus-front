@@ -20,6 +20,13 @@ export class AgendaCompletacionService {
       return this._http.get(this._appSettings.agendaCompletacion.url.base);
   }
 
+    /**
+   * @description: totales de agendas de completacion
+   */
+     public getTotalesAgendaCompletacion(): Observable<any> {
+      return this._http.get(this._appSettings.agendaCompletacion.url.totales);
+  }
+
   /**
    * @description: Establece por defecto el observable behaviorSubject
    */

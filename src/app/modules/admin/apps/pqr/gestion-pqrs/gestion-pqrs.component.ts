@@ -407,7 +407,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     busacar_url(data) {
-        debugger;
+        // debugger;
         let url = data.idComentario + data.extension;
         // url = url.replace('/', '\\');
         // url = url.replace('/', '\\');

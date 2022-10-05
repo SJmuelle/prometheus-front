@@ -1,0 +1,109 @@
+<h2 mat-dialog-title>Gestión de negociación</h2>
+
+<mat-dialog-content>
+  <div class="grid-cols-12 ">
+    <div class="col-span-12">
+      <form [formGroup]="form">
+        <div class="bg-white flex flex-col">
+          <div class="md:flex">
+            <ng-container>
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Nombre con quien se negoció</mat-label>
+                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'nombreNegociador'">
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="md:flex">
+            <ng-container >
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Celular donde se negoció</mat-label>
+                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'celularNegociador'">
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <ng-container *ngIf="this.data.evento!='NO EXITOSA'">
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Valor cartera </mat-label>
+                <span matPrefix>$&nbsp;</span>
+                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorAComprarNoEditable'" readonly  
+                >
+              </mat-form-field>
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Valor negociación   </mat-label>
+                <span matPrefix>$&nbsp;</span>
+                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorAComprar'"
+                (keyup)="form.controls['valorAComprar'].setValue(utility.formatearNumero(form.value.valorAComprar)); calcularDescuento();" 
+                >
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <ng-container *ngIf="this.data.evento!='NO EXITOSA'">
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Valor descuento</mat-label>
+                <span matPrefix>$&nbsp;</span>
+                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorDescuento'"
+                 readonly 
+                >
+              </mat-form-field>
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Porcentaje consultores</mat-label>
+                <span matSuffix>%&nbsp;</span>
+                <input autocomplete="off" matInput type="number" placeholder="" [formControlName]="'porcentajeConsultores'"
+                (keyup)="calcularValorConsultores()"
+                >
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="md:flex">
+            <ng-container *ngIf="this.data.evento!='NO EXITOSA'">
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Valor consultores</mat-label>
+                <span matPrefix>$&nbsp;</span>
+                <input autocomplete="off" matInput type="text" placeholder="" [formControlName]="'valorConsultores'"
+                readonly
+                >
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="md:flex">
+            <ng-container *ngIf="this.data.evento!='NO EXITOSA'">
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>Fecha limite de pagos</mat-label>
+                <input matInput type="date" placeholder=""  min="{{manana}}" [formControlName]="'fechaLimitePago'">
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <ng-container>
+            <div class="md:flex">
+              <mat-form-field class="w-full fuse-mat-dense">
+                <mat-label>{{this.data.evento=='NO EXITOSA'?'Motivo por lo cual no fue exitosa':'Comentario'}}
+                  ({{form.controls['comentarioNegociacion'].value.length}}/800)</mat-label>
+                <textarea class="h-50" matInput [formControlName]="'comentarioNegociacion'"
+                  [readonly]="data.idComentario">
+                          </textarea>
+                <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
+                <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>
+                <mat-error *ngIf="form.controls.comentarioNegociacion.errors?.maxlength">Longitud máxima son 11 dígitos.
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </div>
+      </form>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+    <ng-container *ngIf="!data.idComentario">
+      <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+        Guardar
+      </button>
+    </ng-container>
+    <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+      Cerrar
+    </button>
+  </div>
+</mat-dialog-actions>

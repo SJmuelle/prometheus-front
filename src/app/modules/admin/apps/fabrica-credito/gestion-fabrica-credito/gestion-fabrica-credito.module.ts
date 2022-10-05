@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { GestionFabricaCreditoRoutingModule } from './gestion-fabrica-credito-routing.module';
 import { FormGestionFabricaCreditoComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-credito.component';
@@ -11,7 +12,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatDividerModule} from "@angular/material/divider";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { FormRepresentanteLegalComponent } from './form-representante-legal/form-representante-legal.component';
 import {MatButtonModule} from "@angular/material/button";
 import {MatSelectModule} from "@angular/material/select";
@@ -33,7 +34,24 @@ import { FormDialogDecisionComponent } from './form-dialog-decision/form-dialog-
 import { FormDialogComentariosComponent } from './form-dialog-comentarios/form-dialog-comentarios.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { GridPoliticasComponent } from './grid-politicas/grid-politicas.component';
+import { GridDevolucionesComponent } from './grid-devoluciones/grid-devoluciones.component';
+import { FormDialogDevolucionesComponent } from './form-dialog-devoluciones/form-dialog-devoluciones.component';
+import { FormDialogoChecklistComponent } from './form-dialogo-checklist/form-dialogo-checklist.component';
+import { MatListModule } from '@angular/material/list';
 
+import { FuseDrawerModule } from '@fuse/components/drawer';
+import { GridCentralesComponent } from './grid-centrales/grid-centrales.component';
+import { FormGestionFabricaUltracemComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-ultracem/form-gestion-fabrica-ultracem.component';
+import { FormGestionFabricaLibranzaComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-libranza/form-gestion-fabrica-libranza.component';
+import { GridOfertaLibranzaComponent } from './grid-oferta-libranza/grid-oferta-libranza.component';
+import { GridCarteraComponent } from './grid-cartera/grid-cartera.component';
+import { FuseCardModule } from '@fuse/components/card';
+import { MatRadioModule } from '@angular/material/radio';
+import { FormDialogCarteraComponent } from './form-dialog-cartera/form-dialog-cartera.component';
+import { GridCarteraNegociacionComponent } from './grid-cartera-negociacion/grid-cartera-negociacion.component';
+import { FormDialogNegociacionComponent } from './form-dialog-negociacion/form-dialog-negociacion.component';
+import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.component';
+// import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
 @NgModule({
@@ -49,6 +67,19 @@ import { GridPoliticasComponent } from './grid-politicas/grid-politicas.componen
         FormDialogDecisionComponent,
         FormDialogComentariosComponent,
         GridPoliticasComponent,
+        GridDevolucionesComponent,
+        FormDialogDevolucionesComponent,
+        FormDialogoChecklistComponent,
+        GridCentralesComponent,
+        FormGestionFabricaUltracemComponent,
+        FormGestionFabricaLibranzaComponent,
+        GridOfertaLibranzaComponent,
+        GridCarteraComponent,
+        FormDialogCarteraComponent,
+        GridCarteraNegociacionComponent,
+        FormDialogNegociacionComponent,
+        FabricaOpcionesComponent
+
     ],
     imports: [
         CommonModule,
@@ -73,11 +104,17 @@ import { GridPoliticasComponent } from './grid-politicas/grid-politicas.componen
         Ng2SearchPipeModule,
         PdfViewerModule,
         NgxPaginationModule,
-
+        MatListModule,
+        FuseDrawerModule,
+        FuseCardModule,
+        MatRadioModule,
+        FormsModule,
+        MatAutocompleteModule,
+        // FabricaOpcionesModule
     ],
 
     exports: [
-        GridReferenciasComponent
+        FabricaOpcionesComponent
     ]
 })
 export class GestionFabricaCreditoModule { }

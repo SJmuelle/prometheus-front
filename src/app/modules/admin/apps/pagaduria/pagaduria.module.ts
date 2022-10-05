@@ -12,7 +12,6 @@ import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/ges
 
 import { FuseAlertModule } from '@fuse/components/alert';
 import { Ng2SearchPipeModule } from "ng2-search-filter";
-import { PdfViewerModule } from "ng2-pdf-viewer";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
@@ -60,8 +59,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatTooltipModule,
     MatButtonToggleModule,
     FuseAlertModule,
-    Ng2SearchPipeModule,
-    PdfViewerModule
+    Ng2SearchPipeModule
   ]
 })
 export class PagaduriaModule { }

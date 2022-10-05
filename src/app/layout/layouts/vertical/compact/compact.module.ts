@@ -15,6 +15,7 @@ import { UserMenuModule } from 'app/layout/common/user-menu/user-menu.module';
 import { SharedModule } from 'app/shared/shared.module';
 import { CompactLayoutComponent } from 'app/layout/layouts/vertical/compact/compact.component';
 import { FuseLoadingBarModule } from '@fuse/components/loading-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { FuseLoadingBarModule } from '@fuse/components/loading-bar';
         ShortcutsModule,
         UserMenuModule,
         SharedModule,
-        FuseLoadingBarModule
+        FuseLoadingBarModule,
+        MatTooltipModule
     ],
     exports     : [
         CompactLayoutComponent

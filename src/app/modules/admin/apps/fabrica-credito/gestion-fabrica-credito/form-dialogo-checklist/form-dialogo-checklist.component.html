@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>Seleccione las actividades ya realizadas</h2>
+<mat-dialog-content class="mat-typography">
+
+
+
+  <div class="w-3/12 text-center" class="flex justify-center text-center w-100" *ngIf="!listado.length">
+    <img src="assets/images/animaciones/nodata.gif" class="w-60">
+  </div>
+
+  <div class="divide-y" *ngFor="let data of listado;let indice=index">
+    <div class="w-full select-none hover:bg-gray-100  h-16" (click)="guardar(data)">
+      <div class="relative border-b flex items-center h-full ml-3 border-t">
+
+        <mat-icon [svgIcon]="data.seleccionado=='f'?'mat_outline:radio_button_unchecked':'mat_outline:check_circle'"
+          [ngClass]="data.seleccionado=='f'?'text-base':'text-blue-600'"></mat-icon>
+        <span class="flex flex-auto items-center min-w-0 h-full pl-7">
+          {{data.nombre}}
+        </span>
+
+
+        <ng-container *ngIf="data.usuarioCreacion!=''">
+          <span class="etiqueta1" >
+            {{data.usuarioCreacion}}
+            /
+            {{data.fechaCreacion | date:'MMM dd, h:mm a' }}
+          </span>
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+  <!-- <form [formGroup]="form" *ngIf="listado.length" style="display: none;">
+        <mat-selection-list formControlName="selectedTech">
+          <mat-list-option  *ngFor="let data of listado;let indice=index" value="{{data.idItem}}" >
+            {{data.nombre}}
+          </mat-list-option>
+        </mat-selection-list>
+      </form>  -->
+  <p>
+    Total seleccionado: {{total}} / {{listado.length}}
+  </p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="SiguienteEtapa()">Siguiente
+    Etapa </button>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>

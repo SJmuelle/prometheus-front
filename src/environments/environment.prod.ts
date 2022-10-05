@@ -1,5 +1,6 @@
 export const environment = {
     production: true,
+
     userName: "APPWEB",
     password: btoa("123456"),
     urlApi: 'http://demo.fintra.co:8010/api-fintra/api',

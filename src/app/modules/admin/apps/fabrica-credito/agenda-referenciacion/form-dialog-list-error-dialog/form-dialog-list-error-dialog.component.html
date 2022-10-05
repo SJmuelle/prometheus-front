@@ -1,0 +1,45 @@
+<h2 mat-dialog-title class="ml-3">No es posible cambiar de estado por las siguientes validaciones:</h2>
+<div mat-dialog-content>
+    <mat-list>
+        <ng-container *ngIf="tipoT>0">
+            <div mat-subheader>Campos del Formulario requeridos</div>
+            <ng-container *ngFor="let item of data">
+                <ng-container *ngIf="item.tipo=='T'">
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>format_list_numbered</mat-icon>
+                        <div mat-line>
+                            <span class="px-2 bg-red-200 text-red-700">
+                                {{item.seccion}}
+                            </span>
+                            <span class="ml-2">
+                                {{item.descripcion}}
+                            </span>
+                           
+
+
+
+                        </div>
+                    </mat-list-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <ng-container *ngIf="tipoD>0">
+            <div mat-subheader>Documentos requeridos</div>
+            <ng-container *ngFor="let item of data">
+                <ng-container *ngIf="item.tipo=='D'">
+                    <mat-list-item>
+                        <mat-icon mat-list-icon>attach_file</mat-icon>
+                        <div mat-line> {{item.descripcion}}</div>
+                    </mat-list-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </mat-list>
+
+</div>
+<div mat-dialog-actions class="align-content-center justify-center">
+    <button mat-raised-button mat-button mat-dialog-close class="mr-2 bg-gray-400 text-white" type="button">
+        Cerrar
+    </button>
+</div>

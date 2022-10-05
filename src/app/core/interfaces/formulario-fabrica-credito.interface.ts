@@ -6,6 +6,7 @@ export interface FormularioCreditoInterface {
     descripcionEstado:              string;
     codigoSubEstado:                string;
     descripcionSubestado:           string;
+    contadorEmbargos:               number;
     cupoTotal:                      number;
     cupoReservado:                  number;
     cupoDisponible:                 number;
@@ -62,6 +63,21 @@ export interface FormularioCreditoInterface {
     nitNegocio:                     string;
     digitoVerificacion?:            number;
     score?:                         number;
+    fechaExpedicionDocumento?:      string;
+    codigoDepartamentoExpedicion?:  string;
+    codigoCiudadExpedicion?:        string;
+    salarioBasico?:                 number;
+    numeroCuentaBancaria?:          string;
+    descuentoNomina?:               number;
+    comisionesHorasExtras?:         number;
+    valorSolicitado?:               number;
+    fechaVinculacion?:              string;
+    fechaFinalizacionContrato?:     string;
+    otrosIngresos?:                 number;
+    ingresos?:                      number;
+    plazo?:                         number;
+    nodificado?:                    string;
+    modificadoPolitica?:            string;
 }
 
 export interface FormularioDatosTitularInterface {
@@ -90,6 +106,14 @@ export interface FormularioDatosTitularInterface {
     antiguedadNegocio?:             number;
     camaraComercio?:                string;
     nitNegocio?:                    string;
+    valorSolicitado?:               string;
+    tipoCredito?:                   string;
+    destinoCredito?:                string;
+    plazo?:                         number;
+    cargo?:                         string;
+    estrato?:                       string;
+    otroDestinoCredito?:            string;
+    fechaExpedicionDocumento?:      string;
 }
 
 export interface FormularioRepresentanteInterface {
