@@ -37,18 +37,22 @@
                                     [ngClass]="campo.color">
                                     <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
                                 </div>
-                                <div class="flex-auto ml-4 leading-none">
-                                    <div class="text-sm font-medium text-secondary">{{campo.descripcion}}</div>
-                                    <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor2"></div>
-                                    <div class="text-sm font-medium capitalize " [innerHtml]="campo.valor"></div>
-                                    <div class="text-sm font-medium capitalize my-1"[innerHtml]="campo.valor3"></div>
+                                <div class="flex flex-col justify-center ml-4 leading-none">
+                                    <div class="flex flex-row w-full gap-2" *ngIf="campo.descripcionUno!='' && campo.valor!=''">
+                                        <div class="text-sm text-secondary">{{campo.descripcionUno}}</div>
+                                        <div class="text-sm font-medium capitalize">{{campo.valor}}</div>
+                                    </div>
+                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionDos!='' && campo.valor2!=''">
+                                        <div class="text-sm text-secondary">{{campo.descripcionDos}}</div>
+                                        <div class="text-sm font-medium capitalize">{{campo.valor2}}</div>
+                                    </div>
+                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionTres!='' && campo.valor3!=''">
+                                        <div class="text-sm text-secondary">{{campo.descripcionTres}}</div>
+                                        <div class="text-sm font-medium capitalize">{{campo.valor3}}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="flex flex-col mx-6 my-2" >
-                            <div class="text-sm font-medium leading-none text-secondary">{{campo.label}}:</div>
-                            <div class="mt-1 font-medium leading-none capitalize">{{campo.valor}}</div>
-                        </div> -->
                     </div>
                 </div>
             </ng-container>
@@ -97,12 +101,12 @@
                         </div>
 
                     </div>
-                    <div class="flex items-center mt-auto">
+                    <!-- <div class="flex items-center mt-auto">
                         <button class="mt-2" mat-stroked-button
                             (click)="verComentarios = true; settingsDrawer.toggle();">
                             Mostrar comentarios
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </ng-container>
         </div>

@@ -3,8 +3,20 @@
     margin-left: 47px;
 }
 
+.green-space {
+    background: linear-gradient(88.76deg, #19c72a 5.33%, #5EFF6D 97.14%);
+    // background: linear-gradient(88.76deg, #0D7E18 5.33%, #5EFF6D 97.14%);
+    // border-radius:  0px 100px 100px 100px;
+}
+
+.gray-space {
+    background: linear-gradient(88.76deg, #8b8d8c 5.33%, #c3c4c3 97.14%);
+    // background: linear-gradient(88.76deg, #0D7E18 5.33%, #5EFF6D 97.14%);
+    // border-radius:  0px 100px 100px 100px;
+}
+
 .marginTarjetaNegocios {
-    margin-left: 16%;
+    margin-left: 1%;
 }
 
 .marginTarjetaPagaduria {
@@ -16,7 +28,7 @@
 }
 
 .anchoNegocios {
-    width: 25%;
+    width: 55%;
 }
 
 .anchoPagaduria {
