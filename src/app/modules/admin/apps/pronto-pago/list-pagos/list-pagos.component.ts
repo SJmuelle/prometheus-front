@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { DetalleComponent } from './detalle/detalle.component';
 import moment from 'moment';
 
 @Component({
@@ -11,7 +13,7 @@ export class ListPagosComponent implements OnInit {
 
   listado: any = [];
 
-  constructor(public pago: ProntoPagoService) { }
+  constructor(public pago: ProntoPagoService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.consultarTransportadoras();
@@ -28,12 +30,12 @@ export class ListPagosComponent implements OnInit {
     });
   }
 
-  cambiarFecha(date) {
-    if (date) {
-      moment.locale('es');
-      return moment(date).format('MMMM D YYYY')
-    }
-    return 'No registra';
+  abrirDetalle(){
+    const dialogRef = this.dialog.open(DetalleComponent, {
+      width: '35%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
 }

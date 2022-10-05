@@ -8,97 +8,61 @@
             <tbody class="bg-white">
                 <ng-container *ngFor="let item of listado">
                     <tr class="text-gray-700 border-t border-b">
-                        <td rowspan="2" class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Detalles">
-                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td rowspan="2" class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Aceptar" class="bg-green-200">
-                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td rowspan="2" class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Rechazar" class="bg-red-200">
-                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="px-2 pt-2 pb-1">
+                        <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Identificacion del propietario:</small>
-                                <div class="flex flex-row gap-2">
-                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:identification"></mat-icon>
-                                    <span class="text-md text-black font-medium">{{item.identificacion}}</span>
-                                </div>
+                                <small class="text-accent-600 text-xs">Identificación del propietario:</small>
+                                <span class="text-md text-black font-medium capitalize">{{item.identificacion}}</span>
                             </div>
                         </td>
-                        <td class="px-2 pt-2 pb-1">
+                        <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Nombre del propietario:</small>
-                                <div class="flex flex-row gap-2">
-                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:user"></mat-icon>
-                                    <span class="text-md text-black font-medium">{{item.nombrePropietario}}</span>
-                                </div>
+                                <span class="text-md text-black font-medium capitalize">{{item.nombrePropietario}}</span>
                             </div>
                         </td>
-                        <td class="px-2 pt-2 pb-1">
+                        <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Telefono del propietario:</small>
-                                <div class="flex flex-row gap-2">
-                                    <mat-icon class="icon-size-3 mt-1" svgIcon="phone_android"></mat-icon>
-                                    <span class="text-md text-black font-medium">{{item.celPropietario}}</span>
-                                </div>
+                                <span class="text-md text-black font-medium capitalize">{{item.celPropietario}}</span>
                             </div>
                         </td>
-                        <td class="px-2 pt-2 pb-1">
+                        <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Email del propietario:</small>
-                                <div class="flex flex-row gap-2">
-                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:mail"></mat-icon>
-                                    <span class="text-md text-black font-medium">{{item.emailPropietario}}</span>
-                                </div>
+                                <span class="text-md text-black font-medium capitalize">{{item.emailPropietario}}</span>
                             </div>
                         </td>
-                    </tr>
-                    <tr class="text-gray-700 border-t border-b">
-                        <td class="px-2 pt-1 pb-2">
+                        <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Nombre de la transportadora:</small>
-                                <div class="flex flex-row gap-2">
-                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:truck"></mat-icon>
-                                    <span class="text-md text-black font-medium">{{item.transportadora}}</span>
-                                </div>
+                                <small class="text-accent-600 text-xs">Total pronto pago:</small>
+                                <span class="text-md text-black font-medium">$ {{item.valorProntoPago | number}}</span>
                             </div>
                         </td>
-                        <td class="px-2 pt-1 pb-2">
+                        <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Codigo pronto pago:</small>
-                                <div class="flex flex-row gap-2">
-                                    <span class="text-md text-black font-medium">{{item.prontoPago}}</span>
-                                </div>
+                                <small class="text-accent-600 text-xs">Total planillas:</small>
+                                <span class="text-md text-black font-medium">30</span>
                             </div>
                         </td>
-                        <td class="px-2 pt-1 pb-2">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Valor pronto pago:</small>
-                                <div class="flex flex-row gap-2">
-                                    <span class="text-md text-black font-medium">$ {{item.valorProntoPago | number}}</span>
-                                </div>
+                        <td class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle()">
+                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
+                                </button>
                             </div>
                         </td>
-                        <td class="px-2 pt-1 pb-2">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Fecha pronto pago:</small>
-                                <div class="flex flex-row gap-2">
-                                    <mat-icon class="icon-size-3 mt-1" svgIcon="heroicons_outline:calendar"></mat-icon>
-                                    <span class="text-md text-black font-medium">{{cambiarFecha(item.fechaProntoPago)}}</span>
-                                </div>
+                        <td class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Aceptar" class="bg-green-200 border">
+                                    <mat-icon svgIcon="heroicons_outline:check"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Rechazar" class="bg-red-200 border">
+                                    <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+                                </button>
                             </div>
                         </td>
                     </tr>

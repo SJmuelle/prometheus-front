@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>Detalle de planilla</h1>
+<div mat-dialog-content>
+    <div class="w-full overflow-y-auto">
+        <table class="p-0">
+            <tbody class="bg-white">
+                <ng-container *ngFor="let item of listado">
+                    <tr class="text-gray-700 border-t border-b">
+                        <td class="py-3 text-sm my-3">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Transportadora:</small>
+                                <span class="text-md text-black font-medium capitalize">{{item.transportadora}}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 text-sm my-3">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Valor pronto pago:</small>
+                                <span class="text-md text-black font-medium capitalize">{{item.valorProntoPago}}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 text-sm my-3">
+                            <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Fecha de pago:</small>
+                                <span class="text-md text-black font-medium capitalize">{{item.fechaProntoPago}}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Aceptar" class="bg-green-200 border">
+                                    <mat-icon svgIcon="heroicons_outline:check"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="py-3 text-sm my-3">
+                            <div class="py-0 text-sm">
+                                <button mat-icon-button matTooltip="Rechazar" class="bg-red-200 border">
+                                    <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button class="text-white color_fintra">Pagar</button>
+    <button mat-button mat-dialog-close class="text-white bg-gray-400">Cancelar</button>
+</mat-dialog-actions>

@@ -16,12 +16,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { DetalleComponent } from './list-pagos/detalle/detalle.component';
 
 
 
 @NgModule({
   declarations: [
-    ListPagosComponent
+    ListPagosComponent,
+    DetalleComponent
   ],
   imports: [
     CommonModule,
