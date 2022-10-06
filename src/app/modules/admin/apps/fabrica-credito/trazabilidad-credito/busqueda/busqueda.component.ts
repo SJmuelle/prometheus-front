@@ -21,30 +21,23 @@ export class BusquedaComponent implements OnInit {
     tarjetaTitular: boolean;
     tarjetaNegocios: boolean;
     tarjetaPagaduria: boolean;
-
-    titularForm: FormGroup;
-    negociosForm: FormGroup;
-    pagaduriaForm: FormGroup;
+    filtrarForm: FormGroup;
 
     documento: string='';
     estado: string='';
     nombrePagaduria: string='';
 
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
-        this.titularForm = this.fb.group({
+        this.filtrarForm = this.fb.group({
             documento: [''],
-            nombre: ['']
-        })
-        this.negociosForm = this.fb.group({
+            nombre: [''],
             estado: [''],
             subestado: [''],
-            fechaInicial: [''],
-            fechaFinal: [''],
-            codigo:[''],
-            solicitud:['']
-        })
-        this.pagaduriaForm = this.fb.group({
-            codigo: ['']
+            // fechaInicial: [''],
+            // fechaFinal: [''],
+            codigoNeg:[''],
+            solicitud:[''],
+            codigoPag: ['']
         })
     }
 
@@ -52,6 +45,45 @@ export class BusquedaComponent implements OnInit {
         this.consulta('');
         this.consultaPagaduria('')
         this.consultaEstados('')
+    }
+
+    filtrar(){
+        let data = {
+            "details": [
+                {
+                    "tipo": "CEDULA",
+                    "buscar": this.filtrarForm.value.documento
+                },
+                {
+                    "tipo": "NOMBRE",
+                    "buscar": this.filtrarForm.value.nombre
+                },
+                {
+                    "tipo": "ESTADO",
+                    "buscar": this.filtrarForm.value.estado
+                },
+                {
+                    "tipo": "SUBESTADO",
+                    "buscar": this.filtrarForm.value.subestado
+                },
+                {
+                    "tipo": "NEGOCIO",
+                    "buscar": this.filtrarForm.value.codigoNeg
+                },
+                {
+                    "tipo": "SOLICITUD",
+                    "buscar": this.filtrarForm.value.solicitud
+                },
+                {
+                    "tipo": "PAGADURIA",
+                    "buscar": this.filtrarForm.value.codigoPag
+                }
+            ]
+        }
+        console.log(data)
+        this._utility.postQuery('/cre-consulta-comentarios-v2', data).subscribe((response: any) => {
+            console.log(response)
+        });
     }
 
     consultaPagaduria(data){
@@ -89,17 +121,17 @@ export class BusquedaComponent implements OnInit {
 
     borrarDocumento(){
         this.documento = '';
-        this.titularForm.reset();
+        this.filtrarForm.reset();
     }
 
     borrarEstado(){
         this.estado = '';
-        this.negociosForm.reset();
+        this.filtrarForm.reset();
     }
 
     borrarPagaduria(){
         this.nombrePagaduria = '';
-        this.pagaduriaForm.reset();
+        this.filtrarForm.reset();
     }
 
     mostrarDocumento(event: Event){

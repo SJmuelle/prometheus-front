@@ -102,11 +102,13 @@ export class DetalleTrazabilidadComponent implements OnInit {
             color: "bg-blue-100 text-blue-800",
             label: "Cliente:",
             descripcionUno: "Identificación:",
-            valor: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion,
+            valor: data.resumenCredito.tipoDocumento + ' - ' + data.resumenCredito.identificacion,
             descripcionDos: "Nombre:",
             valor2: data.resumenCredito.nombreCompleto.toLowerCase(),
-            descripcionTres: "Contacto:",
-            valor3: data.resumenCredito.celular + " - " + data.resumenCredito.email
+            descripcionTres: "Telefono:",
+            valor3: data.resumenCredito.celular,
+            descripcionCuatro: "Email:",
+            valor4: data.resumenCredito.email
           },
           {
             icono: "feather:dollar-sign",
@@ -117,7 +119,9 @@ export class DetalleTrazabilidadComponent implements OnInit {
             descripcionDos: "Plazo:",
             valor2: data.resumenCredito.plazo + " meses" ,
             descripcionTres: "Tasa:",
-            valor3: data.resumenCredito.tasa + "%"
+            valor3: data.resumenCredito.tasa + "%",
+            descripcionCuatro: "",
+            valor4: ""
 
           },
           {
@@ -127,7 +131,11 @@ export class DetalleTrazabilidadComponent implements OnInit {
             descripcionUno: "Renovación:",
             valor: data.resumenCredito.renovacion,
             descripcionDos: "Segmento:",
-            valor2: data.resumenCredito.segmento
+            valor2: data.resumenCredito.segmento,
+            descripcionTres: "",
+            valor3: "",
+            descripcionCuatro: "",
+            valor4: ""
           },
           {
             icono: "heroicons_outline:office-building",
@@ -136,16 +144,24 @@ export class DetalleTrazabilidadComponent implements OnInit {
             descripcionUno: "Agenda:",
             valor: data.resumenGeneral.agenda,
             descripcionDos: "Asesor:",
-            valor2: data.resumenGeneral.asesorComercial
+            valor2: data.resumenGeneral.asesorComercial,
+            descripcionTres: "",
+            valor3: "",
+            descripcionCuatro: "",
+            valor4: ""
           },
           {
             icono: "mat_outline:location_on",
             color: "bg-purple-100 text-purple-800",
             label: "Ubicación: ",
-            descripcionUno: "Ubicación:",
-            valor: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase(),
-            descripcionDos: "Dirección:",
-            valor2: data.resumenCredito.direccionVivienda
+            descripcionUno: "Dirección:",
+            valor: data.resumenCredito.direccionVivienda, 
+            descripcionDos: "Ciudad:",
+            valor2: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase(),
+            descripcionTres: "",
+            valor3: "",
+            descripcionCuatro: "",
+            valor4: ""
           }
         ]
       },

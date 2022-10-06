@@ -13,7 +13,7 @@
                             <div class="flex flex-row gap-2 mb-2">
                                 <span class="text-gray-500">Estado:</span>
                                 <div class="flex flex-row w-full gap-2">
-                                    <div class="px-2 rounded" [ngStyle]="{'background-color': color}">
+                                    <div class="px-3 rounded-2xl border" [ngStyle]="{'background-color': color}">
                                         <span class="font-semibold text-white uppercase tracking-wider">{{estado}}</span>
                                     </div>
                                     <div>
@@ -59,17 +59,21 @@
                                     <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
                                 </div>
                                 <div class="flex flex-col justify-center ml-4 leading-none">
-                                    <div class="flex flex-row w-full gap-2">
+                                    <div class="flex flex-row w-full gap-2" *ngIf="campo.descripcionUno!='' && (campo.valor!='' || campo.valor>=0)">
                                         <div class="text-sm text-secondary">{{campo.descripcionUno}}</div>
                                         <div class="text-sm font-medium capitalize">{{campo.valor}}</div>
                                     </div>
-                                    <div class="flex flex-row w-full mt-2 gap-2">
+                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionDos!='' && (campo.valor2!='' || campo.valor2>=0)">
                                         <div class="text-sm text-secondary">{{campo.descripcionDos}}</div>
                                         <div class="text-sm font-medium capitalize">{{campo.valor2}}</div>
                                     </div>
-                                    <div class="flex flex-row w-full mt-2 gap-2">
+                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionTres!='' && (campo.valor3!='' || campo.valor3>=0)">
                                         <div class="text-sm text-secondary">{{campo.descripcionTres}}</div>
                                         <div class="text-sm font-medium lowercase">{{campo.valor3}}</div>
+                                    </div>
+                                    <div class="flex flex-row w-full mt-2 gap-2" *ngIf="campo.descripcionCuatro!='' && (campo.valor4!='' || campo.valor4>=0)">
+                                        <div class="text-sm text-secondary">{{campo.descripcionCuatro}}</div>
+                                        <div class="text-sm font-medium lowercase">{{campo.valor4}}</div>
                                     </div>
                                 </div>
                             </div>
