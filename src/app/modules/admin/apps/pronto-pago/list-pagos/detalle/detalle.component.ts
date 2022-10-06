@@ -11,6 +11,7 @@ import moment from 'moment';
 export class DetalleComponent implements OnInit {
 
   listado: any = [];
+  allComplete:boolean = false;
 
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -24,6 +25,10 @@ export class DetalleComponent implements OnInit {
     this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
       if (response) {
         this.listado = response.data;
+        for (let index = 0; index < this.listado.length; index++) {
+          const element = this.listado[index];
+          this.listado[index].item.nuevoValor = "nuevo valor";
+        }
         console.log(this.listado)
       } else {
         this.listado = [];
@@ -38,5 +43,26 @@ export class DetalleComponent implements OnInit {
     }
     return 'No registra';
   }
+
+  updateAllComplete() {
+    this.allComplete = this.listado != null && this.listado.every(t => (t.chequeado));
+  }
+
+  someComplete(): boolean {
+    if (this.listado== null) {
+      return false;
+    }
+    return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
+  }
+
+  setAll(completed: boolean) {
+    this.allComplete = completed;
+    if (this.listado == null) {
+      return;
+    }
+    this.listado.forEach(t => (t.chequeado = completed));
+  }
+
+
 
 }

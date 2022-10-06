@@ -6,7 +6,7 @@
                 <tr class="text-gray-700 border-t border-b">
                     <th class="py-3 text-sm my-3">
                         <div class="ml-2.5">
-                            <mat-checkbox></mat-checkbox>
+                            <mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox>
                         </div>
                     </th>
                 </tr>
@@ -16,7 +16,7 @@
                     <tr class="text-gray-700 border-t border-b">
                         <td class="py-3 text-sm my-3">
                             <div class="ml-2.5">
-                                <mat-checkbox></mat-checkbox>
+                                <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete()" [ngModelOptions]="{standalone: true}"></mat-checkbox>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
