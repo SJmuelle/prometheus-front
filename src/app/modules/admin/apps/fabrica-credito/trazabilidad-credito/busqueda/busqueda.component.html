@@ -120,8 +120,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <form [formGroup]="filtrarForm">
-                                <div class="absolute z-index bg-card anchoTitular shadow rounded-xl mt-3 border" *ngIf="tarjetaTitular">
+                            <div class="absolute z-index bg-card anchoTitular shadow rounded-xl mt-3 border" *ngIf="tarjetaTitular">
+                                <form [formGroup]="titularForm">
                                     <div class="mt-4 mb-3 flex flex-row justify-center w-full">
                                         <div class="flex flex-col w-3/4">
                                             <div class="w-full">
@@ -140,8 +140,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="border absolute z-index bg-card marginTarjetaNegocios anchoNegocios shadow rounded-xl mt-3" *ngIf="tarjetaNegocios">
+                                </form>
+                            </div>
+                            <div class="border absolute z-index bg-card marginTarjetaNegocios anchoNegocios shadow rounded-xl mt-3" *ngIf="tarjetaNegocios">
+                                <form [formGroup]="negocioForm">
                                     <div class="mt-4 mb-3 flex flex-row justify-center w-full">
                                         <div class="flex flex-col w-4/5">
                                             <div class="flex flex-row w-full justify-between gap-4">
@@ -191,8 +193,10 @@
                                             </div> -->
                                         </div>
                                     </div>
-                                </div>
-                                <div class="border absolute z-index bg-card anchoPagaduria shadow rounded-xl mt-3 marginTarjetaPagaduria" *ngIf="tarjetaPagaduria">
+                                </form>
+                            </div>
+                            <div class="border absolute z-index bg-card anchoPagaduria shadow rounded-xl mt-3 marginTarjetaPagaduria" *ngIf="tarjetaPagaduria">
+                                <form [formGroup]="pagaduriaForm">
                                     <div class="mt-4 mb-3 flex flex-row justify-center w-full">
                                         <div class="flex flex-col w-3/4">
                                             <div class="w-full">
@@ -206,8 +210,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

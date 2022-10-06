@@ -23,20 +23,30 @@ export class BusquedaComponent implements OnInit {
     tarjetaPagaduria: boolean;
     filtrarForm: FormGroup;
 
+    titularForm: FormGroup;
+    negocioForm: FormGroup;
+    pagaduriaForm: FormGroup;
+
     documento: string='';
     estado: string='';
     nombrePagaduria: string='';
 
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
-        this.filtrarForm = this.fb.group({
+        this.titularForm = this.fb.group({
             documento: [''],
-            nombre: [''],
+            nombre: ['']
+        })
+
+        this.negocioForm = this.fb.group({
             estado: [''],
             subestado: [''],
             // fechaInicial: [''],
             // fechaFinal: [''],
             codigoNeg:[''],
-            solicitud:[''],
+            solicitud:['']
+        })
+
+        this.pagaduriaForm = this.fb.group({
             codigoPag: ['']
         })
     }
@@ -52,31 +62,31 @@ export class BusquedaComponent implements OnInit {
             "details": [
                 {
                     "tipo": "CEDULA",
-                    "buscar": this.filtrarForm.value.documento
+                    "buscar": this.titularForm.value.documento
                 },
                 {
                     "tipo": "NOMBRE",
-                    "buscar": this.filtrarForm.value.nombre
+                    "buscar": this.titularForm.value.nombre
                 },
                 {
                     "tipo": "ESTADO",
-                    "buscar": this.filtrarForm.value.estado
+                    "buscar": this.negocioForm.value.estado
                 },
                 {
                     "tipo": "SUBESTADO",
-                    "buscar": this.filtrarForm.value.subestado
+                    "buscar": this.negocioForm.value.subestado
                 },
                 {
                     "tipo": "NEGOCIO",
-                    "buscar": this.filtrarForm.value.codigoNeg
+                    "buscar": this.negocioForm.value.codigoNeg
                 },
                 {
                     "tipo": "SOLICITUD",
-                    "buscar": this.filtrarForm.value.solicitud
+                    "buscar": this.negocioForm.value.solicitud
                 },
                 {
                     "tipo": "PAGADURIA",
-                    "buscar": this.filtrarForm.value.codigoPag
+                    "buscar": this.pagaduriaForm.value.codigoPag
                 }
             ]
         }
@@ -121,17 +131,17 @@ export class BusquedaComponent implements OnInit {
 
     borrarDocumento(){
         this.documento = '';
-        this.filtrarForm.reset();
+        this.titularForm.reset();
     }
 
     borrarEstado(){
         this.estado = '';
-        this.filtrarForm.reset();
+        this.negocioForm.reset();
     }
 
     borrarPagaduria(){
         this.nombrePagaduria = '';
-        this.filtrarForm.reset();
+        this.pagaduriaForm.reset();
     }
 
     mostrarDocumento(event: Event){
