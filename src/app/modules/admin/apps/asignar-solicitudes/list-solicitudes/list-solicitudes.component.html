@@ -8,16 +8,21 @@
                 <div class="flex flex-row gap-4">
                     <div class="w-56">
                         <mat-form-field appearance="fill" class="w-full">
+                            <mat-label>Buscar por: </mat-label>
+                            <mat-select formControlName="analista">
+                                <mat-option *ngFor="let item of opcionesBusqueda" [value]="item.id" (click)="elegirFiltro(item.id)">{{ item.descripcion }}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    <div class="w-56" *ngIf="busqueda=='AN'">
+                        <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Analista</mat-label>
                             <mat-select formControlName="analista">
                                 <mat-option *ngFor="let item of asesores" [value]="item.idusuario">{{ item.idusuario }}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="buscarForm.get('analista').hasError('required')">
-                                Se debe seleccionar un analista.
-                            </mat-error>
                           </mat-form-field>
                     </div>
-                    <div class="w-56">
+                    <div class="w-56" *ngIf="busqueda=='PE'">
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Periodo</mat-label>
                             <mat-date-range-input [rangePicker]="picker">
@@ -26,38 +31,26 @@
                             </mat-date-range-input>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-date-range-picker #picker></mat-date-range-picker>
-                            <mat-error *ngIf="buscarForm.get('fechaInicial').hasError('required')">
-                                Se debe ingresar una fecha inicial.
-                            </mat-error>
-                            <mat-error *ngIf="buscarForm.get('fechaFinal').hasError('required')">
-                                Se debe ingresar una fecha final.
-                            </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="w-56">
+                    <div class="w-56" *ngIf="busqueda=='UN'">
                         <mat-form-field appearance="fill" class="w-full ">
                             <mat-label>Unidad de negocio</mat-label>
                             <mat-select formControlName="unidad">
                               <mat-option *ngFor="let item of unidades" [value]="item.id">{{item.descripcion}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="buscarForm.get('unidad').hasError('required')">
-                                Se debe seleccionar una unidad de negocio.
-                            </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="w-56">
+                    <div class="w-56" *ngIf="busqueda=='AG'">
                         <mat-form-field appearance="fill" class="w-full ">
                             <mat-label>Agenda</mat-label>
                             <mat-select formControlName="agenda">
                               <mat-option *ngFor="let item of asignados" [value]="item.agenda">{{item.nombreAgenda}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="buscarForm.get('agenda').hasError('required')">
-                                Se debe seleccionar una agenda.
-                            </mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="mt-4">
-                        <button mat-raised-button class="text-white w-30 permitir bloquear" [disabled]="buscarForm.invalid" (click)="buscar()">
+                    <!-- <div class="mt-4">
+                        <button mat-raised-button class="text-white w-30 permitir bloquear" (click)="buscar()">
                             <div class="flex flex-row w-full justify-between gap-2">
                                 <div>
                                     <mat-icon svgIcon="heroicons_outline:search"></mat-icon>
@@ -67,17 +60,10 @@
                                 </div>
                             </div>
                         </button>
-                    </div>
-                    <div class="mt-4">
-                        <button mat-raised-button class="text-white w-36 permitir bloquear" [disabled]="buscarForm.invalid" (click)="limpiar()">
-                            <div class="flex flex-row w-full justify-between gap-2">
-                                <div>
-                                    <mat-icon svgIcon="cleaning_services"></mat-icon>
-                                </div>
-                                <div class="mt-1.5">
-                                    <span>Limpiar filtro</span>
-                                </div>
-                            </div>
+                    </div> -->
+                    <div class="mt-2.5">
+                        <button mat-fab color="primary" class="text-white" matTooltip="Limpiar filtro" (click)="limpiar()">
+                            <mat-icon svgIcon="cleaning_services"></mat-icon>
                         </button>
                     </div>
                 </div>
@@ -241,16 +227,6 @@
                                         </mat-icon>
                                         {{ cambiarFecha(item.fecha_re_asigado) }}
                                     </span>
-                                </div>
-                            </td>
-                            <td rowspan="2" class="py-3 text-sm my-3">
-                                <div class="flex flex-row justify-center gap-2">
-                                    <button mat-raised-button class="w-10 per-asig blo-asig" matTooltip="Asignar un analista" [disabled]="item.asesor!=''" (click)="asignarUna(item.numeroSolicitud)">
-                                        <mat-icon class="lg:icon-size-5 xl:icon-size-6" svgIcon="heroicons_outline:user-add"></mat-icon>
-                                    </button>
-                                    <button mat-raised-button class="w-10 per-reasig blo-reasig" matTooltip="Reasignar un analista" [disabled]="item.asesor==''" (click)="reasignarUna(item)">
-                                        <mat-icon class="lg:icon-size-5 xl:icon-size-6" svgIcon="heroicons_outline:refresh"></mat-icon>
-                                    </button>
                                 </div>
                             </td>
                         </tr>

@@ -33,13 +33,16 @@ export class ListSolicitudesComponent implements OnInit {
   filtrarTabla:string='';
   chequeada: boolean = false;
 
+  busqueda:string;
+  opcionesBusqueda: any[] = [];
+
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
-      analista: ['', [Validators.required]],
-      fechaInicial: ['', [Validators.required]],
-      fechaFinal: ['', [Validators.required]],
-      unidad: ['', [Validators.required]],
-      agenda: ['', [Validators.required]],
+      analista: [''],
+      fechaInicial: [''],
+      fechaFinal: [''],
+      unidad: [''],
+      agenda: [''],
     });
   }
 
@@ -50,11 +53,49 @@ export class ListSolicitudesComponent implements OnInit {
     this.consultarSolicitudes();
     this.consultarUnidades();
     this.maxFecha = new Date(this.fechActual);
+    this.opcionesBusqueda = [
+      {
+        "id":"AN",
+        "descripcion":"Analista"
+      },
+      {
+        "id":"PE",
+        "descripcion":"Periodo"
+      },
+      {
+        "id":"UN",
+        "descripcion":"Unidad de negocio"
+      },
+      {
+        "id":"AG",
+        "descripcion":"Agenda"
+      }
+    ]
   }
 
   limpiar(){
     this.formGroupDirective.resetForm()
     this.consultarSolicitudes();
+  }
+
+  elegirFiltro(eleccion){
+    switch (eleccion) {
+      case 'AN':
+        this.busqueda = 'AN';
+        break;
+      case 'PE':
+        this.busqueda = 'PE';
+        break;
+      case 'UN':
+        this.busqueda = 'UN';
+        break;
+      case 'AG':
+        this.busqueda = 'AG';
+        break;
+      default:
+        break;
+    }
+    console.log(eleccion)
   }
 
   updateAllComplete() {
@@ -193,29 +234,6 @@ export class ListSolicitudesComponent implements OnInit {
     });
   }
 
-  asignarUna(item){
-    let data = {
-      "tipoAsesor":"E",
-      "asesorNuevo":"",
-      "details":[{
-        "numeroSolicitud":item.toString()
-      }]
-    }
-    const dialogRef = this.dialog.open(AsignarComponent, {
-      width: '20%',
-      disableClose: true,
-      data: data
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result==true) {
-        this.consultarSolicitudes();
-        this.soliReasignar = [];
-        this.soliAsignar = [];
-        this.antiguos = [];
-      }
-    });
-  }
-
   reasignarVarias() {
     let data = {
       "tipoAsesor":"E",
@@ -226,29 +244,6 @@ export class ListSolicitudesComponent implements OnInit {
       width: '35%',
       disableClose: true,
       data: {enviar: data, asesoresActuales: this.antiguos}
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result==true) {
-        this.consultarSolicitudes();
-        this.soliReasignar = [];
-        this.soliAsignar = [];
-        this.antiguos = [];
-      }
-    });
-  }
-
-  reasignarUna(item) {
-    let data = {
-      "tipoAsesor":"E",
-      "asesorNuevo":"",
-      "details":[{
-        "numeroSolicitud":item.numeroSolicitud.toString()
-      }]
-    }
-    const dialogRef = this.dialog.open(ReasignarComponent, {
-      width: '20%',
-      disableClose: true,
-      data: {enviar: data, asesorActual: item.asesor}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result==true) {
