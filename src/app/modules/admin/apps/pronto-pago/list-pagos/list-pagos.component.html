@@ -23,45 +23,31 @@
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Telefono del propietario:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.celPropietario}}</span>
+                                <span class="text-md text-black font-medium capitalize">{{item.contacto}}</span>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Email del propietario:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.emailPropietario}}</span>
+                                <span class="text-md text-black font-medium capitalize">{{item.email}}</span>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Total pronto pago:</small>
-                                <span class="text-md text-black font-medium">$ {{item.valorProntoPago | number}}</span>
+                                <small class="text-accent-600 text-xs">Saldo total:</small>
+                                <span class="text-md text-black font-medium">$ {{item.saldoTotalPlanilla | number}}</span>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Total planillas:</small>
-                                <span class="text-md text-black font-medium">30</span>
+                                <span class="text-md text-black font-medium">{{item.totalPlanilla}}</span>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
                             <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle()">
+                                <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle(item.idPropietario)">
                                     <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Aceptar" class="bg-green-200 border">
-                                    <mat-icon svgIcon="heroicons_outline:check"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Rechazar" class="bg-red-200 border">
-                                    <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
                                 </button>
                             </div>
                         </td>

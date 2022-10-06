@@ -36,7 +36,8 @@ export class AppSettingsService {
 
     public transportadora = {
         url: {
-            base: EndPoints.uriTranspor('api/negociacion-pronto-pago')
+            base: EndPoints.uriTranspor('api-fintra/api/generic/qry/negociacion-pronto-pago'),
+            basePropietario:EndPoints.uriTranspor('api-fintra/api/generic/qry/propietario-pronto-pago'),
         }
     };
     /**

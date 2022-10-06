@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
 import moment from 'moment';
 
@@ -11,16 +12,18 @@ export class DetalleComponent implements OnInit {
 
   listado: any = [];
 
-  constructor(public pago: ProntoPagoService) { }
+  constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
+    @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
     this.consultarTransportadoras()
+    console.log("Id propietario ",this.data.idPropietario)
   }
 
   consultarTransportadoras(){
-    this.pago.getTransportadoras().subscribe((response: any) => {
+    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
       if (response) {
-        this.listado = response;
+        this.listado = response.data;
         console.log(this.listado)
       } else {
         this.listado = [];

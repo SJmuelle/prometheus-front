@@ -16,13 +16,13 @@ export class ListPagosComponent implements OnInit {
   constructor(public pago: ProntoPagoService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.consultarTransportadoras();
+    this.consultarPropietarios();
   }
 
-  consultarTransportadoras(){
-    this.pago.getTransportadoras().subscribe((response: any) => {
+  consultarPropietarios(){
+    this.pago.getPropietario().subscribe((response: any) => {
       if (response) {
-        this.listado = response;
+        this.listado = response.data;
         console.log(this.listado)
       } else {
         this.listado = [];
@@ -30,9 +30,10 @@ export class ListPagosComponent implements OnInit {
     });
   }
 
-  abrirDetalle(){
+  abrirDetalle(id){
     const dialogRef = this.dialog.open(DetalleComponent, {
-      width: '35%',
+      width: '70%',
+      data: {idPropietario: id}
     });
 
     dialogRef.afterClosed().subscribe(result => {});

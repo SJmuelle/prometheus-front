@@ -7,6 +7,12 @@
                     <tr class="text-gray-700 border-t border-b">
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
+                                <small class="text-accent-600 text-xs">Planilla:</small>
+                                <span class="text-md text-black font-medium capitalize">{{item.planilla}}</span>
+                            </div>
+                        </td>
+                        <td class="py-3 text-sm my-3">
+                            <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Transportadora:</small>
                                 <span class="text-md text-black font-medium capitalize">{{item.transportadora}}</span>
                             </div>
@@ -14,13 +20,13 @@
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Valor pronto pago:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.valorProntoPago}}</span>
+                                <span class="text-md text-black font-medium capitalize">$ {{item.valorPlanilla | number}}</span>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Fecha de pago:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.fechaProntoPago}}</span>
+                                <small class="text-accent-600 text-xs">Fecha de planilla:</small>
+                                <span class="text-md text-black font-medium capitalize">{{cambiarFecha(item.fechaPlanilla)}}</span>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
@@ -44,6 +50,6 @@
     </div>
 </div>
 <mat-dialog-actions align="end">
-    <button mat-button class="text-white color_fintra">Pagar</button>
+    <button mat-button class="text-white color_fintra">Aceptar</button>
     <button mat-button mat-dialog-close class="text-white bg-gray-400">Cancelar</button>
 </mat-dialog-actions>

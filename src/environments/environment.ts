@@ -19,7 +19,7 @@ export const environment = {
     // envioCorreo:'http://192.168.140.197:8084'
     envioCorreo:'http://prometheus.fintra.co:8443/apicredit',
     urlUltracem: 'https://prometheus.fintra.co:8443/api-fintra/api',
-    urlTransportadora: 'https://62fd0a386e617f88dea3b94e.mockapi.io/'
+    urlTransportadora: 'https://91b4-181-57-229-82.ngrok.io/'
 
 };
 
