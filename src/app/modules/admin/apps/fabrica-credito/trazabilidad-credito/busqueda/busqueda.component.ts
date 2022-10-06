@@ -15,6 +15,7 @@ export class BusquedaComponent implements OnInit {
     /* eslint-disable */
     listados = [];
     pagadurias = [];
+    agendas = [];
     estados = [];
     subestados = [];
     seleccionado: boolean = false;
@@ -38,6 +39,7 @@ export class BusquedaComponent implements OnInit {
         })
 
         this.negocioForm = this.fb.group({
+            agenda: [''],
             estado: [''],
             subestado: [''],
             // fechaInicial: [''],
@@ -55,44 +57,31 @@ export class BusquedaComponent implements OnInit {
         this.consulta('');
         this.consultaPagaduria('')
         this.consultaEstados('')
+        this.consultaAgendas('')
     }
 
     filtrar(){
         let data = {
             "details": [
                 {
-                    "tipo": "CEDULA",
-                    "buscar": this.titularForm.value.documento
-                },
-                {
-                    "tipo": "NOMBRE",
-                    "buscar": this.titularForm.value.nombre
-                },
-                {
-                    "tipo": "ESTADO",
-                    "buscar": this.negocioForm.value.estado
-                },
-                {
-                    "tipo": "SUBESTADO",
-                    "buscar": this.negocioForm.value.subestado
-                },
-                {
-                    "tipo": "NEGOCIO",
-                    "buscar": this.negocioForm.value.codigoNeg
-                },
-                {
-                    "tipo": "SOLICITUD",
-                    "buscar": this.negocioForm.value.solicitud
-                },
-                {
-                    "tipo": "PAGADURIA",
-                    "buscar": this.pagaduriaForm.value.codigoPag
+                    "tipo": "AGENDA",
+                    "buscar": this.negocioForm.value.agenda
                 }
             ]
         }
         console.log(data)
+        this.tarjetaTitular = false;
+        this.tarjetaNegocios = false;
+        this.tarjetaPagaduria = false;
+        this.seleccionado = false;
         this._utility.postQuery('/cre-consulta-comentarios-v2', data).subscribe((response: any) => {
             console.log(response)
+            if (response) {
+                this.listados = response.data;
+                console.log(this.listados);
+            } else {
+                this.listados = [];
+            }
         });
     }
 
@@ -102,6 +91,17 @@ export class BusquedaComponent implements OnInit {
                 this.pagadurias = response.data;
             } else {
                 this.pagadurias = [];
+            }
+        });
+    }
+
+    consultaAgendas(data){
+        this._utility.getQuery('consulta-lista-generica/TIPOS-AGENDA', data).subscribe((response: any) => {
+            if (response) {
+                this.agendas = response.data;
+                console.log(this.agendas);
+            } else {
+                this.agendas = [];
             }
         });
     }

@@ -149,13 +149,23 @@
                                             <div class="flex flex-row w-full justify-between gap-4">
                                                 <div class="w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
+                                                        <mat-label>Agenda</mat-label>
+                                                        <mat-select formControlName="agenda">
+                                                          <mat-option *ngFor="let item of agendas" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-row w-full justify-between gap-4">
+                                                <div class="w-full">
+                                                    <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Estado</mat-label>
                                                         <mat-select formControlName="estado">
                                                           <mat-option (click)="mostrarEstado(item.nombre); consultaSubestados(item.codigo)" *ngFor="let item of estados" [value]="item.codigo">{{item.nombre}}</mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
-                                                <div class="w-full">
+                                                <div class="w-full" *ngIf="negocioForm.value.estado!=''">
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Sub-estado</mat-label>
                                                         <mat-select formControlName="subestado">
