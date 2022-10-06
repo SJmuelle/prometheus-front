@@ -2,9 +2,23 @@
 <div mat-dialog-content>
     <div class="w-full overflow-y-auto">
         <table class="p-0">
+            <thead>
+                <tr class="text-gray-700 border-t border-b">
+                    <th class="py-3 text-sm my-3">
+                        <div class="ml-2.5">
+                            <mat-checkbox></mat-checkbox>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
             <tbody class="bg-white">
                 <ng-container *ngFor="let item of listado">
                     <tr class="text-gray-700 border-t border-b">
+                        <td class="py-3 text-sm my-3">
+                            <div class="ml-2.5">
+                                <mat-checkbox></mat-checkbox>
+                            </div>
+                        </td>
                         <td class="py-3 text-sm my-3">
                             <div class="flex flex-col">
                                 <small class="text-accent-600 text-xs">Planilla:</small>
