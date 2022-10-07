@@ -1,5 +1,7 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -13,7 +15,7 @@ export class DetalleComponent implements OnInit {
 
   listado: any = [];
   details: any = [];
-  allComplete:boolean = false;
+  allComplete: boolean = false;
 
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -22,15 +24,30 @@ export class DetalleComponent implements OnInit {
     this.consultarTransportadoras()
   }
 
-  updateAllComplete() {
-    this.listado = this.listado != null && this.listado.every(t => (t.completed));
+  consultarTransportadoras() {
+    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
+      if (response) {
+        this.listado = response.data;
+        this.listado.map(x =>  {
+          return x['selected'] = false
+        });
+      } else {
+        this.listado = [];
+      }
+    });
   }
 
-  someComplete(): boolean {
-    if (this.listado == null) {
-      return false;
+  agregarPlanilla(item, event) {
+    let id = {
+      "idProntoPago": item
     }
-    return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
+    if (event.checked == false) {
+      const dataBuscar = this.details.filter(id => id.idProntoPago == item);
+      let idxSoli = this.details.indexOf(dataBuscar[0]);
+      this.details.splice(idxSoli, 1);
+    } else {
+      this.details.push(id);
+    }
   }
 
   setAll(completed: boolean) {
@@ -38,33 +55,13 @@ export class DetalleComponent implements OnInit {
     if (this.listado == null) {
       return;
     }
-    this.listado.forEach(t => (t.completed = completed));
-  }
-
-  consultarTransportadoras(){
-    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
-      if (response) {
-        this.listado = response.data;
-      } else {
-        this.listado = [];
-      }
+    this.listado.map(x =>  {
+      return x.selected = completed
     });
+    console.log(this.listado);
   }
 
-  agregarPlanilla(item, event){
-    let id = {
-      "idProntoPago": item
-    }
-    if (event.checked==false) {
-      const dataBuscar = this.details.filter(id => id.idProntoPago == item);
-      let idxSoli = this.details.indexOf(dataBuscar[0]);
-      this.details.splice(idxSoli, 1);
-    }else{
-      this.details.push(id);
-    }
-  }
-
-  aceptar(){
+  aceptar() {
     let data = {
       "details": this.details
     }
@@ -102,7 +99,7 @@ export class DetalleComponent implements OnInit {
     });
   }
 
-  rechazar(){
+  rechazar() {
     this.pago.postRechazar(this.details).subscribe((response: any) => {
       if (response) {
         if (this.details.length > 1) {
@@ -137,7 +134,7 @@ export class DetalleComponent implements OnInit {
     });
   }
 
-  confirmarAcepto(){
+  confirmarAcepto() {
     Swal.fire({
       title: '¿Seguro de aceptar las planillas?',
       icon: 'question',
@@ -156,7 +153,7 @@ export class DetalleComponent implements OnInit {
     })
   }
 
-  confirmarRechazo(){
+  confirmarRechazo() {
     Swal.fire({
       title: '¿Seguro de rechazar las planillas?',
       icon: 'question',

@@ -6,7 +6,7 @@
                 <tr class="text-gray-700 border-t border-b">
                     <th class="py-3 text-sm my-3">
                         <div class="ml-2.5">
-                            <mat-checkbox [checked]="allComplete" [indeterminate]="someComplete()" (change)="setAll($event.checked)"></mat-checkbox>
+                            <mat-checkbox (change)="setAll($event.checked)" [checked]="allComplete"></mat-checkbox>
                         </div>
                     </th>
                 </tr>
@@ -16,7 +16,7 @@
                     <tr class="text-gray-700 border-t border-b">
                         <td class="py-3 text-sm my-3">
                             <div class="ml-2.5">
-                                <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item.idProntoPago, $event)"></mat-checkbox>
+                                <mat-checkbox [(ngModel)]="item.check" (change)="agregarPlanilla(item.idProntoPago, $event)"></mat-checkbox>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
