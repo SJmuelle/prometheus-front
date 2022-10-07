@@ -22,15 +22,29 @@ export class BusquedaComponent implements OnInit {
     tarjetaTitular: boolean;
     tarjetaNegocios: boolean;
     tarjetaPagaduria: boolean;
-    filtrarForm: FormGroup;
 
     titularForm: FormGroup;
     negocioForm: FormGroup;
     pagaduriaForm: FormGroup;
 
     documento: string='';
+    verDocumento: string='';
+    verNombreCliente: string='';
+    agenda: string='';
+    verAgenda: string='';
     estado: string='';
+    verEstado: string='';
+    subestado: string='';
+    verSubestado: string='';
+    verSolicitud: string='';
+    verCodigoNeg: string='';
     nombrePagaduria: string='';
+    verNombrePagaduria: string='';
+
+    dataFiltro: any = {"details":[]};
+    dataTitular: any = {"details":[]};
+    dataNegocios: any = {"details":[]};
+    dataPagaduria: any = {"details":[]};
 
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
         this.titularForm = this.fb.group({
@@ -44,8 +58,8 @@ export class BusquedaComponent implements OnInit {
             subestado: [''],
             // fechaInicial: [''],
             // fechaFinal: [''],
+            solicitud:[''],
             codigoNeg:[''],
-            solicitud:['']
         })
 
         this.pagaduriaForm = this.fb.group({
@@ -60,25 +74,124 @@ export class BusquedaComponent implements OnInit {
         this.consultaAgendas('')
     }
 
-    filtrar(){
-        let data = {
-            "details": [
-                {
-                    "tipo": "AGENDA",
-                    "buscar": this.negocioForm.value.agenda
-                }
-            ]
+    eliminarFiltro(){
+        this.borrarTitular()
+        this.borrarEstado()
+        this.borrarPagaduria()
+        this.dataFiltro.details = [];
+        this.consulta('');
+    }
+
+    filtroTitular(){
+        this.dataTitular.details = [];
+        this.tarjetaTitular = false;
+        this.seleccionado = false;
+        if (this.titularForm.value.documento!='') {
+            let data = {
+                "tipo": "IDENTIFICACION",
+                "buscar": this.titularForm.value.documento
+            }
+            this.mostrarDocumento()
+            this.mostrarNombreTitular()
+            this.dataTitular.details.push(data)
+            this.verDocumento = this.documento;
         }
-        console.log(data)
+
+        if (this.titularForm.value.nombre!='') {
+            let data = {
+                "tipo": "NOMBRE",
+                "buscar": this.titularForm.value.nombre
+            }
+            this.dataTitular.details.push(data)
+        }
+    }
+
+    filtroNegocio(){
+        this.dataNegocios.details = [];
+        this.tarjetaNegocios = false;
+        this.seleccionado = false;
+        if (this.negocioForm.value.agenda!='') {
+            let data = {
+                "tipo": "AGENDA",
+                "buscar": this.negocioForm.value.agenda
+            }
+            this.dataNegocios.details.push(data)
+            this.verAgenda = this.agenda;
+        }
+
+        if (this.negocioForm.value.estado!='') {
+            let data = {
+                "tipo": "ESTADO",
+                "buscar": this.negocioForm.value.estado
+            }
+            this.dataNegocios.details.push(data)
+            this.verEstado = this.estado;
+        }
+
+        if (this.negocioForm.value.subestado!='') {
+            let data = {
+                "tipo": "SUBESTADO",
+                "buscar": this.negocioForm.value.subestado
+            }
+            this.dataNegocios.details.push(data)
+            this.verSubestado = this.subestado;
+        }
+
+        if (this.negocioForm.value.solicitud!='') {
+            let data = {
+                "tipo": "SOLICITUD",
+                "buscar": this.negocioForm.value.solicitud
+            }
+            this.mostrarSolicitud()
+            this.dataNegocios.details.push(data)
+        }
+
+        if (this.negocioForm.value.codigoNeg!='') {
+            let data = {
+                "tipo": "NEGOCIO",
+                "buscar": this.negocioForm.value.codigoNeg
+            }
+            this.mostrarCodNeg()
+            this.dataNegocios.details.push(data)
+        }
+    }
+
+    filtroPagaduria(){
+        this.dataPagaduria.details = [];
+        this.tarjetaPagaduria = false;
+        this.seleccionado = false;
+        if (this.pagaduriaForm.value.codigoPag!='') {
+            let data = {
+                "tipo": "PAGADURIA",
+                "buscar": this.pagaduriaForm.value.codigoPag
+            }
+            this.dataPagaduria.details.push(data)
+            this.verNombrePagaduria = this.nombrePagaduria;
+        }
+    }
+
+    filtrar(){
+        this.dataFiltro.details = [];
         this.tarjetaTitular = false;
         this.tarjetaNegocios = false;
         this.tarjetaPagaduria = false;
         this.seleccionado = false;
-        this._utility.postQuery('/cre-consulta-comentarios-v2', data).subscribe((response: any) => {
-            console.log(response)
+        for (let index = 0; index < this.dataTitular.details.length; index++) {
+            const element = this.dataTitular.details[index];
+            this.dataFiltro.details.push(element)
+        }
+        for (let index = 0; index < this.dataNegocios.details.length; index++) {
+            const element = this.dataNegocios.details[index];
+            this.dataFiltro.details.push(element)
+        }
+        for (let index = 0; index < this.dataPagaduria.details.length; index++) {
+            const element = this.dataPagaduria.details[index];
+            this.dataFiltro.details.push(element)
+        }
+        console.log(this.dataFiltro);
+        this._utility.postQuery('/cre-consulta-comentarios-v2', this.dataFiltro).subscribe((response: any) => {
             if (response) {
                 this.listados = response.data;
-                console.log(this.listados);
             } else {
                 this.listados = [];
             }
@@ -129,27 +242,55 @@ export class BusquedaComponent implements OnInit {
         });
     }
 
-    borrarDocumento(){
-        this.documento = '';
+    borrarTitular(){
+        this.verDocumento = '';
+        this.verNombreCliente = '';
+        this.dataTitular.details = [];
         this.titularForm.reset();
     }
 
     borrarEstado(){
-        this.estado = '';
+        this.verEstado = '';
+        this.verAgenda = '';
+        this.verSubestado = '';
+        this.verSolicitud = '';
+        this.verCodigoNeg = '';
+        this.dataNegocios.details = [];
         this.negocioForm.reset();
     }
 
     borrarPagaduria(){
-        this.nombrePagaduria = '';
+        this.verNombrePagaduria = '';
+        this.dataPagaduria.details = [];
         this.pagaduriaForm.reset();
     }
 
-    mostrarDocumento(event: Event){
-        this.documento = (<HTMLInputElement>event.target).value
+    mostrarDocumento(){
+        this.documento = this.titularForm.value.documento
+    }
+
+    mostrarNombreTitular(){
+        this.verNombreCliente = this.titularForm.value.nombre
+    }
+
+    mostrarAgenda(value){
+        this.agenda = value;
     }
 
     mostrarEstado(value){
         this.estado = value
+    }
+
+    mostrarSubestado(value){
+        this.subestado = value
+    }
+
+    mostrarSolicitud(){
+        this.verSolicitud = this.negocioForm.value.solicitud
+    }
+
+    mostrarCodNeg(){
+        this.verCodigoNeg = this.negocioForm.value.codigoNeg
     }
 
     mostrarPagaduria(value){
@@ -202,7 +343,6 @@ export class BusquedaComponent implements OnInit {
             if (response) {
                 this.listados = response.data;
                 this.listadoCount = this.listados.length;
-                console.log(this.listados);
             } else {
                 this.listados = [];
                 this.listadoCount = this.listados.length;

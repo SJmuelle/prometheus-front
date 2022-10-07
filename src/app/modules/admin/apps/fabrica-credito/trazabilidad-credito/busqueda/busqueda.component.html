@@ -15,7 +15,7 @@
                     <!-- Title -->
                     <div>
                         <div class="flex-1 mx-3">
-                            <div class="text-3xl font-semibold tracking-tight leading-8">Busqueda de crédito
+                            <div class="text-3xl font-semibold tracking-tight leading-8">Búsqueda de crédito
                             </div>
                             <div class="flex items-center">
                                 <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
@@ -44,36 +44,87 @@
                         </div>
                     </div> -->
                     <div class="flex flex-row w-full justify-center">
-                        <div class="flex flex-col w-4/5 h-20">
+                        <div class="flex flex-col w-4/5 h-30">
                             <div class="flex flex-row h-full justify-between rounded-full border" [ngClass]="{'bg-hover':seleccionado}">
-                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer" 
-                                (click)="abrirTitular()" [ngClass]="{'bg-white shadow':tarjetaTitular}">
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3" 
+                                 [ngClass]="{'bg-white shadow':tarjetaTitular}">
                                     <div class="flex flex-row w-full justify-center">
                                         <div class="flex flex-col h-full justify-between">
-                                            <div class="text-lg font-semibold leading-tight text-center capitalize">
+                                            <div class="text-lg font-semibold leading-tight text-center capitalize cursor-pointer" (click)="abrirTitular()">
                                                 Titular
                                             </div>
-                                            <div *ngIf="documento!=''" class="mt-2 flex flex-row w-full gap-2">
-                                                <div class="text-sm text-secondary italic leading-tight text-center capitalize">
-                                                    {{documento}}
+                                            <div *ngIf="verDocumento!='' || verNombreCliente!=''" class="mt-2 flex flex-row w-full gap-2">
+                                                <div class="flex flex-col">
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verDocumento!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize font-medium">
+                                                            Identificación:
+                                                        </div>
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            {{verDocumento}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verNombreCliente!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize font-medium">
+                                                            Nombre:
+                                                        </div>
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            {{verNombreCliente}}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="bg-gray-200 flex flex-row h-4 w-4 items-center justify-center rounded-3xl" (click)="borrarDocumento()">
+                                                <div class="bg-gray-200 flex flex-row h-4 w-4 items-center justify-center rounded-3xl" (click)="borrarTitular()">
                                                     <mat-icon class="cursor-pointer icon-size-3" svgIcon="heroicons_outline:x"></mat-icon>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer" 
-                                (click)="abrirNegocios()" [ngClass]="{'bg-white shadow':tarjetaNegocios}">
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3" 
+                                 [ngClass]="{'bg-white shadow':tarjetaNegocios}">
                                     <div class="flex flex-row w-full justify-center">
                                         <div class="flex flex-col">
-                                            <div class="text-lg font-semibold leading-tight text-center capitalize">
+                                            <div class="text-lg font-semibold leading-tight text-center capitalize cursor-pointer" (click)="abrirNegocios()">
                                                 Negocios
                                             </div>
-                                            <div *ngIf="estado!=''" class="mt-2 flex flex-row w-full gap-2">
-                                                <div class="text-sm text-secondary italic leading-tight text-center capitalize">
-                                                    {{estado}}
+                                            <div *ngIf="verAgenda!='' || verEstado!='' || verSubestado!='' || verSolicitud!='' || verCodigoNeg!=''" class="mt-2 flex flex-row w-full gap-2">
+                                                <div class="flex flex-col">
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verAgenda!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center uppercase">
+                                                            {{verAgenda}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verEstado!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize font-medium">
+                                                            Estado:
+                                                        </div>
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            {{verEstado}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verSubestado!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize font-medium">
+                                                            Sub-estado:
+                                                        </div>
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            {{verSubestado}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verSolicitud!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            Solicitud:
+                                                        </div>
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            {{verSolicitud}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verCodigoNeg!=''">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            Negocio:
+                                                        </div>
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                            {{verCodigoNeg}}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="bg-gray-200 flex flex-row h-4 w-4 items-center justify-center rounded-3xl" (click)="borrarEstado()">
                                                     <mat-icon class="cursor-pointer icon-size-3" svgIcon="heroicons_outline:x"></mat-icon>
@@ -82,24 +133,21 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3 cursor-pointer" 
-                                (click)="abrirPagaduria()" [ngClass]="{'bg-white shadow':tarjetaPagaduria}">
+                                <div class="flex flex-col h-full justify-center hover:bg-hover rounded-full w-1/3" 
+                                [ngClass]="{'bg-white shadow':tarjetaPagaduria}">
                                     <div class="flex flex-row justify-center">
                                         <div class="flex flex-col">
-                                            <div class="text-lg font-semibold leading-tight text-center capitalize">
+                                            <div class="text-lg font-semibold leading-tight text-center capitalize cursor-pointer" (click)="abrirPagaduria()">
                                                 Pagaduría
                                             </div>
-                                            <div *ngIf="nombrePagaduria!=''" class="flex flex-row w-full justify-center gap-2">
-                                                <div class="w-3/5">
-                                                    <p class="m-0 text-sm text-secondary italic leading-tight text-center capitalize truncate" 
-                                                    [matTooltip]="nombrePagaduria" [ngClass]="{'mt-2':nombrePagaduria!=''}">{{nombrePagaduria}}</p>
+                                            <div *ngIf="verNombrePagaduria!=''" class="flex flex-row w-full justify-center gap-1">
+                                                <div class="w-4/5 h-10">
+                                                    <p class="m-0 text-sm text-secondary italic leading-tight text-center capitalize" 
+                                                    [matTooltip]="verNombrePagaduria" [ngClass]="{'mt-2':verNombrePagaduria!=''}">{{verNombrePagaduria}}</p>
                                                 </div>
-                                                <div class="w-1/5">
-                                                    <div class="mt-2 bg-gray-200 flex flex-row h-4 w-4 items-center justify-center rounded-3xl" (click)="borrarPagaduria()">
-                                                        <mat-icon class="cursor-pointer icon-size-3" svgIcon="heroicons_outline:x"></mat-icon>
-                                                    </div>
+                                                <div class="mt-2 bg-gray-200 flex flex-row h-4 w-4 items-center justify-center rounded-3xl" (click)="borrarPagaduria()">
+                                                    <mat-icon class="cursor-pointer icon-size-3" svgIcon="heroicons_outline:x"></mat-icon>
                                                 </div>
-                                                
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +158,7 @@
                                             <button mat-raised-button color="primary" (click)="filtrar()"><mat-icon svgIcon="heroicons_outline:search"></mat-icon>Buscar</button>
                                         </div>
                                         <div>
-                                            <button mat-raised-button color="primary">
+                                            <button mat-raised-button color="primary" (click)="eliminarFiltro()">
                                                 <div class="flex flex-row gap-2">
                                                     <mat-icon class="mt-2.5" svgIcon="clear_all"></mat-icon>
                                                     <p class="mt-3">Eliminar filtro</p>
@@ -120,14 +168,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="absolute z-index bg-card anchoTitular shadow rounded-xl lg:mt-24 border" *ngIf="tarjetaTitular">
+                            <div class="absolute z-index bg-card anchoTitular shadow rounded-xl lg:mt-24 xl:mt-32 border" *ngIf="tarjetaTitular">
                                 <form [formGroup]="titularForm">
                                     <div class="mt-4 mb-3 flex flex-row justify-center w-full">
                                         <div class="flex flex-col w-3/4">
                                             <div class="w-full">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>N° de identificación</mat-label>
-                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento" (input)="mostrarDocumento($event)">
+                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento">
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:identification"></mat-icon>
                                                   </mat-form-field>
                                             </div>
@@ -138,11 +186,14 @@
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:user"></mat-icon>
                                                 </mat-form-field>
                                             </div>
+                                            <div class="w-20 mt-2">
+                                                <button mat-raised-button color="primary" (click)="filtroTitular()">Añadir</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="border absolute z-index bg-card marginTarjetaNegocios anchoNegocios shadow rounded-xl lg:mt-24" *ngIf="tarjetaNegocios">
+                            <div class="border absolute z-index bg-card marginTarjetaNegocios anchoNegocios shadow rounded-xl lg:mt-24 xl:mt-32" *ngIf="tarjetaNegocios">
                                 <form [formGroup]="negocioForm">
                                     <div class="mt-4 mb-3 flex flex-row justify-center w-full">
                                         <div class="flex flex-col w-4/5">
@@ -151,7 +202,7 @@
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Agenda</mat-label>
                                                         <mat-select formControlName="agenda">
-                                                          <mat-option *ngFor="let item of agendas" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
+                                                          <mat-option (click)="mostrarAgenda(item.descripcionOpcion)" *ngFor="let item of agendas" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
@@ -161,7 +212,7 @@
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Estado</mat-label>
                                                         <mat-select formControlName="estado">
-                                                          <mat-option (click)="mostrarEstado(item.nombre); consultaSubestados(item.codigo)" *ngFor="let item of estados" [value]="item.codigo">{{item.nombre}}</mat-option>
+                                                          <mat-option (click)="consultaSubestados(item.codigo); mostrarEstado(item.nombre)" *ngFor="let item of estados" [value]="item.codigo">{{item.nombre}}</mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
@@ -169,7 +220,7 @@
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Sub-estado</mat-label>
                                                         <mat-select formControlName="subestado">
-                                                          <mat-option *ngFor="let item of subestados" [value]="item.codigo">{{item.nombre}}</mat-option>
+                                                          <mat-option (click)="mostrarSubestado(item.nombre)" *ngFor="let item of subestados" [value]="item.codigo">{{item.nombre}}</mat-option>
                                                         </mat-select>
                                                     </mat-form-field>
                                                 </div>
@@ -188,6 +239,9 @@
                                                     </mat-form-field>
                                                 </div>
                                             </div>
+                                            <div class="w-20 mt-2">
+                                                <button mat-raised-button color="primary" (click)="filtroNegocio()">Añadir</button>
+                                            </div>
                                             <!-- <div class="flex flex-row w-full mt-2">
                                                 <div class="w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
@@ -205,7 +259,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="border absolute z-index bg-card anchoPagaduria shadow rounded-xl marginTarjetaPagaduria lg:mt-24" *ngIf="tarjetaPagaduria">
+                            <div class="border absolute z-index bg-card anchoPagaduria shadow rounded-xl marginTarjetaPagaduria lg:mt-24 xl:mt-32" *ngIf="tarjetaPagaduria">
                                 <form [formGroup]="pagaduriaForm">
                                     <div class="mt-4 mb-3 flex flex-row justify-center w-full">
                                         <div class="flex flex-col w-3/4">
@@ -217,6 +271,9 @@
                                                       </mat-select>
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:office-building"></mat-icon>
                                                   </mat-form-field>
+                                            </div>
+                                            <div class="w-20 mt-2">
+                                                <button mat-raised-button color="primary" (click)="filtroPagaduria()">Añadir</button>
                                             </div>
                                         </div>
                                     </div>
