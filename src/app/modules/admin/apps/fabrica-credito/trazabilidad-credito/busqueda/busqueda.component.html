@@ -110,7 +110,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="flex flex-row justify-center w-full gap-1" *ngIf="verSolicitud!=''">
-                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize font-medium">
                                                             Solicitud:
                                                         </div>
                                                         <div class="text-sm text-secondary italic leading-tight text-center capitalize">
@@ -118,7 +118,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="flex flex-row justify-center w-full gap-1" *ngIf="verCodigoNeg!=''">
-                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize">
+                                                        <div class="text-sm text-secondary italic leading-tight text-center capitalize font-medium">
                                                             Negocio:
                                                         </div>
                                                         <div class="text-sm text-secondary italic leading-tight text-center capitalize">
@@ -283,7 +283,7 @@
                     </div>
                 </div>
                 <!-- Contacts list -->
-                <div class="w-full">
+                <div class="w-full" *ngIf="listados.length>0">
                     <table class="p-0">
                         <tbody class="bg-white">
                             <ng-container *ngFor="let item of listados; let i = index;">
@@ -533,12 +533,14 @@
                         <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no
                             contacts!</div>
                     </ng-template>
-
                 </div>
-
+                <div class="flex flex-row w-full justify-center" *ngIf="listados.length<1">
+                    <div class="flex flex-col">
+                        <img class="lg:56 xl:h-120 lg:w-56 xl:w-120" src="assets/images/animaciones/nodata.gif">
+                        <div class="text-gray-600 text-center mt-2 font-medium">No hay información para mostrar.</div>
+                    </div>
+                </div>
             </div>
-
         </mat-drawer-content>
-
     </mat-drawer-container>
 </div>
