@@ -23,6 +23,7 @@ export class ListSolicitudesComponent implements OnInit {
   buscarForm: FormGroup;
   formatoFechaInicial:any;
   formatoFechaFinal:any;
+  unidadNegocio:number;
   numSolicitud:number;
   numIdentificacion:number;
   soliAsignar: any[] = [];
@@ -32,8 +33,9 @@ export class ListSolicitudesComponent implements OnInit {
   maxFecha: Date;
   filtrarTabla:string='';
   chequeada: boolean = false;
+  dataFiltro:any;
 
-  busqueda:string;
+  busqueda:string = '';
   opcionesBusqueda: any[] = [];
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
@@ -74,28 +76,22 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   limpiar(){
-    this.formGroupDirective.resetForm()
+    this.busqueda = '';
+    this.dataFiltro = {
+      "unidadNegocio":"",
+      "entidad":"",
+      "analista":"",
+      "fechaInicial":"",
+      "fechaFinal":"",
+      "agenda":""
+    }
+    console.log(this.dataFiltro)
+    this.formGroupDirective.resetForm();
     this.consultarSolicitudes();
   }
 
   elegirFiltro(eleccion){
-    switch (eleccion) {
-      case 'AN':
-        this.busqueda = 'AN';
-        break;
-      case 'PE':
-        this.busqueda = 'PE';
-        break;
-      case 'UN':
-        this.busqueda = 'UN';
-        break;
-      case 'AG':
-        this.busqueda = 'AG';
-        break;
-      default:
-        break;
-    }
-    console.log(eleccion)
+    this.busqueda = eleccion;
   }
 
   updateAllComplete() {
@@ -184,17 +180,30 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   buscar(){
-    this.formatoFechaInicial = moment(this.buscarForm.value.fechaInicial).format("YYYY-MM-DD");
-    this.formatoFechaFinal = moment(this.buscarForm.value.fechaFinal).format("YYYY-MM-DD");
-    let data = {
-      "unidadNegocio":parseInt(this.buscarForm.value.unidad),
-      "entidad":"ASIGNACION_NEGOSIO",
-      "analista":this.buscarForm.value.analista,
-      "fechaInicial":this.formatoFechaInicial,
-      "fechaFinal":this.formatoFechaFinal,
-      "agenda":this.buscarForm.value.agenda
+    if ((this.buscarForm.value.fechaInicial=='' && this.buscarForm.value.fechaFinal=='') || this.buscarForm.value.unidad=='') {
+      this.dataFiltro = {
+        "unidadNegocio":this.buscarForm.value.unidad,
+        "entidad":"ASIGNACION_NEGOSIO",
+        "analista":this.buscarForm.value.analista,
+        "fechaInicial":this.buscarForm.value.fechaInicial,
+        "fechaFinal":this.buscarForm.value.fechaFinal,
+        "agenda":this.buscarForm.value.agenda
+      }
+      console.log("Aqui", this.dataFiltro)
+    } else {
+      this.formatoFechaInicial = moment(this.buscarForm.value.fechaInicial).format("YYYY-MM-DD");
+      this.formatoFechaFinal = moment(this.buscarForm.value.fechaFinal).format("YYYY-MM-DD");
+      this.dataFiltro = {
+        "unidadNegocio":parseInt(this.buscarForm.value.unidad),
+        "entidad":"ASIGNACION_NEGOSIO",
+        "analista":this.buscarForm.value.analista,
+        "fechaInicial":this.formatoFechaInicial,
+        "fechaFinal":this.formatoFechaFinal,
+        "agenda":this.buscarForm.value.agenda
+      }
+      console.log("Aqui", this.dataFiltro)
     }
-    this.asigService.getSolicitudes(data).subscribe((res: any) => {
+    this.asigService.getSolicitudes(this.dataFiltro).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
