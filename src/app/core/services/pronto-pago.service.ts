@@ -23,4 +23,18 @@ export class ProntoPagoService {
    public getPropietario(): Observable<any> {
     return this._http.get(this._appSettings.transportadora.url.basePropietario)
   }
+
+  /**
+   * @description: Aceptar el o los pronto pago
+   */
+  public postAceptar(data: any): Observable<any> {
+    return this._http.post(this._appSettings.transportadora.url.baseAceptar, data);
+  }
+
+  /**
+   * @description: Rechazar el o los pronto pago
+   */
+   public postRechazar(data: any): Observable<any> {
+    return this._http.post(this._appSettings.transportadora.url.baseRechazar, data);
+  }
 }

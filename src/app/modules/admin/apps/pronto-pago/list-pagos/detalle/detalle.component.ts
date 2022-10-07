@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-detalle',
@@ -11,6 +12,7 @@ import moment from 'moment';
 export class DetalleComponent implements OnInit {
 
   listado: any = [];
+  details: any = [];
   allComplete:boolean = false;
 
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
@@ -18,38 +20,14 @@ export class DetalleComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarTransportadoras()
-    console.log("Id propietario ",this.data.idPropietario)
-  }
-
-  consultarTransportadoras(){
-    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
-      if (response) {
-        this.listado = response.data;
-        for (let index = 0; index < this.listado.length; index++) {
-          const element = this.listado[index];
-          this.listado[index].item.nuevoValor = "nuevo valor";
-        }
-        console.log(this.listado)
-      } else {
-        this.listado = [];
-      }
-    });
-  }
-
-  cambiarFecha(date) {
-    if (date) {
-      moment.locale('es');
-      return moment(date).format('MMMM D YYYY')
-    }
-    return 'No registra';
   }
 
   updateAllComplete() {
-    this.allComplete = this.listado != null && this.listado.every(t => (t.chequeado));
+    this.listado = this.listado != null && this.listado.every(t => (t.completed));
   }
 
   someComplete(): boolean {
-    if (this.listado== null) {
+    if (this.listado == null) {
       return false;
     }
     return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
@@ -60,7 +38,150 @@ export class DetalleComponent implements OnInit {
     if (this.listado == null) {
       return;
     }
-    this.listado.forEach(t => (t.chequeado = completed));
+    this.listado.forEach(t => (t.completed = completed));
+  }
+
+  consultarTransportadoras(){
+    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
+      if (response) {
+        this.listado = response.data;
+      } else {
+        this.listado = [];
+      }
+    });
+  }
+
+  agregarPlanilla(item, event){
+    let id = {
+      "idProntoPago": item
+    }
+    if (event.checked==false) {
+      const dataBuscar = this.details.filter(id => id.idProntoPago == item);
+      let idxSoli = this.details.indexOf(dataBuscar[0]);
+      this.details.splice(idxSoli, 1);
+    }else{
+      this.details.push(id);
+    }
+  }
+
+  aceptar(){
+    let data = {
+      "details": this.details
+    }
+    this.pago.postAceptar(data).subscribe((response: any) => {
+      if (response) {
+        if (this.details.length > 1) {
+          Swal.fire(
+            '¡Correcto!',
+            'Las planillas han sido aceptadas de forma exitosa.',
+            'success'
+          )
+        } else {
+          Swal.fire(
+            '¡Correcto!',
+            'La planilla ha sido aceptada de forma exitosa.',
+            'success'
+          )
+        }
+        this.dialogRef.close(true);
+      } else {
+        Swal.fire(
+          'Error!',
+          'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+          'error'
+        )
+        this.dialogRef.close(true);
+      }
+    }, error => {
+      Swal.fire(
+        'Error!',
+        'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+        'error'
+      )
+      this.dialogRef.close(true);
+    });
+  }
+
+  rechazar(){
+    this.pago.postRechazar(this.details).subscribe((response: any) => {
+      if (response) {
+        if (this.details.length > 1) {
+          Swal.fire(
+            '¡Correcto!',
+            'Las planillas han sido rechazadas de forma exitosa.',
+            'success'
+          )
+        } else {
+          Swal.fire(
+            '¡Correcto!',
+            'La planilla ha sido rechazada de forma exitosa.',
+            'success'
+          )
+        }
+        this.dialogRef.close(true);
+      } else {
+        Swal.fire(
+          'Error!',
+          'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+          'error'
+        )
+        this.dialogRef.close(true);
+      }
+    }, error => {
+      Swal.fire(
+        'Error!',
+        'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+        'error'
+      )
+      this.dialogRef.close(true);
+    });
+  }
+
+  confirmarAcepto(){
+    Swal.fire({
+      title: '¿Seguro de aceptar las planillas?',
+      icon: 'question',
+      html: 'Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso',
+      showDenyButton: true,
+      confirmButtonText: 'Si',
+      denyButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.aceptar();
+      } else if (result.isDenied) {
+        this.details = [];
+        this.consultarTransportadoras();
+      }
+    })
+  }
+
+  confirmarRechazo(){
+    Swal.fire({
+      title: '¿Seguro de rechazar las planillas?',
+      icon: 'question',
+      html: 'Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso',
+      showDenyButton: true,
+      confirmButtonText: 'Si',
+      denyButtonText: 'No',
+      allowOutsideClick: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.rechazar();
+      } else if (result.isDenied) {
+        this.details = [];
+        this.consultarTransportadoras();
+      }
+    })
+  }
+
+
+  cambiarFecha(date) {
+    if (date) {
+      moment.locale('es');
+      return moment(date).format('MMMM D YYYY')
+    }
+    return 'No registra';
   }
 
 

@@ -23,7 +23,6 @@ export class ListPagosComponent implements OnInit {
     this.pago.getPropietario().subscribe((response: any) => {
       if (response) {
         this.listado = response.data;
-        console.log(this.listado)
       } else {
         this.listado = [];
       }
@@ -36,7 +35,11 @@ export class ListPagosComponent implements OnInit {
       data: {idPropietario: id}
     });
 
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result==true) {
+        this.consultarPropietarios();
+      }
+    });
   }
 
 }

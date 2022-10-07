@@ -38,6 +38,8 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uriTranspor('api-fintra/api/generic/qry/negociacion-pronto-pago'),
             basePropietario:EndPoints.uriTranspor('api-fintra/api/generic/qry/propietario-pronto-pago'),
+            baseAceptar:EndPoints.uriTranspor('api-fintra/api/generic/aceptacion-pronto-pago'),
+            baseRechazar:EndPoints.uriTranspor('api-fintra/api/generic/rechazar-negociacion-pronto-pago'),
         }
     };
     /**

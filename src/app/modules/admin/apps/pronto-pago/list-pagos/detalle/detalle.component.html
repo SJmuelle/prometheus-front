@@ -16,7 +16,7 @@
                     <tr class="text-gray-700 border-t border-b">
                         <td class="py-3 text-sm my-3">
                             <div class="ml-2.5">
-                                <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete()" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                <mat-checkbox [(ngModel)]="item.completed" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item.idProntoPago, $event)"></mat-checkbox>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
@@ -43,20 +43,6 @@
                                 <span class="text-md text-black font-medium capitalize">{{cambiarFecha(item.fechaPlanilla)}}</span>
                             </div>
                         </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Aceptar" class="bg-green-200 border">
-                                    <mat-icon svgIcon="heroicons_outline:check"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Rechazar" class="bg-red-200 border">
-                                    <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
                     </tr>
                 </ng-container>
             </tbody>
@@ -64,6 +50,7 @@
     </div>
 </div>
 <mat-dialog-actions align="end">
-    <button mat-button class="text-white color_fintra">Aceptar</button>
-    <button mat-button mat-dialog-close class="text-white bg-gray-400">Cancelar</button>
+    <button mat-button class="text-white permitirAceptar bloquear" [disabled]="details.length == 0" (click)="confirmarAcepto()">Aceptar</button>
+    <button mat-button class="text-white permitirRechazar bloquear" [disabled]="details.length == 0" (click)="confirmarRechazo()">Rechazar</button>
+    <button mat-button [mat-dialog-close]="false" class="text-white bg-gray-400">Cancelar</button>
 </mat-dialog-actions>
