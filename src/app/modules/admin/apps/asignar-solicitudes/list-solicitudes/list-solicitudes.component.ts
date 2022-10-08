@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import { AsignarComponent } from './asignar/asignar.component';
 import { AsignarVariosComponent } from './asignar-varios/asignar-varios.component';
-import { ReasignarComponent } from './reasignar/reasignar.component';
 import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.component';
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
@@ -21,9 +19,9 @@ export class ListSolicitudesComponent implements OnInit {
   unidades: any[] = [];
   antiguos: any[] = [];
   buscarForm: FormGroup;
-  formatoFechaInicial:any;
-  formatoFechaFinal:any;
-  unidadNegocio:number;
+  formatoFechaInicial:any = '';
+  formatoFechaFinal:any = '';
+  unidadNegocio:any = '';
   numSolicitud:number;
   numIdentificacion:number;
   soliAsignar: any[] = [];
@@ -180,28 +178,21 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   buscar(){
-    if ((this.buscarForm.value.fechaInicial=='' && this.buscarForm.value.fechaFinal=='') || this.buscarForm.value.unidad=='') {
-      this.dataFiltro = {
-        "unidadNegocio":this.buscarForm.value.unidad,
-        "entidad":"ASIGNACION_NEGOSIO",
-        "analista":this.buscarForm.value.analista,
-        "fechaInicial":this.buscarForm.value.fechaInicial,
-        "fechaFinal":this.buscarForm.value.fechaFinal,
-        "agenda":this.buscarForm.value.agenda
-      }
-      console.log("Aqui", this.dataFiltro)
-    } else {
+    if (this.buscarForm.value.fechaInicial!='' && this.buscarForm.value.fechaFinal!='') {
       this.formatoFechaInicial = moment(this.buscarForm.value.fechaInicial).format("YYYY-MM-DD");
       this.formatoFechaFinal = moment(this.buscarForm.value.fechaFinal).format("YYYY-MM-DD");
-      this.dataFiltro = {
-        "unidadNegocio":parseInt(this.buscarForm.value.unidad),
-        "entidad":"ASIGNACION_NEGOSIO",
-        "analista":this.buscarForm.value.analista,
-        "fechaInicial":this.formatoFechaInicial,
-        "fechaFinal":this.formatoFechaFinal,
-        "agenda":this.buscarForm.value.agenda
-      }
-      console.log("Aqui", this.dataFiltro)
+    }
+
+    if (this.buscarForm.value.unidad!='') {
+      this.unidadNegocio = parseInt(this.buscarForm.value.unidad)
+    }
+    this.dataFiltro = {
+      "unidadNegocio":this.unidadNegocio,
+      "entidad":"ASIGNACION_NEGOSIO",
+      "analista":this.buscarForm.value.analista,
+      "fechaInicial":this.formatoFechaInicial,
+      "fechaFinal":this.formatoFechaFinal,
+      "agenda":this.buscarForm.value.agenda
     }
     this.asigService.getSolicitudes(this.dataFiltro).subscribe((res: any) => {
       if (res) {

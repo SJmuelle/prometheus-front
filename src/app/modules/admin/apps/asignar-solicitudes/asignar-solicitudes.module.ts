@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { AsignarSolicitudesRoutingModule } from './asignar-solicitudes-routing.module';
 import { ListSolicitudesComponent } from './list-solicitudes/list-solicitudes.component';
-import { AsignarComponent } from './list-solicitudes/asignar/asignar.component';
-import { ReasignarComponent } from './list-solicitudes/reasignar/reasignar.component';
 import { ReasignarVariosComponent } from './list-solicitudes/reasignar-varios/reasignar-varios.component';
 
 import { FuseAlertModule } from '@fuse/components/alert';
@@ -31,8 +29,6 @@ import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asigna
 @NgModule({
   declarations: [
     ListSolicitudesComponent,
-    AsignarComponent,
-    ReasignarComponent,
     ReasignarVariosComponent,
     AsignarVariosComponent
   ],
