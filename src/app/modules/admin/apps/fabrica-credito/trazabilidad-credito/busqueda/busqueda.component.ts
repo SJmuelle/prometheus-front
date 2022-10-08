@@ -15,6 +15,7 @@ export class BusquedaComponent implements OnInit {
     /* eslint-disable */
     listados = [];
     pagadurias = [];
+    unidades = [];
     agendas = [];
     estados = [];
     subestados = [];
@@ -30,6 +31,8 @@ export class BusquedaComponent implements OnInit {
     documento: string='';
     verDocumento: string='';
     verNombreCliente: string='';
+    unidad: string='';
+    verUnidad: string='';
     agenda: string='';
     verAgenda: string='';
     estado: string='';
@@ -58,6 +61,7 @@ export class BusquedaComponent implements OnInit {
             subestado: [''],
             // fechaInicial: [''],
             // fechaFinal: [''],
+            unidad: [''],
             solicitud:[''],
             codigoNeg:[''],
         })
@@ -69,6 +73,7 @@ export class BusquedaComponent implements OnInit {
 
     ngOnInit(): void {
         this.consulta('');
+        this.consultaUnidades('')
         this.consultaPagaduria('')
         this.consultaEstados('')
         this.consultaAgendas('')
@@ -110,6 +115,15 @@ export class BusquedaComponent implements OnInit {
         this.dataNegocios.details = [];
         this.tarjetaNegocios = false;
         this.seleccionado = false;
+        if (this.negocioForm.value.unidad!='') {
+            let data = {
+                "tipo": "UNIDAD",
+                "buscar": this.negocioForm.value.unidad
+            }
+            this.dataNegocios.details.push(data)
+            this.verUnidad = this.unidad;
+        }
+
         if (this.negocioForm.value.agenda!='') {
             let data = {
                 "tipo": "AGENDA",
@@ -188,7 +202,6 @@ export class BusquedaComponent implements OnInit {
             const element = this.dataPagaduria.details[index];
             this.dataFiltro.details.push(element)
         }
-        console.log(this.dataFiltro);
         this._utility.postQuery('/cre-consulta-comentarios-v2', this.dataFiltro).subscribe((response: any) => {
             if (response) {
                 this.listados = response.data;
@@ -208,11 +221,20 @@ export class BusquedaComponent implements OnInit {
         });
     }
 
+    consultaUnidades(data){
+        this._utility.getQuery('consulta-lista-generica/UNIDAD-NEGOCIO', data).subscribe((response: any) => {
+            if (response) {
+                this.unidades = response.data;
+            } else {
+                this.unidades = [];
+            }
+        });
+    }
+
     consultaAgendas(data){
         this._utility.getQuery('consulta-lista-generica/TIPOS-AGENDA', data).subscribe((response: any) => {
             if (response) {
                 this.agendas = response.data;
-                console.log(this.agendas);
             } else {
                 this.agendas = [];
             }
@@ -250,6 +272,7 @@ export class BusquedaComponent implements OnInit {
     }
 
     borrarEstado(){
+        this.verUnidad = '';
         this.verEstado = '';
         this.verAgenda = '';
         this.verSubestado = '';
@@ -271,6 +294,10 @@ export class BusquedaComponent implements OnInit {
 
     mostrarNombreTitular(){
         this.verNombreCliente = this.titularForm.value.nombre
+    }
+
+    mostrarUnidad(value){
+        this.unidad = value;
     }
 
     mostrarAgenda(value){

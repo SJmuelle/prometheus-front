@@ -16,11 +16,21 @@
 }
 
 .marginTarjetaNegocios {
-    margin-left: 1%;
+    @media (min-width: 1280px) {
+        margin-left: 9%;
+    }
+    @media (min-width: 1440px) {
+        margin-left: 1%;
+    }        
 }
 
 .marginTarjetaPagaduria {
-    margin-left: 33%;
+    @media (min-width: 1280px) {
+        margin-left: 43%;
+    }
+    @media (min-width: 1440px) {
+        margin-left: 33%;
+    }
 }
 
 .anchoTitular {
