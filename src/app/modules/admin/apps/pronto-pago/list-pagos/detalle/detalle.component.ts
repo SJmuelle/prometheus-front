@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 export class DetalleComponent implements OnInit {
 
   listado: any = [];
+  listadoTrue: any = [];
+  listadoFalse: any = [];
   details: any = [];
   allComplete: boolean = false;
 
@@ -28,7 +30,6 @@ export class DetalleComponent implements OnInit {
     this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
       if (response) {
         this.listado = response.data;
-        console.log(this.listado);
       } else {
         this.listado = [];
       }
@@ -37,14 +38,22 @@ export class DetalleComponent implements OnInit {
 
   agregarPlanilla(item, event) {
     let id = {
-      "idProntoPago": item
+      "idProntoPago": item.idProntoPago
     }
     if (event.checked == false) {
-      const dataBuscar = this.details.filter(id => id.idProntoPago == item);
+      const dataBuscar = this.details.filter(id => id.idProntoPago == item.idProntoPago);
       let idxSoli = this.details.indexOf(dataBuscar[0]);
       this.details.splice(idxSoli, 1);
+      item.check = false;
     } else {
       this.details.push(id);
+      item.check = true;
+    }
+
+    if (this.details.length >= this.listado.length) {
+      this.allComplete = true;
+    } else {
+      this.allComplete = false; 
     }
   }
 
@@ -52,17 +61,22 @@ export class DetalleComponent implements OnInit {
     this.allComplete = this.listado != null && this.listado.every(t => (t.check));
   }
 
-  someComplete(): boolean {
-    if (this.listado == null) {
-      return false;
-    }
-    return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
-  }
-
   setAll(completed: boolean) {
     this.allComplete = completed;
     if (this.listado == null) {
       return;
+    }
+    if (this.allComplete == true) {
+      this.details = [];
+      for (const item of this.listado) {
+        this.details.push(
+          {
+            "idProntoPago": item.idProntoPago
+          }
+        )
+      }
+    }else{
+      this.details = [];
     }
     this.listado.forEach(t => (t.check = completed));
   }

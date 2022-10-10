@@ -2,7 +2,12 @@
 <div mat-dialog-content>
     <div class="flex flex-row w-full pb-4">
         <div class="ml-2.5">
-            <mat-checkbox (change)="setAll($event.checked)" [checked]="allComplete" [indeterminate]="someComplete()"></mat-checkbox>
+            <button mat-raised-button *ngIf="allComplete==false" class="text-white lg:w-32 xl:w-36 color_fintra" (click)="setAll(true)">
+                <span>Marcar todos</span>
+            </button>
+            <button mat-raised-button *ngIf="allComplete==true" class="text-white lg:w-32 xl:w-40 color_fintra" (click)="setAll(false)">
+                <span>Desmarcar todos</span>
+            </button>
         </div>
     </div>
     <div class="w-full overflow-y-auto">
@@ -12,7 +17,7 @@
                     <tr class="text-gray-700 border-t border-b">
                         <td class="py-3 text-sm my-3">
                             <div class="ml-2.5">
-                                <mat-checkbox [checked]="item.check" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item.idProntoPago, $event)"></mat-checkbox>
+                                <mat-checkbox [checked]="item.check" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item, $event)"></mat-checkbox>
                             </div>
                         </td>
                         <td class="py-3 text-sm my-3">
