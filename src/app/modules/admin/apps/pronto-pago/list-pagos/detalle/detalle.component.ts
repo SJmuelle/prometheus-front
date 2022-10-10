@@ -28,9 +28,7 @@ export class DetalleComponent implements OnInit {
     this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
       if (response) {
         this.listado = response.data;
-        this.listado.map(x =>  {
-          return x['selected'] = false
-        });
+        console.log(this.listado);
       } else {
         this.listado = [];
       }
@@ -50,16 +48,25 @@ export class DetalleComponent implements OnInit {
     }
   }
 
+  updateAllComplete() {
+    this.allComplete = this.listado != null && this.listado.every(t => (t.check));
+  }
+
+  someComplete(): boolean {
+    if (this.listado == null) {
+      return false;
+    }
+    return this.listado.filter(t => t.completed).length > 0 && !this.allComplete;
+  }
+
   setAll(completed: boolean) {
     this.allComplete = completed;
     if (this.listado == null) {
       return;
     }
-    this.listado.map(x =>  {
-      return x.selected = completed
-    });
-    console.log(this.listado);
+    this.listado.forEach(t => (t.check = completed));
   }
+
 
   aceptar() {
     let data = {
