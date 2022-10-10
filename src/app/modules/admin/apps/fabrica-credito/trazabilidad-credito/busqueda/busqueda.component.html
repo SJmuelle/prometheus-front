@@ -86,9 +86,9 @@
                                             <div class="text-lg font-semibold leading-tight text-center capitalize cursor-pointer" (click)="abrirNegocios()">
                                                 Negocios
                                             </div>
-                                            <div *ngIf="verAgenda!='' || verEstado!='' || verSubestado!='' || verSolicitud!='' || verCodigoNeg!=''" class="mt-2 flex flex-row w-full gap-2">
+                                            <div *ngIf="verUnidad!='' || verAgenda!='' || verEstado!='' || verSubestado!='' || verSolicitud!='' || verCodigoNeg!=''" class="mt-2 flex flex-row w-full gap-2">
                                                 <div class="flex flex-col">
-                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verAgenda!=''">
+                                                    <div class="flex flex-row justify-center w-full gap-1" *ngIf="verUnidad!=''">
                                                         <div class="text-sm text-secondary italic leading-tight text-center uppercase">
                                                             {{verUnidad}}
                                                         </div>
@@ -108,7 +108,7 @@
                                                     </div>
                                                     <div class="flex flex-row justify-center w-full gap-1" *ngIf="verSolicitud!=''">
                                                         <div class="text-sm text-secondary leading-tight text-center font-medium">
-                                                            N° de solicitud:
+                                                            N° solicitud:
                                                         </div>
                                                         <div class="text-sm text-secondary italic leading-tight text-center capitalize">
                                                             {{verSolicitud}}
@@ -172,14 +172,14 @@
                                             <div class="w-full">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>N° de identificación</mat-label>
-                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento">
+                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento" (input)="mostrarDocumento($event)">
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:identification"></mat-icon>
                                                   </mat-form-field>
                                             </div>
                                             <div class="w-full mt-2">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>Nombre del cliente</mat-label>
-                                                    <input matInput placeholder="Nombre" formControlName="nombre">
+                                                    <input matInput placeholder="Nombre" formControlName="nombre" (input)="mostrarNombreTitular($event)">
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:user"></mat-icon>
                                                 </mat-form-field>
                                             </div>
@@ -234,13 +234,13 @@
                                                 <div class="w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>N° de solicitud</mat-label>
-                                                        <input matInput placeholder="N° Solicitud" formControlName="solicitud">
+                                                        <input matInput placeholder="N° Solicitud" formControlName="solicitud" (input)="mostrarSolicitud($event)">
                                                     </mat-form-field>
                                                 </div>
                                                 <div class="w-full">
                                                     <mat-form-field class="w-full" appearance="fill">
                                                         <mat-label>Código</mat-label>
-                                                        <input matInput placeholder="Codigo" formControlName="codigoNeg">
+                                                        <input matInput placeholder="Codigo" formControlName="codigoNeg" (input)="mostrarCodNeg($event)">
                                                     </mat-form-field>
                                                 </div>
                                             </div>

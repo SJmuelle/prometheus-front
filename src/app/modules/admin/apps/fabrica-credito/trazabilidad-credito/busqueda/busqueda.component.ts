@@ -30,6 +30,7 @@ export class BusquedaComponent implements OnInit {
 
     documento: string='';
     verDocumento: string='';
+    nombreCliente: string='';
     verNombreCliente: string='';
     unidad: string='';
     verUnidad: string='';
@@ -39,7 +40,9 @@ export class BusquedaComponent implements OnInit {
     verEstado: string='';
     subestado: string='';
     verSubestado: string='';
+    solicitud: string='';
     verSolicitud: string='';
+    codigoNeg: string='';
     verCodigoNeg: string='';
     nombrePagaduria: string='';
     verNombrePagaduria: string='';
@@ -96,8 +99,6 @@ export class BusquedaComponent implements OnInit {
                 "tipo": "IDENTIFICACION",
                 "buscar": this.titularForm.value.documento
             }
-            this.mostrarDocumento()
-            this.mostrarNombreTitular()
             this.dataTitular.details.push(data)
             this.verDocumento = this.documento;
         }
@@ -108,6 +109,7 @@ export class BusquedaComponent implements OnInit {
                 "buscar": this.titularForm.value.nombre
             }
             this.dataTitular.details.push(data)
+            this.verNombreCliente = this.nombreCliente;
         }
     }
 
@@ -156,8 +158,8 @@ export class BusquedaComponent implements OnInit {
                 "tipo": "SOLICITUD",
                 "buscar": this.negocioForm.value.solicitud
             }
-            this.mostrarSolicitud()
             this.dataNegocios.details.push(data)
+            this.verSolicitud = this.solicitud;
         }
 
         if (this.negocioForm.value.codigoNeg!='') {
@@ -165,8 +167,8 @@ export class BusquedaComponent implements OnInit {
                 "tipo": "NEGOCIO",
                 "buscar": this.negocioForm.value.codigoNeg
             }
-            this.mostrarCodNeg()
             this.dataNegocios.details.push(data)
+            this.verCodigoNeg = this.codigoNeg;
         }
     }
 
@@ -265,35 +267,44 @@ export class BusquedaComponent implements OnInit {
     }
 
     borrarTitular(){
+        this.documento = '';
         this.verDocumento = '';
+        this.nombreCliente = '';
         this.verNombreCliente = '';
         this.dataTitular.details = [];
         this.titularForm.reset();
     }
 
     borrarEstado(){
+        this.unidad = '';
         this.verUnidad = '';
+        this.estado = '';
         this.verEstado = '';
+        this.agenda = '';
         this.verAgenda = '';
+        this.subestado = '';
         this.verSubestado = '';
+        this.solicitud = '';
         this.verSolicitud = '';
+        this.codigoNeg = '';
         this.verCodigoNeg = '';
         this.dataNegocios.details = [];
         this.negocioForm.reset();
     }
 
     borrarPagaduria(){
+        this.nombrePagaduria = '';
         this.verNombrePagaduria = '';
         this.dataPagaduria.details = [];
         this.pagaduriaForm.reset();
     }
 
-    mostrarDocumento(){
-        this.documento = this.titularForm.value.documento
+    mostrarDocumento(event: Event){
+        this.documento = (<HTMLInputElement>event.target).value
     }
 
-    mostrarNombreTitular(){
-        this.verNombreCliente = this.titularForm.value.nombre
+    mostrarNombreTitular(event: Event){
+        this.nombreCliente = (<HTMLInputElement>event.target).value
     }
 
     mostrarUnidad(value){
@@ -312,12 +323,12 @@ export class BusquedaComponent implements OnInit {
         this.subestado = value
     }
 
-    mostrarSolicitud(){
-        this.verSolicitud = this.negocioForm.value.solicitud
+    mostrarSolicitud(event: Event){
+        this.solicitud = (<HTMLInputElement>event.target).value
     }
 
-    mostrarCodNeg(){
-        this.verCodigoNeg = this.negocioForm.value.codigoNeg
+    mostrarCodNeg(event: Event){
+        this.codigoNeg = (<HTMLInputElement>event.target).value
     }
 
     mostrarPagaduria(value){
