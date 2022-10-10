@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Detalle de planilla</h1>
 <div mat-dialog-content>
-    <div class="flex flex-row w-full pb-4">
+    <div class="flex flex-row w-full pb-4" *ngIf="listado.length>0">
         <div class="ml-2.5">
             <button mat-raised-button *ngIf="allComplete==false" class="text-white lg:w-32 xl:w-36 color_fintra" (click)="setAll(true)">
                 <span>Marcar todos</span>
@@ -10,44 +10,37 @@
             </button>
         </div>
     </div>
-    <div class="w-full overflow-y-auto">
+    <div class="w-full overflow-y-auto" *ngIf="listado.length>0">
         <table class="p-0">
+            <thead class="bg-gray-100">
+                <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                    <th class="py-3 text-center"></th>
+                    <th class="py-3 text-center">Planilla</th>
+                    <th class="py-3 text-center">Transportadora</th>
+                    <th class="py-3 text-center">Valor pronto pago</th>
+                    <th class="py-3 text-center">Fecha de planilla</th>
+                </tr>
+            </thead>
             <tbody class="bg-white">
-                <ng-container *ngFor="let item of listado">
-                    <tr class="text-gray-700 border-t border-b">
-                        <td class="py-3 text-sm my-3">
-                            <div class="ml-2.5">
-                                <mat-checkbox [checked]="item.check" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item, $event)"></mat-checkbox>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Planilla:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.planilla}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Transportadora:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.transportadora}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Valor pronto pago:</small>
-                                <span class="text-md text-black font-medium capitalize">$ {{item.valorPlanilla | number}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Fecha de planilla:</small>
-                                <span class="text-md text-black font-medium capitalize">{{cambiarFecha(item.fechaPlanilla)}}</span>
-                            </div>
-                        </td>
-                    </tr>
-                </ng-container>
+                <tr class="text-gray-700" *ngFor="let item of listado">
+                    <td class="text-sm border py-3 text-center">
+                        <div class="ml-2.5">
+                            <mat-checkbox [checked]="item.check" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item, $event)"></mat-checkbox>
+                        </div>
+                    </td>
+                    <td class="text-sm border text-center">{{ item.planilla}}</td>
+                    <td class="text-sm border text-center">{{ item.transportadora }}</td>
+                    <td class="text-sm border text-center">$ {{ item.valorPlanilla | number }}</td>
+                    <td class="text-sm border text-center">{{cambiarFecha(item.fechaPlanilla)}}</td>
+                </tr>
             </tbody>
         </table>
+    </div>
+    <div class="flex flex-row w-full justify-center" *ngIf="listado.length<1">
+        <div class="flex flex-col">
+            <img class="lg:h-56 xl:h-80 lg:w-56 xl:w-90" src="assets/images/animaciones/nodata.gif">
+            <div class="text-gray-600 text-center mt-2 font-medium">No hay información para mostrar.</div>
+        </div>
     </div>
 </div>
 <mat-dialog-actions align="end">

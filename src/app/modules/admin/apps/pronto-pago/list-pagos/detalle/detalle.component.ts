@@ -168,7 +168,7 @@ export class DetalleComponent implements OnInit {
       if (result.isConfirmed) {
         this.aceptar();
       } else if (result.isDenied) {
-        this.details = [];
+        this.setAll(false);
         this.consultarTransportadoras();
       }
     })
@@ -187,7 +187,7 @@ export class DetalleComponent implements OnInit {
       if (result.isConfirmed) {
         this.rechazar();
       } else if (result.isDenied) {
-        this.details = [];
+        this.setAll(false);
         this.consultarTransportadoras();
       }
     })

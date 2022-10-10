@@ -1,58 +1,37 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100">
-        <h2 class="text-gray-900 col-span-12 mb-4">Transportadora</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Propietarios</h2>
     </div>
 
     <div class="mt-2 w-full overflow-y-auto">
         <table class="p-0">
+            <thead class="bg-gray-100">
+                <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                    <th class="py-3 text-center">Identificación</th>
+                    <th class="py-3 text-center">Nombre</th>
+                    <th class="py-3 text-center">Telefono</th>
+                    <th class="py-3 text-center">Email</th>
+                    <th class="py-3 text-center">Saldo total</th>
+                    <th class="py-3 text-center">Total planillas</th>
+                    <th class="py-3 text-center">Detalles</th>
+                </tr>
+            </thead>
             <tbody class="bg-white">
-                <ng-container *ngFor="let item of listado">
-                    <tr class="text-gray-700 border-t border-b">
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Identificación del propietario:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.identificacion}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Nombre del propietario:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.nombrePropietario}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Telefono del propietario:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.contacto}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Email del propietario:</small>
-                                <span class="text-md text-black font-medium capitalize">{{item.email}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Saldo total:</small>
-                                <span class="text-md text-black font-medium">$ {{item.saldoTotalPlanilla | number}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="flex flex-col">
-                                <small class="text-accent-600 text-xs">Total planillas:</small>
-                                <span class="text-md text-black font-medium">{{item.totalPlanilla}}</span>
-                            </div>
-                        </td>
-                        <td class="py-3 text-sm my-3">
-                            <div class="py-0 text-sm">
-                                <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle(item.idPropietario)">
-                                    <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </ng-container>
+                <tr class="text-gray-700" *ngFor="let item of listado">
+                    <td class="text-sm border py-3 text-center">{{ item.identificacion}}</td>
+                    <td class="text-sm border text-center">{{ item.nombrePropietario}}</td>
+                    <td class="text-sm border text-center">{{ item.contacto }}</td>
+                    <td class="text-sm border text-center lowercase">{{ item.email }}</td>
+                    <td class="text-sm border text-center">$ {{ item.saldoTotalPlanilla | number }}</td>
+                    <td class="text-sm border text-center">{{ item.totalPlanilla }}</td>
+                    <td class="text-sm border text-center">
+                        <div class="py-0 text-sm">
+                            <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle(item.idPropietario)">
+                                <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
