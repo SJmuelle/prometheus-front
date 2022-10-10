@@ -55,7 +55,7 @@ export class SolucionComponent implements OnInit {
         this._activatedRoute.params.subscribe((param) => {
             this.pqrid = param.idPQR;
         });
-        let url = `/informacion-pqrs/${this.pqrid}`;
+        let url = `informacion-pqrs/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 this.datos = response[0];
@@ -79,7 +79,7 @@ export class SolucionComponent implements OnInit {
                     detalle: '',
                     idSolucion: this.solucionCausal
                 };
-                url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
+                url = `pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
                 this._pqrService.getListados(url).subscribe((response: any) => {
                     this.solucionArea =
                         response.solucionArea == 1 ? true : false;
@@ -655,7 +655,7 @@ export class SolucionComponent implements OnInit {
 
     obtenerSoluciones(id) {
         if (this.idSolucion > 0) {
-            let url = `/select-solucion-causales/${id}`;
+            let url = `select-solucion-causales/${id}`;
             this._pqrService.getSolucionesCausales(url).subscribe((sol) => {
                 if (sol) {
                     this.listadoSoluciones = sol;

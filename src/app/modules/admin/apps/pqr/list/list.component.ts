@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
 
     Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
-          .getListados('/listar-pqrs-gestion')
+          .getListados('listar-pqrs-gestion')
           .subscribe((response: any) => {
             Swal.close();
             if (response) {

@@ -25,7 +25,7 @@ export class HojadevidaService {
 
     getInfoCliente(nit: any) {
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-cliente/${nit}`
+            environment.urlApi2 + `informacion-cliente/${nit}`
         );
     }
 

@@ -251,7 +251,7 @@ export class GestionPQRSComponent implements OnInit {
             },
         }).then((result) => {});
         //datos ingreso
-        let url = `/informacion-pqrs/${this.pqrid}`;
+        let url = `informacion-pqrs/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             Swal.close();
             if (response) {
@@ -266,13 +266,13 @@ export class GestionPQRSComponent implements OnInit {
         });
         //reposnable
         let usuario = JSON.parse(localStorage.getItem('usuario'));
-        url = `/pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
+        url = `pqrs-validar-permisos/${this.pqrid}/${usuario.id}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             this.aprobarComentario =
                 response.aprobarComentario == 1 ? true : false;
         });
 
-        url = `/listar-adjuntos-pqrs/${this.pqrid}`;
+        url = `listar-adjuntos-pqrs/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 this.listarAdjuntos = response;
@@ -281,7 +281,7 @@ export class GestionPQRSComponent implements OnInit {
             }
         });
 
-        url = `/listar-comentarios-seguimiento/${this.pqrid}`;
+        url = `listar-comentarios-seguimiento/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 this.listadoSeguimiento = response;
@@ -290,7 +290,7 @@ export class GestionPQRSComponent implements OnInit {
             }
         });
 
-        let urlproc = `/id_comentario_pqrs/${this.pqrid}`;
+        let urlproc = `id_comentario_pqrs/${this.pqrid}`;
         this._pqrService.getListados(urlproc).subscribe((response:any) =>{
             if (response) {
                 this.procedimientoid = response[0].id;
@@ -308,7 +308,7 @@ export class GestionPQRSComponent implements OnInit {
             case 2:
                 this.filtrarTablaGestion = '';
                 this.tamanoTablaGestion = 5;
-                url = `/informacion-historial-seguimiento/${this.pqrid}/0`;
+                url = `informacion-historial-seguimiento/${this.pqrid}/0`;
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Buscando información de PQRS',
@@ -369,7 +369,7 @@ export class GestionPQRSComponent implements OnInit {
             case 3:
                 this.filtrarTablaAsignaciones = '';
                 this.tamanoTablaAsignaciones = 5;
-                url = `/informacion-historial-asignaciones/${this.pqrid}`;
+                url = `informacion-historial-asignaciones/${this.pqrid}`;
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Buscando información de PQRS',
@@ -386,7 +386,7 @@ export class GestionPQRSComponent implements OnInit {
             case 4:
                 this.filtrarTablaAlertas = '';
                 this.tamanoTablaAlertas = 5;
-                url = `/informacion-historial-notificaciones/${this.pqrid}`;
+                url = `informacion-historial-notificaciones/${this.pqrid}`;
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Buscando información de PQRS',

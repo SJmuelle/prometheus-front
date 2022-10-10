@@ -6,9 +6,9 @@ export const environment = {
  production: true,
     userName: "APPWEB",
     password: btoa("123456"),
-    urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
-    urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/',
-    urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
+    urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
+    urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
+    urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic',
     urlApiNgrok: 'https://ultracem.ngrok.io/api-fintra/api',
 
     // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',

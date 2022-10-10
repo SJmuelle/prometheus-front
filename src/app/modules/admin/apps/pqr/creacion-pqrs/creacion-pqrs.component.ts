@@ -105,7 +105,7 @@ export class CreacionPQRSComponent implements OnInit {
 
     buscarListados() {
         //datos ingreso
-        let urlOrigenCliente = `/tk/informacion-pqrs-origen`;
+        let urlOrigenCliente = `tk/informacion-pqrs-origen`;
         this._pqrService
             .getListados(urlOrigenCliente)
             .subscribe((response: any) => {
@@ -115,7 +115,7 @@ export class CreacionPQRSComponent implements OnInit {
                     this.listadoOrigenCliente = [];
                 }
             });
-        let urlTIpoCliente = `/tk/informacion-tipos-cliente`;
+        let urlTIpoCliente = `tk/informacion-tipos-cliente`;
         this._pqrService
             .getListados(urlTIpoCliente)
             .subscribe((response: any) => {
@@ -125,7 +125,7 @@ export class CreacionPQRSComponent implements OnInit {
                     this.listadoTipoCliente = [];
                 }
             });
-        let urlLineaNegocio = `/informacion-lineas-negocio/${this.identificaiconCliente}`;
+        let urlLineaNegocio = `informacion-lineas-negocio/${this.identificaiconCliente}`;
         this._pqrService
             .getListados(urlLineaNegocio)
             .subscribe((response: any) => {
@@ -153,7 +153,7 @@ export class CreacionPQRSComponent implements OnInit {
             this.identificaiconCliente = null;
             this.datos.primerContacto = false;
         } else {
-            let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
+            let urlinfoCliente = `informacion-cliente/${this.identificaiconCliente}`;
             this._pqrService
                 .getListados(urlinfoCliente)
                 .subscribe((response: any) => {
@@ -194,7 +194,7 @@ export class CreacionPQRSComponent implements OnInit {
                 });
         }
         //detalle de PQRS
-        let urltipoPQRS = `/tk/select-tipo-pqrs`;
+        let urltipoPQRS = `tk/select-tipo-pqrs`;
         this._pqrService.getListados(urltipoPQRS).subscribe((response: any) => {
             if (response) {
                 this.listadoTipoPQRS = response;
@@ -317,7 +317,7 @@ export class CreacionPQRSComponent implements OnInit {
         if (this.identificaiconCliente.length == 0) {
             return;
         }
-        let urlinfoCliente = `/informacion-cliente/${this.identificaiconCliente}`;
+        let urlinfoCliente = `informacion-cliente/${this.identificaiconCliente}`;
         this._pqrService
             .getListados(urlinfoCliente)
             .subscribe((response: any) => {
