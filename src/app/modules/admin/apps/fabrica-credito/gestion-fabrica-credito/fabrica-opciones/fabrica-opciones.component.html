@@ -1,10 +1,14 @@
 <!-- Menu -->
 <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
     <div class="menu " *ngIf="fabricaDatos">
+
         <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" (click)="irAtras()"
             [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atrás">
             <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
         </button>
+
+
+
         <button mat-fab class="mx-1 bg-pink-500 roll-in-blurred-right"
             (click)="verCentrales = true;drawerCentrales.toggle();"
             [ngClass]="[animacionVer==true?'show':'hidden',(verCentrales==true?'bounce-top':'')]"
@@ -18,29 +22,35 @@
             matTooltip="Comentario">
             <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
         </button>
-        <ng-container>
+
+        <ng-container *ngIf="!permisoEditar">
             <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
                 [ngClass]="animacionVer==true?'show':'hidden'"
-                matTooltip="{{dialogMostrar=='SIGUIENTE'?'Siguiente':'Check list'}}">
+                matTooltip="{{dialogMostrar=='SIGUIENTE'?'Siguiente 22':'Check list'}}">
                 <mat-icon [svgIcon]="dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'">
                 </mat-icon>
                 <!-- <mat-icon svgIcon="next_plan"></mat-icon> -->
             </button>
+        </ng-container>
 
-            <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
-                (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
-                [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]">
-                <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
-            </button>
+
+        <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
+            (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
+            [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]">
+            <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
+        </button>
+
+
+        <ng-container *ngIf="!permisoEditar">
+            <ng-container *ngIf="fabricaDatos.agenda=='DE'">
+                <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
+                    (click)="abrirDecision()" [ngClass]="animacionVer==true?'show':'hidden'">
+                    <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
+                </button>
+            </ng-container>
         </ng-container>
-        <ng-container *ngIf="fabricaDatos.agenda=='DE'">
-            <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
-                (click)="abrirDecision()"
-                [ngClass]="animacionVer==true?'show':'hidden'"
-              >
-                <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
-            </button>
-        </ng-container>
+
+
         <button mat-fab class="mx-3 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
             <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
         </button>

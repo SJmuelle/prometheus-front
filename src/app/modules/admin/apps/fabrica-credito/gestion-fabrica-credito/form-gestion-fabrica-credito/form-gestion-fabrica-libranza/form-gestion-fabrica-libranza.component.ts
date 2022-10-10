@@ -351,7 +351,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         } else {
             this.form.controls['modificado'].setValue('S')
         }
-        debugger;
         if (
             this.validarCampos(this.form.value.pagaduria, this.fabricaDatos.pagaduria)
             &&
@@ -1172,7 +1171,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
 
     public validacion(tipo: string) {
-        debugger;
         if (this.form.controls['aplicaIngresos'].value == 'N') {
             this.form.controls['otrosIngresos'].setValue("0");
             this.form.controls['ingresos'].setValue("0");

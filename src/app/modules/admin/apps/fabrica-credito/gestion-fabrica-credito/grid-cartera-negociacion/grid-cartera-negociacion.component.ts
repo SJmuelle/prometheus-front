@@ -48,10 +48,8 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
 
   private getListadoCartera(numeroSolicitud: number): void {
-    this.listadoCartera$ = this._listadoCarteraService.getListadoCarteraNegociacion(numeroSolicitud);
-    // console.table( this.listadoCartera$)
-    this.validadorTotalLibranza()
-
+    this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
+    this.validadorTotalLibranza();
   }
 
   public editarCartera(item, tipo): void {
@@ -108,9 +106,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
   }
 
-  public suma(dato){
-    this.TotalSaldo+=dato;
-  }
+
 
   /**
  * @description: Obtiene la data para cargar al formulario

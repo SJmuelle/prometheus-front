@@ -21,23 +21,23 @@
                     <div class="flex">
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>Nit</mat-label>
-                            <input type="text" placeholder="" matInput [formControlName]="'nit'" autocomplete="false">
+                            <input type="text" placeholder="" matInput [formControlName]="'nit'" autocomplete="off">
                         </mat-form-field>
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>N° de obligación</mat-label>
-                            <input matInput type="text" [formControlName]="'numeroCuenta'">
+                            <input matInput type="text" [formControlName]="'numeroCuenta'" autocomplete="off">
                             <!-- <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon> -->
                         </mat-form-field>
                     </div>
                     <div class="flex">
                         <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="tipo=='D'">
                             <mat-label>Altura de mora</mat-label>
-                            <input matInput type="text" [formControlName]="'maximaMora'"
+                            <input matInput type="text" [formControlName]="'maximaMora'" autocomplete="off"
                                 (keyup)="form.controls['maximaMora'].setValue(utility.formatearNumero(form.value.maximaMora));">
                         </mat-form-field>
                         <mat-form-field class="w-full ml-2 fuse-mat-dense">
                             <mat-label>Saldo ($)</mat-label>
-                            <input matInput type="text" [formControlName]="'saldoActual'"
+                            <input matInput type="text" [formControlName]="'saldoActual'" autocomplete="off"
                                 (keyup)="form.controls['saldoActual'].setValue(utility.formatearNumero(form.value.saldoActual));">
                         </mat-form-field>
                     </div>

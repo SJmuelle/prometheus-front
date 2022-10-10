@@ -77,7 +77,7 @@
             <ng-container *ngIf="listadoCartera$ | async as items">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
-                        <td class="text-sm border text-left m-0 p-0">
+                        <td class="text-sm border text-left m-0 p-0  w-1/12">
                             <mat-form-field class="p-0 w-full mt-0 marginInput"
                                 *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                 <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
@@ -115,21 +115,28 @@
                                 </mat-select>
                             </mat-form-field>
                         </td>
-                        <td class="text-sm border w-0">
-                            <button mat-icon-button matTooltip="ver detalles" *ngIf="item.resultadoNegociacion!=''"
-                                (click)="item.mostrarDetalle=item.mostrarDetalle=='f'?'v':'f'">
+                        <td class="text-sm border w-0" *ngIf="item.gestionCartera=='COM'">
+                            <button mat-icon-button matTooltip="ver Detalles de la compra"  
+                                (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'" *ngIf="item.mostarDetalle=='N'">
                                 <mat-icon
-                                    [svgIcon]="item.mostrarDetalle=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                    [svgIcon]="item.mostrarEstado=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                </mat-icon>
+                            </button>
+                        </td>
+                        <td class="text-sm border w-0" *ngIf="item.gestionCartera=='NEG'">
+                            <button mat-icon-button matTooltip="ver Detalles negociacion" *ngIf="item.resultadoNegociacion!=''"
+                                (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                <mat-icon
+                                    [svgIcon]="item.mostrarEstado=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                 </mat-icon>
                             </button>
                         </td>
                     </tr>
-                    <ng-container *ngIf="item.mostrarDetalle=='v'">
+                    <ng-container *ngIf="item.mostrarEstado=='v' && item.mostrarDetalle=='N'">
                         <tr *ngIf="item.resultadoNegociacion=='EXITOSA'">
                             <td colspan="10" class="text-sm border text-left px-4 py-2 m-0">
                                 <div class="flex items-center">
                                     <div class="font-medium text-secondary">Detalles de la negociacion</div>
-
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
                                 <!-- Features -->
@@ -140,7 +147,7 @@
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
                                             Nombre del negociador: <strong
-                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                                class="capitalize">{{item.Detalle.nombreNegociador}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -148,7 +155,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
-                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                            Celular del negociador: <strong>{{item.Detalle.celularNegociador}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -156,7 +163,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor cartera real:
-                                            <strong>${{item.saldoValidado|number}}</strong>
+                                            <strong>${{item.Detalle.valorRealCartera|number}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -164,7 +171,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor negociación:
-                                            <strong>${{item.valorAComprar|number}}</strong>
+                                            <strong>${{item.Detalle.valorAComprar|number}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -172,7 +179,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor descuento:
-                                            <strong>${{item.valorDescuento|number}}</strong>
+                                            <strong>${{item.Detalle.valorDescuento|number}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -180,7 +187,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Valor consultores:
-                                            <strong>{{item.valorConsultores|number}}</strong>
+                                            <strong>{{item.Detalle.valorConsultores|number}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -188,7 +195,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">Porcentaje:
-                                            <strong>{{item.porcentajeConsultores|number}}%</strong>
+                                            <strong>{{item.Detalle.porcentajeConsultores|number}}%</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -196,7 +203,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
-                                            Fecha límite de pago: <strong>{{item.fechaLimitePago}}</strong>
+                                            Fecha límite de pago: <strong>{{item.Detalle.fechaLimitePago}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -212,17 +219,17 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
-                                            Fecha de negociación: <strong>{{item.fechaNegociacion}}</strong>
+                                            Fecha de negociación: <strong>{{item.Detalle.fechaNegociacion}}</strong>
                                         </div>
                                     </div>
-                                    <div class="flex items-center col-span-2">
+                                    <div class="flex items-center col-span-3">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
                                             <strong>Comentario: </strong>
                                             <br>
-                                            <p>{{item.comentario}}</p>
+                                            <p>{{item.Detalle.comentario}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +251,7 @@
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
                                             Nombre del negociador: <strong
-                                                class="capitalize">{{item.nombreNegociador}}</strong>
+                                                class="capitalize">{{item.Detalle.nombreNegociador}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center">
@@ -252,7 +259,7 @@
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
-                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
+                                            Celular del negociador: <strong>{{item.Detalle.celularNegociador}}</strong>
                                         </div>
                                     </div>
                                     <div class="flex items-center col-span-2">
@@ -262,12 +269,38 @@
                                         <div class="ml-2 text-1xl">
                                             <strong>Comentario: </strong>
                                             <br>
-                                            <p>{{item.comentario}}</p>
+                                            <p>{{item.Detalle.comentario}}</p>
                                         </div>
                                     </div>
                                 </div>
                             </td>
                         </tr>
+                    </ng-container>
+                    <ng-container *ngIf="item.mostrarEstado=='v' && item.mostrarDetalle=='S'">
+                        <tr>
+                            <td colspan="10" class="text-sm border text-left px-4 py-2 m-0" >
+                                <div class="flex items-center">
+                                    <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
+                                 
+                                    <div class="flex-auto ml-2 border-b-2"></div>
+                                </div>
+                                <div class="grid grid-cols-1 gap-y-4 mt-2 ">
+                                    <div class="flex items-center ">
+                                        <mat-icon class="icon-size-5 text-primary"
+                                            [svgIcon]="'heroicons_solid:check-circle'">
+                                        </mat-icon>
+                                        <div class="ml-2 text-1xl">
+                                            <strong>Comentario: </strong>
+                                            <br>
+                                            <p>
+                                                Esta obligación proviene de la entidad <strong>{{item.Detalle.entidad}}</strong>
+                                                {{item.Detalle.nit==''?'':'con el nit'}} <strong>{{item.Detalle.nit}}</strong> con el saldo de <strong>${{item.Detalle.saldoActual | number}}</strong> por el usuario  <strong class="uppercase">{{item.usuarioCreacion}}</strong> el día  <strong>{{item.fechaCreacion}}</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>  
                     </ng-container>
                 </ng-container>
             </ng-container>
@@ -302,7 +335,7 @@
                 <th class="px-4 py-3 text-center">Saldo real</th>
                 <th class="px-4 py-3 text-center">Altura de mora</th>
                 <th class="px-4 py-3 text-center">Estado</th>
-                <th class="px-4 py-3 text-center">Resultado de la negociacion</th>
+                <!-- <th class="px-4 py-3 text-center">Resultado de la negociacion</th> -->
                 <th class="px-4 py-3 text-center"></th>
             </tr>
         </thead>
@@ -337,170 +370,40 @@
                                 {{item.estadoCuenta==''?'AL DIA':item.estadoCuenta }}
                             </div>
                         </td>
-                        <td class="text-sm border text-left m-0 p-0">
-                            <mat-form-field class="p-0 w-full mt-0 marginInput"
-                                *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                <mat-select class="m-0 sinB text-center" [(ngModel)]="item.resultadoNegociacion"
-                                    [disabled]="item.gestionCartera==''"
-                                    (ngModelChange)="cambioEstadoNegoiciacion($event,item)">
-                                    <mat-option value="" disabled>Seleccione</mat-option>
-                                    <mat-option value="EXITOSA">Exitosa</mat-option>
-                                    <mat-option value="NO EXITOSA">No exitosa</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </td>
-                        <td class="text-sm border w-0">
-                            <button mat-icon-button matTooltip="ver detalles" *ngIf="item.resultadoNegociacion!=''"
-                                (click)="item.mostrarDetalle=item.mostrarDetalle=='f'?'v':'f'">
+                        <td class="text-sm border w-0" *ngIf="item.mostrarDetalle=='S'">
+                            <button mat-icon-button matTooltip="ver Detalles" 
+                                (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
                                 <mat-icon
-                                    [svgIcon]="item.mostrarDetalle=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                    [svgIcon]="item.mostrarEstado=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                 </mat-icon>
                             </button>
                         </td>
                     </tr>
-                    <ng-container *ngIf="item.mostrarDetalle=='v'">
-                        <tr *ngIf="item.resultadoNegociacion=='EXITOSA'">
-                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
+                    <ng-container *ngIf="item.mostrarEstado=='v' && item.mostrarDetalle=='S'">
+                        <tr>
+                            <td colspan="10" class="text-sm border text-left px-4 py-2 m-0" >
                                 <div class="flex items-center">
-                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
+                                    <div class="font-medium text-secondary">Detalles de la negociación a comprar</div>
+                                 
                                     <div class="flex-auto ml-2 border-b-2"></div>
                                 </div>
-                                <!-- Features -->
-                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Nombre del negociador: <strong
-                                                class="capitalize">{{item.nombreNegociador}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">Valor cartera real:
-                                            <strong>${{item.saldoValidado|number}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">Valor negociación:
-                                            <strong>${{item.valorAComprar|number}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">Valor descuento:
-                                            <strong>${{item.valorDescuento|number}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">Valor consultores:
-                                            <strong>{{item.valorConsultores|number}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">Porcentaje:
-                                            <strong>{{item.porcentajeConsultores|number}}%</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Fecha límite de pago: <strong>{{item.fechaLimitePago}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Usuario negociador: <strong>{{item.usuarioCreacion}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Fecha de negociación: <strong>{{item.fechaNegociacion}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center col-span-3">
+                                <div class="grid grid-cols-1 gap-y-4 mt-2 ">
+                                    <div class="flex items-center ">
                                         <mat-icon class="icon-size-5 text-primary"
                                             [svgIcon]="'heroicons_solid:check-circle'">
                                         </mat-icon>
                                         <div class="ml-2 text-1xl">
                                             <strong>Comentario: </strong>
                                             <br>
-                                            <p>{{item.comentario}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </td>
-                        </tr>
-                        <tr *ngIf="item.resultadoNegociacion=='NO EXITOSA'">
-                            <td colspan="8" class="text-sm border text-left px-4 py-2 m-0">
-                                <div class="flex items-center">
-                                    <div class="font-medium text-secondary">Detalles de la negociacion</div>
-                                    <div class="flex-auto ml-2 border-b-2"></div>
-                                </div>
-                                <!-- Features -->
-                                <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Nombre del negociador: <strong
-                                                class="capitalize">{{item.nombreNegociador}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            Celular del negociador: <strong>{{item.celularNegociador}}</strong>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center col-span-2">
-                                        <mat-icon class="icon-size-5 text-primary"
-                                            [svgIcon]="'heroicons_solid:check-circle'">
-                                        </mat-icon>
-                                        <div class="ml-2 text-1xl">
-                                            <strong>Comentario: </strong>
-                                            <br>
-                                            <p>{{item.comentario}}</p>
+                                            <p>
+                                                Esta obligación proviene de la entidad <strong>{{item.Detalle.entidad}}</strong>
+                                                {{item.Detalle.nit==''?'':'con el nit'}} <strong>{{item.Detalle.nit}}</strong> con el saldo de <strong>${{item.Detalle.saldoActual | number}}</strong> por el usuario  <strong class="uppercase">{{item.usuarioCreacion}}</strong> el día  <strong>{{item.fechaCreacion}}</strong>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
                             </td>
-                        </tr>
+                        </tr>  
                     </ng-container>
                 </ng-container>
             </ng-container>

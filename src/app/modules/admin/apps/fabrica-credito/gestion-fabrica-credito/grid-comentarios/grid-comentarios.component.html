@@ -19,13 +19,15 @@
                 <!-- Title -->
                 <h3 class="mb-2 text-gray-900">Comentarios</h3>
                 <span class="font-semibold text-gray-500">Trazabilidad de la solicitud desde los comentarios.</span>
+                <ng-container *ngIf="!permisoEditar">
+                    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
+                        <button mat-raised-button matTooltip="Nuevo comentario" [color]="'primary'"
+                            (click)="onComentario()">
+                            Nuevo comentario
+                        </button>
+                    </div>
+                </ng-container>
 
-                <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
-                    <button mat-raised-button matTooltip="Nuevo comentario" [color]="'primary'"
-                        (click)="onComentario()">
-                        Nuevo comentario
-                    </button>
-                </div>
             </div>
 
             <ng-container class="py-2.5" *ngIf="(comentarios$ | async) as comentar; else loading">

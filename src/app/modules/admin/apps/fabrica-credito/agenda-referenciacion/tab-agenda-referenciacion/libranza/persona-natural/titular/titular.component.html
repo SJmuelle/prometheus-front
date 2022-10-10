@@ -165,7 +165,7 @@
                         </h2>
                         <div class="grid grid-cols-12">
                             <div class="col-span-12">
-                                <ng-container *ngIf="mostrarDepartamento">
+                                <ng-container>
                                     <div class="flex justify-between items-center">
                                         <p *ngIf="fabricaDatos.descripcionDepartamento!==''">
                                             ¿El titular vive en el departamento
@@ -185,11 +185,10 @@
                                 </ng-container>
 
                                 <div class="-mx-3 md:flex mt-3 mb-2"
-                                    *ngIf="(!form.value.departamentoResidenciaValida_bool && mostrarDepartamento==true)">
+                                    *ngIf="!form.value.departamentoResidenciaValida_bool">
                                     <ng-container *ngIf="departamentos$ | async as departamentos">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                            <mat-label>Departamento {{(form.value.departamentoResidenciaValida_bool &&
-                                                mostrarDepartamento==true)}}</mat-label>
+                                            <mat-label>Departamento</mat-label>
                                             <mat-select (selectionChange)="seleccionDepartamento($event)"
                                                 [value]="'seleccione'"
                                                 [formControlName]="'departamentoResidenciaCorregido'">
@@ -205,7 +204,7 @@
                                     </ng-container>
                                 </div>
 
-                                <ng-container *ngIf="mostrarCiudad==true">
+                                <ng-container>
                                     <div class="flex justify-between items-center">
                                         <p>¿El titular vive en la ciudad de
                                             <strong>{{fabricaDatos.descripcionCiudad}}</strong>?
@@ -223,8 +222,7 @@
                                     </div>
                                 </ng-container>
 
-                                <div class="-mx-3 md:flex mt-3 mb-2"
-                                    *ngIf="((!form.value.ciudadResidenciaValida_bool) && (mostrarCiudad==true))">
+                                <div class="-mx-3 md:flex mt-3 mb-2" *ngIf="!form.value.ciudadResidenciaValida_bool">
                                     <ng-container *ngIf="ciudades$ | async as ciudades">
                                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                             <mat-label>Ciudad / Municipio</mat-label>
@@ -333,7 +331,6 @@
                             </div>
 
                             <ng-container *ngIf="destinoCredito$ | async as destinoCredito">
-
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
                                     *ngIf="!form.value.destinoCreditoCorregido_bool">
                                     <mat-label>El destino del crédito corregido es: </mat-label>
@@ -348,39 +345,14 @@
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>
-
                             </ng-container>
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense"
-                                *ngIf="form.controls['destinoCredito'].value=='OT'">
+                                *ngIf="form.controls['destinoCreditoCorregido'].value=='OT'">
                                 <mat-label>¿Otro? ¿Cual?</mat-label>
                                 <input matInput type="text" [formControlName]="'otroDestinoCredito'" [required]="true">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
-                            <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                              <mat-label>¿Cuánto tiene de inventario?</mat-label>
-                              <input matInput type="text" placeholder="" [formControl
-                              Name]="'inventarioActual'"
-                                  (keyup)="form.controls['inventarioActual'].setValue(utility.formatearNumero(form.value.inventarioActual)); ">
-                              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                              </mat-icon>
-                          </mat-form-field> -->
-                            <!-- 
-                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                              <mat-label>¿Cuánto dinero le debe a proveedores?</mat-label>
-                              <input matInput type="text" placeholder="" [formControlName]="'dineroProveedores'"
-                                  (keyup)="form.controls['dineroProveedores'].setValue(utility.formatearNumero(form.value.dineroProveedores)); ">
-                              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                              </mat-icon>
-                          </mat-form-field>
-                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                              <mat-label>¿Cuánto es el valor total de las cuotas a crédito? </mat-label>
-                              <input matInput type="text" placeholder=""
-                                  [formControlName]="'valorTotalCuotasCreditos'"
-                                  (keyup)="form.controls['valorTotalCuotasCreditos'].setValue(utility.formatearNumero(form.value.valorTotalCuotasCreditos)); ">
-                              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                              </mat-icon>
-                          </mat-form-field> -->
 
                             <div class="mt-3 px-3">
                                 <p class="labelTxt">¿Cuál es el motivo de las obligaciones en mora?</p>
@@ -403,15 +375,24 @@
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
                             Comentario
                         </h2>
-
                         <div class="flex justify-between items-center ">
-
+                            <p>¿Referencia validada?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="referenciaValidada_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center " *ngIf="!form.value.referenciaValidada_bool">
                             <mat-form-field class="w-1/2 fuse-mat-dense">
                                 <mat-label>¿Resultado de referenciación?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'referenciaValidada'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'resultadoReferencia'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option [value]="'E'">Exitoso
                                     </mat-option>
                                     <mat-option [value]="'N'">No exitoso
                                     </mat-option>
@@ -456,7 +437,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-2">
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
-                                <mat-label>Monto solicitido</mat-label>
+                                <mat-label>Monto solicitado</mat-label>
                                 <input matInput type="text" placeholder="" [formControlName]="'valorSolicitado'"
                                     (keyup)="formOferta.controls['valorSolicitado'].setValue(utility.formatearNumero(formOferta.value.valorSolicitado)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -565,20 +546,27 @@
                             </div> -->
 
 
-                            <div *ngIf="capacidadPago$ | async as capacidadPago" class="cardBorder relative rounded-xl m-7">
+                            <div *ngIf="capacidadPago$ | async as capacidadPago"
+                                class="cardBorder relative rounded-xl m-7">
+                              
                                 <div class="flex flex-col items-center mt-1 w-full spanFlotante">
                                     <div class="bg-blue-700 text-xl font-medium px-3 rounded-2xl text-white">
                                         Capacidad de pago</div>
                                 </div>
                                 <ng-container *ngFor="let item of capacidadPago.data; let i = index">
+
                                     <div class="flex flex-col divide-y font-medium m-3">
-                                        <div class="flex items-center justify-between">
+                                        <div class="mt-3 text-3xl font-bold tracking-tight leading-tight text-center ">
+                                            {{item.nombreOferta}}
+                                         </div>
+                                        <div class="flex items-center justify-between mt-3">
+                                       
                                             <div class="text-secondary">
                                                 <mat-icon class="icon-size-5 text-green-600"
                                                     [svgIcon]="'heroicons_solid:check'"></mat-icon>
                                                 Disponible cuota
                                             </div>
-                                            <div>
+                                            <div [ngClass]="item.validacion=='N'?'verde':'rojo'">
                                                 <ng-container *ngIf="item.disponibleCuota">
                                                     $
                                                     {{
@@ -596,41 +584,80 @@
                                             <div>${{ item.monto | number }}</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Plazo</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Plazo
+                                            </div>
                                             <div>{{ item.plazo }} meses</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Tasa</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Tasa
+                                            </div>
                                             <div> {{ item.tasa | number:'1.2-2' }} %</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Salario básico</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Salario básico
+                                            </div>
                                             <div> ${{ item.salarioBasico | number }}</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Comisiones extras</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Comisiones extras
+                                            </div>
                                             <div> ${{ item.comisionesHorasExtras | number}} </div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Descuentos de ley</div>
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Descuentos de ley
+                                            </div>
                                             <div>$ {{ item.descuentosLey |number}}</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Ingresos brutos</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Ingresos brutos
+                                            </div>
                                             <div> ${{ item.ingresosBrutos|number }}</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">50% ingresos brutos</div>
-                                            <div> ${{ item.mitadIngresosBrutos }}</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                50% ingresos brutos
+                                            </div>
+                                            <div> ${{ item.mitadIngresosBrutos |number}}</div>
                                         </div>
                                         <div class="flex items-center justify-between">
-                                            <div class="text-secondary">Factor embargo</div>
-                                            <div> ${{ item.factorEmbargo }}</div>
+
+                                            <div class="text-secondary">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'"></mat-icon>
+                                                Factor embargo
+                                            </div>
+                                            <div> ${{ item.factorEmbargo |number}}</div>
                                         </div>
                                     </div>
                                 </ng-container>
                             </div>
-                            <div *ngIf="listadoOferta$ | async as listadoOferta">
+                            <div *ngIf="listadoOferta$ | async as listadoOferta" class=" m-7">
                                 <div class="flex gap-3 pt-4 ">
                                     <ng-container *ngFor="let item of listadoOferta.data; let i = index ">
                                         <div class="cardBorder relative rounded-xl">
@@ -641,7 +668,7 @@
                                             </div>
 
                                             <div class="p-3 flex flex-col mt-2 divide-y font-medium">
-                                                <div class="flex flex-col items-center justify-center">
+                                                <div class="flex flex-col items-center justify-center my-2">
                                                     <button [disabled]="item.seleccionada == 'S'"
                                                         class="fuse-mat-button" mat-flat-button [color]="'primary'"
                                                         (click)="SelectOferta(item)">
@@ -649,7 +676,16 @@
                                                     </button>
                                                 </div>
                                                 <div class="flex  items-center justify-between">
-                                                    <div class="text-secondary">Valor estimado a desembolsar:</div>
+                                                    <div class="text-secondary">Monto:</div>
+                                                    <div>
+                                                        <ng-container *ngIf="item.valorDesembolsar">
+                                                            <b>${{item.monto | number}}
+                                                            </b>
+                                                        </ng-container>
+                                                    </div>
+                                                </div>
+                                                <div class="flex  items-center justify-between">
+                                                    <div class="text-secondary">Valor estimado desembolso</div>
                                                     <div>
                                                         <ng-container *ngIf="item.valorDesembolsar">
                                                             <b>${{item.valorDesembolsar | number}}
@@ -683,7 +719,7 @@
                                                 </div>
                                                 <div class="flex  items-center justify-between">
                                                     <div class="text-secondary">Saldo a recoger</div>
-                                                    <div>${{ item.garantia | number }}</div>
+                                                    <div>${{ item.saldoARecoger | number }}</div>
                                                 </div>
                                             </div>
 
