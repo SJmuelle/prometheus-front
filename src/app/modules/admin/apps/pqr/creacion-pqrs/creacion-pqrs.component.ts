@@ -752,6 +752,7 @@ export class CreacionPQRSComponent implements OnInit {
         this.causalesLegales.forEach((element) => {
             dataHijos.push({
                 empresa: 'FINV',
+                identificador:'pqrs',
                 campanha:
                     this.datos.campana == undefined ? '' : this.datos.campana,
                 origenPqrs: parseInt(this.datos.origen),
@@ -778,7 +779,7 @@ export class CreacionPQRSComponent implements OnInit {
                         : this.datos.descripcion,
                 idPqrspadre: '',
                 fechaSolucion: element.fechaParaSolucion,
-                adjuntos: this.crearJsonAdjuntos(),
+                file: this.crearJsonAdjuntos(),
                 primerContacto: false,
                 user: this.UsuarioSaggics,
             });
