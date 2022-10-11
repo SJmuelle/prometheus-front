@@ -274,6 +274,8 @@ export class SolucionComponent implements OnInit {
                         Swal.showLoading();
                     },
                 }).then((result) => {});
+                this.seguimiento.detalle = this.editor.editorElem.outerText;
+                console.log(this.seguimiento.detalle)
                 this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
                     console.log('Enviando solucion: ', this.seguimiento)
                     Swal.close();

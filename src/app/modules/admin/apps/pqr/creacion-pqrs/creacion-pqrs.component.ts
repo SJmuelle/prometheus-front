@@ -352,7 +352,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     buscarSelectDinamico(path, tipo, variable, titulo) {
-        let url = `/${path}/${tipo}`;
+        let url = `${path}/${tipo}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response.length != 0) {
                 this[variable] = response;

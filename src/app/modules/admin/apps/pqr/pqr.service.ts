@@ -57,7 +57,7 @@ export class PqrService {
     }
 
     setCausales() {
-        let url: string = `/tk/informacion-causales-pqrs`;
+        let url: string = `tk/informacion-causales-pqrs`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;
@@ -66,7 +66,7 @@ export class PqrService {
     }
 
     setProcedimientos() {
-        let url: string = `/tk/informacion-pqrs-procedimientos`;
+        let url: string = `tk/informacion-pqrs-procedimientos`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;
@@ -84,7 +84,7 @@ export class PqrService {
     }
 
     setResponsables() {
-        let url: string = `/tk/informacion-responsables-pqrs`;
+        let url: string = `tk/informacion-responsables-pqrs`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;

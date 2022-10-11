@@ -301,6 +301,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     onTabChanged(index): void {
+        this.listadoAdjuntos = [];
         this.tab = index;
         let url;
 
@@ -339,10 +340,10 @@ export class GestionPQRSComponent implements OnInit {
                         for (let index = 0; index < unicos.length; index++) {
                             const id = unicos[index];
                             this.comentarioid = id.id;
-                            this.comentariotipoid = id.tipo_comentario;
+                            this.comentariotipoid = id.id_tipo_comentario;
                             this.envio = id.envio;
                             this.motivo = id.detalle;
-                            console.log(this.comentarioid)
+                            console.log(this.motivo)
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
                                 if (response) {
@@ -356,10 +357,12 @@ export class GestionPQRSComponent implements OnInit {
                                         extension:this.listadoAdjuntos[0].extension,
                                         descripcion:this.listadoAdjuntos[0].descripcion
                                     }]
+                                    console.log(this.listadoAdjuntos)
                                 } else {
                                     this.listadoAdjuntos = [];
                                 }
                             });
+                            
                         }
                     }
                     
@@ -416,9 +419,9 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
-        console.log('Tu id es: ', item.tipo_comentario)
-        if (item.tipo_comentario==2) {
-            console.log("Estoy en solucion cliente: ", item.tipo_comentario)
+        console.log('Tu id es: ', item.id_tipo_comentario)
+        if (item.id_tipo_comentario==2) {
+            console.log("Estoy en solucion cliente: ", item.id_tipo_comentario)
             let url = '/pqrs-responder-solucion-cliente';
             let data = {
                 idComentario: parseInt(item.id),
@@ -485,7 +488,7 @@ export class GestionPQRSComponent implements OnInit {
                 });
 
         } else {
-            console.log("Estoy en solucion area: ", item.tipo_comentario)
+            console.log("Estoy en solucion area: ", item.id_tipo_comentario)
             let url = '/pqrs-responder-solucion';
             let data = {
                 idComentario: parseInt(item.id),
