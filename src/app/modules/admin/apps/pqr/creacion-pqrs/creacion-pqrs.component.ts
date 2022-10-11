@@ -61,6 +61,7 @@ export class CreacionPQRSComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        console.log("Aqui estas en los cambios correctos")
         this._activatedRoute.params.subscribe((param) => {
             if (param.cliente) {
                 this.identificaiconCliente = param.cliente;
