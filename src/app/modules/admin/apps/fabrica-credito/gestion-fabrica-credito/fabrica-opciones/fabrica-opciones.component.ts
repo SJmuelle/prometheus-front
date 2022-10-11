@@ -20,7 +20,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public fabricaDatos;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
-  public permisoEditar:boolean;
+  public permisoEditar: boolean;
   public verComentarios: boolean = false;
   public minimizarComentarios: boolean = false;
   public verDevoluciones: boolean = false;
@@ -34,10 +34,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private _dialog: MatDialog,
-    public _permisosService:PermisosService
-  ) { 
-    router.events.subscribe((url:any) => console.log(url));
-    this.permisoEditar=this._permisosService.permisoPorModuleTrazxabilidad(router.url)
+    public _permisosService: PermisosService
+  ) {
+    router.events.subscribe((url: any) => console.log(url));
+    this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
   }
 
 
@@ -113,7 +113,9 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         numeroSolicitud: this.numeroSolicitud,
         tipoDocumento: this.fabricaDatos.tipoDocumento,
         agenda: this.fabricaDatos.agenda,
-        unidadNegocio: this.fabricaDatos.unidadNegocio
+        unidadNegocio: this.fabricaDatos.unidadNegocio,
+        tipo: ''
+
       },
       disableClose: false,
     });
@@ -127,14 +129,36 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
      * @description: Modal de decision
      */
   public abrirDecision(): void {
-    const dialogRef = this._dialog.open(FormDecisionComponent, {
-      width: '30%',
-      data: this.fabricaDatos,
-      disableClose: false
+    let dialogRef;
+    dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
+      minWidth: '60%',
+      maxHeight: '80%',
+      data: {
+        numeroSolicitud: this.numeroSolicitud,
+        tipoDocumento: this.fabricaDatos.tipoDocumento,
+        agenda: this.fabricaDatos.agenda,
+        unidadNegocio: this.fabricaDatos.unidadNegocio,
+        tipo: 'D'
+      },
+      disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
-      this.irAtras();
-    })
+      
+      if(res==true){
+        const dialogRef = this._dialog.open(FormDecisionComponent, {
+          width: '30%',
+          data: this.fabricaDatos,
+          disableClose: false
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          if(res==true){
+            this.irAtras();
+          }
+        })
+      }
+    });
+
+
   }
 
   /**
