@@ -39,8 +39,9 @@ export class GestionPQRSComponent implements OnInit {
     filtrarTablaAsignaciones: string;
     tamanoTablaAsignaciones: number = 5;
     filtrarTablaGestion: string;
-    filtrarTablaSeguimiento: string;
     tamanoTablaGestion: number = 5;
+    filtrarTablaSeguimiento: string;
+    pageSeguimiento: number = 1;
     tamanoTablaSeguimiento: number = 5;
     seguimiento: {
         idPqrs: any;

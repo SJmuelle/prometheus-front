@@ -609,7 +609,8 @@
                                         <div class="mt-2 leading-tight sm:text-end sm:mt-0">
                                             <input class="border rounded p-2 bg-gray-100"
                                                 style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                                                name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaSeguimiento"
+                                                name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaSeguimiento" 
+                                                (ngModelChange)="page = 1"
                                                 placeholder="Filtrar...">
                                             <select name="tamanoTablaAsignaciones" id="tamanoTablaAsignaciones"
                                                 class="border rounded bg-gray-100" (change)="pageSeguimiento=1"

@@ -23,7 +23,7 @@ export class VerComentarioComponent implements OnInit {
   }
 
   buscarDescripcion(){
-    let url = `/select_comentario_seguimiento_id/${this.data}`;
+    let url = `select_comentario_seguimiento_id/${this.data}`;
     this._pqrService.getListados(url).subscribe((response: any) => {
       if (response) {
           this.descripcion = response[0].descripcion;

@@ -422,7 +422,8 @@ export class CreacionPQRSComponent implements OnInit {
                     hijos: this.crearJsonHijas(),
                     user: this.UsuarioSaggics
                 };
-                
+                console.log(data)
+                debugger
                 let url = '/crear-pqrs';
 
                 this.crearJsonHijas();
