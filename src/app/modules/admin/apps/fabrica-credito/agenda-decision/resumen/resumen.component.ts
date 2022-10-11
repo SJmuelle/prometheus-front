@@ -20,6 +20,7 @@ export class ResumenComponent implements OnInit {
   dataPolicitasAdmin: any;
   datos2: any[];
   verComentarios: boolean = false;
+  resumenCuentasMora:  any;
 
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
@@ -79,12 +80,17 @@ export class ResumenComponent implements OnInit {
           },
           {
             icono: "feather:dollar-sign",
+            color: "bg-yellow-100 text-yellow-800",
+            label: "Crédito: " + data.resumenGeneral.tipoCredito,
+            valor: "Destino: " + data.resumenGeneral.descripcionDestinoCredito + "",
+
+          },
+          {
+            icono: "feather:dollar-sign",
             color: "bg-green-100 text-green-800",
-            label: "Crédito: " + data.resumenGeneral.tipoCredito + data.resumenGeneral.destinoCredito,
             valor: "$" + data.resumenCredito.cupoTotal,
             valor2: "Plazo: " + data.resumenCredito.plazo + " meses",
             valor3: "Tasa: " + data.resumenCredito.tasa + "%"
-
           },
           {
             icono: "heroicons_outline:light-bulb",
@@ -155,36 +161,37 @@ export class ResumenComponent implements OnInit {
               {
                 icono: "heroicons_outline:briefcase",
                 color: "bg-blue-100 text-blue-800",
-                label: "",
-                valor: "<span class='text-sm font-medium text-secondary'>Pagaduria </span> " ,
-                valor2:  data.resumenCredito.cargo.toLowerCase(),
+                label: "Pagaduria",
+                // valor: "<span class='text-sm font-medium text-secondary'>Pagaduria </span> " ,
+                valor: data.resumenCredito.nombrePagaduria.toUpperCase(),
                 // valor3: "<span class='text-sm font-medium text-secondary'>Tipo de contrato: </span>" + data.resumenCredito.tipoContrato.toLowerCase()
               },
               {
                 icono: "heroicons_outline:light-bulb",
                 color: "bg-green-100 text-green-800",
                 label: "Cargo",
-                valor:  data.resumenCredito.cargo.toLowerCase(),
+                valor: data.resumenCredito.cargo.toLowerCase(),
 
               },
 
-              {
-                icono: "heroicons_outline:calendar",
-                color: "bg-purple-100 text-purple-800",
-                label: "Tipo de contrato",
-                valor:  data.resumenCredito.tipoContrato.toLowerCase()
-              },
               {
                 icono: "heroicons_outline:document-text",
+                color: "bg-purple-100 text-purple-800",
+                label: "Tipo de contrato",
+                valor: data.resumenCredito.descripcionTipoContrato.toLowerCase()
+              },
+              {
+                icono: "heroicons_outline:calendar",
                 color: "bg-pink-100 text-pink-800",
-                valor2: "<span class='text-sm font-medium text-secondary'>Fecha de vinculacion: </span>" + data.resumenCredito.fechaVinculacion,
-                valor3: "<span class='text-sm font-medium text-secondary'>Fecha de Finalización: </span>" + data.resumenCredito.fechaFinalizacionContrato       
+                label: "Fechas de contrato",
+                valor2: "<span class='text-sm font-medium text-secondary'>Vinculación: </span>" + data.resumenCredito.fechaVinculacion,
+                valor3: "<span class='text-sm font-medium text-secondary'>Finalización: </span>" + data.resumenCredito.fechaFinalizacionContrato
               },
               {
                 icono: "feather:dollar-sign",
-                color: "bg-green-100 text-green-800",
+                color: "bg-yellow-100 text-yellow-800",
                 label: "Salario",
-                valor:  this.separatos(data.resumenCredito.salarioBasico)
+                valor: this.separatos(data.resumenCredito.salarioBasico)
               },
             ]
           },
@@ -220,13 +227,6 @@ export class ResumenComponent implements OnInit {
             icono: "heroicons_outline:academic-cap",
             clase: "bg-blue-100",
             color: "bg-blue-100 text-blue-800",
-            label: "Peor calificación",
-            valor: "A"
-          },
-          {
-            icono: "heroicons_outline:academic-cap",
-            clase: "bg-blue-100",
-            color: "bg-blue-100 text-blue-800",
             label: "Cuotas",
             valor: "$" + data.resumenHdc.cuota
           },
@@ -235,7 +235,28 @@ export class ResumenComponent implements OnInit {
             clase: "bg-blue-100",
             color: "bg-blue-100 text-blue-800",
             label: "Máxima mora actual",
-            valor: "$" + data.resumenHdc.maximaMoraActual
+            valor: data.resumenHdc.maximaMoraActual
+          },
+          {
+            icono: "heroicons_outline:academic-cap",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
+            label: "Contador embargos",
+            valor: data.resumenHdc.contadorEmbargos
+          },
+          {
+            icono: "heroicons_outline:academic-cap",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
+            label: "Sumatoria embargos",
+            valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
+          },
+          {
+            icono: "heroicons_outline:academic-cap",
+            clase: "bg-blue-100",
+            color: "bg-blue-100 text-blue-800",
+            label: "Contador gestiones",
+            valor: data.resumenHdc.contadorGestiones
           }
         ]
       },
@@ -293,17 +314,24 @@ export class ResumenComponent implements OnInit {
         DatosCredito2.push(
           {
             titulo: "Capacidad de pago y oferta ",
+            descripcion: "Información capacidad de pago y oferta",
             tipo: "campos",
             icono: "attach_money",
             color: "text-purple-400",
-            descripcion: "",
             campos: [
               {
                 icono: "heroicons_outline:academic-cap",
                 clase: "bg-purple-100",
                 color: "bg-blue-100 text-blue-800",
+                label: "Score HDC",
+                valor: data.resumenIndicadores.score
+              },
+              {
+                icono: "heroicons_outline:academic-cap",
+                clase: "bg-purple-100",
+                color: "bg-blue-100 text-blue-800",
                 label: "Disponible de cuota",
-                valor: "$" +this.separatos(data.resumenIndicadores.disponibleCuota)
+                valor: "$" + this.separatos(data.resumenIndicadores.disponibleCuota)
               },
               {
                 icono: "heroicons_outline:academic-cap",
@@ -339,6 +367,7 @@ export class ResumenComponent implements OnInit {
 
     this.dataResumenTrazabilidad = data.resumenTrazabilidad;
     this.dataPolicitasAdmin = data.policitasAdmin;
+    this.resumenCuentasMora = data.resumenCuentasMora;
 
   }
 
@@ -357,7 +386,7 @@ export class ResumenComponent implements OnInit {
 
   }
 
-  separatos(numb){
+  separatos(numb) {
     let str = numb.toString().split(".");
     str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return str.join(".");

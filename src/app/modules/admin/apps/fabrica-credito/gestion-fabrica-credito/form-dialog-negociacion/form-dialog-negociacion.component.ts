@@ -20,9 +20,9 @@ export class FormDialogNegociacionComponent implements OnInit {
   public form: FormGroup;
   public unsubscribe$: Subject<any> = new Subject<any>();
   listadoTipo: any;
-  hoy= moment(new Date()).format("yyyy-MM-DD");
+  hoy = moment(new Date()).format("yyyy-MM-DD");
   manana: any;
-  
+
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogRef<FormDialogComentariosComponent>,
@@ -34,8 +34,8 @@ export class FormDialogNegociacionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.manana= moment().add(1, 'days');
-    this.manana=moment(this.manana).format("yyyy-MM-DD");
+    this.manana = moment().add(1, 'days');
+    this.manana = moment(this.manana).format("yyyy-MM-DD");
     console.log(this.data)
     this.crearFormulario();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
@@ -44,7 +44,7 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.resultadoNegociacion.setValue(this.data.evento);
     this.form.controls.porcentajeConsultores.setValue(50);
     this.form.controls.valorAComprarNoEditable.setValue(this.utility.formatearNumero(this.data.item.saldoActual))
-    this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(0+''))
+    this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(0 + ''))
     this.calcularDescuento();
   }
 
@@ -52,26 +52,26 @@ export class FormDialogNegociacionComponent implements OnInit {
    * @description: 
    */
   public calcularDescuento() {
-    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorAComprarNoEditable)))
+    let valorAComprarNoEditable = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)))
     let valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)))
     let valor = valorAComprarNoEditable - valorAComprar
     if (valor < 0) {
       this.form.controls.valorAComprar.setValue(this.utility.formatearNumero(valorAComprarNoEditable + ''))
       this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(0 + ''))
-    }else{
+    } else {
       this.form.controls.valorDescuento.setValue(this.utility.formatearNumero(valor + ''))
     }
     this.calcularValorConsultores();
   }
 
-    /**
-   * @description: 
-   */
-  public calcularValorConsultores(){
+  /**
+ * @description: 
+ */
+  public calcularValorConsultores() {
     let valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
-    let porcentajeConsultores=Number((this.form.value.porcentajeConsultores));
-    let valor=(valorDescuento*(porcentajeConsultores/100));
-    valor=Math.round(valor);
+    let porcentajeConsultores = Number((this.form.value.porcentajeConsultores));
+    let valor = (valorDescuento * (porcentajeConsultores / 100));
+    valor = Math.round(valor);
     this.form.controls.valorConsultores.setValue(this.utility.formatearNumero(valor + ''));
   }
 
@@ -85,29 +85,35 @@ export class FormDialogNegociacionComponent implements OnInit {
   }
 
   public onGuardar(): void {
-    
+
     if (this.form.valid) {
       const data: any = this.form.getRawValue();
       const valorAComprar = Number(this.utility.enviarNumero((this.form.value.valorAComprar)));
       const valorDescuento = Number(this.utility.enviarNumero((this.form.value.valorDescuento)));
       const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores)));
+      const valorRealCartera = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)));
 
       console.log(data);
-      if(valorAComprar==0){
-        Swal.fire('Información', 'El  valor a comprar debe ser mayor a 0, para que tenga una notificación', 'warning').then((resultado) => {
-         
-        });
-        return;
+      if (this.data.evento != 'NO EXITOSA') {
+        if (valorAComprar == 0) {
+          Swal.fire('Información', 'El  valor a comprar debe ser mayor a 0, para guardar la negociación.', 'warning').then((resultado) => {
+
+          });
+          return;
+        }
       }
+
       delete data.valorAComprar;
       delete data.valorDescuento;
       delete data.valorConsultores;
       delete data.valorAComprarNoEditable;
+      delete data.valorRealCartera;
       // delete data.porcentajeConsultores;
       const datosFormularios: any = {
         valorAComprar: valorAComprar,
         valorDescuento: valorDescuento,
         valorConsultores: valorConsultores,
+        valorRealCartera: valorRealCartera,
         ...data
       }
       console.log(datosFormularios);
@@ -146,7 +152,8 @@ export class FormDialogNegociacionComponent implements OnInit {
         celularNegociador: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(11)]],
         fechaLimitePago: ['0099-01-01'],
         valorAComprarNoEditable: [''],
-        porcentajeConsultores:[50],
+        valorRealCartera: ['', [Validators.required]],
+        porcentajeConsultores: [50],
         comentarioNegociacion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(800)]],
       });
     } else {
@@ -156,13 +163,14 @@ export class FormDialogNegociacionComponent implements OnInit {
         idRegistro: [''],
         resultadoNegociacion: [''],
         valorAComprarNoEditable: [''],
-        porcentajeConsultores:[50],
+        porcentajeConsultores: [50],
         valorAComprar: ['', [Validators.required]],
         valorDescuento: ['', [Validators.required]],
         valorConsultores: ['', [Validators.required]],
         nombreNegociador: ['', [Validators.required]],
         celularNegociador: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(11)]],
         fechaLimitePago: ['', [Validators.required]],
+        valorRealCartera: ['', [Validators.required]],
         comentarioNegociacion: [''],
       });
     }
@@ -174,7 +182,7 @@ export class FormDialogNegociacionComponent implements OnInit {
     this._listadoCarteraService.gestionCartera(data).pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
 
-        Swal.fire('Completado', 'Se guardo con exito el resultado de la negociacion', 'success').then((resultado) => {
+        Swal.fire('Completado', 'Se guardo con éxito el resultado de la negociación', 'success').then((resultado) => {
           if (resultado) {
             this.onCerrar();
             Swal.close();

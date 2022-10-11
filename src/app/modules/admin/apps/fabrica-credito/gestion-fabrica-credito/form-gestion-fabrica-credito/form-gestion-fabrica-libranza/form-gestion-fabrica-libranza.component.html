@@ -2,9 +2,9 @@
     <mat-accordion multi>
         <!--Panel Datos de la solicitud-->
         <mat-expansion-panel expanded>
-            <mat-expansion-panel-header>
+            <mat-expansion-panel-header *ngIf="fabricaDatos">
                 <mat-panel-title>
-                    Datos de la solicitud de Libranza  {{agenda_fabrica}}
+                    <strong class="mr-2">Datos de la solicitud de Libranza </strong> | {{fabricaDatos.nombreAgenda}}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -112,6 +112,14 @@
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Valor solicitado</mat-label>
+                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                            (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                            readonly>
+                        <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
+
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Monto crédito</mat-label>
                         <input matInput type="text" [formControlName]="'valorSolicitado'"
                             (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); "
                             (change)="validacion('MO')">
@@ -129,18 +137,18 @@
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Aplica saneamiento </mat-label>
                         <mat-select disabled [formControlName]="'sanamientoFinanciero'">
-                            <mat-option  value="S">Si aplica
+                            <mat-option value="S">Si aplica
                             </mat-option>
-                            <mat-option  value="N">No aplica
+                            <mat-option value="N">No aplica
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Aplica detalle oferta</mat-label>
                         <mat-select disabled [formControlName]="'aplicaDetalleOferta'">
-                            <mat-option  value="S">Si aplica
+                            <mat-option value="S">Si aplica
                             </mat-option>
-                            <mat-option  value="N">No aplica
+                            <mat-option value="N">No aplica
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -149,20 +157,22 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'aplicaCodeudor'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option  value="S">Si aplica
+                            <mat-option value="S">Si aplica
                             </mat-option>
-                            <mat-option  value="N">No aplica
+                            <mat-option value="N">No aplica
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                </div>
+                <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                        <mat-label>Credito titular lineas</mat-label>
+                        <mat-label>Crédito titular lineas</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoTitularLineas'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option  value="S">Si aplica
+                            <mat-option value="S">Si aplica
                             </mat-option>
-                            <mat-option  value="N">No aplica
+                            <mat-option value="N">No aplica
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -171,11 +181,25 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoCodeudorLineas'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option  value="S">Si aplica
+                            <mat-option value="S">Si aplica
                             </mat-option>
-                            <mat-option  value="N">No aplica
+                            <mat-option value="N">No aplica
                             </mat-option>
                         </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label [ngClass]="form.value.aplicaEmbargo!='N'?'text-red-700':''"> Embargo
+                        </mat-label>
+                        <mat-select   [value]="'seleccione'" disabled [formControlName]="'aplicaEmbargo'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            </mat-option>
+                            <mat-option value="S">Si aplica
+                            </mat-option>
+                            <mat-option value="N">No aplica
+                            </mat-option>
+                        </mat-select>
+                        <!-- <input matInput type="text" [formControlName]="'aplicaEmbargo'"
+                            disabled class="text-red-700"> -->
                     </mat-form-field>
                 </div>
             </div>
@@ -207,7 +231,8 @@
                                 <mat-label>No. de identificación</mat-label>
 
                                 <input matInput type="text" [formControlName]="'identificacion'" [readonly]="true">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'"></mat-icon>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
+                                </mat-icon>
                                 <mat-error *ngIf="soloNumero('identificacion')">
                                     Este campo solo acepta números.
                                 </mat-error>
@@ -313,7 +338,8 @@
                                 <ng-container *ngIf="generos$ | async as generos">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Género</mat-label>
-                                        <mat-select [value]="'seleccione'" [formControlName]="'genero'" (selectionChange)="validacion('GEN')">
+                                        <mat-select [value]="'seleccione'" [formControlName]="'genero'"
+                                            (selectionChange)="validacion('GEN')">
                                             <mat-option disabled [value]="'seleccione'">Seleccione
                                             </mat-option>
                                             <mat-option *ngFor="let genero of generos.data"
@@ -512,7 +538,8 @@
                             <ng-container *ngIf="pagaduria$ | async as pagaduria">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Empresa para la que trabaja</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'" (selectionChange)="validacion('PA')">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
@@ -543,7 +570,8 @@
                             <ng-container *ngIf="tipoContrato$ | async as tipoContrato">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Tipo de contrato</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'" (selectionChange)="validacion('TC')">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'"
+                                        (selectionChange)="validacion('TC')">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of tipoContrato.data" [value]="item.codigoOpcion">
@@ -618,14 +646,6 @@
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Descripción de otros ingresos </mat-label>
                                     <input matInput type="text" [formControlName]="'descripcionOtrosIngresos'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Ingresos adicionales</mat-label>
-                                    <input matInput type="text" [formControlName]="'otrosIngresos'"
-                                        (change)="validacion('IA')"
-                                        (keyup)="form.controls['otrosIngresos'].setValue(utility.formatearNumero(form.value.otrosIngresos)); ">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>
@@ -746,7 +766,7 @@
                         <ng-template matTabLabel>Análisis financiero</ng-template>
                     </mat-tab>
                 </ng-container> -->
-                <ng-container *ngIf="agenda_fabrica != 'GC' && agenda_fabrica != 'CM'" >
+                <ng-container *ngIf="agenda_fabrica != 'GC' && agenda_fabrica != 'CM'">
                     <mat-tab>
                         <ng-template matTabLabel>Politicas</ng-template>
                         <app-grid-politicas></app-grid-politicas>
@@ -756,7 +776,7 @@
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera></app-grid-cartera>
                 </mat-tab>
-                <mat-tab  *ngIf="agenda_fabrica != 'CM'">
+                <mat-tab *ngIf="agenda_fabrica != 'CM'">
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>
