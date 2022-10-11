@@ -1,0 +1,51 @@
+<div class="flex flex-col justify-center w-full">
+    <div class="mx-auto">
+        <img src="https://edu.fintra.co/assets/images/preferidos.png" alt="plan preferido">
+    </div>
+
+    <div class="grid gap-3 m-5 justify-center">
+        <!-- <mat-card class="example-card" >
+            <img  [src]="item.iconoProducto">
+            <mat-card-content>
+                <p>
+                   {{urlProducto}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button>
+                    <mat-icon svgIcon="mat_outline:content_copy"></mat-icon>
+                </button>
+                <button mat-button>SHARE</button>
+            </mat-card-actions>
+        </mat-card> -->
+
+        <ng-container *ngFor="let item of listado">
+            <ng-container>
+                <fuse-card>
+                <div>
+                    <img class="p-3 w-24 borderImagewn" [src]="item.iconoProducto" alt="Card cover image">
+                </div>
+                <div class="flex flex-col flex-auto">
+                    <div class=" caja flex m-3 text-md"  [style.background]="item.colorProducto">
+                        <p  class="truncate  mt-3 w-96">{{item.urlProducto}}</p> 
+                        <div class="flex gap-3 justify-content-end ml-5 mt-1 text-white">
+                            <button mat-mini-fab color="gray"  [cdkCopyToClipboard]="item.codigoReferido"   matTooltip="Copiar código del asesor" >
+                                <mat-icon svgIcon="mat_outline:person_pin"></mat-icon>
+                            </button>
+                            <button mat-mini-fab color="gray"  [cdkCopyToClipboard]="item.urlProducto"  matTooltip="Copiar url">
+                                <mat-icon svgIcon="mat_outline:content_copy"></mat-icon>
+                            </button>
+                            <button mat-mini-fab color="gray" (click)="nuevaPages(item.urlProducto)"  matTooltip="Redireccionar">
+                                <mat-icon svgIcon="mat_outline:call_missed_outgoing"></mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </fuse-card>
+            </ng-container>
+        </ng-container>
+
+    </div>
+
+</div>

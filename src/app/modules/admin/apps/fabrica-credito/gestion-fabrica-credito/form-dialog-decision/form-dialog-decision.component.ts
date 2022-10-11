@@ -111,6 +111,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         case 1:
                             let data_cambioEstado = {
                                 numeroSolicitud: data.numeroSolicitud,
+                                agenda: this.data.idAgenda,
                                 estado: this.listadoAgenda.estadoSgte,
                                 subestado: this.listadoAgenda.subEstadoSgte,
                                 comentario: data.comentario
@@ -127,6 +128,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         case 2:
                             this.postCambioEstado({
                                 numeroSolicitud: data.numeroSolicitud,
+                                agenda: this.data.idAgenda,
                                 estado: this.listadoAgenda.estadoAnterior,
                                 subestado: this.listadoAgenda.subEstadoAnterior,
                                 comentario: data.comentario
