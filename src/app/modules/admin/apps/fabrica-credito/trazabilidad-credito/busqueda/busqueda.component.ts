@@ -211,8 +211,18 @@ export class BusquedaComponent implements OnInit {
             }
         }
         console.log(this.dataFiltro.details)
+        Swal.fire({ 
+            title: 'Cargando', 
+            html: 'Filtrando la información', 
+            timer: 500000,
+            allowOutsideClick: false, 
+            didOpen: () => { 
+                Swal.showLoading() 
+            }, 
+        }).then((result) => { })
         this._utility.postQuery('/cre-consulta-comentarios-v2', this.dataFiltro).subscribe((response: any) => {
             if (response) {
+                Swal.close();
                 this.listados = response.data;
             } else {
                 this.listados = [];
@@ -387,6 +397,7 @@ export class BusquedaComponent implements OnInit {
             Swal.close();
             if (response) {
                 this.listados = response.data;
+                console.log(this.listados);
                 this.listadoCount = this.listados.length;
             } else {
                 this.listados = [];
