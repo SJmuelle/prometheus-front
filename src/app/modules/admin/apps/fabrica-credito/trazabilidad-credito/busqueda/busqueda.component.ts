@@ -94,7 +94,7 @@ export class BusquedaComponent implements OnInit {
         this.dataTitular.details = [];
         this.tarjetaTitular = false;
         this.seleccionado = false;
-        if (this.titularForm.value.documento!='') {
+        if (this.titularForm.value.documento!='' && this.titularForm.value.documento!=null) {
             let data = {
                 "tipo": "IDENTIFICACION",
                 "buscar": this.titularForm.value.documento
@@ -103,7 +103,7 @@ export class BusquedaComponent implements OnInit {
             this.verDocumento = this.documento;
         }
 
-        if (this.titularForm.value.nombre!='') {
+        if (this.titularForm.value.nombre!='' && this.titularForm.value.nombre!=null) {
             let data = {
                 "tipo": "NOMBRE",
                 "buscar": this.titularForm.value.nombre
@@ -117,7 +117,7 @@ export class BusquedaComponent implements OnInit {
         this.dataNegocios.details = [];
         this.tarjetaNegocios = false;
         this.seleccionado = false;
-        if (this.negocioForm.value.unidad!='') {
+        if (this.negocioForm.value.unidad!='' && this.negocioForm.value.unidad!=null) {
             let data = {
                 "tipo": "UNIDAD",
                 "buscar": this.negocioForm.value.unidad
@@ -126,7 +126,7 @@ export class BusquedaComponent implements OnInit {
             this.verUnidad = this.unidad;
         }
 
-        if (this.negocioForm.value.agenda!='') {
+        if (this.negocioForm.value.agenda!='' && this.negocioForm.value.agenda!=null) {
             let data = {
                 "tipo": "AGENDA",
                 "buscar": this.negocioForm.value.agenda
@@ -135,7 +135,7 @@ export class BusquedaComponent implements OnInit {
             this.verAgenda = this.agenda;
         }
 
-        if (this.negocioForm.value.estado!='') {
+        if (this.negocioForm.value.estado!='' && this.negocioForm.value.estado!=null) {
             let data = {
                 "tipo": "ESTADO",
                 "buscar": this.negocioForm.value.estado
@@ -144,7 +144,7 @@ export class BusquedaComponent implements OnInit {
             this.verEstado = this.estado;
         }
 
-        if (this.negocioForm.value.subestado!='') {
+        if (this.negocioForm.value.subestado!='' && this.negocioForm.value.subestado!=null) {
             let data = {
                 "tipo": "SUBESTADO",
                 "buscar": this.negocioForm.value.subestado
@@ -153,7 +153,7 @@ export class BusquedaComponent implements OnInit {
             this.verSubestado = this.subestado;
         }
 
-        if (this.negocioForm.value.solicitud!='') {
+        if (this.negocioForm.value.solicitud!='' && this.negocioForm.value.solicitud!=null) {
             let data = {
                 "tipo": "SOLICITUD",
                 "buscar": this.negocioForm.value.solicitud
@@ -162,7 +162,7 @@ export class BusquedaComponent implements OnInit {
             this.verSolicitud = this.solicitud;
         }
 
-        if (this.negocioForm.value.codigoNeg!='') {
+        if (this.negocioForm.value.codigoNeg!='' && this.negocioForm.value.codigoNeg!=null) {
             let data = {
                 "tipo": "NEGOCIO",
                 "buscar": this.negocioForm.value.codigoNeg
@@ -176,7 +176,7 @@ export class BusquedaComponent implements OnInit {
         this.dataPagaduria.details = [];
         this.tarjetaPagaduria = false;
         this.seleccionado = false;
-        if (this.pagaduriaForm.value.codigoPag!='') {
+        if (this.pagaduriaForm.value.codigoPag!='' && this.pagaduriaForm.value.codigoPag!=null) {
             let data = {
                 "tipo": "PAGADURIA",
                 "buscar": this.pagaduriaForm.value.codigoPag
@@ -192,18 +192,25 @@ export class BusquedaComponent implements OnInit {
         this.tarjetaNegocios = false;
         this.tarjetaPagaduria = false;
         this.seleccionado = false;
-        for (let index = 0; index < this.dataTitular.details.length; index++) {
-            const element = this.dataTitular.details[index];
-            this.dataFiltro.details.push(element)
+        if (this.dataTitular.details.length>0) {
+            for (let index = 0; index < this.dataTitular.details.length; index++) {
+                const element = this.dataTitular.details[index];
+                this.dataFiltro.details.push(element)
+            }
         }
-        for (let index = 0; index < this.dataNegocios.details.length; index++) {
-            const element = this.dataNegocios.details[index];
-            this.dataFiltro.details.push(element)
+        if (this.dataNegocios.details.length>0) {
+            for (let index = 0; index < this.dataNegocios.details.length; index++) {
+                const element = this.dataNegocios.details[index];
+                this.dataFiltro.details.push(element)
+            }
         }
-        for (let index = 0; index < this.dataPagaduria.details.length; index++) {
-            const element = this.dataPagaduria.details[index];
-            this.dataFiltro.details.push(element)
+        if (this.dataPagaduria.details.length>0) {
+            for (let index = 0; index < this.dataPagaduria.details.length; index++) {
+                const element = this.dataPagaduria.details[index];
+                this.dataFiltro.details.push(element)
+            }
         }
+        console.log(this.dataFiltro.details)
         this._utility.postQuery('/cre-consulta-comentarios-v2', this.dataFiltro).subscribe((response: any) => {
             if (response) {
                 this.listados = response.data;
