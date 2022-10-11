@@ -24,15 +24,15 @@
         </button>
 
         <ng-container *ngIf="!permisoEditar">
-            <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
-                [ngClass]="animacionVer==true?'show':'hidden'"
-                matTooltip="{{dialogMostrar=='SIGUIENTE'?'Siguiente 22':'Check list'}}">
-                <mat-icon [svgIcon]="dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'">
-                </mat-icon>
-                <!-- <mat-icon svgIcon="next_plan"></mat-icon> -->
-            </button>
+            <ng-container *ngIf="fabricaDatos.agenda!='DE'">
+                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
+                    [ngClass]="animacionVer==true?'show':'hidden'"
+                    matTooltip="{{dialogMostrar=='SIGUIENTE'?'Siguiente 22':'Check list'}}">
+                    <mat-icon [svgIcon]="dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'">
+                    </mat-icon>
+                </button>
+            </ng-container>
         </ng-container>
-
 
         <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
             (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
