@@ -25,4 +25,10 @@ export class EndPoints {
      static uriAsig(url: string): string {
         return environment.urlAsig + url;
     }
+    /**
+     * @description: URL asignacion de solicitudes
+     */
+     static urlSelect(url: string): string {
+        return environment.urlSelect + url;
+    }
 }

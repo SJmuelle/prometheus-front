@@ -21,6 +21,7 @@ export class ListSolicitudesComponent implements OnInit {
   buscarForm: FormGroup;
   formatoFechaInicial:any = '';
   formatoFechaFinal:any = '';
+  fechAsignacion: any = '';
   unidadNegocio:any = '';
   numSolicitud:number;
   numIdentificacion:number;
@@ -109,14 +110,22 @@ export class ListSolicitudesComponent implements OnInit {
 
   agregarSoli(item, event){
     let num = {
-      "numeroSolicitud":item.numeroSolicitud.toString()
+      "numeroSolicitud":item.numero_solicitud.toString()
     }
+
+    if (item.fecha_re_asigado=='' || item.fecha_re_asigado=='0099-01-01 00:01:00') {
+      this.fechAsignacion = item.fecha_asigacion;
+    } else {
+      this.fechAsignacion = item.fecha_re_asigado;
+    }
+    
     let asesorAntiguo = {
-      "analista":item.asesor,
-      "solicitud":item.numeroSolicitud,
-      "fecha":item.fecha_re_asigado
+      "analista":item.asesor_credito,
+      "solicitud":item.numero_solicitud,
+      "fecha":this.fechAsignacion
     }
-    if (item.asesor=='') { 
+    
+    if (item.asesor_credito=='') { 
       if (event.checked==false) {
         const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
         let idxSoli = this.soliAsignar.indexOf(dataBuscar[0]);
@@ -144,26 +153,6 @@ export class ListSolicitudesComponent implements OnInit {
           {
               "tipo": "STATUS",
               "buscar": ""
-          },
-          {
-              "tipo": "AGENDA_ASESOR",
-              "buscar": ""
-          },
-          {
-              "tipo": "ASESOR_CREDITO",
-              "buscar": ""
-          },
-          {
-              "tipo": "UNIDAD_NEGOCIO",
-              "buscar": ""
-          },
-          {
-              "tipo": "FECHA_INICIAL",
-              "buscar": "2022-01-01"
-          },
-          {
-              "tipo": "FECHA_FINAL",
-              "buscar": moment(this.fechActual).format("YYYY-MM-DD")
           }
       ]
     }
@@ -171,6 +160,7 @@ export class ListSolicitudesComponent implements OnInit {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
+        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -317,6 +307,7 @@ export class ListSolicitudesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result==true) {
+        this.setAll(false);
         this.consultarSolicitudes();
         this.soliReasignar = [];
         this.soliAsignar = [];
@@ -338,6 +329,7 @@ export class ListSolicitudesComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result==true) {
+        this.setAll(false);
         this.consultarSolicitudes();
         this.soliReasignar = [];
         this.soliAsignar = [];
