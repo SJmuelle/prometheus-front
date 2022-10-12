@@ -348,7 +348,8 @@ export class GestionPQRSComponent implements OnInit {
                             console.log(this.motivo)
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
-                                if (response) {
+                                console.log(response.length)
+                                if (response.length > 0) {
                                     this.objAdjunto = response[0];
                                     this.listadoAdjuntos.push(this.objAdjunto)
                                     this.archivo = [{
