@@ -139,12 +139,33 @@ export class ListSolicitudesComponent implements OnInit {
 
   consultarSolicitudes(){
     let data = {
-      "unidadNegocio":22,
-      "entidad":"ASIGNACION_NEGOSIO",
-      "analista":"",
-      "fechaInicial":"2021-01-01",
-      "fechaFinal":moment(this.fechActual).format("YYYY-MM-DD"),
-      "agenda":""
+      "entidad": "ASIGNACION_NEGOSIO",
+      "details": [
+          {
+              "tipo": "STATUS",
+              "buscar": ""
+          },
+          {
+              "tipo": "AGENDA_ASESOR",
+              "buscar": ""
+          },
+          {
+              "tipo": "ASESOR_CREDITO",
+              "buscar": ""
+          },
+          {
+              "tipo": "UNIDAD_NEGOCIO",
+              "buscar": ""
+          },
+          {
+              "tipo": "FECHA_INICIAL",
+              "buscar": "2022-01-01"
+          },
+          {
+              "tipo": "FECHA_FINAL",
+              "buscar": moment(this.fechActual).format("YYYY-MM-DD")
+          }
+      ]
     }
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       if (res) {
@@ -178,22 +199,92 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   buscar(){
+    if (this.buscarForm.value.analista!='') {
+      this.dataFiltro = {
+        "entidad": "ASIGNACION_NEGOSIO",
+        "details": [
+            {
+                "tipo": "STATUS",
+                "buscar": ""
+            },
+            {
+              "tipo": "ASESOR_CREDITO",
+              "buscar": this.buscarForm.value.analista
+          },
+        ]
+      }
+    }
+
     if (this.buscarForm.value.fechaInicial!='' && this.buscarForm.value.fechaFinal!='') {
       this.formatoFechaInicial = moment(this.buscarForm.value.fechaInicial).format("YYYY-MM-DD");
       this.formatoFechaFinal = moment(this.buscarForm.value.fechaFinal).format("YYYY-MM-DD");
+      this.dataFiltro = {
+        "entidad": "ASIGNACION_NEGOSIO",
+        "details": [
+            {
+                "tipo": "STATUS",
+                "buscar": ""
+            },
+            {
+                "tipo": "FECHA_INICIAL",
+                "buscar": this.formatoFechaInicial
+            },
+            {
+                "tipo": "FECHA_FINAL",
+                "buscar": this.formatoFechaFinal
+            }
+        ]
+      }
     }
 
     if (this.buscarForm.value.unidad!='') {
-      this.unidadNegocio = parseInt(this.buscarForm.value.unidad)
+      this.dataFiltro = {
+        "entidad": "ASIGNACION_NEGOSIO",
+        "details": [
+            {
+                "tipo": "STATUS",
+                "buscar": ""
+            },
+            {
+              "tipo": "UNIDAD_NEGOCIO",
+              "buscar": this.buscarForm.value.unidad
+            },
+        ]
+      }
     }
-    this.dataFiltro = {
-      "unidadNegocio":this.unidadNegocio,
-      "entidad":"ASIGNACION_NEGOSIO",
-      "analista":this.buscarForm.value.analista,
-      "fechaInicial":this.formatoFechaInicial,
-      "fechaFinal":this.formatoFechaFinal,
-      "agenda":this.buscarForm.value.agenda
+
+    if (this.buscarForm.value.agenda!='') {
+      this.dataFiltro = {
+        "entidad": "ASIGNACION_NEGOSIO",
+        "details": [
+            {
+                "tipo": "STATUS",
+                "buscar": ""
+            },
+            {
+              "tipo": "AGENDA_ASESOR",
+              "buscar": this.buscarForm.value.agenda
+            },
+        ]
+      }
     }
+
+    if (this.buscarForm.value.unidad!='') {
+      this.dataFiltro = {
+        "entidad": "ASIGNACION_NEGOSIO",
+        "details": [
+            {
+                "tipo": "STATUS",
+                "buscar": ""
+            },
+            {
+              "tipo": "UNIDAD_NEGOCIO",
+              "buscar": this.buscarForm.value.unidad
+            },
+        ]
+      }
+    }
+    
     this.asigService.getSolicitudes(this.dataFiltro).subscribe((res: any) => {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
