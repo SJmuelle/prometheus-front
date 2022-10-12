@@ -302,6 +302,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     onTabChanged(index): void {
+        console.log(index)
         this.listadoAdjuntos = [];
         this.tab = index;
         let url;
@@ -387,7 +388,8 @@ export class GestionPQRSComponent implements OnInit {
                     this.listadoAsignaciones = data;
                 });
                 break;
-            case 4:
+            case 5:
+                console.log('Aqui estoy..')
                 this.filtrarTablaAlertas = '';
                 this.tamanoTablaAlertas = 5;
                 url = `informacion-historial-notificaciones/${this.pqrid}`;
