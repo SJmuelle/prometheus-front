@@ -3,6 +3,7 @@ import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DetalleComponent } from './detalle/detalle.component';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-pagos',
@@ -20,7 +21,9 @@ export class ListPagosComponent implements OnInit {
   }
 
   consultarPropietarios(){
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de propietarios', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pago.getPropietario().subscribe((response: any) => {
+      Swal.close();
       if (response) {
         this.listado = response.data;
       } else {
