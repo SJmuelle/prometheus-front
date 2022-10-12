@@ -3,7 +3,7 @@
     margin-left: 47px;
 }
 .title-secundary{
-    margin-top: -9px;
+    margin-top: rgb(17, 17, 17)
 }
 
 .tilt-in-top-1 {
@@ -95,4 +95,10 @@
         opacity: 0;
         position: absolute;
     }
+}
+
+.icon-menu{
+    position: absolute;
+    top: 1px;
+    right: 1px;
 }

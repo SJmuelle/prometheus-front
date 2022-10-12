@@ -19,13 +19,15 @@
                 <!-- Title -->
                 <h3 class="mb-2 text-gray-900">Comentarios</h3>
                 <span class="font-semibold text-gray-500">Trazabilidad de la solicitud desde los comentarios.</span>
+                <ng-container *ngIf="!permisoEditar">
+                    <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
+                        <button mat-raised-button matTooltip="Nuevo comentario" [color]="'primary'"
+                            (click)="onComentario()">
+                            Nuevo comentario
+                        </button>
+                    </div>
+                </ng-container>
 
-                <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-end py-2 border-b h-full">
-                    <button mat-raised-button matTooltip="Nuevo comentario" [color]="'primary'"
-                        (click)="onComentario()">
-                        Nuevo comentario
-                    </button>
-                </div>
             </div>
 
             <ng-container class="py-2.5" *ngIf="(comentarios$ | async) as comentar; else loading">
@@ -91,10 +93,9 @@
                                                     </div>
                                                 </div>
                                             </ng-container>
-                                            <div class="row items-center mt-3"
-                                                style="border-left: 5px solid #b6ce1d; padding-left: 4px;">
-                                                <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0 w-screen"
-                                                    [innerHTML]="item.comentario">
+                                            <div class="items-center mt-3 linea flex">
+                                                <div class="relative font-titulo m-0 p-0 lowercase text-left">
+                                                    <div class="w-full" [innerHTML]="item.comentario"></div>
                                                 </div>
                                             </div>
                                         </div>

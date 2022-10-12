@@ -1,0 +1,100 @@
+<ng-container>
+  <h2 mat-dialog-title>Comprar {{tipo=='N'?'obligación al día':'obligación en mora' }}</h2>
+</ng-container>
+<mat-dialog-content>
+  <div class="grid-cols-12  ">
+    <div class="col-span-12">
+      <form [formGroup]="form">
+        <div class="bg-white flex flex-col">
+          <div class="flex">
+            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+              <mat-label>Entidad financiera</mat-label>
+              <input type="text" placeholder="" matInput [formControlName]="'entidad'" readonly>
+            </mat-form-field>
+            <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="!form.value.nuevaEntidad">
+              <mat-label>Nueva entidad financiera</mat-label>
+              <input type="text" placeholder="" matInput [formControlName]="'nombreEntidadNueva'" autocomplete="off"
+                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
+                  {{option.nombre}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="flex">
+            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+              <mat-label>Nit</mat-label>
+              <input type="text" placeholder="" matInput [formControlName]="'nitRegistro'" autocomplete="off">
+              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+
+            </mat-form-field>
+            <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="!form.value.nuevaEntidad">
+              <mat-label>Nuevo nit</mat-label>
+              <input type="text" placeholder="" matInput [formControlName]="'nitNuevo'" autocomplete="off">
+              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="flex">
+            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+              <mat-label>N° de obligación</mat-label>
+              <input matInput type="text" [formControlName]="'numeroCuenta'" readonly>
+            </mat-form-field>
+            <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="tipo=='D'">
+              <mat-label>Altura de mora</mat-label>
+              <input matInput type="text" [formControlName]="'maximaMora'" readonly
+                (keyup)="form.controls['maximaMora'].setValue(utility.formatearNumero(form.value.maximaMora));">
+            </mat-form-field>
+          </div>
+          <div class="flex">
+            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+              <mat-label>Saldo ($)</mat-label>
+              <input matInput type="text" [formControlName]="'saldoActual'" readonly="" autocomplete="off"
+                (keyup)="form.controls['saldoActual'].setValue(utility.formatearNumero(form.value.saldoActual));">
+            </mat-form-field>
+            <mat-form-field class="w-full ml-2 fuse-mat-dense">
+              <mat-label>Saldo real</mat-label>
+              <input matInput type="text" [formControlName]="'saldoReal'" autocomplete="off"
+                (keyup)="form.controls['saldoReal'].setValue(utility.formatearNumero(form.value.saldoReal));">
+              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="flex">
+            <ng-container *ngIf="estadoCuenta$ | async as estadoCuenta">
+              <mat-form-field class="w-full ml-2 fuse-mat-dense">
+                <mat-label>Estado</mat-label>
+                <input matInput type="text" [formControlName]="'estadoCuenta'" readonly>
+              </mat-form-field>
+            </ng-container>
+          </div>
+          <div class="flex justify-between items-center w-100">
+            <p>¿Pagada en esta entidad?</p>
+            <div class="toggle-button-cover">
+              <div class="button-cover">
+                <div class="button r" id="button-1">
+                  <input type="checkbox" class="checkbox" formControlName="nuevaEntidad">
+                  <div class="knobs"></div>
+                  <div class="layer"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+    <ng-container *ngIf="!data.idComentario">
+      <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+        Guardar
+      </button>
+    </ng-container>
+    <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+      Cerrar
+    </button>
+  </div>
+</mat-dialog-actions>
