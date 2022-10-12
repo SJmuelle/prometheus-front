@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import { ComentariosService } from "../../../../../../core/services/comentarios.service";
 import { Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-form-dialog-comentarios',
@@ -15,21 +17,40 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public unsubscribe$: Subject<any> = new Subject<any>();
     listadoTipo: any;
+    datoFabrica: any;
     constructor(
         private fb: FormBuilder,
+        private route: ActivatedRoute,
         private _dialog: MatDialogRef<FormDialogComentariosComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
-        private comentariosService: ComentariosService
-    ) { }
+        private comentariosService: ComentariosService,
+        private fabricaCreditoService: FabricaCreditoService,
+    ) { 
+        console.log(this.data)
+        this.getFabricaCreditoAgenda(this.data.numeroSolicitud)
+    }
 
     ngOnInit(): void {
         this.crearFormulario();
         this.getTipoComentario();
+      
         this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
         if (this.data.idComentario) {
             this.form.controls.comentario.setValue(this.data.comentario);
         }
     }
+    
+  /**
+ * @description: Obtiene la data para cargar al formulario
+ */
+  private getFabricaCreditoAgenda(numeroSolicitud: string): void {
+      this.comentariosService.obtenerAgendaSolicitud(numeroSolicitud).pipe()
+      .subscribe(({ data }) => {
+        Swal.close();
+        this.datoFabrica = data;
+      })
+  }
+
     /**
      * @description: Cierra el dialogo
      */
@@ -41,12 +62,13 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
         if (this.form.valid) {
             const data: any = this.form.getRawValue();
             console.log(data);
+            let valida=this.datoFabrica.agenda!='GC'&&this.datoFabrica.agenda!='CM';
             let envioData = {
                 comentario: data.comentario,
                 numeroSolicitud: data.numeroSolicitud,
-                tipoComentario: Number(data.tipoComentario),
+                tipoComentario: valida?Number(data.tipoComentario):2,
             }
-            let mensaje=data.tipoComentario=='2'?'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario será visible para todos los usuarios.':'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario no será visible para todos los usuarios';
+            let mensaje=envioData.tipoComentario==2?'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario será visible para todos los usuarios.':'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario no será visible para todos los usuarios';
             Swal.fire({
                 title: 'Guardar información',
                 text: mensaje,
