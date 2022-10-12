@@ -61,7 +61,6 @@ export class CreacionPQRSComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        console.log("Aqui estas en los cambios correctos")
         this._activatedRoute.params.subscribe((param) => {
             if (param.cliente) {
                 this.identificaiconCliente = param.cliente;
@@ -382,10 +381,6 @@ export class CreacionPQRSComponent implements OnInit {
         });
     }
 
-    mostrarMensaje() {
-        // console.log(this.datos.descripcion);
-    }
-
     guardar() {
         this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
             if (response.data.area !== 'SAC') {
@@ -423,8 +418,6 @@ export class CreacionPQRSComponent implements OnInit {
                     hijos: this.crearJsonHijas(),
                     user: this.UsuarioSaggics
                 };
-                console.log(data)
-                debugger
                 let url = '/crear-pqrs';
 
                 this.crearJsonHijas();
@@ -501,11 +494,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     public onCharge(input: HTMLInputElement, ind): void {
-        // this.showButtonSave = false;
-        // this.showButtonRecord = true;
-        // this.nameFile = 'masivo.cvs';
         const files = input.files;
-        // console.log(files);
         if (files && files.length) {
             const fileToRead = files[0];
             const reader = new FileReader();
@@ -517,7 +506,6 @@ export class CreacionPQRSComponent implements OnInit {
                 let nombre = this.evidencia[ind].filename.split('.');
                 this.evidencia[ind].ext = nombre[1];
                 this.evidencia[ind].nombre = nombre[0];
-                // console.log(this.evidencia[ind].file);
             };
         }
     }

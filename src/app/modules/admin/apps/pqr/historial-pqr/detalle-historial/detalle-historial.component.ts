@@ -19,7 +19,6 @@ export class DetalleHistorialComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('Estas en el modal: ', this.data)
     this.consulta();
   }
 
@@ -29,9 +28,6 @@ export class DetalleHistorialComponent implements OnInit {
       Swal.close();
       if (response) {
         this.datos = response
-        console.log(response)
-      } else {
-        // this.datos = '';
       }
     });
   }

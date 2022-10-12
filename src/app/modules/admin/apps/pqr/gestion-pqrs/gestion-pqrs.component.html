@@ -623,7 +623,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="h-72 overflow-x-scroll overflow-y-scroll sm:overflow-x-hidden">
+                                    <div class="h-72 overflow-x-scroll overflow-y-scroll sm:overflow-x-hidden" *ngIf="listadoSeguimiento.length>0">
                                         <table class="w-full shadow">
                                             <thead>
                                                 <tr
@@ -653,6 +653,14 @@
                                                 previousLabel="Anterior" nextLabel="Siguiente" class="justify-self-end">
                                             </pagination-controls>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
+                                            *ngIf="listadoSeguimiento.length==0">
+                                            <div class="w-3/12">
+                                                <img src="assets/images/animaciones/nodata.gif">
+                                            </div>
+                                        </fuse-card>
                                     </div>
                                 </div>
                         </mat-tab>
