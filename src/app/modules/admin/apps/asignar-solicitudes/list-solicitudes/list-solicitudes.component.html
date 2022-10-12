@@ -9,7 +9,7 @@
                     <div class="w-56">
                         <mat-form-field appearance="fill" class="w-full">
                             <mat-label>Buscar por: </mat-label>
-                            <mat-select formControlName="analista">
+                            <mat-select>
                                 <mat-option *ngFor="let item of opcionesBusqueda" [value]="item.id" (click)="elegirFiltro(item.id)">{{ item.descripcion }}</mat-option>
                             </mat-select>
                           </mat-form-field>
