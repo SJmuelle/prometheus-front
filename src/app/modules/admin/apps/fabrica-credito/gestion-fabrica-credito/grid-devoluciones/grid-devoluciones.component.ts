@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { DevolucionesService } from "../../../../../../core/services/devoluciones.service";
 import { Observable } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { FormDialogDevolucionesComponent } from "../form-dialog-devoluciones/form-dialog-devoluciones.component";
 import { FormControl } from "@angular/forms";
 import moment from 'moment';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
   selector: 'app-grid-devoluciones',
@@ -20,11 +21,18 @@ export class GridDevolucionesComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public page: number = 1;
   public tamanoTabl = new FormControl('5');
+  permisoEditar:boolean
   @Input() agenda: string;
   constructor(
     private devolucionesService: DevolucionesService,
     private route: ActivatedRoute,
-    private _dialog: MatDialog,) { }
+    private router: Router,
+    public _permisosService:PermisosService,
+    private _dialog: MatDialog,) { 
+
+      router.events.subscribe((url: any) => console.log(url));
+      this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
+    }
 
   ngOnInit(): void {
     this.getData();

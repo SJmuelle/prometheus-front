@@ -1,21 +1,20 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ComentariosService } from 'app/core/services/comentarios.service';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
 import { UtilityService } from 'app/resources/services/utility.service';
-import { Observable, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
+
+import { Subject, Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
 
 @Component({
-  selector: 'app-form-dialog-cartera',
-  templateUrl: './form-dialog-cartera.component.html',
-  styleUrls: ['./form-dialog-cartera.component.scss']
+  selector: 'app-form-dialog-cartera-comprar',
+  templateUrl: './form-dialog-cartera-comprar.component.html',
+  styleUrls: ['./form-dialog-cartera-comprar.component.scss']
 })
-export class FormDialogCarteraComponent implements OnInit, OnDestroy {
+export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
   public unsubscribe$: Subject<any> = new Subject<any>();
@@ -30,13 +29,13 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   myControl = new FormControl('');
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<any[]>;
-  entidadFinanciera: any[]=[];
-  nuevo: boolean=false;
+  entidadFinanciera: any[] = [];
+  nuevo: boolean = false;
   //fin prueba
 
   constructor(
     private fb: FormBuilder,
-    private _dialog: MatDialogRef<FormDialogComentariosComponent>,
+    private _dialog: MatDialogRef<FormDialogCarteraComprarComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private genericaServices: GenericasService,
     private _listadoCarteraService: ListadoCarteraService,
@@ -48,44 +47,43 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.crearFormulario();
     this.getEntidadBancaria();
     this.getTipoCuentaBancaria();
-    this.form
-    .get('entidad').valueChanges.subscribe(value => this.colocarNit(value));
-    this.form.get('entidad').valueChanges.subscribe(value => this.postBusquedaEntidadFinanciera(value));
-
+    this.form.get('nombreEntidadNueva').valueChanges.subscribe(value => this.colocarNit(value));
+    this.form.get('nombreEntidadNueva').valueChanges.subscribe(value => this.postBusquedaEntidadFinanciera(value));
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
-    
+
     // this.form.controls.estadoCuenta.setValue(this.data.tipo == 'D' ? 'DEUDA' : 'AL DIA');
     this.form.controls.alDia.setValue(this.data.tipo == 'D' ? false : true);
     this.tipo = this.data.tipo;
     this.postBusquedaEntidadFinanciera('');
     this.getEstadoCuenta(this.data.tipo != 'D' ? "AL DIA" : "EN MORA");
-    this.filteredOptions = this.form.controls.entidad.valueChanges.pipe(
+    this.filteredOptions = this.form.controls.nombreEntidadNueva.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
-    if(this.data.item!=null){
-      this.nuevo=true;
+    if (this.data.item != null) {
+      this.nuevo = true;
       this.form.controls.entidad.setValue(this.data.item.entidad);
       this.form.controls.nit.setValue(this.data.item.nit);
       this.form.controls.numeroCuenta.setValue(this.data.item.numeroCuenta);
       this.form.controls.maximaMora.setValue(this.data.item.maximaMora);
       this.form.controls.saldoActual.setValue(this.utility.formatearNumero(this.data.item.saldoActual));
       this.form.controls.estadoCuenta.setValue(this.data.item.estadoCuenta);
-      this.form.controls.idObligacion.setValue(this.data.item.id.toString());
+      this.form.controls.idObligacion.setValue(Number(this.data.item.id.toString()));
       this.form.controls.codigoEstado.setValue(this.data.item.codigoEstado);
+      // this.form.controls.nombreEntidadNueva.setValue(true)
     }
   }
 
-  private _filter(value: string): any[]{
+  private _filter(value: string): any[] {
     const filterValue = value.toLowerCase();
-      return this.entidadFinanciera.filter(option => option.nombre.toLowerCase().includes(filterValue));
+    return this.entidadFinanciera.filter(option => option.nombre.toLowerCase().includes(filterValue));
     // return this.genericaServices.postBusquedaEntidadFinanciera(filterValue);
   }
 
-  private postBusquedaEntidadFinanciera(nombre: string){
+  private postBusquedaEntidadFinanciera(nombre: string) {
     this.genericaServices.postBusquedaEntidadFinanciera(nombre).subscribe((res) => {
-      this.entidadFinanciera=res.data;
+      this.entidadFinanciera = res.data;
     });
   }
 
@@ -104,13 +102,13 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.tipoCuentaBancaria$ = this.genericaServices.getTipoCuentaBancaria();
   }
 
-    /**
-   * @description: Obtiene los tipos de estados civiles
-   */
-     private getEstadoCuenta(tipo): void {
-      this.estadoCuenta$ = this.genericaServices.getEstadoCuenta(tipo);
-    }
-  
+  /**
+ * @description: Obtiene los tipos de estados civiles
+ */
+  private getEstadoCuenta(tipo): void {
+    this.estadoCuenta$ = this.genericaServices.getEstadoCuenta(tipo);
+  }
+
 
   /**
 * @description: Obtiene los tipos de estados civiles
@@ -120,40 +118,32 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   }
   public onGuardar(): void {
     if (this.form.valid) {
-      const  datos: any = this.form.getRawValue();
-      const  { saldoActual,estadoCuenta, entidad,...data } = datos;
-      const  saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
-      const  saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
+      const datos: any = this.form.getRawValue();
+      const { nitNuevo,saldoActual, estadoCuenta, entidad, nombreEntidadNueva, saldoReal, ...data } = datos;
+      const saldoRealFormato = Number(this.utility.enviarNumero(this.form.value.saldoReal));
+      const saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
+      const saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
       delete data.saldoActual;
       delete data.saldoMora;
       delete data.estadoCuenta;
       delete data.entidad;
-      let  datosFormularios: any 
+      let datosFormularios: any
       let mensaje;
-      if(this.nuevo==false){
-        mensaje = '¿Desea agregar una nueva obligación ?'
-        datosFormularios = {
-          saldoActual: saldoActualFormato,
-          saldoMora: saldoMoraFormato,
-          estadoCuenta:estadoCuenta.toUpperCase(),
-          entidad:entidad.toUpperCase(),
-          ...data
-        }
-      }else{
-        mensaje = '¿Desea editar esta nueva obligación ?'
-        datosFormularios = {
-          saldoActual: saldoActualFormato,
-          saldoMora: saldoMoraFormato,
-          estadoCuenta:estadoCuenta.toUpperCase(),
-          entidad:entidad.toUpperCase(),
-          ...data
-        }
-      }
       // const data: any = this.form.getRawValue();
-     
+      mensaje = '¿Desea comprar esta obligación?'
+      datosFormularios = {
+        saldoActual: saldoActualFormato,
+        saldoMora: saldoMoraFormato,
+        saldoReal: saldoRealFormato,
+        estadoCuenta: estadoCuenta.toUpperCase(),
+        entidad: entidad.toUpperCase(),
+        nombreEntidadNueva: this.form.value.nuevaEntidad?entidad:nombreEntidadNueva.toUpperCase(),
+        nitNuevo:this.form.value.nuevaEntidad?this.form.value.nit:nitNuevo,
+        ...data
+      }
       // debugger;
       console.log(datosFormularios);
-      
+
       Swal.fire({
         title: 'Guardar información',
         text: mensaje,
@@ -165,18 +155,10 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          if(this.nuevo==true){
-            this.editarCambio(datosFormularios);
-          }else{
-            this.guardadoCambio(datosFormularios);
-          
+          this.editarCambio(datosFormularios);
 
-          }
-        
+
         }
-        // setTimeout(() => {
-        //   this.onCerrar();
-        // }, 1000);
       });
     } else {
       this.form.markAllAsTouched();
@@ -197,10 +179,10 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       .createCartera(data)
       .subscribe((res) => {
         Swal.close();
-        if (res.data.respuesta == 'OK') {
+        if (res.data.resultado == 'OK') {
           this.onCerrar();
         } else {
-          Swal.fire('Error', res.data.resultado, 'error');
+          Swal.fire('Error', res.data.msg, 'error');
         }
       });
 
@@ -215,11 +197,15 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       },
     }).then((result) => { });
     this._listadoCarteraService
-      .editarCartera(data)
+      .guardarGestionCompra(data)
       .subscribe((res) => {
         Swal.close();
-        if (res.data.respuesta == 'OK') {
-          this.onCerrar();
+        if (res.data.resultado == 'OK') {
+          let msg=res.data.msg=='OK'?'Registro guardado con éxito':res.data.msg;
+          Swal.fire('Completado', res.data.msg, 'success');
+          setTimeout(() => {
+            this.onCerrar();
+          }, 1000);
         } else {
           Swal.fire('Error', res.data.resultado, 'error');
         }
@@ -238,20 +224,27 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       estadoCuenta: [''],
       maximaMora: [''],
       saldoActual: [''],
+      saldoReal: ['', Validators.required],
       saldoMora: [''],
       nit: [''],
-      idObligacion:[''],
+      nitNuevo: [''],
+      idObligacion: [''],
       agregadaManualmente: true,
-      codigoEstado:[''],
+      codigoEstado: [''],
       alDia: Boolean,
+      nombreEntidadNueva: [''],
+      nuevaEntidad: true,
+      gestionCartera: 'COM'
+
+
     });
   }
 
-  colocarNit(valor){
-    if(valor){
-      const result = this.entidadFinanciera.filter(entidadFinanciera => entidadFinanciera.nombre ==valor);
-      if(result.length==1){
-        this.form.controls.nit.setValue(result[0].nit);
+  colocarNit(valor) {
+    if (valor) {
+      const result = this.entidadFinanciera.filter(entidadFinanciera => entidadFinanciera.nombre == valor);
+      if (result.length == 1) {
+        this.form.controls.nitNuevo.setValue(result[0].nit);
       }
     }
   }
@@ -259,5 +252,4 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
   }
-
 }

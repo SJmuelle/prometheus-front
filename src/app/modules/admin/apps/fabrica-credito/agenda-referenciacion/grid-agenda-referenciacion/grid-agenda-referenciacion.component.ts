@@ -20,7 +20,7 @@ import { FormDialogReprogramarComponent } from '../form-dialog-reprogramar/form-
 export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
     public unsubscribe$: Subject<any> = new Subject();
     public filtrarTabla = new FormControl('');
-    public tamanoTabl = new FormControl('5');
+    public tamanoTabl = new FormControl('10');
     public page: number = 1;
     public mostrar: boolean = true;
     public datos: any[] = [];

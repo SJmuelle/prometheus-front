@@ -19,7 +19,7 @@
 
 
         <ng-container *ngIf="data.usuarioCreacion!=''">
-          <span class="etiqueta1" >
+          <span class="etiqueta1">
             {{data.usuarioCreacion}}
             /
             {{data.fechaCreacion | date:'MMM dd, h:mm a' }}
@@ -41,8 +41,15 @@
   </p>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="SiguienteEtapa()">Siguiente
-    Etapa </button>
+<mat-dialog-actions class="text-end" *ngIf="data.tipo!='D'">
+  <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="SiguienteEtapa()">
+    Siguiente etapa 
+  </button>
+  <button mat-button mat-dialog-close>Cerrar</button>
+</mat-dialog-actions>
+<mat-dialog-actions class="text-end" *ngIf="data.tipo=='D'">
+  <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="decision()">
+    Decision
+  </button>
   <button mat-button mat-dialog-close>Cerrar</button>
 </mat-dialog-actions>
