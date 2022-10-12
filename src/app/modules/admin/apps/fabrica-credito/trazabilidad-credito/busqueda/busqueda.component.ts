@@ -55,7 +55,16 @@ export class BusquedaComponent implements OnInit {
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
         this.titularForm = this.fb.group({
             documento: [''],
-            nombre: ['']
+            nombre: [''],
+            agenda: [''],
+            estado: [''],
+            subestado: [''],
+            // fechaInicial: [''],
+            // fechaFinal: [''],
+            unidad: [''],
+            solicitud:[''],
+            codigoNeg:[''],
+            codigoPag: ['']
         })
 
         this.negocioForm = this.fb.group({
@@ -88,6 +97,14 @@ export class BusquedaComponent implements OnInit {
         this.borrarPagaduria()
         this.dataFiltro.details = [];
         this.consulta('');
+    }
+
+    abrirFiltro(){
+        if (this.tarjetaTitular) {
+            this.tarjetaTitular = false;
+        }else{
+            this.tarjetaTitular = true;
+        }
     }
 
     filtroTitular(){
