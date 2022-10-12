@@ -97,10 +97,7 @@ export class GestionPQRSComponent implements OnInit {
         let urlOrigenCliente = `/generic/qry/obtener-usuario-prometheus/${this.UsuarioSaggics}`;
         this._pqrService.getListadosUnico(urlOrigenCliente).subscribe((response: any) => {
             if (response) {
-                console.log(response)
                 this.UsuarioSaggics=response.respuesta
-            } else {
-                console.log(response)
             }
         });
     }
@@ -160,7 +157,6 @@ export class GestionPQRSComponent implements OnInit {
                     data: {idPadre:parseInt(this.pqrid), idProcedimiento:this.procedimientoid},
                 });
                 dialogRef.afterClosed().subscribe((result) => {
-                    // console.log(result)
                     let dataModal = result;
                     if (
                         dataModal.file != '' &&
@@ -177,7 +173,6 @@ export class GestionPQRSComponent implements OnInit {
                             "descripcion": dataModal.descripcion
                         });
                     }
-                    console.log('Saliste del modal: ', this.evidencia)
                     let url = '/adjuntar-pqrs';
                     let data = {
                         idPadre: this.pqrid,
@@ -186,10 +181,8 @@ export class GestionPQRSComponent implements OnInit {
                         file:this.evidencia,
                         user: ""
                     };
-                    console.log('Aqui tu data: ', data)
                     this._pqrService.postFile(url, data).subscribe((response: any) => {
                         if (response) {
-                            console.log(response)
                             this.buscarDatos()
                         }
                     });   
@@ -257,8 +250,6 @@ export class GestionPQRSComponent implements OnInit {
             Swal.close();
             if (response) {
                 this.datos = response[0];
-                // this.procedimientoid = this.datos.id_procedimiento
-                // console.log('Aqui tu procedimiento: ', this.procedimientoid)
                 this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
             } else {
@@ -302,7 +293,6 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     onTabChanged(index): void {
-        console.log(index)
         this.listadoAdjuntos = [];
         this.tab = index;
         let url;
@@ -330,7 +320,6 @@ export class GestionPQRSComponent implements OnInit {
                     }
                     this.listadoGestion = unicos;
                     Swal.close();
-                    console.log(unicos)
                     if (unicos.length<=0) {
                         Swal.fire({
                             icon: 'info',
@@ -345,7 +334,6 @@ export class GestionPQRSComponent implements OnInit {
                             this.comentariotipoid = id.id_tipo_comentario;
                             this.envio = id.envio;
                             this.motivo = id.detalle;
-                            console.log(this.motivo)
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
                                 if (response) {
@@ -359,7 +347,6 @@ export class GestionPQRSComponent implements OnInit {
                                         extension:this.listadoAdjuntos[0].extension,
                                         descripcion:this.listadoAdjuntos[0].descripcion
                                     }]
-                                    console.log(this.listadoAdjuntos)
                                 } else {
                                     this.listadoAdjuntos = [];
                                 }
@@ -389,7 +376,6 @@ export class GestionPQRSComponent implements OnInit {
                 });
                 break;
             case 5:
-                console.log('Aqui estoy..')
                 this.filtrarTablaAlertas = '';
                 this.tamanoTablaAlertas = 5;
                 url = `informacion-historial-notificaciones/${this.pqrid}`;
@@ -402,7 +388,6 @@ export class GestionPQRSComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this._pqrService.getListados(url).subscribe((data: any) => {
-                    console.log(data)
                     this.listadoNotificaciones = data;
                     Swal.close();
                 });
@@ -422,9 +407,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
-        console.log('Tu id es: ', item.id_tipo_comentario)
         if (item.id_tipo_comentario==2) {
-            console.log("Estoy en solucion cliente: ", item.id_tipo_comentario)
             let url = '/pqrs-responder-solucion-cliente';
             let data = {
                 idComentario: parseInt(item.id),
@@ -432,7 +415,6 @@ export class GestionPQRSComponent implements OnInit {
                 respuesta: estado,
                 comentario: 'A'
             };
-            console.log('Mirame: ', data)
             const swalWithBootstrapButtons = Swal.mixin({});
 
             swalWithBootstrapButtons
@@ -491,7 +473,6 @@ export class GestionPQRSComponent implements OnInit {
                 });
 
         } else {
-            console.log("Estoy en solucion area: ", item.id_tipo_comentario)
             let url = '/pqrs-responder-solucion';
             let data = {
                 idComentario: parseInt(item.id),
@@ -499,7 +480,6 @@ export class GestionPQRSComponent implements OnInit {
                 respuesta: estado,
                 comentario: 'A'
             };
-            console.log('Mirame: ', data)
             const swalWithBootstrapButtons = Swal.mixin({});
 
             swalWithBootstrapButtons
@@ -562,8 +542,6 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     guardar_data(data, url) {
-        console.log('Pilla aqui: ', this.comentariotipoid)
-
         if (this.comentariotipoid==2) {
             Swal.fire({
                 title: 'Cargando',
@@ -585,19 +563,9 @@ export class GestionPQRSComponent implements OnInit {
                             );
                             this.onTabChanged(2);
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            console.log(this.archivo[0].idComentario)
                             if (this.archivo[0].idComentario==0) {
 
                                 if (data.respuesta == true) {
-                                    console.log(
-                                        url,
-                                        data.idPqrs,
-                                        5,
-                                        data.comentario,
-                                        "",
-                                        this.motivo,
-                                        this.envio
-                                    );
                                     this._pqrService.enviaCorreos(
                                         url,
                                         data.idPqrs,
@@ -670,7 +638,6 @@ export class GestionPQRSComponent implements OnInit {
                 }
             });
         } else {
-            console.log()
             Swal.fire({
                 title: 'Cargando',
                 html: 'Guardando información de PQRS',
@@ -748,10 +715,8 @@ export class GestionPQRSComponent implements OnInit {
                         let data = {
                             id:item.idComentario
                         }
-                        console.log(data)
                         this._pqrService.Create(url, data).subscribe((response:any)=>{
                             if (response) {
-                                console.log(response)
                                 this.buscarDatos()
                             }
                         })
@@ -763,7 +728,6 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     verAdjunto(id) {
-        console.log(id);
         this.filtrarTablaGestion = '';
         this.tamanoTablaGestion = 5;
         let data = {

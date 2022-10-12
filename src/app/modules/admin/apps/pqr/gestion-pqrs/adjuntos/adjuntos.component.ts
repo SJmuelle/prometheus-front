@@ -76,34 +76,5 @@ export class AdjuntosComponent implements OnInit {
     }
 }
 
-  guardar(){
-    console.log('Estas en el modal: ', this.evidencia)
-    // this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
-    //   console.log(response.data.area);
-    //   if (response.data.area !== 'SAC') {
-    //       Swal.fire(
-    //           '¡Información!',
-    //           `Este usuario no tiene permiso para crear una PQRS`,
-    //           'error'
-    //       ).then();
-    //       return;
-    //   } else {
-    //     let data = {
-    //       idPadre: this.data.idPadre,
-    //       idProcedimiento: this.data.idProcedimiento,
-    //       file:this.evidencia,
-    //       user: ""
-    //     };
-    //     console.log('Aqui tu data: ', data)
-    //     this._pqrService.postFile(url, data).subscribe((response: any) => {
-    //       console.log(response)
-    //       if (response) {
-            
-    //       }
-    //     });
-    //   }
-    // })
-    
-  }
 
 }

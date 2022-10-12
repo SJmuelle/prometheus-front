@@ -28,7 +28,6 @@ export class HistorialPqrComponent implements OnInit {
     this._pqrService.setHistorial().subscribe((response: any) => {
       Swal.close();
       if (response) {
-        console.log(response)
         this.listado = response;
       } else {
         this.listado = [];

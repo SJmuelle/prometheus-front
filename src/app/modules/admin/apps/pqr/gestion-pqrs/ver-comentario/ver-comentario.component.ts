@@ -18,7 +18,6 @@ export class VerComentarioComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.buscarDescripcion();
   }
 
@@ -27,7 +26,6 @@ export class VerComentarioComponent implements OnInit {
     this._pqrService.getListados(url).subscribe((response: any) => {
       if (response) {
           this.descripcion = response[0].descripcion;
-          console.log('Aqui estoy: ', this.descripcion)
       } else {
           this.descripcion = '';
       }

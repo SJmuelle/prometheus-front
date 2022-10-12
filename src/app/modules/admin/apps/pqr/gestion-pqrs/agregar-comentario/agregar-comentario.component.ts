@@ -45,7 +45,6 @@ export class AgregarComentarioComponent implements OnInit {
       descripcion: descripcion,
       estado:this.data.estado
     }
-    console.log(this.comentario)
     this._pqrService.CreateComentario(url, this.comentario).subscribe((response:any)=>{
       Swal.fire(
         '¡Exito!',
