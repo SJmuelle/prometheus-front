@@ -1,20 +1,14 @@
-<h1 mat-dialog-title>Detalle de planilla</h1>
-<div mat-dialog-content class="flex flex-row w-full pb-4" *ngIf="listado.length>0">
-    <div class="ml-2.5">
-        <button mat-raised-button *ngIf="allComplete==false" class="text-white lg:w-32 xl:w-36 color_fintra" (click)="setAll(true)">
-            <span>Marcar todos</span>
-        </button>
-        <button mat-raised-button *ngIf="allComplete==true" class="text-white lg:w-32 xl:w-40 color_fintra" (click)="setAll(false)">
-            <span>Desmarcar todos</span>
-        </button>
-    </div>
-</div>
+<h1 mat-dialog-title>Detalle de planilla negociación</h1>
 <div mat-dialog-content>
     <div class="w-full overflow-y-auto" *ngIf="listado.length>0">
         <table class="p-0">
             <thead class="bg-gray-100">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                    <th class="py-3 text-center"></th>
+                    <th class="py-3 text-center">
+                        <div class="ml-2.5">
+                            <mat-checkbox [checked]="allComplete" (change)="setAll($event.checked)"></mat-checkbox>
+                        </div>
+                    </th>
                     <th class="py-3 text-center">Planilla</th>
                     <th class="py-3 text-center">Transportadora</th>
                     <th class="py-3 text-center">Valor pronto pago</th>
