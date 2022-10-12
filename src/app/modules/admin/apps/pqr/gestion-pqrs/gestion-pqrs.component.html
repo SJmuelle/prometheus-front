@@ -656,84 +656,84 @@
                                     </div>
                                 </div>
                         </mat-tab>
-                            <mat-tab label="Alertas y notificaciones">
-                                <div class="row items-center">
-                                    <span class="leading-none col-lg-4 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Alertas y notificaciones
+                        <mat-tab label="Alertas y notificaciones">
+                            <div class="row items-center">
+                                <span class="leading-none col-lg-4 col-sm-12">
+                                    <div class="leading-tight titulo_tabs">Alertas y notificaciones
+                                    </div>
+                                </span>
+                                <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                    <input class="border rounded p-2 bg-gray-100"
+                                        style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                        name="filtrarTablaAlertas" [(ngModel)]="filtrarTablaAlertas"
+                                        placeholder="Filtrar...">
+                                    <select name="tamanoTablaAlertas" id="tamanoTablaAlertas"
+                                        class="border rounded  bg-gray-100" (change)="pageAlerta=1"
+                                        [(ngModel)]="tamanoTablaAlertas"
+                                        style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                        <option value="5"> 5</option>
+                                        <option value="10"> 10</option>
+                                        <option value="20"> 20</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-12" *ngIf="listadoNotificaciones.length!=0">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="w-full shadow">
+                                                <thead>
+                                                    <tr
+                                                        class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                        <th class="px-4 py-3">Fecha y hora</th>
+                                                        <th class="px-4 py-3">Correo electronico</th>
+                                                        <th class="px-4 py-3">Detalle</th>
+                                                        <th class="px-4 py-3">Tipo</th>
+                                                        <th class="px-4 py-3">Estado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white">
+                                                    <tr class="text-gray-700"
+                                                        *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
+                                                        <td class="px-4 py-1 text-sm border">{{ item.fecha }}</td>
+                                                        <td class="px-4 py-1 text-sm border">{{ item.email }}</td>
+                                                        <td class="px-4 py-1 text-sm border">{{ item.descripcion }}</td>
+                                                        <td class="px-4 py-1 text-sm border">{{ item.tipo }}</td>
+                                                        <!-- <td class="px-4 py-1 text-sm border" [class]="item.estado.includes('Error') ? 'bg-red-500 text-white font-bold text-center' : 'bg-green-500 text-white font-bold text-center'">
+                                                            {{ item.estado }}
+                                                        </td> -->
+                                                        <td class="px-4 py-1 text-sm border">
+                                                            <div [ngClass]="item.estado.includes('Error') ? 'bg-pink-300' : 'bg-green-300'">
+                                                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                                    {{ item.estado}}
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </span>
-                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
-                                        <input class="border rounded p-2 bg-gray-100"
-                                            style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                                            name="filtrarTablaAlertas" [(ngModel)]="filtrarTablaAlertas"
-                                            placeholder="Filtrar...">
-                                        <select name="tamanoTablaAlertas" id="tamanoTablaAlertas"
-                                            class="border rounded  bg-gray-100" (change)="pageAlerta=1"
-                                            [(ngModel)]="tamanoTablaAlertas"
-                                            style="font-size: 10px; color: #9aa8bc; padding: 7px;">
-                                            <option value="5"> 5</option>
-                                            <option value="10"> 10</option>
-                                            <option value="20"> 20</option>
-                                        </select>
+                                        <div class="col-lg-12 col-sm-12 text-end">
+                                            <pagination-controls (pageChange)="pageAlerta = $event"
+                                                previousLabel="Anterior" nextLabel="Siguiente">
+                                            </pagination-controls>
+                                        </div>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-lg-12" *ngIf="listadoNotificaciones.length!=0">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <table class="w-full shadow">
-                                                    <thead>
-                                                        <tr
-                                                            class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                                            <th class="px-4 py-3">Fecha y hora</th>
-                                                            <th class="px-4 py-3">Correo electronico</th>
-                                                            <th class="px-4 py-3">Detalle</th>
-                                                            <th class="px-4 py-3">Tipo</th>
-                                                            <th class="px-4 py-3">Estado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="bg-white">
-                                                        <tr class="text-gray-700"
-                                                            *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
-                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha }}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.email }}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion }}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.tipo }}</td>
-                                                            <!-- <td class="px-4 py-1 text-sm border" [class]="item.estado.includes('Error') ? 'bg-red-500 text-white font-bold text-center' : 'bg-green-500 text-white font-bold text-center'">
-                                                                {{ item.estado }}
-                                                            </td> -->
-                                                            <td class="px-4 py-1 text-sm border">
-                                                                <div [ngClass]="item.estado.includes('Error') ? 'bg-pink-300' : 'bg-green-300'">
-                                                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
-                                                                        {{ item.estado}}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12 text-end">
-                                                <pagination-controls (pageChange)="pageAlerta = $event"
-                                                    previousLabel="Anterior" nextLabel="Siguiente">
-                                                </pagination-controls>
-                                            </div>
+                                <div class="col-lg-12">
+                                    <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
+                                        *ngIf="listadoNotificaciones.length==0">
+                                        <div class="w-3/12">
+                                            <img src="assets/images/animaciones/nodata.gif">
                                         </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
-                                            *ngIf="listadoNotificaciones.length==0">
-                                            <div class="w-3/12">
-                                                <img src="assets/images/animaciones/nodata.gif">
-                                            </div>
-                                        </fuse-card>
-                                    </div>
+                                    </fuse-card>
                                 </div>
-                                <div class="m-5">
+                            </div>
+                            <div class="m-5">
 
-                                </div>
-                            </mat-tab>
+                            </div>
+                        </mat-tab>
                         </mat-tab-group>
                     </div>
                 </div>
