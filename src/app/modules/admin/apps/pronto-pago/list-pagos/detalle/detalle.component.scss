@@ -10,3 +10,11 @@
     background-color: white;
     border: 1px solid rgb(212, 212, 212);
 }
+
+thead th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+    background-color: #F9FAFB;
+    z-index: 90;
+}

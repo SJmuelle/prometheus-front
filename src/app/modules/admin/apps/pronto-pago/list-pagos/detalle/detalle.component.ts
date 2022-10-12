@@ -27,7 +27,9 @@ export class DetalleComponent implements OnInit {
   }
 
   consultarTransportadoras() {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de planillas', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
+      Swal.close();
       if (response) {
         this.listado = response.data;
       } else {
@@ -121,7 +123,10 @@ export class DetalleComponent implements OnInit {
   }
 
   rechazar() {
-    this.pago.postRechazar(this.details).subscribe((response: any) => {
+    let data = {
+      "details": this.details
+    }
+    this.pago.postRechazar(data).subscribe((response: any) => {
       if (response) {
         if (this.details.length > 1) {
           Swal.fire(
