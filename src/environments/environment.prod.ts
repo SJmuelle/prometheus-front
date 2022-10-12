@@ -4,8 +4,8 @@ export const environment = {
     userName: "APPWEB",
     password: btoa("123456"),
     urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
-    urlApi2: 'http://demo.fintra.co:8010/api-pqrs/api/generic/qry/',
-    urlApi3: 'http://demo.fintra.co:8010/api-pqrs/api/generic',
+    urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
+    urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic',
     urlApiNgrok: 'https://ultracem.ngrok.io/api-fintra/api',
 
     urlApi4: 'http://demo.fintra.co:8010/api-fintra/api/credito/tk/recursos/',

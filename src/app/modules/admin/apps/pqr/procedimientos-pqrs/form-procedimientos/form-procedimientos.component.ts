@@ -35,7 +35,7 @@ export class FormProcedimientosComponent implements OnInit {
             },
         }).then((result) => {});
         this._pqrService
-            .getListados(`/tk/select-causales-pqrs`)
+            .getListados(`tk/select-causales-pqrs`)
             .subscribe((response: any) => {
                 if (response) {
                     this.listadoCausal = response;
@@ -45,7 +45,7 @@ export class FormProcedimientosComponent implements OnInit {
             });
 
         this._pqrService
-            .getListados(`/tk/select-responsables-pqrs`)
+            .getListados(`tk/select-responsables-pqrs`)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {

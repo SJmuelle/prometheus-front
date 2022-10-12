@@ -273,15 +273,6 @@ export class GestionPQRSComponent implements OnInit {
             }
         });
 
-        url = `listar-comentarios-seguimiento/${this.pqrid}`;
-        this._pqrService.getListados(url).subscribe((response: any) => {
-            if (response) {
-                this.listadoSeguimiento = response;
-            } else {
-                this.listadoSeguimiento = [];
-            }
-        });
-
         let urlproc = `id_comentario_pqrs/${this.pqrid}`;
         this._pqrService.getListados(urlproc).subscribe((response:any) =>{
             if (response) {
@@ -336,7 +327,8 @@ export class GestionPQRSComponent implements OnInit {
                             this.motivo = id.detalle;
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
-                                if (response) {
+                                console.log(response.length)
+                                if (response.length > 0) {
                                     this.objAdjunto = response[0];
                                     this.listadoAdjuntos.push(this.objAdjunto)
                                     this.archivo = [{
@@ -373,6 +365,27 @@ export class GestionPQRSComponent implements OnInit {
                 this._pqrService.getListados(url).subscribe((data: any) => {
                     Swal.close();
                     this.listadoAsignaciones = data;
+                });
+                break;
+            case 4:
+                this.filtrarTablaSeguimiento = '';
+                this.tamanoTablaSeguimiento = 5;
+                url = `listar-comentarios-seguimiento/${this.pqrid}`;
+                Swal.fire({
+                    title: 'Cargando',
+                    html: 'Buscando información de PQRS',
+                    timer: 500000,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                }).then((result) => {});
+                this._pqrService.getListados(url).subscribe((response: any) => {
+                    Swal.close();
+                    if (response) {
+                        this.listadoSeguimiento = response;
+                    } else {
+                        this.listadoSeguimiento = [];
+                    }
                 });
                 break;
             case 5:

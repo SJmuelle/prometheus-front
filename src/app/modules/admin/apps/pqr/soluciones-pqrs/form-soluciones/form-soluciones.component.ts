@@ -34,7 +34,7 @@ export class FormSolucionesComponent implements OnInit {
             },
         }).then((result) => {});
         this._pqrService
-            .getListados(`/tk/select-causales-pqrs`)
+            .getListados(`tk/select-causales-pqrs`)
             .subscribe((response: any) => {
                 if (response) {
                     this.listadoCausal = response;

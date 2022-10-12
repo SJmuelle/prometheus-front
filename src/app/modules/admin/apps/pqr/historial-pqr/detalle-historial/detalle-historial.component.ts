@@ -28,8 +28,6 @@ export class DetalleHistorialComponent implements OnInit {
       Swal.close();
       if (response) {
         this.datos = response
-      } else {
-        // this.datos = '';
       }
     });
   }

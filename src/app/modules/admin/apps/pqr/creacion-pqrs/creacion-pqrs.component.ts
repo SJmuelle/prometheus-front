@@ -381,10 +381,6 @@ export class CreacionPQRSComponent implements OnInit {
         });
     }
 
-    mostrarMensaje() {
-        // console.log(this.datos.descripcion);
-    }
-
     guardar() {
         this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
             if (response.data.area !== 'SAC') {
@@ -422,7 +418,6 @@ export class CreacionPQRSComponent implements OnInit {
                     hijos: this.crearJsonHijas(),
                     user: this.UsuarioSaggics
                 };
-                debugger
                 let url = '/crear-pqrs';
 
                 this.crearJsonHijas();
@@ -499,9 +494,6 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     public onCharge(input: HTMLInputElement, ind): void {
-        // this.showButtonSave = false;
-        // this.showButtonRecord = true;
-        // this.nameFile = 'masivo.cvs';
         const files = input.files;
         if (files && files.length) {
             const fileToRead = files[0];
@@ -514,7 +506,6 @@ export class CreacionPQRSComponent implements OnInit {
                 let nombre = this.evidencia[ind].filename.split('.');
                 this.evidencia[ind].ext = nombre[1];
                 this.evidencia[ind].nombre = nombre[0];
-                // console.log(this.evidencia[ind].file);
             };
         }
     }
