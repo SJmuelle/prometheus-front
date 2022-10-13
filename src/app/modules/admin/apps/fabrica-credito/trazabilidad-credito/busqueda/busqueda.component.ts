@@ -29,23 +29,14 @@ export class BusquedaComponent implements OnInit {
     pagaduriaForm: FormGroup;
 
     documento: string='';
-    verDocumento: string='';
     nombreCliente: string='';
-    verNombreCliente: string='';
     unidad: string='';
-    verUnidad: string='';
     agenda: string='';
-    verAgenda: string='';
     estado: string='';
-    verEstado: string='';
     subestado: string='';
-    verSubestado: string='';
     solicitud: string='';
-    verSolicitud: string='';
     codigoNeg: string='';
-    verCodigoNeg: string='';
     nombrePagaduria: string='';
-    verNombrePagaduria: string='';
 
     dataFiltro: any = {"details":[]};
     dataTitular: any = {"details":[]};
@@ -66,21 +57,6 @@ export class BusquedaComponent implements OnInit {
             codigoNeg:[''],
             codigoPag: ['']
         })
-
-        this.negocioForm = this.fb.group({
-            agenda: [''],
-            estado: [''],
-            subestado: [''],
-            // fechaInicial: [''],
-            // fechaFinal: [''],
-            unidad: [''],
-            solicitud:[''],
-            codigoNeg:[''],
-        })
-
-        this.pagaduriaForm = this.fb.group({
-            codigoPag: ['']
-        })
     }
 
     ngOnInit(): void {
@@ -92,11 +68,16 @@ export class BusquedaComponent implements OnInit {
     }
 
     eliminarFiltro(){
-        this.borrarTitular()
-        this.borrarEstado()
-        this.borrarPagaduria()
+        this.titularForm.value.documento='';
+        this.titularForm.value.nombre='';
+        this.titularForm.value.unidad='';
+        this.titularForm.value.agenda='';
+        this.titularForm.value.estado='';
+        this.titularForm.value.subestado='';
+        this.titularForm.value.solicitud='';
+        this.titularForm.value.codigoNeg='';
+        this.titularForm.value.codigoPag='';
         this.dataFiltro.details = [];
-        this.consulta('');
     }
 
     abrirFiltro(){
@@ -107,144 +88,133 @@ export class BusquedaComponent implements OnInit {
         }
     }
 
-    filtroTitular(){
-        this.dataTitular.details = [];
-        this.tarjetaTitular = false;
-        this.seleccionado = false;
-        if (this.titularForm.value.documento!='' && this.titularForm.value.documento!=null) {
-            let data = {
-                "tipo": "IDENTIFICACION",
-                "buscar": this.titularForm.value.documento
-            }
-            this.dataTitular.details.push(data)
-            this.verDocumento = this.documento;
+    mostrarDocumento(){
+        let data = {
+            "tipo": "IDENTIFICACION",
+            "buscar": this.titularForm.value.documento
         }
-
-        if (this.titularForm.value.nombre!='' && this.titularForm.value.nombre!=null) {
-            let data = {
-                "tipo": "NOMBRE",
-                "buscar": this.titularForm.value.nombre
-            }
-            this.dataTitular.details.push(data)
-            this.verNombreCliente = this.nombreCliente;
-        }
+        const dataBuscar = this.dataFiltro.details.filter(docu => docu.buscar != this.titularForm.value.documento);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
     }
 
-    filtroNegocio(){
-        this.dataNegocios.details = [];
-        this.tarjetaNegocios = false;
-        this.seleccionado = false;
-        if (this.negocioForm.value.unidad!='' && this.negocioForm.value.unidad!=null) {
-            let data = {
-                "tipo": "UNIDAD",
-                "buscar": this.negocioForm.value.unidad
-            }
-            this.dataNegocios.details.push(data)
-            this.verUnidad = this.unidad;
+    mostrarNombre(){
+        let data = {
+            "tipo": "NOMBRE",
+            "buscar": this.titularForm.value.nombre
         }
-
-        if (this.negocioForm.value.agenda!='' && this.negocioForm.value.agenda!=null) {
-            let data = {
-                "tipo": "AGENDA",
-                "buscar": this.negocioForm.value.agenda
-            }
-            this.dataNegocios.details.push(data)
-            this.verAgenda = this.agenda;
-        }
-
-        if (this.negocioForm.value.estado!='' && this.negocioForm.value.estado!=null) {
-            let data = {
-                "tipo": "ESTADO",
-                "buscar": this.negocioForm.value.estado
-            }
-            this.dataNegocios.details.push(data)
-            this.verEstado = this.estado;
-        }
-
-        if (this.negocioForm.value.subestado!='' && this.negocioForm.value.subestado!=null) {
-            let data = {
-                "tipo": "SUBESTADO",
-                "buscar": this.negocioForm.value.subestado
-            }
-            this.dataNegocios.details.push(data)
-            this.verSubestado = this.subestado;
-        }
-
-        if (this.negocioForm.value.solicitud!='' && this.negocioForm.value.solicitud!=null) {
-            let data = {
-                "tipo": "SOLICITUD",
-                "buscar": this.negocioForm.value.solicitud
-            }
-            this.dataNegocios.details.push(data)
-            this.verSolicitud = this.solicitud;
-        }
-
-        if (this.negocioForm.value.codigoNeg!='' && this.negocioForm.value.codigoNeg!=null) {
-            let data = {
-                "tipo": "NEGOCIO",
-                "buscar": this.negocioForm.value.codigoNeg
-            }
-            this.dataNegocios.details.push(data)
-            this.verCodigoNeg = this.codigoNeg;
-        }
+        const dataBuscar = this.dataFiltro.details.filter(nom => nom.buscar != this.titularForm.value.nombre);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
     }
 
-    filtroPagaduria(){
-        this.dataPagaduria.details = [];
-        this.tarjetaPagaduria = false;
-        this.seleccionado = false;
-        if (this.pagaduriaForm.value.codigoPag!='' && this.pagaduriaForm.value.codigoPag!=null) {
-            let data = {
-                "tipo": "PAGADURIA",
-                "buscar": this.pagaduriaForm.value.codigoPag
-            }
-            this.dataPagaduria.details.push(data)
-            this.verNombrePagaduria = this.nombrePagaduria;
+    mostrarUnidad(){
+        let data = {
+            "tipo": "UNIDAD",
+            "buscar": this.titularForm.value.unidad
         }
+        const dataBuscar = this.dataFiltro.details.filter(uni => uni.buscar != this.titularForm.value.unidad);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
     }
 
-    filtrar(){
-        this.dataFiltro.details = [];
-        this.tarjetaTitular = false;
-        this.tarjetaNegocios = false;
-        this.tarjetaPagaduria = false;
-        this.seleccionado = false;
-        if (this.dataTitular.details.length>0) {
-            for (let index = 0; index < this.dataTitular.details.length; index++) {
-                const element = this.dataTitular.details[index];
-                this.dataFiltro.details.push(element)
-            }
+    mostrarAgenda(){
+        let data = {
+            "tipo": "AGENDA",
+            "buscar": this.titularForm.value.agenda
         }
-        if (this.dataNegocios.details.length>0) {
-            for (let index = 0; index < this.dataNegocios.details.length; index++) {
-                const element = this.dataNegocios.details[index];
-                this.dataFiltro.details.push(element)
-            }
+        const dataBuscar = this.dataFiltro.details.filter(age => age.buscar != this.titularForm.value.agenda);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarEstado(){
+        let data = {
+            "tipo": "ESTADO",
+            "buscar": this.titularForm.value.estado
         }
-        if (this.dataPagaduria.details.length>0) {
-            for (let index = 0; index < this.dataPagaduria.details.length; index++) {
-                const element = this.dataPagaduria.details[index];
-                this.dataFiltro.details.push(element)
-            }
+        const dataBuscar = this.dataFiltro.details.filter(est => est.buscar != this.titularForm.value.estado);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarSubestado(){
+        let data = {
+            "tipo": "SUBESTADO",
+            "buscar": this.titularForm.value.subestado
         }
-        console.log(this.dataFiltro.details)
-        Swal.fire({ 
-            title: 'Cargando', 
-            html: 'Filtrando la información', 
-            timer: 500000,
-            allowOutsideClick: false, 
-            didOpen: () => { 
-                Swal.showLoading() 
-            }, 
-        }).then((result) => { })
-        this._utility.postQuery('/cre-consulta-comentarios-v2', this.dataFiltro).subscribe((response: any) => {
-            if (response) {
-                Swal.close();
-                this.listados = response.data;
-            } else {
-                this.listados = [];
-            }
-        });
+        const dataBuscar = this.dataFiltro.details.filter(sub => sub.buscar != this.titularForm.value.subestado);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarSolicitud(){
+        let data = {
+            "tipo": "SOLICITUD",
+            "buscar": this.titularForm.value.solicitud
+        }
+        const dataBuscar = this.dataFiltro.details.filter(sol => sol.buscar != this.titularForm.value.solicitud);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarNegocio(){
+        let data = {
+            "tipo": "NEGOCIO",
+            "buscar": this.titularForm.value.codigoNeg
+        }
+        const dataBuscar = this.dataFiltro.details.filter(neg => neg.buscar != this.titularForm.value.codigoNeg);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarPagaduria(){
+        let data = {
+            "tipo": "PAGADURIA",
+            "buscar": this.titularForm.value.codigoPag
+        }
+        const dataBuscar = this.dataFiltro.details.filter(pag => pag.buscar != this.titularForm.value.codigoPag);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    filtrar(value){
+        console.log(value)
+        // Swal.fire({ 
+        //     title: 'Cargando', 
+        //     html: 'Filtrando la información', 
+        //     timer: 500000,
+        //     allowOutsideClick: false, 
+        //     didOpen: () => { 
+        //         Swal.showLoading() 
+        //     }, 
+        // }).then((result) => { })
+        // this._utility.postQuery('/cre-consulta-comentarios-v2', value).subscribe((response: any) => {
+        //     if (response) {
+        //         Swal.close();
+        //         this.listados = response.data;
+        //     } else {
+        //         this.listados = [];
+        //     }
+        // });
     }
 
     consultaPagaduria(data){
@@ -300,109 +270,12 @@ export class BusquedaComponent implements OnInit {
         });
     }
 
-    borrarTitular(){
-        this.documento = '';
-        this.verDocumento = '';
-        this.nombreCliente = '';
-        this.verNombreCliente = '';
-        this.dataTitular.details = [];
-        this.titularForm.reset();
-    }
-
-    borrarEstado(){
-        this.unidad = '';
-        this.verUnidad = '';
-        this.estado = '';
-        this.verEstado = '';
-        this.agenda = '';
-        this.verAgenda = '';
-        this.subestado = '';
-        this.verSubestado = '';
-        this.solicitud = '';
-        this.verSolicitud = '';
-        this.codigoNeg = '';
-        this.verCodigoNeg = '';
-        this.dataNegocios.details = [];
-        this.negocioForm.reset();
-    }
-
-    borrarPagaduria(){
-        this.nombrePagaduria = '';
-        this.verNombrePagaduria = '';
-        this.dataPagaduria.details = [];
-        this.pagaduriaForm.reset();
-    }
-
-    mostrarDocumento(event: Event){
-        this.documento = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarNombreTitular(event: Event){
-        this.nombreCliente = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarUnidad(value){
-        this.unidad = value;
-    }
-
-    mostrarAgenda(value){
-        this.agenda = value;
-    }
-
-    mostrarEstado(value){
-        this.estado = value
-    }
-
-    mostrarSubestado(value){
-        this.subestado = value
-    }
-
-    mostrarSolicitud(event: Event){
-        this.solicitud = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarCodNeg(event: Event){
-        this.codigoNeg = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarPagaduria(value){
-        this.nombrePagaduria = value
-    }
-
     abrirTitular(){
-        if ( this.tarjetaTitular) {
+        if (this.tarjetaTitular) {
             this.tarjetaTitular=false;
-            this.seleccionado=false;
         } else {
             this.tarjetaTitular=true;
-            this.seleccionado=true;
         }
-        this.tarjetaNegocios=false;
-        this.tarjetaPagaduria=false;
-    }
-
-    abrirNegocios(){
-        if ( this.tarjetaNegocios) {
-            this.tarjetaNegocios=false;
-            this.seleccionado=false;
-        } else {
-            this.tarjetaNegocios=true;
-            this.seleccionado=true;
-        }
-        this.tarjetaTitular=false;
-        this.tarjetaPagaduria=false;
-    }
-
-    abrirPagaduria(){
-        if ( this.tarjetaPagaduria) {
-            this.tarjetaPagaduria=false;
-            this.seleccionado=false;
-        } else {
-            this.tarjetaPagaduria=true;
-            this.seleccionado=true;
-        }
-        this.tarjetaTitular=false;
-        this.tarjetaNegocios=false;
     }
 
     consulta(dato) {
@@ -414,7 +287,6 @@ export class BusquedaComponent implements OnInit {
             Swal.close();
             if (response) {
                 this.listados = response.data;
-                console.log(this.listados);
                 this.listadoCount = this.listados.length;
             } else {
                 this.listados = [];

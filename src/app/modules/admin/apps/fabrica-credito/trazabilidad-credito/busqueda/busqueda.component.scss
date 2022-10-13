@@ -34,7 +34,13 @@
 }
 
 .anchoTitular {
-    width: 77%;
+    @media (min-width: 1280px) {
+        width: 80%;
+    }
+    @media (min-width: 1440px) {
+        width: 77%;
+    }
+    
 }
 
 .anchoNegocios {

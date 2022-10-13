@@ -39,176 +39,99 @@
                                     <button mat-raised-button color="primary" (click)="abrirFiltro()"><mat-icon svgIcon="heroicons_outline:search"></mat-icon></button>
                                 </div>
                             </div>
-                            <div class="absolute z-index bg-card anchoTitular shadow rounded-xl lg:mt-32 xl:mt-24 border" *ngIf="tarjetaTitular">
+                            <div class="absolute z-index bg-card anchoTitular shadow rounded-xl border lg:mt-24 lg:ml-22 xl:mt-24" *ngIf="tarjetaTitular">
                                 <div class="py-3 px-3 flex flex-col w-full">
                                     <form [formGroup]="titularForm">
-                                        <div class="flex flex-row w-full justify-start gap-4 border-b">
-                                            <div class="flex flex-row w-1/4">
+                                        <div class="flex flex-row w-full gap-4 border-b">
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>N° de identificación</mat-label>
-                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento" (input)="mostrarDocumento($event)">
+                                                    <input matInput placeholder="Cedula o Nit" formControlName="documento">
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:identification"></mat-icon>
-                                                </mat-form-field>
-                                                <div class="flex flex-col justify-center">
-                                                    <button mat-icon-button matTooltip="Añadir">
-                                                        <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                                    <button matSuffix mat-icon-button (click)="mostrarDocumento()">
+                                                        <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:check-circle"></mat-icon>
                                                     </button>
-                                                </div>
+                                                </mat-form-field>
                                             </div>
-                                            <div class="flex flex-row w-1/4">
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>Nombre del cliente</mat-label>
-                                                    <input matInput placeholder="Nombre" formControlName="nombre" (input)="mostrarNombreTitular($event)">
+                                                    <input matInput placeholder="Nombre" formControlName="nombre">
                                                     <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:user"></mat-icon>
-                                                </mat-form-field>
-                                                <div class="flex flex-col justify-center">
-                                                    <button mat-icon-button matTooltip="Añadir">
-                                                        <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                                    <button matSuffix mat-icon-button (click)="mostrarNombre()">
+                                                        <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:check-circle"></mat-icon>
                                                     </button>
-                                                </div>
+                                                </mat-form-field>
                                             </div>
                                         </div>
-                                        <div class="flex flex-row w-full justify-between gap-5">
-                                            <div class="w-1/4">
+                                        <div class="flex flex-row w-full gap-4 mt-2">
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>Unidad de negocio</mat-label>
                                                     <mat-select formControlName="unidad">
-                                                      <mat-option (click)="mostrarUnidad(item.descripcionOpcion)" *ngFor="let item of unidades" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
+                                                      <mat-option (click)="mostrarUnidad()" *ngFor="let item of unidades" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="w-1/4">
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>Agenda</mat-label>
                                                     <mat-select formControlName="agenda">
-                                                      <mat-option (click)="mostrarAgenda(item.descripcionOpcion)" *ngFor="let item of agendas" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
+                                                      <mat-option (click)="mostrarAgenda()" *ngFor="let item of agendas" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             </div>
-                                            <div class="w-1/4">
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>Estado</mat-label>
                                                     <mat-select formControlName="estado">
-                                                      <mat-option (click)="consultaSubestados(item.codigo); mostrarEstado(item.nombre)" *ngFor="let item of estados" [value]="item.codigo">{{item.nombre}}</mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                            <div class="w-1/4">
-                                                <mat-form-field class="w-full" appearance="fill">
-                                                    <mat-label>Sub-estado</mat-label>
-                                                    <mat-select formControlName="subestado">
-                                                      <mat-option (click)="mostrarSubestado(item.nombre)" *ngFor="let item of subestados" [value]="item.codigo">{{item.nombre}}</mat-option>
+                                                      <mat-option (click)="consultaSubestados(item.codigo); mostrarEstado()" *ngFor="let item of estados" [value]="item.codigo">{{item.nombre}}</mat-option>
                                                     </mat-select>
                                                 </mat-form-field>
                                             </div>
                                         </div>
                                         <div class="flex flex-row w-full justify-start gap-4 border-b">
-                                            <div class="flex flex-row w-1/4">
+                                            <div class="w-72">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Sub-estado</mat-label>
+                                                    <mat-select formControlName="subestado">
+                                                      <mat-option (click)="mostrarSubestado()" *ngFor="let item of subestados" [value]="item.codigo">{{item.nombre}}</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>N° de solicitud</mat-label>
-                                                    <input matInput placeholder="N° Solicitud" formControlName="solicitud" (input)="mostrarSolicitud($event)">
-                                                </mat-form-field>
-                                                <div class="flex flex-col justify-center">
-                                                    <button mat-icon-button matTooltip="Añadir">
+                                                    <input matInput placeholder="N° Solicitud" formControlName="solicitud">
+                                                    <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:clipboard-list"></mat-icon>
+                                                    <button matSuffix mat-icon-button (click)="mostrarSolicitud()">
                                                         <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
                                                     </button>
-                                                </div>
+                                                </mat-form-field>
                                             </div>
-                                            <div class="flex flex-row w-1/4">
+                                            <div class="w-72">
                                                 <mat-form-field class="w-full" appearance="fill">
                                                     <mat-label>Código</mat-label>
-                                                    <input matInput placeholder="Codigo" formControlName="codigoNeg" (input)="mostrarCodNeg($event)">
-                                                </mat-form-field>
-                                                <div class="flex flex-col justify-center">
-                                                    <button mat-icon-button matTooltip="Añadir">
+                                                    <input matInput placeholder="Codigo" formControlName="codigoNeg">
+                                                    <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:key"></mat-icon>
+                                                    <button matSuffix mat-icon-button (click)="mostrarNegocio()">
                                                         <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
                                                     </button>
-                                                </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-row w-full justify-start gap-4 border-b mt-2">
+                                            <div class="w-72">
+                                                <mat-form-field class="w-full" appearance="fill">
+                                                    <mat-label>Pagaduría</mat-label>
+                                                    <mat-select placeholder="Pagaduria" formControlName="codigoPag">
+                                                        <mat-option (click)="mostrarPagaduria()" *ngFor="let item of pagadurias" [value]="item.codigo">{{item.nombre}}</mat-option>
+                                                      </mat-select>
+                                                </mat-form-field>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
-                            </div>
-                            <div class="border absolute z-index bg-card marginTarjetaNegocios anchoNegocios shadow rounded-xl lg:mt-32 xl:mt-36" *ngIf="tarjetaNegocios">
-                                <form [formGroup]="negocioForm">
-                                    <div class="mt-4 mb-3 flex flex-row justify-center w-full">
-                                        <div class="flex flex-col w-4/5">
-                                            <div class="flex flex-row w-full justify-between gap-4">
-                                                <div class="w-full">
-                                                    <mat-form-field class="w-full" appearance="fill">
-                                                        <mat-label>Unidad de negocio</mat-label>
-                                                        <mat-select formControlName="unidad">
-                                                          <mat-option (click)="mostrarUnidad(item.descripcionOpcion)" *ngFor="let item of unidades" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="w-full">
-                                                    <mat-form-field class="w-full" appearance="fill">
-                                                        <mat-label>Agenda</mat-label>
-                                                        <mat-select formControlName="agenda">
-                                                          <mat-option (click)="mostrarAgenda(item.descripcionOpcion)" *ngFor="let item of agendas" [value]="item.codigoOpcion">{{item.descripcionOpcion}}</mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-row w-full justify-between gap-4">
-                                                <div class="w-full">
-                                                    <mat-form-field class="w-full" appearance="fill">
-                                                        <mat-label>Estado</mat-label>
-                                                        <mat-select formControlName="estado">
-                                                          <mat-option (click)="consultaSubestados(item.codigo); mostrarEstado(item.nombre)" *ngFor="let item of estados" [value]="item.codigo">{{item.nombre}}</mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="w-full" *ngIf="negocioForm.value.estado!=''">
-                                                    <mat-form-field class="w-full" appearance="fill">
-                                                        <mat-label>Sub-estado</mat-label>
-                                                        <mat-select formControlName="subestado">
-                                                          <mat-option (click)="mostrarSubestado(item.nombre)" *ngFor="let item of subestados" [value]="item.codigo">{{item.nombre}}</mat-option>
-                                                        </mat-select>
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                            <div class="flex flex-row w-full justify-between mt-2 gap-4">
-                                                <div class="w-full">
-                                                    <mat-form-field class="w-full" appearance="fill">
-                                                        <mat-label>N° de solicitud</mat-label>
-                                                        <input matInput placeholder="N° Solicitud" formControlName="solicitud" (input)="mostrarSolicitud($event)">
-                                                    </mat-form-field>
-                                                </div>
-                                                <div class="w-full">
-                                                    <mat-form-field class="w-full" appearance="fill">
-                                                        <mat-label>Código</mat-label>
-                                                        <input matInput placeholder="Codigo" formControlName="codigoNeg" (input)="mostrarCodNeg($event)">
-                                                    </mat-form-field>
-                                                </div>
-                                            </div>
-                                            <div class="w-20 mt-2">
-                                                <button mat-raised-button color="primary" (click)="filtroNegocio()">Añadir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="border absolute z-index bg-card anchoPagaduria shadow rounded-xl marginTarjetaPagaduria lg:mt-32 xl:mt-36" *ngIf="tarjetaPagaduria">
-                                <form [formGroup]="pagaduriaForm">
-                                    <div class="mt-4 mb-3 flex flex-row justify-center w-full">
-                                        <div class="flex flex-col w-3/4">
-                                            <div class="w-full">
-                                                <mat-form-field class="w-full" appearance="fill">
-                                                    <mat-label>Pagaduría</mat-label>
-                                                    <mat-select placeholder="Pagaduria" formControlName="codigoPag">
-                                                        <mat-option (click)="mostrarPagaduria(item.nombre)" *ngFor="let item of pagadurias" [value]="item.codigo">{{item.nombre}}</mat-option>
-                                                      </mat-select>
-                                                    <mat-icon class="icon-size-5" matSuffix svgIcon="heroicons_outline:office-building"></mat-icon>
-                                                  </mat-form-field>
-                                            </div>
-                                            <div class="w-20 mt-2">
-                                                <button mat-raised-button color="primary" (click)="filtroPagaduria()">Añadir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
