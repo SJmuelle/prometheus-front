@@ -325,7 +325,6 @@ export class GestionPQRSComponent implements OnInit {
                         }
                     }
                     this.listadoGestion = unicos.reverse();
-                    console.log(this.listadoGestion)
                     Swal.close();
                     if (unicos.length<=0) {
                         Swal.fire({
@@ -343,7 +342,6 @@ export class GestionPQRSComponent implements OnInit {
                             this.motivo = id.detalle;
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
-                                console.log(response.length)
                                 if (response.length > 0) {
                                     this.objAdjunto = response[0];
                                     this.listadoAdjuntos.push(this.objAdjunto)

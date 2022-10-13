@@ -1,7 +1,5 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { disableDebugTools } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { InsertarAdjuntosComponent } from '../../creacion-pqrs/insertar-adjuntos/insertar-adjuntos.component';
@@ -513,9 +511,7 @@ export class SolucionComponent implements OnInit {
                                         Swal.showLoading();
                                     },
                                 }).then((result) => {});
-                                debugger;
                                 this._pqrService.postFile(url, data).subscribe((response: any) => {
-                                    debugger;
                                     Swal.close();
                                     if (response) {
                                         Swal.fire(
