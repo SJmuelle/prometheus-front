@@ -111,7 +111,6 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     logChange($event) {
-        debugger;
         this.mensajeQuill=$event.text;
     }
 
@@ -121,7 +120,23 @@ export class GestionPQRSComponent implements OnInit {
             data: {id: parseInt(this.pqrid), estado: this.datos.estado}
         })
         dialogRef.afterClosed().subscribe((result)=>{
-            this.buscarDatos()
+            let url = `listar-comentarios-seguimiento/${this.pqrid}`;
+                Swal.fire({
+                    title: 'Cargando',
+                    html: 'Buscando comentario de PQRS',
+                    timer: 500000,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
+                }).then((result) => {});
+                this._pqrService.getListados(url).subscribe((response: any) => {
+                    Swal.close();
+                    if (response) {
+                        this.listadoSeguimiento = response;
+                    } else {
+                        this.listadoSeguimiento = [];
+                    }
+                });
         })
     }
 
@@ -309,7 +324,8 @@ export class GestionPQRSComponent implements OnInit {
                             unicos.push(iterator)
                         }
                     }
-                    this.listadoGestion = unicos;
+                    this.listadoGestion = unicos.reverse();
+                    console.log(this.listadoGestion)
                     Swal.close();
                     if (unicos.length<=0) {
                         Swal.fire({
@@ -373,7 +389,7 @@ export class GestionPQRSComponent implements OnInit {
                 url = `listar-comentarios-seguimiento/${this.pqrid}`;
                 Swal.fire({
                     title: 'Cargando',
-                    html: 'Buscando información de PQRS',
+                    html: 'Buscando comentario de PQRS',
                     timer: 500000,
                     didOpen: () => {
                         Swal.showLoading();
