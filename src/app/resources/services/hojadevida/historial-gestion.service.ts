@@ -33,7 +33,7 @@ export class HistorialGestionService {
     getHistorialGestion(codigoNegocio: string = '') {
         return this._httpClient.get(
             environment.urlApi2 +
-                `/informacion-historial-gestion/${codigoNegocio}`
+                `informacion-historial-gestion/${codigoNegocio}`
         );
     }
 }

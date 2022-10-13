@@ -281,7 +281,7 @@ export class CreacionPQRSComponent implements OnInit {
 
     //datos ingreso
     negociosCabeceras(tipo) {
-        let url = `/pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
+        let url = `pqrs-negocios-cabecera/${tipo}/${this.identificaiconCliente}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
             if (response) {
                 this.listadoNegocio = response;
