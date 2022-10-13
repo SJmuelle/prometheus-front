@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class ListPagosComponent implements OnInit {
 
   listado: any = [];
+  filtrarTabla:string='';
 
   constructor(public pago: ProntoPagoService, public dialog: MatDialog) { }
 

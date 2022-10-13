@@ -1,9 +1,17 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100">
-        <h2 class="text-gray-900 col-span-12 mb-4">Propietarios</h2>
+        <h2 class="text-gray-900 col-span-12 mb-2">Propietarios</h2>
     </div>
 
-    <div class="mt-2 w-full max-h-192 overflow-y-auto" *ngIf="listado.length>0">
+    <div class="flex flex-row w-full justify-end mb-4">
+        <div>
+            <input class="border rounded p-2 bg-gray-100 w-72" style="font-size: 10px; margin-right: 1em;"
+                        type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
+                        placeholder="Filtrar...">
+        </div>
+    </div>
+
+    <div class="w-full lg:max-h-120 xl:max-h-192 overflow-y-auto" *ngIf="listado.length>0">
         <table class="p-0">
             <thead class="bg-gray-100">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
@@ -17,7 +25,7 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <tr class="text-gray-700" *ngFor="let item of listado">
+                <tr class="text-gray-700" *ngFor="let item of listado | filter:filtrarTabla">
                     <td class="text-sm border py-3 text-center">{{ item.identificacion}}</td>
                     <td class="text-sm border text-center">{{ item.nombrePropietario}}</td>
                     <td class="text-sm border text-center">{{ item.contacto }}</td>
@@ -35,7 +43,7 @@
             </tbody>
         </table>
     </div>
-    <div class="flex flex-row w-full h-192 justify-center" *ngIf="listado.length<1">
+    <div class="flex flex-row w-full h-80 justify-center" *ngIf="listado.length<1">
         <div class="flex flex-col h-full justify-center">
             <img class="lg:h-56 xl:h-80 lg:w-56 xl:w-80" src="assets/images/animaciones/nodata.gif">
             <div class="text-gray-600 text-center mt-2 font-medium">No hay información para mostrar.</div>
