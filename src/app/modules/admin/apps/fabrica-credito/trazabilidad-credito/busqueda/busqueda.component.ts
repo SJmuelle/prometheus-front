@@ -19,12 +19,9 @@ export class BusquedaComponent implements OnInit {
     agendas = [];
     estados = [];
     subestados = [];
-    seleccionado: boolean = false;
-    tarjetaTitular: boolean;
-    tarjetaNegocios: boolean;
-    tarjetaPagaduria: boolean;
+    tarjetaFiltro: boolean;
 
-    titularForm: FormGroup;
+    filtroForm: FormGroup;
     negocioForm: FormGroup;
     pagaduriaForm: FormGroup;
 
@@ -39,12 +36,10 @@ export class BusquedaComponent implements OnInit {
     nombrePagaduria: string='';
 
     dataFiltro: any = {"details":[]};
-    dataTitular: any = {"details":[]};
-    dataNegocios: any = {"details":[]};
-    dataPagaduria: any = {"details":[]};
+    dataMuestra:any = [];
 
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
-        this.titularForm = this.fb.group({
+        this.filtroForm = this.fb.group({
             documento: [''],
             nombre: [''],
             agenda: [''],
@@ -68,132 +63,177 @@ export class BusquedaComponent implements OnInit {
     }
 
     eliminarFiltro(){
-        this.titularForm.value.documento='';
-        this.titularForm.value.nombre='';
-        this.titularForm.value.unidad='';
-        this.titularForm.value.agenda='';
-        this.titularForm.value.estado='';
-        this.titularForm.value.subestado='';
-        this.titularForm.value.solicitud='';
-        this.titularForm.value.codigoNeg='';
-        this.titularForm.value.codigoPag='';
+        this.filtroForm.value.documento='';
+        this.filtroForm.value.nombre='';
+        this.filtroForm.value.unidad='';
+        this.filtroForm.value.agenda='';
+        this.filtroForm.value.estado='';
+        this.filtroForm.value.subestado='';
+        this.filtroForm.value.solicitud='';
+        this.filtroForm.value.codigoNeg='';
+        this.filtroForm.value.codigoPag='';
         this.dataFiltro.details = [];
     }
 
     abrirFiltro(){
-        if (this.tarjetaTitular) {
-            this.tarjetaTitular = false;
+        if (this.tarjetaFiltro) {
+            this.tarjetaFiltro = false;
         }else{
-            this.tarjetaTitular = true;
+            this.tarjetaFiltro = true;
         }
     }
 
     mostrarDocumento(){
         let data = {
             "tipo": "IDENTIFICACION",
-            "buscar": this.titularForm.value.documento
+            "buscar": this.filtroForm.value.documento
         }
-        const dataBuscar = this.dataFiltro.details.filter(docu => docu.buscar != this.titularForm.value.documento);
+        let muestra = {
+            "tipo": "Identificación",
+            "descripcion": this.filtroForm.value.documento
+        }
+        const dataBuscar = this.dataFiltro.details.filter(docu => docu.buscar != this.filtroForm.value.documento);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
     mostrarNombre(){
         let data = {
             "tipo": "NOMBRE",
-            "buscar": this.titularForm.value.nombre
+            "buscar": this.filtroForm.value.nombre
         }
-        const dataBuscar = this.dataFiltro.details.filter(nom => nom.buscar != this.titularForm.value.nombre);
+        let muestra = {
+            "tipo": "Nombre",
+            "descripcion": this.filtroForm.value.nombre
+        }
+        const dataBuscar = this.dataFiltro.details.filter(nom => nom.buscar != this.filtroForm.value.nombre);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
-    mostrarUnidad(){
+    mostrarUnidad(value){
         let data = {
             "tipo": "UNIDAD",
-            "buscar": this.titularForm.value.unidad
+            "buscar": this.filtroForm.value.unidad
         }
-        const dataBuscar = this.dataFiltro.details.filter(uni => uni.buscar != this.titularForm.value.unidad);
+        let muestra = {
+            "tipo": "Unidad",
+            "descripcion": value
+        }
+        const dataBuscar = this.dataFiltro.details.filter(uni => uni.buscar != this.filtroForm.value.unidad);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
-    mostrarAgenda(){
+    mostrarAgenda(value){
         let data = {
             "tipo": "AGENDA",
-            "buscar": this.titularForm.value.agenda
+            "buscar": this.filtroForm.value.agenda
         }
-        const dataBuscar = this.dataFiltro.details.filter(age => age.buscar != this.titularForm.value.agenda);
+        let muestra = {
+            "tipo": "Agenda",
+            "descripcion": value
+        }
+        const dataBuscar = this.dataFiltro.details.filter(age => age.buscar != this.filtroForm.value.agenda);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
-    mostrarEstado(){
+    mostrarEstado(value){
         let data = {
             "tipo": "ESTADO",
-            "buscar": this.titularForm.value.estado
+            "buscar": this.filtroForm.value.estado
         }
-        const dataBuscar = this.dataFiltro.details.filter(est => est.buscar != this.titularForm.value.estado);
+        let muestra = {
+            "tipo": "Estado",
+            "descripcion": value
+        }
+        const dataBuscar = this.dataFiltro.details.filter(est => est.buscar != this.filtroForm.value.estado);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
-    mostrarSubestado(){
+    mostrarSubestado(value){
         let data = {
             "tipo": "SUBESTADO",
-            "buscar": this.titularForm.value.subestado
+            "buscar": this.filtroForm.value.subestado
         }
-        const dataBuscar = this.dataFiltro.details.filter(sub => sub.buscar != this.titularForm.value.subestado);
+        let muestra = {
+            "tipo": "Subestado",
+            "descripcion": value
+        }
+        const dataBuscar = this.dataFiltro.details.filter(sub => sub.buscar != this.filtroForm.value.subestado);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
     mostrarSolicitud(){
         let data = {
             "tipo": "SOLICITUD",
-            "buscar": this.titularForm.value.solicitud
+            "buscar": this.filtroForm.value.solicitud
         }
-        const dataBuscar = this.dataFiltro.details.filter(sol => sol.buscar != this.titularForm.value.solicitud);
+        let muestra = {
+            "tipo": "Solicitud",
+            "descripcion": this.filtroForm.value.solicitud
+        }
+        const dataBuscar = this.dataFiltro.details.filter(sol => sol.buscar != this.filtroForm.value.solicitud);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
     mostrarNegocio(){
         let data = {
             "tipo": "NEGOCIO",
-            "buscar": this.titularForm.value.codigoNeg
+            "buscar": this.filtroForm.value.codigoNeg
         }
-        const dataBuscar = this.dataFiltro.details.filter(neg => neg.buscar != this.titularForm.value.codigoNeg);
+        let muestra = {
+            "tipo": "Negocio",
+            "descripcion": this.filtroForm.value.codigoNeg
+        }
+        const dataBuscar = this.dataFiltro.details.filter(neg => neg.buscar != this.filtroForm.value.codigoNeg);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
-    mostrarPagaduria(){
+    mostrarPagaduria(value){
         let data = {
             "tipo": "PAGADURIA",
-            "buscar": this.titularForm.value.codigoPag
+            "buscar": this.filtroForm.value.codigoPag
         }
-        const dataBuscar = this.dataFiltro.details.filter(pag => pag.buscar != this.titularForm.value.codigoPag);
+        let muestra = {
+            "tipo": "Pagaduria",
+            "descripcion": value
+        }
+        const dataBuscar = this.dataFiltro.details.filter(pag => pag.buscar != this.filtroForm.value.codigoPag);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
+        this.dataMuestra.push(muestra);
     }
 
     filtrar(value){
@@ -268,14 +308,6 @@ export class BusquedaComponent implements OnInit {
                 this.subestados = [];
             }
         });
-    }
-
-    abrirTitular(){
-        if (this.tarjetaTitular) {
-            this.tarjetaTitular=false;
-        } else {
-            this.tarjetaTitular=true;
-        }
     }
 
     consulta(dato) {
