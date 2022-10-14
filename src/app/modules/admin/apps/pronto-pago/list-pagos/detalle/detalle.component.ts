@@ -18,12 +18,14 @@ export class DetalleComponent implements OnInit {
   listadoFalse: any = [];
   details: any = [];
   allComplete: boolean = false;
+  countPlanilla: number = 0;
 
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
     this.consultarTransportadoras()
+    console.log(this.data)
   }
 
   consultarTransportadoras() {
@@ -47,15 +49,17 @@ export class DetalleComponent implements OnInit {
       let idxSoli = this.details.indexOf(dataBuscar[0]);
       this.details.splice(idxSoli, 1);
       item.check = false;
+      this.countPlanilla = this.countPlanilla - 1;
     } else {
       this.details.push(id);
       item.check = true;
+      this.countPlanilla = this.countPlanilla + 1;
     }
 
     if (this.details.length >= this.listado.length) {
       this.allComplete = true;
     } else {
-      this.allComplete = false; 
+      this.allComplete = false;
     }
   }
 
@@ -70,6 +74,7 @@ export class DetalleComponent implements OnInit {
     }
     if (this.allComplete == true) {
       this.details = [];
+      this.countPlanilla = this.listado.length;
       for (const item of this.listado) {
         this.details.push(
           {
@@ -79,6 +84,7 @@ export class DetalleComponent implements OnInit {
       }
     }else{
       this.details = [];
+      this.countPlanilla = 0;
     }
     this.listado.forEach(t => (t.check = completed));
   }

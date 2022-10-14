@@ -3,7 +3,7 @@
         <h2 class="text-gray-900 col-span-12 mb-2">Propietarios</h2>
     </div>
 
-    <div class="flex flex-row w-full justify-end mb-4">
+    <div class="flex flex-row w-full justify-end mb-4" *ngIf="listado.length>0">
         <div>
             <input class="border rounded p-2 bg-gray-100 w-72" style="font-size: 10px; margin-right: 1em;"
                         type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
@@ -28,13 +28,13 @@
                 <tr class="text-gray-700" *ngFor="let item of listado | filter:filtrarTabla">
                     <td class="text-sm border py-3 text-center">{{ item.identificacion}}</td>
                     <td class="text-sm border text-center">{{ item.nombrePropietario}}</td>
-                    <td class="text-sm border text-center">{{ item.contacto }}</td>
+                    <td class="text-sm border text-center">{{ mascara(item.contacto) }}</td>
                     <td class="text-sm border text-center lowercase">{{ item.email }}</td>
                     <td class="text-sm border text-center">$ {{ item.saldoTotalPlanilla | number }}</td>
                     <td class="text-sm border text-center">{{ item.totalPlanilla }}</td>
                     <td class="text-sm border text-center">
                         <div class="py-0 text-sm">
-                            <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle(item.idPropietario)">
+                            <button mat-icon-button matTooltip="Detalles" class="border" (click)="abrirDetalle(item)">
                                 <mat-icon svgIcon="heroicons_outline:dots-circle-horizontal"></mat-icon>
                             </button>
                         </div>

@@ -33,10 +33,29 @@ export class ListPagosComponent implements OnInit {
     });
   }
 
-  abrirDetalle(id){
+  mascara(numero){
+    var mask = "";
+    if (numero) {
+      for (let index = 1; index < numero.length - 3; index++) {
+        mask +="*";
+      }
+      return mask + numero.slice(7, 10)
+    }
+  }
+
+  // cambiarFecha(date){
+  //   moment.locale('es');
+  //   return moment(date).format('MMMM D YYYY')
+  // }
+
+  abrirDetalle(item){
     const dialogRef = this.dialog.open(DetalleComponent, {
       width: '70%',
-      data: {idPropietario: id}
+      data: {
+        idPropietario: item.idPropietario, 
+        totalPlanilla: item.totalPlanilla,
+        saldoTotalPlanilla: item.saldoTotalPlanilla
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
