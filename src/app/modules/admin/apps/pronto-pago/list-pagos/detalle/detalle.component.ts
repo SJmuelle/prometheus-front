@@ -19,6 +19,7 @@ export class DetalleComponent implements OnInit {
   details: any = [];
   allComplete: boolean = false;
   countPlanilla: number = 0;
+  total: number = 0;
 
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
     @Inject(MAT_DIALOG_DATA) public data) { }
@@ -50,10 +51,12 @@ export class DetalleComponent implements OnInit {
       this.details.splice(idxSoli, 1);
       item.check = false;
       this.countPlanilla = this.countPlanilla - 1;
+      this.total =  this.total - item.valorPlanilla;
     } else {
       this.details.push(id);
       item.check = true;
       this.countPlanilla = this.countPlanilla + 1;
+      this.total =  this.total + item.valorPlanilla;
     }
 
     if (this.details.length >= this.listado.length) {
