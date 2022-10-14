@@ -167,7 +167,6 @@ export class ListSolicitudesComponent implements OnInit {
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
-        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -264,7 +263,6 @@ export class ListSolicitudesComponent implements OnInit {
         ]
       }
     }
-    console.log(this.dataFiltro)
     this.asigService.getSolicitudes(this.dataFiltro).subscribe((res: any) => {
       this.buscarForm.value.analista = '';
       this.buscarForm.value.fechaInicial = '';

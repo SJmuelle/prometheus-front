@@ -15,8 +15,7 @@ export const environment = {
     urlApi5: 'https://ultracem.ngrok.io/api-fintra/api/generic/',
     urlApi6: 'https://ultracem.ngrok.io/api-fintra/api/archivos/guardar/',
 
-    urlAsig: 'https://6c18-181-57-229-82.ngrok.io/api-fintra/api',
-    urlSelect: 'http://prometheus.fintra.co:8084/api-fintra/api',
+    urlAsig: 'http://prometheus.fintra.co:8084/api-fintra/api',
 
     urlPagaduria: 'https://prometheus.fintra.co:8443/',
 
