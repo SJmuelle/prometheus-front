@@ -1,9 +1,7 @@
-import { Component, DebugElement, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
-import { ComentariosService } from 'app/core/services/comentarios.service';
-import { result } from 'lodash';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 import { AdjuntosComponent } from './adjuntos/adjuntos.component';
@@ -25,12 +23,12 @@ export class GestionPQRSComponent implements OnInit {
     comentariotipoid:number;
     envio:any;
     motivo:any;
+    estado: string;
     UsuarioSaggics: string;
     tab: any;
     listadoSoluciones: any = 0;
     listadoGestion: any = [];
     listadoAdjuntos: any = [];
-    objAdjunto: any = {};
     listadoSeguimiento: any = [];
     listadoAsignaciones: any = [];
     listadoNotificaciones: any = [];
@@ -69,14 +67,9 @@ export class GestionPQRSComponent implements OnInit {
     };
     @ViewChild('editor') editor2;
     mensajeQuill: string;
-    archivo =[{
-        idComentario:0,
-        documento:'',
-        filepath:'',
-        filename:'',
-        extension:'',
-        descripcion:''
-    }];
+    archivo =[];
+    objAdjunto: any = {};
+    confIdComen: boolean;
 
     constructor(
         private _pqrService: PqrService,
@@ -301,7 +294,6 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     onTabChanged(index): void {
-        this.listadoAdjuntos = [];
         this.tab = index;
         let url;
 
@@ -335,33 +327,31 @@ export class GestionPQRSComponent implements OnInit {
                             text: 'No existen soluciones por aprobar o rechazar'
                         }).then()
                     } else {
-
+                        this.listadoAdjuntos = [];
+                        this.archivo = [];
                         for (let index = 0; index < unicos.length; index++) {
-                            const id = unicos[index];
-                            this.comentarioid = id.id;
-                            this.comentariotipoid = id.id_tipo_comentario;
-                            this.envio = id.envio;
-                            this.motivo = id.detalle;
+                            const elemento = unicos[index];
+                            this.comentarioid = elemento.id;
+                            this.comentariotipoid = elemento.id_tipo_comentario;
+                            this.envio = elemento.envio;
+                            this.motivo = elemento.detalle;
+                            this.estado = elemento.estado;
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
                             this._pqrService.getListados(urlad).subscribe((response:any) =>{
+                                console.log(response)
                                 if (response.length > 0) {
-                                    this.objAdjunto = response[0];
-                                    this.listadoAdjuntos.push(this.objAdjunto)
-                                    this.archivo = [{
-                                        idComentario:this.listadoAdjuntos[0].id_comentario,
-                                        documento:this.listadoAdjuntos[0].documento,
-                                        filepath:this.listadoAdjuntos[0].filepath,
-                                        filename:this.listadoAdjuntos[0].filename,
-                                        extension:this.listadoAdjuntos[0].extension,
-                                        descripcion:this.listadoAdjuntos[0].descripcion
-                                    }]
+                                    for (let index = 0; index < response.length; index++) {
+                                        const element = response[index];
+                                        this.listadoAdjuntos.push(element)
+                                    }
+                                    console.log(this.listadoAdjuntos)
                                 } else {
                                     this.listadoAdjuntos = [];
                                 }
                             });
-                            
                         }
                     }
+                    
                     
                 });
                 
@@ -432,6 +422,23 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
+        if (this.listadoAdjuntos.length>0) {
+            for (let index = 0; index < this.listadoAdjuntos.length; index++) {
+                const element = this.listadoAdjuntos[index];
+                this.objAdjunto = {
+                    idComentario:this.listadoAdjuntos[index].id_comentario,
+                    documento:this.listadoAdjuntos[index].documento,
+                    filepath:this.listadoAdjuntos[index].filepath,
+                    filename:this.listadoAdjuntos[index].filename,
+                    extension:this.listadoAdjuntos[index].extension,
+                    descripcion:this.listadoAdjuntos[index].descripcion
+                }
+                if (item.id==this.objAdjunto.idComentario) {
+                    this.archivo.push(this.objAdjunto)
+                }
+            }
+        }
+        
         if (item.id_tipo_comentario==2) {
             let url = '/pqrs-responder-solucion-cliente';
             let data = {
@@ -567,6 +574,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     guardar_data(id, data, url) {
+        debugger;
         if (id==2) {
             Swal.fire({
                 title: 'Cargando',
@@ -587,8 +595,9 @@ export class GestionPQRSComponent implements OnInit {
                                 'success'
                             );
                             this.onTabChanged(2);
+                            debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            if (this.archivo[0].idComentario==0) {
+                            if (this.confIdComen==false) {
                                 if (data.respuesta == true) {
                                     this._pqrService.enviaCorreos(
                                         url,
