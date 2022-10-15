@@ -98,6 +98,7 @@ export class GestionPQRSComponent implements OnInit {
     vercomentario(id){
         const dialogRef = this.dialog.open(VerComentarioComponent, {
             width: '60%',
+            height: '40%',
             data: id
         });
         dialogRef.afterClosed().toPromise();
@@ -594,7 +595,7 @@ export class GestionPQRSComponent implements OnInit {
                             this.onTabChanged(2);
                             debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            if (this.confIdComen==false) {
+                            if (this.archivo[0].idComentario==0) {
                                 if (data.respuesta == true) {
                                     this._pqrService.enviaCorreos(
                                         url,

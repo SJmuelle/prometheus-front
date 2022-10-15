@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <div>
-                                <a class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
+                                <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <div>
-                                <a class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item.idComentario)"></mat-icon></a>
+                                <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
                     </div>
@@ -641,7 +641,7 @@
                                                 *ngFor="let item of listadoSeguimiento | filter: filtrarTablaSeguimiento  | paginate: { itemsPerPage: tamanoTablaSeguimiento, currentPage: pageSeguimiento }">
                                                     <td class="px-4 py-1 text-sm border text-center"><mat-icon class="cursor-pointer" (click)="vercomentario(item.id)">remove_red_eye</mat-icon></td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.id}}</td>
-                                                    <td class="px-4 py-1 text-sm border text-center">{{item.descripcion}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center"><p class="truncate w-60 m-0">{{item.descripcion}}</p></td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.usuario_creacion}}</td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.fecha_creacion}}</td>
                                                     <td class="px-4 py-1 text-sm border text-center">{{item.estado}}</td>
