@@ -421,6 +421,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
+        debugger
         if (this.listadoAdjuntos.length>0) {
             for (let index = 0; index < this.listadoAdjuntos.length; index++) {
                 this.objAdjunto = {
@@ -582,6 +583,8 @@ export class GestionPQRSComponent implements OnInit {
                     Swal.showLoading();
                 },
             }).then((result) => {});
+            console.log(data)
+            debugger;
             this._pqrService.Create(url, data).subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -619,6 +622,7 @@ export class GestionPQRSComponent implements OnInit {
                                 }
                             } else {
                                 if (data.respuesta == true) {
+                                    debugger
                                     this._pqrService.enviaCorreos(
                                         url,
                                         data.idPqrs,
