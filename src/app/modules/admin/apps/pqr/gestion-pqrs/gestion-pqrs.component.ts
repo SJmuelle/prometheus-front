@@ -321,6 +321,7 @@ export class GestionPQRSComponent implements OnInit {
                     }
                     this.listadoGestion = unicos.reverse();
                     Swal.close();
+                    console.log(unicos)
                     if (unicos.length<=0) {
                         Swal.fire({
                             icon: 'info',
@@ -421,7 +422,6 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
-        debugger
         if (this.listadoAdjuntos.length>0) {
             for (let index = 0; index < this.listadoAdjuntos.length; index++) {
                 this.objAdjunto = {
@@ -437,7 +437,6 @@ export class GestionPQRSComponent implements OnInit {
                 }
             }
         }
-
         if (item.id_tipo_comentario==2) {
             let url = '/pqrs-responder-solucion-cliente';
             let data = {
@@ -494,11 +493,11 @@ export class GestionPQRSComponent implements OnInit {
                                         return;
                                     }
                                     data.comentario = result.value;
-                                    this.guardar_data(item.id_tipo_comentario, data, url);
+                                    this.guardar_data(item, data, url);
                                 }
                             });
                         } else {
-                            this.guardar_data(item.id_tipo_comentario, data, url);
+                            this.guardar_data(item, data, url);
                         }
                     }
                 });
@@ -559,11 +558,11 @@ export class GestionPQRSComponent implements OnInit {
                                         return;
                                     }
                                     data.comentario = result.value;
-                                    this.guardar_data(item.id_tipo_comentario, data, url);
+                                    this.guardar_data(item, data, url);
                                 }
                             });
                         } else {
-                            this.guardar_data(item.id_tipo_comentario, data, url);
+                            this.guardar_data(item, data, url);
                         }
                     }
                 });
@@ -572,9 +571,8 @@ export class GestionPQRSComponent implements OnInit {
 
     }
 
-    guardar_data(id, data, url) {
-        debugger;
-        if (id==2) {
+    guardar_data(item, data, url) {
+        if (item.id_tipo_comentario==2) {
             Swal.fire({
                 title: 'Cargando',
                 html: 'Guardando información de PQRS',
@@ -584,7 +582,6 @@ export class GestionPQRSComponent implements OnInit {
                 },
             }).then((result) => {});
             console.log(data)
-            debugger;
             this._pqrService.Create(url, data).subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -596,7 +593,6 @@ export class GestionPQRSComponent implements OnInit {
                                 'success'
                             );
                             this.onTabChanged(2);
-                            debugger;
                             let url = `/sendmail/notificacion-crear-pqrs`;
                             if (this.archivo[0].idComentario==0) {
                                 if (data.respuesta == true) {
@@ -606,8 +602,8 @@ export class GestionPQRSComponent implements OnInit {
                                         5,
                                         data.comentario,
                                         "",
-                                        this.motivo,
-                                        this.envio
+                                        item.detalle,
+                                        item.envio
                                     );
                                 } else {
                                     this._pqrService.envioCorreos(
@@ -616,21 +612,20 @@ export class GestionPQRSComponent implements OnInit {
                                         4,
                                         data.comentario,
                                         "",
-                                        this.motivo,
+                                        item.detalle,
                                         "N"
                                     );
                                 }
                             } else {
                                 if (data.respuesta == true) {
-                                    debugger
                                     this._pqrService.enviaCorreos(
                                         url,
                                         data.idPqrs,
                                         5,
                                         data.comentario,
                                         this.archivo,
-                                        this.motivo,
-                                        this.envio
+                                        item.detalle,
+                                        item.envio
                                     );
                                 } else {
                                     this._pqrService.envioCorreos(
@@ -639,7 +634,7 @@ export class GestionPQRSComponent implements OnInit {
                                         4,
                                         data.comentario,
                                         "",
-                                        this.motivo,
+                                        item.detalle,
                                         "N"
                                     );
                                 }
