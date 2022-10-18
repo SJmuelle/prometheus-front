@@ -5,6 +5,7 @@ import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.co
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -163,7 +164,9 @@ export class ListSolicitudesComponent implements OnInit {
           }
       ]
     }
+    Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
+      Swal.close();
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
@@ -263,12 +266,14 @@ export class ListSolicitudesComponent implements OnInit {
         ]
       }
     }
+    Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.asigService.getSolicitudes(this.dataFiltro).subscribe((res: any) => {
       this.buscarForm.value.analista = '';
       this.buscarForm.value.fechaInicial = '';
       this.buscarForm.value.fechaFinal = '';
       this.buscarForm.value.unidad = '';
       this.buscarForm.value.agenda = '';
+      Swal.close();
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
