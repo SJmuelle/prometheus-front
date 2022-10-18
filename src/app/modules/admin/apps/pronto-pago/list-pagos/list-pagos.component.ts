@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DetalleComponent } from './detalle/detalle.component';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -12,7 +12,8 @@ import Swal from 'sweetalert2';
 })
 export class ListPagosComponent implements OnInit {
 
-  listado: any = [];
+  listadoPropietarios: any = [];
+  listadoTransportadoras: any = [];
   filtrarTabla:string='';
 
   constructor(public pago: ProntoPagoService, public dialog: MatDialog) { }
@@ -26,9 +27,19 @@ export class ListPagosComponent implements OnInit {
     this.pago.getPropietario().subscribe((response: any) => {
       Swal.close();
       if (response) {
-        this.listado = response.data;
+        this.listadoPropietarios = response.data;
       } else {
-        this.listado = [];
+        this.listadoPropietarios = [];
+      }
+    });
+  }
+
+  consultarTransportadoras(){
+    this.pago.getTransportadorasPropietario().subscribe((response: any) => {
+      if (response) {
+        this.listadoTransportadoras = response.data;
+      } else {
+        this.listadoTransportadoras = [];
       }
     });
   }
@@ -42,11 +53,6 @@ export class ListPagosComponent implements OnInit {
       return mask + numero.slice(7, 10)
     }
   }
-
-  // cambiarFecha(date){
-  //   moment.locale('es');
-  //   return moment(date).format('MMMM D YYYY')
-  // }
 
   abrirDetalle(item){
     const dialogRef = this.dialog.open(DetalleComponent, {

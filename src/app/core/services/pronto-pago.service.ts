@@ -18,9 +18,16 @@ export class ProntoPagoService {
   }
 
   /**
-   * @description: Obtiene listado de transportadoras del propietario
+   * @description: Obtiene listado de propietarios
    */
    public getPropietario(): Observable<any> {
+    return this._http.get(this._appSettings.transportadora.url.basePropietario)
+  }
+
+  /**
+   * @description: Obtiene listado de propietarios
+   */
+   public getTransportadorasPropietario(): Observable<any> {
     return this._http.get(this._appSettings.transportadora.url.basePropietario)
   }
 
