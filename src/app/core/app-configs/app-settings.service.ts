@@ -39,10 +39,10 @@ export class AppSettingsService {
      public asignacion = {
         url: {
             base: EndPoints.uriAsig('/credito/tk/property/asignacion-solicitudes-creditos'),
-            baseAsesor: EndPoints.urlSelect('/generic/qry/tk/listado-analista'),
-            guardarAsesor: EndPoints.urlSelect('/generic/tk/guardar-analista'),
-            actualizarAsesor: EndPoints.urlSelect('/generic/tk/actualizar-analista'),
-            baseUnidades: EndPoints.urlSelect('/generic/qry/tk/listado-tipos-negocios'),
+            baseAsesor: EndPoints.uriAsig('/generic/qry/tk/listado-analista'),
+            guardarAsesor: EndPoints.uriAsig('/generic/tk/guardar-analista'),
+            actualizarAsesor: EndPoints.uriAsig('/generic/tk/actualizar-analista'),
+            baseUnidades: EndPoints.uriAsig('/generic/qry/tk/listado-tipos-negocios'),
         }
     };
     /**

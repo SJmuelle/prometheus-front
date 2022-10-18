@@ -5,6 +5,7 @@ import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.co
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -32,10 +33,13 @@ export class ListSolicitudesComponent implements OnInit {
   maxFecha: Date;
   filtrarTabla:string='';
   chequeada: boolean = false;
-  dataFiltro:any;
+  dataFiltro:any = {"details":[]};
 
   busqueda:string = '';
   opcionesBusqueda: any[] = [];
+  analista:string = '';
+  unidad:string = '';
+  agenda:string = '';
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -77,15 +81,19 @@ export class ListSolicitudesComponent implements OnInit {
   limpiar(){
     this.busqueda = '';
     this.dataFiltro = {
-      "unidadNegocio":"",
-      "entidad":"",
-      "analista":"",
-      "fechaInicial":"",
-      "fechaFinal":"",
-      "agenda":""
+      "entidad": "ASIGNACION_NEGOSIO",
+      "details": [
+          {
+              "tipo": "STATUS",
+              "buscar": ""
+          }
+      ]
     }
-    console.log(this.dataFiltro)
-    this.formGroupDirective.resetForm();
+    this.buscarForm.value.analista = '';
+    this.buscarForm.value.fechaInicial = '';
+    this.buscarForm.value.fechaFinal = '';
+    this.buscarForm.value.unidad = '';
+    this.buscarForm.value.agenda = '';
     this.consultarSolicitudes();
   }
 
@@ -156,11 +164,12 @@ export class ListSolicitudesComponent implements OnInit {
           }
       ]
     }
+    Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
+      Swal.close();
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
-        console.log(this.asignados)
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -200,14 +209,12 @@ export class ListSolicitudesComponent implements OnInit {
             {
               "tipo": "ASESOR_CREDITO",
               "buscar": this.buscarForm.value.analista
-          },
+            },
         ]
       }
     }
 
     if (this.buscarForm.value.fechaInicial!='' && this.buscarForm.value.fechaFinal!='') {
-      this.formatoFechaInicial = moment(this.buscarForm.value.fechaInicial).format("YYYY-MM-DD");
-      this.formatoFechaFinal = moment(this.buscarForm.value.fechaFinal).format("YYYY-MM-DD");
       this.dataFiltro = {
         "entidad": "ASIGNACION_NEGOSIO",
         "details": [
@@ -217,17 +224,18 @@ export class ListSolicitudesComponent implements OnInit {
             },
             {
                 "tipo": "FECHA_INICIAL",
-                "buscar": this.formatoFechaInicial
+                "buscar": moment(this.buscarForm.value.fechaInicial).format("YYYY-MM-DD")
             },
             {
                 "tipo": "FECHA_FINAL",
-                "buscar": this.formatoFechaFinal
+                "buscar": moment(this.buscarForm.value.fechaFinal).format("YYYY-MM-DD")
             }
         ]
       }
     }
 
     if (this.buscarForm.value.unidad!='') {
+      this.unidad = this.buscarForm.value.unidad;
       this.dataFiltro = {
         "entidad": "ASIGNACION_NEGOSIO",
         "details": [
@@ -237,7 +245,7 @@ export class ListSolicitudesComponent implements OnInit {
             },
             {
               "tipo": "UNIDAD_NEGOCIO",
-              "buscar": this.buscarForm.value.unidad
+              "buscar": this.buscarForm.value.unidad.toString()
             },
         ]
       }
@@ -258,24 +266,14 @@ export class ListSolicitudesComponent implements OnInit {
         ]
       }
     }
-
-    if (this.buscarForm.value.unidad!='') {
-      this.dataFiltro = {
-        "entidad": "ASIGNACION_NEGOSIO",
-        "details": [
-            {
-                "tipo": "STATUS",
-                "buscar": ""
-            },
-            {
-              "tipo": "UNIDAD_NEGOCIO",
-              "buscar": this.buscarForm.value.unidad
-            },
-        ]
-      }
-    }
-    
+    Swal.fire({ title: 'Cargando', html: 'Buscando solicitudes', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.asigService.getSolicitudes(this.dataFiltro).subscribe((res: any) => {
+      this.buscarForm.value.analista = '';
+      this.buscarForm.value.fechaInicial = '';
+      this.buscarForm.value.fechaFinal = '';
+      this.buscarForm.value.unidad = '';
+      this.buscarForm.value.agenda = '';
+      Swal.close();
       if (res) {
         this.solicitudes = res.data.listadoSolicitud;
         this.asignados = res.data.solicitudAsignada;
