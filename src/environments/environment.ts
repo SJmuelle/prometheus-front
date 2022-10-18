@@ -21,7 +21,7 @@ export const environment = {
     urlPagaduria: 'https://prometheus.fintra.co:8443/',
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto:'http://demo.fintra.co:8010/api-fintra/api/pqrs',
+    adjunto:'http://demo.fintra.co:8010/api-pqrs/api/pqrs',
     // envioCorreo:'http://192.168.140.197:8084'
     envioCorreo:'https://prometheus.fintra.co:8443/apicredit',
     urlUltracem: 'https://prometheus.fintra.co:8443/api-fintra/api'
