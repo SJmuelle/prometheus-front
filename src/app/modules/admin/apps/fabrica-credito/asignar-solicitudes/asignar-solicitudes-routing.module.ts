@@ -5,12 +5,7 @@ import { ListSolicitudesComponent } from './list-solicitudes/list-solicitudes.co
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: 'list-soli',
-        component: ListSolicitudesComponent
-      }
-    ]
+    component: ListSolicitudesComponent
   }
 ];
 
