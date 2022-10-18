@@ -58,7 +58,7 @@ const routes: Routes = [
                 loadChildren: () => AgendaFormalizacionModule
             },
             {
-                path: 'asig-soli',
+                path: 'asignar-solicitudes',
                 loadChildren: () => AsignarSolicitudesModule
             },
 
