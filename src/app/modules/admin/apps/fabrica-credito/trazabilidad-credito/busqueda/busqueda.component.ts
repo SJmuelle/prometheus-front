@@ -19,46 +19,28 @@ export class BusquedaComponent implements OnInit {
     agendas = [];
     estados = [];
     subestados = [];
-    seleccionado: boolean = false;
-    tarjetaTitular: boolean;
-    tarjetaNegocios: boolean;
-    tarjetaPagaduria: boolean;
+    tarjetaFiltro: boolean;
 
-    titularForm: FormGroup;
+    filtroForm: FormGroup;
     negocioForm: FormGroup;
     pagaduriaForm: FormGroup;
 
     documento: string='';
-    verDocumento: string='';
     nombreCliente: string='';
-    verNombreCliente: string='';
     unidad: string='';
-    verUnidad: string='';
     agenda: string='';
-    verAgenda: string='';
     estado: string='';
-    verEstado: string='';
     subestado: string='';
-    verSubestado: string='';
     solicitud: string='';
-    verSolicitud: string='';
     codigoNeg: string='';
-    verCodigoNeg: string='';
     nombrePagaduria: string='';
-    verNombrePagaduria: string='';
 
     dataFiltro: any = {"details":[]};
-    dataTitular: any = {"details":[]};
-    dataNegocios: any = {"details":[]};
-    dataPagaduria: any = {"details":[]};
 
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
-        this.titularForm = this.fb.group({
+        this.filtroForm = this.fb.group({
             documento: [''],
-            nombre: ['']
-        })
-
-        this.negocioForm = this.fb.group({
+            nombre: [''],
             agenda: [''],
             estado: [''],
             subestado: [''],
@@ -67,9 +49,6 @@ export class BusquedaComponent implements OnInit {
             unidad: [''],
             solicitud:[''],
             codigoNeg:[''],
-        })
-
-        this.pagaduriaForm = this.fb.group({
             codigoPag: ['']
         })
     }
@@ -83,134 +62,129 @@ export class BusquedaComponent implements OnInit {
     }
 
     eliminarFiltro(){
-        this.borrarTitular()
-        this.borrarEstado()
-        this.borrarPagaduria()
+        this.filtroForm.reset('');
         this.dataFiltro.details = [];
+        this.tarjetaFiltro = false;
         this.consulta('');
     }
 
-    filtroTitular(){
-        this.dataTitular.details = [];
-        this.tarjetaTitular = false;
-        this.seleccionado = false;
-        if (this.titularForm.value.documento!='' && this.titularForm.value.documento!=null) {
-            let data = {
-                "tipo": "IDENTIFICACION",
-                "buscar": this.titularForm.value.documento
-            }
-            this.dataTitular.details.push(data)
-            this.verDocumento = this.documento;
-        }
-
-        if (this.titularForm.value.nombre!='' && this.titularForm.value.nombre!=null) {
-            let data = {
-                "tipo": "NOMBRE",
-                "buscar": this.titularForm.value.nombre
-            }
-            this.dataTitular.details.push(data)
-            this.verNombreCliente = this.nombreCliente;
+    abrirFiltro(){
+        if (this.tarjetaFiltro) {
+            this.tarjetaFiltro = false;
+        }else{
+            this.tarjetaFiltro = true;
         }
     }
 
-    filtroNegocio(){
-        this.dataNegocios.details = [];
-        this.tarjetaNegocios = false;
-        this.seleccionado = false;
-        if (this.negocioForm.value.unidad!='' && this.negocioForm.value.unidad!=null) {
-            let data = {
-                "tipo": "UNIDAD",
-                "buscar": this.negocioForm.value.unidad
-            }
-            this.dataNegocios.details.push(data)
-            this.verUnidad = this.unidad;
+    mostrarDocumento(){
+        let data = {
+            "tipo": "IDENTIFICACION",
+            "buscar": this.filtroForm.value.documento
         }
-
-        if (this.negocioForm.value.agenda!='' && this.negocioForm.value.agenda!=null) {
-            let data = {
-                "tipo": "AGENDA",
-                "buscar": this.negocioForm.value.agenda
-            }
-            this.dataNegocios.details.push(data)
-            this.verAgenda = this.agenda;
-        }
-
-        if (this.negocioForm.value.estado!='' && this.negocioForm.value.estado!=null) {
-            let data = {
-                "tipo": "ESTADO",
-                "buscar": this.negocioForm.value.estado
-            }
-            this.dataNegocios.details.push(data)
-            this.verEstado = this.estado;
-        }
-
-        if (this.negocioForm.value.subestado!='' && this.negocioForm.value.subestado!=null) {
-            let data = {
-                "tipo": "SUBESTADO",
-                "buscar": this.negocioForm.value.subestado
-            }
-            this.dataNegocios.details.push(data)
-            this.verSubestado = this.subestado;
-        }
-
-        if (this.negocioForm.value.solicitud!='' && this.negocioForm.value.solicitud!=null) {
-            let data = {
-                "tipo": "SOLICITUD",
-                "buscar": this.negocioForm.value.solicitud
-            }
-            this.dataNegocios.details.push(data)
-            this.verSolicitud = this.solicitud;
-        }
-
-        if (this.negocioForm.value.codigoNeg!='' && this.negocioForm.value.codigoNeg!=null) {
-            let data = {
-                "tipo": "NEGOCIO",
-                "buscar": this.negocioForm.value.codigoNeg
-            }
-            this.dataNegocios.details.push(data)
-            this.verCodigoNeg = this.codigoNeg;
-        }
+        const dataBuscar = this.dataFiltro.details.filter(docu => docu.buscar != this.filtroForm.value.documento);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
     }
 
-    filtroPagaduria(){
-        this.dataPagaduria.details = [];
-        this.tarjetaPagaduria = false;
-        this.seleccionado = false;
-        if (this.pagaduriaForm.value.codigoPag!='' && this.pagaduriaForm.value.codigoPag!=null) {
-            let data = {
-                "tipo": "PAGADURIA",
-                "buscar": this.pagaduriaForm.value.codigoPag
-            }
-            this.dataPagaduria.details.push(data)
-            this.verNombrePagaduria = this.nombrePagaduria;
+    mostrarNombre(){
+        let data = {
+            "tipo": "NOMBRE",
+            "buscar": this.filtroForm.value.nombre
         }
+        const dataBuscar = this.dataFiltro.details.filter(nom => nom.buscar != this.filtroForm.value.nombre);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
     }
 
-    filtrar(){
-        this.dataFiltro.details = [];
-        this.tarjetaTitular = false;
-        this.tarjetaNegocios = false;
-        this.tarjetaPagaduria = false;
-        this.seleccionado = false;
-        if (this.dataTitular.details.length>0) {
-            for (let index = 0; index < this.dataTitular.details.length; index++) {
-                const element = this.dataTitular.details[index];
-                this.dataFiltro.details.push(element)
-            }
+    mostrarUnidad(){
+        let data = {
+            "tipo": "UNIDAD",
+            "buscar": this.filtroForm.value.unidad
         }
-        if (this.dataNegocios.details.length>0) {
-            for (let index = 0; index < this.dataNegocios.details.length; index++) {
-                const element = this.dataNegocios.details[index];
-                this.dataFiltro.details.push(element)
-            }
+        const dataBuscar = this.dataFiltro.details.filter(uni => uni.buscar != this.filtroForm.value.unidad);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarAgenda(){
+        let data = {
+            "tipo": "AGENDA",
+            "buscar": this.filtroForm.value.agenda
         }
-        if (this.dataPagaduria.details.length>0) {
-            for (let index = 0; index < this.dataPagaduria.details.length; index++) {
-                const element = this.dataPagaduria.details[index];
-                this.dataFiltro.details.push(element)
-            }
+        const dataBuscar = this.dataFiltro.details.filter(age => age.buscar != this.filtroForm.value.agenda);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarEstado(){
+        let data = {
+            "tipo": "ESTADO",
+            "buscar": this.filtroForm.value.estado
         }
-        console.log(this.dataFiltro.details)
+        const dataBuscar = this.dataFiltro.details.filter(est => est.buscar != this.filtroForm.value.estado);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarSubestado(){
+        let data = {
+            "tipo": "SUBESTADO",
+            "buscar": this.filtroForm.value.subestado
+        }
+        const dataBuscar = this.dataFiltro.details.filter(sub => sub.buscar != this.filtroForm.value.subestado);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarSolicitud(){
+        let data = {
+            "tipo": "SOLICITUD",
+            "buscar": this.filtroForm.value.solicitud
+        }
+        const dataBuscar = this.dataFiltro.details.filter(sol => sol.buscar != this.filtroForm.value.solicitud);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarNegocio(){
+        let data = {
+            "tipo": "NEGOCIO",
+            "buscar": this.filtroForm.value.codigoNeg
+        }
+        const dataBuscar = this.dataFiltro.details.filter(neg => neg.buscar != this.filtroForm.value.codigoNeg);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    mostrarPagaduria(){
+        let data = {
+            "tipo": "PAGADURIA",
+            "buscar": this.filtroForm.value.codigoPag
+        }
+        const dataBuscar = this.dataFiltro.details.filter(pag => pag.buscar != this.filtroForm.value.codigoPag);
+        let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
+        this.dataFiltro.details.splice(idx, 1);
+        this.dataFiltro.details.push(data)
+        this.filtrar(this.dataFiltro)
+    }
+
+    filtrar(value){
         Swal.fire({ 
             title: 'Cargando', 
             html: 'Filtrando la información', 
@@ -220,7 +194,7 @@ export class BusquedaComponent implements OnInit {
                 Swal.showLoading() 
             }, 
         }).then((result) => { })
-        this._utility.postQuery('/cre-consulta-comentarios-v2', this.dataFiltro).subscribe((response: any) => {
+        this._utility.postQuery('/cre-consulta-comentarios-v2', value).subscribe((response: any) => {
             if (response) {
                 Swal.close();
                 this.listados = response.data;
@@ -283,111 +257,6 @@ export class BusquedaComponent implements OnInit {
         });
     }
 
-    borrarTitular(){
-        this.documento = '';
-        this.verDocumento = '';
-        this.nombreCliente = '';
-        this.verNombreCliente = '';
-        this.dataTitular.details = [];
-        this.titularForm.reset();
-    }
-
-    borrarEstado(){
-        this.unidad = '';
-        this.verUnidad = '';
-        this.estado = '';
-        this.verEstado = '';
-        this.agenda = '';
-        this.verAgenda = '';
-        this.subestado = '';
-        this.verSubestado = '';
-        this.solicitud = '';
-        this.verSolicitud = '';
-        this.codigoNeg = '';
-        this.verCodigoNeg = '';
-        this.dataNegocios.details = [];
-        this.negocioForm.reset();
-    }
-
-    borrarPagaduria(){
-        this.nombrePagaduria = '';
-        this.verNombrePagaduria = '';
-        this.dataPagaduria.details = [];
-        this.pagaduriaForm.reset();
-    }
-
-    mostrarDocumento(event: Event){
-        this.documento = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarNombreTitular(event: Event){
-        this.nombreCliente = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarUnidad(value){
-        this.unidad = value;
-    }
-
-    mostrarAgenda(value){
-        this.agenda = value;
-    }
-
-    mostrarEstado(value){
-        this.estado = value
-    }
-
-    mostrarSubestado(value){
-        this.subestado = value
-    }
-
-    mostrarSolicitud(event: Event){
-        this.solicitud = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarCodNeg(event: Event){
-        this.codigoNeg = (<HTMLInputElement>event.target).value
-    }
-
-    mostrarPagaduria(value){
-        this.nombrePagaduria = value
-    }
-
-    abrirTitular(){
-        if ( this.tarjetaTitular) {
-            this.tarjetaTitular=false;
-            this.seleccionado=false;
-        } else {
-            this.tarjetaTitular=true;
-            this.seleccionado=true;
-        }
-        this.tarjetaNegocios=false;
-        this.tarjetaPagaduria=false;
-    }
-
-    abrirNegocios(){
-        if ( this.tarjetaNegocios) {
-            this.tarjetaNegocios=false;
-            this.seleccionado=false;
-        } else {
-            this.tarjetaNegocios=true;
-            this.seleccionado=true;
-        }
-        this.tarjetaTitular=false;
-        this.tarjetaPagaduria=false;
-    }
-
-    abrirPagaduria(){
-        if ( this.tarjetaPagaduria) {
-            this.tarjetaPagaduria=false;
-            this.seleccionado=false;
-        } else {
-            this.tarjetaPagaduria=true;
-            this.seleccionado=true;
-        }
-        this.tarjetaTitular=false;
-        this.tarjetaNegocios=false;
-    }
-
     consulta(dato) {
         let data = {
             busqueda: dato
@@ -397,7 +266,6 @@ export class BusquedaComponent implements OnInit {
             Swal.close();
             if (response) {
                 this.listados = response.data;
-                console.log(this.listados);
                 this.listadoCount = this.listados.length;
             } else {
                 this.listados = [];

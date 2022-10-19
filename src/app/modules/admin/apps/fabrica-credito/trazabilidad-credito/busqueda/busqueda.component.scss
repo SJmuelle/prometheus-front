@@ -15,6 +15,36 @@
     // border-radius:  0px 100px 100px 100px;
 }
 
+.dimensionUno {
+    @media (min-width: 1280px) {
+        width: 43.5rem;
+    }
+    @media (min-width: 1440px) {
+        width: 30rem;
+    }
+}
+
+.dimensionDos {
+    width: 75rem;
+}
+
+.dimensionTres {
+    width: 35%;
+}
+
+.dimensionCuatro {
+    width: 30.5rem;
+}
+
+.dimensionCinco {
+    @media (min-width: 1280px) {
+        width: 48.8rem;
+    }
+    @media (min-width: 1440px) {
+        width: 68.3rem;
+    }
+}
+
 .marginTarjetaNegocios {
     @media (min-width: 1280px) {
         margin-left: 9%;
@@ -34,7 +64,13 @@
 }
 
 .anchoTitular {
-    width: 25%;
+    @media (min-width: 1280px) {
+        width: 80%;
+    }
+    @media (min-width: 1440px) {
+        width: 77%;
+    }
+    
 }
 
 .anchoNegocios {
