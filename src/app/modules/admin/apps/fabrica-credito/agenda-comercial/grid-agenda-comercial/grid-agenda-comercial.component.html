@@ -301,18 +301,18 @@
                                             </td>
                                             <td class="px-2 pb-1 pt-1">
                                                 <div class="flex justify-between">
-                                                    <div class="flex-column flex items-center justify-center w-14 h-14 rounded  " [ngClass]="item.numeroIntentos<=2?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                                    <div class="flex-column flex items-center justify-center px-2 h-14 rounded  " [ngClass]="item.numeroIntentos<=2?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                                                         <small class="text-xs">Nº Intentos</small>
                                                         <span class="text-current">
                                                     {{ item.numeroIntentos}}
                                                 </span>
-                                                        <small class="text-xs">{{ item.fechaUltimaReprogramacion}}</small>
+                                                        <small class="text-xs">{{ cambiarFecha(item.fechaUltimaReprogramacion)}}</small>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="px-2 pb-1 pt-1">
                                                 <div class="flex justify-between">
-                                                    <div class="flex-column flex items-center justify-center w-20 h-14 rounded  " [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                                    <div class="flex-column flex items-center justify-center px-2 h-14 rounded  " [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                                                         <small class="text-xs">Devolución</small>
                                                         <span class="text-current">
                                                     {{ item.cantidadDevolucion}}

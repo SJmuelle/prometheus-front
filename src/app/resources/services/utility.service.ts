@@ -132,7 +132,6 @@ export class UtilityService {
     }
 
     postQuery(query: string, data: any, typeHeaders: string = 'data') {
-        debugger;
         const URL = this.server3 + query;
         let optiones: any;
         if (typeHeaders == 'data') {

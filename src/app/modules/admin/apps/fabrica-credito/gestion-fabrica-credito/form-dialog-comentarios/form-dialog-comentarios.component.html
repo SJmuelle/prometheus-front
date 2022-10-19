@@ -4,13 +4,13 @@
 <ng-container *ngIf="!data.idComentario">
     <h2 mat-dialog-title>Nuevo comentario</h2>
 </ng-container>
-<mat-dialog-content>
+<mat-dialog-content *ngIf="datoFabrica">
     <div class="grid-cols-12 ">
         <div class="col-span-12">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                     <div class="flex">
-                        <mat-form-field class="w-full" appearance="fill">
+                        <mat-form-field class="w-full" appearance="fill" *ngIf="datoFabrica.agenda!='CM'&&datoFabrica.agenda!='GC'">
                             <mat-label>Tipo de comentario </mat-label>
                             <!-- lo mando el jefe lucho Tipo de visibilidad a tipo de comentario -->
                             <mat-select formControlName="tipoComentario">
@@ -19,7 +19,7 @@
                             </mat-select>
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
                         </mat-form-field>
-                    </div>
+                    </div> 
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Texto</mat-label>

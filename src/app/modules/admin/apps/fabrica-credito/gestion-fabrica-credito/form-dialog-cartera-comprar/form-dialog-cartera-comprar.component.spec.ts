@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { LibranzaTitularComponent } from './titular.component';
+import { FormDialogCarteraComprarComponent } from './form-dialog-cartera-comprar.component';
 
-describe('TitularComponent', () => {
-  let component: LibranzaTitularComponent;
-  let fixture: ComponentFixture<LibranzaTitularComponent>;
+describe('FormDialogCarteraComprarComponent', () => {
+  let component: FormDialogCarteraComprarComponent;
+  let fixture: ComponentFixture<FormDialogCarteraComprarComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LibranzaTitularComponent ]
+      declarations: [ FormDialogCarteraComprarComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LibranzaTitularComponent);
+    fixture = TestBed.createComponent(FormDialogCarteraComprarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

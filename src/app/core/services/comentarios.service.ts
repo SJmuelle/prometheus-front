@@ -19,6 +19,12 @@ export class ComentariosService {
     return this._http.get(`${this._appSettings.comentarios.url.baseComentario}/${codigo}/${agenda}`);
   }
   /**
+ * @description: Obtiene los obtenerAgendaSolicitud
+ */
+  public obtenerAgendaSolicitud(codigo: string): Observable<any> {
+    return this._http.get(`${this._appSettings.obtenerAgendaSolicitud.url.base}/${codigo}`);
+  }
+  /**
    * @description: Crea un comentario
    */
   public postComentario(datos: any): Observable<any> {

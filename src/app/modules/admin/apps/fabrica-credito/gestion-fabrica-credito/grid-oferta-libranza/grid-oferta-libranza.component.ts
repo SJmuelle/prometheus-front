@@ -14,7 +14,6 @@ export class GridOfertaLibranzaComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public listadoOferta$: Observable<any>;
   public capacidadPago$: Observable<any>;
-
   capacidadOferta: boolean = true;
 
   constructor(
