@@ -36,7 +36,6 @@ export class BusquedaComponent implements OnInit {
     nombrePagaduria: string='';
 
     dataFiltro: any = {"details":[]};
-    dataMuestra:any = [];
 
     constructor(private _utility: UtilityService, private router: Router, private fb: FormBuilder) {
         this.filtroForm = this.fb.group({
@@ -63,16 +62,10 @@ export class BusquedaComponent implements OnInit {
     }
 
     eliminarFiltro(){
-        this.filtroForm.value.documento='';
-        this.filtroForm.value.nombre='';
-        this.filtroForm.value.unidad='';
-        this.filtroForm.value.agenda='';
-        this.filtroForm.value.estado='';
-        this.filtroForm.value.subestado='';
-        this.filtroForm.value.solicitud='';
-        this.filtroForm.value.codigoNeg='';
-        this.filtroForm.value.codigoPag='';
+        this.filtroForm.reset('');
         this.dataFiltro.details = [];
+        this.tarjetaFiltro = false;
+        this.consulta('');
     }
 
     abrirFiltro(){
@@ -88,16 +81,11 @@ export class BusquedaComponent implements OnInit {
             "tipo": "IDENTIFICACION",
             "buscar": this.filtroForm.value.documento
         }
-        let muestra = {
-            "tipo": "Identificación",
-            "descripcion": this.filtroForm.value.documento
-        }
         const dataBuscar = this.dataFiltro.details.filter(docu => docu.buscar != this.filtroForm.value.documento);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
     mostrarNombre(){
@@ -105,84 +93,59 @@ export class BusquedaComponent implements OnInit {
             "tipo": "NOMBRE",
             "buscar": this.filtroForm.value.nombre
         }
-        let muestra = {
-            "tipo": "Nombre",
-            "descripcion": this.filtroForm.value.nombre
-        }
         const dataBuscar = this.dataFiltro.details.filter(nom => nom.buscar != this.filtroForm.value.nombre);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
-    mostrarUnidad(value){
+    mostrarUnidad(){
         let data = {
             "tipo": "UNIDAD",
             "buscar": this.filtroForm.value.unidad
-        }
-        let muestra = {
-            "tipo": "Unidad",
-            "descripcion": value
         }
         const dataBuscar = this.dataFiltro.details.filter(uni => uni.buscar != this.filtroForm.value.unidad);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
-    mostrarAgenda(value){
+    mostrarAgenda(){
         let data = {
             "tipo": "AGENDA",
             "buscar": this.filtroForm.value.agenda
-        }
-        let muestra = {
-            "tipo": "Agenda",
-            "descripcion": value
         }
         const dataBuscar = this.dataFiltro.details.filter(age => age.buscar != this.filtroForm.value.agenda);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
-    mostrarEstado(value){
+    mostrarEstado(){
         let data = {
             "tipo": "ESTADO",
             "buscar": this.filtroForm.value.estado
-        }
-        let muestra = {
-            "tipo": "Estado",
-            "descripcion": value
         }
         const dataBuscar = this.dataFiltro.details.filter(est => est.buscar != this.filtroForm.value.estado);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
-    mostrarSubestado(value){
+    mostrarSubestado(){
         let data = {
             "tipo": "SUBESTADO",
             "buscar": this.filtroForm.value.subestado
-        }
-        let muestra = {
-            "tipo": "Subestado",
-            "descripcion": value
         }
         const dataBuscar = this.dataFiltro.details.filter(sub => sub.buscar != this.filtroForm.value.subestado);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
     mostrarSolicitud(){
@@ -190,16 +153,11 @@ export class BusquedaComponent implements OnInit {
             "tipo": "SOLICITUD",
             "buscar": this.filtroForm.value.solicitud
         }
-        let muestra = {
-            "tipo": "Solicitud",
-            "descripcion": this.filtroForm.value.solicitud
-        }
         const dataBuscar = this.dataFiltro.details.filter(sol => sol.buscar != this.filtroForm.value.solicitud);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
     mostrarNegocio(){
@@ -207,54 +165,43 @@ export class BusquedaComponent implements OnInit {
             "tipo": "NEGOCIO",
             "buscar": this.filtroForm.value.codigoNeg
         }
-        let muestra = {
-            "tipo": "Negocio",
-            "descripcion": this.filtroForm.value.codigoNeg
-        }
         const dataBuscar = this.dataFiltro.details.filter(neg => neg.buscar != this.filtroForm.value.codigoNeg);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
-    mostrarPagaduria(value){
+    mostrarPagaduria(){
         let data = {
             "tipo": "PAGADURIA",
             "buscar": this.filtroForm.value.codigoPag
-        }
-        let muestra = {
-            "tipo": "Pagaduria",
-            "descripcion": value
         }
         const dataBuscar = this.dataFiltro.details.filter(pag => pag.buscar != this.filtroForm.value.codigoPag);
         let idx = this.dataFiltro.details.indexOf(dataBuscar[0]);
         this.dataFiltro.details.splice(idx, 1);
         this.dataFiltro.details.push(data)
         this.filtrar(this.dataFiltro)
-        this.dataMuestra.push(muestra);
     }
 
     filtrar(value){
-        console.log(value)
-        // Swal.fire({ 
-        //     title: 'Cargando', 
-        //     html: 'Filtrando la información', 
-        //     timer: 500000,
-        //     allowOutsideClick: false, 
-        //     didOpen: () => { 
-        //         Swal.showLoading() 
-        //     }, 
-        // }).then((result) => { })
-        // this._utility.postQuery('/cre-consulta-comentarios-v2', value).subscribe((response: any) => {
-        //     if (response) {
-        //         Swal.close();
-        //         this.listados = response.data;
-        //     } else {
-        //         this.listados = [];
-        //     }
-        // });
+        Swal.fire({ 
+            title: 'Cargando', 
+            html: 'Filtrando la información', 
+            timer: 500000,
+            allowOutsideClick: false, 
+            didOpen: () => { 
+                Swal.showLoading() 
+            }, 
+        }).then((result) => { })
+        this._utility.postQuery('/cre-consulta-comentarios-v2', value).subscribe((response: any) => {
+            if (response) {
+                Swal.close();
+                this.listados = response.data;
+            } else {
+                this.listados = [];
+            }
+        });
     }
 
     consultaPagaduria(data){

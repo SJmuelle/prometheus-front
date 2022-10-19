@@ -16,11 +16,33 @@
 }
 
 .dimensionUno {
-    width: 33.333333%;
+    @media (min-width: 1280px) {
+        width: 43.5rem;
+    }
+    @media (min-width: 1440px) {
+        width: 30rem;
+    }
 }
 
 .dimensionDos {
-    width: 66.666667%;
+    width: 75rem;
+}
+
+.dimensionTres {
+    width: 35%;
+}
+
+.dimensionCuatro {
+    width: 30.5rem;
+}
+
+.dimensionCinco {
+    @media (min-width: 1280px) {
+        width: 48.8rem;
+    }
+    @media (min-width: 1440px) {
+        width: 68.3rem;
+    }
 }
 
 .marginTarjetaNegocios {
