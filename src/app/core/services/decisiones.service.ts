@@ -69,9 +69,30 @@ export class DecisionesService {
   }
 
   /**
+ * @description: comprobacion Campos
+ */
+   public comprobacionCampos(data: any): Observable<any> {
+    
+    return this._http.post(this._appSettings.decision.url.comprobacionCampos, data)
+    .pipe(catchError(this.handleError));
+
+  }
+  
+  /**
+ * @description: comprobacion Campos
+ */
+   public generarNumeroPagare(data: any): Observable<any> {
+    
+    return this._http.post(this._appSettings.decision.url.generarNumeroPagare, data)
+    .pipe(catchError(this.handleError));
+
+  }
+
+  /**
   * @description:post de validacion Datos
   */
   public postGuardado(data: any): Observable<any> {
+
     // return this._http.post(this._appSettings.decision.url.guardado, data);
     return this._http
     .post(this._appSettings.decision.url.guardado, data)
