@@ -15,24 +15,12 @@ export class ListPagosComponent implements OnInit {
   listadoPropietarios: any = [];
   listadoTransportadoras: any = [];
   filtrarTabla:string='';
+  idTransportadora:string='';
 
   constructor(public pago: ProntoPagoService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.consultarPropietarios();
     this.consultarTransportadoras();
-  }
-
-  consultarPropietarios(){
-    Swal.fire({ title: 'Cargando', html: 'Buscando información de propietarios', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.pago.getPropietario().subscribe((response: any) => {
-      Swal.close();
-      if (response) {
-        this.listadoPropietarios = response.data;
-      } else {
-        this.listadoPropietarios = [];
-      }
-    });
   }
 
   consultarTransportadoras(){
@@ -42,6 +30,20 @@ export class ListPagosComponent implements OnInit {
         console.log(this.listadoTransportadoras);
       } else {
         this.listadoTransportadoras = [];
+      }
+    });
+  }
+
+  consultarPropietarios(id){
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de propietarios', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this.pago.getPropietario(id).subscribe((response: any) => {
+      Swal.close();
+      if (response) {
+        this.listadoPropietarios = response.data;
+        this.idTransportadora = id;
+        console.log(this.listadoPropietarios);
+      } else {
+        this.listadoPropietarios = [];
       }
     });
   }
@@ -61,16 +63,13 @@ export class ListPagosComponent implements OnInit {
       width: '70%',
       data: {
         idPropietario: item.idPropietario, 
+        idTransportadora: this.idTransportadora, 
         totalPlanilla: item.totalPlanilla,
         saldoTotalPlanilla: item.saldoTotalPlanilla
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result==true) {
-        this.consultarPropietarios();
-      }
-    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
 }

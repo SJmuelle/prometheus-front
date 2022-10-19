@@ -31,7 +31,7 @@ export class DetalleComponent implements OnInit {
 
   consultarTransportadoras() {
     Swal.fire({ title: 'Cargando', html: 'Buscando información de planillas', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
+    this.pago.getTransportadoras(this.data.idPropietario, this.data.idTransportadora).subscribe((response: any) => {
       Swal.close();
       if (response) {
         this.listado = response.data;
