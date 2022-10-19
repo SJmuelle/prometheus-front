@@ -201,6 +201,8 @@ export class AppSettingsService {
     public decision = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
+            comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
+            generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
