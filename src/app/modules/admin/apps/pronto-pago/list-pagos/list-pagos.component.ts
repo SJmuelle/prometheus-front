@@ -20,6 +20,7 @@ export class ListPagosComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarPropietarios();
+    this.consultarTransportadoras();
   }
 
   consultarPropietarios(){
@@ -38,6 +39,7 @@ export class ListPagosComponent implements OnInit {
     this.pago.getTransportadorasPropietario().subscribe((response: any) => {
       if (response) {
         this.listadoTransportadoras = response.data;
+        console.log(this.listadoTransportadoras);
       } else {
         this.listadoTransportadoras = [];
       }
