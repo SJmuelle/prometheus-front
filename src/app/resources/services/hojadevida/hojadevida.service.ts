@@ -15,7 +15,7 @@ export class HojadevidaService {
 
     getNegocios(cc: number) {
         // debugger
-        let url: string = `/informacion-negocios-por-cliente/${cc}`;
+        let url: string = `informacion-negocios-por-cliente/${cc}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;
@@ -25,12 +25,12 @@ export class HojadevidaService {
 
     getInfoCliente(nit: any) {
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-cliente/${nit}`
+            environment.urlApi2 + `informacion-cliente/${nit}`
         );
     }
 
     getInfoCertificadoPazySalvo(documento: string) {
-        let url = `/certificado-informacion-pazysalvo/${documento}`;
+        let url = `certificado-informacion-pazysalvo/${documento}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res;

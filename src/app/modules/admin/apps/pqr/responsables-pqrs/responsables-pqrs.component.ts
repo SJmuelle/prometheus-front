@@ -23,7 +23,6 @@ export class ResponsablesPQRSComponent implements OnInit {
   responsable: any;
   escala: any;
   listadoArea: any=[];
-  // datos: { responsable: string; escalado: string; estado: string; cerrarPqrs: boolean; };
 
 
   constructor(
@@ -77,13 +76,10 @@ export class ResponsablesPQRSComponent implements OnInit {
 
     const dialogRef = this.dialog.open(FormResponsablesComponent, {
         width: '60%',
-      // maxHeight: '550px',
       data: this.datos,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
       this.consulta();
     });
 
@@ -106,8 +102,6 @@ export class ResponsablesPQRSComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
         if(result){
             if(tipo=='R'){
                 this.responsable=result;
