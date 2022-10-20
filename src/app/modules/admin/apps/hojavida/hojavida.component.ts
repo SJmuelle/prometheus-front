@@ -394,7 +394,7 @@ export class HojavidaComponent implements OnInit {
                         Swal.showLoading();
                     },
                 }).then((result) => {});
-                let url = `/informacion-historial-pqrs/${this.info_cliente.identificacion}`;
+                let url = `informacion-historial-pqrs/${this.info_cliente.identificacion}`;
                 this._pqrService.getListados(url).subscribe((response: any) => {
                     // this.listadoReporteCentrales = response.data;
                     Swal.close();
