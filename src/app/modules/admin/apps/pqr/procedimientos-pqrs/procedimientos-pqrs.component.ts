@@ -62,14 +62,10 @@ export class ProcedimientosPQRSComponent implements OnInit {
         }
 
         const dialogRef = this.dialog.open(FormProcedimientosComponent, {
-            // width: '1080px',
-            // maxHeight: '550px',
             data: this.datos,
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
-            // console.log(result);
             this.consulta();
         });
     }

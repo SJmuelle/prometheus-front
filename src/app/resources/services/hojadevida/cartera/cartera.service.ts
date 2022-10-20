@@ -11,7 +11,7 @@ export class CarteraService {
 
     getCartera(cedula: string) {
         let url;
-        url = environment.urlApi2 + `/informacion-cartera/${cedula}`;
+        url = environment.urlApi2 + `informacion-cartera/${cedula}`;
         return this._httpClient.get(url);
     }
 
@@ -21,7 +21,7 @@ export class CarteraService {
         let mesActual = (today.getMonth() + 1);
         let mes = mesActual > 9 ? mesActual : '0' + mesActual;
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-detalle-cartera/${year}${mes}/1/${codigoNegocio}`
+            environment.urlApi2 + `informacion-detalle-cartera/${year}${mes}/1/${codigoNegocio}`
         );
     }
     getDetalleCarteraTotal(codigoNegocio: string,id) {
@@ -31,20 +31,20 @@ export class CarteraService {
         let mesActual = (today.getMonth() + 1);
         let mes = mesActual > 9 ? mesActual : '0' + mesActual;
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-detalle-cartera-sum/${year}${mes}/${id}/${codigoNegocio}`
+            environment.urlApi2 + `informacion-detalle-cartera-sum/${year}${mes}/${id}/${codigoNegocio}`
         );
     }
     getIngreso(codigo: string) {
         // /informacion-detalle-cartera/202009/1/MC18825
 
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-ingresos/${codigo}`
+            environment.urlApi2 + `informacion-ingresos/${codigo}`
         );
     }
     getDetalleIngreso(codigo: any,tipo:any, dstrct:any) {
         // {{generic}}/informacion-detalle-ingresos/IA590985/ICA/FINV
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-detalle-ingresos/${codigo}/${tipo}/${dstrct}`
+            environment.urlApi2 + `informacion-detalle-ingresos/${codigo}/${tipo}/${dstrct}`
         );
     }
     getPlanPago(codigo) {

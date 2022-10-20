@@ -2,16 +2,14 @@
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2 text-gray-900">Gestión de PQRS</h2>
-            <!-- <p class="uppercase font-bold text-gray-600 text-xs">1 Shots</p> -->
         </div>
     </div>
     <div class="row">
         <div class="bg-white col-lg-12 col-sm-12">
-            <div class="row items-center">
-
+            <div class="row items-center mb-3">
                 <span class="leading-none col-lg-4 col-sm-12">
                     <div class="leading-tight titulo_tabs">
-
+                        <button mat-button class="color_fintra text-white" (click)="exportAsXLSX()">Exportar</button>
                     </div>
                 </span>
                 <div class="leading-tight col-lg-8 col-sm-12 text-end">
@@ -42,6 +40,9 @@
                                         <th class="px-4 py-3 text-center">Línea de negocio</th>
                                         <th class="px-4 py-3 text-center w-0">Tipo</th>
                                         <th class="px-4 py-3 text-center">Causal</th>
+                                        <th class="px-4 py-3 text-center">Responsable</th>
+                                        <th class="px-4 py-3 text-center">Escalado</th>
+                                        <th class="px-4 py-3 text-center">Días por vencer</th>
                                         <th class="px-4 py-3 text-center">Estado</th>
                                         <th class="px-4 py-3 text-center w-0">Fecha solución</th>
                                         <th class="px-4 py-3 text-center">Solución</th>
@@ -55,12 +56,15 @@
                                         <td class="px-2 text-sm border text-center" (click)="gestion(item.id)">
                                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                                         </td>
-                                        <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs}}</td>
-                                        <td class="px-2 text-sm border text-center">{{ item.identificacion}}</td>
+                                        <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.identificacion }}</td>
                                         <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{ item.apellidosCliente }}</td>
                                         <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.tipoPqrs }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.causalPqrs }}</td>
+                                        <td class="px-1 text-sm border text-center">{{ item.responsable }}</td>
+                                        <td class="px-1 text-sm border text-center">{{ item.escalado }}</td>
+                                        <td class="px-1 text-sm border text-center">{{ item.diasxvencer }} dias</td>
                                         <td class="px-2 text-sm border text-center">{{ item.estado }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.fechaSolucion }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.solucionPqrs }}</td>

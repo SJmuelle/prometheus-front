@@ -62,7 +62,7 @@
     <div class="row">
         <div class="col-lg-12 mt-2 mb-10">
             <div style="height: 7em;">
-                <quill-editor #editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="seguimiento.detalle" (contentChanged)="logChange($event);"
+                <quill-editor #editor class="mb-2" placeholder="Agregar detalle de la solución" [(ngModel)]="detalleSolucion" (contentChanged)="logChange($event);"
                     [modules]="quillModules"></quill-editor>
             </div>
         </div>
@@ -76,10 +76,10 @@
     </div>
     <div class="row mt-3">
         <div class="col-lg-6">
-                <mat-checkbox class="example-margin" [(ngModel)]="envioCorreo" *ngIf="idTipoComentario == 2" >¿Desea incluir esta respuesta en el correo?</mat-checkbox>
+                <mat-checkbox *ngIf="idTipoComentario==2" class="example-margin" [(ngModel)]="envioCorreo">¿Desea incluir esta respuesta en el correo?</mat-checkbox>
         </div>
-        <div class="col-sm-6 text-end" >
-            <button mat-button  class="btn color_fintra text-white" (click)="guardar()">Guardar </button>
+        <div class="col-sm-6 text-end" *ngIf="editor.editorElem">
+            <button mat-button  class="btn color_fintra text-white" (click)="guardar()" *ngIf="editor.editorElem.outerText.length>1 || evidencia.length!=0">Guardar </button>
         </div>
     </div>
 </div>
