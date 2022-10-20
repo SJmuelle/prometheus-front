@@ -31,7 +31,7 @@ export class FormCausalesComponent implements OnInit {
             },
         }).then((result) => {});
         this._pqrService
-            .getListados(`tk/select-tipo-pqrs`)
+            .getListados(`/tk/select-tipo-pqrs`)
             .subscribe((response: any) => {
                 Swal.close();
                 if (response) {

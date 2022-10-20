@@ -29,7 +29,7 @@ export class NavigationMockApi
     menu(): void {
         if(localStorage.getItem('accessToken')){
            
-            let url: string = `tk/opciones-sistemas`;
+            let url: string = `/tk/opciones-sistemas`;
             this._utility
                 .getQuery(url, true)
                 .subscribe((res: any) => {
