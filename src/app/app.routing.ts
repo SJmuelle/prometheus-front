@@ -11,6 +11,7 @@ import { DashboardModule } from './modules/admin/apps/dashboard/dashboard.module
 import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
 import { PagoMasivoModule } from './modules/admin/apps/pago-masivo/pago-masivo.module';
+import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -113,6 +114,14 @@ export const appRoutes: Route[] = [
                 loadChildren: () => FabricaCreditoModule
             },
             {
+                path: 'run-date',
+                loadChildren: () => FechaCorridaModule
+            },
+            {
+                path: 'activities', 
+                loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule),
+            },
+            {
                 path: 'pagaduria',
                 loadChildren: () => PagaduriaModule
             },
@@ -120,8 +129,19 @@ export const appRoutes: Route[] = [
                 path: 'pago-masivo',
                 loadChildren: () => PagoMasivoModule
             }
+            // {
+            //     path: 'act',
+            //     loadChildren: () => ActivitiesModule
+            // }
         ]
     },
+    // {path: 'pages', children: [
+
+    //     // Activities
+    //     {path: 'activities', loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule)},
+
+    // ]},
+
     {path: '**', redirectTo: 'dashboard'}
     // {path: '**', redirectTo: 'sign-in'},
     // {path: '*', redirectTo: 'sign-in'}

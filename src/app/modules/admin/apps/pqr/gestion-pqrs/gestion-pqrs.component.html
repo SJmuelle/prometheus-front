@@ -1,4 +1,4 @@
-<div class=" bg-white h-full h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="!no_mostrar==true">
+<div class=" bg-white h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100" *ngIf="!no_mostrar==true">
     <div class="row justify-between" *ngIf="datos!={}">
         <div class="text-left col l12">
             <h2 class="mb-2  text-gray-900">Gestión de PQRS ({{pqrid}})</h2>
@@ -10,7 +10,7 @@
         <div class="col-sm-12 col-lg-3 pb-3">
             <fuse-card class="card p-3 shadow row mr-3 mb-4 ">
                 <div
-                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tight col-lg-12 col-sm-12 pl-0">
+                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0">
                     Datos del cliente
                 </div>
                 <hr class="w-full border-t col-lg-12 col-sm-12">
@@ -63,32 +63,62 @@
                     </div>
                 </div>
             </fuse-card>
-            <fuse-card class="card p-3 shadow row mr-3 ">
-                <div
-                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold leading-tigh col-lg-12 col-sm-12 pl-0">
-                    Adjuntos
+            <fuse-card class="card p-3 shadow row mr-3">
+                <div class="flex flex-col">
+                    <div class="mr-1 leading-tight titulo_tabs text-2xl font-semibold">Adjuntos</div>
+                    
                 </div>
-
-                <hr class="w-full border-t col-lg-12 col-sm-12">
-
-                <div class="col-lg-12 col-sm-12">
-                    <div class="row items-center mb-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"
-                        *ngFor="let item of listarAdjuntos ">
-
-                        <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(item.idComentario)">
-                            <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
+                <hr class="w-full border-t mt-2">
+                <div class="flex flex-col overflow-y-scroll h-40">
+                    <div class="flex flex-row justify-between mt-2">
+                        <div class="mb-1">Registros</div>
+                        <div>
+                            <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Agregar adjuntos" svgIcon="heroicons_outline:document-add"></mat-icon></a>
                         </div>
-                        <div class="font-titulo col-lg-10 col-sm-10 m-0 p-0">
-                            {{ item.descripcion }} <br>
-                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
-                                {{ item.fechaCreacion }}
-                            </span>
+                    </div>
+                    <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                        <div class="flex flex-row ml-1 mb-2 justify-between" *ngIf="item.id_comentario=='3'">
+                            <div class="flex flex-row">
+                                <div>
+                                    <mat-icon class="text-sm cursor-pointer" matTooltip="Descargar adjunto" svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>
+                                </div>
+                                <div class="flex flex-col font-titulo">
+                                    {{ item.descripcion }} <br>
+                                    <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                        {{ item.fechaCreacion }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
+                            </div>
                         </div>
-
                     </div>
                 </div>
-
+                <hr class="w-full border-t mt-3">
+                <div class="flex flex-col overflow-y-scroll h-40">
+                    <div class="mb-1">Soluciones</div>
+                    <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
+                        <div class="flex flex-row ml-1 mb-2" *ngIf="item.id_comentario=='2' || item.id_comentario=='1'">
+                            <div class="flex flex-row">
+                                <div>
+                                    <mat-icon class="text-sm cursor-pointer" matTooltip="Descargar adjunto" svgIcon="iconsmind:file_link" (click)="verAdjunto(item.idComentario)"></mat-icon>
+                                </div>
+                                <div class="flex flex-col font-titulo">
+                                    {{ item.descripcion }} <br>
+                                    <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                        {{ item.fechaCreacion }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </fuse-card>
+            
         </div>
         <div class="col-sm-12 col-lg-9">
             <fuse-card class="card shadow  row mr-3 mb-3">
@@ -140,6 +170,18 @@
                                         <div class="capitalize" style="font-size: 16px;">{{datos.tipoCliente}}
                                         </div>
                                     </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm text-secondary font-bold">Tipo de solicitante
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.tipo_solicitante}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm text-secondary font-bold">Segmento actual
+                                        </div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.segmento_actual}}
+                                        </div>
+                                    </div>                
                                     <div class="col-sm-6 col-lg-2">
                                         <div class="text-sm text-secondary font-bold">Línea negocio
                                         </div>
@@ -249,13 +291,54 @@
                     <div>
                         <mat-tab-group (selectedTabChange)="onTabChanged($event.index)">
                             <mat-tab label="Descripción">
-                                <div class="row">
-                                    <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted"
-                                        style="    overflow: auto;height: 16em;">
+                                <div class="flex flex-col">
+                                    <div [hidden]="mostrarDescripcion==false" class="flex flex-col mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted" style="overflow: auto;height: 16em;">
+                                        
+                                        <div>
+                                            <p><strong>Detalle de la PQRS</strong></p>
+                                        </div>
+    
+                                        <div>
+                                            <div [innerHTML]="datos.detalle"></div>
+                                        </div>
+                                        
+                                        <br>
+                                        <div class="flex flex-col sm:flex-row sm:justify-start sm:gap-3">
+                                            <div>
+                                                <button mat-button id="btnEditar" class="color_fintra text-white w-100 sm:w-36" (click)="editarDescripcion()" [hidden]="datos.estado!='Sin resolver'"><mat-icon>edit</mat-icon></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div [hidden]="mostrarEditor==false" class="flex flex-row">
+                                    <div class="flex flex-col mt-2 mb-10 w-100">
+                                        <div class="h-28">
+                                            <!-- <quill-editor #editor  class="mb-2" (contentChanged)="logChange($event);" placeholder="Editar la descripcion" [(ngModel)]="datos.detalle" [modules]="quillModules"></quill-editor> -->
+                                            <quill-editor #editor2 class="mb-2" placeholder="Editar la descripcion"  [(ngModel)]="datos.detalle" (contentChanged)="logChange($event);"
+                                            [modules]="quillModules"></quill-editor>
+                                            <div class="col-lg-12 mt-1.5" *ngIf="editor2.editorElem">
+                                                <small [ngClass]="editor2.editorElem.outerText.length>650?'text-red-600':'text-green-600'" class="text-sm"
+                                                 *ngIf="editor2.editorElem.outerText.length>1">
+                                                 <!-- Caracteres: {{ editor2.editorElem.outerText.length }} -->
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div [hidden]="mostrarEditor==false" class="flex flex-row mt-3 justify-end" *ngIf="editor2.editorElem">
+                                    <div class="flex flex-col">
+                                        <button mat-button  class="btn color_fintra text-white" (click)="guardarDescripcion(pqrid, datos.detalle)" *ngIf="editor2.editorElem.outerText.length>1">Guardar</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="row">
+                                    <div class="mt-4 py-4 px-5 rounded-lg bg-gray-200 dark:bg-gray-800 ng-star-inserted" style="overflow: auto;height: 16em;">
                                         <p><strong>Detalle de la PQRS</strong></p><br>
                                         <div [innerHTML]=" datos.detalle"></div>
                                     </div>
-                                </div>
+                                </div> -->
                             </mat-tab>
 
                             <mat-tab label="Solución" [disabled]="datos.estado=='Cerrado'">
@@ -266,15 +349,15 @@
                                     </app-solucion>
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Historial de seguimiento">
+                            <mat-tab label="Historial de gestión">
                                 <div class="row items-center">
                                     <span class="leading-none col-lg-6 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
+                                        <div class="leading-tight titulo_tabs">Historial de gestión</div>
                                     </span>
                                     <div class="leading-tight col-lg-6 col-sm-12 text-end">
                                         <input class="border rounded p-2 bg-gray-100"
                                             style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                                            name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaHistorial"
+                                            name="filtrarTablaGestion" [(ngModel)]="filtrarTablaGestion"
                                             placeholder="Filtrar...">
                                         <!-- <select name="tamanoTablaHistorial" id="tamanoTablaHistorial"
                                             class="border rounded  bg-gray-100" (change)="pageHistorial=1"
@@ -290,18 +373,18 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
-                                            *ngIf="listadoHistorial.length==0">
+                                            *ngIf="listadoGestion.length==0">
                                             <div class="w-3/12">
                                                 <img src="assets/images/animaciones/nodata.gif">
                                             </div>
                                         </fuse-card>
                                     </div>
-                                    <div class="col-lg-12" *ngIf="listadoHistorial.length!=0">
+                                    <div class="col-lg-12" *ngIf="listadoGestion.length!=0">
                                         <div class="">
                                             <ol>
                                                 <!-- Activities -->
                                                 <ng-container
-                                                    *ngFor="let item of listadoHistorial | filter: filtrarTablaHistorial">
+                                                    *ngFor="let item of listadoGestion | filter: filtrarTablaGestion">
                                                     <!-- Activity -->
                                                     <li class="relative flex">
                                                         <!-- Line -->
@@ -328,15 +411,22 @@
                                                                 <ng-container>
                                                                     <div class="row w-100">
                                                                         <div class="col-lg-7">
-                                                                            <div class="text-secondary">
-                                                                                ({{pqrid}}-{{ item.id}})
+                                                                            <div class="flex flex-row gap-3">
+                                                                                <div class="text-secondary">
+                                                                                    ({{pqrid}}-{{ item.id}})
+                                                                                </div>
+                                                                                <div class="text-secondary" *ngIf="item.id_tipo_comentario==1">
+                                                                                    Solución de area
+                                                                                </div>
+                                                                                <div class="text-secondary" *ngIf="item.id_tipo_comentario==2">
+                                                                                    Solución de cliente
+                                                                                </div>
                                                                             </div>
                                                                             <strong class="capitalize">
                                                                                 {{ item.usuario}}
                                                                             </strong>
                                                                         </div>
-                                                                        <div class="col-lg-5 text-right"
-                                                                            *ngIf="aprobarComentario==true">
+                                                                        <div class="col-lg-5 text-right" *ngIf="aprobarComentario==true">
                                                                             <button mat-button
                                                                                 [hidden]="item.estadocolor!='bg-warning'"
                                                                                 class="color_fintra text-white"
@@ -377,11 +467,11 @@
                                                                     </ng-container>
                                                                 </div>
                                                                 <!-- Extra content -->
-                                                                <ng-container>
-                                                                    <div *ngFor="let adj of listarAdjuntos" class="w-50 text-start">
+                                                                <ng-container *ngIf="listadoAdjuntos.length>0">
+                                                                    <div *ngFor="let adj of listadoAdjuntos" class="w-50 text-start">
                                                                         <div class="row items-center mt-3" style="border-left: 5px solid #b6ce1d; padding-left: 3px;"
-                                                                            *ngIf="adj.idSolucion == item.id">
-                                                                            <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(adj.idComentario)">
+                                                                            *ngIf="adj.id_comentario == item.id">
+                                                                            <div class="col-lg-1 col-sm-2 m-0 p-0" (click)="verAdjunto(adj.id_adjunto)">
                                                                                 <mat-icon svgIcon="iconsmind:file_link"></mat-icon>
                                                                             </div>
                                                                             <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
@@ -392,10 +482,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="mt-2 px-3 rounded-lg bg-gray-200 dark:bg-gray-800 "
-                                                                        [innerHTML]=" item.detalle">
-                                                                    </div>
+                                                                    <div class="mt-2 px-3 rounded-lg bg-gray-200 dark:bg-gray-800" [innerHTML]=" item.detalle"></div>                                                         
                                                                 </ng-container>
                                                                 <fuse-alert class="mt-2" [type]="'warn'" [appearance]="'outline'" *ngIf="item.estadocolor=='bg-pink-300'">
                                                                     <span fuseAlertTitle>Motivo rechazo</span>
@@ -507,84 +594,154 @@
 
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Alertas y notificaciones">
-                                <div class="row items-center">
-                                    <span class="leading-none col-lg-4 col-sm-12">
-                                        <div class="leading-tight titulo_tabs">Alertas y notificaciones
-                                        </div>
+                            <mat-tab label="Historial de seguimiento">
+                                <div class="flex flex-col sm:flex-row sm:justify-between">
+                                    <span class="sm:mt-4 leading-none">
+                                        <div class="leading-tight titulo_tabs">Historial de seguimiento</div>
                                     </span>
-                                    <div class="leading-tight col-lg-8 col-sm-12 text-end">
-                                        <input class="border rounded p-2 bg-gray-100"
-                                            style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
-                                            name="filtrarTablaAlertas" [(ngModel)]="filtrarTablaAlertas"
-                                            placeholder="Filtrar...">
-                                        <select name="tamanoTablaAlertas" id="tamanoTablaAlertas"
-                                            class="border rounded  bg-gray-100" (change)="pageAlerta=1"
-                                            [(ngModel)]="tamanoTablaAlertas"
-                                            style="font-size: 10px; color: #9aa8bc; padding: 7px;">
-                                            <option value="5"> 5</option>
-                                            <option value="10"> 10</option>
-                                            <option value="20"> 20</option>
-                                        </select>
-                                    </div>
                                 </div>
                                 <hr>
-                                <div class="row">
-                                    <div class="col-lg-12" *ngIf="listadoNotificaciones.length!=0">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <table class="w-full shadow">
-                                                    <thead>
-                                                        <tr
-                                                            class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                                                            <th class="px-4 py-3">Fecha y hora</th>
-                                                            <th class="px-4 py-3">Correo electronico</th>
-                                                            <th class="px-4 py-3">Detalle</th>
-                                                            <th class="px-4 py-3">Tipo</th>
-                                                            <th class="px-4 py-3">Estado</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody class="bg-white">
-                                                        <tr class="text-gray-700"
-                                                            *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
-                                                            <td class="px-4 py-1 text-sm border">{{ item.fecha }}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.email }}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.descripcion }}</td>
-                                                            <td class="px-4 py-1 text-sm border">{{ item.tipo }}</td>
-                                                            <!-- <td class="px-4 py-1 text-sm border" [class]="item.estado.includes('Error') ? 'bg-red-500 text-white font-bold text-center' : 'bg-green-500 text-white font-bold text-center'">
-                                                                {{ item.estado }}
-                                                            </td> -->
-                                                            <td class="px-4 py-1 text-sm border">
-                                                                <div [ngClass]="item.estado.includes('Error') ? 'bg-pink-300' : 'bg-green-300'">
-                                                                    <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
-                                                                        {{ item.estado}}
-                                                                    </span>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12 text-end">
-                                                <pagination-controls (pageChange)="pageAlerta = $event"
-                                                    previousLabel="Anterior" nextLabel="Siguiente">
-                                                </pagination-controls>
-                                            </div>
+                                <div class="flex flex-col">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between mb-2">
+                                        <div>
+                                            <button mat-button class="permitir bloquear text-white w-100 sm:w-36" (click)="agregarcomentario()" [disabled]="datos.estado=='Cerrado'">Agregar comentario</button>
+                                        </div>
+                                        <div class="mt-2 leading-tight sm:text-end sm:mt-0">
+                                            <input class="border rounded p-2 bg-gray-100"
+                                                style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                                name="filtrarTablaHistorial" [(ngModel)]="filtrarTablaSeguimiento" 
+                                                (ngModelChange)="page = 1"
+                                                placeholder="Filtrar...">
+                                            <select name="tamanoTablaAsignaciones" id="tamanoTablaAsignaciones"
+                                                class="border rounded bg-gray-100" (change)="pageSeguimiento=1"
+                                                [(ngModel)]="tamanoTablaSeguimiento"
+                                                style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                                <option value="5"> 5</option>
+                                                <option value="10"> 10</option>
+                                                <option value="20"> 20</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="h-72 overflow-x-scroll overflow-y-scroll sm:overflow-x-hidden" *ngIf="listadoSeguimiento.length>0">
+                                        <table class="w-full shadow">
+                                            <thead>
+                                                <tr
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                    <th class="px-4 py-3 bg-white"></th>
+                                                    <th class="px-4 py-3 text-center">Cod</th>
+                                                    <th class="px-4 py-3 text-center">Descripción</th>
+                                                    <th class="px-4 py-3 text-center">Usuario</th>
+                                                    <th class="px-4 py-3 text-center">Fecha y hora</th>
+                                                    <th class="px-4 py-3 text-center">Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white">
+                                                <tr class="text-gray-700" 
+                                                *ngFor="let item of listadoSeguimiento | filter: filtrarTablaSeguimiento  | paginate: { itemsPerPage: tamanoTablaSeguimiento, currentPage: pageSeguimiento }">
+                                                    <td class="px-4 py-1 text-sm border text-center"><mat-icon class="cursor-pointer" (click)="vercomentario(item.id)">remove_red_eye</mat-icon></td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.id}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center"><p class="truncate w-60 m-0">{{item.descripcion}}</p></td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.usuario_creacion}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.fecha_creacion}}</td>
+                                                    <td class="px-4 py-1 text-sm border text-center">{{item.estado}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="grid">
+                                            <pagination-controls (pageChange)="pageSeguimiento = $event"
+                                                previousLabel="Anterior" nextLabel="Siguiente" class="justify-self-end">
+                                            </pagination-controls>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
-                                            *ngIf="listadoNotificaciones.length==0">
+                                            *ngIf="listadoSeguimiento.length==0">
                                             <div class="w-3/12">
                                                 <img src="assets/images/animaciones/nodata.gif">
                                             </div>
                                         </fuse-card>
                                     </div>
                                 </div>
-                                <div class="m-5">
-
+                        </mat-tab>
+                        <mat-tab label="Alertas y notificaciones">
+                            <div class="row items-center">
+                                <span class="leading-none col-lg-4 col-sm-12">
+                                    <div class="leading-tight titulo_tabs">Alertas y notificaciones
+                                    </div>
+                                </span>
+                                <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                    <input class="border rounded p-2 bg-gray-100"
+                                        style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                        name="filtrarTablaAlertas" [(ngModel)]="filtrarTablaAlertas"
+                                        placeholder="Filtrar...">
+                                    <select name="tamanoTablaAlertas" id="tamanoTablaAlertas"
+                                        class="border rounded  bg-gray-100" (change)="pageAlerta=1"
+                                        [(ngModel)]="tamanoTablaAlertas"
+                                        style="font-size: 10px; color: #9aa8bc; padding: 7px;">
+                                        <option value="5"> 5</option>
+                                        <option value="10"> 10</option>
+                                        <option value="20"> 20</option>
+                                    </select>
                                 </div>
-                            </mat-tab>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-12" *ngIf="listadoNotificaciones.length!=0">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <table class="w-full shadow">
+                                                <thead>
+                                                    <tr
+                                                        class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                                                        <th class="px-4 py-3">Fecha y hora</th>
+                                                        <th class="px-4 py-3">Correo electronico</th>
+                                                        <th class="px-4 py-3">Detalle</th>
+                                                        <th class="px-4 py-3">Tipo</th>
+                                                        <th class="px-4 py-3">Estado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="bg-white">
+                                                    <tr class="text-gray-700"
+                                                        *ngFor="let item of listadoNotificaciones | filter: filtrarTablaAlertas  | paginate: { itemsPerPage: tamanoTablaAlertas, currentPage: pageAlerta }">
+                                                        <td class="px-4 py-1 text-sm border">{{ item.fecha }}</td>
+                                                        <td class="px-4 py-1 text-sm border">{{ item.email }}</td>
+                                                        <td class="px-4 py-1 text-sm border">{{ item.descripcion }}</td>
+                                                        <td class="px-4 py-1 text-sm border">{{ item.tipo }}</td>
+                                                        <!-- <td class="px-4 py-1 text-sm border" [class]="item.estado.includes('Error') ? 'bg-red-500 text-white font-bold text-center' : 'bg-green-500 text-white font-bold text-center'">
+                                                            {{ item.estado }}
+                                                        </td> -->
+                                                        <td class="px-4 py-1 text-sm border">
+                                                            <div [ngClass]="item.estado.includes('Error') ? 'bg-pink-300' : 'bg-green-300'">
+                                                                <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                                    {{ item.estado}}
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12 text-end">
+                                            <pagination-controls (pageChange)="pageAlerta = $event"
+                                                previousLabel="Anterior" nextLabel="Siguiente">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <fuse-card class="card p-3 shadow capitalize row ml-1 align-content-around"
+                                        *ngIf="listadoNotificaciones.length==0">
+                                        <div class="w-3/12">
+                                            <img src="assets/images/animaciones/nodata.gif">
+                                        </div>
+                                    </fuse-card>
+                                </div>
+                            </div>
+                            <div class="m-5">
+
+                            </div>
+                        </mat-tab>
                         </mat-tab-group>
                     </div>
                 </div>

@@ -32,7 +32,9 @@ export class FormDialogoChecklistComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data)
   }
-
+  decision(){
+    this.matDialogRef.close(true);
+  }
 
   consulta() {
     this.total = 0;
@@ -77,7 +79,7 @@ export class FormDialogoChecklistComponent implements OnInit {
 
   guardar(item) {
     let data, url;
-    url = 'registro-chequeo-credito';
+    url = '/registro-chequeo-credito';
     data = {
       numeroSolicitud: this.data.numeroSolicitud,
       nombre: item.nombre,

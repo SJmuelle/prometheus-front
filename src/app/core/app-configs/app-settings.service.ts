@@ -15,12 +15,12 @@ export class AppSettingsService {
     /**
      * @description: End-point agenda de completacion
      */
-         public agendaFormalizacion = {
-            url: {
-                base: EndPoints.uri('/generic/qry/agendas-credito/FO'),
-                totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FO')
-            }
-        };
+    public agendaFormalizacion = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/FO'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FO')
+        }
+    };
     /**
      * @description: End-point pagaduria
      */
@@ -104,6 +104,26 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point Transferencias
+     */
+     public transferencias = {
+        url: {
+            baseTransferencia: EndPoints.uriBase('/transferencia/transferencia-cxp-proveedor'),
+            baseProveedor: EndPoints.uriBase('/generic/qry/buscar-proveedor'),
+            baseBancos: EndPoints.uriBase('/generic/qry/bancos-transferencia/JHSALAZAR'),
+            baseFiltro: EndPoints.uriBase('/generic/qry/cxp-proveedor'),
+        }
+    };
+    /**
+     * @description: End-point Archivos de transferencias
+     */
+     public archivos = {
+        url: {
+            ListFiles: EndPoints.uriBase('/generic/qry/tk/transferencia-consultar-achivo'),
+            DownFile: EndPoints.uriBase('/transferencia/obtener-achivo-base64')
+        }
+    };
+    /**
      * @description: End-point referencias
      */
     public referencias = {
@@ -127,8 +147,17 @@ export class AppSettingsService {
         }
     };
     /**
-   * @description: End-point comentarios
-   */
+ * @description: End-point comentarios
+ */
+    public obtenerAgendaSolicitud = {
+        url: {
+            base: EndPoints.uri('/generic/qry/obtener-agenda-solicitud'),
+        }
+    };
+    /**
+/**
+* @description: End-point comentarios
+*/
     public centrales = {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
@@ -160,6 +189,8 @@ export class AppSettingsService {
     public decision = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
+            comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
+            generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
@@ -182,9 +213,12 @@ export class AppSettingsService {
      */
     public listadoCartera = {
         url: {
-            base: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras'),
+            base: EndPoints.uri('/credito/tk/array-padre-hija/recursos-obligaciones-carteras'),
+            baseCompradas: EndPoints.uri('/generic/qry/tk/obligaciones-compradas-hijas'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
+            editar:EndPoints.uri("/generic/actualizar-cartera"),
+            guardarGestionCompra:EndPoints.uri("/generic/guardar-gestion-compra"),
             pasarAgenda: EndPoints.uri('/generic/cre-valida-gestion-cartera'),
             validadorTotalLibranza: EndPoints.uri('/generic/validador-total-libranza'),
             //negociacion
@@ -262,13 +296,22 @@ export class AppSettingsService {
         }
     };
 
-    
+
     /**
     * @description: End-point agenda decision
     */
-     public busquedaEstadoCuenta = {
+    public busquedaEstadoCuenta = {
         url: {
             base: EndPoints.uri('/generic/obtener-estados-cuentas'),
+
+        }
+    };
+    /**
+* @description: End-point agenda decision
+*/
+    public salarioBasico = {
+        url: {
+            base: EndPoints.uri('/generic/obtener-salario-min-vigente'),
 
         }
     };

@@ -10,7 +10,7 @@ export class CreditoService {
 
     getCredito(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-credito/${codigoNegocio}`
+            environment.urlApi2 + `informacion-credito/${codigoNegocio}`
         );
     }
 }

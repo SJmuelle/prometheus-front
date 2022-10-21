@@ -31,6 +31,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<any[]>;
   entidadFinanciera: any[]=[];
+  nuevo: boolean=false;
   //fin prueba
 
   constructor(
@@ -47,17 +48,33 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     this.crearFormulario();
     this.getEntidadBancaria();
     this.getTipoCuentaBancaria();
-    this.getEstadoCuenta();
+    this.form
+    .get('entidad').valueChanges.subscribe(value => this.colocarNit(value));
+    this.form.get('entidad').valueChanges.subscribe(value => this.postBusquedaEntidadFinanciera(value));
+
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion.toString());
+    
     // this.form.controls.estadoCuenta.setValue(this.data.tipo == 'D' ? 'DEUDA' : 'AL DIA');
     this.form.controls.alDia.setValue(this.data.tipo == 'D' ? false : true);
     this.tipo = this.data.tipo;
     this.postBusquedaEntidadFinanciera('');
+    this.getEstadoCuenta(this.data.tipo != 'D' ? "AL DIA" : "EN MORA");
     this.filteredOptions = this.form.controls.entidad.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
+    if(this.data.item!=null){
+      this.nuevo=true;
+      this.form.controls.entidad.setValue(this.data.item.entidad);
+      this.form.controls.nit.setValue(this.data.item.nit);
+      this.form.controls.numeroCuenta.setValue(this.data.item.numeroCuenta);
+      this.form.controls.maximaMora.setValue(this.data.item.maximaMora);
+      this.form.controls.saldoActual.setValue(this.utility.formatearNumero(this.data.item.saldoActual));
+      this.form.controls.estadoCuenta.setValue(this.data.item.estadoCuenta);
+      this.form.controls.idObligacion.setValue(this.data.item.id.toString());
+      this.form.controls.codigoEstado.setValue(this.data.item.codigoEstado);
+    }
   }
 
   private _filter(value: string): any[]{
@@ -90,8 +107,8 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
     /**
    * @description: Obtiene los tipos de estados civiles
    */
-     private getEstadoCuenta(): void {
-      this.estadoCuenta$ = this.genericaServices.getEstadoCuenta();
+     private getEstadoCuenta(tipo): void {
+      this.estadoCuenta$ = this.genericaServices.getEstadoCuenta(tipo);
     }
   
 
@@ -103,25 +120,40 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
   }
   public onGuardar(): void {
     if (this.form.valid) {
-      // const data: any = this.form.getRawValue();
-      const datos: any = this.form.getRawValue();
-      const { saldoActual,estadoCuenta, entidad,...data } = datos;
-      const saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
-      const saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
+      const  datos: any = this.form.getRawValue();
+      const  { saldoActual,estadoCuenta, entidad,...data } = datos;
+      const  saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
+      const  saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
       delete data.saldoActual;
       delete data.saldoMora;
       delete data.estadoCuenta;
       delete data.entidad;
-      const datosFormularios: any = {
-        saldoActual: saldoActualFormato,
-        saldoMora: saldoMoraFormato,
-        estadoCuenta:estadoCuenta.toUpperCase(),
-        entidad:entidad.toUpperCase(),
-        ...data
+      let  datosFormularios: any 
+      let mensaje;
+      if(this.nuevo==false){
+        mensaje = '¿Desea agregar una nueva obligación ?'
+        datosFormularios = {
+          saldoActual: saldoActualFormato,
+          saldoMora: saldoMoraFormato,
+          estadoCuenta:estadoCuenta.toUpperCase(),
+          entidad:entidad.toUpperCase(),
+          ...data
+        }
+      }else{
+        mensaje = '¿Desea editar esta nueva obligación ?'
+        datosFormularios = {
+          saldoActual: saldoActualFormato,
+          saldoMora: saldoMoraFormato,
+          estadoCuenta:estadoCuenta.toUpperCase(),
+          entidad:entidad.toUpperCase(),
+          ...data
+        }
       }
-      debugger;
-      console.log(data);
-      let mensaje = data.tipoComentario == 'D' ? '¿Desea agregar una nueva obligación al día?' : '¿Desea agregar una nueva obligación en mora?';
+      // const data: any = this.form.getRawValue();
+     
+      // debugger;
+      console.log(datosFormularios);
+      
       Swal.fire({
         title: 'Guardar información',
         text: mensaje,
@@ -133,7 +165,14 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          this.guardadoCambio(datosFormularios);
+          if(this.nuevo==true){
+            this.editarCambio(datosFormularios);
+          }else{
+            this.guardadoCambio(datosFormularios);
+          
+
+          }
+        
         }
         // setTimeout(() => {
         //   this.onCerrar();
@@ -166,6 +205,27 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       });
 
   }
+  public editarCambio(data) {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando información',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._listadoCarteraService
+      .editarCartera(data)
+      .subscribe((res) => {
+        Swal.close();
+        if (res.data.respuesta == 'OK') {
+          this.onCerrar();
+        } else {
+          Swal.fire('Error', res.data.resultado, 'error');
+        }
+      });
+
+  }
 
   private crearFormulario(): void {
     this.form = this.fb.group({
@@ -179,11 +239,22 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       maximaMora: [''],
       saldoActual: [''],
       saldoMora: [''],
+      nit: [''],
+      idObligacion:[''],
       agregadaManualmente: true,
+      codigoEstado:[''],
       alDia: Boolean,
     });
   }
 
+  colocarNit(valor){
+    if(valor){
+      const result = this.entidadFinanciera.filter(entidadFinanciera => entidadFinanciera.nombre ==valor);
+      if(result.length==1){
+        this.form.controls.nit.setValue(result[0].nit);
+      }
+    }
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();

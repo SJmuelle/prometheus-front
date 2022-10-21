@@ -9,6 +9,7 @@ import { AgendaDecisionModule } from './agenda-decision/agenda-decision.module';
 import { TrazabilidadCreditoModule } from './trazabilidad-credito/trazabilidad-credito.module';
 import { AgendaGestionCarteraModule } from './agenda-gestion-cartera/agenda-gestion-cartera.module';
 import {AgendaFormalizacionModule} from "./agenda-formalizacion/agenda-formalizacion.module";
+import { ReferidosModule } from './referidos/referidos.module';
 
 
 const routes: Routes = [
@@ -18,6 +19,10 @@ const routes: Routes = [
             {
                 path: 'parametria',
                 loadChildren: () => ParametriaModule
+            },
+            {
+                path: 'referidos',
+                loadChildren: () => ReferidosModule
             },
             {
                 path: 'agenda-comercial',

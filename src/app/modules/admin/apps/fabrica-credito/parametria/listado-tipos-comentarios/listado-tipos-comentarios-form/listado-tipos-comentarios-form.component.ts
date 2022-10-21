@@ -27,13 +27,13 @@ export class ListadoTiposComentariosFormComponent implements OnInit {
       //post
       // idAgenda,unidadNegocio,nombre,tipoIdentificacion
 
-      url = 'agregar-nuevo-tipo-de-comentario';
+      url = '/agregar-nuevo-tipo-de-comentario';
       data = {
         visualizacion:this.datos.visualizacion,
         descripcion:this.datos.descripcion
       };
     } else {
-      url = 'actualizar-tipo-de-comentario';
+      url = '/actualizar-tipo-de-comentario';
       data = {
         id: parseInt(this.datos.id),
         visualizacion:this.datos.visualizacion,

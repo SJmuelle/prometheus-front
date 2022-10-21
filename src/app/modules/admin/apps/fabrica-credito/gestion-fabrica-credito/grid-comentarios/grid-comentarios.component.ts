@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Inject, OnInit, Output, ViewEncapsulation, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ComentariosService } from "../../../../../../core/services/comentarios.service";
 import { Observable } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { MatDialog } from "@angular/material/dialog";
 import { FormDialogComentariosComponent } from "../form-dialog-comentarios/form-dialog-comentarios.component";
 import { FormControl } from "@angular/forms";
 import moment from 'moment';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-grid-comentarios',
@@ -21,11 +22,18 @@ export class GridComentariosComponent implements OnInit {
     public page: number = 1;
     public tamanoTabl = new FormControl('5');
     @Input() agenda: string;
+    public permisoEditar:boolean;
     constructor(
         private comentariosServices: ComentariosService,
         private route: ActivatedRoute,
+        private router: Router,
         private _dialog: MatDialog,
-    ) { }
+        public _permisosService: PermisosService
+
+    ) {
+        router.events.subscribe((url: any) => console.log(url));
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
+    }
 
     ngOnInit(): void {
         this.getData();
@@ -70,7 +78,7 @@ export class GridComentariosComponent implements OnInit {
      * @description: Obtiene los comentarios
      */
     private getComentarios(codigo: string): void {
-        this.comentarios$ = this.comentariosServices.getComentarios(codigo,this.agenda);
+        this.comentarios$ = this.comentariosServices.getComentarios(codigo, this.agenda);
     }
 
     /**
@@ -82,7 +90,7 @@ export class GridComentariosComponent implements OnInit {
     isSameDay(current: string, compare: string): boolean {
         return moment(current, moment.ISO_8601).isSame(moment(compare, moment.ISO_8601), 'day');
     }
-    
+
     /**
      * Get the relative format of the given date
      *

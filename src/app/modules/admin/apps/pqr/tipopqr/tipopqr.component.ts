@@ -63,20 +63,11 @@ export class TipopqrComponent implements OnInit {
     }
 
     const dialogRef = this.dialog.open(FormComponent, {
-      // width: '1080px',
-      // maxHeight: '550px',
       data: this.datos,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
-
         this.consulta();
-
-
     });
-
   }
-
 }

@@ -70,6 +70,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     public pagaduria$: Observable<any>;
     public entidadBancaria$: Observable<any>;
     public aplicaIngresos$: Observable<any>;
+    public salarioBasico: number;
     public fabricaDatos;
     unidadNegocio: any;
     constructor(
@@ -114,6 +115,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.getTipoCuentaBancaria();
         this.getEntidadBancaria();
         this.getPagaduria()
+        this.getSalarioBasico()
+        // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
     }
     /**
      * @description:
@@ -166,7 +169,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             data: { numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento }
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('The dialog was closed');
+            // console.log('The dialog was closed');
         });
     }
     /**
@@ -201,11 +204,11 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     minWidth: '30%',
                     minHeight: '30%',
                     // data: { numeroSolicitud: this.numeroSolicitud, etapa: 1 },
-                    data: { 
-                        numeroSolicitud: this.numeroSolicitud, 
-                        etapa: 1, 
-                        idAgenda:this.agenda_fabrica,     
-                      },
+                    data: {
+                        numeroSolicitud: this.numeroSolicitud,
+                        etapa: 1,
+                        idAgenda: this.agenda_fabrica,
+                    },
                     disableClose: false,
                 });
                 dialogRef.afterClosed().toPromise().then(() => {
@@ -238,7 +241,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 this.form.controls.descripcionDepartamento.setValue(dataModal.departamentoNombre);
                 this.form.controls.codigoCiudad.setValue(dataModal.municipio);
                 this.form.controls.descripcionCiudad.setValue(dataModal.municipioNombre);
-                this.form.controls.codigoBarrio.setValue(Number(dataModal.codigoBarrio));
+                this.form.controls.codigoBarrio.setValue((dataModal.codigoBarrio));
                 this.form.controls.descripcionBarrio.setValue(dataModal.barrio);
                 this.form.controls.direccionResidencial.setValue(
                     (dataModal.viaNombre == undefined
@@ -279,7 +282,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 this.form.controls.descripcionDepartamentoNegocio.setValue(dataModal.departamentoNombre);
                 this.form.controls.codigoCiudadNegocio.setValue(dataModal.municipio);
                 this.form.controls.descripcionCiudadNegocio.setValue(dataModal.municipioNombre);
-                this.form.controls.codigoBarrioNegocio.setValue(Number(dataModal.codigoBarrio));
+                this.form.controls.codigoBarrioNegocio.setValue((dataModal.codigoBarrio));
                 this.form.controls.descripcionBarrioNegocio.setValue(dataModal.barrio);
                 this.form.controls.direccionNegocio.setValue(
                     (dataModal.viaNombre == undefined
@@ -348,8 +351,23 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         } else {
             this.form.controls['modificado'].setValue('S')
         }
+        if (
+            this.validarCampos(this.form.value.pagaduria, this.fabricaDatos.pagaduria)
+            &&
+            this.validarCampos(this.form.value.tipoContrato, this.fabricaDatos.tipoContrato)
+            &&
+            this.validarCampos(this.form.value.fechaVinculacion, this.fabricaDatos.fechaVinculacion)
+            &&
+            this.validarCampos(this.form.value.genero, this.fabricaDatos.genero)
+            &&
+            this.validarCampos(this.form.value.fechaNacimiento,  this.fabricaDatos.fechaNacimiento)
+        ) {
+            this.form.controls['modificadoPolitica'].setValue('N')
+        } else {
+            this.form.controls['modificadoPolitica'].setValue('S')
+        }
         const datos: FormularioCreditoInterface = this.form.getRawValue();
-        const { fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
+        const { codigoBarrio, fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
 
         const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
         const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
@@ -371,13 +389,15 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
         const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
         const plazoFormato = Number(this.form.value.plazo);
-
+        // debugger
+        const codigoBarrioFormato = codigoBarrio == undefined ? 0 : Number(codigoBarrio)
         // descuentoNomina
         delete data.ventasMensuales;
         delete data.comprasSemanales;
         delete data.activos;
         delete data.comisionesHorasExtras;
         delete data.descuentoNomina;
+
         // delete data.otrosIngresos;
         const datosFormularios: FormularioCreditoInterface = {
             otrosIngresos: otrosIngresosFormato,
@@ -400,6 +420,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             cupoTotal: Number(cupoTotalFormato),
             cupoReservado: Number(cupoReservadoFormato),
             cupoDisponible: Number(cupoDisponbileFormato),
+            codigoBarrio: codigoBarrioFormato,
             ...data
         };
         Swal.fire({
@@ -498,6 +519,10 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 if (data.valorSolicitado) {
                     this.form.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitado)));
                 }
+                if (data.valorSolicitado) {
+                    this.form.controls['valorSolicitadoWeb'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitadoWeb)));
+                }
+                // this.form.controls['aplicaEmbargo'].setValue(this.form.value.aplicaEmbargo=='N'?'No aplica':'Si aplica')
                 // form.value.valorSolicitado
                 if (data.comisionesHorasExtras) {
                     this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.form.value.comisionesHorasExtras)));
@@ -770,9 +795,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                     'Información guardada con éxito',
                     'success'
                 );
-                    setTimeout(() => {
-                        location.reload()
-                    }, 1000);
+                setTimeout(() => {
+                    location.reload()
+                }, 1000);
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
                 Swal.fire({
@@ -797,7 +822,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
         // Se valida el nit
         if (isNaN(data)) {
-            console.log('El nit/cédula \'' + data + '\' no es válido(a).');
+            // console.log('El nit/cédula \'' + data + '\' no es válido(a).');
             return '';
         };
 
@@ -854,6 +879,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             cupoDisponible: [''],
             score: [''],
             descripcionSubestado: [''],
+            contadorEmbargos: [''],
             descripcionScore: [''],
             nivelEndeudamiento: [''],
             comprasSemanales: [''],
@@ -929,6 +955,14 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             fechaVinculacion: [''],
             fechaFinalizacionContrato: [''],
             codigoDepartamentoExpedicion: [''],
+            modificadoPolitica:[''],
+            aplicaDetalleOferta:[''],
+            aplicaCodeudor:[''],
+            creditoTitularLineas:[''],
+            creditoCodeudorLineas:[''],
+            sanamientoFinanciero:[''],
+            aplicaEmbargo:[''],
+            valorSolicitadoWeb:['']
         });
     }
 
@@ -1092,6 +1126,17 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     }
 
 
+    /**
+* @description: Obtiene los tipos de estados civiles
+*/
+    private getSalarioBasico(): void {
+        this.genericaServices.getSalarioBasico().subscribe(({ data }) => {
+            this.salarioBasico = Number(data.salarioMinimo)
+        })
+    }
+
+
+
 
     /**
      * @description: Valida que el campo solo sea numeros
@@ -1126,88 +1171,146 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
 
     public validacion(tipo: string) {
-        let mensaje = "¿Estas seguro de editar el campo de "
+        if (this.form.controls['aplicaIngresos'].value == 'N') {
+            this.form.controls['otrosIngresos'].setValue("0");
+            this.form.controls['ingresos'].setValue("0");
+            this.form.controls['descripcionOtrosIngresos'].setValue("");
+        }
+        let mensaje = "¿Estás seguro de editar el campo de "
         switch (tipo) {
             case 'S':
-                mensaje += 'salario';
+                mensaje += ' <b> salario</b>';
                 break;
             case 'D':
-                mensaje += 'descuento de nomina';
+                mensaje += '<b> descuento de nómina</b>';
                 break;
             case 'C':
-                mensaje += 'comisiones por hora extras';
+                mensaje += ' <b> comisiones por horas extras</b>';
                 break;
             case 'AI':
-                mensaje += 'Ingresos adicionalea';
+                mensaje += ' <b> ingresos adicionales</b>';
                 break;
             case 'IA':
-                mensaje += 'el valor de los ingresos adicionales';
+                mensaje += ' <b> valor de los ingresos adicionales</b>';
                 break;
             case 'PL':
-                debugger;
-                mensaje += 'el valor del plazo';
+                mensaje += ' <b> plazo del crédito</b>';
                 break;
             case 'MO':
-                mensaje += 'el valor del monto';
+                mensaje += ' <b> valor del monto solicitado</b>';
+                break;
+            case 'PA':
+                mensaje += ' <b> empresa en la que trabaja</b>';
+                break;
+            case 'TC':
+                mensaje += ' <b> tipo de contrato</b>';
+                break;
+            case 'FV':
+                mensaje += ' <b> fecha de vinculación</b>';
+                break;
+            case 'GEN':
+                mensaje += ' <b> género </b>';
+                break;
+            case 'FEN':
+                mensaje += ' <b> fecha de nacimiento</b>';
                 break;
             default:
                 break;
         }
-        mensaje += "?. Este campo actualiza la capacidad de pago del cliente.";
-
-        Swal.fire({
-            title: 'Guardar información',
-            text: mensaje,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#a3a0a0',
-            confirmButtonText: 'Aceptar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let sum =
-                    Number(this.utility.enviarNumero(this.form.value.salarioBasico))
-                    +
-                    // Number(this.utility.enviarNumero(this.form.value.descuentoNomina))
-                    // +
-                    Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras))
-                    +
-                    Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
-                    ;
-                this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
-
-            } else {
-
-
-                switch (tipo) {
-                    case 'S':
+        
+        if ((tipo == 'PA') || (tipo == 'TC')|| (tipo == 'FV')|| (tipo == 'GEN')|| (tipo == 'FEN')) {
+            mensaje += "?, Este campo modifica el motor de decisión y políticas SARC.";
+        }else{
+            mensaje += "?, Este campo actualiza la capacidad de pago del cliente.";
+        }
+        if (tipo != 'AI' && tipo != 'IA') {
+            Swal.fire({
+                title: 'Guardar información',
+                html: mensaje,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#a3a0a0',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let salarioBasicoForm=Number(this.utility.enviarNumero(this.form.value.salarioBasico));
+                    if(this.salarioBasico>salarioBasicoForm){
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Validación de campo',
+                            text: "El salario ingresado no puede ser menor al SLMV.",
+                        });
                         this.form.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
-                        break;
-                    case 'D':
-                        this.form.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina)));
-                        break;
-                    case 'C':
-                        this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras)));
-                        break;
-                    case 'AI':
-                        this.form.controls['aplicaIngresos'].setValue(this.fabricaDatos.aplicaIngresos);
-                        break;
-                    case 'IA':
-                        this.form.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos)));
-                        break;
-                    case 'PL':
-                        this.form.controls['plazo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.plazo)));
-                        break;
-                    case 'MO':
-                        this.form.controls['monto'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+                        return
+                    }
+                    let sum =
+                        Number(this.utility.enviarNumero(this.form.value.salarioBasico))
+                        +
+                        // Number(this.utility.enviarNumero(this.form.value.descuentoNomina))
+                        // +
+                        Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras))
+                        +
+                        Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
+                        ;
+                    this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
 
+                } else {
+                    switch (tipo) {
+                        case 'S':
+                            this.form.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
+                            break;
+                        case 'D':
+                            this.form.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina)));
+                            break;
+                        case 'C':
+                            this.form.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras)));
+                            break;
+                        case 'AI':
+                            this.form.controls['aplicaIngresos'].setValue(this.fabricaDatos.aplicaIngresos);
+                            break;
+                        case 'IA':
+                            this.form.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos)));
+                            break;
+                        case 'PL':
+                            this.form.controls['plazo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.plazo)));
+                            break;
+                        case 'MO':
+                            this.form.controls['monto'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
+                            break;
+                        case 'PA':
+                            this.form.controls['pagaduria'].setValue(String(this.fabricaDatos.pagaduria));
+                            break;
+                        case 'TC':
+                            this.form.controls['tipoContrato'].setValue(String(this.fabricaDatos.tipoContrato));
+                            break;
+                        case 'FV':
+                            this.form.controls['fechaVinculacion'].setValue(String(this.fabricaDatos.fechaVinculacion));
+                            break;
+                        case 'GEN':
+                            this.form.controls['genero'].setValue(String(this.fabricaDatos.genero));
+                            break;
+                        case 'FEN':
+                            this.form.controls['fechaNacimiento'].setValue(String(this.fabricaDatos.fechaNacimiento));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+
+        let sum =
+            Number(this.utility.enviarNumero(this.form.value.salarioBasico))
+            +
+            // Number(this.utility.enviarNumero(this.form.value.descuentoNomina))
+            // +
+            Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras))
+            +
+            Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
+            ;
+        this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
 
     }
 

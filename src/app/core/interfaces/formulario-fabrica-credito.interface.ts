@@ -6,6 +6,7 @@ export interface FormularioCreditoInterface {
     descripcionEstado:              string;
     codigoSubEstado:                string;
     descripcionSubestado:           string;
+    contadorEmbargos:               number;
     cupoTotal:                      number;
     cupoReservado:                  number;
     cupoDisponible:                 number;
@@ -76,6 +77,7 @@ export interface FormularioCreditoInterface {
     ingresos?:                      number;
     plazo?:                         number;
     nodificado?:                    string;
+    modificadoPolitica?:            string;
 }
 
 export interface FormularioDatosTitularInterface {
