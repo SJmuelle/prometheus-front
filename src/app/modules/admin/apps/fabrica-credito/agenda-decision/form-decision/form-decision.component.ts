@@ -43,14 +43,13 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     this.DecisionForm = this.fb.group({
       decision: ['', [Validators.required]],
       causal: [''],
-      cupo:[''],
+      cupo: [''],
       comentario: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(500)]]
     })
   }
 
   ngOnInit() {
     this.consultaDecisiones();
-    debugger;
     this.DecisionForm.controls['cupo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.cupoTotal)));
   }
 
@@ -84,15 +83,63 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   public getlistadoCausales() {
     if (this.DecisionForm.value.decision == 'R') {
       this.consultaCausalesRechazo();
-    }else{
+    } else {
       this.consultaCausalesAprobacion();
     }
   }
 
 
+  public guardar() {
+    if (this.DecisionForm.value.decision == 'R') {
+      this.postDecicion();
+    } else {
+      if (this.fabricaDatos.unidadNegocio == 22) {
+        let data_pagare = {
+          "numeroSolicitud": this.fabricaDatos.numeroSolicitud,
+        }
+        this._decisionesService.generarNumeroPagare(data_pagare)
+          .subscribe((res2) => {
+            let datoComprobacion = {
+              "numeroSolicitud": this.fabricaDatos.numeroSolicitud,
+              "unidadNegocio": this.fabricaDatos.unidadNegocio,
+              "tipoTercero": 'T'
+            }
+            this._decisionesService.comprobacionCampos(datoComprobacion)
+              .subscribe((res2) => {
+                debugger;
+                let respuesta: any = {};
+                switch (res2.status) {
+                  case 200:
+                    this.postDecicion()
+                  case 400:
+                    respuesta = {
+                      icon: 'error',
+                      title: 'Mensaje',
+                      text: 'Advertencia'
+                    };
+                    this.mostrarAlerta(respuesta);
+                    break;
+                  case 500:
+                    respuesta = {
+                      icon: 'error',
+                      title: 'Mensaje',
+                      text: 'Ha ocurrido un error'
+                    };
+                    this.mostrarAlerta(respuesta);
+                    break;
+                  default:
+                    break;
+                }
 
+              })
+          })
+      } else {
+        this.postDecicion();
+      }
+    }
+  }
 
-  guardar() {
+  private postDecicion() {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     let datos={
       numeroSolicitud:this.fabricaDatos.numeroSolicitud,
@@ -102,15 +149,15 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       causal:Number(this.DecisionForm.value.causal),
       unidadNegocio:this.fabricaDatos.unidadNegocio,
     }
-    this._decisionesService.postGuardado(datos).subscribe((response: any)=>{
+    this._decisionesService.postGuardado(datos).subscribe((response: any) => {
       Swal.close()
       if (response) {
         Swal.fire(
           '¡Correcto!',
           'Decisión guardada con éxito.',
           'success'
-        ).then((result)=>{
-          if(result){
+        ).then((result) => {
+          if (result) {
             this.dialog.close();
           }
         })
@@ -120,6 +167,25 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
         }, 10000);
       }
     })
+  }
+
+
+  /**
+   * @description: Captura el mensaje de la respuesta
+   */
+  private mostrarAlerta(respuesta: any): void {
+    Swal.fire({
+      icon: respuesta.icon,
+      title: respuesta.title,
+      text: respuesta.text,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.dialog.close();
+      }
+    });
+    setTimeout(() => {
+      this.dialog.close();
+    }, 1000);
   }
 
   ngOnDestroy(): void {

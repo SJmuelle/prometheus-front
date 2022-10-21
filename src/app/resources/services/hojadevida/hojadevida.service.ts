@@ -8,6 +8,9 @@ import { UtilityService } from '../utility.service';
     providedIn: 'root',
 })
 export class HojadevidaService {
+
+    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
+
     constructor(
         private _httpClient: HttpClient,
         private _utility: UtilityService
@@ -25,12 +28,12 @@ export class HojadevidaService {
 
     getInfoCliente(nit: any) {
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-cliente/${nit}`
+            this.ruta + `informacion-cliente/${nit}`
         );
     }
 
     getInfoCertificadoPazySalvo(documento: string) {
-        let url = `/certificado-informacion-pazysalvo/${documento}`;
+        let url = `certificado-informacion-pazysalvo/${documento}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res;

@@ -9,7 +9,7 @@ import { environment } from 'environments/environment';
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
-
+    private ruta:string=environment.apiUrl+'api-fintra/api';
     /**
      * Constructor
      */
@@ -67,7 +67,7 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post(environment.urlApi + '/private/iniciar-sesion-sagicc', credentials).pipe(
+        return this._httpClient.post(this.ruta + '/private/iniciar-sesion-sagicc', credentials).pipe(
             switchMap((response: any) => {
                 // Store the access token in the local storage
                 this.accessToken = response.data.token;
@@ -109,7 +109,7 @@ export class AuthService {
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post(environment.urlApi + '/private/iniciar-sesion', credentials).pipe(
+        return this._httpClient.post(this.ruta + '/private/iniciar-sesion', credentials).pipe(
             switchMap((response: any) => {
                 // Store the access token in the local storage
                 this.accessToken = response.data.token;
@@ -146,7 +146,7 @@ export class AuthService {
      */
     signInUsingToken(): Observable<any> {
         // Renew token
-        return this._httpClient.post(environment.urlApi + '/private/refresh-token', null, { headers: { refreshToken: this.accessToken } }).pipe(
+        return this._httpClient.post(this.ruta + '/private/refresh-token', null, { headers: { refreshToken: this.accessToken } }).pipe(
             catchError(() =>
 
                 // Return false

@@ -6,11 +6,12 @@ import { environment } from 'environments/environment';
     providedIn: 'root',
 })
 export class CreditoService {
+    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
     constructor(private _httpClient: HttpClient) {}
 
     getCredito(codigoNegocio: string) {
         return this._httpClient.get(
-            environment.urlApi2 + `/informacion-credito/${codigoNegocio}`
+            this.ruta + `informacion-credito/${codigoNegocio}`
         );
     }
 }
