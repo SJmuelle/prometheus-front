@@ -97,7 +97,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     let datos={
       numeroSolicitud:this.fabricaDatos.numeroSolicitud,
       concepto:this.DecisionForm.value.decision,
-      cupo:Number( this.utility.enviarNumero(String(this.DecisionForm.value.cupo))), 
+      cupo:Number( this.utility.enviarNumero(String(this.DecisionForm.value.cupo))),
       comentario:this.DecisionForm.value.comentario,
       causal:Number(this.DecisionForm.value.causal),
       unidadNegocio:this.fabricaDatos.unidadNegocio,
@@ -107,7 +107,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       if (response) {
         Swal.fire(
           '¡Correcto!',
-          'Se ha aprobado exitosamente la solicitud.',
+          'Decisión guardada con éxito.',
           'success'
         ).then((result)=>{
           if(result){

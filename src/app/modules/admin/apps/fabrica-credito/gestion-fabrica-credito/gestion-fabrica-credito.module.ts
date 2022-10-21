@@ -54,6 +54,9 @@ import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.co
 import { QuillModule } from 'ngx-quill';
 import { FormDialogCarteraComprarComponent } from './form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { FormGestionFabricaConsumoComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-consumo/form-gestion-fabrica-consumo.component';
+import { GridConductoresConsumoComponent } from './grid-conductores-consumo/grid-conductores-consumo.component';
+import { FormDetallesConductoresComponent } from './form-detalles-conductores/form-detalles-conductores.component';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
@@ -76,13 +79,16 @@ import { MatMenuModule } from '@angular/material/menu';
         GridCentralesComponent,
         FormGestionFabricaUltracemComponent,
         FormGestionFabricaLibranzaComponent,
+        FormGestionFabricaConsumoComponent,
         GridOfertaLibranzaComponent,
         GridCarteraComponent,
         FormDialogCarteraComponent,
         GridCarteraNegociacionComponent,
         FormDialogNegociacionComponent,
         FabricaOpcionesComponent,
-        FormDialogCarteraComprarComponent
+        FormDialogCarteraComprarComponent,
+        GridConductoresConsumoComponent,
+        FormDetallesConductoresComponent
     ],
     imports: [
         CommonModule,
