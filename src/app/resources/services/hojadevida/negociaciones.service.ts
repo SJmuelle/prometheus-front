@@ -29,19 +29,19 @@ export class NegociacionesService {
     getNegociaciones(codigoNegocio: string = '') {
         return this._httpClient.get(
             environment.urlApi2 +
-                `/informacion-historial-negociaciones/${codigoNegocio}`
+                `informacion-historial-negociaciones/${codigoNegocio}`
         );
     }
     getInformacionExtractos(codigoNegocio: string = '') {
         return this._httpClient.get(
             environment.urlApi2 +
-                `/informacion-extractos/${codigoNegocio}`
+                `informacion-extractos/${codigoNegocio}`
         );
     }
     getReporteCentrales(codigoNegocio: string = '') {
         return this._httpClient.get(
             environment.urlApi2 +
-                `/informacion-reporte-centrales/${codigoNegocio}`
+                `informacion-reporte-centrales/${codigoNegocio}`
         );
     }
 }

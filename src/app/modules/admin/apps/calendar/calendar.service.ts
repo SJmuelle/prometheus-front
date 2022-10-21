@@ -213,7 +213,7 @@ export class CalendarService {
         // console.log(`${annoI}${mesI}-${annoF}${mesF}`)
 
         // /tk/informacion-dias-no-habiles
-        let url: string = `/informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
+        let url: string = `informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
         // Get the events
         return this._httpClient.get<any>(environment.urlApi2+url,{}).pipe(
             switchMap(response => this._events.pipe(
@@ -273,7 +273,7 @@ export class CalendarService {
          let annoF = this.end.format('yyyy')
          let mesF = this.end.format('MM');
          // /tk/informacion-dias-no-habiles
-         let url: string = `/informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
+         let url: string = `informacion-dias-no-habiles/${annoI}${mesI}/${annoF}${mesF}`;
          // Get the events
          return this._httpClient.get<any>(environment.urlApi2+url,{}).pipe(
             map((response) => {
