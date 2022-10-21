@@ -1,0 +1,985 @@
+<form [formGroup]="form">
+    <mat-accordion multi>
+        <!--Panel Datos de la solicitud-->
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header *ngIf="fabricaDatos">
+                <mat-panel-title>
+                    <strong class="mr-2">Datos de la solicitud de consumo</strong> | {{fabricaDatos.nombreAgenda}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                <div class="-mx-3 md:flex mb-2">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>No. de solicitud</mat-label>
+                        <input matInput type="number" [formControlName]="'numeroSolicitud'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Fecha de solicitud</mat-label>
+                        <input matInput type="text" [formControlName]="'emision'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Es preaprobado</mat-label>
+                        <input matInput type="text" [formControlName]="'descripcionOrigen'" [readonly]="true">
+                    </mat-form-field>
+                </div>
+                <div class="-mx-3 md:flex mb-2">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Fecha de ingreso a fábrica</mat-label>
+                        <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Estado</mat-label>
+                        <input matInput type="text" [formControlName]="'descripcionEstado'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Subestado</mat-label>
+                        <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true">
+                    </mat-form-field>
+                </div>
+                <span class="bg-gray-200 p-1.5 rounded-1 mb-3 text-dark">Información del crédito</span>
+                <div class="-mx-3 md:flex mb-2">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Nombre del convenio</mat-label>
+                        <input matInput type="text" [formControlName]="'destinoCredito'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Tipo de crédito</mat-label>
+                        <input matInput type="text" [formControlName]="'tipoCredito'" [readonly]="true">
+                    </mat-form-field>
+                </div>
+                <div class="-mx-3 md:flex mb-2">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Valor solicitado del crédito</mat-label>
+                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                            (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                            readonly>
+                        <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Plazo</mat-label>
+                        <input matInput type="text" [formControlName]="'plazo'" (change)="validacion('PL') " readonly>
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense" disabled>
+                        <mat-label>Cuota diaria aproximada</mat-label>
+                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                            (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                            readonly>
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense" disabled>
+                        <mat-label>Cuota mensual aproximada</mat-label>
+                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                            (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                            readonly>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-expansion-panel>
+        <!--Panel datos de riesgo-->
+        <!--Panel informacion del titular-->
+        <mat-expansion-panel expanded>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Información del titular
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-tab-group [animationDuration]="'0'">
+                <mat-tab>
+                    <ng-template matTabLabel>Datos del titular</ng-template>
+                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Propietario o conductor?</mat-label>
+                                <input matInput type="text" [formControlName]="'descripcionTipo'" [readonly]="true">
+                            </mat-form-field>
+                            <ng-container *ngIf="tipoDocumentos$ | async as documentos">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de documento</mat-label>
+                                    <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true">
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>No. de identificación</mat-label>
+
+                                <input matInput type="text" [formControlName]="'identificacion'" [readonly]="true">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
+                                </mat-icon>
+                                <mat-error *ngIf="soloNumero('identificacion')">
+                                    Este campo solo acepta números.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                <mat-label>Nombre completo del titular</mat-label>
+                                <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Teléfono / Celular </mat-label>
+                                <input matInput type="text" [formControlName]="'celular'" [required]="true">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
+                                    <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es
+                                        requerido.</mat-error>
+                                    <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan
+                                        números.</mat-error>
+                                    <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud
+                                        mínima son 7 dígitos.</mat-error>
+                                    <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud
+                                        máxima son 11 dígitos.</mat-error>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
+                            <div class="-mx-3 md:flex mt-3 mb-2">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Primer nombre</mat-label>
+                                    <input matInput type="text" [formControlName]="'primerNombre'"
+                                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                    <mat-error *ngIf="primerNombre">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Segundo nombre</mat-label>
+                                    <input matInput type="text" [formControlName]="'segundoNombre'"
+                                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Primer apellido</mat-label>
+                                    <input matInput type="text" [formControlName]="'primerApellido'"
+                                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                    <mat-error *ngIf="primerApellido">Este campo es requerido.</mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Segundo apellido</mat-label>
+                                    <input matInput type="text" [formControlName]="'segundoApellido'"
+                                        (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <ng-container *ngIf="tipoEstadoCivil$ | async as tipoEstadoCivil">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Estado civil</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'estadoCivil'">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of tipoEstadoCivil.data"
+                                            [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Email</mat-label>
+                                <input matInput type="text" [formControlName]="'email'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
+                                <ng-container *ngIf="generos$ | async as generos">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Género</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'genero'"
+                                            (selectionChange)="validacion('GEN')">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let genero of generos.data"
+                                                [value]="genero.codigoOpcion">{{genero.descripcionOpcion}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
+                            <div class="-mx-3 md:flex mt-3 mb-2">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Fecha de nacimiento </mat-label>
+                                    <input matInput [matDatepicker]="fechaNacimiento"
+                                        [formControlName]="'fechaNacimiento'" (change)="validacion('FEN')">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaNacimiento></mat-datepicker>
+                                </mat-form-field>
+                                <ng-container *ngIf="departamentosNacimiento$ | async as departamentos">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Nivel de estudio</mat-label>
+                                        <mat-select (selectionChange)="seleccionDepartamentoNacimiento($event)"
+                                            [value]="'seleccione'" [formControlName]="'codigoDepartamentoNacimiento'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let departamento of departamentos.data"
+                                                [value]="departamento.codigo">{{departamento.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Antigüedad en el negocio de transporte</mat-label>
+                                    <input matInput type="text" [formControlName]="'nacionalidad'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <!-- <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
+                                  <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                      <mat-label>Tipo de vivienda</mat-label>
+                                      <mat-select [value]="'seleccione'"
+                                          [formControlName]="'tipoVivienda'">
+                                          <mat-option disabled [value]="'seleccione'">Seleccione
+                                          </mat-option>
+                                          <mat-option *ngFor="let item of tipoViviendas.data"
+                                              [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                          </mat-option>
+                                      </mat-select>
+                                      <mat-icon class="icon-size-5" matSuffix
+                                          [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                  </mat-form-field>
+                              </ng-container>-->
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
+                            <div class="-mx-3 md:flex mt-3 mb-2">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Fecha de expedición </mat-label>
+                                    <input matInput [matDatepicker]="fechaExpedicionDocumento"
+                                        [formControlName]="'fechaExpedicionDocumento'" [readonly]="true">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento"
+                                        [disabled]="false">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
+                                </mat-form-field>
+                                <ng-container *ngIf="departamentosExpedicion$ | async as departamentos">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Departamento de expedición</mat-label>
+                                        <mat-select (selectionChange)="seleccionDepartamentoExpedicion($event)"
+                                            [value]="'seleccione'" [formControlName]="'codigoDepartamentoExpedicion'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let departamento of departamentos.data"
+                                                [value]="departamento.codigo">{{departamento.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                                <ng-container *ngIf="ciudadesExpedicion$ | async as ciudades">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Ciudad de expedición</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadExpedicion'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
+                                                {{ciudad.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                                <!-- <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Estado civil</mat-label>
+                                    <mat-select [value]="'seleccione'"
+                                        [formControlName]="'tipoVivienda'">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of tipoViviendas.data"
+                                            [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix
+                                        [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                </mat-form-field>
+                            </ng-container> -->
+                            </div>
+                        </ng-container>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Departamento de residencia</mat-label>
+                                <input matInput type="text" [formControlName]="'descripcionDepartamento'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Ciudad / municipio de residencia</mat-label>
+                                <input matInput type="text" [formControlName]="'descripcionCiudad'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Barrio</mat-label>
+                                <input matInput type="text" [formControlName]="'descripcionBarrio'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Dirección de residencia</mat-label>
+                                <input matInput type="text" [formControlName]="'direccionResidencial'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
+                            <div class="-mx-3 md:flex mt-3 mb-2">
+                                <ng-container *ngIf="nivelEstudio$ | async as nivelEstudio">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Tipo de vivienda</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'nivelEstudio'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let item of nivelEstudio.data"
+                                                [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                                <ng-container *ngIf="estrato$ | async as estrato">
+                                    <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                                        <mat-label>Años de residencia</mat-label>
+                                        <input matInput type="text" [formControlName]="'descripcionCiudad'">
+
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                                        <mat-label>Meses de residencia</mat-label>
+                                        <input matInput type="text" [formControlName]="'descripcionCiudad'">
+
+                                    </mat-form-field>
+                                </ng-container>
+
+                            </div>
+                        </ng-container>
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información laboral</span>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Ocupación</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Nombre de la empresa</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'cargo'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls['pagaduria'].value == '999999999'">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿Otra? ¿Cual?</mat-label>
+                                    <input matInput type="text" [formControlName]="'otraPagaduria'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <ng-container *ngIf="tipoContrato$ | async as tipoContrato">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de contrato</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'"
+                                        (selectionChange)="validacion('TC')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of tipoContrato.data" [value]="item.codigoOpcion">
+                                            {{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Fecha de ingreso </mat-label>
+                                <input matInput [matDatepicker]="fechaVinculacion"
+                                    [formControlName]="'fechaVinculacion'" (Change)="validacion('FV')">
+                                <mat-datepicker-toggle matSuffix [for]="fechaVinculacion">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #fechaVinculacion></mat-datepicker>
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls['tipoContrato'].value == 'F'">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Fecha desvinculación </mat-label>
+                                    <input matInput [matDatepicker]="fechaFinalizacionContrato"
+                                        [formControlName]="'fechaFinalizacionContrato'" [readonly]="true">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaFinalizacionContrato">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #fechaFinalizacionContrato readonly></mat-datepicker>
+                                </mat-form-field>
+                            </ng-container>
+
+
+                        </div>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Actividad económica</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Actividad específica</mat-label>
+                                <input matInput type="text" [formControlName]="'cargo'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <ng-container *ngIf="form.controls['pagaduria'].value == '999999999'">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿Otra? ¿Cual?</mat-label>
+                                    <input matInput type="text" [formControlName]="'otraPagaduria'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+
+
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Dirección del negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'salarioBasico'"
+                                    (change)="validacion('S')"
+                                    (keyup)="form.controls['salarioBasico'].setValue(utility.formatearNumero(form.value.salarioBasico)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Teléfono del negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'descuentoNomina'"
+                                    (change)="validacion('D')"
+                                    (keyup)="form.controls['descuentoNomina'].setValue(utility.formatearNumero(form.value.descuentoNomina)); ">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Antigüedad del negocio </mat-label>
+                                <input matInput [matDatepicker]="fechaVinculacion"
+                                    [formControlName]="'fechaVinculacion'" (Change)="validacion('FV')">
+                                <mat-datepicker-toggle matSuffix [for]="fechaVinculacion">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #fechaVinculacion></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información económica</span>
+                        <div class="-mx-3 md:flex mt-3 mb-2"></div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Ingreso mes</mat-label>
+                                <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                                    (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                                    readonly>
+                                <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Otros ingresos (comisiones, arriendos, etc)</mat-label>
+                                <input matInput type="text" [formControlName]="'plazo'" (change)="validacion('PL') "
+                                    readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Activos</mat-label>
+                                <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                                    (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                                    readonly>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Pasivos</mat-label>
+                                <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                                    (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                                    readonly>
+                            </mat-form-field>
+                        </div>
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información vehículo</span>
+                        <div class="-mx-3 md:flex mt-3 mb-2"></div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>¿Tiene tarjeta de propiedad?</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                            (selectionChange)="validacion('PA')">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                                {{item.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </ng-container>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de servicio</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No. tarjeta de circulación</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿Cuántos turnos maneja actualmente?</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿Cuántos días a la semana trabaja?</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿Que tipo de combustible usa actualmente?</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>¿Cuánto genera en ingresos diariamente?</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Marca</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Línea</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Modelo</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No. de placa</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <!-- <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información laboral</span>
+                        <div class="-mx-3 md:flex mt-3 mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Actividad económica</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Actividad específica</mat-label>
+                                <input matInput type="text" [formControlName]="'cargo'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                            </mat-form-field>
+                            <ng-container *ngIf="estrato$ | async as estrato">
+                                <mat-form-field class="w-1/6 px-3 fuse-mat-dense">
+                                    <mat-label>Años de actividad</mat-label>
+                                    <input matInput type="text" [formControlName]="'descripcionCiudad'">
+
+                                </mat-form-field>
+                                <mat-form-field class="w-1/6 px-3 fuse-mat-dense">
+                                    <mat-label>Meses de actividad</mat-label>
+                                    <input matInput type="text" [formControlName]="'descripcionCiudad'">
+
+                                </mat-form-field>
+                            </ng-container>
+                        </div> -->
+
+                       <!--   <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información vehículo</span>
+                        <div class="-mx-3 md:flex mt-3 mb-2"></div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de servicio</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tarjeta de propiedad</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No. de tarjeta de propiedad</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Marca</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Línea</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Modelo</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No. de placa</mat-label>
+                                    <input matInput type="text" [formControlName]="'cargo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Días de trabajo semanal</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No de turnos que maneja</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de combustible que usa</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'pagaduria'"
+                                        (selectionChange)="validacion('PA')">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let item of pagaduria.data" [value]="item.codigo">
+                                            {{item.nombre}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container *ngIf="pagaduria$ | async as pagaduria">
+
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Valor de gasto combustible día</mat-label>
+                                    <input matInput type="text" [formControlName]="'salarioBasico'"
+                                        (change)="validacion('S')"
+                                        (keyup)="form.controls['salarioBasico'].setValue(utility.formatearNumero(form.value.salarioBasico)); ">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No. de tanqueos día</mat-label>
+                                    <input matInput type="text" [formControlName]="'salarioBasico'"
+                                        (change)="validacion('S')"
+                                        (keyup)="form.controls['salarioBasico'].setValue(utility.formatearNumero(form.value.salarioBasico)); ">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Ingresos diarios</mat-label>
+                                    <input matInput type="text" [formControlName]="'salarioBasico'"
+                                        (change)="validacion('S')"
+                                        (keyup)="form.controls['salarioBasico'].setValue(utility.formatearNumero(form.value.salarioBasico)); ">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <!-- <div class="-mx-3 md:flex mt-3 mb-2">
+                          <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                              <mat-label>Activo ($)</mat-label>
+                              <input matInput type="text" placeholder="" [formControlName]="'activos'"
+                                  (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); ">
+                              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                              </mat-icon>
+                          </mat-form-field>
+                          <ng-container *ngIf="declarante$ | async as declarante">
+                              <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                  <mat-label>¿Es declarante?</mat-label>
+                                  <mat-select [value]="'seleccione'" [formControlName]="'declarante'">
+                                      <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                      <mat-option *ngFor="let item of declarante.data"
+                                          [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                      </mat-option>
+                                  </mat-select>
+                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                  </mat-icon>
+                              </mat-form-field>
+                          </ng-container> -->
+                        <!-- </div> -->
+                        <ng-container *ngIf="form.controls['tipoDocumento'].value != 'NIT'">
+                            <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de desembolso</span>
+                            <div class="-mx-3 md:flex mt-3 mb-2">
+                                <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Entidad bancaria</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let item of entidadBancaria.data" [value]="item.codigo">
+                                                {{item.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense" disabled>
+                                        <mat-label>Costo de la transacción</mat-label>
+                                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
+                                            (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); "
+                                            readonly>
+                                    </mat-form-field>
+                                </ng-container>
+                            </div>
+                            <div class="-mx-3 md:flex mt-3 mb-2">
+                                <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label>Tipo de cuenta</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let item of entidadBancaria.data" [value]="item.codigo">
+                                                {{item.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                        <mat-label > {{ entidadBancaria == 'NEQUI' ? "Celular vinculado a nequi" : "No. de cuenta"}}  </mat-label>
+                                        <input matInput type="text" [formControlName]="'numeroCuentaBancaria'" readonly>
+                                    </mat-form-field>
+                                </ng-container>
+                                <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
+                                    <mat-label>Entidad bancaria</mat-label>
+                                    <input matInput type="text" [formControlName]="'nombreNegocio'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field> -->
+
+                                <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Tipo de cuenta</mat-label>
+                                    <input matInput type="text" [formControlName]="'nombreNegocio'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field> -->
+                            </div>
+                        </ng-container>
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                </mat-tab>
+                <ng-container *ngIf="form.controls['tipoDocumento'].value === 'NIT'">
+                    <mat-tab>
+                        <ng-template matTabLabel>Representante legal</ng-template>
+                        <app-form-representante-legal></app-form-representante-legal>
+                    </mat-tab>
+                </ng-container>
+                <mat-tab>
+                    <ng-template matTabLabel>Documentación</ng-template>
+                    <app-grid-documentacion></app-grid-documentacion>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template matTabLabel>Referencias</ng-template>
+                    <app-grid-referencias></app-grid-referencias>
+                </mat-tab>
+                <ng-container *ngIf="form.controls['tipo'].value === 'T'">
+                <mat-tab>
+                    <ng-template matTabLabel>Conductores</ng-template>
+                    <app-grid-conductores-consumo></app-grid-conductores-consumo>
+                </mat-tab>
+            </ng-container>
+                <!-- <ng-container *ngIf="agenda_fabrica !== 'CO'">
+                    <mat-tab>
+                        <ng-template matTabLabel>Análisis financiero</ng-template>
+                    </mat-tab>
+                </ng-container> -->
+                <ng-container *ngIf="agenda_fabrica != 'GC' && agenda_fabrica != 'CM'">
+                    <mat-tab>
+                        <ng-template matTabLabel>Políticas</ng-template>
+                        <app-grid-politicas></app-grid-politicas>
+                    </mat-tab>
+                </ng-container>
+                <ng-container *ngIf="agenda_fabrica != 'CO'">
+                <mat-tab>
+                    <ng-template matTabLabel>Capacidad de pago y ofertas</ng-template>
+                    <app-grid-oferta-libranza></app-grid-oferta-libranza>
+                </mat-tab>
+            </ng-container>
+            </mat-tab-group>
+        </mat-expansion-panel>
+
+    </mat-accordion>
+</form>

@@ -1,0 +1,123 @@
+<h2 mat-dialog-title>Información de referencia</h2>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12 col-md-12 col-lg-12">
+            <form [formGroup]="form">
+                <div class="bg-white flex flex-col">
+                    <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
+                        <div class="md:flex">
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Primer nombre</mat-label>
+                                <input matInput type="text" [formControlName]="'primerNombre'" [required]="true">
+                                <mat-error *ngIf="campoRequerido('primerNombre')">
+                                    Este campo es requerido
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                                <mat-label>Segundo nombre (opcional)</mat-label>
+                                <input matInput type="text" [formControlName]="'segundoNombre'">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
+                        <div class="md:flex">
+                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                                <mat-label>Primer apellido</mat-label>
+                                <input matInput type="text" [formControlName]="'primerApellido'" [required]="true">
+                                <mat-error *ngIf="campoRequerido('primerApellido')">
+                                    Este campo es requerido
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                                <mat-label>Segundo apellido (opcional)</mat-label>
+                                <input matInput type="text" [formControlName]="'segundoApellido'">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="form.controls['tipo'].value === 'C'">
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Antigüedad de ser cliente (meses)</mat-label>
+                                <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'" [required]="true">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="form.controls['tipo'].value !== 'P' && form.controls['tipo'].value !== 'F'">
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Departamento</mat-label>
+                                <input matInput type="text" [formControlName]="'departamentoNombre'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Ciudad / municipio</mat-label>
+                                <input matInput type="text" [formControlName]="'ciudadNombre'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Barrio</mat-label>
+                                <input matInput type="text" [formControlName]="'nombreBarrio'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
+                        </div>
+                        <div class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Dirección</mat-label>
+                                <input matInput type="text" [formControlName]="'direccion'"
+                                    (keydown)="openModalDirection()" (click)="openModalDirection()">
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+                    <div class="md:flex">
+                        <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                            <mat-label>Celular</mat-label>
+                            <input matInput type="text" [formControlName]="'celular'" [required]="true">
+                            <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
+                                <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                                <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                                <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                                <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="w-1/2 fuse-mat-dense">
+                            <mat-label>Teléfono (opcional)</mat-label>
+                            <input matInput type="text" [formControlName]="'telefono'">
+                            <mat-error *ngIf="(form.controls.telefono.dirty || form.controls.telefono.touched)">
+                                <mat-error *ngIf="form.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
+                                <mat-error *ngIf="form.controls.telefono.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
+                                <mat-error *ngIf="form.controls.telefono.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'">
+                        <!--{{form.controls.tipo.value}}-->
+                        <ng-container *ngIf="parentescos$ | async as items">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Tipo de parentesco</mat-label>
+                                <mat-select [formControlName]="'parentesco'">
+                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                        {{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+            Guardar
+        </button>
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>
