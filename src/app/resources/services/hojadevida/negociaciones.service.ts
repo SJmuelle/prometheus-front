@@ -6,6 +6,7 @@ import { environment } from 'environments/environment';
     providedIn: 'root',
 })
 export class NegociacionesService {
+    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
     titulos: Array<string> = [
         'Código del Negocio',
         'Fecha de Creación',
@@ -28,19 +29,19 @@ export class NegociacionesService {
 
     getNegociaciones(codigoNegocio: string = '') {
         return this._httpClient.get(
-            environment.urlApi2 +
+           this.ruta +
                 `informacion-historial-negociaciones/${codigoNegocio}`
         );
     }
     getInformacionExtractos(codigoNegocio: string = '') {
         return this._httpClient.get(
-            environment.urlApi2 +
+           this.ruta +
                 `informacion-extractos/${codigoNegocio}`
         );
     }
     getReporteCentrales(codigoNegocio: string = '') {
         return this._httpClient.get(
-            environment.urlApi2 +
+           this.ruta +
                 `informacion-reporte-centrales/${codigoNegocio}`
         );
     }

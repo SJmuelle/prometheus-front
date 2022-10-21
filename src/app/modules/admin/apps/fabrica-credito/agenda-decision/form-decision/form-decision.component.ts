@@ -107,30 +107,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             this._decisionesService.comprobacionCampos(datoComprobacion)
               .subscribe((res2) => {
                 debugger;
-                let respuesta: any = {};
-                switch (res2.status) {
-                  case 200:
-                    this.postDecicion()
-                  case 400:
-                    respuesta = {
-                      icon: 'error',
-                      title: 'Mensaje',
-                      text: 'Advertencia'
-                    };
-                    this.mostrarAlerta(respuesta);
-                    break;
-                  case 500:
-                    respuesta = {
-                      icon: 'error',
-                      title: 'Mensaje',
-                      text: 'Ha ocurrido un error'
-                    };
-                    this.mostrarAlerta(respuesta);
-                    break;
-                  default:
-                    break;
-                }
-
+                this.postDecicion()
               })
           })
       } else {
@@ -154,7 +131,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       if (response) {
         Swal.fire(
           '¡Correcto!',
-          'Se ha aprobado exitosamente la solicitud.',
+          'Decisión guardada con éxito.',
           'success'
         ).then((result) => {
           if (result) {

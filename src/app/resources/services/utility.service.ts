@@ -19,12 +19,12 @@ import Swal from 'sweetalert2';
     providedIn: 'root',
 })
 export class UtilityService {
-    server: string = environment.urlApi;
-    server2: string = environment.urlApi2;
-    server3: string = environment.urlApi3;
-    adjunto: string = environment.adjunto;
-    correo: string = environment.envioCorreo;
-    // homelogin:string = environment.login;
+    urlFinal: string = environment.apiUrl;
+    server: string = this.urlFinal+'api-fintra/api';
+    server2: string = this.urlFinal+'api-fintra/api/generic/qry/';
+    server3: string = this.urlFinal+'api-fintra/api/generic';
+    adjunto: string = this.urlFinal+'api-fintra/api/pqrs';
+    correo: string =  this.urlFinal+'apicredit';
     notoken: string = 'notoken';
     constructor(private _httpClient: HttpClient) {}
 
