@@ -154,7 +154,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       if (response) {
         Swal.fire(
           '¡Correcto!',
-          'Se ha aprobado exitosamente la solicitud.',
+          'Decisión guardada con éxito.',
           'success'
         ).then((result) => {
           if (result) {
