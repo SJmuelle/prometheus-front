@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PagoMasivoService } from 'app/core/services/pago-masivo.service';
 import * as XLSX from 'xlsx';
 import moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-import-file',
@@ -16,7 +18,7 @@ export class ImportFileComponent implements OnInit {
   chequeada: boolean = false;
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  constructor() { }
+  constructor(private pago: PagoMasivoService) { }
 
   ngOnInit() {
   }
@@ -65,12 +67,27 @@ export class ImportFileComponent implements OnInit {
     if (this.listRowsExcel == null) {
       return;
     }
+    if (this.chequeada == true) {
+      this.listAsignados.details=[];
+      for (const item of this.listRowsExcel){
+        this.listAsignados.details.push({
+          "nitTransportadora": item.nitTransportadora.toString(),         
+          "fechaPago": moment(item.fechaPago).format("YYYY-MM-DD"),
+          "banco": item.banco,
+          "sucursal": item.sucursal,
+          "valorAplicar":item.valorAplicar.toString(),
+          "comisionRecaudo":item.comisionRecaudo.toString()
+        })
+      }
+    }else{
+      this.listAsignados.details=[];
+    }
     this.listRowsExcel.forEach(t => (t.chequeado = completed));
   }
 
   acumular(item, event){
     let data = {
-      "nitTransportadora": item.nitTransportadora,         
+      "nitTransportadora": item.nitTransportadora.toString(),         
       "fechaPago": moment(item.fechaPago).format("YYYY-MM-DD"),
       "banco": item.banco,
       "sucursal": item.sucursal,
@@ -86,7 +103,7 @@ export class ImportFileComponent implements OnInit {
       this.listAsignados.details.splice(idx, 1);
     }
 
-    if (this.listAsignados.length >= this.listRowsExcel.length) {
+    if (this.listAsignados.details.length >= this.listRowsExcel.length) {
       this.chequeada = true;
     } else {
       this.chequeada = false;
@@ -94,8 +111,46 @@ export class ImportFileComponent implements OnInit {
 
   }
 
-  enviar(){
+  eliminar() {
+    for (let index = 0; index < this.listRowsExcel.length; index++) {
+      
+      
+    }
+    // const dataBuscar = this.listAsignados.details.filter(data => data.nitTransportadora == item.nitTransportadora);
+    // let idx = this.listAsignados.details.indexOf(dataBuscar[0]);
+    // this.listAsignados.details.splice(idx, 1);
+  }
 
+  enviar(){
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Enviando informacion de pago',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 500000
+    })
+    this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
+      Swal.close();
+      if (res) {
+        Swal.fire(
+          'Correcto',
+          'Se ha realizado el pago exitosament.',
+          'success'
+        )
+      }else{
+        Swal.fire(
+          'Error',
+          'No se ha podido realizar el pago, porfavor intente mas tarde.',
+          'error'
+        )
+      }
+    }, error => {
+      Swal.fire(
+        'Error',
+        'No se ha podido realizar el pago, porfavor intente mas tarde.',
+        'error'
+      )
+    })
   }
 
 }

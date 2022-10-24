@@ -5,3 +5,12 @@
     --tw-bg-opacity: 1;
     background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
 }
+
+.permitir:enabled {
+    background-color: #4ABBEC
+}
+
+.bloquear:disabled{
+    background-color: white;
+    border: 1px solid rgb(212, 212, 212);
+}
