@@ -111,46 +111,52 @@ export class ImportFileComponent implements OnInit {
 
   }
 
-  eliminar() {
-    for (let index = 0; index < this.listRowsExcel.length; index++) {
-      
-      
-    }
-    // const dataBuscar = this.listAsignados.details.filter(data => data.nitTransportadora == item.nitTransportadora);
-    // let idx = this.listAsignados.details.indexOf(dataBuscar[0]);
-    // this.listAsignados.details.splice(idx, 1);
-  }
-
   enviar(){
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Enviando informacion de pago',
-      allowOutsideClick: false,
-      showConfirmButton: false,
-      timer: 500000
-    })
-    this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
-      Swal.close();
-      if (res) {
-        Swal.fire(
-          'Correcto',
-          'Se ha realizado el pago exitosament.',
-          'success'
-        )
-      }else{
-        Swal.fire(
-          'Error',
-          'No se ha podido realizar el pago, porfavor intente mas tarde.',
-          'error'
-        )
+    console.log(this.listRowsExcel)
+    console.log(this.listAsignados)
+    for (let index = 0; index < this.listAsignados.details.length; index++) {
+      let search = {
+        "nitTransportadora": parseInt(this.listAsignados.details[index].nitTransportadora),
+        "fechaPago": this.listAsignados.details[index].fechaPago,
+        "banco":this.listAsignados.details[index].banco,
+        "sucursal":this.listAsignados.details[index].sucursal,
+        "valorAplicar":parseInt(this.listAsignados.details[index].valorAplicar),
+        "comisionRecaudo":parseInt(this.listAsignados.details[index].comisionRecaudo),
+        "chequeado":true
       }
-    }, error => {
-      Swal.fire(
-        'Error',
-        'No se ha podido realizar el pago, porfavor intente mas tarde.',
-        'error'
-      )
-    })
+      console.log(search)
+      const indice = this.listRowsExcel.indexOf(search)
+      console.log(indice)
+    }
+    // Swal.fire({
+    //   title: 'Cargando',
+    //   html: 'Enviando informacion de pago',
+    //   allowOutsideClick: false,
+    //   showConfirmButton: false,
+    //   timer: 500000
+    // })
+    // this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
+    //   Swal.close();
+    //   if (res) {
+    //     Swal.fire(
+    //       'Correcto',
+    //       'Se ha realizado el pago exitosament.',
+    //       'success'
+    //     )
+    //   }else{
+    //     Swal.fire(
+    //       'Error',
+    //       'No se ha podido realizar el pago, porfavor intente mas tarde.',
+    //       'error'
+    //     )
+    //   }
+    // }, error => {
+    //   Swal.fire(
+    //     'Error',
+    //     'No se ha podido realizar el pago, porfavor intente mas tarde.',
+    //     'error'
+    //   )
+    // })
   }
 
 }
