@@ -22,19 +22,22 @@
       <thead>
         <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
           <th class="px-4 py-3 text-center">
-            <mat-checkbox></mat-checkbox>
+            <mat-checkbox [checked]="chequeada" (change)="setAll($event.checked)"></mat-checkbox>
           </th>
           <th class="px-3 py-3 text-center" *ngFor="let item of cabeceras">{{item}}</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="text-gray-700" *ngFor="let objVal of listValores; let i=index">
+        <tr class="text-gray-700" *ngFor="let item of listRowsExcel">
           <td class="px-2 py-2 text-sm border text-center">
-            <mat-checkbox (change)="acumular(objVal, i, listValores.chequeado, $event)"></mat-checkbox>
+            <mat-checkbox [(ngModel)]="item.chequeado" (ngModelChange)="updateAllComplete()" (change)="acumular(item, $event)"></mat-checkbox>
           </td>
-          <td class="px-2 py-2 text-sm border text-center" *ngFor="let itemVal of objVal">
-            {{ itemVal }}
-          </td>
+          <td class="px-2 text-sm border text-center">{{item.nitTransportadora}}</td>
+          <td class="px-2 text-sm border text-center">{{item.fechaPago}}</td>
+          <td class="px-2 text-sm border text-center">{{item.banco}}</td>
+          <td class="px-2 text-sm border text-center">{{item.sucursal}}</td>
+          <td class="px-2 text-sm border text-center">{{item.valorAplicar}}</td>
+          <td class="px-2 text-sm border text-center">{{item.comisionRecaudo}}</td>
         </tr>
       </tbody>
     </table>
