@@ -389,6 +389,7 @@ export class GestionPQRSComponent implements OnInit {
                     Swal.close();
                     if (response) {
                         this.listadoSeguimiento = response;
+                        console.log(this.listadoSeguimiento)
                     } else {
                         this.listadoSeguimiento = [];
                     }
