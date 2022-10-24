@@ -13,6 +13,7 @@ export class ImportFileComponent implements OnInit {
   valores: any = []
   listValores: any = []
   filtrarTabla:string=''; // filtrar la tabla
+  chequeada: boolean = false;
   @ViewChild('fileInput') fileInput: ElementRef;
 
   constructor() { }
@@ -35,14 +36,37 @@ export class ImportFileComponent implements OnInit {
       let hoja = workbook.SheetNames[0];
       const data = XLSX.utils.sheet_to_json(workbook.Sheets[hoja]);
       this.listRowsExcel = data;
+      console.log(this.listRowsExcel);
       this.cabeceras=Object.keys(this.listRowsExcel[0])
       for (let index = 0; index < this.listRowsExcel.length; index++) {
         const element = this.listRowsExcel[index];
         this.valores = Object.values(element)
         this.listValores.push(this.valores)
       }
+      this.listValores['chequeado'] = false;
+      console.log(this.listValores)
     }
     this.fileInput.nativeElement.value = '';
+  }
+
+  updateAllComplete() {
+    this.chequeada = this.listValores != null && this.listValores.every(t => (t.chequeado));
+  }
+
+  setAll(completed: boolean) {
+    this.chequeada = completed;
+    if (this.listValores == null) {
+      return;
+    }
+    this.listValores.forEach(t => (t.chequeado = completed));
+  }
+
+
+
+  acumular(item, index, chequeado){
+    console.log(index)
+    console.log(item)
+    console.log(chequeado)
   }
 
 }
