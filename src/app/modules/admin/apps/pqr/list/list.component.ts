@@ -12,7 +12,7 @@ export class ListComponent implements OnInit {
 
   listado: any=[];
   page:number=1;
-  tamanoTabl:number=5;
+  tamanoTabl:number=10;
   filtrarTabla:string='';
   mostrar_form:boolean=true;
 
@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
 
   consulta(){
 
-    Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, allowOutsideClick:false, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
           .getListados('listar-pqrs-gestion')
           .subscribe((response: any) => {
