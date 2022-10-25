@@ -112,51 +112,40 @@ export class ImportFileComponent implements OnInit {
   }
 
   enviar(){
-    console.log(this.listRowsExcel)
-    console.log(this.listAsignados)
-    for (let index = 0; index < this.listAsignados.details.length; index++) {
-      let search = {
-        "nitTransportadora": parseInt(this.listAsignados.details[index].nitTransportadora),
-        "fechaPago": this.listAsignados.details[index].fechaPago,
-        "banco":this.listAsignados.details[index].banco,
-        "sucursal":this.listAsignados.details[index].sucursal,
-        "valorAplicar":parseInt(this.listAsignados.details[index].valorAplicar),
-        "comisionRecaudo":parseInt(this.listAsignados.details[index].comisionRecaudo),
-        "chequeado":true
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Enviando informacion de pago',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 500000
+    })
+    this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
+      const dataBuscar = this.listRowsExcel.filter(data => data.chequeado == true);
+      for (let index = 0; index < dataBuscar.length; index++) {
+        let idx = this.listRowsExcel.indexOf(dataBuscar[index]);
+        this.listRowsExcel.splice(idx, 1);
       }
-      console.log(search)
-      const indice = this.listRowsExcel.indexOf(search)
-      console.log(indice)
-    }
-    // Swal.fire({
-    //   title: 'Cargando',
-    //   html: 'Enviando informacion de pago',
-    //   allowOutsideClick: false,
-    //   showConfirmButton: false,
-    //   timer: 500000
-    // })
-    // this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
-    //   Swal.close();
-    //   if (res) {
-    //     Swal.fire(
-    //       'Correcto',
-    //       'Se ha realizado el pago exitosament.',
-    //       'success'
-    //     )
-    //   }else{
-    //     Swal.fire(
-    //       'Error',
-    //       'No se ha podido realizar el pago, porfavor intente mas tarde.',
-    //       'error'
-    //     )
-    //   }
-    // }, error => {
-    //   Swal.fire(
-    //     'Error',
-    //     'No se ha podido realizar el pago, porfavor intente mas tarde.',
-    //     'error'
-    //   )
-    // })
+      Swal.close();
+      if (res) {
+        Swal.fire(
+          'Correcto',
+          'Se ha realizado el pago exitosament.',
+          'success'
+        )
+      }else{
+        Swal.fire(
+          'Error',
+          'No se ha podido realizar el pago, porfavor intente mas tarde.',
+          'error'
+        )
+      }
+    }, error => {
+      Swal.fire(
+        'Error',
+        'No se ha podido realizar el pago, porfavor intente mas tarde.',
+        'error'
+      )
+    })
   }
 
 }
