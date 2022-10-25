@@ -70,10 +70,10 @@
                 </div>
                 <hr class="w-full border-t mt-2">
                 <div class="flex flex-col overflow-y-scroll h-40">
-                    <div class="flex flex-row justify-between mt-2">
+                    <div class="flex flex-row justify-between">
                         <div class="mb-1">Registros</div>
-                        <div>
-                            <a (click)="insertadjunti()" class="text-sm cursor-pointer" [hidden]="datos.estado!='Sin resolver'"><mat-icon matTooltip="Agregar adjuntos" svgIcon="heroicons_outline:document-add"></mat-icon></a>
+                        <div *ngIf="datos.estado=='Sin resolver' || datos.estado=='En espera'">
+                            <a (click)="insertadjunti()" class="text-sm cursor-pointer"><mat-icon matTooltip="Agregar adjuntos" svgIcon="heroicons_outline:document-add"></mat-icon></a>
                         </div>
                     </div>
                     <div *ngFor="let item of listarAdjuntos" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
@@ -89,7 +89,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div>
+                            <div *ngIf="datos.estado=='Sin resolver' || datos.estado=='En espera'">
                                 <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div>
+                            <div *ngIf="datos.estado=='Sin resolver' || datos.estado=='En espera'">
                                 <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
