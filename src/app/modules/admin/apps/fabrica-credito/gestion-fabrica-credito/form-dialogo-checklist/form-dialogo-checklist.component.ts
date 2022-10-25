@@ -5,6 +5,7 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormDialogDecisionComponent } from '../form-dialog-decision/form-dialog-decision.component';
+import moment from "moment";
 import 'moment/locale/es';
 @Component({
   selector: 'app-form-dialogo-checklist',
