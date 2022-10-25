@@ -33,6 +33,15 @@ export class AppSettingsService {
             baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/documentos-negocio')
         }
     };
+
+    /**
+     * @description: End-point de pago masivo
+     */
+     public pago = {
+        url: {
+            base: EndPoints.uriDemo('/generic/aplicacion-pago-finl')
+        }
+    };
     /**
      * @description: End-point agenda de referenciacion
      */
