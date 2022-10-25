@@ -117,35 +117,39 @@ export class ImportFileComponent implements OnInit {
       html: 'Enviando informacion de pago',
       allowOutsideClick: false,
       showConfirmButton: false,
-      timer: 500000
-    })
-    this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
-      const dataBuscar = this.listRowsExcel.filter(data => data.chequeado == true);
-      for (let index = 0; index < dataBuscar.length; index++) {
-        let idx = this.listRowsExcel.indexOf(dataBuscar[index]);
-        this.listRowsExcel.splice(idx, 1);
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading()
+        this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
+          const dataBuscar = this.listRowsExcel.filter(data => data.chequeado == true);
+          for (let index = 0; index < dataBuscar.length; index++) {
+            let idx = this.listRowsExcel.indexOf(dataBuscar[index]);
+            this.listRowsExcel.splice(idx, 1);
+          }
+          Swal.close();
+          if (res) {
+            Swal.fire(
+              'Correcto',
+              'Se ha realizado el pago exitosamente.',
+              'success'
+            )
+          }else{
+            Swal.fire(
+              'Error',
+              'No se ha podido realizar el pago, porfavor intente mas tarde.',
+              'error'
+            )
+          }
+        }, error => {
+          Swal.fire(
+            'Error',
+            'No se ha podido realizar el pago, porfavor intente mas tarde.',
+            'error'
+          )
+        })
       }
-      Swal.close();
-      if (res) {
-        Swal.fire(
-          'Correcto',
-          'Se ha realizado el pago exitosament.',
-          'success'
-        )
-      }else{
-        Swal.fire(
-          'Error',
-          'No se ha podido realizar el pago, porfavor intente mas tarde.',
-          'error'
-        )
-      }
-    }, error => {
-      Swal.fire(
-        'Error',
-        'No se ha podido realizar el pago, porfavor intente mas tarde.',
-        'error'
-      )
     })
+    
   }
 
 }
