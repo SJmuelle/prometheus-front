@@ -481,9 +481,9 @@
                                                                                 </span>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="mt-2 px-3 rounded-lg bg-gray-200 dark:bg-gray-800" [innerHTML]=" item.detalle"></div>                                                         
+                                                                    </div>                                            
                                                                 </ng-container>
+                                                                <div *ngIf="item.detalle!=''" class="mt-2 px-3 rounded-lg bg-gray-200 dark:bg-gray-800" [innerHTML]="item.detalle"></div> 
                                                                 <fuse-alert class="mt-2" [type]="'warn'" [appearance]="'outline'" *ngIf="item.estadocolor=='bg-pink-300'">
                                                                     <span fuseAlertTitle>Motivo rechazo</span>
                                                                     <div>

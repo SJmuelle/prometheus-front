@@ -321,7 +321,6 @@ export class GestionPQRSComponent implements OnInit {
                     }
                     this.listadoGestion = unicos.reverse();
                     Swal.close();
-                    console.log(unicos)
                     if (unicos.length<=0) {
                         Swal.fire({
                             icon: 'info',
@@ -345,8 +344,6 @@ export class GestionPQRSComponent implements OnInit {
                                         const element = response[index];
                                         this.listadoAdjuntos.push(element)
                                     }
-                                } else {
-                                    this.listadoAdjuntos = [];
                                 }
                             });
                         }
@@ -581,7 +578,6 @@ export class GestionPQRSComponent implements OnInit {
                     Swal.showLoading();
                 },
             }).then((result) => {});
-            console.log(data)
             this._pqrService.Create(url, data).subscribe((response: any) => {
                 Swal.close();
                 if (response) {
