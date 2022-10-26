@@ -18,7 +18,6 @@ export class GestionPQRSComponent implements OnInit {
     unicoges: any =[];
     pqrid: any;
     datos: any = {};
-    estadoPqrs: any;
     procedimientoid: any;
     comentarioid:number;
     comentariotipoid:number;
