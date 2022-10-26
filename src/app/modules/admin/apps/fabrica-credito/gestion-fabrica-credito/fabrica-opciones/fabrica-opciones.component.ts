@@ -152,7 +152,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe((res) => {
           if(res==true){
-            this.irAtras();
+            this.redireccionar('agenda-decision');
           }
         })
       }

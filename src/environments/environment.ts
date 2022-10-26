@@ -6,6 +6,7 @@ export const environment = {
  production: true,
     userName: "APPWEB",
     password: btoa("123456"),
+<<<<<<< HEAD
     urlApi: 'https://prometheus.fintra.co:8443/api-fintra/api',
     urlApi2: 'https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/',
     urlApi3: 'https://prometheus.fintra.co:8443/api-fintra/api/generic',
@@ -20,6 +21,10 @@ export const environment = {
     envioCorreo:'https://prometheus.fintra.co:8443/apicredit',
     urlUltracem: 'https://prometheus.fintra.co:8443/api-fintra/api',
     urlTransportadora: 'https://5be8-181-57-229-82.ngrok.io/'
+=======
+    apiUrl:"https://prometheus.fintra.co:8443/",
+    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+>>>>>>> 87b1d682e40eddc6f3626d418ca270ba6406a1e0
 };
 
 /*
