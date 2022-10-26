@@ -22,9 +22,10 @@ export class ImportFileComponent implements OnInit {
 
   ngOnInit() {
   }
-  /*
-    Convertir archivo excel a JSON.
-  */
+  
+  
+
+
   subirArchivo(event) {
     this.listRowsExcel = [];
     this.cabeceras = [];
