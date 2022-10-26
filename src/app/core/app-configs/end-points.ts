@@ -24,6 +24,6 @@ export class EndPoints {
      * @description: URL pagaduria
      */
      static uriTranspor(url: string): string {
-        return environment.urlTransportadora + url;
+        return 'https://001c-181-57-229-82.ngrok.io/' + url;
     }
 }
