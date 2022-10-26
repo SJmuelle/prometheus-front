@@ -244,7 +244,6 @@ export class GestionPQRSComponent implements OnInit {
             Swal.close();
             if (response) {
                 this.datos = response[0];
-                console.log(this.datos)
                 this.listadoSoluciones = this.datos.idCausal;
                 this.no_mostrar = false;
             } else {
