@@ -72,7 +72,7 @@
                 <div class="flex flex-col overflow-y-scroll h-40">
                     <div class="flex flex-row justify-between">
                         <div class="mb-1">Registros</div>
-                        <div *ngIf="datos.estado=='Sin resolver'">
+                        <div *ngIf="datos.codigoEstado=='S'">
                             <a (click)="insertadjunti()" class="text-sm cursor-pointer"><mat-icon matTooltip="Agregar adjuntos" svgIcon="heroicons_outline:document-add"></mat-icon></a>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div *ngIf="datos.estado=='Sin resolver'">
+                            <div *ngIf="datos.codigoEstado=='S'">
                                 <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div *ngIf="datos.estado=='Sin resolver'">
+                            <div *ngIf="datos.codigoEstado=='S'">
                                 <a class="text-sm cursor-pointer"><mat-icon matTooltip="Eliminar adjunto" svgIcon="heroicons_outline:document-remove" (click)="eliminarAdjunto(item)"></mat-icon></a>
                             </div>
                         </div>
