@@ -1,4 +1,22 @@
 <h1 mat-dialog-title>Detalle de planilla negociación</h1>
+<div mat-dialog-content class="flex flex-col">
+    <div class="flex flex-row justify-between">
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Planillas a pagar:</p>
+            <p class="text-lg text-gray-900 font-medium">{{countPlanilla}} / {{data.totalPlanilla}}</p>
+        </div>
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Total a pagar:</p>
+            <p class="text-lg text-gray-900 font-medium">$ {{total | number}} / $ {{data.saldoTotalPlanilla | number}}</p>
+        </div>
+    </div>
+    <div class="flex flex-row justify-between">
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Propietario:</p>
+            <p class="text-lg text-gray-900 font-medium">{{data.nombrePropietario}}</p>
+        </div>
+    </div>
+</div>
 <div mat-dialog-content>
     <div class="w-full overflow-y-auto" *ngIf="listado.length>0">
         <table class="p-0">
@@ -13,6 +31,7 @@
                     <th class="py-3 text-center">Transportadora</th>
                     <th class="py-3 text-center">Valor pronto pago</th>
                     <th class="py-3 text-center">Fecha de planilla</th>
+                    <th class="py-3 text-center">Factoring</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -26,6 +45,7 @@
                     <td class="text-sm border text-center">{{ item.transportadora }}</td>
                     <td class="text-sm border text-center">$ {{ item.valorPlanilla | number }}</td>
                     <td class="text-sm border text-center">{{cambiarFecha(item.fechaPlanilla)}}</td>
+                    <td class="text-sm border text-center">{{item.porcentajeNegociacion | percent}}</td>
                 </tr>
             </tbody>
         </table>
@@ -38,6 +58,7 @@
     </div>
 </div>
 <mat-dialog-actions align="end">
+    <button mat-button class="text-white permitirActualizar bloquear" [disabled]="factoring.length == 0" (click)="cambiarPorcentaje()">Actualizar factoring</button>
     <button mat-button class="text-white permitirAceptar bloquear" [disabled]="details.length == 0" (click)="confirmarAcepto()">Aceptar</button>
     <button mat-button class="text-white permitirRechazar bloquear" [disabled]="details.length == 0" (click)="confirmarRechazo()">Rechazar</button>
     <button mat-button [mat-dialog-close]="false" class="text-white bg-gray-400">Cancelar</button>

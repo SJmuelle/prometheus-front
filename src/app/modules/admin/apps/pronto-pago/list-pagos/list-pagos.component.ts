@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DetalleComponent } from './detalle/detalle.component';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -12,37 +12,70 @@ import Swal from 'sweetalert2';
 })
 export class ListPagosComponent implements OnInit {
 
-  listado: any = [];
+  listadoPropietarios: any = [];
+  listadoTransportadoras: any = [];
+  filtrarTabla:string='';
+  idTransportadora:string='';
+  porcentajeMinimo:string='';
+  porcentajeMaximo:string='';
 
   constructor(public pago: ProntoPagoService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.consultarPropietarios();
+    this.consultarTransportadoras();
   }
 
-  consultarPropietarios(){
+  consultarTransportadoras(){
+    this.pago.getTransportadorasPropietario().subscribe((response: any) => {
+      if (response) {
+        this.listadoTransportadoras = response.data;
+      } else {
+        this.listadoTransportadoras = [];
+      }
+    });
+  }
+
+  consultarPropietarios(item){
     Swal.fire({ title: 'Cargando', html: 'Buscando información de propietarios', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.pago.getPropietario().subscribe((response: any) => {
+    this.pago.getPropietario(item.id).subscribe((response: any) => {
       Swal.close();
       if (response) {
-        this.listado = response.data;
+        this.listadoPropietarios = response.data;
+        this.idTransportadora = item.id;
+        this.porcentajeMinimo = item.porcentajeMinProntoPago;
+        this.porcentajeMaximo = item.porcentajeMaxProntoPago;
       } else {
-        this.listado = [];
+        this.listadoPropietarios = [];
       }
     });
   }
 
-  abrirDetalle(id){
+  mascara(numero){
+    var mask = "";
+    if (numero) {
+      for (let index = 1; index < numero.length - 3; index++) {
+        mask +="*";
+      }
+      return mask + numero.slice(7, 10)
+    }
+  }
+
+  abrirDetalle(item){
     const dialogRef = this.dialog.open(DetalleComponent, {
       width: '70%',
-      data: {idPropietario: id}
+      data: {
+        idPropietario: item.idPropietario,
+        nombrePropietario: item.nombrePropietario, 
+        idTransportadora: this.idTransportadora, 
+        totalPlanilla: item.totalPlanilla,
+        saldoTotalPlanilla: item.saldoTotalPlanilla,
+        minimo: this.porcentajeMinimo,
+        maximo: this.porcentajeMaximo
+      },
+      disableClose: false
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result==true) {
-        this.consultarPropietarios();
-      }
-    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
 }

@@ -1,8 +1,8 @@
-import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 import { ProntoPagoService } from 'app/core/services/pronto-pago.service';
+import { PorcentajeComponent } from './porcentaje/porcentaje.component';
+import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 
@@ -17,10 +17,13 @@ export class DetalleComponent implements OnInit {
   listadoTrue: any = [];
   listadoFalse: any = [];
   details: any = [];
+  factoring: any = [];
   allComplete: boolean = false;
+  countPlanilla: number = 0;
+  total: number = 0;
 
-  constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<DetalleComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) { }
+  constructor(public pago: ProntoPagoService, public dialog: MatDialog, public dialogRef: MatDialogRef<DetalleComponent>,
+    @Inject(MAT_DIALOG_DATA) public data) {dialogRef.disableClose = true}
 
   ngOnInit(): void {
     this.consultarTransportadoras()
@@ -28,7 +31,7 @@ export class DetalleComponent implements OnInit {
 
   consultarTransportadoras() {
     Swal.fire({ title: 'Cargando', html: 'Buscando información de planillas', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.pago.getTransportadoras(this.data.idPropietario).subscribe((response: any) => {
+    this.pago.getTransportadoras(this.data.idPropietario, this.data.idTransportadora).subscribe((response: any) => {
       Swal.close();
       if (response) {
         this.listado = response.data;
@@ -38,24 +41,42 @@ export class DetalleComponent implements OnInit {
     });
   }
 
+  cambiarPorcentaje(){
+    const dialogRef = this.dialog.open(PorcentajeComponent, {
+      width: '70%',
+      data: {
+        minimo: this.data.minimo,
+        maximo: this.data.maximo,
+        planilla: this.factoring
+      },
+      disableClose: true
+    });
+  }
+
   agregarPlanilla(item, event) {
     let id = {
       "idProntoPago": item.idProntoPago
     }
     if (event.checked == false) {
       const dataBuscar = this.details.filter(id => id.idProntoPago == item.idProntoPago);
-      let idxSoli = this.details.indexOf(dataBuscar[0]);
-      this.details.splice(idxSoli, 1);
+      let idx = this.details.indexOf(dataBuscar[0]);
+      this.details.splice(idx, 1);
+      this.factoring.splice(idx, 1);
       item.check = false;
+      this.countPlanilla = this.countPlanilla - 1;
+      this.total =  this.total - item.valorPlanilla;
     } else {
       this.details.push(id);
+      this.factoring.push(id);
       item.check = true;
+      this.countPlanilla = this.countPlanilla + 1;
+      this.total =  this.total + item.valorPlanilla;
     }
 
     if (this.details.length >= this.listado.length) {
       this.allComplete = true;
     } else {
-      this.allComplete = false; 
+      this.allComplete = false;
     }
   }
 
@@ -70,15 +91,23 @@ export class DetalleComponent implements OnInit {
     }
     if (this.allComplete == true) {
       this.details = [];
+      this.countPlanilla = this.listado.length;
+      this.total = this.data.saldoTotalPlanilla;
       for (const item of this.listado) {
         this.details.push(
           {
             "idProntoPago": item.idProntoPago
           }
         )
+        this.factoring.push({
+          "idProntoPago": item.idProntoPago
+        })
       }
     }else{
       this.details = [];
+      this.factoring = [];
+      this.countPlanilla = 0;
+      this.total = 0;
     }
     this.listado.forEach(t => (t.check = completed));
   }

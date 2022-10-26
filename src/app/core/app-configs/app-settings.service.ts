@@ -36,10 +36,11 @@ export class AppSettingsService {
 
     public transportadora = {
         url: {
-            base: EndPoints.uriTranspor('api-fintra/api/generic/qry/negociacion-pronto-pago'),
-            basePropietario:EndPoints.uriTranspor('api-fintra/api/generic/qry/propietario-pronto-pago'),
+            base: EndPoints.uriTranspor('api-fintra/api/generic/qry/detalle-pronto-pago'),
+            basePropietario:EndPoints.uriTranspor('api-fintra/api/generic/qry/negociacion-pronto-pago'),
             baseAceptar:EndPoints.uriTranspor('api-fintra/api/generic/aceptacion-pronto-pago'),
             baseRechazar:EndPoints.uriTranspor('api-fintra/api/generic/rechazar-negociacion-pronto-pago'),
+            baseTransportadora:EndPoints.uriTranspor('api-fintra/api/generic/qry/transportadoras'),
         }
     };
     /**

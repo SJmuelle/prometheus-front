@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ProntoPagoRoutingModule } from './pronto-pago-routing.module';
 import { ListPagosComponent } from './list-pagos/list-pagos.component';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -16,14 +18,17 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatSliderModule} from '@angular/material/slider';
 import { DetalleComponent } from './list-pagos/detalle/detalle.component';
+import { PorcentajeComponent } from './list-pagos/detalle/porcentaje/porcentaje.component';
 
 
 
 @NgModule({
   declarations: [
     ListPagosComponent,
-    DetalleComponent
+    DetalleComponent,
+    PorcentajeComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +44,10 @@ import { DetalleComponent } from './list-pagos/detalle/detalle.component';
     MatStepperModule,
     MatDialogModule,
     MatTooltipModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSliderModule,
+    FormsModule,
+    Ng2SearchPipeModule
   ]
 })
 export class ProntoPagoModule { }
