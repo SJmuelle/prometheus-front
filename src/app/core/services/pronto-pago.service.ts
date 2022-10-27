@@ -32,6 +32,13 @@ export class ProntoPagoService {
   }
 
   /**
+   * @description: Actualizar el porcentaje del pronto pago.
+   */
+   public postActualizar(data: any): Observable<any> {
+    return this._http.post(this._appSettings.transportadora.url.baseActualizar, data);
+  }
+
+  /**
    * @description: Aceptar el o los pronto pago
    */
   public postAceptar(data: any): Observable<any> {

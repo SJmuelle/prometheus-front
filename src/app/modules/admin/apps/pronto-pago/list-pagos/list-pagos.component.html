@@ -8,7 +8,7 @@
             <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Transportadoras:</mat-label>
                 <mat-select>
-                  <mat-option *ngFor="let item of listadoTransportadoras" (click)="consultarPropietarios(item)" [value]="item.transportadora">
+                  <mat-option *ngFor="let item of listadoTransportadoras" (click)="consultarPropietarios(item.id, item.porcentajeMinProntoPago, item.porcentajeMaxProntoPago)" [value]="item.transportadora">
                     {{item.transportadora}}
                   </mat-option>
                 </mat-select>

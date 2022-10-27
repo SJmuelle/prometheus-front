@@ -1,1 +1,16 @@
-<p>porcentaje works!</p>
+<h1 mat-dialog-title>Cambiar factoring</h1>
+<div mat-dialog-content class="pt-3">
+    <mat-slider 
+    class="w-full cursor-pointer"
+    thumbLabel
+    [displayWith]="formatLabel"
+    step="0.01"
+    [min]="data.minimo"
+    [max]="data.maximo"
+    [(ngModel)]="valor"
+    aria-label="units"></mat-slider>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button class="text-white permitirAceptar bloquear" (click)="actualizar()">Aceptar</button>
+    <button mat-button [mat-dialog-close]="false" class="text-white bg-gray-400">Cancelar</button>
+</mat-dialog-actions>

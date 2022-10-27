@@ -51,6 +51,14 @@ export class DetalleComponent implements OnInit {
       },
       disableClose: true
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.consultarTransportadoras();
+      this.details = [];
+      this.factoring = [];
+      this.allComplete = false;
+      this.countPlanilla = 0;
+      this.total = 0;
+    });
   }
 
   agregarPlanilla(item, event) {
@@ -117,76 +125,97 @@ export class DetalleComponent implements OnInit {
     let data = {
       "details": this.details
     }
-    this.pago.postAceptar(data).subscribe((response: any) => {
-      if (response) {
-        if (this.details.length > 1) {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Enviando información',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+        this.pago.postAceptar(data).subscribe((response: any) => {
+          Swal.close();
+          if (response) {
+            if (this.details.length > 1) {
+              Swal.fire(
+                '¡Correcto!',
+                'Las planillas han sido aceptadas de forma exitosa.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                '¡Correcto!',
+                'La planilla ha sido aceptada de forma exitosa.',
+                'success'
+              )
+            }
+            this.dialogRef.close(true);
+          } else {
+            Swal.fire(
+              'Error!',
+              'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+              'error'
+            )
+            this.dialogRef.close(true);
+          }
+        }, error => {
           Swal.fire(
-            '¡Correcto!',
-            'Las planillas han sido aceptadas de forma exitosa.',
-            'success'
+            'Error!',
+            'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+            'error'
           )
-        } else {
-          Swal.fire(
-            '¡Correcto!',
-            'La planilla ha sido aceptada de forma exitosa.',
-            'success'
-          )
-        }
-        this.dialogRef.close(true);
-      } else {
-        Swal.fire(
-          'Error!',
-          'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
-          'error'
-        )
-        this.dialogRef.close(true);
-      }
-    }, error => {
-      Swal.fire(
-        'Error!',
-        'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
-        'error'
-      )
-      this.dialogRef.close(true);
-    });
+          this.dialogRef.close(true);
+        });
+      }})
+    
   }
 
   rechazar() {
     let data = {
       "details": this.details
     }
-    this.pago.postRechazar(data).subscribe((response: any) => {
-      if (response) {
-        if (this.details.length > 1) {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Enviando información',
+      allowOutsideClick: false,
+      showConfirmButton: false,
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+        this.pago.postRechazar(data).subscribe((response: any) => {
+          Swal.close();
+          if (response) {
+            if (this.details.length > 1) {
+              Swal.fire(
+                '¡Correcto!',
+                'Las planillas han sido rechazadas de forma exitosa.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                '¡Correcto!',
+                'La planilla ha sido rechazada de forma exitosa.',
+                'success'
+              )
+            }
+            this.dialogRef.close(true);
+          } else {
+            Swal.fire(
+              'Error!',
+              'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+              'error'
+            )
+            this.dialogRef.close(true);
+          }
+        }, error => {
           Swal.fire(
-            '¡Correcto!',
-            'Las planillas han sido rechazadas de forma exitosa.',
-            'success'
+            'Error!',
+            'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
+            'error'
           )
-        } else {
-          Swal.fire(
-            '¡Correcto!',
-            'La planilla ha sido rechazada de forma exitosa.',
-            'success'
-          )
-        }
-        this.dialogRef.close(true);
-      } else {
-        Swal.fire(
-          'Error!',
-          'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
-          'error'
-        )
-        this.dialogRef.close(true);
-      }
-    }, error => {
-      Swal.fire(
-        'Error!',
-        'El proceso no ha podido llevarse a cabo, por favor intente mas tarde.',
-        'error'
-      )
-      this.dialogRef.close(true);
-    });
+          this.dialogRef.close(true);
+        });
+      }})
   }
 
   confirmarAcepto() {

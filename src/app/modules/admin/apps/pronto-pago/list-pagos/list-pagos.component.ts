@@ -35,15 +35,15 @@ export class ListPagosComponent implements OnInit {
     });
   }
 
-  consultarPropietarios(item){
+  consultarPropietarios(id, minimo, maximo){
     Swal.fire({ title: 'Cargando', html: 'Buscando información de propietarios', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    this.pago.getPropietario(item.id).subscribe((response: any) => {
+    this.pago.getPropietario(id).subscribe((response: any) => {
       Swal.close();
       if (response) {
         this.listadoPropietarios = response.data;
-        this.idTransportadora = item.id;
-        this.porcentajeMinimo = item.porcentajeMinProntoPago;
-        this.porcentajeMaximo = item.porcentajeMaxProntoPago;
+        this.idTransportadora = id;
+        this.porcentajeMinimo = minimo;
+        this.porcentajeMaximo = maximo;
       } else {
         this.listadoPropietarios = [];
       }
@@ -75,7 +75,9 @@ export class ListPagosComponent implements OnInit {
       disableClose: false
     });
 
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+      this.consultarPropietarios(this.idTransportadora, this.porcentajeMinimo, this.porcentajeMaximo);
+    });
   }
 
 }
