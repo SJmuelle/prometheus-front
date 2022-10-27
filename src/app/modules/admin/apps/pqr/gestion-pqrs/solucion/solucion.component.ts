@@ -374,6 +374,7 @@ export class SolucionComponent implements OnInit {
                         Swal.showLoading();
                     },
                 }).then((result) => {});
+                this.seguimiento_area.detalle = this.editor.editorElem.outerText;
                 this._pqrService.Create(url, this.seguimiento_area).subscribe((response: any) => {
                     Swal.close();
                     if (response) {
