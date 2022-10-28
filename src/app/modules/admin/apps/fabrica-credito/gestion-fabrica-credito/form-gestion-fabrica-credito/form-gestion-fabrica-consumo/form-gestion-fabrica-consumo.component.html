@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-    <mat-accordion multi>
+    <mat-accordion multi> 
         <!--Panel Datos de la solicitud-->
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header *ngIf="fabricaDatos">
@@ -40,11 +40,11 @@
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Nombre del convenio</mat-label>
-                        <input matInput type="text" [formControlName]="'destinoCredito'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'descripcionTipoCredito'" [readonly]="true">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Tipo de crédito</mat-label>
-                        <input matInput type="text" [formControlName]="'tipoCredito'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'descripcionTipoCredito'" [readonly]="true">
                     </mat-form-field>
                 </div>
                 <div class="-mx-3 md:flex mb-2">
@@ -74,8 +74,6 @@
                 </div>
             </div>
         </mat-expansion-panel>
-        <!--Panel datos de riesgo-->
-        <!--Panel informacion del titular-->
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>
