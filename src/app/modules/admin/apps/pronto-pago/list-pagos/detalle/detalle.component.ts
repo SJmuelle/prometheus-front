@@ -17,6 +17,7 @@ export class DetalleComponent implements OnInit {
   listadoTrue: any = [];
   listadoFalse: any = [];
   details: any = [];
+  planillas: any = [];
   factoring: any = [];
   allComplete: boolean = false;
   countPlanilla: number = 0;
@@ -27,6 +28,7 @@ export class DetalleComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarTransportadoras()
+    console.log(this.data)
   }
 
   consultarTransportadoras() {
@@ -35,6 +37,7 @@ export class DetalleComponent implements OnInit {
       Swal.close();
       if (response) {
         this.listado = response.data;
+        console.log(this.listado)
       } else {
         this.listado = [];
       }
@@ -65,17 +68,24 @@ export class DetalleComponent implements OnInit {
     let id = {
       "idProntoPago": item.idProntoPago
     }
+    let planilla = {
+      "planilla":item.planilla
+    }
     if (event.checked == false) {
       const dataBuscar = this.details.filter(id => id.idProntoPago == item.idProntoPago);
+      const buscarPlanilla = this.planillas.filter(pla => pla.planilla == item.planilla);
       let idx = this.details.indexOf(dataBuscar[0]);
+      let idxPla = this.planillas.indexOf(buscarPlanilla[0])
       this.details.splice(idx, 1);
       this.factoring.splice(idx, 1);
+      this.planillas.splice(idxPla, 1);
       item.check = false;
       this.countPlanilla = this.countPlanilla - 1;
-      this.total =  this.total - item.valorPlanilla;
+      this.total = this.total - item.valorPlanilla;
     } else {
       this.details.push(id);
       this.factoring.push(id);
+      this.planillas.push(planilla)
       item.check = true;
       this.countPlanilla = this.countPlanilla + 1;
       this.total =  this.total + item.valorPlanilla;
@@ -114,20 +124,109 @@ export class DetalleComponent implements OnInit {
     }else{
       this.details = [];
       this.factoring = [];
+      this.planillas = [];
       this.countPlanilla = 0;
       this.total = 0;
     }
     this.listado.forEach(t => (t.check = completed));
   }
 
+  comentar(op) {
+    Swal.fire({
+      title: 'Ingrese comentario',
+      input: 'textarea',
+      inputAttributes: {
+          autocapitalize: 'off',
+      },
+      showLoaderOnConfirm: true,
+      showCancelButton: true,
+      showDenyButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+      denyButtonText: 'Borrar',
+      allowOutsideClick: false,
+    }).then((result)=>{
+      console.log(result)
+      if (result.isConfirmed) {
+        if (result.value.length<1) {
+          Swal.fire(
+            'Aviso',
+            'El comentario es obligatorio',
+            'error'
+          );
+        }
 
-  aceptar() {
+        if (result.value.length<10) {
+          Swal.fire(
+            'Aviso',
+            'El comentario tener al menos 10 caracteres',
+            'error'
+          );
+        }
+
+        if (result.value.length>10) {
+          let trazabilidad = {
+            "idPropietario": this.data.idPropietario,
+            "idTransportadora": this.data.idTransportadora,
+            "details": this.planillas,
+            "valorTotalNegociacion": this.total,
+            "actividad": op,
+            "comentario": result.value.toString()
+          }
+          Swal.fire({
+            title: 'Cargando',
+            html: 'Enviado comentario',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            timer: 500000,
+            didOpen: () => {
+              Swal.showLoading();
+              this.pago.postTrazabilidad(trazabilidad).subscribe((response:any)=>{
+                Swal.close();
+                if (response) {
+                  Swal.fire(
+                    '¡Correcto!',
+                    'Comentario guardado.',
+                    'success'
+                  )
+  
+                  if (trazabilidad.actividad=='A') {
+                    this.aceptar()
+                  }else{
+                    this.rechazar()
+                  }
+                  
+                }else{
+                  Swal.fire(
+                    '¡Error!',
+                    'No se pudo guardar el comentario, intente mas tarde.',
+                    'error'
+                  )
+                }
+              })
+            }
+          })
+        }
+      }
+
+      if (result.isDenied) {
+        result.value.length = 0;
+      }
+
+      if (result.isDismissed) {
+        this.setAll(false);
+        this.consultarTransportadoras();
+      }
+    })
+  }
+
+  aceptar(){
     let data = {
       "details": this.details
     }
     Swal.fire({
       title: 'Cargando',
-      html: 'Enviando información',
+      html: 'Enviando planillas',
       allowOutsideClick: false,
       showConfirmButton: false,
       timer: 500000,
@@ -166,8 +265,8 @@ export class DetalleComponent implements OnInit {
           )
           this.dialogRef.close(true);
         });
-      }})
-    
+      }
+    })
   }
 
   rechazar() {
@@ -176,7 +275,7 @@ export class DetalleComponent implements OnInit {
     }
     Swal.fire({
       title: 'Cargando',
-      html: 'Enviando información',
+      html: 'Enviando planillas',
       allowOutsideClick: false,
       showConfirmButton: false,
       timer: 500000,
@@ -229,7 +328,7 @@ export class DetalleComponent implements OnInit {
       allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
-        this.aceptar();
+        this.comentar('A');
       } else if (result.isDenied) {
         this.setAll(false);
         this.consultarTransportadoras();
@@ -248,7 +347,7 @@ export class DetalleComponent implements OnInit {
       allowOutsideClick: false
     }).then((result) => {
       if (result.isConfirmed) {
-        this.rechazar();
+        this.comentar('R');
       } else if (result.isDenied) {
         this.setAll(false);
         this.consultarTransportadoras();

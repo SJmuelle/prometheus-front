@@ -51,4 +51,11 @@ export class ProntoPagoService {
    public postRechazar(data: any): Observable<any> {
     return this._http.post(this._appSettings.transportadora.url.baseRechazar, data);
   }
+
+  /**
+   * @description: Enviar comentario de trazabilidad
+   */
+   public postTrazabilidad(data: any): Observable<any> {
+    return this._http.post(this._appSettings.transportadora.url.baseTrazabilidad, data);
+  }
 }
