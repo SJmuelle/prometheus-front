@@ -34,12 +34,12 @@ export class ListSolicitudesComponent implements OnInit {
   filtrarTabla:string='';
   chequeada: boolean = false;
   dataFiltro:any = {"details":[]};
-
   busqueda:string = '';
   opcionesBusqueda: any[] = [];
   analista:string = '';
   unidad:string = '';
   agenda:string = '';
+  fecha:string = '';
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
     this.buscarForm = this.fb.group({
@@ -287,9 +287,13 @@ export class ListSolicitudesComponent implements OnInit {
   cambiarFecha(date) {
     if (date) {
       moment.locale('es');
-      return moment(date).format('MMMM D YYYY')
+      if (moment(date).format('MMMM D YYYY')=='enero 1 0099') {
+        return 'No registra'
+      }else{
+        return moment(date).format('MMMM D YYYY')
+      }
     }
-    return 'No registra';
+    return 'No registra'
   }
 
   asignarVarias() {
