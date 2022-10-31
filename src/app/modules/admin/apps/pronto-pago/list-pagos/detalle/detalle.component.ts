@@ -46,7 +46,7 @@ export class DetalleComponent implements OnInit {
 
   cambiarPorcentaje(){
     const dialogRef = this.dialog.open(PorcentajeComponent, {
-      width: '70%',
+      width: '20%',
       data: {
         minimo: this.data.minimo,
         maximo: this.data.maximo,
@@ -140,10 +140,8 @@ export class DetalleComponent implements OnInit {
       },
       showLoaderOnConfirm: true,
       showCancelButton: true,
-      showDenyButton: true,
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar',
-      denyButtonText: 'Borrar',
       allowOutsideClick: false,
     }).then((result)=>{
       console.log(result)
@@ -207,13 +205,7 @@ export class DetalleComponent implements OnInit {
             }
           })
         }
-      }
-
-      if (result.isDenied) {
-        result.value.length = 0;
-      }
-
-      if (result.isDismissed) {
+      }else{
         this.setAll(false);
         this.consultarTransportadoras();
       }

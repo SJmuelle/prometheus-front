@@ -18,7 +18,7 @@ export class PorcentajeComponent implements OnInit {
   ngOnInit(): void {}
 
   formatLabel(value: number) {
-    return value;
+    return value + '%';
   }
 
   actualizar(){
