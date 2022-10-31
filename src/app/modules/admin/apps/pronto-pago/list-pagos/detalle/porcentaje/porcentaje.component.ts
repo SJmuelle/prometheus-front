@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 })
 export class PorcentajeComponent implements OnInit {
 
-  valor:number;
+  valor:number = 0;
 
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<PorcentajeComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {dialogRef.disableClose = true}

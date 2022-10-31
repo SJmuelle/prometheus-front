@@ -1,8 +1,11 @@
 <h1 mat-dialog-title>Cambiar factoring</h1>
-<div mat-dialog-content class="pt-3">
+<div mat-dialog-content>
+    <div class="flex flex-row w-full justify-between">
+        <label class="font-semibold">{{data.minimo | number}}%</label>
+        <label class="font-semibold">{{valor | number}}%</label>
+    </div>
     <mat-slider 
-    class="w-full cursor-pointer"
-    thumbLabel
+    class="w-full cursor-pointer pt-5"
     [displayWith]="formatLabel"
     step="0.01"
     [min]="data.minimo"
