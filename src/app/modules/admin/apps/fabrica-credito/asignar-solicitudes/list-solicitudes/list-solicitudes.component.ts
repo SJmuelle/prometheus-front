@@ -168,7 +168,8 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       Swal.close();
       if (res) {
-        this.solicitudes = res.data.listadoSolicitud;
+        this.solicitudes = res.data.listadoSolicitud
+        console.log(this.solicitudes.sort((a, b)=> b.fecha_ingreso_agenda - a.fecha_ingreso_agenda))
         this.asignados = res.data.solicitudAsignada;
       }else{
         this.solicitudes = [];
