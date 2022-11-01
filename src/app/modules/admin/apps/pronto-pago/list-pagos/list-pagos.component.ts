@@ -63,9 +63,13 @@ export class ListPagosComponent implements OnInit {
   abrirDetalle(item){
     const dialogRef = this.dialog.open(DetalleComponent, {
       width: '70%',
+      maxHeight: '95vh',
       data: {
         idPropietario: item.idPropietario,
+        identificacion: item.identificacion,
         nombrePropietario: item.nombrePropietario, 
+        contacto: item.contacto,
+        email: item.email,
         idTransportadora: this.idTransportadora, 
         totalPlanilla: item.totalPlanilla,
         saldoTotalPlanilla: item.saldoTotalPlanilla,

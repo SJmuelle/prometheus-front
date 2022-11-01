@@ -1,12 +1,26 @@
 <h1 mat-dialog-title>Detalle de planilla negociación</h1>
-<div mat-dialog-content class="flex flex-row">
-    <div class="flex flex-row gap-2">
-        <p class="text-lg text-gray-400 font-medium">Propietario:</p>
-        <p class="text-lg text-gray-900 font-medium">{{data.nombrePropietario}}</p>
+<div mat-dialog-content class="flex flex-row justify-between">
+    <div class="flex flex-col">
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Identificacion:</p>
+            <p class="text-lg text-gray-900 font-medium">{{data.identificacion}}</p>
+        </div>
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Propietario:</p>
+            <p class="text-lg text-gray-900 font-medium">{{data.nombrePropietario}}</p>
+        </div>
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Contacto:</p>
+            <p class="text-lg text-gray-900 font-medium">{{data.contacto}}</p>
+        </div>
+        <div class="flex flex-row gap-2">
+            <p class="text-lg text-gray-400 font-medium">Correo:</p>
+            <p class="text-lg text-gray-900 font-medium">{{data.email}}</p>
+        </div>
     </div>
 </div>
 <div mat-dialog-content>
-    <div class="w-full overflow-y-auto" *ngIf="listado.length>0">
+    <div class="w-full overflow-y-auto max-h-80" *ngIf="listado.length>0">
         <table class="p-0">
             <thead class="bg-gray-100">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
@@ -36,7 +50,7 @@
                     <td class="text-sm border text-center">{{item.porcentajeNegociacion | number}} %</td>
                 </tr>
             </tbody>
-            <tfoot>
+            <!-- <tfoot>
                 <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900">
                     <th class="border px-4 py-2 text-lg text-gray-400 font-medium">Planillas seleccionadas</th>
                     <th colspan="5" class="border px-4 py-2 text-lg text-gray-900 font-medium">{{countPlanilla}} / {{data.totalPlanilla}}</th>
@@ -45,7 +59,7 @@
                     <th class="border px-4 py-2 text-lg text-gray-400 font-medium">Total a pagar</th>
                     <th colspan="5" class="border px-4 py-2 text-lg text-gray-900 font-medium">$ {{total | number}} / $ {{data.saldoTotalPlanilla | number}}</th>
                 </tr>
-            </tfoot>
+            </tfoot> -->
         </table>
     </div>
     <div class="flex flex-row w-full justify-center" *ngIf="listado.length<1">

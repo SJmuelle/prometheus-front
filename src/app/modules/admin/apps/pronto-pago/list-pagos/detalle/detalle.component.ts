@@ -29,6 +29,9 @@ export class DetalleComponent implements OnInit {
   ngOnInit(): void {
     this.consultarTransportadoras()
     console.log(this.data)
+    if (this.data.email=='') {
+      this.data.email = 'N/A'
+    }
   }
 
   consultarTransportadoras() {

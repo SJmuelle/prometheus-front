@@ -24,6 +24,6 @@ export class EndPoints {
      * @description: URL pagaduria
      */
      static uriTranspor(url: string): string {
-        return 'https://152c-181-57-229-82.ngrok.io/' + url;
+        return 'http://demo.fintra.co:8011/' + url;
     }
 }
