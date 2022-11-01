@@ -78,6 +78,29 @@ export interface FormularioCreditoInterface {
     plazo?:                         number;
     nodificado?:                    string;
     modificadoPolitica?:            string;
+    annosTiempoResidencia?:         number;
+    mesesTiempoResidencia?:         number;
+    descripcionTipoCliente?:        string;
+    nombreConvenio?:                string;
+    descripcionTipoConsumo?:        string;
+    valorCuotaDiaria?:              number;
+    valorCuota?:                    number;
+    nombreEmpresa?:                 string;
+    actividadEconomica?:            string;
+    actividadEspecifica?:           string;
+    pasivos?:                       number;
+    tarjetaPropiedad?:              string;
+    tipoServicio?:                  string;
+    numeroTarjetaCirculacion?:      string;
+    turnoVehiculo?:                 string;
+    tipoCombustible?:               string;
+    diasTrabajados?:                string;
+    ingresosDiarios?:               string;
+    marcaVehiculo?:                 string;
+    lineaVehiculo?:                 string;
+    modeloVehiculo?:                string;
+    numeroPlacaVehiculo?:           string;
+    costoTransaccion?:              string;
 }
 
 export interface FormularioDatosTitularInterface {
@@ -114,6 +137,29 @@ export interface FormularioDatosTitularInterface {
     estrato?:                       string;
     otroDestinoCredito?:            string;
     fechaExpedicionDocumento?:      string;
+    annosTiempoResidencia?:         number;
+    mesesTiempoResidencia?:         number;
+    descripcionTipoCliente?:        string;
+    nombreConvenio ?:               string;
+    descripcionTipoConsumo?:        string;
+    valorCuotaDiaria?:              number;
+    valorCuota?:                    number;
+    nombreEmpresa?:                 string;
+    actividadEconomica?:            string;
+    actividadEspecifica?:           string;
+    pasivos?:                       number;
+    tarjetaPropiedad?:              string;
+    tipoServicio?:                  string;
+    numeroTarjetaCirculacion?:      string;
+    turnoVehiculo?:                 string;
+    tipoCombustible?:               string;
+    diasTrabajados?:                string;
+    ingresosDiarios?:               string;
+    marcaVehiculo?:                 string;
+    lineaVehiculo?:                 string;
+    modeloVehiculo?:                string;
+    numeroPlacaVehiculo?:           string;
+    costoTransaccion?:              string;
 }
 
 export interface FormularioRepresentanteInterface {

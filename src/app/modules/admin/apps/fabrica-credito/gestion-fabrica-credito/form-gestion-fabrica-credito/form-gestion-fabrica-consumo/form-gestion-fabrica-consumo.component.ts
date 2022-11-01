@@ -68,6 +68,11 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
     public estrato$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
     public pagaduria$: Observable<any>;
+    public tipoServicio$: Observable<any>;
+    public turnoVehiculo$: Observable<any>;
+    public tipoCombustible$: Observable<any>;
+    public listadoOcupaciones$: Observable<any>;
+    public actividadEconomica$: Observable<any>;
     public entidadBancaria$: Observable<any>;
     public aplicaIngresos$: Observable<any>;
     public salarioBasico: number;
@@ -114,8 +119,14 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
         this.getAplicaIngresos();
         this.getTipoCuentaBancaria();
         this.getEntidadBancaria();
-        this.getPagaduria()
-        this.getSalarioBasico()
+        this.getPagaduria();
+        this.getServicio();
+        this.getTurnoVehiculo();
+        this.getTipoCombustible();
+        this.getSalarioBasico();
+        this.getTipoOcupacion();
+        this.getActividadEconomica(Number(this.numeroSolicitud));
+        this.form.get('entidadBancaria')?.valueChanges.subscribe(id => {this.validacionEntidad(id)})
         // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
     }
     /**
@@ -501,6 +512,9 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
                 if (data.activos) {
                     this.form.controls['activos'].setValue(this.utility.formatearNumero(String(this.form.value.activos)));
                 }
+                if (data.pasivos) {
+                    this.form.controls['pasivos'].setValue(this.utility.formatearNumero(String(this.form.value.pasivos)));
+                }
                 if (data.cupoTotal) {
                     this.form.controls['cupoTotal'].setValue(this.utility.formatearNumero(String(this.form.value.cupoTotal)));
                 }
@@ -521,6 +535,18 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
                 }
                 if (data.valorSolicitado) {
                     this.form.controls['valorSolicitadoWeb'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitadoWeb)));
+                }
+                if (data.annosTiempoResidencia) {
+                    this.form.controls['annosTiempoResidencia'].setValue(this.utility.formatearNumero(String(this.form.value.annosTiempoResidencia)));
+                }
+                if (data.mesesTiempoResidencia) {
+                    this.form.controls['mesesTiempoResidencia'].setValue(this.utility.formatearNumero(String(this.form.value.mesesTiempoResidencia)));
+                }
+                if (data.valorCuotaDiaria) {
+                    this.form.controls['valorCuotaDiaria'].setValue(this.utility.formatearNumero(String(this.form.value.valorCuotaDiaria)));
+                }
+                if (data.valorCuota) {
+                    this.form.controls['valorCuota'].setValue(this.utility.formatearNumero(String(this.form.value.valorCuota)));
                 }
                 // this.form.controls['aplicaEmbargo'].setValue(this.form.value.aplicaEmbargo=='N'?'No aplica':'Si aplica')
                 // form.value.valorSolicitado
@@ -551,7 +577,21 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
                 if (data.pagaduria) {
                     this.form.controls['pagaduria'].setValue(this.form.value.pagaduria.toString());
                 }
-
+                if (data.listadoOcupaciones) {
+                    this.form.controls['ocupacion'].setValue(this.form.value.ocupacion.toString());
+                }
+                if (data.tipoServicio) {
+                    this.form.controls['tipoServicio'].setValue(this.form.value.tipoServicio.toString());
+                }
+                if (data.turnoVehiculo) {
+                    this.form.controls['turnoVehiculo'].setValue(this.form.value.turnoVehiculo.toString());
+                }
+                if (data.tipoCombustible) {
+                    this.form.controls['tipoCombustible'].setValue(this.form.value.tipoCombustible.toString());
+                }
+                if (data.actividadEconomica) {
+                    this.form.controls['actividadEconomica'].setValue(this.form.value.actividadEconomica.toString());
+                }
                 this.tipoDocumento = data.tipoDocumento;
                 const datosDocumentos: any = {
                     numeroSolicitud: datosSolicitud.numeroSolicitud,
@@ -735,6 +775,37 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
         this.pagaduria$ = this.genericaServices.getPagadurias();
     }
     /**
+* * @description: Obtiene los tipos de estados civiles
+*/
+    private getServicio(): void {
+        this.tipoServicio$ = this.genericaServices.getTipoServicios();
+    }
+    /**
+* * @description: Obtiene los tipos de estados civiles
+*/
+    private getTurnoVehiculo(): void {
+        this.turnoVehiculo$ = this.genericaServices.getTurnoVehiculos();
+    }
+    /**
+* * @description: Obtiene los tipos de estados civiles
+*/
+private getTipoCombustible(): void {
+    this.tipoCombustible$ = this.genericaServices.getTipoCombustibles();
+}
+/**
+* @description: Obtiene los tipos de estados civiles
+*/
+private getTipoOcupacion(): void {
+    this.listadoOcupaciones$ = this.genericaServices.getlistadoOcupaciones();
+}
+/**
+* @description: Obtiene los tipos de estados civiles
+*/
+
+private getActividadEconomica(codigo:number): void {
+    this.actividadEconomica$ = this.genericaServices.postActividadEconomica(codigo);
+}
+/**
 * @description: Obtiene los tipos de estados civiles
 */
     private getTipoContrato(): void {
@@ -886,6 +957,7 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
             antiguedadComprasSemanales: [''],
             ventasMensuales: [''],
             activos: [''],
+            pasivos: [''],
             declarante: ['', [Validators.required]],
             codigoDepartamentoNegocio: [''],
             descripcionDepartamentoNegocio: [''],
@@ -962,7 +1034,30 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
             creditoCodeudorLineas:[''],
             sanamientoFinanciero:[''],
             aplicaEmbargo:[''],
-            valorSolicitadoWeb:['']
+            valorSolicitadoWeb:[''],
+            annosTiempoResidencia:[''],
+            mesesTiempoResidencia:[''],
+            descripcionTipoCliente:[''],
+            nombreConvenio:[''],
+            descripcionTipoConsumo:[''],
+            valorCuotaDiaria:[''],
+            valorCuota:[''],
+            ocupacion:[''],
+            nombreEmpresa:[''],
+            actividadEconomica:[''],
+            actividadEspecifica:[''],
+            tarjetaPropiedad:[''],
+            tipoServicio:[''],
+            numeroTarjetaCirculacion:[''],
+            turnoVehiculo:[''],
+            tipoCombustible:[''],
+            diasTrabajados:[''],
+            ingresosDiarios:[''],
+            marcaVehiculo:[''],
+            lineaVehiculo:[''],
+            modeloVehiculo:[''],
+            numeroPlacaVehiculo:[''],
+            costoTransaccion:['']
         });
     }
 
@@ -1036,6 +1131,7 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
                     descripcionTipo: false,
                     tipoEstadoCivil: false,
                     tipoCredito: false,
+                    descripcionTipoCliente: false
 
                 };
                 break;
@@ -1105,6 +1201,7 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
                     descripcionTipo: false,
                     tipoEstadoCivil: false,
                     tipoCredito: false,
+                    descripcionTipoCliente : false
 
                 };
                 break;
@@ -1169,6 +1266,19 @@ import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dia
         this.router.navigate(['/credit-factory/' + data]);
     }
 
+    public validacionEntidad(tipo: string) {
+
+        this.entidadBancaria$.forEach(element => {
+            debugger;
+            for (const item of element.data) {
+                if(item.codigo == tipo ){
+                    this.form.controls['costoTransaccion'].setValue(this.utility.formatearNumero(String(item.costoTransaccion)));
+                 }
+            }
+
+         });
+
+    }
 
     public validacion(tipo: string) {
         if (this.form.controls['aplicaIngresos'].value == 'N') {

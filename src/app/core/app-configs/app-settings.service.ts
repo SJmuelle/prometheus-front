@@ -296,6 +296,15 @@ export class AppSettingsService {
         }
     };
 
+        /**
+    * @description: End-point agenda decision
+    */
+         public busquedaActividadEconomica = {
+            url: {
+                base: EndPoints.uri('/generic/listado-actividad-economica'),
+            }
+        };
+
 
     /**
     * @description: End-point agenda decision

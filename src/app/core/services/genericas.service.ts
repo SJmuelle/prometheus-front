@@ -115,6 +115,40 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
     }
     /**
+     * @description: Obtiene nivel de estudii
+     */
+         public getTipoServicios(): Observable<any> {
+            const params: string = 'TIPO-SERVICIO-PLEXA';
+            return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+        }
+    /**
+    * @description: Obtiene nivel de estudii
+     */
+     public getTurnoVehiculos(): Observable<any> {
+        const params: string = 'TIPO-JORNADA';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+    * @description: Obtiene nivel de estudii
+     */
+     public getTipoCombustibles(): Observable<any> {
+        const params: string = 'TIPO-COMBUSTIBLE';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+     * @description: Obtiene nivel de estudii
+     */
+    public getlistadoOcupaciones(): Observable<any> {
+        const params: string = 'listado-ocupaciones';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
+    public postActividadEconomica(numeroSolicitud: number): Observable<any> {
+        let data = {
+            numeroSolicitud: numeroSolicitud
+        }
+        return this._http.post(this._appSettings.busquedaActividadEconomica.url.base, data);
+    }
+    /**
         * @description: obtiene nivel de estudii
         */
     public getTipoCuentaBancaria(): Observable<any> {
@@ -137,7 +171,7 @@ export class GenericasService {
     public getSalarioBasico(): Observable<any> {
         // const params: string = 'ESTADO-CUENTA';
         let data = {
-          
+
         }
         return this._http.post(`${this._appSettings.salarioBasico.url.base}`,data);
     }
@@ -145,7 +179,7 @@ export class GenericasService {
     * @description: Obtiene nivel de estudii
     */
     public getEntidadBancaria(): Observable<any> {
-        const params: string = 'obtener-bancos';
+        const params: string = 'obtener-bancos-consumo';
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
     }
     /**
