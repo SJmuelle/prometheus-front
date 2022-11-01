@@ -20,7 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
 import { UtilityService } from 'app/resources/services/utility.service';
-// import moment from "moment";
+import moment from "moment";
 import 'moment/locale/es';
 
 @Component({

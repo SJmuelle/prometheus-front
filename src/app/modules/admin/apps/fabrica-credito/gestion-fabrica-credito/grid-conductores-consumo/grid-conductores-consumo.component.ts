@@ -33,7 +33,6 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
   }
 
   ngOnInit(): void {
-    debugger
       this.cargarReferencias();
       this.escuchaObservable();
   }
