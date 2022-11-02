@@ -15,3 +15,15 @@ thead th {
         max-height: 46rem;
     }
 }
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+}

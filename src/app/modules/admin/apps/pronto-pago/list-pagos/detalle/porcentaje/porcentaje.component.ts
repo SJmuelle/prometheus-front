@@ -15,7 +15,9 @@ export class PorcentajeComponent implements OnInit {
   constructor(public pago: ProntoPagoService, public dialogRef: MatDialogRef<PorcentajeComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {dialogRef.disableClose = true}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.data)
+  }
 
   formatLabel(value: number) {
     return value + '%';

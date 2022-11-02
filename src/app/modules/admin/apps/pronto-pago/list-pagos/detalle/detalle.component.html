@@ -1,45 +1,61 @@
 <h1 mat-dialog-title>Detalle de planilla negociación</h1>
-<div mat-dialog-content class="flex flex-row w-full gap-4">
-    <div class="flex flex-col lg:w-4/5 xl:w-1/2">
+<div mat-dialog-content class="flex flex-row w-full gap-4 mx-0">
+    <div class="flex flex-col lg:w-3/5 xl:w-1/2">
         <div class="flex flex-row gap-4">
             <div class="flex flex-row gap-2">
-                <p class="text-lg text-gray-400 font-medium">Identificación:</p>
-                <p class="text-lg text-gray-900 font-medium">{{data.identificacion}}</p>
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Identificación:</p>
+                <p class="lg:text-base xl:text-lg">{{data.identificacion}}</p>
             </div>
             <div class="flex flex-row gap-2">
-                <p class="text-lg text-gray-400 font-medium">Propietario:</p>
-                <p class="text-lg text-gray-900 font-medium">{{data.nombrePropietario}}</p>
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Propietario:</p>
+                <p class="lg:text-base xl:text-lg">{{data.nombrePropietario}}</p>
             </div>
         </div>
         <div class="flex flex-row gap-4">
             <div class="flex flex-row gap-2">
-                <p class="text-lg text-gray-400 font-medium">Celular:</p>
-                <p class="text-lg text-gray-900 font-medium">{{data.contacto}}</p>
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Celular:</p>
+                <p class="lg:text-base xl:text-lg">{{data.contacto}}</p>
             </div>
-            <div class="flex flex-row gap-2">
-                <p class="text-lg text-gray-400 font-medium">Correo:</p>
-                <p class="text-lg text-gray-900 font-medium">{{data.email}}</p>
+            <div class="xl:ml-8 flex flex-row gap-2">
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Correo:</p>
+                <p class="lg:text-base xl:text-lg">{{data.email}}</p>
             </div>
         </div>
     </div>
-    <div class="flex lg:flex-col xl:flex-row lg:w-1/5 xl:w-2/5 justify-start gap-4">
-        <div class="flex flex-col bg-card border rounded-2xl p-2 h-15 max-w-26">
-            <div class="flex flex-row justify-center">
-                <div class="text-6xl font-bold tracking-tight leading-none">
-                    {{countPlanilla}} /
+    <div class="flex flex-row lg:w-2/5 xl:w-3/5 justify-end gap-4">
+        <div class="flex flex-col bg-card border rounded-2xl p-2 lg:h-12 xl:h-15 lg:max-w-26 xl:max-w-40">
+            <div class="flex flex-row justify-center gap-1">
+                <div class="lg:mt-1 xl:mt-2">
+                    <mat-icon class="lg:icon-size-5 xl:icon-size-6" svgIcon="heroicons_outline:clipboard-check"></mat-icon>
                 </div>
-                <div class="text-xl font-semibold text-secondary tracking-tight leading-none mt-3">
-                    {{data.totalPlanilla}}
+                <div class="flex flex-row gap-1">
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        {{countPlanilla}}
+                    </div>
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        /
+                    </div>
+                    <div class="text-base xl:text-xl font-semibold text-secondary tracking-tight leading-none lg:mt-2 xl:mt-3.5">
+                        {{data.totalPlanilla}}
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="flex flex-col bg-card border rounded-2xl p-2 h-15 max-w-80">
-            <div class="flex flex-row justify-center">
-                <div class="text-6xl font-bold tracking-tight leading-none">
-                    {{total | number}} /
+        <div class="flex flex-col bg-card border rounded-2xl p-2 lg:h-12 xl:h-15 lg:max-w-80 xl:max-w-90">
+            <div class="flex flex-row justify-center gap-1">
+                <div class="lg:mt-1 xl:mt-2">
+                    <mat-icon class="lg:icon-size-5 xl:icon-size-6" svgIcon="mat_outline:monetization_on"></mat-icon>
                 </div>
-                <div class="text-xl font-semibold text-secondary tracking-tight leading-none mt-3">
-                    {{data.saldoTotalPlanilla | number}}
+                <div class="flex flex-row gap-1">
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        {{total | number}}
+                    </div>
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        /
+                    </div>
+                    <div class="text-base xl:text-xl font-semibold text-secondary tracking-tight leading-none lg:mt-2 xl:mt-3.5">
+                        {{data.saldoTotalPlanilla | number}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -56,10 +72,10 @@
                         </div>
                     </th>
                     <th class="py-3 text-center">Planilla</th>
-                    <th class="py-3 text-center">Transportadora</th>
                     <th class="py-3 text-center">Valor pronto pago</th>
                     <th class="py-3 text-center">Fecha de planilla</th>
-                    <th class="py-3 text-center">Factoring</th>
+                    <th class="py-3 text-center">% Factoring</th>
+                    <th class="py-3 text-center">Descuento factoring</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -70,22 +86,12 @@
                         </div>
                     </td>
                     <td class="text-sm border text-center">{{ item.planilla}}</td>
-                    <td class="text-sm border text-center">{{ item.transportadora }}</td>
                     <td class="text-sm border text-center">$ {{ item.valorPlanilla | number }}</td>
                     <td class="text-sm border text-center">{{cambiarFecha(item.fechaPlanilla)}}</td>
                     <td class="text-sm border text-center">{{item.porcentajeNegociacion | number}} %</td>
+                    <td class="text-sm border text-center">$ {{item.valorDescuentoNegociacion | number}}</td>
                 </tr>
             </tbody>
-            <!-- <tfoot>
-                <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900">
-                    <th class="border px-4 py-2 text-lg text-gray-400 font-medium">Planillas seleccionadas</th>
-                    <th colspan="5" class="border px-4 py-2 text-lg text-gray-900 font-medium">{{countPlanilla}} / {{data.totalPlanilla}}</th>
-                </tr>
-                <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900">
-                    <th class="border px-4 py-2 text-lg text-gray-400 font-medium">Total a pagar</th>
-                    <th colspan="5" class="border px-4 py-2 text-lg text-gray-900 font-medium">$ {{total | number}} / $ {{data.saldoTotalPlanilla | number}}</th>
-                </tr>
-            </tfoot> -->
         </table>
     </div>
     <div class="flex flex-row w-full justify-center" *ngIf="listado.length<1">

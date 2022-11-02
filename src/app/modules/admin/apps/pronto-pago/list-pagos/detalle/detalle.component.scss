@@ -22,3 +22,15 @@ thead th {
     background-color: #F9FAFB;
     z-index: 90;
 }
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+}

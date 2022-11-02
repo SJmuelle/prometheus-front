@@ -28,7 +28,6 @@ export class DetalleComponent implements OnInit {
 
   ngOnInit(): void {
     this.consultarTransportadoras()
-    console.log(this.data)
     if (this.data.email=='') {
       this.data.email = 'N/A'
     }
@@ -40,7 +39,6 @@ export class DetalleComponent implements OnInit {
       Swal.close();
       if (response) {
         this.listado = response.data;
-        console.log(this.listado)
       } else {
         this.listado = [];
       }
@@ -53,7 +51,8 @@ export class DetalleComponent implements OnInit {
       data: {
         minimo: this.data.minimo,
         maximo: this.data.maximo,
-        planilla: this.factoring
+        planilla: this.factoring,
+        listado: this.planillas
       },
       disableClose: true
     });
@@ -122,6 +121,9 @@ export class DetalleComponent implements OnInit {
         )
         this.factoring.push({
           "idProntoPago": item.idProntoPago
+        })
+        this.planillas.push({
+          "planilla":item.planilla
         })
       }
     }else{
@@ -316,7 +318,9 @@ export class DetalleComponent implements OnInit {
     Swal.fire({
       title: '¿Seguro de aceptar las planillas?',
       icon: 'question',
-      html: 'Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso',
+      html: '<p class="text-justify">Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso.</p>'+
+            '<p class="text-justify m-0">Tenga en cuenta que si una planilla tiene 0% en el <b>Factoring</b>, se le aplicará el valor maximo de '
+            +this.data.maximo+'% para llevar a cabo el proceso.</p>',
       showDenyButton: true,
       confirmButtonText: 'Si',
       denyButtonText: 'No',
@@ -335,7 +339,9 @@ export class DetalleComponent implements OnInit {
     Swal.fire({
       title: '¿Seguro de rechazar las planillas?',
       icon: 'question',
-      html: 'Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso',
+      html: '<p class="text-justify">Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso.</p>'+
+            '<p class="text-justify m-0">Tenga en cuenta que si una planilla tiene 0% en el <b>Factoring</b>, se le aplicará el valor maximo de '
+            +this.data.maximo+'% para llevar a cabo el proceso.</p>',
       showDenyButton: true,
       confirmButtonText: 'Si',
       denyButtonText: 'No',
