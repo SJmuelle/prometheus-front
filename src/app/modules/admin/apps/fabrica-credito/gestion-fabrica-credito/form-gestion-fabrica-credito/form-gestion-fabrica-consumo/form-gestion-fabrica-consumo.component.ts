@@ -1269,7 +1269,6 @@ private getActividadEconomica(codigo:number): void {
     public validacionEntidad(tipo: string) {
 
         this.entidadBancaria$.forEach(element => {
-            debugger;
             for (const item of element.data) {
                 if(item.codigo == tipo ){
                     this.form.controls['costoTransaccion'].setValue(this.utility.formatearNumero(String(item.costoTransaccion)));

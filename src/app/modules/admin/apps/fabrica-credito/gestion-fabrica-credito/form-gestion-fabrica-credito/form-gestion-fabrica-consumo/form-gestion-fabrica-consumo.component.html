@@ -865,24 +865,27 @@
                                 </ng-container>
                             </div>
                             <div class="-mx-3 md:flex mt-3 mb-2">
-                                <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
+                                <ng-container *ngIf="form.controls['entidadBancaria'].value != '1507'">
+                                <ng-container *ngIf="tipoCuentaBancaria$ | async as tipoCuentaBancaria">
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                         <mat-label>Tipo de cuenta</mat-label>
-                                        <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
+                                        <mat-select [value]="'seleccione'" [formControlName]="'tipoCuentaBancaria'">
                                             <mat-option disabled [value]="'seleccione'">Seleccione
                                             </mat-option>
-                                            <mat-option *ngFor="let item of entidadBancaria.data" [value]="item.codigo">
-                                                {{item.nombre}}
+                                            <mat-option *ngFor="let item of tipoCuentaBancaria.data"
+                                                [value]="item.codigoOpcion">
+                                                {{item.descripcionOpcion}}
                                             </mat-option>
                                         </mat-select>
                                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                         </mat-icon>
                                     </mat-form-field>
+                                </ng-container>
+                            </ng-container>
                                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                        <mat-label > {{ entidadBancaria == 'NEQUI' ? "Celular vinculado a nequi" : "No. de cuenta"}}  </mat-label>
+                                        <mat-label > {{ form.controls['entidadBancaria'].value == '1507' ? "Celular vinculado a nequi" : "No. de cuenta"}}  </mat-label>
                                         <input matInput type="text" [formControlName]="'numeroCuentaBancaria'" readonly>
                                     </mat-form-field>
-                                </ng-container>
                                 <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
                                     <mat-label>Entidad bancaria</mat-label>
                                     <input matInput type="text" [formControlName]="'nombreNegocio'">
