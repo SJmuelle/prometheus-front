@@ -1,21 +1,47 @@
 <h1 mat-dialog-title>Detalle de planilla negociación</h1>
-<div mat-dialog-content class="flex flex-row justify-between">
-    <div class="flex flex-col">
-        <div class="flex flex-row gap-2">
-            <p class="text-lg text-gray-400 font-medium">Identificacion:</p>
-            <p class="text-lg text-gray-900 font-medium">{{data.identificacion}}</p>
+<div mat-dialog-content class="flex flex-row w-full gap-4">
+    <div class="flex flex-col lg:w-4/5 xl:w-1/2">
+        <div class="flex flex-row gap-4">
+            <div class="flex flex-row gap-2">
+                <p class="text-lg text-gray-400 font-medium">Identificación:</p>
+                <p class="text-lg text-gray-900 font-medium">{{data.identificacion}}</p>
+            </div>
+            <div class="flex flex-row gap-2">
+                <p class="text-lg text-gray-400 font-medium">Propietario:</p>
+                <p class="text-lg text-gray-900 font-medium">{{data.nombrePropietario}}</p>
+            </div>
         </div>
-        <div class="flex flex-row gap-2">
-            <p class="text-lg text-gray-400 font-medium">Propietario:</p>
-            <p class="text-lg text-gray-900 font-medium">{{data.nombrePropietario}}</p>
+        <div class="flex flex-row gap-4">
+            <div class="flex flex-row gap-2">
+                <p class="text-lg text-gray-400 font-medium">Celular:</p>
+                <p class="text-lg text-gray-900 font-medium">{{data.contacto}}</p>
+            </div>
+            <div class="flex flex-row gap-2">
+                <p class="text-lg text-gray-400 font-medium">Correo:</p>
+                <p class="text-lg text-gray-900 font-medium">{{data.email}}</p>
+            </div>
         </div>
-        <div class="flex flex-row gap-2">
-            <p class="text-lg text-gray-400 font-medium">Contacto:</p>
-            <p class="text-lg text-gray-900 font-medium">{{data.contacto}}</p>
+    </div>
+    <div class="flex lg:flex-col xl:flex-row lg:w-1/5 xl:w-2/5 justify-start gap-4">
+        <div class="flex flex-col bg-card border rounded-2xl p-2 h-15 max-w-26">
+            <div class="flex flex-row justify-center">
+                <div class="text-6xl font-bold tracking-tight leading-none">
+                    {{countPlanilla}} /
+                </div>
+                <div class="text-xl font-semibold text-secondary tracking-tight leading-none mt-3">
+                    {{data.totalPlanilla}}
+                </div>
+            </div>
         </div>
-        <div class="flex flex-row gap-2">
-            <p class="text-lg text-gray-400 font-medium">Correo:</p>
-            <p class="text-lg text-gray-900 font-medium">{{data.email}}</p>
+        <div class="flex flex-col bg-card border rounded-2xl p-2 h-15 max-w-80">
+            <div class="flex flex-row justify-center">
+                <div class="text-6xl font-bold tracking-tight leading-none">
+                    {{total | number}} /
+                </div>
+                <div class="text-xl font-semibold text-secondary tracking-tight leading-none mt-3">
+                    {{data.saldoTotalPlanilla | number}}
+                </div>
+            </div>
         </div>
     </div>
 </div>
