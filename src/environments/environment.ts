@@ -6,7 +6,7 @@ export const environment = {
  production: false,
     userName: "APPWEB",
     password: btoa("123456"),
-    apiUrl:"http://localhost:8010/",
+    apiUrl:"http://192.168.138.115:8010/",
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
 };
 
