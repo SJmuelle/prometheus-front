@@ -19,10 +19,4 @@ export class EndPoints {
      static uriPaga(url: string): string {
         return environment.apiUrl + url;
     }
-    /**
-     * @description: URL asignacion de solicitudes
-     */
-     static uriAsig(url: string): string {
-        return environment.apiUrl+'api-fintra/api' + url;
-    }
 }

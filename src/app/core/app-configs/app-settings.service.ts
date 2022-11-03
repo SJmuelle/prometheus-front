@@ -38,11 +38,11 @@ export class AppSettingsService {
      */
      public asignacion = {
         url: {
-            base: EndPoints.uriAsig('/credito/tk/property/asignacion-solicitudes-creditos'),
-            baseAsesor: EndPoints.uriAsig('/generic/qry/tk/listado-analista'),
-            guardarAsesor: EndPoints.uriAsig('/generic/tk/guardar-analista'),
-            actualizarAsesor: EndPoints.uriAsig('/generic/tk/actualizar-analista'),
-            baseUnidades: EndPoints.uriAsig('/generic/qry/tk/listado-tipos-negocios'),
+            base: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos'),
+            baseAsesor: EndPoints.uri('/generic/qry/tk/listado-analista'),
+            guardarAsesor: EndPoints.uri('/generic/tk/guardar-analista'),
+            actualizarAsesor: EndPoints.uri('/generic/tk/actualizar-analista'),
+            baseUnidades: EndPoints.uri('/generic/qry/tk/listado-tipos-negocios'),
         }
     };
     /**
