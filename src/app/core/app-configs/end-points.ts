@@ -19,11 +19,4 @@ export class EndPoints {
      static uriPaga(url: string): string {
         return environment.apiUrl + url;
     }
-
-    /**
-     * @description: URL pagaduria
-     */
-     static uriTranspor(url: string): string {
-        return 'http://demo.fintra.co:8011/' + url;
-    }
 }
