@@ -57,7 +57,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FormGestionFabricaConsumoComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-consumo/form-gestion-fabrica-consumo.component';
 import { GridConductoresConsumoComponent } from './grid-conductores-consumo/grid-conductores-consumo.component';
 import { FormDetallesConductoresComponent } from './form-detalles-conductores/form-detalles-conductores.component';
+import { GridOfertaConsumoComponent } from './grid-oferta-consumo/grid-oferta-consumo.component';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @NgModule({
@@ -88,7 +90,8 @@ import { FormDetallesConductoresComponent } from './form-detalles-conductores/fo
         FabricaOpcionesComponent,
         FormDialogCarteraComprarComponent,
         GridConductoresConsumoComponent,
-        FormDetallesConductoresComponent
+        FormDetallesConductoresComponent,
+        GridOfertaConsumoComponent
     ],
     imports: [
         CommonModule,
@@ -120,7 +123,8 @@ import { FormDetallesConductoresComponent } from './form-detalles-conductores/fo
         FormsModule,
         MatAutocompleteModule,
         QuillModule,
-        MatMenuModule
+        MatMenuModule,
+        MatSliderModule
         // FabricaOpcionesModule
     ],
 

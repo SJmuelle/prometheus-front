@@ -271,6 +271,7 @@ export class AppSettingsService {
     public oferta = {
         url: {
             base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza-seleccionada'),
+            consumo: EndPoints.uri('/generic/obtener-oferta-plexa'),
             postSelectOferta: EndPoints.uri('/generic/actualizar-eleccion-oferta'),
             recalcularOferta: EndPoints.uri('/generic/recalcular-capacidad-pago-libranza'),
         }

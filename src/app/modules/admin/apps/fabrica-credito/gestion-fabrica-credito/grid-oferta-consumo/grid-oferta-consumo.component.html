@@ -1,0 +1,96 @@
+<ng-container *ngIf="listadoOferta$ | async as listadoOferta">
+    <ng-container *ngFor="let item of listadoOferta.data; let i = index">
+        <div class="mb-30 mx-80 relative">
+            <div class="card container mt-2 p-2 shadow rounded-3xl">
+                <h3 class="title mt-3 "> Detalle de la oferta</h3>
+
+                <div class="flex flex-col mt-2 text-secondary text-center">
+                    <div>
+                        <b> Monto del credito </b>
+                    </div>
+                </div>
+                <div class="flex items-baseline whitespace-nowrap justify-center">
+                    <div class="text-xl font-semibold leading-tight tracking-tight">
+                        <b>${{item.monto | number}}</b>
+                    </div>
+                </div>
+                <div class="flex flex-col mt-2 text-secondary text-center">
+                    <div>
+                        <b> Plazos</b>
+                    </div>
+                </div>
+                <div class="flex items-baseline whitespace-nowrap justify-center">
+                    <div class="text-xl font-semibold leading-tight tracking-tight">
+                        <b>{{item.plazo | number}} meses</b>
+                    </div>
+                </div>
+                <hr class="mx-13">
+                <div class="grid grid-cols-2">
+                    <div class="card segundario mx-5 text-center">
+                        <div class="subtitule mt-2 ">Cuota diaria aproximada</div>
+                        <h3 class="titleCard mb-2">${{item.valorCuotaDiaria|number}}</h3>
+                    </div>
+                    <div class="card primario mx-5 text-center">
+                        <div class="subtitule mt-2">Cuota mensual aproximada</div>
+                        <h3 class="titleCard mb-2">${{item.valorCuotaMesual|number}}</h3>
+                    </div>
+                </div>
+                <hr class="mx-13">
+                <div class="gap-x-10 grid grid-cols-1 md:grid-cols-2 ml-12 pb-6">
+                    <div class="flex">
+                        <mat-icon class="icon-size-5 text-green-600" [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                        <div class="ml-2 leading-5">
+                            Tasa Interes
+                            <b>${{
+                                item.tasaInteres | number
+                                }}</b>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <mat-icon class="icon-size-5 text-green-600" [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                        <div class="ml-2 leading-5">
+                            Valor estudio crédito
+                            <b>${{
+                                item.valorEstudioCredito | number
+                                }}</b>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <mat-icon class="icon-size-5 text-green-600" [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                        <div class="ml-2 leading-5">
+                            Valor aval
+                            <b>${{
+                                item.tasaInteres | number
+                                }}</b>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <mat-icon class="icon-size-5 text-green-600" [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                        <div class="ml-2 leading-5">
+                            Seguro
+                            <b>${{
+                                item.valorSeguro | number
+                                }}</b>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <mat-icon class="icon-size-5 text-green-600" [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                        <div class="ml-2 leading-5">
+                            Tecnologia
+                            <b>${{
+                                item.valorTecnologia | number
+                                }}</b>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </ng-container>
+</ng-container>

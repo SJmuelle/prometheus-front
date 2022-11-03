@@ -213,6 +213,14 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
 
+        /**
+ * @description: Obtiene listado de tipos de Paretensco
+ */
+         public getTipoVia(): Observable<any> {
+            const params: string = 'nomenclarturas';
+            return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+        }
+
     /**
     * @description:
     */

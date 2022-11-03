@@ -23,6 +23,16 @@ export class OfertaService {
     return this._http.post(this._appSettings.oferta.url.base, data);
   }
 
+    /**
+   * @description:
+   */
+     public getListadoOfertaConsumo(numeroSolicitud: number): Observable<any> {
+      let data = {
+        numeroSolicitud: numeroSolicitud
+      }
+      return this._http.post(this._appSettings.oferta.url.consumo, data);
+    }
+
   /**
  * @description:
  */
