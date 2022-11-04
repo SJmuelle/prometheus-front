@@ -36,7 +36,7 @@ export class AppSettingsService {
     /**
      * @description: End-point asignacion de creditos
      */
-     public asignacion = {
+    public asignacion = {
         url: {
             base: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos'),
             baseAsesor: EndPoints.uri('/generic/qry/tk/listado-analista'),
@@ -118,7 +118,7 @@ export class AppSettingsService {
     /**
      * @description: End-point Transferencias
      */
-     public transferencias = {
+    public transferencias = {
         url: {
             baseTransferencia: EndPoints.uriBase('/transferencia/transferencia-cxp-proveedor'),
             baseProveedor: EndPoints.uriBase('/generic/qry/buscar-proveedor'),
@@ -129,7 +129,7 @@ export class AppSettingsService {
     /**
      * @description: End-point Archivos de transferencias
      */
-     public archivos = {
+    public archivos = {
         url: {
             ListFiles: EndPoints.uriBase('/generic/qry/tk/transferencia-consultar-achivo'),
             DownFile: EndPoints.uriBase('/transferencia/obtener-achivo-base64')
@@ -146,6 +146,16 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
+        }
+    };
+    /**
+     * @description: End-point referencias
+     */
+    public conductores = {
+        url: {
+            base: EndPoints.uri('/generic/qry/consulta-conductores'),
+            baseConductoresCrear: EndPoints.uri('/generic/cre-agregar-conductor-consumo'),
+            baseConductores: EndPoints.uri('/generic/cre-actualizar-conductor-consumo'),
         }
     };
     /**
@@ -229,8 +239,8 @@ export class AppSettingsService {
             baseCompradas: EndPoints.uri('/generic/qry/tk/obligaciones-compradas-hijas'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
-            editar:EndPoints.uri("/generic/actualizar-cartera"),
-            guardarGestionCompra:EndPoints.uri("/generic/guardar-gestion-compra"),
+            editar: EndPoints.uri("/generic/actualizar-cartera"),
+            guardarGestionCompra: EndPoints.uri("/generic/guardar-gestion-compra"),
             pasarAgenda: EndPoints.uri('/generic/cre-valida-gestion-cartera'),
             validadorTotalLibranza: EndPoints.uri('/generic/validador-total-libranza'),
             //negociacion
@@ -309,14 +319,14 @@ export class AppSettingsService {
         }
     };
 
-        /**
-    * @description: End-point agenda decision
-    */
-         public busquedaActividadEconomica = {
-            url: {
-                base: EndPoints.uri('/generic/listado-actividad-economica'),
-            }
-        };
+    /**
+* @description: End-point agenda decision
+*/
+    public busquedaActividadEconomica = {
+        url: {
+            base: EndPoints.uri('/generic/listado-actividad-economica'),
+        }
+    };
 
 
     /**

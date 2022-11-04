@@ -4,20 +4,11 @@
             <button mat-raised-button
                     color="accent"
                     type="button"
-                    (click)="onDialogReferencia()"
+                    (click)="onDialogConductores()"
             >
-                Nueva referencia
+                Nuevo conductor
             </button>
         </ng-container>
-        <!--<ng-container *ngIf="datos">
-            <button mat-raised-button
-                    color="accent"
-                    type="button"
-                    (click)="onDialogReferenciacion()"
-            >
-                Nueva referencia
-            </button>
-        </ng-container>-->
     </div>
     <ng-container >
         <div class="col-md-12 col-lg-12">
@@ -26,20 +17,20 @@
                 <tr
                     class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                     <th class="px-4 py-3"></th>
-                    <th class="px-4 py-3">Nombre / Razon social</th>
+                    <th class="px-4 py-3">Nombre del conductor</th>
                     <th class="px-4 py-3">Teléfono / celular</th>
-                    <th class="px-4 py-3">Tipo de referencia</th>
+                    <th class="px-4 py-3">Dirección</th>
                     <th class="px-4 py-3">Estado</th>
                     <th class="px-4 py-3">Fecha de referencia</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white">
-                <ng-container *ngIf="referencias$ | async as items">
+                <ng-container *ngIf="Conductores$ | async as items">
                     <ng-container *ngFor="let item of items.data">
                         <tr>
                             <td class="px-1 text-sm border">
                                 <button mat-icon-button
-                                        (click)="onGetReferencia(item)"
+                                        (click)="onGetConductores(item)"
                                         matTooltip="Ver información"
                                 >
                                     <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
@@ -47,8 +38,8 @@
                             </td>
                             <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
                             <td class="px-2 text-sm border">{{ item.celular}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionTipoReferencia}} {{item.descripcionParentesco}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
+                            <td class="px-2 text-sm border">{{ item.direccionResidencia}}</td>
+                            <td class="px-2 text-sm border">{{ item.descripcionEstadoReferencia}}</td>
                             <td class="px-2 text-sm border">{{ item.fechaReferencia }}</td>
                         </tr>
                     </ng-container>
@@ -57,13 +48,7 @@
             </table>
         </div>
     </ng-container>
-    <!--Formulario detalles referencias-->
     <div class="sm:mt-13">
-        <!--<ng-container *ngSwitchCase="true">
-             <app-form-detalles-referencias
-                 (cerrarFormulario)=onCerrarFormularioDetalle($event)
-             ></app-form-detalles-referencias>
-        </ng-container>-->
     </div>
 </div>
 

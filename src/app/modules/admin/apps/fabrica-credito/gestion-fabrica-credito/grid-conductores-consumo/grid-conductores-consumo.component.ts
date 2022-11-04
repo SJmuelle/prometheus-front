@@ -7,9 +7,8 @@ import { MatSelectChange } from "@angular/material/select";
 import { GenericasService } from "../../../../../../core/services/genericas.service";
 import { ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ReferenciasService } from "../../../../../../core/services/referencias.service";
 import Swal from "sweetalert2";
-import { DirectionsComponent } from "../../../../../../shared/modal/directions/directions.component";
+import { ConductoresService } from 'app/core/services/conductores.service';
 
 
 
@@ -19,13 +18,13 @@ import { DirectionsComponent } from "../../../../../../shared/modal/directions/d
   styleUrls: ['./grid-conductores-consumo.component.scss']
 })
 export class GridConductoresConsumoComponent implements OnInit, OnDestroy, AfterViewInit {
-  public referencias$: Observable<any>;
+  public Conductores$: Observable<any>;
   public esVer: boolean = false;
   public subscription$: Subscription;
   @Input() datos: any;
   constructor(
       private route: ActivatedRoute,
-      private referenciasService: ReferenciasService,
+      private conductoresService: ConductoresService,
       private _dialog: MatDialog
   ) {
 
@@ -33,16 +32,16 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
   }
 
   ngOnInit(): void {
-      this.cargarReferencias();
+      this.cargarConductores();
       this.escuchaObservable();
   }
   /**
-   * @description: Abre el dialogo de nueva referencia
+   * @description: Abre el dialogo de nueva Conductores
    */
-  public onDialogReferencia(): void {
+  public onDialogConductores(): void {
       const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       const dialogRef = this._dialog.open(FormDetallesConductoresComponent, {
-          data: {numeroSolicitud: numeroSolicitud, tipo:"N"},
+          data: {numeroSolicitud: Number(numeroSolicitud), tipo:"N"},
           minWidth: '680px',
           minHeight: '420px',
           disableClose: true,
@@ -50,22 +49,23 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
       dialogRef.afterClosed().toPromise();
   }
   /**
-   * @description: Cerrar formulario de detalles referencias
+   * @description: Cerrar formulario de detalles Conductoress
    */
   public onCerrarFormularioDetalle(event: boolean) {
       this.esVer = event;
   }
+  
   /**
-   * @description: carga las referencias desde el inicio
+   * @description: carga las Conductoress desde el inicio
    */
-  public cargarReferencias(): void {
+  public cargarConductores(): void {
       const codigo: string = this.route.snapshot.paramMap.get('num');
       if (codigo) {
-          this.getReferencias(codigo);
+          this.getConductores(codigo);
       }
   }
 
-  public onGetReferencia(datos: any): void {
+  public onGetConductores(datos: any): void {
      let data={...datos, tipo:"V"}
      console.log(data)
      debugger;
@@ -77,22 +77,22 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
           data: data
       });
       dialogRef.afterClosed().toPromise();
-      this.referenciasService.seleccionDatosReferencia.next({value: datos, show: true});
+      this.conductoresService.seleccionDatosConductores.next({value: datos, show: true});
   }
 
   /**
-   * @description: Obtiene las referencias
+   * @description: Obtiene las Conductoress
    */
-  private getReferencias(codigo: string): void {
-      this.referencias$ = this.referenciasService.getReferencias(codigo);
+  private getConductores(codigo: string): void {
+      this.Conductores$ = this.conductoresService.getConductores(codigo);
   }
   /**
    * @description:  Escucha el observable evento
    */
   private escuchaObservable(): void {
-      this.subscription$ = this.referenciasService.eventos$.subscribe((res) => {
+      this.subscription$ = this.conductoresService.eventos$.subscribe((res) => {
           if (res) {
-              this.cargarReferencias();
+              this.cargarConductores();
           }
       });
   }
@@ -105,7 +105,7 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
     ngAfterViewInit(): void {
         if (this.datos) {
             if (Object.keys(this.datos).length) {
-                this.getReferencias(this.datos.numeroSolicitud);
+                this.getConductores(this.datos.numeroSolicitud);
             }
         }
     }
