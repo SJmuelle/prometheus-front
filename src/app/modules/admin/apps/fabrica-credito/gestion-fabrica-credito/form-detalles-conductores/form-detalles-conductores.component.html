@@ -83,8 +83,7 @@
                         <ng-container *ngIf="ciudades$ | async as ciudades">
                             <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                                 <mat-label>Ciudad de residencia</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
-                                    (selectionChange)="seleccionCiudad($event)">
+                                <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'" >
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
@@ -163,7 +162,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" >
             Guardar
         </button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">

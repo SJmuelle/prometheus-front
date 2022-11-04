@@ -453,7 +453,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
                     this.form.controls['compraDia'].setValue(this.form.value.compraDia.toString());
                 }
                 if (data.tanqueoDia) {
-                    this.form.controls['tanqueoDia'].setValue(this.form.value.TanqueoDia.toString());
+                    this.form.controls['tanqueoDia'].setValue(this.form.value.tanqueoDia.toString());
                 }
                 this.tipoDocumento = data.tipoDocumento;
                 const datosDocumentos: any = {

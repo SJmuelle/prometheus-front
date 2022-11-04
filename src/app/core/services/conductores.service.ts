@@ -43,5 +43,13 @@ export class ConductoresService {
     return this._http.post(this._appSettings.conductores.url.baseConductores, datos);
   }
 
+   /**
+   * @description: Actualiza la Conductores
+   * @param: tipo:string si es N es nuevo crea sino actualiza
+   */
+  public guardado(datos:any, tipo:string){
+    return this._http.post(tipo=='N'?this._appSettings.conductores.url.baseConductoresCrear:this._appSettings.conductores.url.baseConductores, datos);
+  }
+
 
 }

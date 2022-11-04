@@ -33,24 +33,22 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
 
   ngOnInit(): void {
       this.cargarConductores();
-      this.escuchaObservable();
   }
-  /**
-   * @description: Abre el dialogo de nueva Conductores
-   */
+
   public onDialogConductores(): void {
       const numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
       const dialogRef = this._dialog.open(FormDetallesConductoresComponent, {
           data: {numeroSolicitud: Number(numeroSolicitud), tipo:"N"},
-          minWidth: '680px',
-          minHeight: '420px',
+          minWidth: '480px',
+          minHeight: '460px',
           disableClose: true,
       });
-      dialogRef.afterClosed().toPromise();
+      dialogRef.afterClosed().subscribe(result => {
+        this.cargarConductores();
+      });
   }
-  /**
-   * @description: Cerrar formulario de detalles Conductoress
-   */
+
+
   public onCerrarFormularioDetalle(event: boolean) {
       this.esVer = event;
   }
@@ -68,16 +66,17 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
   public onGetConductores(datos: any): void {
      let data={...datos, tipo:"V"}
      console.log(data)
-     debugger;
       this.esVer = true;
       const dialogRef = this._dialog.open(FormDetallesConductoresComponent, {
           minWidth: '480px',
-          minHeight: '440px',
+          minHeight: '460px',
           disableClose: true,
           data: data
       });
-      dialogRef.afterClosed().toPromise();
-      this.conductoresService.seleccionDatosConductores.next({value: datos, show: true});
+      dialogRef.afterClosed().subscribe(result => {
+        this.cargarConductores();
+      });
+
   }
 
   /**
@@ -85,16 +84,6 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
    */
   private getConductores(codigo: string): void {
       this.Conductores$ = this.conductoresService.getConductores(codigo);
-  }
-  /**
-   * @description:  Escucha el observable evento
-   */
-  private escuchaObservable(): void {
-      this.subscription$ = this.conductoresService.eventos$.subscribe((res) => {
-          if (res) {
-              this.cargarConductores();
-          }
-      });
   }
 
     ngOnDestroy(): void {

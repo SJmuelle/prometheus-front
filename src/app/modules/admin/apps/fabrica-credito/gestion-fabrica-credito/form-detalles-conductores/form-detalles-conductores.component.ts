@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ConductoresService } from "app/core/services/conductores.service";
 import { DepartamentosCiudadesService } from "app/core/services/departamentos-ciudades.service";
 import { GenericasService } from "app/core/services/genericas.service";
-import { Observable, Subscription } from "rxjs";
+import { Observable, Subject, Subscription } from "rxjs";
 import Swal from "sweetalert2";
 
 @Component({
@@ -19,7 +19,7 @@ export class FormDetallesConductoresComponent implements OnInit, OnDestroy {
     public ciudades$: Observable<any>;
     public barrios$: Observable<any>;
     public tipoVia$: Observable<any>;
-    public subscription$: Subscription;
+    public unSubscribe$: Subject<any> = new Subject<any>();
 
 
     constructor(
@@ -33,15 +33,67 @@ export class FormDetallesConductoresComponent implements OnInit, OnDestroy {
     ) { }
 
 
-    ngOnInit(): void {     
+    ngOnInit(): void {
         this.crearFormulario();
         this.form.patchValue(this.data);
         this.getEstadosReferencias();
         this.getDepartamentos();
         this.getTipoVia();
-        
+        this.subscripciones();
+
+
+    }
+
+    private subscripciones(): void {
         this.form.get('codigoDepartamento')?.valueChanges.subscribe(id => { this.getCiudades(id) })
         this.form.get('codigoCiudad')?.valueChanges.subscribe(id => { this.getBarrios(id) })
+        this.form.get('primerNombre')?.valueChanges.subscribe(primerNombre => {
+            this.form.controls['nombreCompleto'].setValue(primerNombre + ' ' + this.form.value.primerApellido)
+        })
+        this.form.get('primerApellido')?.valueChanges.subscribe(primerApellido => {
+            this.form.controls['nombreCompleto'].setValue(this.form.value.primerNombre + ' ' + primerApellido)
+        })
+
+        this.form.get('direccionViaTipo')?.valueChanges.subscribe(direccionViaTipo => {
+            let direccion = direccionViaTipo + ' ' +
+                this.form.value.direccionViaPrincipal + ' # ' +
+                this.form.value.direccionViaNumero + ' - ' +
+                this.form.value.direccionViaDistancia + '' +
+                this.form.value.direccionViaComplemento;
+            this.form.controls['direccion'].setValue(direccion)
+        })
+        this.form.get('direccionViaPrincipal')?.valueChanges.subscribe(direccionViaPrincipal => {
+            let direccion = this.form.value.direccionViaTipo + ' ' +
+                direccionViaPrincipal + ' ' +
+                this.form.value.direccionViaNumero + ' ' +
+                this.form.value.direccionViaDistancia + ' ' +
+                this.form.value.direccionViaComplemento;
+            this.form.controls['direccion'].setValue(direccion)
+        })
+        this.form.get('direccionViaNumero')?.valueChanges.subscribe(direccionViaNumero => {
+            let direccion = this.form.value.direccionViaTipo + ' ' +
+                this.form.value.direccionViaPrincipal + ' ' +
+                direccionViaNumero + ' ' +
+                this.form.value.direccionViaDistancia + ' ' +
+                this.form.value.direccionViaComplemento;
+            this.form.controls['direccion'].setValue(direccion)
+        })
+        this.form.get('direccionViaDistancia')?.valueChanges.subscribe(direccionViaDistancia => {
+            let direccion = this.form.value.direccionViaTipo + ' ' +
+                this.form.value.direccionViaPrincipal + ' ' +
+                this.form.value.direccionViaNumero + ' ' +
+                direccionViaDistancia + ' ' +
+                this.form.value.direccionViaComplemento;
+            this.form.controls['direccion'].setValue(direccion)
+        })
+        this.form.get('direccionViaComplemento')?.valueChanges.subscribe(direccionViaComplemento => {
+            let direccion = this.form.value.direccionViaTipo + ' ' +
+                this.form.value.direccionViaPrincipal + ' ' +
+                this.form.value.direccionViaNumero + ' ' +
+                this.form.value.direccionViaDistancia + ' ' +
+                direccionViaComplemento;
+            this.form.controls['direccion'].setValue(direccion)
+        })
     }
 
 
@@ -66,17 +118,17 @@ export class FormDetallesConductoresComponent implements OnInit, OnDestroy {
         this.form = this.fb.group({
             numeroSolicitud: ['', [Validators.required]],
             idConductor: ['', [Validators.required]],
-            identificacion: ['', [Validators.required], [Validators.required], [Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(10)]],
+            identificacion: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(5), Validators.maxLength(10)]],
             primerNombre: ['', [Validators.required]],
             segundoNombre: [''],
             primerApellido: ['', [Validators.required]],
             segundoApellido: [''],
             nombreCompleto: ['', [Validators.required]],
             email: ['', [Validators.required]],
-            codigoDepartamento:["",[Validators.required]],
-            codigoCiudad:["",[Validators.required]],
-            codigoBarrio:["",[Validators.required]],
-            celular: ['', [Validators.required], [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+            codigoDepartamento: ["", Validators.required],
+            codigoCiudad: ["", Validators.required],
+            codigoBarrio: ["", Validators.required],
+            celular: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
             direccion: ['', [Validators.required]],
             direccionViaTipo: ['', [Validators.required]],
             direccionViaPrincipal: ['', [Validators.required]],
@@ -89,6 +141,10 @@ export class FormDetallesConductoresComponent implements OnInit, OnDestroy {
     }
 
     public onGuardar() {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
         Swal.fire({
             title: 'Guardar información',
             text: '¿Está seguro de guardar información?',
@@ -101,16 +157,21 @@ export class FormDetallesConductoresComponent implements OnInit, OnDestroy {
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-                this.conductoresService.postConductores( this.form.getRawValue())
-                .subscribe((res) => {
-                    debugger
-                    if(res){
+                this.conductoresService.guardado(this.form.getRawValue(),this.data.tipo)
+                    .subscribe((res) => {
+                        Swal.close();
+                        if (res) {
+                            Swal.fire(
+                                'Completado',
+                                'Información guardada con éxito',
+                                'success'
+                            );
+                            this._dialog.close();
+                        }
 
-                    }
-                    this._dialog.close();
-                })
-               
-            } 
+                    })
+
+            }
         })
     }
 
@@ -120,12 +181,11 @@ export class FormDetallesConductoresComponent implements OnInit, OnDestroy {
 
 
     public onCerrar(): void {
-        this.subscription$.unsubscribe();
         this._dialog.close();
     }
 
     ngOnDestroy(): void {
-
+        this.unSubscribe$.unsubscribe();
     }
 
 }
