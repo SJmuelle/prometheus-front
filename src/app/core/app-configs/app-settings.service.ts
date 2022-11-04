@@ -314,7 +314,7 @@ export class AppSettingsService {
     */
          public busquedaActividadEconomica = {
             url: {
-                base: EndPoints.uri('/generic/listado-actividad-economica'),
+                base: EndPoints.uri('/generic/listado-actividad-economica-consumo'),
             }
         };
 
