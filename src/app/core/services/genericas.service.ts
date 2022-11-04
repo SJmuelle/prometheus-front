@@ -142,9 +142,9 @@ export class GenericasService {
         const params: string = 'listado-ocupaciones';
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
     }
-    public postActividadEconomica(numeroSolicitud: number): Observable<any> {
+    public postActividadEconomica(ocupacion: string): Observable<any> {
         let data = {
-            numeroSolicitud: numeroSolicitud
+            ocupacion: ocupacion
         }
         return this._http.post(this._appSettings.busquedaActividadEconomica.url.base, data);
     }

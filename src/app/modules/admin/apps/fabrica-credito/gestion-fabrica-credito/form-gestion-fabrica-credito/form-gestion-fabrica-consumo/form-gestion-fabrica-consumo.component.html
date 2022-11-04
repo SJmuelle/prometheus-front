@@ -461,7 +461,7 @@
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaVinculacion></mat-datepicker>
                             </mat-form-field>
-                            <ng-container *ngIf="form.controls['tipoContrato'].value == 'F'">
+                            <!-- <ng-container *ngIf="form.controls['tipoContrato'].value == 'F'">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha desvinculación </mat-label>
                                     <input matInput [matDatepicker]="fechaFinalizacionContrato"
@@ -470,7 +470,7 @@
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #fechaFinalizacionContrato readonly></mat-datepicker>
                                 </mat-form-field>
-                            </ng-container>
+                            </ng-container> -->
 
 
                         </div>
@@ -513,11 +513,11 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Antigüedad del negocio </mat-label>
-                                <input matInput [matDatepicker]="fechaVinculacion"
-                                    [formControlName]="'fechaVinculacion'">
-                                <mat-datepicker-toggle matSuffix [for]="fechaVinculacion">
+                                <input matInput [matDatepicker]="fechaAntiguedadNegocio"
+                                    [formControlName]="'fechaAntiguedadNegocio'">
+                                <mat-datepicker-toggle matSuffix [for]="fechaAntiguedadNegocio">
                                 </mat-datepicker-toggle>
-                                <mat-datepicker #fechaVinculacion></mat-datepicker>
+                                <mat-datepicker #fechaAntiguedadNegocio></mat-datepicker>
                             </mat-form-field>
                         </div>
                         <div class="-mx-3 md:flex mt-3 mb-2">
@@ -621,29 +621,25 @@
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Ingreso mes</mat-label>
                                 <input matInput type="text" [formControlName]="'ingresos'"
-                                    (keyup)="form.controls['ingresos'].setValue(utility.formatearNumero(form.value.ingresos)); "
-                                    readonly>
+                                    (keyup)="form.controls['ingresos'].setValue(utility.formatearNumero(form.value.ingresos)); ">
                                 <!-- <input matInput type="text" [formControlName]="'valorSolicitado'" [required]="true"> -->
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Otros ingresos (comisiones, arriendos, etc)</mat-label>
                                 <input matInput type="text" [formControlName]="'otrosIngresos'"
-                                    (keyup)="form.controls['otrosIngresos'].setValue(utility.formatearNumero(form.value.otrosIngresos)); "
-                                    readonly>
+                                    (keyup)="form.controls['otrosIngresos'].setValue(utility.formatearNumero(form.value.otrosIngresos)); ">
                             </mat-form-field>
                         </div>
                         <div class="-mx-3 md:flex mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Activos</mat-label>
                                 <input matInput type="text" [formControlName]="'activos'"
-                                    (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); "
-                                    readonly>
+                                    (keyup)="form.controls['activos'].setValue(utility.formatearNumero(form.value.activos)); ">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Pasivos</mat-label>
                                 <input matInput type="text" [formControlName]="'pasivos'"
-                                    (keyup)="form.controls['pasivos'].setValue(utility.formatearNumero(form.value.pasivos)); "
-                                    readonly>
+                                    (keyup)="form.controls['pasivos'].setValue(utility.formatearNumero(form.value.pasivos)); ">
                             </mat-form-field>
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información vehículo</span>
@@ -757,7 +753,7 @@
                         <div class="-mx-3 md:flex mb-2">
                             <ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Compra día combistible</mat-label>
+                                    <mat-label>Compra al día de combustible</mat-label>
                                     <input matInput type="text" [formControlName]="'compraDia'"
                                         (keyup)="form.controls['compraDia'].setValue(utility.formatearNumero(form.value.compraDia)); ">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -819,7 +815,7 @@
                                         {{ form.controls['entidadBancaria'].value == '1507'
                                         ? "Celular vinculado a nequi" : "No. de cuenta"}}
                                     </mat-label>
-                                    <input matInput type="text" [formControlName]="'numeroCuentaBancaria'" readonly>
+                                    <input matInput type="text" [formControlName]="'numeroCuentaBancaria'">
                                 </mat-form-field>
                             </div>
                         </ng-container>

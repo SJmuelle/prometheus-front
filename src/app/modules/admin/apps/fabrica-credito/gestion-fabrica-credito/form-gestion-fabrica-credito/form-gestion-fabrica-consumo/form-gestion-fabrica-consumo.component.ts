@@ -123,10 +123,11 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
         this.getTipoCombustible();
         this.getSalarioBasico();
         this.getTipoOcupacion();
-        this.getActividadEconomica(Number(this.numeroSolicitud));
+        // this.getActividadEconomica(this.form.value.ocupacion.toString());
         this.getTipoVia();
         this.gettipoViaNegocio();
         this.form.get('entidadBancaria')?.valueChanges.subscribe(id => { this.validacionEntidad(id) })
+        this.form.get('ocupacion')?.valueChanges.subscribe(id => {this.getActividadEconomica(id); })
     }
 
 
@@ -249,7 +250,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
 
         //fechas
         const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
-        const fechaExpedicionFormato = moment(fechaExpedicion).format('YYYY-MM-DD');
+        const fechaExpedicionFormato = moment(this.form.value.fechaExpedicionDocumento).format('YYYY-MM-DD');
         const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
         const fechaAntiguedadNegocioFormato = moment(fechaAntiguedadNegocio).format('YYYY-MM-DD');
         // 
@@ -453,9 +454,6 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
                 }
                 if (data.tanqueoDia) {
                     this.form.controls['tanqueoDia'].setValue(this.form.value.TanqueoDia.toString());
-                }
-                if (data.tipo) {
-                    this.form.controls['tipoTercero'].setValue(this.form.value.tipo);
                 }
                 this.tipoDocumento = data.tipoDocumento;
                 const datosDocumentos: any = {
@@ -668,7 +666,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
     * @description: Obtiene los tipos de estados civiles
     */
 
-    private getActividadEconomica(codigo: number): void {
+    private getActividadEconomica(codigo: string): void {
         this.actividadEconomica$ = this.genericaServices.postActividadEconomica(codigo);
     }
     /**
