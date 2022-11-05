@@ -13,6 +13,8 @@ export class ImportFileComponent implements OnInit {
 
   listRowsExcel: any = []; // filas del archivo convertido a JSON
   cabeceras: any = [];
+  ejemplos: any = [];
+  igual: boolean;
   listAsignados: any = {"details":[]};
   filtrarTabla:string=''; // filtrar la tabla
   chequeada: boolean = false;
@@ -21,10 +23,15 @@ export class ImportFileComponent implements OnInit {
   constructor(private pago: PagoMasivoService) { }
 
   ngOnInit() {
+    this.ejemplos = [
+      "Identificacion",
+      "Fecha Pago",
+      "Banco",
+      "Sucursal",
+      "Valor Aplicar Neto",
+      "Comision Recaudo"
+    ]
   }
-  
-  
-
 
   subirArchivo(event) {
     this.listRowsExcel = [];
@@ -39,24 +46,58 @@ export class ImportFileComponent implements OnInit {
       const data = XLSX.utils.sheet_to_json(workbook.Sheets[hoja]);
       this.listRowsExcel = data;
       this.cabeceras=Object.keys(this.listRowsExcel[0])
-      for (let index = 0; index < this.listRowsExcel.length; index++) {
-        const element = this.listRowsExcel[index];
-        element['nitTransportadora']=element['Identificacion'];
-        delete element['Identificacion'];
-        element['fechaPago']=element['Fecha Pago'];
-        delete element['Fecha Pago'];
-        element['banco']=element['Banco'];
-        delete element['Banco'];
-        element['sucursal']=element['Sucursal'];
-        delete element['Sucursal'];
-        element['valorAplicar']=element['Valor Aplicar Neto'];
-        delete element['Valor Aplicar Neto'];
-        element['comisionRecaudo']=element['Comision Recaudo'];
-        delete element['Comision Recaudo'];
-        element.chequeado = false;
+      this.comparar(this.cabeceras, this.ejemplos)
+      if (this.igual==true) {
+        for (let index = 0; index < this.listRowsExcel.length; index++) {
+          const element = this.listRowsExcel[index];
+          element['nitTransportadora']=element['Identificacion'];
+          delete element['Identificacion'];
+          element['fechaPago']=element['Fecha Pago'];
+          delete element['Fecha Pago'];
+          element['banco']=element['Banco'];
+          delete element['Banco'];
+          element['sucursal']=element['Sucursal'];
+          delete element['Sucursal'];
+          element['valorAplicar']=element['Valor Aplicar Neto'];
+          delete element['Valor Aplicar Neto'];
+          element['comisionRecaudo']=element['Comision Recaudo'];
+          delete element['Comision Recaudo'];
+          element.chequeado = false;
+        }
+      } else {
+        this.listRowsExcel = [];
+        this.cabeceras = [];
+        Swal.fire({
+          title: 'Archivo incorrecto',
+          icon: 'info',
+          imageUrl: 'assets/images/estructuras.png',
+          imageWidth: 400,
+          html: '<p class="text-justify">Los archivos a importar deben cumplir con la estructura mostrada.</p>'
+        })
       }
     }
     this.fileInput.nativeElement.value = '';
+  }
+
+  comparar(cabeceras:any[], ejemplo:any[]){
+    console.log(cabeceras)
+    console.log(ejemplo)
+    if (cabeceras.length == ejemplo.length) {
+      for (let i = 0; i < cabeceras.length; i++) {
+        const elementoUno = cabeceras[i];
+        const elementoDos = ejemplo[i]
+        if(elementoUno[i] == elementoDos[i]){
+          this.igual = true;
+          console.log(this.igual)
+        }else{
+          this.igual = false;
+          console.log(this.igual)
+        }
+      }
+    }else{
+      this.igual = false;
+      console.log(this.igual)
+    }
   }
 
   updateAllComplete() {

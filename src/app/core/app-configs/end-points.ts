@@ -19,11 +19,4 @@ export class EndPoints {
      static uriPaga(url: string): string {
         return environment.apiUrl + url;
     }
-
-    /**
-     * @description: Url para probar los endpoint con demo
-     */
-     static uriDemo(url: string): string {
-        return environment.apiUrl + 'api-fintra/api' + url;
-    }
 }

@@ -39,7 +39,7 @@ export class AppSettingsService {
      */
      public pago = {
         url: {
-            base: EndPoints.uriDemo('/generic/aplicacion-pago-finl')
+            base: EndPoints.uri('/generic/aplicacion-pago-finl')
         }
     };
     /**
