@@ -16,4 +16,11 @@ export class PagoMasivoService {
    public postPagoMasivo(datos: any): Observable<any> {
     return this._http.post(this._appSettings.pago.url.base, datos);
   }
+
+  /**
+   * @description: Envia el array del JSON de excel.
+   */
+   public getConvenios(): Observable<any> {
+    return this._http.get(this._appSettings.pago.url.baseConvenios);
+  }
 }

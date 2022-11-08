@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PagoMasivoService } from 'app/core/services/pago-masivo.service';
+import {MatDialog} from '@angular/material/dialog'; 
+import { ConveniosComponent } from './convenios/convenios.component';
 import * as XLSX from 'xlsx';
 import moment from 'moment';
 import Swal from 'sweetalert2';
@@ -20,7 +22,7 @@ export class ImportFileComponent implements OnInit {
   chequeada: boolean = false;
   @ViewChild('fileInput') fileInput: ElementRef;
 
-  constructor(private pago: PagoMasivoService) { }
+  constructor(private pago: PagoMasivoService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.ejemplos = [
@@ -31,6 +33,13 @@ export class ImportFileComponent implements OnInit {
       "Valor Aplicar Neto",
       "Comision Recaudo"
     ]
+  }
+
+  mostrarConvenios(){
+    const dialogRef = this.dialog.open(ConveniosComponent,{
+      width: '40%'
+    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
   subirArchivo(event) {
@@ -80,23 +89,18 @@ export class ImportFileComponent implements OnInit {
   }
 
   comparar(cabeceras:any[], ejemplo:any[]){
-    console.log(cabeceras)
-    console.log(ejemplo)
     if (cabeceras.length == ejemplo.length) {
       for (let i = 0; i < cabeceras.length; i++) {
         const elementoUno = cabeceras[i];
         const elementoDos = ejemplo[i]
         if(elementoUno[i] == elementoDos[i]){
           this.igual = true;
-          console.log(this.igual)
         }else{
           this.igual = false;
-          console.log(this.igual)
         }
       }
     }else{
       this.igual = false;
-      console.log(this.igual)
     }
   }
 

@@ -24,12 +24,14 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ConveniosComponent } from './import-file/convenios/convenios.component';
 
 
 
 @NgModule({
   declarations: [
-    ImportFileComponent
+    ImportFileComponent,
+    ConveniosComponent
   ],
   imports: [
     CommonModule,
