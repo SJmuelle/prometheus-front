@@ -44,6 +44,18 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point asignacion de creditos
+     */
+     public asignacion = {
+        url: {
+            base: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos'),
+            baseAsesor: EndPoints.uri('/generic/qry/tk/listado-analista'),
+            guardarAsesor: EndPoints.uri('/generic/tk/guardar-analista'),
+            actualizarAsesor: EndPoints.uri('/generic/tk/actualizar-analista'),
+            baseUnidades: EndPoints.uri('/generic/qry/tk/listado-tipos-negocios'),
+        }
+    };
+    /**
      * @description: End-point agenda de referenciacion
      */
     public agendaReferenciacion = {
