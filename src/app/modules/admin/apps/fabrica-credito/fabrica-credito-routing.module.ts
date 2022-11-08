@@ -10,6 +10,7 @@ import { TrazabilidadCreditoModule } from './trazabilidad-credito/trazabilidad-c
 import { AgendaGestionCarteraModule } from './agenda-gestion-cartera/agenda-gestion-cartera.module';
 import {AgendaFormalizacionModule} from "./agenda-formalizacion/agenda-formalizacion.module";
 import { ReferidosModule } from './referidos/referidos.module';
+import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitudes.module';
 
 
 const routes: Routes = [
@@ -55,6 +56,10 @@ const routes: Routes = [
             {
                 path: 'agenda-formalizacion',
                 loadChildren: () => AgendaFormalizacionModule
+            },
+            {
+                path: 'asignar-solicitudes',
+                loadChildren: () => AsignarSolicitudesModule
             },
 
         ]
