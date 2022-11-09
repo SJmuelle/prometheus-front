@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Actualizar tasa del convenio {{data.nombreConvenio}}</h1>
+<mat-dialog-content [formGroup]="actualizarForm">
+    <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Digite la nueva tasa usura:</mat-label>
+        <input type="text" matInput formControlName="tasa" maxlength="5">
+        <mat-error *ngIf="actualizarForm.get('tasa').hasError('required')">
+            Debe digitar un numero.
+        </mat-error>
+        <mat-error *ngIf="actualizarForm.get('tasa').hasError('notNumber')">
+            Solo se aceptan valores numericos.
+        </mat-error>
+        <mat-error *ngIf="actualizarForm.get('tasa').hasError('notDecimal')">
+            Numero invalidado, debe ser como el siguiente ejemplo: 5.0 o 5.00.
+        </mat-error>
+      </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button class="color_fintra text-white" [disabled]="actualizarForm.invalid" (click)="actualizar()">Aceptar</button>
+    <button mat-button mat-dialog-close class="color_fintra text-white">Cancelar</button>
+</mat-dialog-actions>

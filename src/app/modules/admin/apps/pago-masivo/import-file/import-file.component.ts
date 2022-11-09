@@ -37,7 +37,8 @@ export class ImportFileComponent implements OnInit {
 
   mostrarConvenios(){
     const dialogRef = this.dialog.open(ConveniosComponent,{
-      width: '40%'
+      width: '40%',
+      disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {});
   }

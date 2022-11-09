@@ -6,12 +6,20 @@
                 <tr class="bg-gray-100 text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                     <th class="px-3 py-3 text-center">Convenio</th>
                     <th class="px-3 py-3 text-center">Tasa usura</th>
+                    <th class="px-3 py-3 text-center">Actualizar tasa</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="text-gray-700" *ngFor="let item of listConvenios">
-                    <td class="px-2 text-sm border text-center">{{item.nombreConvenio}}</td>
+                    <td class="px-2 py-3 text-sm border text-center">{{item.nombreConvenio}}</td>
                     <td class="px-2 text-sm border text-center">{{item.tasaUsura}} %</td>
+                    <td class="text-sm border text-center">
+                        <div class="py-0 text-sm">
+                            <button mat-icon-button class="border" (click)="abrirActualizar(item)">
+                                <mat-icon svgIcon="heroicons_outline:refresh"></mat-icon>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -23,3 +31,6 @@
         </div>
     </div>
 </mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="color_fintra text-white">Cancelar</button>
+</mat-dialog-actions>

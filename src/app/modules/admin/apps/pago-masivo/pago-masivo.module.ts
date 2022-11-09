@@ -25,13 +25,15 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ConveniosComponent } from './import-file/convenios/convenios.component';
+import { ActualizarTasaComponent } from './import-file/convenios/actualizar-tasa/actualizar-tasa.component';
 
 
 
 @NgModule({
   declarations: [
     ImportFileComponent,
-    ConveniosComponent
+    ConveniosComponent,
+    ActualizarTasaComponent
   ],
   imports: [
     CommonModule,
