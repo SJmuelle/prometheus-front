@@ -110,6 +110,7 @@
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
                 <ng-container [ngSwitch]="unidadNegocio">
+                    {{unidadNegocio}}
                     <ng-container  *ngSwitchCase="'ULTRACEM'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
@@ -128,6 +129,16 @@
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <LIBRANZA-NATURAL-LABORAL [currentStep]="currentStep" *ngSwitchCase="'L'">
                             </LIBRANZA-NATURAL-LABORAL>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'CONSUMO'">
+                        <ng-container [ngSwitch]="tipoReferenciacion">
+                            <CONSUMO-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
+                            </CONSUMO-NATURAL-TITULAR>
+                            <CONSUMO-NATURAL-LABORAL [currentStep]="currentStep" *ngSwitchCase="'P'">
+                            </CONSUMO-NATURAL-LABORAL>
+                            <CONSUMO-NATURAL-FAMILIAR [currentStep]="currentStep" *ngSwitchCase="'F'">
+                            </CONSUMO-NATURAL-FAMILIAR>
                         </ng-container>
                     </ng-container>
                 </ng-container>
