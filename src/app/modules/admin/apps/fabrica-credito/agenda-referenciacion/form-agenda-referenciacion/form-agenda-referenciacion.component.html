@@ -110,8 +110,7 @@
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
                 <ng-container [ngSwitch]="unidadNegocio">
-                    {{unidadNegocio}}
-                    <ng-container  *ngSwitchCase="'ULTRACEM'">
+                    <ng-container  *ngSwitchCase="'32'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
                             </ULTRACEM-NATURAL-TITULAR>
@@ -121,7 +120,7 @@
                             </ULTRACEM-NATURAL-PERSONAL>
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngSwitchCase="'LIBRANZA'">
+                    <ng-container *ngSwitchCase="'22'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <LIBRANZA-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
                             </LIBRANZA-NATURAL-TITULAR>
@@ -131,12 +130,12 @@
                             </LIBRANZA-NATURAL-LABORAL>
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngSwitchCase="'CONSUMO'">
+                    <ng-container *ngSwitchCase="'30'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <CONSUMO-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
                             </CONSUMO-NATURAL-TITULAR>
-                            <CONSUMO-NATURAL-LABORAL [currentStep]="currentStep" *ngSwitchCase="'P'">
-                            </CONSUMO-NATURAL-LABORAL>
+                            <CONSUMO-NATURAL-PERSONAL [currentStep]="currentStep" *ngSwitchCase="'P'">
+                            </CONSUMO-NATURAL-PERSONAL>
                             <CONSUMO-NATURAL-FAMILIAR [currentStep]="currentStep" *ngSwitchCase="'F'">
                             </CONSUMO-NATURAL-FAMILIAR>
                         </ng-container>

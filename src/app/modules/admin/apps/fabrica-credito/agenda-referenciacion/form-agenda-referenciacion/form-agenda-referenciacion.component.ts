@@ -44,7 +44,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    alert(this.unidadNegocio)
     switch (this.tipoReferenciacion) {
       case 'P':
         this.titulo = "personal"
@@ -62,6 +61,9 @@ export class FormAgendaReferenciacionComponent implements OnInit {
         break;
       case 'L':
         this.titulo = "Laboral"
+        break;
+        case 'F':
+        this.titulo = "Familiar"
         break;
       default:
         break;
