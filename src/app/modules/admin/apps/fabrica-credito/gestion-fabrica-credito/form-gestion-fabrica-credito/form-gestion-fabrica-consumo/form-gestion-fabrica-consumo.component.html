@@ -403,8 +403,8 @@
                             <ng-container *ngIf="listadoOcupaciones$ | async as listadoOcupaciones">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Ocupación</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'ocupacion'">
-                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                    <mat-select [value]="''" [formControlName]="'ocupacion'">
+                                        <mat-option disabled [value]="''">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of listadoOcupaciones.data" [value]="item.codigo">
                                             {{item.nombre}}
@@ -474,12 +474,13 @@
 
 
                         </div>
+                        <ng-container *ngIf="form.controls['ocupacion'].value != 'EPLDO' && form.controls['ocupacion'].value != 'PENSI'">
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="actividadEconomica$ | async as actividadEconomica">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Actividad económica</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'">
-                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                    <mat-select [value]="''" [formControlName]="'actividadEconomica'">
+                                        <mat-option disabled [value]="''">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of actividadEconomica.data" [value]="item.codigo">
                                             {{item.nombre}}
@@ -495,14 +496,6 @@
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-                            <ng-container *ngIf="form.controls['pagaduria'].value == '999999999'">
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>¿Otra? ¿Cual?</mat-label>
-                                    <input matInput type="text" [formControlName]="'otraPagaduria'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                            </ng-container>
                         </div>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -615,6 +608,7 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
+                    </ng-container>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información económica</span>
                         <div class="-mx-3 md:flex mt-3 mb-2"></div>
                         <div class="-mx-3 md:flex mb-2">
@@ -647,13 +641,16 @@
                         <div class="-mx-3 md:flex mb-2">
                             <ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+
                                     <mat-label>¿Tiene tarjeta de propiedad?</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'tarjetaPropiedad'">
-                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tarjetaPropiedad'"
+                                    [disabled]="form.controls['descripcionTipoCliente'].value != 'CON'"
+                                    >
+                                        <mat-option disabled [value]="''">Seleccione</mat-option>
                                         <mat-option [value]="'SI'">Si</mat-option>
                                         <mat-option [value]="'NO'">No</mat-option>
                                     </mat-select>
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    <mat-icon *ngIf="form.controls['descripcionTipoCliente'].value != 'CON'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'" >
                                     </mat-icon>
                                 </mat-form-field>
                             </ng-container>
@@ -670,9 +667,37 @@
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense" *ngIf="form.controls['tipoServicio'].value != 'PA'" >
+                                    <mat-label>Número de tarjeta de control</mat-label>
+                                    <input matInput type="text"  [formControlName]="'numeroTarjetaCirculacion'">
+                                    <mat-icon *ngIf="form.controls['tipoServicio'].value != 'PA'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="-mx-3 md:flex mb-2">
+                            <ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>No. tarjeta de circulación</mat-label>
-                                    <input matInput type="text" [formControlName]="'numeroTarjetaCirculacion'">
+                                    <mat-label>Marca</mat-label>
+                                    <input matInput type="text" [formControlName]="'marcaVehiculo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Línea</mat-label>
+                                    <input matInput type="text" [formControlName]="'lineaVehiculo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>Modelo</mat-label>
+                                    <input matInput type="text" [formControlName]="'modeloVehiculo'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                    <mat-label>No. de placa</mat-label>
+                                    <input matInput type="text" [formControlName]="'numeroPlacaVehiculo'">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>
@@ -725,34 +750,6 @@
                         <div class="-mx-3 md:flex mb-2">
                             <ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Marca</mat-label>
-                                    <input matInput type="text" [formControlName]="'marcaVehiculo'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Línea</mat-label>
-                                    <input matInput type="text" [formControlName]="'lineaVehiculo'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Modelo</mat-label>
-                                    <input matInput type="text" [formControlName]="'modeloVehiculo'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>No. de placa</mat-label>
-                                    <input matInput type="text" [formControlName]="'numeroPlacaVehiculo'">
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
-                        <div class="-mx-3 md:flex mb-2">
-                            <ng-container>
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Compra al día de combustible</mat-label>
                                     <input matInput type="text" [formControlName]="'compraDia'"
                                         (keyup)="form.controls['compraDia'].setValue(utility.formatearNumero(form.value.compraDia)); ">
@@ -768,7 +765,7 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-                        <ng-container *ngIf="form.controls['tipoDocumento'].value != 'NIT'">
+                        <ng-container *ngIf="form.controls['tipoCredito'].value != 'PY'">
                             <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de desembolso</span>
                             <div class="-mx-3 md:flex mt-3 mb-2">
                                 <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
@@ -840,7 +837,7 @@
                     <ng-template matTabLabel>Referencias</ng-template>
                     <app-grid-referencias></app-grid-referencias>
                 </mat-tab>
-                <ng-container *ngIf="form.controls['tipo'].value === 'T'">
+                <ng-container *ngIf="form.controls['tipoCliente'].value === 'CON'">
                     <mat-tab>
                         <ng-template matTabLabel>Conductores</ng-template>
                         <app-grid-conductores-consumo></app-grid-conductores-consumo>

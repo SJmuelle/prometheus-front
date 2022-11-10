@@ -3,13 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
- production: false,
+    production: false,
     userName: "APPWEB",
     password: btoa("123456"),
-    apiUrl:"http://localhost:8010/",
+    apiUrl: "http://localhost:8010/",
     // diego
     // apiUrl:"http://192.168.138.221:8010/",
-    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+
+    urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
 };
 
 /*
