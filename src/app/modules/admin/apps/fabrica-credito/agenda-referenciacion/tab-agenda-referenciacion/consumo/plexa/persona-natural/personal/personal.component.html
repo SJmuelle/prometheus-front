@@ -1,0 +1,130 @@
+<!-- Steps -->
+<ng-container *ngIf="MostrarfabricaDatos">
+    <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
+        <form [formGroup]="form">
+            <ng-container [ngSwitch]="currentStep">
+                <mat-tab *ngIf="currentStep==0">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Datos de la llamada
+                        </h2>
+                        <div class="grid sm:grid-cols-3 grid-cols-2 mb-1">
+                            <fuse-card class="flex items-center max-w-80 w-full p-6 filter-info border-2 rounded-2 ">
+                                <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:smartphone_2'"></mat-icon>
+                                <div class="flex flex-col">
+                                    <div class="text-2xl font-semibold leading-tight">{{fabricaDatos.celular}}</div>
+                                    <div class="text-md text-secondary">Celular</div>
+                                </div>
+                            </fuse-card>
+                            <fuse-card
+                                class="flex items-center w-full p-6 filter-info border-2 rounded-2 md:ml-4 col-span-2">
+                                <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:file_clipboardfiletext'">
+                                </mat-icon>
+                                <div class="flex flex-col">
+                                    <div class="text-2xl font-semibold leading-tight capitalize">
+                                        {{fabricaDatos.nombreCompleto}}
+                                    </div>
+                                    <div class="text-md text-secondary">Nombre del contacto</div>
+                                </div>
+                            </fuse-card>
+                        </div>
+                        <hr>
+                        <div class="flex justify-between items-center ">
+                            <p>¿Usted conoce a <strong class="capitalize">{{fabricaDatos.nombreTitular}}</strong>?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="conoceTitularValida_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </mat-tab>
+
+
+
+                <mat-tab *ngIf="currentStep==1">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Preguntas a la referencia
+                        </h2>
+
+                        <div class="">
+
+                            <mat-form-field class=" fuse-mat-dense w-full px-3">
+                                <mat-label>¿Hace cuánto lo conoce? (meses)</mat-label>
+                                <input matInput type="text" [formControlName]="'tiempoConoceTitular'">
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error
+                                    *ngIf="(form.controls.tiempoConoceTitular.dirty || form.controls.tiempoConoceTitular.touched)">
+
+                                    <mat-error *ngIf="form.controls.tiempoConoceTitular.errors?.pattern">
+                                        Solo se aceptan
+                                        números.</mat-error>
+
+                                </mat-error>
+                            </mat-form-field>
+                            <div class="mt-1 px-3">
+                                <label class="labelTxt">¿A que se dedica el titular?</label>
+                                <quill-editor class="mb-2" placeholder="" name="descripcion" [modules]="quillModules"
+                                    [formControlName]="'conoceProfesionTitular'"></quill-editor>
+                            </div>
+                            <div class="mt-2 px-3">
+                                <mat-form-field class="w-1/2 fuse-mat-dense">
+                                    <mat-label>¿Hace cuanto se dedica a esta actividad? (meses)?</mat-label>
+                                    <input matInput type="text" placeholder="" [formControlName]="'conoceDeDondeTitular'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </mat-tab>
+
+                <mat-tab *ngIf="currentStep==2">
+                    <div
+                        class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            Comentario
+                        </h2>
+                        <div class="flex justify-between items-center ">
+                            <p>¿Referencia validada?</p>
+                            <div class="toggle-button-cover">
+                                <div class="button-cover">
+                                    <div class="button r" id="button-1">
+                                        <input type="checkbox" class="checkbox"
+                                            formControlName="referenciaValidada_bool">
+                                        <div class="knobs"></div>
+                                        <div class="layer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <quill-editor class="mb-2" placeholder=" Ingrese aquí el resumen de la referenciación..."
+                                name="descripcion" [modules]="quillModules" [formControlName]="'resultadoReferencia'">
+                            </quill-editor>
+                        </div>
+
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                </mat-tab>
+            </ng-container>
+        </form>
+    </mat-tab-group>
+</ng-container>

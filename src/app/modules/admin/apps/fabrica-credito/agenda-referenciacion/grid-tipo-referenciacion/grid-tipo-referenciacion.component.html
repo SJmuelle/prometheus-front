@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="text-secondary text-md truncate" *ngIf="titular.email">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
-                                        </mat-icon>{{miniscula(laboral.email)}}
+                                        </mat-icon>{{miniscula(titular.email)}}
                                     </div>
                                     <div class="text-secondary text-md" *ngIf="titular.celular">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
@@ -76,6 +76,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="titular.identificacion+'/T'">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium">LLamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='22'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
                                     <a class="flex items-center" [routerLink]="titular.identificacion+'/T'">
@@ -121,7 +131,7 @@
                                     </div>
                                     <div class="text-secondary text-md" *ngIf="laboral.telefono">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
-                                        </mat-icon>{{laboral.telefono}}
+                                        </mat-icon>{{laboral.telefono}} 
                                     </div>
                                     <div class="text-secondary text-md truncate" *ngIf="laboral.email">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
@@ -192,6 +202,17 @@
                                     </a>
                                 </div>
                             </ng-container>
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="personal.identificacion+'/P'">
+                                        <mat-icon class=" mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class=" font-medium">Llamar</span>
+
+                                    </a>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='32'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
                                     <a class="flex items-center" [routerLink]="personal.identificacion+'/P'">
@@ -251,6 +272,16 @@
                                     </a>
                                 </div>
                             </ng-container>
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="comercial.identificacion+'/C'">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium">Llamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='32'">
                                 <div class="bg-gray-200 flex items-center justify-center py-4 px-8 text-primary ">
                                     <a class="flex items-center" [routerLink]="comercial.identificacion+'/C'">
@@ -299,14 +330,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-200 flex items-center justify-center py-4 px-8 text-primary ">
-                                <a class="flex items-center" [routerLink]="familiar.identificacion+'/C'">
-                                    <mat-icon class="mr-2 bg-gray-200 icon-size-8 text-white"
-                                        [svgIcon]="'heroicons_solid:phone'">
-                                    </mat-icon>
-                                    <span class="font-medium bg-gray-200">Llamar</span>
-                                </a>
-                            </div>
+                       
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="familiar.identificacion+'/F'">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium">Llamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </div>
