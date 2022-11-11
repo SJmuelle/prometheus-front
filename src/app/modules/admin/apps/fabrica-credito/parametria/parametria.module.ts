@@ -19,6 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ListadoBarriosComponent } from './listado-barrios/listado-barrios.component';
 import { ListadoBarriosFormComponent } from './listado-barrios/listado-barrios-form/listado-barrios-form.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { TipoCombustibleComponent } from './tipo-combustible/tipo-combustible.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     FormTiempoAgendaComponent,
     ListadoTiposComentariosFormComponent,
     ListadoBarriosComponent,
-    ListadoBarriosFormComponent
+    ListadoBarriosFormComponent,
+    TipoCombustibleComponent
   ],
   imports: [
     CommonModule,

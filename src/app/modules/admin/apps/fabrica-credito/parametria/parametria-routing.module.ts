@@ -5,6 +5,7 @@ import { ListadoChequeoComponent } from './listado-chequeo/listado-chequeo.compo
 import { ListadoPreguntasReferenciacionComponent } from './listado-preguntas-referenciacion/listado-preguntas-referenciacion.component';
 import { ListadoTiposComentariosComponent } from './listado-tipos-comentarios/listado-tipos-comentarios.component';
 import { TiempoAgendaComponent } from './tiempo-agenda/tiempo-agenda.component';
+import { TipoCombustibleComponent } from './tipo-combustible/tipo-combustible.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'tiempoAgenda',
     component: TiempoAgendaComponent
+  },
+  {
+    path: 'tipoCombustible',
+    component: TipoCombustibleComponent
   },
   {
     path: 'listadoBarrio',
