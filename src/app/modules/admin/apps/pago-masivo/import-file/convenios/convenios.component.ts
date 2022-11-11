@@ -38,7 +38,11 @@ export class ConveniosComponent implements OnInit {
       },
       disableClose: true
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result==true) {
+        this.convenios()
+      }
+    });
   }
 
 }

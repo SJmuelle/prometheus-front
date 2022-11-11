@@ -18,9 +18,16 @@ export class PagoMasivoService {
   }
 
   /**
-   * @description: Envia el array del JSON de excel.
+   * @description: Se obtiene el listado de convenios.
    */
    public getConvenios(): Observable<any> {
     return this._http.get(this._appSettings.pago.url.baseConvenios);
+  }
+
+  /**
+   * @description: Se envia el JSON para actualizar las tasas de los convenios.
+   */
+   public postTasaConvenios(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.pago.url.baseUpdateConvenios, datos);
   }
 }

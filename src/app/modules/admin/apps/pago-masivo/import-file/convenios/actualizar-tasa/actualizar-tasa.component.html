@@ -2,15 +2,12 @@
 <mat-dialog-content [formGroup]="actualizarForm">
     <mat-form-field class="w-full" appearance="fill">
         <mat-label>Digite la nueva tasa usura:</mat-label>
-        <input type="text" matInput formControlName="tasa" maxlength="5">
+        <input type="number" matInput formControlName="tasa" class="only-number">
         <mat-error *ngIf="actualizarForm.get('tasa').hasError('required')">
             Debe digitar un numero.
         </mat-error>
-        <mat-error *ngIf="actualizarForm.get('tasa').hasError('notNumber')">
-            Solo se aceptan valores numericos.
-        </mat-error>
-        <mat-error *ngIf="actualizarForm.get('tasa').hasError('notDecimal')">
-            Numero invalidado, debe ser como el siguiente ejemplo: 5.0 o 5.00.
+        <mat-error *ngIf="actualizarForm.get('tasa').hasError('pattern')">
+            El numero no cumple con las condiciones, la parte entera y la parte entera no pueden tener mas de 2 digitos.
         </mat-error>
       </mat-form-field>
 </mat-dialog-content>
