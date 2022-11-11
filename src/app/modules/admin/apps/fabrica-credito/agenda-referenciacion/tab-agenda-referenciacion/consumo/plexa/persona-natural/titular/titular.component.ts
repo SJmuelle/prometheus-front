@@ -24,48 +24,33 @@ export class TitularConsumoPlexaComponent implements OnInit {
   // currentStep = 1;
   @ViewChild('editor') editor;
   public form: FormGroup;
-  public formOferta: FormGroup;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public undadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
-
   public subscription$: Subscription;
   public unSubscribe$: Subject<any> = new Subject<any>();
   public departamentos$: Observable<any>;
-  public departamentosNacimiento$: Observable<any>;
-  public departamentosNegocio$: Observable<any>;
   public ciudades$: Observable<any>;
-  public ciudadesNacimiento$: Observable<any>;
-  public ciudadesNegocio$: Observable<any>;
   public barrios$: Observable<any>;
-  public barriosNegocio$: Observable<any>;
-  public tipoDocumentos$: Observable<any>;
-  public generos$: Observable<any>;
-  public tipoVivienda$: Observable<any>;
-  public destinoCredito$: Observable<any>;
-  public nivelEstudio$: Observable<any>;
-  public viveNegocio$: Observable<any>;
-  public declarante$: Observable<any>;
-  public camaraComercio$: Observable<any>;
+  public actividadEconomica$: Observable<any>;
+  public tipoCombustible$: Observable<any>;
+
   public fabricaDatos: any;
   public MostrarfabricaDatos: boolean = false;
-  //variablkes de oferta
-  // public numeroSolicitud: string =  this.route.snapshot.paramMap.get('num');
-  public listadoOferta$: Observable<any>;
-  public capacidadPago$: Observable<any>;
-  quillModules: any = {
+  public mensajeQuill: any;
+  public quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline'],
       [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }],
       ['clean'],
     ],
   };
-  mensajeQuill: any;
   // consulta todos los datos de la solicitud 
   public datosCompletoSolicitud: any;
-  mostrarDepartamento: boolean;
-  mostrarCiudad: boolean;
-  mostrarBarrio: boolean;
+  public mostrarDepartamento: boolean;
+  public mostrarCiudad: boolean;
+  public mostrarBarrio: boolean;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -83,24 +68,9 @@ export class TitularConsumoPlexaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.createFormulario();
     this.getDepartamentos();
-    this.getDepartamentoNacimiento();
-    this.getDepartamentoNegocio();
-    this.getTiposDocumentos();
-    this.getGeneros();
-    this.getTiposVivienda();
-    this.getNivelEstudio();
-    this.getViveNegocio();
-    this.getDeclarante();
-    this.getCamaraComercio();
-    this.getDestinoCredito();
-    this.getListadoOferta(Number(this.numeroSolicitud));
-    this.getCapacidadPago(Number(this.numeroSolicitud));
+    this.getTipoCombustible();
     this.getTodosFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
-
-    // this.getFabricaCreditoAgenda(Number(this.numeroSolicitud));
-    // this.listenFormulario();
   }
 
   /**
@@ -146,43 +116,10 @@ export class TitularConsumoPlexaComponent implements OnInit {
   }
 
   /**
-* @description :modal direcionn negocio
-*/
-  public openModalNegocio(): void {
-    const dialogRef = this._dialog.open(DirectionsBasicComponent, {
-      width: '60%',
-      data: {
-        direccion: '',
-      },
-      disableClose: false
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-      const dataModal: any = res;
-      if (dataModal.viaNombre != undefined) {
-        this.form.controls.direccionNegocioCorregido.setValue(
-          (dataModal.viaNombre == undefined
-            ? ''
-            : `${dataModal.viaNombre}`) +
-          (dataModal.callePrincipal == undefined
-            ? ''
-            : ` ${dataModal.callePrincipal}`) +
-          (dataModal.numero == undefined
-            ? ''
-            : ` # ${dataModal.numero}`) +
-          (dataModal.numero2 == undefined
-            ? ''
-            : ` - ${dataModal.numero2}`) +
-          (dataModal.complemento == undefined
-            ? ''
-            : ` ${dataModal.complemento}`));
-      }
-    });
-  }
-
+ * @description :cantidad de caracteres del mensajes
+ */
   logChange($event) {
     console.log(this.editor);
-    //console.log($event);
     this.mensajeQuill = $event.text;
   }
 
@@ -191,79 +128,92 @@ export class TitularConsumoPlexaComponent implements OnInit {
  */
   private createFormulario(): void {
     this.form = this.fb.group({
-      recurso: [''],
       unidadNegocio: [''],
-      numeroSolicitud: this.numeroSolicitud.toString(),
+      numeroSolicitud: [''],
       tipoReferencia: [''],
       idReferencia: [''],
       nombreCompleto: [''],
       celular: [''],
       numeroFormularioValida: [''],
       numeroFormularioValida_bool: Boolean,
-      descripcionDestinoCredito: [''],
-      telefonoContacto: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-      telefonoContactoValida: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      telefonoContacto: [''],
+      telefonoContactoValida: [''],
       telefonoContactoValida_bool: Boolean,
-      telefonoContactoCorregido: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      telefonoContactoCorregido: [''],
       telefonoContactoObservacion: [''],
-      correoElectronico: [''],
-      correoElectronicoValida: [''],
-      correoElectronicoValida_bool: Boolean,
-      correoElectronicoCorregido: ['', [Validators.email]],
-
-      fechaNacimiento: [''],
-      fechaNacimientoValida: [''],
-      fechaNacimientoValida_bool: Boolean,
-      fechaNacimientoCorregido: [''],
-
       departamentoResidencia: [''],
       departamentoResidenciaValida: [''],
       departamentoResidenciaValida_bool: Boolean,
       departamentoResidenciaCorregido: [''],
+      descripcionDepartamento: [''],
+      descripcionDepartamentoCorregido: [''],
       ciudadResidencia: [''],
       ciudadResidenciaValida: [''],
       ciudadResidenciaValida_bool: Boolean,
       ciudadResidenciaCorregido: [''],
-      barrioResidencia: [''],
-      barrioResidenciaValida: [''],
-      barrioResidenciaValida_bool: Boolean,
-      barrioResidenciaCorregido: [''],
+      descripcionCiudad: [''],
+      descripcionCiudadCorregida: [''],
       direccionResidencia: [''],
       direccionResidenciaValida: [''],
       direccionResidenciaValida_bool: Boolean,
       direccionResidenciaCorregido: [''],
-
-      destinoCredito: [''],
-      destinoCreditoValida: [''],
-      destinoCreditoCorregido_bool: Boolean,
-      destinoCreditoCorregido: [''],
-
-      otroDestinoCredito: [''],
-      motivoObligaciones: [''],
-      referenciaValidada: [''],
-      referenciaValidada_bool: Boolean,
-      resultadoReferencia: [''],
-      comentarioValidacion: ['']
-    });
-    this.formOferta = this.fb.group({
-      valorSolicitado: [''],
-      plazo: [''],
-      salarioBasico: [''],
+      barrioResidencia: [''],
+      barrioResidenciaValida: [''],
+      barrioResidenciaValida_bool: Boolean,
+      barrioResidenciaCorregido: [''],
+      descripcionBarrio: [''],
+      descripcionBarrioCorregido: [''],
+      correoElectronico: [''],
+      correoElectronicoValida: [''],
+      correoElectronicoValida_bool: Boolean,
+      correoElectronicoCorregido: [''],
+      celularReconocerValida: [''],
+      celularReconocerValida_bool: Boolean,
+      conoceCelularReconocerValida: [''],
+      conoceCelularReconocerValida_bool: Boolean,
+      comentarioReconocerCelular: [''],
+      direccionReconocerValida: [''],
+      direccionReconocerValida_bool: Boolean,
+      conoceDireccionReconocerValida: [''],
+      conoceDireccionReconocerValida_bool: Boolean,
+      comentarioReconocerDireccion: [''],
+      emailReconocerValida: [''],
+      emailReconocerValida_bool: Boolean,
+      conoceEmailReconocerValida: [''],
+      conoceEmailReconocerValida_bool: Boolean,
+      comentarioReconocerEmail: [''],
+      actividadEspecifica: [''],
+      actividadEspecificaValida: [''],
+      actividadEspecificaValida_bool: Boolean,
+      actividadEspecificaCorregida: [''],
+      ingresosAdicionalesValida: [''],
+      ingresosAdicionalesValida_bool: Boolean,
       otrosIngresos: [''],
-      comisionesHorasExtras: [''],
-      descuentoNomina: [''],
-      numeroSolicitud: Number(this.numeroSolicitud),
-    })
+      comentarioOtrosIngresos: [''],
+      otrosIngresosCorregido: [''],
+      diasTrabajados: [''],
+      diastrabajadosvalida: [''],
+      diastrabajadosvalida_bool: Boolean,
+      diasTrabajadosCorregido: [''],
+      tipoCombustible: [''],
+      tipoCombustibleValida: [''],
+      tipoCombustibleValida_bool: Boolean,
+      tipoCombustibleCorregido: [''],
+      compraCombustibleDia: [''],
+      compraCombustibleValida: [''],
+      compraCombustibleValida_bool: Boolean,
+      compraCombustiblediaCorregido: [''],
+      referenciaValidada: [''],
+      referenciaValida_bool: Boolean,
+      comentarioValidacion:[''],
+      resultadoReferencia:[''],
+      recurso: [''],
+    });
   }
 
   /**
-   * {
-    "numeroSolicitud":185376,
-    "tipo":"T",
-    "identificacion":"1110178226"
-}
- * @description: Obtiene la data para cargar al formulario
- */
+   * @description: Obtiene la data para cargar al formulario
+   */
   private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     const datosSolicitud: any = {
@@ -274,72 +224,60 @@ export class TitularConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        // ;
         console.log(data);
         this.MostrarfabricaDatos = true;
-        this.fabricaDatos = data
+        this.fabricaDatos = { ...data }
         this.form.patchValue(data);
-        // if (data.departamentoResidencia) {
-        //   this.getCiudades(data.departamentoResidencia);
-        //   this.form.controls['departamentoResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'N' ? true : false)
-        //   this.mostrarDepartamento = true;
-        //   if (data.ciudadResidencia) {
-        //     this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'N' ? true : false)
-        //     this.getBarrios(data.ciudadResidencia);
-        //     this.mostrarDepartamento = true;
-        //     this.mostrarCiudad = true;
-        //   } else {
-        //     this.form.controls['ciudadResidenciaValida_bool'].setValue(false)
-        //     this.form.controls['barrioResidenciaValida_bool'].setValue(false);
-        //   }
-        // } else {
-        //   this.form.controls['departamentoResidenciaValida_bool'].setValue(false);
-        //   this.form.controls['barrioResidenciaValida_bool'].setValue(false);
-        //   this.mostrarDepartamento = false;
-        //   this.mostrarCiudad = false;
-        //   this.mostrarBarrio = false
-        //   this.mostrarDepartamento = false;
-        // }
-        
         this.form.controls['departamentoResidenciaValida_bool'].setValue(this.form.value.departamentoResidenciaValida == 'N' ? true : false)
         this.form.controls['ciudadResidenciaValida_bool'].setValue(this.form.value.ciudadResidenciaValida == 'N' ? true : false)
         this.form.controls['barrioResidenciaValida_bool'].setValue(this.form.value.barrioResidenciaValida == 'N' ? true : false)
 
         if (data.departamentoResidenciaCorregido) {
           this.getCiudades(data.departamentoResidenciaCorregido);
-        }else{
+        } else {
           this.getCiudades(data.departamentoResidencia);
         }
 
         if (data.ciudadResidenciaCorregido) {
           this.getBarrios(data.ciudadResidenciaCorregido);
-        }else{
+        } else {
           this.getBarrios(data.ciudadResidencia);
         }
 
-        if (data.codigoDepartamentoNacimiento) {
-          this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
-        }
 
-
-        if (data.destinoCredito) {
-          this.form.controls['destinoCredito'].setValue(data.destinoCredito);
-        }
-        if (data.destinoCreditoCorregido) {
-          this.form.controls['destinoCreditoCorregido'].setValue(data.destinoCreditoCorregido);
-        }
         //para el backend --LUIS CANTILLO-- la palabra valida signica modificado, es decir si el dato fue modificado o si esta malo colocar un s por lo tanto 
         //la estructura del envio esta invertida 
         this.form.controls['correoElectronicoValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
         this.form.controls['direccionResidenciaValida_bool'].setValue(this.form.value.direccionResidenciaValida == 'N' ? true : false)
         this.form.controls['numeroFormularioValida_bool'].setValue(this.form.value.numeroFormularioValida == 'N' ? true : false)
         this.form.controls['telefonoContactoValida_bool'].setValue(this.form.value.telefonoContactoValida == 'N' ? true : false)
+        this.form.controls['actividadEspecificaValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
+        this.form.controls['ingresosAdicionalesValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
+        this.form.controls['diastrabajadosvalida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
+        this.form.controls['tipoCombustibleValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
+        this.form.controls['compraCombustibleValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
 
-        this.form.controls['destinoCreditoCorregido_bool'].setValue(this.form.value.destinoCreditoValida == 'N' ? true : false)
-        this.form.controls['fechaNacimientoValida_bool'].setValue(this.fabricaDatos.fechaNacimientoValidada == 'N' ? true : false)
+        //reconocer va tener una logica distinta-->donde si lo conce es SI y no lo conoce es NO
+        this.form.controls['celularReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['conoceCelularReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['direccionReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['conoceDireccionReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['emailReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['conoceEmailReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
 
 
-        this.form.controls['referenciaValidada_bool'].setValue(this.form.value.referenciaValidada == 'S' ? true : false)
+        //tambien la logica es diferente pq lo tamn como pregunta 
+        this.form.controls['referenciaValida_bool'].setValue(this.form.value.referenciaValidada == 'S' ? true : false)
+
+        if (data.ciudadResidenciaCorregido) {
+          this.getBarrios(data.ciudadResidenciaCorregido);
+        } else {
+          this.getBarrios(data.ciudadResidencia);
+        }
+
+        this.form.controls['compraCombustiblediaCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.compraCombustiblediaCorregido)));
+        this.form.controls['otrosIngresosCorregido'].setValue(this.utility.formatearNumero(String(this.form.value.otrosIngresosCorregido)));
+
 
       });
   }
@@ -348,20 +286,8 @@ export class TitularConsumoPlexaComponent implements OnInit {
     const codigo: string = event.value;
     this.getCiudades(codigo);
   }
-  /**
-   * @description: Departamento de nacimiento
-   */
-  public seleccionDepartamentoNacimiento(event: MatSelectChange): void {
-    const codigo: string = event.value;
-    this.getCiudadesNacimiento(codigo);
-  }
-  /**
-   * @description: Departamento de negocio
-   */
-  public seleccionDepartamentoNegocio(event: MatSelectChange): void {
-    const codigo: string = event.value;
-    this.getCiudadesNegocio(codigo);
-  }
+
+
   /**
    * @description: Selecciona el codigo para cargar el api barrios
    *
@@ -370,130 +296,43 @@ export class TitularConsumoPlexaComponent implements OnInit {
     const codigo: string = event.value;
     this.getBarrios(codigo);
   }
+
   /**
-   * @description: Selecciona el codigo para cargar el api barrios
-   */
-  public seleccionCiudadNegocio(event: MatSelectChange): void {
-    const codigo: string = event.value;
-    this.getBarriosNegocio(codigo);
+ * @description: Obtiene el listado de ciudades
+ */
+  private getCiudades(codigo: string): void {
+    this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
   }
+
   /**
    * @description: Obtiene el listado de departamento
    */
   private getDepartamentos(): void {
     this.departamentos$ = this.departamentosCiudadesService.getDepartamentos();
   }
-  /**
-   * @description: Obtiene listado de departamento nacimiento
-   */
-  private getDepartamentoNacimiento(): void {
-    this.departamentosNacimiento$ = this.departamentosCiudadesService.getDepartamentos();
-  }
-  /**
-   * @description:
-   */
-  private getDepartamentoNegocio(): void {
-    this.departamentosNegocio$ = this.departamentosCiudadesService.getDepartamentos();
-  }
-  /**
-   * @description: Obtiene el listado de ciudades
-   */
-  private getCiudades(codigo: string): void {
-    this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
-  }
-  /**
-   * @description: Obtiene listado de ciudades nacimiento
-   */
-  private getCiudadesNacimiento(codigo: string): void {
-    this.ciudadesNacimiento$ = this.departamentosCiudadesService.getCiudades(codigo);
-  }
-  /**
-   * @description: Obtiene listado de ciudades negocio
-   */
-  private getCiudadesNegocio(codigo: string): void {
-    this.ciudadesNegocio$ = this.departamentosCiudadesService.getCiudades(codigo);
-  }
+
+
+
   /**
    * @description: Obtiene el listado de barrios
    */
   private getBarrios(codigo: string): void {
     this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
   }
-  /**
-   * @description: Obtiene el listado de barrios del negocio
-   */
-  private getBarriosNegocio(codigo: string): void {
-    this.barriosNegocio$ = this.departamentosCiudadesService.getBarrios(codigo);
-  }
-  /**
-   * @description: Obtiene los tipos de documentos
-   */
-  private getTiposDocumentos(): void {
-    this.tipoDocumentos$ = this.genericaServices.getTiposDocumentos();
-  }
-  /**
-   * @description: Obtiene los generos
-   */
-  private getGeneros(): void {
-    this.generos$ = this.genericaServices.getGeneros();
-  }
-  /**
-   * @description: Obtiene los tipos de vivienda
-   */
-  private getTiposVivienda(): void {
-    this.tipoVivienda$ = this.genericaServices.getTipoViviendas();
-  }
-  /**
-   * @description: Obtiene el nivel de estudio
-   */
-  private getNivelEstudio(): void {
-    this.nivelEstudio$ = this.genericaServices.getNivelEstudio();
-  }
-  /**
-   * @description: Obtiene listado de vive en negocio
-   */
-  private getViveNegocio(): void {
-    this.viveNegocio$ = this.genericaServices.getViveNegocio();
-  }
-  /**
-   * @description: Obtiene el listado de declarantes
-   */
-  private getDeclarante(): void {
-    this.declarante$ = this.genericaServices.getDeclarante();
-  }
-  /**
-   * @description:
-   */
-  private getCamaraComercio(): void {
-    this.camaraComercio$ = this.genericaServices.getCamaraComercio();
-  }
-  /**
-* @description: Obtiene los tipos de estados civiles
-*/
-  private getDestinoCredito(): void {
-    this.destinoCredito$ = this.genericaServices.getDestinoCredito();
+
+
+  private getActividadEconomica(codigo: string): void {
+    this.actividadEconomica$ = this.genericaServices.postActividadEconomica(codigo);
   }
 
-  // onPostDatos() {
-  //   Swal.fire({
-  //     title: 'Guardar información',
-  //     text: '¿Está seguro de guardar información?',
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#a3a0a0',
-  //     confirmButtonText: 'Guardar',
-  //     cancelButtonText: 'Cancelar'
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       Swal.fire(
-  //         'Completado',
-  //         'Información guardada con éxito',
-  //         'success'
-  //       );
-  //     }
-  //   });
-  // }
+  /**
+* * @description: Obtiene los tipos de estados civiles
+*/
+  private getTipoCombustible(): void {
+    this.tipoCombustible$ = this.genericaServices.getTipoCombustibles();
+  }
+
+
 
   /**
   * @description:
@@ -505,57 +344,104 @@ export class TitularConsumoPlexaComponent implements OnInit {
 
     //para el backend --LUIS CANTILLO-- la palabra valida signica modificado, es decir si el dato fue modificado o si esta malo colocar un s por lo tanto 
     //la estructura del envio esta invertida 
+    const numeroFormularioValida = this.form.value.numeroFormularioValida_bool == true ? 'N' : 'S';
     const telefonoContactoValida = this.form.value.telefonoContactoValida_bool == true ? 'N' : 'S';
-    const correoElectronicoValida = this.form.value.correoElectronicoValida_bool == true ? 'N' : 'S';
     const departamentoResidenciaValida = this.form.value.departamentoResidenciaValida_bool == true ? 'N' : 'S';
     const ciudadResidenciaValida = this.form.value.ciudadResidenciaValida_bool == true ? 'N' : 'S';
-    const barrioResidenciaValida = this.form.value.barrioResidenciaValida_bool == true ? 'N' : 'S';
     const direccionResidenciaValida = this.form.value.direccionResidenciaValida_bool == true ? 'N' : 'S';
-    const numeroFormularioValida = this.form.value.numeroFormularioValida_bool == true ? 'N' : 'S';
-    const destinoCreditoValida = this.form.value.destinoCreditoCorregido_bool == true ? 'N' : 'S';
-    const fechaNacimientoValida = this.form.value.fechaNacimientoValida_bool == true ? 'N' : 'S';
-
+    const barrioResidenciaValida = this.form.value.barrioResidenciaValida_bool == true ? 'N' : 'S';
+    const correoElectronicoValida = this.form.value.correoElectronicoValida_bool == true ? 'N' : 'S';
+    const actividadEspecificaValida = this.form.value.actividadEspecificaValida_bool == true ? 'N' : 'S';
+    const ingresosAdicionalesValida = this.form.value.ingresosAdicionalesValida_bool == true ? 'N' : 'S';
+    const diastrabajadosvalida = this.form.value.diastrabajadosvalida_bool == true ? 'N' : 'S';
+    const tipoCombustibleValida = this.form.value.tipoCombustibleValida_bool == true ? 'N' : 'S';
+    const compraCombustibleValida = this.form.value.compraCombustibleValida_bool == true ? 'N' : 'S';
     
-    const referenciaValidada = this.form.value.referenciaValidada_bool == true ? 'S' : 'N';
-    const resultadoReferencia = this.form.value.referenciaValidada_bool == true ? 'E' : this.form.value.resultadoReferencia;
+    //logica diferente
+    const celularReconocerValida = this.form.value.celularReconocerValida_bool == true ? 'S' : 'N';
+    const conoceCelularReconocerValida = this.form.value.conoceCelularReconocerValida_bool == true ? 'S' : 'N';
+    const direccionReconocerValida = this.form.value.direccionReconocerValida_bool == true ? 'S' : 'N';
+    const conoceDireccionReconocerValida = this.form.value.conoceDireccionReconocerValida_bool == true ? 'S' : 'N';
+    const emailReconocerValida = this.form.value.emailReconocerValida_bool == true ? 'S' : 'N';
+    const conoceEmailReconocerValida = this.form.value.conoceEmailReconocerValida_bool == true ? 'S' : 'N';
 
-    delete data.telefonoContactoValida_bool;
-    delete data.correoElectronicoValida_bool;
-    delete data.departamentoResidenciaValida_bool;
-    delete data.ciudadResidenciaValida_bool;
-    delete data.barrioResidenciaValida_bool;
-    delete data.direccionResidenciaValida_bool;
-    delete data.numeroFormularioValida_bool;
-    delete data.destinoCreditoValida_bool;
-    delete data.referenciaValidada_bool;
-    delete data.fechaNacimientoValida_bool
-    delete data.numeroSolicitud;
-    delete data.resultadoReferencia;
-    delete data.referenciaValidada;
-    delete data.telefonoContactoValida;
-    delete data.correoElectronicoValida;
-    delete data.departamentoResidenciaValida;
-    delete data.ciudadResidenciaValida;
-    delete data.barrioResidenciaValida;
-    delete data.direccionResidenciaValida;
+    //empanda de lucho
+    const referenciaValida = this.form.value.referenciaValida_bool == true ? 'S' : 'N';
+
+
+    //valor 
+    const otrosIngresosCorregidoFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresosCorregido.toString()));
+    const compraCombustiblediaCorregidoFormato = Number(this.utility.enviarNumero(this.form.value.compraCombustiblediaCorregido.toString()));
+
+
+    delete data.otrosIngresosCorregido;
+    delete data.compraCombustiblediaCorregido;
     delete data.numeroFormularioValida;
-    delete data.destinoCreditoValida;
-    delete data.referenciaValidada;
-    delete data.fechaNacimientoValida
+    delete data.numeroFormularioValida_bool;
+    delete data.telefonoContactoValida;
+    delete data.telefonoContactoValida_bool;
+    delete data.departamentoResidenciaValida;
+    delete data.departamentoResidenciaValida_bool;
+    delete data.ciudadResidenciaValida;
+    delete data.ciudadResidenciaValida_bool;
+    delete data.direccionResidenciaValida;
+    delete data.direccionResidenciaValida_bool;
+    delete data.barrioResidenciaValida;
+    delete data.barrioResidenciaValida_bool;
+    delete data.correoElectronicoValida;
+    delete data.correoElectronicoValida_bool;
+    delete data.celularReconocerValida;
+    delete data.celularReconocerValida_bool;
+    delete data.conoceCelularReconocerValida;
+    delete data.conoceCelularReconocerValida_bool;
+    delete data.direccionReconocerValida;
+    delete data.direccionReconocerValida_bool;
+    delete data.conoceDireccionReconocerValida;
+    delete data.conoceDireccionReconocerValida_bool;
+    delete data.emailReconocerValida;
+    delete data.emailReconocerValida_bool;
+    delete data.conoceEmailReconocerValida;
+    delete data.conoceEmailReconocerValida_bool;
+    delete data.actividadEspecificaValida;
+    delete data.actividadEspecificaValida_bool;
+    delete data.ingresosAdicionalesValida;
+    delete data.ingresosAdicionalesValida_bool;
+    delete data.diastrabajadosvalida;
+    delete data.diastrabajadosvalida_bool;
+    delete data.tipoCombustibleValida;
+    delete data.tipoCombustibleValida_bool;
+    delete data.compraCombustibleValida;
+    delete data.compraCombustibleValida_bool;
+    delete data.referenciaValida;
+    delete data.referenciaValida_bool;
+    delete data.comentarioValida;
+    delete data.numeroSolicitud;
+    delete data.diasTrabajadosCorregido;
 
     const datosFormularios: any = {
       numeroSolicitud: this.numeroSolicitud.toString(),
+      otrosIngresosCorregido:otrosIngresosCorregidoFormato,
+      compraCombustiblediaCorregido:compraCombustiblediaCorregidoFormato,
+      numeroFormularioValida: numeroFormularioValida,
       telefonoContactoValida: telefonoContactoValida,
-      fechaNacimientoValida: fechaNacimientoValida,
-      correoElectronicoValida: correoElectronicoValida,
       departamentoResidenciaValida: departamentoResidenciaValida,
       ciudadResidenciaValida: ciudadResidenciaValida,
-      barrioResidenciaValida: barrioResidenciaValida,
       direccionResidenciaValida: direccionResidenciaValida,
-      numeroFormularioValida: numeroFormularioValida,
-      destinoCreditoValida: destinoCreditoValida,
-      referenciaValidada: referenciaValidada,
-      resultadoReferencia: resultadoReferencia,
+      barrioResidenciaValida: barrioResidenciaValida,
+      correoElectronicoValida: correoElectronicoValida,
+      celularReconocerValida: celularReconocerValida,
+      conoceCelularReconocerValida: conoceCelularReconocerValida,
+      direccionReconocerValida: direccionReconocerValida,
+      conoceDireccionReconocerValida: conoceDireccionReconocerValida,
+      emailReconocerValida: emailReconocerValida,
+      conoceEmailReconocerValida: conoceEmailReconocerValida,
+      actividadEspecificaValida: actividadEspecificaValida,
+      ingresosAdicionalesValida: ingresosAdicionalesValida,
+      diastrabajadosvalida: diastrabajadosvalida,
+      tipoCombustibleValida: tipoCombustibleValida,
+      compraCombustibleValida: compraCombustibleValida,
+      referenciaValida: referenciaValida,
+      diasTrabajadosCorregido:this.form.value.diasTrabajadosCorregido.toString(),
       ...data
     };
     Swal.fire({
@@ -605,73 +491,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
       });
   }
 
-  // opciones de oficerta
-
-  private getListadoOferta(numeroSolicitud: number): void {
-    this.listadoOferta$ = this.ofertaService.getListadoOferta(numeroSolicitud);
-  }
-  private getCapacidadPago(numeroSolicitud: number): void {
-    this.capacidadPago$ = this.ofertaService.getCapacidadPago(numeroSolicitud);
-  }
-  public SelectOferta(item: any): void {
-    let data = {
-      numeroSolicitud: Number(this.numeroSolicitud),
-      identificacion: item.identificacion,
-      idRegistro: item.idOpcion
-    }
-
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Guardando información',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-
-    this.ofertaService
-      .SelectOferta(data)
-      .subscribe((res) => {
-        Swal.close();
-        if (res.data.respuesta == 'OK') {
-          this.getListadoOferta(Number(this.numeroSolicitud));
-        } else {
-          Swal.fire('Error', res.data.resultado, 'error');
-        }
-      });
-  }
-  public recalcularOferta(): void {
-    let data = {
-      valorSolicitado: Number(this.utility.enviarNumero(this.formOferta.value.valorSolicitado)),
-      plazo: Number(this.utility.enviarNumero(this.formOferta.value.plazo)),
-      salarioBasico: Number(this.utility.enviarNumero(this.formOferta.value.salarioBasico)),
-      otrosIngresos: Number(this.utility.enviarNumero(this.formOferta.value.otrosIngresos)),
-      comisionesHorasExtras: Number(this.utility.enviarNumero(this.formOferta.value.comisionesHorasExtras)),
-      descuentoNomina: Number(this.utility.enviarNumero(this.formOferta.value.descuentoNomina)),
-      numeroSolicitud: Number(this.numeroSolicitud),
-    }
-
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Guardando información',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-
-    this.ofertaService
-      .recalcularOferta(data)
-      .subscribe((res) => {
-        Swal.close();
-        if (res.data.respuesta == 'OK') {
-          this.getListadoOferta(Number(this.numeroSolicitud));
-          this.getCapacidadPago(Number(this.numeroSolicitud));
-        } else {
-          Swal.fire('Error', res.data.resultado, 'error');
-        }
-      });
-  }
 
 
   /**
@@ -690,30 +509,10 @@ export class TitularConsumoPlexaComponent implements OnInit {
       .subscribe(({ data }) => {
         Swal.close();
         this.datosCompletoSolicitud = data;
-        this.llenarDatosFormOferta(data);
+        this.getActividadEconomica(data.ocupacion);
       });
   }
 
-  private llenarDatosFormOferta(data) {
-    if (data.valorSolicitado) {
-      this.formOferta.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(data.valorSolicitado)));
-    }
-    if (data.plazo) {
-      this.formOferta.controls['plazo'].setValue(this.utility.formatearNumero(String(data.plazo)));
-    }
-    if (data.salarioBasico) {
-      this.formOferta.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(data.salarioBasico)));
-    }
-    if (data.otrosIngresos) {
-      this.formOferta.controls['otrosIngresos'].setValue(this.utility.formatearNumero(String(data.otrosIngresos)));
-    }
-    if (data.comisionesHorasExtras) {
-      this.formOferta.controls['comisionesHorasExtras'].setValue(this.utility.formatearNumero(String(data.comisionesHorasExtras)));
-    }
-    if (data.descuentoNomina) {
-      this.formOferta.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(data.descuentoNomina)));
-    }
-  }
 }
 
 
