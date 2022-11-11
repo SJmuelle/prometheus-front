@@ -542,6 +542,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
     if (data.valorCuota) {
       this.formOferta.controls['valorCuota'].setValue(this.utility.formatearNumero(String(data.valorCuota)));
     }
+    this.formOferta.controls['tipoCombustible'].setValue(data.tipoCombustible);
   }
 
   public recalcularOferta(): void {
@@ -569,7 +570,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
       .subscribe((res) => {
         Swal.close();
         if (res.data.respuesta == 'OK') {
-          
+
         } else {
           Swal.fire('Error', res.data.resultado, 'error');
         }
