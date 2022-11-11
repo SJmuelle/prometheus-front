@@ -99,7 +99,7 @@ export class DecisionesService {
 
     // return this._http.post(this._appSettings.decision.url.guardado, data);
     return this._http
-      .post(this._appSettings.decision.url.guardado, data);
+      .post(this._appSettings.decision.url.guardado, data).pipe(catchError(this.handleError));
   }
 
 
