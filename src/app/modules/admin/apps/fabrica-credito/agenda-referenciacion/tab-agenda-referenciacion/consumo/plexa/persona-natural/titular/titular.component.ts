@@ -34,7 +34,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
   public barrios$: Observable<any>;
   public actividadEconomica$: Observable<any>;
   public tipoCombustible$: Observable<any>;
-
+  public formOferta: FormGroup;
   public fabricaDatos: any;
   public MostrarfabricaDatos: boolean = false;
   public mensajeQuill: any;
@@ -209,6 +209,17 @@ export class TitularConsumoPlexaComponent implements OnInit {
       resultadoReferencia:[''],
       recurso: [''],
     });
+
+    this.formOferta = this.fb.group({
+      valorSolicitado: [''],
+      plazo: [''],
+      tanqueoDia: [''],
+      tipoCombustible: [''],
+      ingresosDiarios: [''],
+      valorCuotaDiaria: [''],
+      valorCuota:[''],
+      numeroSolicitud: Number(this.numeroSolicitud),
+    })
   }
 
   /**
@@ -251,19 +262,19 @@ export class TitularConsumoPlexaComponent implements OnInit {
         this.form.controls['direccionResidenciaValida_bool'].setValue(this.form.value.direccionResidenciaValida == 'N' ? true : false)
         this.form.controls['numeroFormularioValida_bool'].setValue(this.form.value.numeroFormularioValida == 'N' ? true : false)
         this.form.controls['telefonoContactoValida_bool'].setValue(this.form.value.telefonoContactoValida == 'N' ? true : false)
-        this.form.controls['actividadEspecificaValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
-        this.form.controls['ingresosAdicionalesValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
-        this.form.controls['diastrabajadosvalida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
-        this.form.controls['tipoCombustibleValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
-        this.form.controls['compraCombustibleValida_bool'].setValue(this.form.value.correoElectronicoValida == 'N' ? true : false)
+        this.form.controls['actividadEspecificaValida_bool'].setValue(this.form.value.actividadEspecificaValida == 'N' ? true : false)
+        this.form.controls['ingresosAdicionalesValida_bool'].setValue(this.form.value.ingresosAdicionalesValida == 'N' ? true : false)
+        this.form.controls['diastrabajadosvalida_bool'].setValue(this.form.value.diastrabajadosvalida == 'N' ? true : false)
+        this.form.controls['tipoCombustibleValida_bool'].setValue(this.form.value.tipoCombustibleValida == 'N' ? true : false)
+        this.form.controls['compraCombustibleValida_bool'].setValue(this.form.value.compraCombustibleValida == 'N' ? true : false)
 
         //reconocer va tener una logica distinta-->donde si lo conce es SI y no lo conoce es NO
-        this.form.controls['celularReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
-        this.form.controls['conoceCelularReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
-        this.form.controls['direccionReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
-        this.form.controls['conoceDireccionReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
-        this.form.controls['emailReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
-        this.form.controls['conoceEmailReconocerValida_bool'].setValue(this.form.value.correoElectronicoValida == 'S' ? true : false)
+        this.form.controls['celularReconocerValida_bool'].setValue(this.form.value.celularReconocerValida == 'S' ? true : false)
+        this.form.controls['conoceCelularReconocerValida_bool'].setValue(this.form.value.conoceCelularReconocerValida == 'S' ? true : false)
+        this.form.controls['direccionReconocerValida_bool'].setValue(this.form.value.direccionReconocerValida == 'S' ? true : false)
+        this.form.controls['conoceDireccionReconocerValida_bool'].setValue(this.form.value.conoceDireccionReconocerValida == 'S' ? true : false)
+        this.form.controls['emailReconocerValida_bool'].setValue(this.form.value.emailReconocerValida == 'S' ? true : false)
+        this.form.controls['conoceEmailReconocerValida_bool'].setValue(this.form.value.conoceEmailReconocerValida == 'S' ? true : false)
 
 
         //tambien la logica es diferente pq lo tamn como pregunta 
@@ -508,11 +519,62 @@ export class TitularConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
+        debugger
         this.datosCompletoSolicitud = data;
         this.getActividadEconomica(data.ocupacion);
+        this.llenarDatosFormOferta(data)
       });
   }
 
+  private llenarDatosFormOferta(data) {
+    if (data.valorSolicitado) {
+      this.formOferta.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(data.valorSolicitado)));
+    }
+    if (data.plazo) {
+      this.formOferta.controls['plazo'].setValue(this.utility.formatearNumero(String(data.plazo)));
+    }
+    if (data.tanqueoDia) {
+      this.formOferta.controls['tanqueoDia'].setValue(this.utility.formatearNumero(String(data.tanqueoDia)));
+    }
+    if (data.valorCuotaDiaria) {
+      this.formOferta.controls['valorCuotaDiaria'].setValue(this.utility.formatearNumero(String(data.valorCuotaDiaria)));
+    }
+    if (data.valorCuota) {
+      this.formOferta.controls['valorCuota'].setValue(this.utility.formatearNumero(String(data.valorCuota)));
+    }
+  }
+
+  public recalcularOferta(): void {
+    let data = {
+      valorSolicitado: Number(this.utility.enviarNumero(this.formOferta.value.valorSolicitado)),
+      plazo: Number(this.utility.enviarNumero(this.formOferta.value.plazo)),
+      salarioBasico: Number(this.utility.enviarNumero(this.formOferta.value.salarioBasico)),
+      otrosIngresos: Number(this.utility.enviarNumero(this.formOferta.value.otrosIngresos)),
+      comisionesHorasExtras: Number(this.utility.enviarNumero(this.formOferta.value.comisionesHorasExtras)),
+      descuentoNomina: Number(this.utility.enviarNumero(this.formOferta.value.descuentoNomina)),
+      numeroSolicitud: Number(this.numeroSolicitud),
+    }
+
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando información',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+
+    this.ofertaService
+      .recalcularOferta(data)
+      .subscribe((res) => {
+        Swal.close();
+        if (res.data.respuesta == 'OK') {
+          
+        } else {
+          Swal.fire('Error', res.data.resultado, 'error');
+        }
+      });
+  }
 }
 
 
