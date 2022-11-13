@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
- production: true,
+ production: false,
     userName: "APPWEB",
     password: btoa("123456"),
     apiUrl:"https://prometheus.fintra.co:8443/",
