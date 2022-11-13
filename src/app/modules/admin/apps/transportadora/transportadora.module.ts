@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ProntoPagoRoutingModule } from './pronto-pago-routing.module';
-import { ListPagosComponent } from './list-pagos/list-pagos.component';
+import { TransportadoraRoutingModule } from './transportadora-routing.module';
+import { ProntoPagoComponent } from './pronto-pago/pronto-pago.component';
 import { FormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
@@ -19,20 +19,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSliderModule} from '@angular/material/slider';
-import { DetalleComponent } from './list-pagos/detalle/detalle.component';
-import { PorcentajeComponent } from './list-pagos/detalle/porcentaje/porcentaje.component';
-
+import { DetalleComponent } from './pronto-pago/detalle/detalle.component';
+import { PorcentajeComponent } from './pronto-pago/detalle/porcentaje/porcentaje.component';
 
 
 @NgModule({
   declarations: [
-    ListPagosComponent,
+    ProntoPagoComponent,
     DetalleComponent,
     PorcentajeComponent
   ],
   imports: [
     CommonModule,
-    ProntoPagoRoutingModule,
+    TransportadoraRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
     MatExpansionModule,
@@ -50,4 +49,4 @@ import { PorcentajeComponent } from './list-pagos/detalle/porcentaje/porcentaje.
     Ng2SearchPipeModule
   ]
 })
-export class ProntoPagoModule { }
+export class TransportadoraModule { }

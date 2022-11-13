@@ -16,7 +16,7 @@ export class PorcentajeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data) {dialogRef.disableClose = true}
 
   ngOnInit(): void {
-    console.log(this.data)
+    
   }
 
   formatLabel(value: number) {

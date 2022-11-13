@@ -365,6 +365,4 @@ export class DetalleComponent implements OnInit {
     return 'No registra';
   }
 
-
-
 }

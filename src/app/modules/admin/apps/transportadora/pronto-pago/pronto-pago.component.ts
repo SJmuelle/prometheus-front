@@ -6,11 +6,11 @@ import moment from 'moment';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-list-pagos',
-  templateUrl: './list-pagos.component.html',
-  styleUrls: ['./list-pagos.component.scss']
+  selector: 'app-pronto-pago',
+  templateUrl: './pronto-pago.component.html',
+  styleUrls: ['./pronto-pago.component.scss']
 })
-export class ListPagosComponent implements OnInit {
+export class ProntoPagoComponent implements OnInit {
 
   listadoPropietarios: any = [];
   listadoTransportadoras: any = [];
