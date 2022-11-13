@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Actualizar tasa del convenio {{data.nombreConvenio}}</h1>
+<mat-dialog-content [formGroup]="actualizarForm">
+    <mat-form-field class="w-full" appearance="fill">
+        <mat-label>Digite la nueva tasa usura:</mat-label>
+        <input type="number" matInput formControlName="tasa" class="only-number">
+        <mat-error *ngIf="actualizarForm.get('tasa').hasError('required')">
+            Debe digitar un numero.
+        </mat-error>
+        <mat-error *ngIf="actualizarForm.get('tasa').hasError('pattern')">
+            El numero no cumple con las condiciones, la parte entera y la parte entera no pueden tener mas de 2 digitos.
+        </mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button class="color_fintra text-white" [disabled]="actualizarForm.invalid" (click)="actualizar()">Aceptar</button>
+    <button mat-button mat-dialog-close class="color_fintra text-white">Cancelar</button>
+</mat-dialog-actions>

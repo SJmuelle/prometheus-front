@@ -3,7 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { TransportadoraRoutingModule } from './transportadora-routing.module';
 import { ProntoPagoComponent } from './pronto-pago/pronto-pago.component';
-import { FormsModule } from '@angular/forms';
+import { DetalleComponent } from './pronto-pago/detalle/detalle.component';
+import { PorcentajeComponent } from './pronto-pago/detalle/porcentaje/porcentaje.component';
+import { PagoMasivoComponent } from './pago-masivo/pago-masivo.component';
+import { ConveniosComponent } from './convenios/convenios.component';
+import { ActualizarTasaComponent } from './convenios/actualizar-tasa/actualizar-tasa.component';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { MatButtonModule } from '@angular/material/button';
@@ -19,15 +25,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSliderModule} from '@angular/material/slider';
-import { DetalleComponent } from './pronto-pago/detalle/detalle.component';
-import { PorcentajeComponent } from './pronto-pago/detalle/porcentaje/porcentaje.component';
+
 
 
 @NgModule({
   declarations: [
     ProntoPagoComponent,
     DetalleComponent,
-    PorcentajeComponent
+    PorcentajeComponent,
+    PagoMasivoComponent,
+    ConveniosComponent,
+    ActualizarTasaComponent
   ],
   imports: [
     CommonModule,
@@ -46,6 +54,7 @@ import { PorcentajeComponent } from './pronto-pago/detalle/porcentaje/porcentaje
     MatDatepickerModule,
     MatSliderModule,
     FormsModule,
+    ReactiveFormsModule,
     Ng2SearchPipeModule
   ]
 })

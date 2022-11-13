@@ -34,7 +34,7 @@ export class AppSettingsService {
         }
     };
 
-    public transportadora = {
+    public pronto = {
         url: {
             base: EndPoints.uri('/generic/qry/detalle-pronto-pago'),
             basePropietario:EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
@@ -44,7 +44,17 @@ export class AppSettingsService {
             baseActualizar:EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
             baseTrazabilidad:EndPoints.uri('/generic/trazabilidad-pronto-pago'),
         }
-    };
+    }
+    /**
+     * @description: End-point de pago masivo
+     */
+    public pago = {
+        url: {
+            base: EndPoints.uri('/generic/aplicacion-pago-finl'),
+            baseConvenios: EndPoints.uri('/generic/qry/convenios-unidad-negocio-finl'),
+            baseUpdateConvenios: EndPoints.uri('/generic/update-convenio-finl')
+        }
+    }
     /**
      * @description: End-point asignacion de creditos
      */
