@@ -1,15 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AsignarSolicitudesRoutingModule } from './asignar-solicitudes-routing.module';
-import { ListSolicitudesComponent } from './list-solicitudes/list-solicitudes.component';
-import { ReasignarVariosComponent } from './list-solicitudes/reasignar-varios/reasignar-varios.component';
-
-// import { FuseAlertModule } from '@fuse/components/alert';
-import { Ng2SearchPipeModule } from "ng2-search-filter";
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { ProntoPagoRoutingModule } from './pronto-pago-routing.module';
+import { ListPagosComponent } from './list-pagos/list-pagos.component';
+import { FormsModule } from '@angular/forms';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -23,23 +18,24 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asignar-varios.component';
+import {MatSliderModule} from '@angular/material/slider';
+import { DetalleComponent } from './list-pagos/detalle/detalle.component';
+import { PorcentajeComponent } from './list-pagos/detalle/porcentaje/porcentaje.component';
+
 
 
 @NgModule({
   declarations: [
-    ListSolicitudesComponent,
-    ReasignarVariosComponent,
-    AsignarVariosComponent
+    ListPagosComponent,
+    DetalleComponent,
+    PorcentajeComponent
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AsignarSolicitudesRoutingModule,
+    ProntoPagoRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -47,10 +43,11 @@ import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asigna
     MatSelectModule,
     MatStepperModule,
     MatDialogModule,
-    MatExpansionModule,
     MatTooltipModule,
-    Ng2SearchPipeModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSliderModule,
+    FormsModule,
+    Ng2SearchPipeModule
   ]
 })
-export class AsignarSolicitudesModule { }
+export class ProntoPagoModule { }

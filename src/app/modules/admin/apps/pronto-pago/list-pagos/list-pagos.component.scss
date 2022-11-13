@@ -1,0 +1,29 @@
+thead th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+    background-color: #F9FAFB;
+    z-index: 10;
+}
+
+.altura-tabla {
+    @media (min-width: 1280px) {
+        max-height: 27rem;
+    }
+
+    @media (min-width: 1440px) {
+        max-height: 46rem;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+}
