@@ -1,6 +1,6 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100">
-        <h2 class="text-gray-900 col-span-12 mb-4">Propietarios</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Negociación - Pronto pago</h2>
     </div>
     <div class="flex flex-row w-full justify-between">
         <div class="w-1/4">
@@ -37,7 +37,7 @@
                 <tr class="text-gray-700" *ngFor="let item of listadoPropietarios | filter:filtrarTabla">
                     <td class="text-sm border py-3 text-center">{{ item.identificacion }}</td>
                     <td class="text-sm border text-center">{{ item.nombrePropietario }}</td>
-                    <td class="text-sm border text-center">{{ item.contacto }}</td>
+                    <td class="text-sm border text-center">{{ mascara(item.contacto) }}</td>
                     <td class="text-sm border text-center lowercase">{{ item.email }}</td>
                     <td class="text-sm border text-center">$ {{ item.saldoTotalPlanilla | number }}</td>
                     <td class="text-sm border text-center">{{ item.totalPlanilla }}</td>

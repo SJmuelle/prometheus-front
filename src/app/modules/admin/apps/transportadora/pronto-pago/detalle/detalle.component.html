@@ -72,10 +72,11 @@
                         </div>
                     </th>
                     <th class="py-3 text-center">Planilla</th>
-                    <th class="py-3 text-center">Valor pronto pago</th>
                     <th class="py-3 text-center">Fecha de planilla</th>
+                    <th class="py-3 text-center">Valor planilla</th>
                     <th class="py-3 text-center">% Factoring</th>
                     <th class="py-3 text-center">Descuento factoring</th>
+                    <th class="py-3 text-center">Valor neto antes de comisión bancaria</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -86,10 +87,11 @@
                         </div>
                     </td>
                     <td class="text-sm border text-center">{{ item.planilla}}</td>
-                    <td class="text-sm border text-center">$ {{ item.valorPlanilla | number }}</td>
                     <td class="text-sm border text-center">{{cambiarFecha(item.fechaPlanilla)}}</td>
+                    <td class="text-sm border text-center">$ {{ item.valorPlanilla | number }}</td>
                     <td class="text-sm border text-center">{{item.porcentajeNegociacion | number}} %</td>
                     <td class="text-sm border text-center">$ {{item.valorDescuentoNegociacion | number}}</td>
+                    <td class="text-sm border text-center">$ {{item.valorNetoAntesDeComisionBancaria | number}}</td>
                 </tr>
             </tbody>
         </table>

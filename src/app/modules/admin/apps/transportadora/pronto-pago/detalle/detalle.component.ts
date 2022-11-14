@@ -39,6 +39,7 @@ export class DetalleComponent implements OnInit {
       Swal.close();
       if (response) {
         this.listado = response.data;
+        console.log(this.listado)
       } else {
         this.listado = [];
       }

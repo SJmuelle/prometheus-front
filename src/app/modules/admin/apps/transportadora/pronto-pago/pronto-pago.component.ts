@@ -51,18 +51,13 @@ export class ProntoPagoComponent implements OnInit {
   }
 
   mascara(numero){
-    var mask = "";
-    if (numero) {
-      for (let index = 1; index < numero.length - 3; index++) {
-        mask +="*";
-      }
-      return mask + numero.slice(7, 10)
-    }
+    const valor: string = numero.substr( 0 , 3 ) + '-' + numero.substr ( 3 , 3 ) + '-' + numero.substr ( 6 , 4 );
+    return "+57-" + valor;
   }
 
   abrirDetalle(item){
     const dialogRef = this.dialog.open(DetalleComponent, {
-      width: '70%',
+      width: '80%',
       maxHeight: '95vh',
       data: {
         idPropietario: item.idPropietario,
