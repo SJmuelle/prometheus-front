@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Actualizar tasa del convenio {{data.nombreConvenio}}</h1>
+<h1 mat-dialog-title>Actualizar tasa del convenio <p class="lowercase m-0">{{data.nombreConvenio}}</p></h1>
 <mat-dialog-content [formGroup]="actualizarForm">
     <mat-form-field class="w-full" appearance="fill">
         <mat-label>Digite la nueva tasa usura:</mat-label>
@@ -12,6 +12,6 @@
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button class="color_fintra text-white" [disabled]="actualizarForm.invalid" (click)="actualizar()">Aceptar</button>
-    <button mat-button mat-dialog-close class="color_fintra text-white">Cancelar</button>
+    <button mat-button class="permitir bloquear text-white" [disabled]="actualizarForm.invalid" (click)="actualizar()">Aceptar</button>
+    <button mat-button mat-dialog-close class="text-white bg-gray-400">Cancelar</button>
 </mat-dialog-actions>
