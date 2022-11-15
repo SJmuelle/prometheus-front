@@ -60,6 +60,7 @@ import { FormDetallesConductoresComponent } from './form-detalles-conductores/fo
 import { GridOfertaConsumoComponent } from './grid-oferta-consumo/grid-oferta-consumo.component';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 import {MatSliderModule} from '@angular/material/slider';
+import { GridHistoricoClienteComponent } from './grid-historico-cliente/grid-historico-cliente.component';
 
 
 @NgModule({
@@ -91,7 +92,8 @@ import {MatSliderModule} from '@angular/material/slider';
         FormDialogCarteraComprarComponent,
         GridConductoresConsumoComponent,
         FormDetallesConductoresComponent,
-        GridOfertaConsumoComponent
+        GridOfertaConsumoComponent,
+        GridHistoricoClienteComponent
     ],
     imports: [
         CommonModule,
