@@ -295,7 +295,9 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza-seleccionada'),
             consumo: EndPoints.uri('/generic/obtener-oferta-plexa'),
             postSelectOferta: EndPoints.uri('/generic/actualizar-eleccion-oferta'),
+            postSelectOfertaConsumo: EndPoints.uri('/generic/validacion-oferta-consumo'),
             recalcularOferta: EndPoints.uri('/generic/recalcular-capacidad-pago-libranza'),
+            recalcularOfertaConsumo: EndPoints.uri('/generic/calcular-capacidad-pago-consumo'),
         }
     };
 
@@ -305,7 +307,7 @@ export class AppSettingsService {
     public capacidad = {
         url: {
             base: EndPoints.uri('/generic/obtener-capacidad-pago'),
-
+            consumo: EndPoints.uri('/generic/qry/consulta-capacidad-pago-consumo'),
         }
     };
 

@@ -20,7 +20,7 @@ export class ResumenComponent implements OnInit {
   dataPolicitasAdmin: any;
   datos2: any[];
   verComentarios: boolean = false;
-  resumenCuentasMora:  any;
+  resumenCuentasMora: any[] = [];
 
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
@@ -63,51 +63,105 @@ export class ResumenComponent implements OnInit {
 
     //general
     let DatosCredito = [], DatosCredito2 = [];
-    DatosCredito.push(
-      {
-        titulo: "Información del cliente:",
-        tipo: "campos",
-        icono: "feather:user",
-        color: "text-blue-600",
-        descripcion: "Datos específicos del cliente:",
-        campos: [
+    switch (data.resumenGeneral.unidadNegocio) {
+      case 32:
+      case 22:
+        DatosCredito.push(
           {
-            icono: "heroicons_outline:user-circle",
-            color: "bg-blue-100 text-blue-800",
-            label: "Cliente:",
-            valor: data.resumenCredito.nombreCompleto.toLowerCase(),
-            valor2: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion
-          },
-          {
-            icono: "feather:dollar-sign",
-            color: "bg-yellow-100 text-yellow-800",
-            label: "Crédito: " + data.resumenGeneral.tipoCredito,
-            valor: "Destino: " + data.resumenGeneral.descripcionDestinoCredito + "",
+            titulo: "Información del cliente:",
+            tipo: "campos",
+            icono: "feather:user",
+            color: "text-blue-600",
+            descripcion: "Datos específicos del cliente:",
+            campos: [
+              {
+                icono: "heroicons_outline:user-circle",
+                color: "bg-blue-100 text-blue-800",
+                label: "Cliente:",
+                valor: data.resumenCredito.nombreCompleto.toLowerCase(),
+                valor2: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion
+              },
+              {
+                icono: "feather:dollar-sign",
+                color: "bg-yellow-100 text-yellow-800",
+                label: "Crédito: " + data.resumenGeneral.tipoCredito,
+                valor: "Destino: " + data.resumenGeneral.descripcionDestinoCredito + "",
 
+              },
+              {
+                icono: "feather:dollar-sign",
+                color: "bg-green-100 text-green-800",
+                valor: "$" + data.resumenCredito.cupoTotal,
+                valor2: "Plazo: " + data.resumenCredito.plazo + " meses",
+                valor3: "Tasa: " + data.resumenCredito.tasa + "%"
+              },
+              {
+                icono: "heroicons_outline:light-bulb",
+                color: "bg-pink-100 text-pink-800",
+                label: "Condiciones: ",
+                valor: "Renovación: " + data.resumenCredito.renovacion,
+                valor2: "Segmento: " + data.resumenCredito.segmento
+              },
+              {
+                icono: "mat_outline:location_on",
+                color: "bg-purple-100 text-purple-800",
+                label: "Ubicación: ",
+                valor: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase()
+              }
+            ]
           },
+        )
+      case 30:
+        DatosCredito.push(
           {
-            icono: "feather:dollar-sign",
-            color: "bg-green-100 text-green-800",
-            valor: "$" + data.resumenCredito.cupoTotal,
-            valor2: "Plazo: " + data.resumenCredito.plazo + " meses",
-            valor3: "Tasa: " + data.resumenCredito.tasa + "%"
+            titulo: "Información del cliente:",
+            tipo: "campos",
+            icono: "feather:user",
+            color: "text-blue-600",
+            descripcion: "Datos específicos del cliente:",
+            campos: [
+              {
+                icono: "heroicons_outline:user-circle",
+                color: "bg-blue-100 text-blue-800",
+                label: "Cliente:",
+                valor: data.resumenCredito.nombreCompleto.toLowerCase(),
+                valor2: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion
+              },
+              {
+                icono: "feather:dollar-sign",
+                color: "bg-yellow-100 text-yellow-800",
+                valor: "<span class='text-sm font-medium text-secondary'>Tipo crédito: </span> " + data.resumenGeneral.TipoCreditoConsumo,
+                valor2: "<span class='text-sm font-medium text-secondary'>Tipo cliente: </span> " + data.resumenGeneral.tipoCliente,
+                valor3: "<span class='text-sm font-medium text-secondary'>Tarjeta de propiedad: </span> " + (data.resumenGeneral.tarjetaPropiedad == 'S' ? 'Si' : 'No'),
+              },
+              {
+                icono: "feather:dollar-sign",
+                color: "bg-green-100 text-green-800",
+                valor: "$" + data.resumenCredito.cupoTotal,
+                valor2: "Plazo: " + data.resumenCredito.plazo + " meses",
+                valor3: "Tasa: " + data.resumenCredito.tasa + "%"
+              },
+              {
+                icono: "heroicons_outline:light-bulb",
+                color: "bg-pink-100 text-pink-800",
+                label: "Condiciones: ",
+                valor: "Renovación: " + data.resumenCredito.renovacion,
+                valor2: "Segmento: " + data.resumenCredito.segmento
+              },
+              {
+                icono: "mat_outline:location_on",
+                color: "bg-purple-100 text-purple-800",
+                label: "Ubicación: ",
+                valor: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase()
+              }
+            ]
           },
-          {
-            icono: "heroicons_outline:light-bulb",
-            color: "bg-pink-100 text-pink-800",
-            label: "Condiciones: ",
-            valor: "Renovación: " + data.resumenCredito.renovacion,
-            valor2: "Segmento: " + data.resumenCredito.segmento
-          },
-          {
-            icono: "mat_outline:location_on",
-            color: "bg-purple-100 text-purple-800",
-            label: "Ubicación: ",
-            valor: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase()
-          }
-        ]
-      },
-    )
+        )
+        break;
+    }
+
+
+    // resumenCredito
     switch (data.resumenGeneral.unidadNegocio) {
       case 32:
         DatosCredito.push(
@@ -148,6 +202,100 @@ export class ResumenComponent implements OnInit {
             ]
           },
         )
+        break;
+      case 30:
+        if (data.resumenCredito.ocupacion.toLowerCase() == 'Epldo') {
+          DatosCredito.push(
+            {
+              titulo: "Información laboral",
+              tipo: "campos",
+              icono: "heroicons_outline:briefcase",
+              color: "text-gray-400",
+              descripcion: "Pagaduria",
+              campos: [
+                {
+                  icono: "heroicons_outline:briefcase",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Nombre de la empresa",
+                  // valor: "<span class='text-sm font-medium text-secondary'>Pagaduria </span> " ,
+                  valor: data.resumenCredito.nombrePagaduria.toUpperCase(),
+                  // valor3: "<span class='text-sm font-medium text-secondary'>Tipo de contrato: </span>" + data.resumenCredito.tipoContrato.toLowerCase()
+                },
+                {
+                  icono: "heroicons_outline:light-bulb",
+                  color: "bg-green-100 text-green-800",
+                  label: "Cargo",
+                  valor: data.resumenCredito.cargo.toLowerCase(),
+
+                },
+
+                {
+                  icono: "heroicons_outline:document-text",
+                  color: "bg-purple-100 text-purple-800",
+                  label: "Tipo de contrato",
+                  valor: data.resumenCredito.descripcionTipoContrato.toLowerCase()
+                },
+                {
+                  icono: "heroicons_outline:calendar",
+                  color: "bg-pink-100 text-pink-800",
+                  label: "Fechas de contrato",
+                  valor2: "<span class='text-sm font-medium text-secondary'>Fecha de ingreso: </span>" + data.resumenCredito.fechaVinculacion,
+                },
+                {
+                  icono: "feather:dollar-sign",
+                  color: "bg-yellow-100 text-yellow-800",
+                  label: "Valor de ingreso al mes",
+                  valor: this.separatos(data.resumenCredito.salarioBasico)
+                },
+              ]
+            },
+          )
+        } else {
+          DatosCredito.push(
+            {
+              titulo: "Información del negocio",
+              tipo: "campos",
+              icono: "heroicons_outline:briefcase",
+              color: "text-gray-400",
+              descripcion: "Actividad económica del titular",
+              campos: [
+                {
+                  icono: "heroicons_outline:briefcase",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "",
+                  valor: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.ocupacion.toLowerCase(),
+                  valor2: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.actividadEconomica.toLowerCase(),
+                  valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica.toLowerCase()
+                },
+                {
+                  icono: "heroicons_outline:phone",
+                  color: "bg-purple-100 text-purple-800",
+                  label: "Teléfono del negocio:",
+                  valor: data.resumenCredito.telefonoNegocio
+                },
+                {
+                  icono: "mat_outline:access_time",
+                  color: "bg-green-100 text-green-800",
+                  label: "Antigüedad del negocio:",
+                  valor: data.resumenCredito.antiguedadNegocio
+                },
+                {
+                  icono: "mat_outline:location_on",
+                  color: "bg-purple-100 text-purple-800",
+                  label: "Ubicación del negocio:",
+                  valor: data.resumenCredito.departamentoNegocio + ", " + data.resumenCredito.ciudadNegocio.toLowerCase()
+                },
+                {
+                  icono: "feather:dollar-sign",
+                  color: "bg-yellow-100 text-yellow-800",
+                  label: "Valor de ingreso al mes",
+                  valor: this.separatos(data.resumenCredito.salarioBasico)
+                },
+              ]
+            },
+          )
+        }
+
         break;
       case 22:
         DatosCredito.push(
@@ -310,53 +458,57 @@ export class ResumenComponent implements OnInit {
           },
         )
         break;
+      case 30:
       case 22:
-        DatosCredito2.push(
-          {
-            titulo: "Capacidad de pago y oferta ",
-            descripcion: "Información capacidad de pago y oferta",
-            tipo: "campos",
-            icono: "attach_money",
-            color: "text-purple-400",
-            campos: [
-              {
-                icono: "heroicons_outline:academic-cap",
-                clase: "bg-purple-100",
-                color: "bg-blue-100 text-blue-800",
-                label: "Score HDC",
-                valor: data.resumenIndicadores.score
-              },
-              {
-                icono: "heroicons_outline:academic-cap",
-                clase: "bg-purple-100",
-                color: "bg-blue-100 text-blue-800",
-                label: "Disponible de cuota",
-                valor: "$" + this.separatos(data.resumenIndicadores.disponibleCuota)
-              },
-              {
-                icono: "heroicons_outline:academic-cap",
-                clase: "bg-purple-100",
-                color: "bg-blue-100 text-blue-800",
-                label: "Valor cuota del crédito",
-                valor: "$" + this.separatos(data.resumenIndicadores.valorCuota)
-              },
-              {
-                icono: "heroicons_outline:academic-cap",
-                clase: "bg-purple-100",
-                color: "bg-blue-100 text-blue-800",
-                label: "Total de obligaciones a comprar y recoger",
-                valor: "$" + this.separatos(data.resumenIndicadores.sumaTotal)
-              },
-              {
-                icono: "heroicons_outline:academic-cap",
-                clase: "bg-purple-100",
-                color: "bg-blue-100 text-blue-800",
-                label: "Valor consultores ",
-                valor: "$" + this.separatos(data.resumenIndicadores.sumaConsultores)
-              },
-            ]
-          },
-        )
+        if (data.resumenIndicadores) {
+          DatosCredito2.push(
+            {
+              titulo: "Capacidad de pago y oferta ",
+              descripcion: "Información capacidad de pago y oferta",
+              tipo: "campos",
+              icono: "attach_money",
+              color: "text-purple-400",
+              campos: [
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Score HDC",
+                  valor: data.resumenIndicadores.score
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Disponible de cuota",
+                  valor: "$" + this.separatos(data.resumenIndicadores.disponibleCuota)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Valor cuota del crédito",
+                  valor: "$" + this.separatos(data.resumenIndicadores.valorCuota)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Total de obligaciones a comprar y recoger",
+                  valor: "$" + this.separatos(data.resumenIndicadores.sumaTotal)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Valor consultores ",
+                  valor: "$" + this.separatos(data.resumenIndicadores.sumaConsultores)
+                },
+              ]
+            },
+          )
+        }
+
         break;
       default:
         break;
@@ -367,7 +519,7 @@ export class ResumenComponent implements OnInit {
 
     this.dataResumenTrazabilidad = data.resumenTrazabilidad;
     this.dataPolicitasAdmin = data.policitasAdmin;
-    this.resumenCuentasMora = data.resumenCuentasMora;
+    this.resumenCuentasMora = data.resumenCuentasMora ? data.resumenCuentasMora : [];
 
   }
 

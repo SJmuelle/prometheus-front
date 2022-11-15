@@ -6,11 +6,7 @@
                     <h3 class="mb-2 text-gray-900">Resumen del crédito</h3>
                     <span class="font-semibold text-gray-500">Número solicitud: {{numeroSolicitud}}</span>
                 </div>
-                <!-- <button class="mt-2" mat-stroked-button (click)="openModalNegocio()">
-                    Decisión
-                </button> -->
                 <app-fabrica-opciones></app-fabrica-opciones>
-
             </div>
         </div>
     </div>
@@ -94,8 +90,6 @@
                                     <mat-icon  svgIcon="heroicons_outline:information-circle"></mat-icon>
                                 </button>
                             </div>
-                            <!-- <div class="text-sm font-medium leading-none text-secondary">{{campo.label}}:</div>
-                            <div class="mt-1 font-medium leading-none capitalize">{{campo.valor}}</div> -->
                         </div>
                     </div>
                 </div>
@@ -211,6 +205,10 @@
             <div mat-line> <span>Entidad: {{item.entidad}}</span></div>
             <div mat-line> <span class="text-xs text-secondary"> No Cuenta {{item.numeroCuenta}} </span></div>
             <div mat-line> <span class="text-xs">Saldo ${{item.saldoActual | number}} </span></div>
+        </mat-list-item>
+        <mat-list-item *ngIf="resumenCuentasMora">
+            <mat-icon mat-list-icon>note</mat-icon>
+            <div mat-line> <span>No tiene enbargos</span></div>
         </mat-list-item>
     </mat-list>
 </mat-menu>

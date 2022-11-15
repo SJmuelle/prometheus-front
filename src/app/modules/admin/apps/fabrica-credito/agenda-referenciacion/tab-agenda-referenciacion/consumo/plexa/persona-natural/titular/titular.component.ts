@@ -38,6 +38,8 @@ export class TitularConsumoPlexaComponent implements OnInit {
   public fabricaDatos: any;
   public MostrarfabricaDatos: boolean = false;
   public mensajeQuill: any;
+  public capacidadPago$: Observable<any>;
+  public listadoOferta: any;
   public quillModules: any = {
     toolbar: [
       ['bold', 'italic', 'underline'],
@@ -70,6 +72,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
   ngOnInit(): void {
     this.getDepartamentos();
     this.getTipoCombustible();
+    this.getCapacidadPago(Number(this.numeroSolicitud));
     this.getTodosFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
   }
 
@@ -216,6 +219,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
       tanqueoDia: [''],
       tipoCombustible: [''],
       ingresosDiarios: [''],
+      ingresos: [''],
       valorCuotaDiaria: [''],
       valorCuota:[''],
       numeroSolicitud: Number(this.numeroSolicitud),
@@ -502,7 +506,41 @@ export class TitularConsumoPlexaComponent implements OnInit {
       });
   }
 
+  // CAPCIDAD DE PAGO Y OFERTA
 
+  private getCapacidadPago(numeroSolicitud: number): void {
+    this.capacidadPago$ = this.ofertaService.getCapacidadPagoConsumo(numeroSolicitud);
+  }
+
+  public SelectOferta(item: any): void {
+    let data = {
+      numeroSolicitud: Number(this.numeroSolicitud),
+      numeroCapacidadPago: item.numeroCapacidadPago,
+    }
+
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando información',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+
+    this.ofertaService
+      .SelectOfertaConsumo(data)
+      .subscribe((res) => {
+        Swal.close();
+        debugger
+        if (res.msg == 'OK') {
+          this.listadoOferta=res.data;
+          this.getCapacidadPago(Number(this.numeroSolicitud));
+          // this.getListadoOferta(Number(this.numeroSolicitud));
+        } else {
+          Swal.fire('Error', res.data.resultado, 'error');
+        }
+      });
+  }
 
   /**
  * Track by function for ngFor loops
@@ -523,12 +561,19 @@ export class TitularConsumoPlexaComponent implements OnInit {
         this.datosCompletoSolicitud = data;
         this.getActividadEconomica(data.ocupacion);
         this.llenarDatosFormOferta(data)
-      });
+      }); 
   }
 
   private llenarDatosFormOferta(data) {
+    // ingresosDiarios
     if (data.valorSolicitado) {
       this.formOferta.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(data.valorSolicitado)));
+    }
+    if (data.ingresosDiarios) {
+      this.formOferta.controls['ingresosDiarios'].setValue(this.utility.formatearNumero(String(data.ingresosDiarios)));
+    }
+    if (data.ingresos) {
+      this.formOferta.controls['ingresos'].setValue(this.utility.formatearNumero(String(data.ingresos)));
     }
     if (data.plazo) {
       this.formOferta.controls['plazo'].setValue(this.utility.formatearNumero(String(data.plazo)));
@@ -547,13 +592,12 @@ export class TitularConsumoPlexaComponent implements OnInit {
 
   public recalcularOferta(): void {
     let data = {
-      valorSolicitado: Number(this.utility.enviarNumero(this.formOferta.value.valorSolicitado)),
-      plazo: Number(this.utility.enviarNumero(this.formOferta.value.plazo)),
-      salarioBasico: Number(this.utility.enviarNumero(this.formOferta.value.salarioBasico)),
-      otrosIngresos: Number(this.utility.enviarNumero(this.formOferta.value.otrosIngresos)),
-      comisionesHorasExtras: Number(this.utility.enviarNumero(this.formOferta.value.comisionesHorasExtras)),
-      descuentoNomina: Number(this.utility.enviarNumero(this.formOferta.value.descuentoNomina)),
       numeroSolicitud: Number(this.numeroSolicitud),
+      plazo: Number(this.utility.enviarNumero(this.formOferta.value.plazo)),
+      monto: Number(this.utility.enviarNumero(this.formOferta.value.monto)),
+      tanqueoDiario: Number(this.utility.enviarNumero(this.formOferta.value.tanqueoDiario)),
+      tipoCombustible: this.formOferta.value.tipoCombustible,
+      ingresosDiarios: Number(this.utility.enviarNumero(this.formOferta.value.ingresosDiarios)),
     }
 
     Swal.fire({
@@ -566,11 +610,12 @@ export class TitularConsumoPlexaComponent implements OnInit {
     }).then((result) => { });
 
     this.ofertaService
-      .recalcularOferta(data)
+      .recalcularOfertaConsumo(data)
       .subscribe((res) => {
         Swal.close();
-        if (res.data.respuesta == 'OK') {
+        if (res.data.cre_sp_calcular_capacidad_pago_consumo == 'OK') {
 
+          this.getCapacidadPago(Number(this.numeroSolicitud));
         } else {
           Swal.fire('Error', res.data.resultado, 'error');
         }
