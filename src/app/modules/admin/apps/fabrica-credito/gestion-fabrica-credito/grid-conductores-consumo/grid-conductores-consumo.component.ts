@@ -20,7 +20,6 @@ import { ConductoresService } from 'app/core/services/conductores.service';
 export class GridConductoresConsumoComponent implements OnInit, OnDestroy, AfterViewInit {
   public Conductores$: Observable<any>;
   public esVer: boolean = false;
-  public subscription$: Subscription;
   @Input() datos: any;
   constructor(
       private route: ActivatedRoute,
@@ -88,7 +87,6 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
 
     ngOnDestroy(): void {
       this.esVer = false;
-      this.subscription$.unsubscribe();
     }
 
     ngAfterViewInit(): void {
