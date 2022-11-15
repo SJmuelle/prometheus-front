@@ -659,8 +659,8 @@
                                     [disabled]="form.controls['descripcionTipoCliente'].value != 'CON'"
                                     >
                                         <mat-option disabled [value]="''">Seleccione</mat-option>
-                                        <mat-option [value]="'SI'">Si</mat-option>
-                                        <mat-option [value]="'NO'">No</mat-option>
+                                        <mat-option [value]="'S'">Si</mat-option>
+                                        <mat-option [value]="'N'">No</mat-option>
                                     </mat-select>
                                     <mat-icon *ngIf="form.controls['descripcionTipoCliente'].value != 'CON'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'" >
                                     </mat-icon>
