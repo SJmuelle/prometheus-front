@@ -594,7 +594,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
     let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
       plazo: Number(this.utility.enviarNumero(this.formOferta.value.plazo)),
-      monto: Number(this.utility.enviarNumero(this.formOferta.value.monto)),
+      monto: Number(this.utility.enviarNumero(this.formOferta.value.valorSolicitado)),
       tanqueoDiario: Number(this.utility.enviarNumero(this.formOferta.value.tanqueoDiario)),
       tipoCombustible: this.formOferta.value.tipoCombustible,
       ingresosDiarios: Number(this.utility.enviarNumero(this.formOferta.value.ingresosDiarios)),
