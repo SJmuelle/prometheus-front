@@ -49,6 +49,16 @@
                 </div>
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Score</mat-label>
+                        <input matInput type="text" [formControlName]="'score'" [readonly]="true">
+                    </mat-form-field>
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                        <mat-label>Nivel de riesgo</mat-label>
+                        <input matInput type="text" [formControlName]="'descripcionScore'" [readonly]="true">
+                    </mat-form-field>
+                </div>
+                <div class="-mx-3 md:flex mb-2">
+                    <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Valor solicitado del crédito</mat-label>
                         <input matInput type="text" [formControlName]="'valorSolicitado'"
                             (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); "
@@ -238,8 +248,8 @@
                             <div class="-mx-3 md:flex mt-3 mb-2">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha de expedición </mat-label>
-                                    <input matInput [matDatepicker]="fechaExpedicionDocumento"
-                                        [formControlName]="'fechaExpedicionDocumento'" [readonly]="true">
+                                    <input matInput [matDatepicker]="fechaExpedicionDocumento" 
+                                        [formControlName]="'fechaExpedicionDocumento'" disabled>
                                     <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento"
                                         [disabled]="false">
                                     </mat-datepicker-toggle>

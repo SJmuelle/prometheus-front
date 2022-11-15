@@ -918,6 +918,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
             fechaAntiguedadNegocio:[''],
             celularNequi:[''],
             costoTransaccion:[''],
+
         });
     }
 

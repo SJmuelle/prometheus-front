@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./grid-historico-cliente.component.scss']
 })
 export class GridHistoricoClienteComponent implements OnInit {
-  datosGeneral
+  datosGeneral:any[]=[]
   constructor(
     private route: ActivatedRoute,
     private _fabricaCreditoService: FabricaCreditoService,
