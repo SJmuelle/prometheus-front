@@ -51,8 +51,8 @@ export class ProntoPagoComponent implements OnInit {
   }
 
   mascara(numero){
-    const valor: string = numero.substr( 0 , 3 ) + '-' + numero.substr ( 3 , 3 ) + '-' + numero.substr ( 6 , 4 );
-    return "+57-" + valor;
+    const valor: string = '+57 (' + numero.substr(0,3) + ')-' + numero.substr (3,3) + '-' + numero.substr (6,4);
+    return valor;
   }
 
   abrirDetalle(item){

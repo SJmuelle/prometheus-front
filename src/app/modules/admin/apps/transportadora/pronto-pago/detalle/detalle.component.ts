@@ -33,6 +33,11 @@ export class DetalleComponent implements OnInit {
     }
   }
 
+  mascara(numero){
+    const valor: string = '+57 (' + numero.substr(0,3) + ')-' + numero.substr (3,3) + '-' + numero.substr (6,4);
+    return valor;
+  }
+
   consultarTransportadoras() {
     Swal.fire({ title: 'Cargando', html: 'Buscando información de planillas', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this.pago.getTransportadoras(this.data.idPropietario, this.data.idTransportadora).subscribe((response: any) => {
