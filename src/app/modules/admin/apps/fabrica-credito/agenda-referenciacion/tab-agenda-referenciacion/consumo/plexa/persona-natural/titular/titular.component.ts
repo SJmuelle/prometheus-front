@@ -208,8 +208,8 @@ export class TitularConsumoPlexaComponent implements OnInit {
       compraCombustiblediaCorregido: [''],
       referenciaValidada: [''],
       referenciaValida_bool: Boolean,
-      comentarioValidacion:[''],
-      resultadoReferencia:[''],
+      comentarioValidacion: [''],
+      resultadoReferencia: [''],
       recurso: [''],
     });
 
@@ -221,7 +221,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
       ingresosDiarios: [''],
       ingresos: [''],
       valorCuotaDiaria: [''],
-      valorCuota:[''],
+      valorCuota: [''],
       numeroSolicitud: Number(this.numeroSolicitud),
     })
   }
@@ -371,7 +371,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
     const diastrabajadosvalida = this.form.value.diastrabajadosvalida_bool == true ? 'N' : 'S';
     const tipoCombustibleValida = this.form.value.tipoCombustibleValida_bool == true ? 'N' : 'S';
     const compraCombustibleValida = this.form.value.compraCombustibleValida_bool == true ? 'N' : 'S';
-    
+
     //logica diferente
     const celularReconocerValida = this.form.value.celularReconocerValida_bool == true ? 'S' : 'N';
     const conoceCelularReconocerValida = this.form.value.conoceCelularReconocerValida_bool == true ? 'S' : 'N';
@@ -435,8 +435,8 @@ export class TitularConsumoPlexaComponent implements OnInit {
 
     const datosFormularios: any = {
       numeroSolicitud: this.numeroSolicitud.toString(),
-      otrosIngresosCorregido:otrosIngresosCorregidoFormato,
-      compraCombustiblediaCorregido:compraCombustiblediaCorregidoFormato,
+      otrosIngresosCorregido: otrosIngresosCorregidoFormato,
+      compraCombustiblediaCorregido: compraCombustiblediaCorregidoFormato,
       numeroFormularioValida: numeroFormularioValida,
       telefonoContactoValida: telefonoContactoValida,
       departamentoResidenciaValida: departamentoResidenciaValida,
@@ -456,7 +456,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
       tipoCombustibleValida: tipoCombustibleValida,
       compraCombustibleValida: compraCombustibleValida,
       referenciaValida: referenciaValida,
-      diasTrabajadosCorregido:this.form.value.diasTrabajadosCorregido.toString(),
+      diasTrabajadosCorregido: this.form.value.diasTrabajadosCorregido.toString(),
       ...data
     };
     Swal.fire({
@@ -533,7 +533,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
         Swal.close();
         debugger
         if (res.msg == 'OK') {
-          this.listadoOferta=res.data;
+          this.listadoOferta = res.data;
           this.getCapacidadPago(Number(this.numeroSolicitud));
           // this.getListadoOferta(Number(this.numeroSolicitud));
         } else {
@@ -561,7 +561,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
         this.datosCompletoSolicitud = data;
         this.getActividadEconomica(data.ocupacion);
         this.llenarDatosFormOferta(data)
-      }); 
+      });
   }
 
   private llenarDatosFormOferta(data) {
@@ -616,6 +616,8 @@ export class TitularConsumoPlexaComponent implements OnInit {
         if (res.data.cre_sp_calcular_capacidad_pago_consumo == 'OK') {
 
           this.getCapacidadPago(Number(this.numeroSolicitud));
+          this.getTodosFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+
         } else {
           Swal.fire('Error', res.data.resultado, 'error');
         }
