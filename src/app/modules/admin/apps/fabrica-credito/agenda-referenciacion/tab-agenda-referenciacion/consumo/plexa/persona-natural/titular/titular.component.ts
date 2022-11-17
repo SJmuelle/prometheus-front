@@ -24,6 +24,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
   // currentStep = 1;
   @ViewChild('editor') editor;
   public form: FormGroup;
+  public errorPlazo=false;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public undadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
@@ -52,6 +53,8 @@ export class TitularConsumoPlexaComponent implements OnInit {
   public mostrarDepartamento: boolean;
   public mostrarCiudad: boolean;
   public mostrarBarrio: boolean;
+  plazoMaximo: number=0;
+  plazoMinimo: number=0;
 
   constructor(
     private router: Router,
@@ -214,14 +217,14 @@ export class TitularConsumoPlexaComponent implements OnInit {
     });
 
     this.formOferta = this.fb.group({
-      valorSolicitado: [''],
-      plazo: [''],
-      tanqueoDia: [''],
-      tipoCombustible: [''],
-      ingresosDiarios: [''],
-      ingresos: [''],
-      valorCuotaDiaria: [''],
-      valorCuota: [''],
+      valorSolicitado: ['', [Validators.required]],
+      plazo: ['', [Validators.required]],
+      tanqueoDia: ['', [Validators.required]],
+      tipoCombustible: ['', [Validators.required]],
+      ingresosDiarios: ['', [Validators.required]],
+      ingresos: ['', [Validators.required]],
+      valorCuotaDiaria: ['', [Validators.required]],
+      valorCuota: ['', [Validators.required]],
       numeroSolicitud: Number(this.numeroSolicitud),
     })
   }
@@ -531,7 +534,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
       .SelectOfertaConsumo(data)
       .subscribe((res) => {
         Swal.close();
-        debugger
+        // debugger
         if (res.msg == 'OK') {
           this.listadoOferta = res.data;
           this.getCapacidadPago(Number(this.numeroSolicitud));
@@ -557,13 +560,35 @@ export class TitularConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        debugger
+        // debugger
         this.datosCompletoSolicitud = data;
         this.getActividadEconomica(data.ocupacion);
         this.llenarDatosFormOferta(data)
+        // buscar valores max y min
+        if(this.datosCompletoSolicitud.tipoCredito){
+          this.genericaServices.getParametriaTipoCredito(this.datosCompletoSolicitud.tipoCredito)
+          .subscribe(({ data }) => {
+            // debugger;
+            this.plazoMaximo=data.plazoMaximo;
+            this.plazoMinimo=data.plazoMinimo;
+            this.formOferta.controls['plazo'].setValidators([Validators.required,Validators.max(this.plazoMaximo), Validators.min(this.plazoMinimo) ])
+            this.formOferta.markAllAsTouched();
+          })
+        }
+       
       });
   }
 
+  public validacionPlazo(data:string){
+    // debugger;
+    let plazo= Number(this.utility.enviarNumero(data));
+    let cambiar=false;
+    if((plazo>this.plazoMaximo) || (plazo<this.plazoMinimo)){
+        cambiar=true;
+    }
+    this.errorPlazo=cambiar;
+
+  }
   private llenarDatosFormOferta(data) {
     // ingresosDiarios
     if (data.valorSolicitado) {

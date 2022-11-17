@@ -177,6 +177,14 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/obtener-agenda-solicitud'),
         }
     };
+        /**
+ * @description: End-point comentarios
+ */
+         public parametriaTipoCredito = {
+            url: {
+                base: EndPoints.uri('/generic/qry/consulta-parametria-negocios'),
+            }
+        };
     /**
 /**
 * @description: End-point comentarios

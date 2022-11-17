@@ -117,21 +117,21 @@ export class GenericasService {
     /**
      * @description: Obtiene nivel de estudii
      */
-         public getTipoServicios(): Observable<any> {
-            const params: string = 'TIPO-SERVICIO-PLEXA';
-            return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
-        }
+    public getTipoServicios(): Observable<any> {
+        const params: string = 'TIPO-SERVICIO-PLEXA';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
     /**
     * @description: Obtiene nivel de estudii
      */
-     public getTurnoVehiculos(): Observable<any> {
+    public getTurnoVehiculos(): Observable<any> {
         const params: string = 'TIPO-JORNADA';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
     /**
     * @description: Obtiene nivel de estudii
      */
-     public getTipoCombustibles(): Observable<any> {
+    public getTipoCombustibles(): Observable<any> {
         const params: string = 'TIPO-COMBUSTIBLE';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
@@ -161,19 +161,19 @@ export class GenericasService {
     public getEstadoCuenta(tipo): Observable<any> {
         // const params: string = 'ESTADO-CUENTA';
         let data = {
-            tipo:tipo
+            tipo: tipo
         }
-        return this._http.post(`${this._appSettings.busquedaEstadoCuenta.url.base}`,data);
+        return this._http.post(`${this._appSettings.busquedaEstadoCuenta.url.base}`, data);
     }
-   /**
-    * @description: obtiene nivel de estudii
-    */
+    /**
+     * @description: obtiene nivel de estudii
+     */
     public getSalarioBasico(): Observable<any> {
         // const params: string = 'ESTADO-CUENTA';
         let data = {
 
         }
-        return this._http.post(`${this._appSettings.salarioBasico.url.base}`,data);
+        return this._http.post(`${this._appSettings.salarioBasico.url.base}`, data);
     }
     /**
     * @description: Obtiene nivel de estudii
@@ -205,6 +205,15 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
 
+
+    /**
+   * @description: Obtiene listado de tipos de referencia
+   */
+    public getParametriaTipoCredito(data: string): Observable<any> {
+
+        return this._http.get(`${this._appSettings.parametriaTipoCredito.url.base}/${data}`);
+    }
+
     /**
  * @description: Obtiene listado de tipos de Paretensco
  */
@@ -213,13 +222,13 @@ export class GenericasService {
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
 
-        /**
- * @description: Obtiene listado de tipos de Paretensco
- */
-         public getTipoVia(): Observable<any> {
-            const params: string = 'nomenclarturas';
-            return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
-        }
+    /**
+* @description: Obtiene listado de tipos de Paretensco
+*/
+    public getTipoVia(): Observable<any> {
+        const params: string = 'nomenclarturas';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
 
     /**
     * @description:
