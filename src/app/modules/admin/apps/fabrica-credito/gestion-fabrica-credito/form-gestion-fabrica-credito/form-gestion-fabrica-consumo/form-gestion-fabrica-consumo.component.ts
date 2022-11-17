@@ -405,6 +405,21 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
                 if (data.valorCuota) {
                     this.form.controls['valorCuota'].setValue(this.utility.formatearNumero(String(this.form.value.valorCuota)));
                 }
+               
+                if (data.compraDia) {
+                    this.form.controls['compraDia'].setValue(this.utility.formatearNumero(String(this.form.value.compraDia.toString())));
+                }
+                if (data.tanqueoDia) {
+                    this.form.controls['tanqueoDia'].setValue(this.utility.formatearNumero(String(this.form.value.tanqueoDia.toString())));
+                }
+                
+
+                if (data.ingresosDiarios) {
+                    this.form.controls['ingresosDiarios'].setValue(this.utility.formatearNumero(String(this.form.value.ingresosDiarios.toString())));
+                }
+                if (data.antiguedadNegocio) {
+                    this.form.controls['antiguedadNegocio'].setValue(this.utility.formatearNumero(String(this.form.value.antiguedadNegocio.toString())));
+                }
                 // this.form.controls['aplicaEmbargo'].setValue(this.form.value.aplicaEmbargo=='N'?'No aplica':'Si aplica')
                 // form.value.valorSolicitado
                 if (data.comisionesHorasExtras) {
@@ -448,12 +463,6 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
                 }
                 if (data.actividadEconomica) {
                     this.form.controls['actividadEconomica'].setValue(this.form.value.actividadEconomica.toString());
-                }
-                if (data.compraDia) {
-                    this.form.controls['compraDia'].setValue(this.form.value.compraDia.toString());
-                }
-                if (data.tanqueoDia) {
-                    this.form.controls['tanqueoDia'].setValue(this.form.value.tanqueoDia.toString());
                 }
                 this.tipoDocumento = data.tipoDocumento;
                 const datosDocumentos: any = {
