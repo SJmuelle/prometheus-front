@@ -617,21 +617,20 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2">
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                 <mat-label>Monto solicitado</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'valorSolicitado'"
+                                <input matInput type="text" readonly autocomplete="off" placeholder="" [formControlName]="'valorSolicitado'"
                                     (keyup)="formOferta.controls['valorSolicitado'].setValue(utility.formatearNumero(formOferta.value.valorSolicitado)); ">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
+                               
                             </mat-form-field>
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                 <mat-label>Plazo</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'plazo'"
+                                <input matInput type="text" placeholder="" autocomplete="off" [formControlName]="'plazo'"
                                     (keyup)="formOferta.controls['plazo'].setValue(utility.formatearNumero(formOferta.value.plazo)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                 <mat-label>¿Cuánto tanquea diario? ($)</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'tanqueoDia'"
+                                <input matInput type="text" placeholder="" autocomplete="off" [formControlName]="'tanqueoDia'"
                                     (keyup)="formOferta.controls['tanqueoDia'].setValue(utility.formatearNumero(formOferta.value.tanqueoDia)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -639,7 +638,7 @@
                             <ng-container *ngIf="tipoCombustible$ | async as tipoCombustible">
                                 <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                     <mat-label>Tipo de combustible</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoCombustible'">
+                                    <mat-select [value]="'seleccione'"  [formControlName]="'tipoCombustible'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of tipoCombustible.data"
@@ -653,37 +652,38 @@
 
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                 <mat-label>Valor ingresos diarios ($)</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'ingresosDiarios'"
+                                <input matInput type="text" placeholder="" autocomplete="off" [formControlName]="'ingresosDiarios'"
                                     (keyup)="formOferta.controls['ingresosDiarios'].setValue(utility.formatearNumero(formOferta.value.ingresosDiarios)); ">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                 <mat-label>Cuota diaria ($)</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'valorCuotaDiaria'"
+                                <input matInput type="text" placeholder="" readonly autocomplete="off" [formControlName]="'valorCuotaDiaria'"
                                     (keyup)="formOferta.controls['valorCuotaDiaria'].setValue(utility.formatearNumero(formOferta.value.valorCuotaDiaria)); ">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
+                               
                             </mat-form-field>
 
 
                             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                                 <mat-label>Cuota mensual ($)</mat-label>
-                                <input matInput type="text" placeholder="" [formControlName]="'valorCuota'"
+                                <input matInput type="text" placeholder="" readonly [formControlName]="'valorCuota'"
                                     (keyup)="formOferta.controls['valorCuota'].setValue(utility.formatearNumero(formOferta.value.valorCuota)); ">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
                             </mat-form-field>
-                        </div>
 
-                        <div class="flex justify-content-around">
-                            <div class="flex items-center justify-items-center">
-                                <button mat-fab class=" bg-green-500" (click)="recalcularOferta()"
-                                    matTooltip="Recalcular oferta">
-                                    <mat-icon svgIcon="heroicons_outline:refresh"></mat-icon>
-                                </button>
+                            <div class="flex justify-content-around">
+                                <div class="border-ra flex items-center justify-items-center">
+                                    <button   mat-raised-button class="text-white bg-green-500 py-3 px-36" (click)="recalcularOferta()"
+                                        matTooltip="Recalcular oferta">
+                                        <mat-icon class="text-white mr-3" svgIcon="heroicons_outline:refresh"></mat-icon>
+                                        Recalcular
+                                        
+                                    </button>
+                                </div>
                             </div>
                         </div>
+
+                        
 
 
                         <div class="flex flex-col items-center mt-3 w-full spanFlotante">
