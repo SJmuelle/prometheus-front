@@ -36,7 +36,7 @@ export class AppSettingsService {
     /**
      * @description: End-point asignacion de creditos
      */
-     public asignacion = {
+    public asignacion = {
         url: {
             base: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos'),
             baseAsesor: EndPoints.uri('/generic/qry/tk/listado-analista'),
@@ -78,6 +78,7 @@ export class AppSettingsService {
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
+            historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
         }
     };
@@ -118,7 +119,7 @@ export class AppSettingsService {
     /**
      * @description: End-point Transferencias
      */
-     public transferencias = {
+    public transferencias = {
         url: {
             baseTransferencia: EndPoints.uriBase('/transferencia/transferencia-cxp-proveedor'),
             baseProveedor: EndPoints.uriBase('/generic/qry/buscar-proveedor'),
@@ -129,7 +130,7 @@ export class AppSettingsService {
     /**
      * @description: End-point Archivos de transferencias
      */
-     public archivos = {
+    public archivos = {
         url: {
             ListFiles: EndPoints.uriBase('/generic/qry/tk/transferencia-consultar-achivo'),
             DownFile: EndPoints.uriBase('/transferencia/obtener-achivo-base64')
@@ -146,6 +147,16 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
+        }
+    };
+    /**
+     * @description: End-point referencias
+     */
+    public conductores = {
+        url: {
+            base: EndPoints.uri('/generic/qry/consulta-conductores'),
+            baseConductoresCrear: EndPoints.uri('/generic/cre-agregar-conductor-consumo'),
+            baseConductores: EndPoints.uri('/generic/cre-actualizar-conductor-consumo'),
         }
     };
     /**
@@ -166,6 +177,14 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/obtener-agenda-solicitud'),
         }
     };
+        /**
+ * @description: End-point comentarios
+ */
+         public parametriaTipoCredito = {
+            url: {
+                base: EndPoints.uri('/generic/qry/consulta-parametria-negocios'),
+            }
+        };
     /**
 /**
 * @description: End-point comentarios
@@ -229,8 +248,8 @@ export class AppSettingsService {
             baseCompradas: EndPoints.uri('/generic/qry/tk/obligaciones-compradas-hijas'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
-            editar:EndPoints.uri("/generic/actualizar-cartera"),
-            guardarGestionCompra:EndPoints.uri("/generic/guardar-gestion-compra"),
+            editar: EndPoints.uri("/generic/actualizar-cartera"),
+            guardarGestionCompra: EndPoints.uri("/generic/guardar-gestion-compra"),
             pasarAgenda: EndPoints.uri('/generic/cre-valida-gestion-cartera'),
             validadorTotalLibranza: EndPoints.uri('/generic/validador-total-libranza'),
             //negociacion
@@ -283,8 +302,11 @@ export class AppSettingsService {
     public oferta = {
         url: {
             base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza-seleccionada'),
+            consumo: EndPoints.uri('/generic/obtener-oferta-plexa'),
             postSelectOferta: EndPoints.uri('/generic/actualizar-eleccion-oferta'),
+            postSelectOfertaConsumo: EndPoints.uri('/generic/validacion-oferta-consumo'),
             recalcularOferta: EndPoints.uri('/generic/recalcular-capacidad-pago-libranza'),
+            recalcularOfertaConsumo: EndPoints.uri('/generic/calcular-capacidad-pago-consumo'),
         }
     };
 
@@ -294,7 +316,7 @@ export class AppSettingsService {
     public capacidad = {
         url: {
             base: EndPoints.uri('/generic/obtener-capacidad-pago'),
-
+            consumo: EndPoints.uri('/generic/qry/consulta-capacidad-pago-consumo'),
         }
     };
 
@@ -305,6 +327,15 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/obtener-nombre-entidades'),
 
+        }
+    };
+
+    /**
+* @description: End-point agenda decision
+*/
+    public busquedaActividadEconomica = {
+        url: {
+            base: EndPoints.uri('/generic/listado-actividad-economica-consumo'),
         }
     };
 

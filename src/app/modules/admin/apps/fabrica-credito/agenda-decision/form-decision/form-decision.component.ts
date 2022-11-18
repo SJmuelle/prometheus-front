@@ -118,13 +118,13 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
   private postDecicion() {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-    let datos = {
-      numeroSolicitud: this.fabricaDatos.numeroSolicitud,
-      concepto: this.DecisionForm.value.decision,
-      cupo: Number(this.utility.enviarNumero(String(this.DecisionForm.value.cupo))),
-      comentario: this.DecisionForm.value.comentario,
-      causal: Number(this.DecisionForm.value.causal),
-      unidadNegocio: this.fabricaDatos.unidadNegocio,
+    let datos={
+      numeroSolicitud:this.fabricaDatos.numeroSolicitud,
+      concepto:this.DecisionForm.value.decision,
+      cupo:Number( this.utility.enviarNumero(String(this.DecisionForm.value.cupo))),
+      comentario:this.DecisionForm.value.comentario,
+      causal:Number(this.DecisionForm.value.causal),
+      unidadNegocio:this.fabricaDatos.unidadNegocio,
     }
     this._decisionesService.postGuardado(datos).subscribe((response: any) => {
       Swal.close()

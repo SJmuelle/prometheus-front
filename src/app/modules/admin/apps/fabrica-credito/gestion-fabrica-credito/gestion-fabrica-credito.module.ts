@@ -54,7 +54,13 @@ import { FabricaOpcionesComponent } from './fabrica-opciones/fabrica-opciones.co
 import { QuillModule } from 'ngx-quill';
 import { FormDialogCarteraComprarComponent } from './form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { FormGestionFabricaConsumoComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-consumo/form-gestion-fabrica-consumo.component';
+import { GridConductoresConsumoComponent } from './grid-conductores-consumo/grid-conductores-consumo.component';
+import { FormDetallesConductoresComponent } from './form-detalles-conductores/form-detalles-conductores.component';
+import { GridOfertaConsumoComponent } from './grid-oferta-consumo/grid-oferta-consumo.component';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
+import {MatSliderModule} from '@angular/material/slider';
+import { GridHistoricoClienteComponent } from './grid-historico-cliente/grid-historico-cliente.component';
 
 
 @NgModule({
@@ -76,13 +82,18 @@ import { MatMenuModule } from '@angular/material/menu';
         GridCentralesComponent,
         FormGestionFabricaUltracemComponent,
         FormGestionFabricaLibranzaComponent,
+        FormGestionFabricaConsumoComponent,
         GridOfertaLibranzaComponent,
         GridCarteraComponent,
         FormDialogCarteraComponent,
         GridCarteraNegociacionComponent,
         FormDialogNegociacionComponent,
         FabricaOpcionesComponent,
-        FormDialogCarteraComprarComponent
+        FormDialogCarteraComprarComponent,
+        GridConductoresConsumoComponent,
+        FormDetallesConductoresComponent,
+        GridOfertaConsumoComponent,
+        GridHistoricoClienteComponent
     ],
     imports: [
         CommonModule,
@@ -114,7 +125,8 @@ import { MatMenuModule } from '@angular/material/menu';
         FormsModule,
         MatAutocompleteModule,
         QuillModule,
-        MatMenuModule
+        MatMenuModule,
+        MatSliderModule
         // FabricaOpcionesModule
     ],
 
