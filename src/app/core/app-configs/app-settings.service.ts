@@ -123,7 +123,7 @@ export class AppSettingsService {
         url: {
             baseTransferencia: EndPoints.uriBase('/transferencia/transferencia-cxp-proveedor'),
             baseProveedor: EndPoints.uriBase('/generic/qry/buscar-proveedor'),
-            baseBancos: EndPoints.uriBase('/generic/qry/bancos-transferencia/JHSALAZAR'),
+            baseBancos: EndPoints.uriBase('/generic/qry/bancos-transferencia'),
             baseFiltro: EndPoints.uriBase('/generic/qry/cxp-proveedor'),
         }
     };

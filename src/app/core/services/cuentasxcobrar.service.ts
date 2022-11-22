@@ -18,8 +18,8 @@ export class CuentasxcobrarService {
     return this._http.get(`${this._appSettings.transferencias.url.baseFiltro}/${nit}/${vencimiento}`);
   }
 
-  public  getBanco(): Observable<any> {
-    return this._http.get(`${this._appSettings.transferencias.url.baseBancos}`);
+  public  getBanco(user: any): Observable<any> {
+    return this._http.get(`${this._appSettings.transferencias.url.baseBancos}/${user}`);
   }
 
   public  getProveedor(): Observable<any> {

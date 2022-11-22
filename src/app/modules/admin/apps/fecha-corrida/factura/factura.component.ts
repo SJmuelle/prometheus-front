@@ -179,7 +179,8 @@ export class FacturaComponent implements OnInit {
   }
 
   consultaBanco(){
-    this.cuentaService.getBanco().subscribe((response: any) => {
+    let data = JSON.parse(localStorage.getItem('usuario'))
+    this.cuentaService.getBanco(data.user).subscribe((response: any) => {
       if (response) {
         this.banco = response.data;
       }
