@@ -30,7 +30,9 @@ export class OfertaService {
     let data = {
       numeroSolicitud: numeroSolicitud
     }
-    return this._http.post(this._appSettings.oferta.url.consumo, data);
+    // return this._http.post(this._appSettings.oferta.url.consumo, data);
+    return this._http.get(`${this._appSettings.oferta.url.consumo}/${numeroSolicitud}`);
+
   }
 
   /**

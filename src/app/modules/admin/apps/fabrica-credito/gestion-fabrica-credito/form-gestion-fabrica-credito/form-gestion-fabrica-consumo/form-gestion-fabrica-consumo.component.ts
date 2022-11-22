@@ -127,7 +127,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
         this.getTipoVia();
         this.gettipoViaNegocio();
         this.form.get('entidadBancaria')?.valueChanges.subscribe(id => { this.validacionEntidad(id) })
-        this.form.get('ocupacion')?.valueChanges.subscribe(id => {this.getActividadEconomica(id); })
+        this.form.get('ocupacion')?.valueChanges.subscribe(id => { this.getActividadEconomica(id); })
     }
 
 
@@ -218,12 +218,85 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
     }
 
 
+    public validacionCampos(campo: string, modificado: string, variable: string, tipo: string): void {
+        let mensaje = `<p>¿Estás seguro de editar el campo de <strong>${campo}</strong>?, ya que este modifica ${modificado}.</p>`;
+        Swal.fire({
+            title: 'Guardar información',
+            html: mensaje,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+            } else {
+                if (tipo == 'N') {
+                    this.form.controls[variable].setValue(this.utility.formatearNumero(String(this.fabricaDatos[variable])));
+                } else if (tipo == 'D') {
+                    debugger
+                    if (this.fabricaDatos.codigoDepartamento) {
+                        this.getCiudades(this.fabricaDatos.codigoDepartamento);
+                        this.form.controls['codigoDepartamento'].setValue(String(this.fabricaDatos.codigoDepartamento));
+                        this.form.controls['codigoCiudad'].setValue(String(this.fabricaDatos.codigoCiudad));
+                    }
+
+                } else if (tipo == 'C') {
+                    if (this.fabricaDatos.codigoCiudad) {
+                        this.getBarrios(this.fabricaDatos.codigoCiudad);
+                        this.form.controls['codigoCiudad'].setValue(String(this.fabricaDatos.codigoCiudad));
+                        this.form.controls['codigoBarrio'].setValue(Number(this.fabricaDatos.codigoBarrio));
+
+                    }
+
+                } else {
+                    this.form.controls[variable].setValue(String(this.fabricaDatos[variable]));
+                }
+            }
+        });
+    }
+
+    private validarCampos() {
+        const datos: FormularioCreditoPlexa = this.form.getRawValue();
+
+        if (
+            (datos.plazo == this.fabricaDatos.plazo)
+        ) {
+            this.form.controls.modificadoPlazo.setValue('N')
+        } else {
+            this.form.controls.modificadoPlazo.setValue('S')
+        }
+
+        let ingresosDiarios=Number(this.utility.enviarNumero(datos.ingresosDiarios.toString()));
+        let compraDia=Number(this.utility.enviarNumero(datos.compraDia.toString()));
+        if (
+            (ingresosDiarios != this.fabricaDatos.ingresosDiarios) ||
+            (compraDia != this.fabricaDatos.compraDia) ||
+            (datos.tipoCombustible != this.fabricaDatos.tipoCombustible)
+        ) {
+            this.form.controls.modificadoIngresos.setValue('S')
+        } else {
+            this.form.controls.modificadoIngresos.setValue('N')
+        }
+        if (
+            (datos.fechaNacimiento != this.fabricaDatos.fechaNacimiento) ||
+            (datos.codigoDepartamento != this.fabricaDatos.codigoDepartamento) ||
+            (datos.codigoCiudad != this.fabricaDatos.codigoCiudad)||
+            (datos.fechaAntiguedadNegocio != this.fabricaDatos.fechaAntiguedadNegocio)
+            ) 
+        {
+            this.form.controls.modificadoPolitica.setValue('S')
+        } else {
+            this.form.controls.modificadoPolitica.setValue('N')
+        }
+    }
 
     /**
      * @description:
      */
     public onPostDatos(): void {
-
+        this.validarCampos();
         const datos: FormularioCreditoPlexa = this.form.getRawValue();
         const {
             fechaNacimiento,
@@ -315,6 +388,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
+                debugger
                 this.postFormularioFabrica(datosFormularios);
             }
         });
@@ -405,14 +479,14 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
                 if (data.valorCuota) {
                     this.form.controls['valorCuota'].setValue(this.utility.formatearNumero(String(this.form.value.valorCuota)));
                 }
-               
+
                 if (data.compraDia) {
                     this.form.controls['compraDia'].setValue(this.utility.formatearNumero(String(this.form.value.compraDia.toString())));
                 }
                 if (data.tanqueoDia) {
                     this.form.controls['tanqueoDia'].setValue(this.utility.formatearNumero(String(this.form.value.tanqueoDia.toString())));
                 }
-                
+
 
                 if (data.ingresosDiarios) {
                     this.form.controls['ingresosDiarios'].setValue(this.utility.formatearNumero(String(this.form.value.ingresosDiarios.toString())));
@@ -552,6 +626,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
      */
     private getCiudades(codigo: string): void {
         this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
+        // this.form.controls.codigoBarrio.setValue('');
         // this.form.controls.codigoBarrio.setValue("");
     }
 
@@ -773,161 +848,163 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
      */
     private createFormulario(): void {
         this.form = this.fb.group({
-            numeroSolicitud:[''],
-            unidadNegocio:[''],
-            tipo:[''],
-            descripcionTipo:[''],
-            emision:[''],
-            origen:[''],
-            descripcionOrigen:[''],
-            fechaIngresoFabrica:[''],
-            codigoEstado:[''],
-            descripcionEstado:[''],
-            codigoSubEstado:[''],
-            descripcionSubestado:[''],
-            cupoTotal:[''],
-            cupoReservado:[''],
-            cupoDisponible:[''],
-            score:[''],
-            descripcionScore:[''],
-            nivelEndeudamiento:[''],
-            tipoDocumento:[''],
-            identificacion:[''],
-            nombreCompleto:[''],
-            primerNombre:[''],
-            segundoNombre:[''],
-            primerApellido:[''],
-            segundoApellido:[''],
-            telefono:[''],
-            celular:[''],
-            email:[''],
-            genero:[''],
-            descripcionGenero:[''],
-            nacionalidad:[''],
-            fechaNacimiento:[''],
-            codigoDepartamentoNacimiento:[''],
-            descripcionDepartamentoNacimiento:[''],
-            codigoCiudadNacimiento:[''],
-            descripcionCiudadNacimiento:[''],
-            tipoVivienda:[''],
-            descripcionTipoVivienda:[''],
-            codigoDepartamento:[''],
-            descripcionDepartamento:[''],
-            codigoCiudad:[''],
-            descripcionCiudad:[''],
-            codigoBarrio:[''],
-            descripcionBarrio:[''],
-            direccionResidencial:[''],
-            nivelEstudio:[''],
-            descripcionNivelEstudio:[''],
-            viveEnNegocio:[''],
-            descripcionViveNegocio:[''],
-            fechaMatricula:[''],
-            comprasSemanales:[''],
-            antiguedadComprasSemanales:[''],
-            ventasMensuales:[''],
-            activos:[''],
-            pasivos:[''],
-            declarante:[''],
-            descripcionDeclarante:[''],
-            codigoDepartamentoNegocio:[''],
-            descripcionDepartamentoNegocio:[''],
-            codigoCiudadNegocio:[''],
-            descripcionCiudadNegocio:[''],
-            codigoBarrioNegocio:[''],
-            descripcionBarrioNegocio:[''],
-            direccionNegocio:[''],
-            telefonoNegocio:[''],
-            antiguedadNegocio:[''],
-            camaraComercio:[''],
-            descripcionCamaraComercio:[''],
-            nitNegocio:[''],
-            nombreNegocio:[''],
-            agenda:[''],
-            nombreAgenda:[''],
-            totalCheckList:[''],
-            cantidadCheckList:[''],
-            tipoCredito:[''],
-            descripcionTipoCredito:[''],
-            destinoCredito:[''],
-            otroDestinoCredito:[''],
-            valorSolicitado:[''],
-            plazo:[''],
-            estadoCivil:[''],
-            fechaExpedicionDocumento:[''],
-            codigoDepartamentoExpedicion:[''],
-            nombreDepartamentoExpedicion:[''],
-            codigoCiudadExpedicion:[''],
-            nombreCiudadExpedicion:[''],
-            cargo:[''],
-            aplicaIngresos:[''],
-            descripcionOtrosIngresos:[''],
-            otrosIngresos:[''],
-            ingresos:[''],
-            tipoCuentaBancaria:[''],
-            numeroCuentaBancaria:[''],
-            entidadBancaria:[''],
-            autorizacionBancaria:[''],
-            pagaduria:[''],
-            otraPagaduria:[''],
-            tipoContrato:[''],
-            fechaVinculacion:[''],
-            fechaFinalizacionContrato:[''],
-            salarioBasico:[''],
-            descuentoNomina:[''],
-            comisionesHorasExtras:[''],
-            estrato:[''],
-            contadorGestiones:[''],
-            valorSolicitadoWeb:[''],
-            aplicaEmbargo:[''],
-            sanamientoFinanciero:[''],
-            aplicaDetalleOferta:[''],
-            aplicaCodeudor:[''],
-            creditoTitularLineas:[''],
-            creditoCodeudorLineas:[''],
-            nombreConvenio:[''],
-            convenio:[''],
-            compraDia:[''],
-            tanqueoDia:[''],
-            valorCuota:[''],
-            valorCuotaDiaria:[''],
-            descripcionTipoConsumo:[''],
-            nombreEmpresa:[''],
-            actividadEconomica:[''],
-            descripcionActividadEconomica:[''],
-            actividadEspecifica:[''],
-            direccionNegocioVia:[''],
-            direccionNegocioPrincipal:[''],
-            direccionNegocioNroVia:[''],
-            direccionNegocioDistanciaVia:[''],
-            direccionNegocioCompleto:[''],
-            direccionTipoVia:[''],
-            direccionViaPrincipal:[''],
-            direccionNumeroVia:[''],
-            direccionDistanciaVia:[''],
-            direccionComplemento:[''],
-            annosTiempoResidencia:[''],
-            mesesTiempoResidencia:[''],
-            tipoCliente:[''],
-            descripcionTipoCliente:[''],
-            tarjetaPropiedad:[''],
-            tipoServicio:[''],
-            descripcionTipoServicio:[''],
-            numeroTarjetaCirculacion:[''],
-            ocupacion:[''],
-            marcaVehiculo:[''],
-            lineaVehiculo:[''],
-            modeloVehiculo:[''],
-            numeroPlacaVehiculo:[''],
-            turnoVehiculo:[''],
-            diasTrabajados:[''],
-            tipoCombustible:[''],
-            descripcionTipoCombustible:[''],
-            ingresosDiarios:[''],
-            fechaAntiguedadNegocio:[''],
-            celularNequi:[''],
-            costoTransaccion:[''],
-
+            numeroSolicitud: [''],
+            unidadNegocio: [''],
+            tipo: [''],
+            descripcionTipo: [''],
+            emision: [''],
+            origen: [''],
+            descripcionOrigen: [''],
+            fechaIngresoFabrica: [''],
+            codigoEstado: [''],
+            descripcionEstado: [''],
+            codigoSubEstado: [''],
+            descripcionSubestado: [''],
+            cupoTotal: [''],
+            cupoReservado: [''],
+            cupoDisponible: [''],
+            score: [''],
+            descripcionScore: [''],
+            nivelEndeudamiento: [''],
+            tipoDocumento: [''],
+            identificacion: [''],
+            nombreCompleto: [''],
+            primerNombre: [''],
+            segundoNombre: [''],
+            primerApellido: [''],
+            segundoApellido: [''],
+            telefono: [''],
+            celular: [''],
+            email: [''],
+            genero: [''],
+            descripcionGenero: [''],
+            nacionalidad: [''],
+            fechaNacimiento: [''],
+            codigoDepartamentoNacimiento: [''],
+            descripcionDepartamentoNacimiento: [''],
+            codigoCiudadNacimiento: [''],
+            descripcionCiudadNacimiento: [''],
+            tipoVivienda: [''],
+            descripcionTipoVivienda: [''],
+            codigoDepartamento: [''],
+            descripcionDepartamento: [''],
+            codigoCiudad: [''],
+            descripcionCiudad: [''],
+            codigoBarrio: [''],
+            descripcionBarrio: [''],
+            direccionResidencial: [''],
+            nivelEstudio: [''],
+            descripcionNivelEstudio: [''],
+            viveEnNegocio: [''],
+            descripcionViveNegocio: [''],
+            fechaMatricula: [''],
+            comprasSemanales: [''],
+            antiguedadComprasSemanales: [''],
+            ventasMensuales: [''],
+            activos: [''],
+            pasivos: [''],
+            declarante: [''],
+            descripcionDeclarante: [''],
+            codigoDepartamentoNegocio: [''],
+            descripcionDepartamentoNegocio: [''],
+            codigoCiudadNegocio: [''],
+            descripcionCiudadNegocio: [''],
+            codigoBarrioNegocio: [''],
+            descripcionBarrioNegocio: [''],
+            direccionNegocio: [''],
+            telefonoNegocio: [''],
+            antiguedadNegocio: [''],
+            camaraComercio: [''],
+            descripcionCamaraComercio: [''],
+            nitNegocio: [''],
+            nombreNegocio: [''],
+            agenda: [''],
+            nombreAgenda: [''],
+            totalCheckList: [''],
+            cantidadCheckList: [''],
+            tipoCredito: [''],
+            descripcionTipoCredito: [''],
+            destinoCredito: [''],
+            otroDestinoCredito: [''],
+            valorSolicitado: [''],
+            plazo: [''],
+            estadoCivil: [''],
+            fechaExpedicionDocumento: [''],
+            codigoDepartamentoExpedicion: [''],
+            nombreDepartamentoExpedicion: [''],
+            codigoCiudadExpedicion: [''],
+            nombreCiudadExpedicion: [''],
+            cargo: [''],
+            aplicaIngresos: [''],
+            descripcionOtrosIngresos: [''],
+            otrosIngresos: [''],
+            ingresos: [''],
+            tipoCuentaBancaria: [''],
+            numeroCuentaBancaria: [''],
+            entidadBancaria: [''],
+            autorizacionBancaria: [''],
+            pagaduria: [''],
+            otraPagaduria: [''],
+            tipoContrato: [''],
+            fechaVinculacion: [''],
+            fechaFinalizacionContrato: [''],
+            salarioBasico: [''],
+            descuentoNomina: [''],
+            comisionesHorasExtras: [''],
+            estrato: [''],
+            contadorGestiones: [''],
+            valorSolicitadoWeb: [''],
+            aplicaEmbargo: [''],
+            sanamientoFinanciero: [''],
+            aplicaDetalleOferta: [''],
+            aplicaCodeudor: [''],
+            creditoTitularLineas: [''],
+            creditoCodeudorLineas: [''],
+            nombreConvenio: [''],
+            convenio: [''],
+            compraDia: [''],
+            tanqueoDia: [''],
+            valorCuota: [''],
+            valorCuotaDiaria: [''],
+            descripcionTipoConsumo: [''],
+            nombreEmpresa: [''],
+            actividadEconomica: [''],
+            descripcionActividadEconomica: [''],
+            actividadEspecifica: [''],
+            direccionNegocioVia: [''],
+            direccionNegocioPrincipal: [''],
+            direccionNegocioNroVia: [''],
+            direccionNegocioDistanciaVia: [''],
+            direccionNegocioCompleto: [''],
+            direccionTipoVia: [''],
+            direccionViaPrincipal: [''],
+            direccionNumeroVia: [''],
+            direccionDistanciaVia: [''],
+            direccionComplemento: [''],
+            annosTiempoResidencia: [''],
+            mesesTiempoResidencia: [''],
+            tipoCliente: [''],
+            descripcionTipoCliente: [''],
+            tarjetaPropiedad: [''],
+            tipoServicio: [''],
+            descripcionTipoServicio: [''],
+            numeroTarjetaCirculacion: [''],
+            ocupacion: [''],
+            marcaVehiculo: [''],
+            lineaVehiculo: [''],
+            modeloVehiculo: [''],
+            numeroPlacaVehiculo: [''],
+            turnoVehiculo: [''],
+            diasTrabajados: [''],
+            tipoCombustible: [''],
+            descripcionTipoCombustible: [''],
+            ingresosDiarios: [''],
+            fechaAntiguedadNegocio: [''],
+            celularNequi: [''],
+            costoTransaccion: [''],
+            modificadoPlazo: [''],
+            modificadoIngresos: [''],
+            modificadoPolitica: [''],
         });
     }
 

@@ -67,7 +67,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Plazo</mat-label>
-                        <input matInput type="text" [formControlName]="'plazo'">
+                        <input matInput type="text" [formControlName]="'plazo'" (change)="validacionCampos('plazo','la oferta de esta solicitud','plazo','S')">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                         </mat-icon>
                     </mat-form-field>
@@ -219,7 +219,7 @@
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Fecha de nacimiento </mat-label>
                                     <input matInput [matDatepicker]="fechaNacimiento"
-                                        [formControlName]="'fechaNacimiento'">
+                                        [formControlName]="'fechaNacimiento'" (dateChange)="validacionCampos('fecha de nacimiento','políticas SARC de esta solicitud','fechaNacimiento','S')">
                                     <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #fechaNacimiento></mat-datepicker>
@@ -240,7 +240,7 @@
                                 </ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Antigüedad en el negocio de transporte</mat-label>
-                                    <input matInput type="text" [formControlName]="'antiguedadNegocio'"
+                                    <input matInput type="text" [formControlName]="'fechaAntiguedadNegocio'" (change)="validacionCampos('antigüedad negocio de transporte','políticas SARC de esta solicitud','fechaAntiguedadNegocio','N')"
                                     (keyup)="form.controls['antiguedadNegocio'].setValue(utility.formatearNumero(form.value.antiguedadNegocio)); "
                                     >
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -296,7 +296,7 @@
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Departamento de residencia</mat-label>
                                     <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
-                                        [formControlName]="'codigoDepartamento'">
+                                        [formControlName]="'codigoDepartamento'" (selectionChange)="validacionCampos('departamento de residencia','políticas SARC de esta solicitud','codigoDepartamento','D')">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let departamento of departamentos.data"
@@ -310,7 +310,7 @@
                             <ng-container *ngIf="ciudades$ | async as ciudades">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Ciudad de residencia</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
+                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'" (selectionChange)="validacionCampos('ciudad de residencia','políticas SARC de esta solicitud','codigoCiudad','C')"
                                         (selectionChange)="seleccionCiudad($event)">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
@@ -740,7 +740,7 @@
                             <ng-container *ngIf="tipoCombustible$ | async as tipoCombustible">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>¿Que tipo de combustible usa actualmente?</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoCombustible'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoCombustible'"  (selectionChange)="validacionCampos('combustible','capacidad de pago del cliente','tipoCombustible','S')">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let item of tipoCombustible.data"
@@ -752,7 +752,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>¿Cuánto genera en ingresos diariamente?</mat-label>
-                                    <input matInput type="text" [formControlName]="'ingresosDiarios'"
+                                    <input matInput type="text" [formControlName]="'ingresosDiarios'" (change)="validacionCampos('ingresos diarios','capacidad de pago del cliente','ingresosDiarios','N')"
                                     (keyup)="form.controls['ingresosDiarios'].setValue(utility.formatearNumero(form.value.ingresosDiarios));">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
@@ -763,7 +763,7 @@
                             <ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                     <mat-label>Compra al día de combustible</mat-label>
-                                    <input matInput type="text" [formControlName]="'compraDia'"
+                                    <input matInput type="text" [formControlName]="'compraDia'" (change)="validacionCampos('compra de combustible día','capacidad de pago del cliente','compraDia','N')"
                                         (keyup)="form.controls['compraDia'].setValue(utility.formatearNumero(form.value.compraDia)); ">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
