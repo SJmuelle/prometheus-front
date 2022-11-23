@@ -179,6 +179,13 @@ export class GenericasService {
     * @description: Obtiene nivel de estudii
     */
     public getEntidadBancaria(): Observable<any> {
+        const params: string = 'obtener-bancos';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
+    /**
+* @description: Obtiene nivel de estudii
+*/
+    public getEntidadBancariaConsumo(): Observable<any> {
         const params: string = 'obtener-bancos-consumo';
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
     }

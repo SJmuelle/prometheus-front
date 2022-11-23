@@ -73,6 +73,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
+        debugger
         this.totales = res.data
 
       });

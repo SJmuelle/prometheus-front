@@ -777,7 +777,7 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-                        <ng-container *ngIf="form.controls['tipoCredito'].value == 'PY'">
+                        <ng-container *ngIf="form.controls['tipoCredito'].value != 'PY'">
                             <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de desembolso</span>
                             <div class="-mx-3 md:flex mt-3 mb-2">
                                 <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">

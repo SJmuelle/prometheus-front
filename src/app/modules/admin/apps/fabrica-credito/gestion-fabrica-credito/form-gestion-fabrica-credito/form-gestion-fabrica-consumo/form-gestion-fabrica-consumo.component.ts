@@ -696,7 +696,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
      * @description: Obtiene los tipos de estados civiles
      */
     private getTipoCuentaBancaria(): void {
-        this.tipoCuentaBancaria$ = this.genericaServices.getTipoCuentaBancaria();
+        this.tipoCuentaBancaria$ = this.genericaServices.getEntidadBancariaConsumo();
     }
     /**
     * @description: Obtiene los tipos de estados civiles
