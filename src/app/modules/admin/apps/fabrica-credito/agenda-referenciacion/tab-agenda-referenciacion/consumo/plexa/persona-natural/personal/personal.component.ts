@@ -199,13 +199,17 @@ export class PersonalConsumoPlexaComponent implements OnInit {
       conoceTitularValida_bool: Boolean,
       tiempoConoceTitular: ['', [Validators.pattern(/^[0-9]*$/)]],
       conoceProfesionTitular: [''],
+      conoceProfesionTitularValida: [''],
+      conoceProfesionTitularValida_bool:[''],
       conoceDeDondeTitular: [''],
       tipoComentario: 1,
       comentario: [''],
       estadoReferencia: [''],
       resultadoReferencia: [''],
       refenciaValidada: [''],
-      referenciaValidada_bool:Boolean
+      referenciaValidada_bool:Boolean,
+      profesionTitular:[''],
+      haceCuantoDedicaProfesion:['']
     });
   }
 
@@ -231,6 +235,9 @@ export class PersonalConsumoPlexaComponent implements OnInit {
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = data
         this.form.patchValue(data);
+        // this.conoceProfesionTitularValida
+        this.form.controls['conoceProfesionTitularValida_bool'].setValue(this.form.value.conoceProfesionTitularValida == 'N' ? true : false)
+
       });
   }
 

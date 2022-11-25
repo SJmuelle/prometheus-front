@@ -29,6 +29,7 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
   public referencia: string = this.route.snapshot.paramMap.get('referencia');
   public tipoReferenciacion: string = this.route.snapshot.paramMap.get('tipoReferenciacion');
   public undadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
+  public parentescos$: Observable<any>;
   public subscription$: Subscription;
   public unSubscribe$: Subject<any> = new Subject<any>();
   public departamentos$: Observable<any>;
@@ -83,7 +84,7 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
     this.getViveNegocio();
     this.getDeclarante();
     this.getCamaraComercio();
-
+    this.getParentesco();
     // this.listenFormulario();
   }
 
@@ -94,6 +95,12 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
     return this.form.controls[field].hasError('pattern');
   }
 
+  /**
+ * @description: Obtiene el listado de barrios
+ */
+  private getParentesco(): void {
+    this.parentescos$ = this.genericaServices.getParetensco();
+  }
   /**
  * @description :modal de direcion
  */
@@ -194,7 +201,7 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
       idReferencia: [''],
       nombreCompleto: [''],
       celular: [''],
-      nombreTitular:[''],
+      nombreTitular: [''],
       conoceTitularValida: [''],
       conoceTitularValida_bool: Boolean,
       tiempoConoceTitular: ['', [Validators.pattern(/^[0-9]*$/)]],
@@ -205,7 +212,9 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
       estadoReferencia: [''],
       resultadoReferencia: [''],
       refenciaValidada: [''],
-      referenciaValidada_bool:Boolean
+      referenciaValidada_bool: Boolean,
+      parentesco:[''],
+      otroParentesco:[],
     });
   }
 
@@ -234,9 +243,9 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
       });
   }
 
- /**
-   * @description: Departamento de 
-   */
+  /**
+    * @description: Departamento de 
+    */
   public seleccionDepartamento(event: MatSelectChange): void {
     const codigo: string = event.value;
     this.getCiudades(codigo);
@@ -377,7 +386,7 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
     const datosFormularios: any = {
       numeroSolicitud: this.numeroSolicitud.toString(),
       conoceTitularValida: conoceTitularValida,
-      refenciaValidada:refenciaValidada,
+      refenciaValidada: refenciaValidada,
       ...data
     };
     Swal.fire({
@@ -398,7 +407,10 @@ export class FamiliarConsumoPlexaComponent implements OnInit {
     });
 
   }
+  cambiarOtro(){
+    this.form.controls.otroParentesco.setValue('');
 
+  }
   /**
  * @description: Guardado de datos fabrica
  */

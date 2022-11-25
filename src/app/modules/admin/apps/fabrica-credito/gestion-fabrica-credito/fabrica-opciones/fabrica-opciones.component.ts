@@ -8,6 +8,7 @@ import { FormDialogoChecklistComponent } from 'app/modules/admin/apps/fabrica-cr
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
+import { ModalRecalcularComponent } from '../modal-recalcular/modal-recalcular.component';
 
 @Component({
   selector: 'app-fabrica-opciones',
@@ -143,23 +144,47 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
-      
-      if(res==true){
+
+      if (res == true) {
+        this.abrirModal('recalcular')
+      }
+    });
+
+
+  }
+
+  abrirModal(tipo: string) {
+    switch (tipo) {
+      case "decision":
         const dialogRef = this._dialog.open(FormDecisionComponent, {
           width: '30%',
           data: this.fabricaDatos,
           disableClose: false
         });
         dialogRef.afterClosed().subscribe((res) => {
-          if(res==true){
-            this.redireccionar('agenda-decision');
+          if (res == true) {
+            this.irAtras()
           }
         })
-      }
-    });
-
+        break;
+      case "recalcular":
+        const dialogRec = this._dialog.open(ModalRecalcularComponent, {
+          width: '100%',
+          data: this.fabricaDatos,
+          disableClose: false
+        });
+        dialogRec.afterClosed().subscribe((res) => {
+          if (res == true) {
+            this.abrirModal('decision')
+          }
+        })
+        break;
+      default:
+        break;
+    }
 
   }
+
 
   /**
    * @description: Minimiza el componente comentarios

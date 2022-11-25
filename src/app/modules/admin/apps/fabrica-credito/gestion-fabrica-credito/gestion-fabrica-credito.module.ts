@@ -61,6 +61,9 @@ import { GridOfertaConsumoComponent } from './grid-oferta-consumo/grid-oferta-co
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 import {MatSliderModule} from '@angular/material/slider';
 import { GridHistoricoClienteComponent } from './grid-historico-cliente/grid-historico-cliente.component';
+import { RecalcularOfertaLibranzaComponent } from './recalcular-oferta-libranza/recalcular-oferta-libranza.component';
+import { RecalcularOfertaConsumoPlexaComponent } from './recalcular-oferta-consumo-plexa/recalcular-oferta-consumo-plexa.component';
+import { ModalRecalcularComponent } from './modal-recalcular/modal-recalcular.component';
 
 
 @NgModule({
@@ -93,11 +96,15 @@ import { GridHistoricoClienteComponent } from './grid-historico-cliente/grid-his
         GridConductoresConsumoComponent,
         FormDetallesConductoresComponent,
         GridOfertaConsumoComponent,
-        GridHistoricoClienteComponent
+        GridHistoricoClienteComponent,
+        RecalcularOfertaLibranzaComponent,
+        RecalcularOfertaConsumoPlexaComponent,
+        ModalRecalcularComponent
     ],
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
+        
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,
@@ -131,7 +138,10 @@ import { GridHistoricoClienteComponent } from './grid-historico-cliente/grid-his
     ],
 
     exports: [
-        FabricaOpcionesComponent
+        FabricaOpcionesComponent,
+        RecalcularOfertaLibranzaComponent,
+        RecalcularOfertaConsumoPlexaComponent
+
     ]
 })
 export class GestionFabricaCreditoModule { }

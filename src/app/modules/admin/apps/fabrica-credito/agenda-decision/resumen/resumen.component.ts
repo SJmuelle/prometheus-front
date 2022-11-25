@@ -111,6 +111,7 @@ export class ResumenComponent implements OnInit {
             ]
           },
         )
+        break;
       case 30:
         DatosCredito.push(
           {
@@ -458,7 +459,6 @@ export class ResumenComponent implements OnInit {
           },
         )
         break;
-      case 30:
       case 22:
         if (data.resumenIndicadores) {
           DatosCredito2.push(
@@ -503,6 +503,78 @@ export class ResumenComponent implements OnInit {
                   color: "bg-blue-100 text-blue-800",
                   label: "Valor consultores ",
                   valor: "$" + this.separatos(data.resumenIndicadores.sumaConsultores)
+                },
+              ]
+            },
+          )
+        }
+
+        break;
+      case 30:
+        if (data.resumenIndicadores) {
+          DatosCredito2.push(
+            {
+              titulo: "Capacidad de pago y oferta ",
+              descripcion: "Información capacidad de pago y oferta",
+              tipo: "campos",
+              icono: "attach_money",
+              color: "text-purple-400",
+              campos: [
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Score HDC",
+                  valor: data.resumenIndicadores.score
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Capital trabajo",
+                  valor: "$" + this.separatos(data.resumenIndicadores.capitalTrabajo)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Valor cuota mensual",
+                  valor: "$" + this.separatos(data.resumenIndicadores.valorCuota)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Valor cuota diaria",
+                  valor: "$" + this.separatos(data.resumenIndicadores.valorCuotaDiaria)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Capital trabajo",
+                  valor: "" + this.separatos(data.resumenIndicadores.capitalTrabajo)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Razón corriente",
+                  valor: "" + this.separatos(data.resumenIndicadores.razonCorriente)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Disponible diario descuento",
+                  valor: "$" + this.separatos(data.resumenIndicadores.disponibelDiarioDescuento)
+                },
+                {
+                  icono: "heroicons_outline:academic-cap",
+                  clase: "bg-purple-100",
+                  color: "bg-blue-100 text-blue-800",
+                  label: "Maximo a descontar",
+                  valor: "$" + this.separatos(data.resumenIndicadores.maximoADescontar)
                 },
               ]
             },

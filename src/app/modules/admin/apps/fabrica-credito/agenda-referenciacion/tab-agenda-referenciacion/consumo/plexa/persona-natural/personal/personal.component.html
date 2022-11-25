@@ -56,31 +56,28 @@
                             Preguntas a la referencia
                         </h2>
 
+
                         <div class="">
 
-                            <mat-form-field class=" fuse-mat-dense w-full px-3">
-                                <mat-label>¿Hace cuánto lo conoce? (meses)</mat-label>
-                                <input matInput type="text" [formControlName]="'tiempoConoceTitular'">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error
-                                    *ngIf="(form.controls.tiempoConoceTitular.dirty || form.controls.tiempoConoceTitular.touched)">
-
-                                    <mat-error *ngIf="form.controls.tiempoConoceTitular.errors?.pattern">
-                                        Solo se aceptan
-                                        números.</mat-error>
-
-                                </mat-error>
-                            </mat-form-field>
+                            <div class="mt-2 px-3">
+                                <mat-form-field class="w-1/2 fuse-mat-dense">
+                                    <mat-label>¿De donde lo conoce?</mat-label>
+                                    <input matInput type="text" placeholder=""
+                                        [formControlName]="'conoceDeDondeTitular'">
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </div>
                             <div class="mt-1 px-3">
                                 <label class="labelTxt">¿A que se dedica el titular?</label>
                                 <quill-editor class="mb-2" placeholder="" name="descripcion" [modules]="quillModules"
-                                    [formControlName]="'conoceProfesionTitular'"></quill-editor>
+                                    [formControlName]="'profesionTitular'"></quill-editor>
                             </div>
                             <div class="mt-2 px-3">
-                                <mat-form-field class="w-1/2 fuse-mat-dense">
-                                    <mat-label>¿Hace cuanto se dedica a esta actividad? (meses)?</mat-label>
-                                    <input matInput type="text" placeholder="" [formControlName]="'conoceDeDondeTitular'">
+                                <mat-form-field class="w-full fuse-mat-dense">
+                                    <mat-label>¿Hace cuanto se dedica a esta actividad? (meses)</mat-label>
+                                    <input matInput type="number" placeholder=""
+                                        [formControlName]="'haceCuantoDedicaProfesion'">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>

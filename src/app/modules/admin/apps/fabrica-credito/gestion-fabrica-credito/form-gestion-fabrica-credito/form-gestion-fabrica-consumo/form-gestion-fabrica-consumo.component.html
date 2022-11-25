@@ -409,7 +409,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                     <mat-label>Meses de residencia</mat-label>
-                                    <input matInput type="number" [formControlName]="'mesesTiempoResidencia'">
+                                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'"  min="0" max="11">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                 </mat-form-field>
@@ -509,7 +509,7 @@
                                     </mat-icon>
                                 </mat-form-field>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Antigüedad del negocio (meses) </mat-label>
+                                    <mat-label>Antigüedad de la actividad (meses) </mat-label>
                                     <input matInput [formControlName]="'fechaAntiguedadNegocio'">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
@@ -651,9 +651,9 @@
                             <ng-container>
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
 
-                                    <mat-label>¿Tiene tarjeta de propiedad?</mat-label>
+                                    <mat-label>¿Tiene tarjeta de propiedad a nombre propio?</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'tarjetaPropiedad'"
-                                        [disabled]="form.controls['descripcionTipoCliente'].value != 'CON'">
+                                        [disabled]="form.controls['descripcionTipoCliente'].value == 'CON'">
                                         <mat-option disabled [value]="''">Seleccione</mat-option>
                                         <mat-option [value]="'S'">Si</mat-option>
                                         <mat-option [value]="'N'">No</mat-option>
@@ -829,7 +829,7 @@
                             </div>
                         </ng-container>
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()"    [disabled]="form.invalid">
                                 Guardar
                             </button>
                         </div>
