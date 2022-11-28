@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ObservacionComponent } from '../observacion/observacion.component';
-import { DebiendoComponent } from './debiendo/debiendo.component';
 
 @Component({
-  selector: 'app-list-solicitud',
-  templateUrl: './list-solicitud.component.html',
-  styleUrls: ['./list-solicitud.component.scss']
+  selector: 'app-list-finalizado',
+  templateUrl: './list-finalizado.component.html',
+  styleUrls: ['./list-finalizado.component.scss']
 })
-export class ListSolicitudComponent implements OnInit {
+export class ListFinalizadoComponent implements OnInit {
 
   filtrarTabla:string = '';
   listado: any[] = [
@@ -22,7 +21,7 @@ export class ListSolicitudComponent implements OnInit {
       "banco":"Bancolombia",
       "fecha":"2022-11-28",
       "correo":"tavosalas270@gmail.com",
-      "aprobar":"S"
+      "recobro":40000
     },
     {
       "id":"258963",
@@ -34,7 +33,7 @@ export class ListSolicitudComponent implements OnInit {
       "banco":"Commeva",
       "fecha":"2022-10-28",
       "correo":"egonzales@fintra.co",
-      "aprobar":"N"
+      "recobro":60000
     }
   ];
 
@@ -46,15 +45,6 @@ export class ListSolicitudComponent implements OnInit {
   abrirObservacion(){
     const dialogRef = this.dialog.open(ObservacionComponent, {
       width: '60%',
-      maxHeight: '50%'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {});
-  }
-
-  abrirDeuda(){
-    const dialogRef = this.dialog.open(DebiendoComponent, {
-      width: '30%',
       maxHeight: '50%'
     });
 

@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Detalle de deuda</h2>
+<mat-dialog-content class="mat-typography">
+    <table class="p-0">
+        <thead class="bg-gray-100">
+            <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                <th class="py-3 text-center">Nombre</th>
+                <th class="py-3 text-center">Correo</th>
+                <th class="py-3 text-center">Monto</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <tr class="text-gray-700" *ngFor="let item of listado">
+                <td class="text-sm border text-center py-3">{{ item.nombre }}</td>
+                <td class="text-sm border text-center py-3">{{ item.correo }}</td>
+                <td class="text-sm border text-center">$ {{ item.monto | number }}</td>
+            </tr>
+        </tbody>
+    </table>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="text-white color_fintra">Cerrar</button>
+</mat-dialog-actions>

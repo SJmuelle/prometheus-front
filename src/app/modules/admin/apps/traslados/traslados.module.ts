@@ -22,13 +22,19 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { TrasladosRoutingModule } from './traslados-routing.module';
 import { ListSolicitudComponent } from './list-solicitud/list-solicitud.component';
-import { ObservacionComponent } from './list-solicitud/observacion/observacion.component';
+import { ObservacionComponent } from './observacion/observacion.component';
+import { ListFinalizadoComponent } from './list-finalizado/list-finalizado.component';
+import { DebiendoComponent } from './list-solicitud/debiendo/debiendo.component';
+import { DetalleDeudaComponent } from './list-solicitud/debiendo/detalle-deuda/detalle-deuda.component';
 
 
 @NgModule({
   declarations: [
     ListSolicitudComponent,
-    ObservacionComponent
+    ObservacionComponent,
+    ListFinalizadoComponent,
+    DebiendoComponent,
+    DetalleDeudaComponent
   ],
   imports: [
     CommonModule,
