@@ -129,27 +129,27 @@
                                                 <div class="text-gray-700 grid-cols-2 grid">
                                                     <div class="py-0 text-sm">
                                                         <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
-                                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
-                                                </button>
+                                                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                                        </button>
                                                     </div>
                                                     <ng-container *ngIf="item.clienteDesistio === 'S'">
                                                         <div class="py-0 text-sm">
                                                             <button mat-icon-button matTooltip="Rechazar" (click)="onComentarioRechazar(item)">
-                                                        <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
-                                                    </button>
+                                                            <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
+                                                            </button>
                                                         </div>
                                                     </ng-container>
-                                                <ng-container *ngIf="item.unidadNegocioFabrica ===32">
-                                                    <div class="py-0 text-sm ">
-                                                        <button mat-icon-button (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
-                                                    <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
-                                                    </button>
-                                                    </div>
-                                                </ng-container>
+                                                    <ng-container *ngIf="item.unidadNegocioFabrica ===32">
+                                                        <div class="py-0 text-sm ">
+                                                            <button mat-icon-button (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
+                                                                <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
+                                                            </button>
+                                                        </div>
+                                                    </ng-container>
                                                     <div class="py-0 text-sm ">
                                                         <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
-                                                    <mat-icon svgIcon="mat_outline:timer"></mat-icon>
-                                                </button>
+                                                            <mat-icon svgIcon="mat_outline:timer"></mat-icon>
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -198,10 +198,10 @@
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
-                                            <ng-container *ngIf="item.unidadNegocioFabrica ===32">
+                                            <ng-container>
                                                     <span class="text-md text-black font-medium" matTooltip="Asesor">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesor}}
+                                                {{ item.asesor==''?'Usuario web':item.asesor}} 
                                             </span>
                                             </ng-container>
                                                 </div>

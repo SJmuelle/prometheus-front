@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TitularComponent } from './titular.component';
+import { AsignarVariosComponent } from './asignar-varios.component';
 
-describe('TitularComponent', () => {
-  let component: TitularComponent;
-  let fixture: ComponentFixture<TitularComponent>;
+describe('AsignarVariosComponent', () => {
+  let component: AsignarVariosComponent;
+  let fixture: ComponentFixture<AsignarVariosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TitularComponent ]
+      declarations: [ AsignarVariosComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TitularComponent);
+    fixture = TestBed.createComponent(AsignarVariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

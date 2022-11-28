@@ -1,0 +1,64 @@
+mat-slider {
+    width: inherit;
+}
+.tam-inherit {
+    width: inherit;
+}
+.pipe {
+    letter-spacing: 12.9pt;
+    padding: 0px 1px;
+    position: absolute;
+    top: 30px;
+    font-size: 9px;
+    overflow: hidden;
+}
+.subtitule {
+    font-size: 15px;
+}
+.textmed {
+    font-size: 11px;
+}
+
+.title {
+    font-weight: 700;
+    color: #23495c;
+    font-size: 1.75rem;
+    text-align: center;
+}
+.text-color{
+    color: #23495c;
+}
+
+
+.card{
+    border: none;
+    .titleCard {
+        font-weight: 700;
+        font-size: 1.75rem;
+        text-align: center;
+    }
+}
+
+.primario{
+    background: linear-gradient(271.07deg, #1C8BBB 0.81%, #4BBCED 99.09%);
+    color: #fff;
+}
+.segundario{
+    background: linear-gradient(270.57deg, #DDDDDD 2.95%, #F7F7F7 96.41%);
+    color: #252C30;
+}
+
+
+.label-check{
+    span{
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 1em;
+        color: #505050;
+        a{
+            font-weight: 600;
+            color: #0098DA;
+        }
+    }
+    
+}

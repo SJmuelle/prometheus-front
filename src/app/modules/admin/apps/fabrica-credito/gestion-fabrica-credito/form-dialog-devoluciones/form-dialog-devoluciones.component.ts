@@ -112,7 +112,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
    * @description: Obtiene los comentarios
    */
   private getCausales(): void {
-    this.listCausales$ = this.devolucionesService.getCausalesDevoluciones(this.agendaFabrica);
+    this.listCausales$ = this.devolucionesService.getCausalesDevoluciones(this.agendaFabrica,this.data.numeroSolicitud);
   }
 
   /**

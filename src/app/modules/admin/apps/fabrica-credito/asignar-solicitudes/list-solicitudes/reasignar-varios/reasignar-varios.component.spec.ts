@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComercialComponent } from './comercial.component';
+import { ReasignarVariosComponent } from './reasignar-varios.component';
 
-describe('ComercialComponent', () => {
-  let component: ComercialComponent;
-  let fixture: ComponentFixture<ComercialComponent>;
+describe('ReasignarVariosComponent', () => {
+  let component: ReasignarVariosComponent;
+  let fixture: ComponentFixture<ReasignarVariosComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComercialComponent ]
+      declarations: [ ReasignarVariosComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ComercialComponent);
+    fixture = TestBed.createComponent(ReasignarVariosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

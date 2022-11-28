@@ -3,30 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
- production: true,
+    production: false,
     userName: "APPWEB",
     password: btoa("123456"),
-    urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
-    urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
-    urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic',
-    urlApiNgrok: 'https://ultracem.ngrok.io/api-fintra/api',
+    // apiUrl: "http://localhost:8010/",
+    apiUrl:"https://prometheus.fintra.co:8443/",
+    // diego
+    // apiUrl:"http://192.168.138.221:8010/",
+    // apiUrl:"http://demo.fintra.co:8011/",
 
-    // urlApi: 'http://demo.fintra.co:8010/api-fintra/api',
-    // urlApi2: 'http://demo.fintra.co:8010/api-fintra/api/generic/qry/',
-    // urlApi3: 'http://demo.fintra.co:8010/api-fintra/api/generic/',
-    urlApi4: 'http://demo.fintra.co:8011/api-fintra/api/credito/tk/recursos/',
-    urlApi5: 'http://demo.fintra.co:8011/api-fintra/api/generic/',
-    urlApi6: 'http://demo.fintra.co:8011/api-fintra/api/archivos/guardar/',
-
-    urlPagaduria: 'http://demo.fintra.co:8011/',
-
-    urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
-    adjunto:'http://demo.fintra.co:8010/api-pqrs/api/pqrs',
-    // envioCorreo:'http://192.168.140.197:8084'
-    envioCorreo:'http://demo.fintra.co:8011/apicredit',
-    urlUltracem: 'http://demo.fintra.co:8011/api-fintra/api'
-
-
+    urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
 };
 
 /*

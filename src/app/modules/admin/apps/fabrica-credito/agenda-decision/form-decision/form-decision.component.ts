@@ -107,30 +107,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             this._decisionesService.comprobacionCampos(datoComprobacion)
               .subscribe((res2) => {
                 debugger;
-                let respuesta: any = {};
-                switch (res2.status) {
-                  case 200:
-                    this.postDecicion()
-                  case 400:
-                    respuesta = {
-                      icon: 'error',
-                      title: 'Mensaje',
-                      text: 'Advertencia'
-                    };
-                    this.mostrarAlerta(respuesta);
-                    break;
-                  case 500:
-                    respuesta = {
-                      icon: 'error',
-                      title: 'Mensaje',
-                      text: 'Ha ocurrido un error'
-                    };
-                    this.mostrarAlerta(respuesta);
-                    break;
-                  default:
-                    break;
-                }
-
+                this.postDecicion()
               })
           })
       } else {
@@ -141,20 +118,20 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
   private postDecicion() {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-    let datos = {
-      numeroSolicitud: this.fabricaDatos.numeroSolicitud,
-      concepto: this.DecisionForm.value.decision,
-      cupo: Number(this.utility.enviarNumero(String(this.DecisionForm.value.cupo))),
-      comentario: this.DecisionForm.value.comentario,
-      causal: Number(this.DecisionForm.value.causal),
-      unidadNegocio: this.fabricaDatos.unidadNegocio,
+    let datos={
+      numeroSolicitud:this.fabricaDatos.numeroSolicitud,
+      concepto:this.DecisionForm.value.decision,
+      cupo:Number( this.utility.enviarNumero(String(this.DecisionForm.value.cupo))),
+      comentario:this.DecisionForm.value.comentario,
+      causal:Number(this.DecisionForm.value.causal),
+      unidadNegocio:this.fabricaDatos.unidadNegocio,
     }
     this._decisionesService.postGuardado(datos).subscribe((response: any) => {
       Swal.close()
       if (response) {
         Swal.fire(
           '¡Correcto!',
-          'Se ha aprobado exitosamente la solicitud.',
+          'Decisión guardada con éxito.',
           'success'
         ).then((result) => {
           if (result) {
@@ -163,9 +140,9 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
         })
         setTimeout(() => {
           this.dialog.close();
-          this.router.navigate(['/credit-factory/agenda-referencing']);
+          this.router.navigate(['/credit-factory/agenda-decision']);
         }, 10000);
-      }
+      } 
     })
   }
 

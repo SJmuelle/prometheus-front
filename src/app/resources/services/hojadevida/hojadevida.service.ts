@@ -1,13 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 import { UtilityService } from '../utility.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class HojadevidaService {
+
+    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
+
     constructor(
         private _httpClient: HttpClient,
         private _utility: UtilityService
@@ -25,7 +28,7 @@ export class HojadevidaService {
 
     getInfoCliente(nit: any) {
         return this._httpClient.get(
-            environment.urlApi2 + `informacion-cliente/${nit}`
+            this.ruta + `informacion-cliente/${nit}`
         );
     }
 

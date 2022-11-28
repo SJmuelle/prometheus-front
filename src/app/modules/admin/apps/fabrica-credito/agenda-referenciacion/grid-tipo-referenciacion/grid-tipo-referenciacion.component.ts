@@ -36,14 +36,9 @@ export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
   fabricaDatos: any;
 
   constructor(
-    private agendaCompletacionService: AgendaCompletacionService,
     private fabricaCreditoService: FabricaCreditoService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private departamentosCiudadesService: DepartamentosCiudadesService,
     private router: Router,
-    private genericaServices: GenericasService,
-    private _dialog: MatDialog,
     public utility: UtilityService,
     private agendaReferenciaService: AgendaReferenciacionService,
   ) {

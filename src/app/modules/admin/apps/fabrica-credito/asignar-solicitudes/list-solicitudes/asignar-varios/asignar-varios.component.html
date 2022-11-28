@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Asignar solicitudes</h2>
+<mat-dialog-content>
+    <form [formGroup]="asignarForm">
+      <div class="flex flex-col w-full">
+        <div class="flex flex-row w-full justify-center max-h-30 mb-2 pr-2 overflow-y-auto overflow-x-hidden">
+          <div class="w-full">
+            <table class="p-0">
+              <ng-container *ngFor="let item of solicitudes">
+                <tr class="text-gray-700 border-t border-b">
+                  <td class="px-2 py-2">
+                    <div class="flex flex-column">
+                      <small class="text-accent-600 text-xs">Solicitud:</small>
+                      <span class="text-md text-black font-medium">
+                          <mat-icon class="icon-size-3" svgIcon="heroicons_outline:clipboard-check"></mat-icon>
+                          {{item.numeroSolicitud}}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </table>
+          </div>
+        </div>
+        <div class="w-full">
+          <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Asignar a:</mat-label>
+            <mat-select formControlName="analista">
+              <mat-option *ngFor="let item of asesores" [value]="item.idusuario">{{ item.idusuario }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="asignarForm.get('analista').hasError('required')">
+                Se debe seleccionar un analista.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button [disabled]="asignarForm.invalid" class="text-white" (click)="guardarAnalista()">Guardar</button>
+    <button mat-button class="text-white bg-gray-500" (click)="cerrar()">Cancelar</button>
+  </mat-dialog-actions>
