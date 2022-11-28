@@ -63,7 +63,7 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            <ng-container *ngIf="(listadoCartera$ | async) as items;">
+            <ng-container *ngIf="(listadoCartera$ | async) as items; else nodataCartera2">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0">
@@ -128,7 +128,7 @@
                     </ng-container>
                 </ng-container>
             </ng-container>
-            <ng-container>
+            <ng-template #nodataCartera2>
                 <tr>
                     <th colspan="9">
                         <div class="flex justify-center">
@@ -141,7 +141,7 @@
                         <span>No hay obligaciones en mora</span>
                     </th>
                 </tr>
-            </ng-container>
+            </ng-template>
         </tbody>
     </table>
     <hr class="shadow">
@@ -166,7 +166,7 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            <ng-container *ngIf="listadoCartera$ | async as items;">
+            <ng-container *ngIf="listadoCartera$ | async as items; else nodataCartera">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia=='t'">
                         <td class="px-0 text-sm border text-left">
@@ -229,20 +229,20 @@
                     </ng-container>
                 </ng-container>
             </ng-container>
-        </tbody>
-        <tbody>
-            <tr>
-                <th colspan="8">
-                    <div class="flex justify-center">
-                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                    </div>
-                </th>
-            </tr>
-            <tr>
-                <th colspan="8" class="text-center">
-                    <span>No hay obligaciones al día</span>
-                </th>
-            </tr>
+            <ng-template #nodataCartera>
+                <tr>
+                    <th colspan="8">
+                        <div class="flex justify-center">
+                            <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="8" class="text-center">
+                        <span>No hay obligaciones al día</span>
+                    </th>
+                </tr>
+            </ng-template>
         </tbody>
     </table>
 </div>

@@ -1,7 +1,7 @@
 <ng-container *ngIf="listadoOferta$ | async as listadoOferta">
     <!-- {{listadoOferta | json}} -->
     <ng-container>
-        <div class="mb-30 mx-80 relative">
+        <div class="mb-30 m-auto relative">
             <div class="card container mt-2 p-2 shadow rounded-3xl">
                 <h3 class="title mt-3 "> Detalle de la oferta</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 mx-28">
@@ -12,7 +12,7 @@
                             </div>
                         </div>
                         <div class="flex items-baseline whitespace-nowrap justify-center">
-                            <div class="text-4xl font-semibold leading-tight tracking-tight">
+                            <div class="text-2xl font-semibold leading-tight tracking-tight">
                                 <b>${{listadoOferta.data.monto | number}}</b>
                             </div>
                         </div>
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="flex items-baseline whitespace-nowrap justify-center">
-                            <div class="text-4xl font-semibold leading-tight tracking-tight">
+                            <div class="text-2xl font-semibold leading-tight tracking-tight">
                                 <b>{{listadoOferta.data.plazo | number}} meses</b>
                             </div>
                         </div>
@@ -36,11 +36,11 @@
                 <div class="grid grid-cols-2">
                     <div class="card segundario mx-5 text-center">
                         <div class="subtitule mt-2 ">Cuota diaria aproximada</div>
-                        <h3 class="titleCard mb-2">${{listadoOferta.data.valorCuotaDiaria|number}}</h3>
+                        <h3 class="titleCard mt-0 mb-2">${{listadoOferta.data.valorCuotaDiaria|number}}</h3>
                     </div>
                     <div class="card primario mx-5 text-center">
                         <div class="subtitule mt-2">Cuota mensual aproximada</div>
-                        <h3 class="titleCard mb-2">${{listadoOferta.data.valorCuotaMensual|number}}</h3>
+                        <h3 class="titleCard mt-0 mb-2">${{listadoOferta.data.valorCuotaMensual|number}}</h3>
                     </div>
                 </div>
                 <hr class="mx-13">
