@@ -1,0 +1,72 @@
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
+    <div class="flex flex-row w-100">
+        <h2 class="mb-2 text-gray-900">Crear solicitud de traslado</h2>
+    </div>
+    <div class="flex flex-col w-full">
+        <div>
+            <p class="m-0 italic text-gray-400 font-normal">Datos personales</p>
+        </div>
+        <div class="w-4/5">
+            <hr class="mt-1">
+        </div>
+        <div class="flex flex-row w-4/5 justify-between gap-4">
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Correo</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Empresa</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">
+                      {{item.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="mt-2">
+            <p class="m-0 italic text-gray-400 font-normal">Datos de traslado</p>
+        </div>
+        <div class="w-4/5">
+            <hr class="mt-1">
+        </div>
+        <div class="flex flex-row w-4/5 justify-between gap-4">
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Empresa destino</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">
+                      {{item.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Banco</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Numero de cuenta</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+        </div>
+        <div class="flex flex-row w-4/5 justify-between gap-4">
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Tipo de cuenta</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Monto</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/2">
+                <mat-label>Fecha</mat-label>
+                <input matInput type="text">
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button class="color_fintra text-white">Solicitar</button>
+        </div>
+    </div>
+</div>

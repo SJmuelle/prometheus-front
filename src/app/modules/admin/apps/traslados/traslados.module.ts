@@ -26,6 +26,7 @@ import { ObservacionComponent } from './observacion/observacion.component';
 import { ListFinalizadoComponent } from './list-finalizado/list-finalizado.component';
 import { DebiendoComponent } from './list-solicitud/debiendo/debiendo.component';
 import { DetalleDeudaComponent } from './list-solicitud/debiendo/detalle-deuda/detalle-deuda.component';
+import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { DetalleDeudaComponent } from './list-solicitud/debiendo/detalle-deuda/d
     ObservacionComponent,
     ListFinalizadoComponent,
     DebiendoComponent,
-    DetalleDeudaComponent
+    DetalleDeudaComponent,
+    CrearSolicitudComponent
   ],
   imports: [
     CommonModule,
