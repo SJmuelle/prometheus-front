@@ -1,72 +1,80 @@
-<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
+<div class="py-2 px-3 h-100 w-100 bg-white rounded-lg overflow-y-auto">
     <div class="flex flex-row w-100">
         <h2 class="mb-2 text-gray-900">Crear solicitud de traslado</h2>
     </div>
     <div class="flex flex-col w-full">
+        <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3">
+            <div class="mb-2 mt-1 ml-3 leading-tight text-2xl italic text-gray-400 font-semibold pl-0 cursor-pointer" (click)="cambiarTarjeta(1)">
+                Datos de personales
+            </div>
+            <div class="flex flex-row w-full justify-between gap-4" [hidden]="tabMostrar!=1">
+                <mat-form-field appearance="fill" class="w-1/2">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput type="text" [value]="datosUsuario.name" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-1/2">
+                    <mat-label>Correo</mat-label>
+                    <input matInput type="email" [value]="datosUsuario.email" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="w-1/2">
+                    <mat-label>Empresa</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">
+                          {{item.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </fuse-card>
+        <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3 mt-2.5">
+            <div class="mb-2 mt-1 ml-3 leading-tight titulo_tabs text-2xl italic text-gray-400 font-semibold pl-0 cursor-pointer" (click)="cambiarTarjeta(2)">
+                Datos de traslado
+            </div>
+            <div class="flex flex-col w-full" [hidden]="tabMostrar!=2">
+                <div class="flex flex-row w-full justify-between gap-4">
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Empresa destino</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">
+                              {{item.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Banco</mat-label>
+                        <input matInput type="text">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Numero de cuenta</mat-label>
+                        <input matInput type="text">
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row w-full justify-between gap-4">
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Tipo de cuenta</mat-label>
+                        <input matInput type="text">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Monto</mat-label>
+                        <input matInput type="text">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Fecha</mat-label>
+                        <input matInput [matDatepicker]="picker" [value]="fechaActual" readonly>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker disabled="true"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-row w-full">
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-label>Observación</mat-label>
+                        <textarea class="resize-none" matInput placeholder="Explique por que requiere este traslado" rows="5" maxlength="500"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </fuse-card>
         <div>
-            <p class="m-0 italic text-gray-400 font-normal">Datos personales</p>
-        </div>
-        <div class="w-4/5">
-            <hr class="mt-1">
-        </div>
-        <div class="flex flex-row w-4/5 justify-between gap-4">
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Nombre</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Correo</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Empresa</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">
-                      {{item.nombre}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="mt-2">
-            <p class="m-0 italic text-gray-400 font-normal">Datos de traslado</p>
-        </div>
-        <div class="w-4/5">
-            <hr class="mt-1">
-        </div>
-        <div class="flex flex-row w-4/5 justify-between gap-4">
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Empresa destino</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">
-                      {{item.nombre}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Banco</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Numero de cuenta</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-        </div>
-        <div class="flex flex-row w-4/5 justify-between gap-4">
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Tipo de cuenta</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Monto</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="w-1/2">
-                <mat-label>Fecha</mat-label>
-                <input matInput type="text">
-            </mat-form-field>
-        </div>
-        <div>
-            <button mat-raised-button class="color_fintra text-white">Solicitar</button>
+            <button mat-raised-button class="color_fintra text-white mt-3 ml-2">Solicitar</button>
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FuseAlertModule } from '@fuse/components/alert';
+import { FuseCardModule } from '../../../../../@fuse/components/card/card.module';
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,6 +43,7 @@ import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.compo
     CommonModule,
     HttpClientModule,
     FormsModule,
+    FuseCardModule,
     ReactiveFormsModule,
     TrasladosRoutingModule,
     FuseAlertModule,
