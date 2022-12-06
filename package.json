@@ -5,7 +5,7 @@
     "private": true,
     "scripts": {
         "ng": "ng",
-        "start": "ng serve --host=192.168.140.241",
+        "start":  "react-scripts --openssl-legacy-provider start",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
