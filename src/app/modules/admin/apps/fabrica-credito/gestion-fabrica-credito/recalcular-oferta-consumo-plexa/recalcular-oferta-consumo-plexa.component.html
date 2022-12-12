@@ -31,12 +31,12 @@
             <mat-form-field class="w-100 px-3 fuse-mat-dense">
                 <mat-label>Tipo de combustible</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoCombustible'"
-                    [disabled]="datosCompletoSolicitud.tipoCredito=='YP'">
+                    [disabled]="datosCompletoSolicitud?.tipoCredito=='YP'">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <ng-container *ngFor="let item of tipoCombustible.data">
                         <mat-option [value]="item.codigoOpcion"
-                            *ngIf="(datosCompletoSolicitud.tipoCredito!='YP') && (item.codigoOpcion!='GL')">
+                            *ngIf="(datosCompletoSolicitud?.tipoCredito!='YP') && (item.codigoOpcion!='GL')">
                             {{item.descripcionOpcion}}
                         </mat-option>
                     </ng-container>
@@ -101,11 +101,11 @@
                     [class]="item.numeroCapacidadPago!=2?'justify-between':'justify-center'">
 
                     <div [ngClass]="item.validacion=='S'?'border-green-400':'border-red-400'"
-                        class=" grid grid-cols-1 px-3 border-3 x font-bold leading-tight mt-3  rounded-3xl text-4xl text-center">
+                        class=" grid grid-cols-1 px-3 border-3 x font-bold leading-tight mt-3  rounded-3xl text-2xl text-center">
                         <span>
                             ${{ item.disponibleDiarioDescuento | number }}
                         </span>
-                        <span class=" text-sm font-bold  leading-tight text-center ">
+                        <span class=" text-sm font-bold  leading-tight text-center max-w-40	">
                             Disponible diario para descuento
                         </span>
                     </div>
@@ -114,7 +114,7 @@
 
                     <div [ngClass]="item.validacion=='S'?'border-green-400':'border-red-400'"
                         *ngIf="item.numeroCapacidadPago!=2"
-                        class=" grid grid-cols-1 px-3 border-3 x font-bold leading-tight mt-3  rounded-3xl text-4xl text-center">
+                        class=" grid grid-cols-1 px-3 border-3 x font-bold leading-tight mt-3  rounded-3xl text-2xl text-center">
                         <span>
                             ${{ item.maximoDescontar | number }}
                         </span>
@@ -192,11 +192,13 @@
         </div>
 
     </div>
-    <div *ngIf="listadoOferta" class="flex flex-col items-center mt-3 w-full spanFlotante">
+    <div  class="flex flex-col items-center mt-3 w-full spanFlotante">
         <div class="bg-blue-700 text-xl font-medium px-3 rounded-2xl text-white">
             Detalle de la oferta</div>
     </div>
-
+    <div *ngIf="!listadoOferta" class="flex flex-col items-center mt-3 w-full spanFlotante">
+        <grid-oferta-consumo></grid-oferta-consumo>
+    </div>
     <ng-container *ngFor="let item of listadoOferta; let i = index">
         <div class="mb-30 mx-10 text-center relative">
             <div class="card container mt-2 p-2 shadow rounded-3xl">
