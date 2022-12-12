@@ -2,8 +2,72 @@
     <div class="flex flex-row w-100">
         <h2 class="mb-2 text-gray-900">Crear solicitud de traslado</h2>
     </div>
-    <div class="flex flex-col w-full">
-        <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3">
+    <div class="flex flex-row w-100">
+        <mat-form-field appearance="fill" class="w-1/5">
+            <mat-label>Tipo de traslado</mat-label>
+            <mat-select>
+                <mat-option value="IN" (click)="tipoTraslado('IN')">Interno</mat-option>
+                <mat-option value="IE" (click)="tipoTraslado('IE')">Inter-Empresa</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="flex flex-col w-full" *ngIf="tabMostrar != 0">
+        <fuse-card class="card pr-3 pl-3 shadow ml-0.5 mr-3">
+            <div class="mb-2 mt-1 leading-tight text-2xl italic text-gray-400 font-semibold pl-0 cursor-pointer" (click)="cambiarTarjeta(1)">
+                Datos de traslado
+            </div>
+            <div class="flex flex-col w-full">
+                <div class="flex flex-row w-full justify-between gap-4">
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Origen</mat-label>
+                        <mat-select>
+                            <mat-option>456789369</mat-option>
+                            <mat-option>369874125</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Destino</mat-label>
+                        <mat-select>
+                            <mat-option>456789369</mat-option>
+                            <mat-option>369874125</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Tipo de operación</mat-label>
+                        <mat-select>
+                            <mat-option>Prestamo</mat-option>
+                            <mat-option>Pago</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2">
+                        <mat-label>Monto</mat-label>
+                        <input matInput type="number" [(ngModel)]="valorInicial" (keyup)="formatearNumero(valorInicial); convText()">
+                        <mat-hint *ngIf="valorInicial>0">$ {{valorNum}}</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2" *ngIf="tabMostrar==1">
+                        <mat-label>Empresa</mat-label>
+                        <input matInput type="text" value="FINTRA" readonly>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-1/2" *ngIf="tabMostrar==2">
+                        <mat-label>Empresa</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let item of listadoEmpresas" [value]="item.id">{{item.nombre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field appearance="fill" class="w-full">
+                        <mat-label>Descripción</mat-label>
+                        <textarea class="resize-none" matInput placeholder="Explique por que requiere este traslado" rows="5" maxlength="500"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </fuse-card>
+        <div>
+            <button mat-raised-button class="color_fintra text-white mt-3 ml-2">Solicitar</button>
+        </div>
+    </div>
+    <!-- <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3">
             <div class="mb-2 mt-1 ml-3 leading-tight text-2xl italic text-gray-400 font-semibold pl-0 cursor-pointer" (click)="cambiarTarjeta(1)">
                 Datos de personales
             </div>
@@ -25,8 +89,8 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-        </fuse-card>
-        <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3 mt-2.5">
+        </fuse-card> -->
+        <!-- <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3 mt-2.5">
             <div class="mb-2 mt-1 ml-3 leading-tight titulo_tabs text-2xl italic text-gray-400 font-semibold pl-0 cursor-pointer" (click)="cambiarTarjeta(2)">
                 Datos de traslado
             </div>
@@ -72,9 +136,8 @@
                     </mat-form-field>
                 </div>
             </div>
-        </fuse-card>
-        <div>
+        </fuse-card> -->
+        <!-- <div>
             <button mat-raised-button class="color_fintra text-white mt-3 ml-2">Solicitar</button>
-        </div>
-    </div>
+        </div> -->
 </div>
