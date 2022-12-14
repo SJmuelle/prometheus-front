@@ -28,6 +28,7 @@ import { ListFinalizadoComponent } from './list-finalizado/list-finalizado.compo
 import { DebiendoComponent } from './list-solicitud/debiendo/debiendo.component';
 import { DetalleDeudaComponent } from './list-solicitud/debiendo/detalle-deuda/detalle-deuda.component';
 import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.component';
+import { AdministradorComponent } from './administrador/administrador.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { CrearSolicitudComponent } from './crear-solicitud/crear-solicitud.compo
     ListFinalizadoComponent,
     DebiendoComponent,
     DetalleDeudaComponent,
-    CrearSolicitudComponent
+    CrearSolicitudComponent,
+    AdministradorComponent
   ],
   imports: [
     CommonModule,

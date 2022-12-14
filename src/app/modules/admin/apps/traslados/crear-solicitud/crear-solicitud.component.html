@@ -57,14 +57,14 @@
                 </div>
                 <div class="w-full">
                     <mat-form-field appearance="fill" class="w-full">
-                        <mat-label>Descripción</mat-label>
+                        <mat-label>Observación</mat-label>
                         <textarea class="resize-none" matInput placeholder="Explique por que requiere este traslado" rows="5" maxlength="500"></textarea>
                     </mat-form-field>
                 </div>
             </div>
         </fuse-card>
         <div>
-            <button mat-raised-button class="color_fintra text-white mt-3 ml-2">Solicitar</button>
+            <button mat-raised-button class="color_fintra text-white mt-3 ml-2" (click)="solicitar()">Solicitar</button>
         </div>
     </div>
     <!-- <fuse-card class="card pr-3 pl-3 shadow row ml-2 mr-3">

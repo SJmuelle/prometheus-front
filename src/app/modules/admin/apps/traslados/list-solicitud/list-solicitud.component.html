@@ -18,7 +18,6 @@
         <table class="p-0">
             <thead class="bg-gray-100">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
-                    <th class="py-3 text-center"></th>
                     <th class="py-3 text-center">Origen</th>
                     <th class="py-3 text-center">Monto</th>
                     <th class="py-3 text-center">Destino</th>
@@ -32,11 +31,6 @@
             </thead>
             <tbody class="bg-white">
                 <tr class="text-gray-700" *ngFor="let item of listado | filter:filtrarTabla">
-                    <td class="text-sm border py-3 text-center">
-                        <div class="ml-1">
-                            <mat-checkbox *ngIf="item.aprobar=='S'"></mat-checkbox>
-                        </div>
-                    </td>
                     <td class="text-sm border text-center py-3">{{ item.origen }}</td>
                     <td class="text-sm border text-center">$ {{ item.monto | number }}</td>
                     <td class="text-sm border text-center">{{ item.destino }}</td>
@@ -50,10 +44,10 @@
                             <button mat-icon-button class="cursor-pointer border" (click)="abrirObservacion()">
                                 <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
                             </button>
-                            <button mat-icon-button class="cursor-pointer border bg-green-200">
+                            <button mat-icon-button class="cursor-pointer border bg-green-200" *ngIf="item.aprobar=='S'">
                                 <mat-icon svgIcon="heroicons_outline:check"></mat-icon>
                             </button>
-                            <button mat-icon-button class="cursor-pointer border bg-red-200">
+                            <button mat-icon-button class="cursor-pointer border bg-red-200" *ngIf="item.aprobar=='S'">
                                 <mat-icon svgIcon="heroicons_outline:x"></mat-icon>
                             </button>
                         </div>

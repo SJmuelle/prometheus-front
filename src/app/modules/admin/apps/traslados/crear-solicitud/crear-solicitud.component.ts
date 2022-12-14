@@ -11,10 +11,6 @@ export class CrearSolicitudComponent implements OnInit {
 
   listadoEmpresas:any[] = [
     {
-      "id":"FI",
-      "nombre":"FINTRA"
-    },
-    {
       "id":"FL",
       "nombre":"FINTRA LOGISTICS"
     },

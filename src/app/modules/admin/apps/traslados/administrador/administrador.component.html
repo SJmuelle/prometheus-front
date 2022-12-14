@@ -1,0 +1,51 @@
+<div class="py-2 px-3 h-100 w-100 bg-white rounded-lg overflow-y-auto">
+    <div class="flex flex-row w-100">
+        <h2 class="mb-2 text-gray-900">Asignar permisos de usuario</h2>
+    </div>
+    <div class="flex flex-col w-full">
+        <mat-form-field appearance="fill" class="w-1/5">
+            <mat-label>Usuario</mat-label>
+            <mat-select>
+                <mat-option value="IN">EGONZALES</mat-option>
+                <mat-option value="IE">GASALAS</mat-option>
+                <mat-option value="IE">SMUELLE</mat-option>
+                <mat-option value="IE">DSOTTER</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="flex flex-row w-full gap-4">
+            <mat-form-field appearance="fill" class="w-1/5">
+                <mat-label>Cuenta</mat-label>
+                <mat-select>
+                    <mat-option value="IN">444444444</mat-option>
+                    <mat-option value="IE">555555555</mat-option>
+                    <mat-option value="IE">666666666</mat-option>
+                    <mat-option value="IE">777777777</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/5">
+                <mat-label>Tipo de cuenta</mat-label>
+                <mat-select>
+                    <mat-option value="IN">Ahorro</mat-option>
+                    <mat-option value="IE">Corriente</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="w-1/5">
+                <mat-label>Tipo de operación</mat-label>
+                <mat-select>
+                    <mat-option value="IN">Prestamo</mat-option>
+                    <mat-option value="IE">Pago</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col">
+            <label class="font-semibold text-gray-500">¿Aprobación?</label>
+            <mat-radio-group class="mt-1 flex flex-row gap-4">
+                <mat-radio-button value="S">Si</mat-radio-button>
+                <mat-radio-button value="N">No</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div>
+            <button mat-raised-button class="color_fintra text-white mt-3">Asignar</button>
+        </div>
+    </div>
+</div>
