@@ -22,7 +22,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
   currentStep: number = 0;
   drawerMode: 'over' | 'side' = 'side';
   drawerOpened: boolean = true;
-  totalsteps = 4;
+  totalsteps = 1;
   steps: { order: number; title: string; subtitle: string; }[];
   data: any;
   dataAgencia: any;
@@ -53,15 +53,18 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
   agenciasStep = [
     {
       codigo: "ATL",
-      descripcion: "Atlantico"
+      descripcion: "Atlantico",
+      mostrarNuevo: false
     },
     {
       codigo: "SUC",
-      descripcion: "Sucre"
+      descripcion: "Sucre",
+      mostrarNuevo: false
     },
     {
       codigo: "COR",
-      descripcion: "Cordoba"
+      descripcion: "Cordoba",
+      mostrarNuevo: false
     },
   ]
   clonarPeriodo: boolean = false;
@@ -109,11 +112,8 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
 
     // Mark for check
     this._changeDetectorRef.markForCheck();
-    if (this.currentStep < 3) {
-      this.metasListaIndicadores();
-    } else {
-      this.metasListaIndicadoresTotal()
-    }
+    this.metasListaIndicadoresTotal()
+
 
 
   }
@@ -146,14 +146,14 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
             Swal.fire('Completado', res.data.msg, 'success').then((result) => {
               if (result) {
                 this.clonarPeriodo = true;
-                Swal.fire('Completado', res.data.msg, 'success');
+               
                 this.goToStep(1)
-
+                
               }
             })
             setTimeout(() => {
               this.clonarPeriodo = true;
-              Swal.fire('Completado', res.data.msg, 'success');
+              // Swal.fire('Completado', res.data.msg, 'success');
               this.goToStep(1)
 
             }, 1000);
@@ -208,18 +208,10 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
       let envio = {
         periodoActual: data.periodoActual.replace('-', ''),
       }
-      Swal.fire({
-        title: 'Cargando',
-        html: 'Guardando información',
-        timer: 500000,
-        didOpen: () => {
-          Swal.showLoading();
-        },
-      }).then((result) => { });
+   
       this._procesosService
         .metasListaIndicadores(envio)
         .subscribe((res) => {
-          Swal.close();
           this.dataTotal = res.data;
         });
     }
@@ -253,6 +245,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
             }
             )
           });
+          this.metasListaIndicadoresTotal()
 
         });
     }
@@ -298,7 +291,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
     }
   }
 
-  metasAnularAsesor(asesor: string) {
+  metasAnularAsesor(asesor: string, agencia:string) {
     Swal.fire({
       title: 'Confirmar anulación',
       html: `¿Está seguro de anular el asesor <strong>${asesor}</strong>?`,
@@ -313,7 +306,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
         const data: any = this.form.getRawValue();
         let envio = {
           periodoActual: data.periodoActual.replace('-', ''),
-          agencia: this.agencias[this.currentStep].codigo,
+          agencia: agencia,
           asesor: asesor
         }
         Swal.fire({
@@ -331,11 +324,11 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
             if (res.data.resultado == 'OK') {
               Swal.fire('Completado', res.data.msg, 'success').then((result) => {
                 if (result) {
-                  this.metasListaIndicadores();
+                  this.metasListaIndicadoresAgencia(agencia);
                 }
               })
               setTimeout(() => {
-                this.metasListaIndicadores();
+                this.metasListaIndicadoresAgencia(agencia);
               }, 1000);
             } else {
               this.clonarPeriodo = false;
@@ -349,7 +342,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
 
   }
 
-  metasUpdateMetaColocacion(item: any) {
+  metasUpdateMetaColocacion(item: any, agencia:string) {
     Swal.fire({
       title: 'Confirmar anulación',
       html: `¿Está seguro de actulizar la meta de colocación a <strong>${item.formatoMetaColocacion}</strong> al asesor <strong>${item.asesor}</strong>?`,
@@ -364,7 +357,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
         const data: any = this.form.getRawValue();
         let envio = {
           periodoActual: data.periodoActual.replace('-', ''),
-          agencia: this.agencias[this.currentStep].codigo,
+          agencia: agencia,
           asesor: item.asesor,
           metaColocacion: Number(this.utility.enviarNumero(item.formatoMetaColocacion))
         }
@@ -383,11 +376,11 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
             if (res.data.resultado == 'OK') {
               Swal.fire('Completado', res.data.msg, 'success').then((result) => {
                 if (result) {
-                  this.metasListaIndicadores();
+                  this.metasListaIndicadoresAgencia(agencia);
                 }
               })
               setTimeout(() => {
-                this.metasListaIndicadores();
+                this.metasListaIndicadoresAgencia(agencia);
               }, 1000);
             } else {
               this.clonarPeriodo = false;
@@ -401,7 +394,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
 
   }
 
-  metasAgregarAsesor() {
+  metasAgregarAsesor( agencia: string) {
     if (this.formNuevo.valid) {
       const data: any = this.formNuevo.getRawValue();
       Swal.fire({
@@ -419,7 +412,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
           const nuevo: any = this.formNuevo.getRawValue();
           let envio = {
             periodoActual: data.periodoActual.replace('-', ''),
-            agencia: this.agencias[this.currentStep].codigo,
+            agencia: agencia,
             asesor: nuevo.asesor,
             tipoAsesor: nuevo.tipoAsesor,
             metaColocacion: Number(this.utility.enviarNumero(nuevo.metaColocacion))
@@ -439,16 +432,16 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
               if (res.data.resultado == 'OK') {
                 Swal.fire('Completado', res.data.msg, 'success').then((result) => {
                   if (result) {
-                    this.metasListaIndicadores();
-                    this.accordion.closeAll()
+                    this.metasListaIndicadoresAgencia(agencia);
+                    this.formNuevo.reset();
+                    this.myControl.setValue('');
 
                   }
                 })
                 setTimeout(() => {
-                  this.metasListaIndicadores();
+                  this.metasListaIndicadoresAgencia(agencia);
                   this.formNuevo.reset();
                   this.myControl.setValue('');
-                  this.accordion.closeAll()
 
                 }, 1000);
               } else {
