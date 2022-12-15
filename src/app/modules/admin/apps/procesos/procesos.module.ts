@@ -17,6 +17,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseFindByKeyPipeModule } from '@fuse/pipes/find-by-key';
 import { SharedModule } from 'app/shared/shared.module';
+import { FuseAlertModule } from '@fuse/components/alert';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import { SharedModule } from 'app/shared/shared.module';
     SharedModule,
     MatTabsModule,
     MatDatepickerModule,
-    MatNativeDateModule 
+    MatNativeDateModule,
+    FuseAlertModule,
+    MatExpansionModule,
+    MatAutocompleteModule
   ]
 })
 export class ProcesosModule { }
