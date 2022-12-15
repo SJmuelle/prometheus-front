@@ -177,14 +177,14 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/obtener-agenda-solicitud'),
         }
     };
-        /**
- * @description: End-point comentarios
- */
-         public parametriaTipoCredito = {
-            url: {
-                base: EndPoints.uri('/generic/qry/consulta-parametria-negocios'),
-            }
-        };
+    /**
+* @description: End-point comentarios
+*/
+    public parametriaTipoCredito = {
+        url: {
+            base: EndPoints.uri('/generic/qry/consulta-parametria-negocios'),
+        }
+    };
     /**
 /**
 * @description: End-point comentarios
@@ -237,6 +237,23 @@ export class AppSettingsService {
     public politicas = {
         url: {
             base: EndPoints.uri('/generic/qry/cre-politicas-adm')
+        }
+    };
+    /**
+     * @description: End-Point
+     */
+    public procesos = {
+        url: {
+            // http://prometheus.fintra.co:8084/api-fintra/api/generic/metas-agregar-asesor
+            metasClonarPeriodo: EndPoints.uri('/generic/metas-clonar-periodo'),
+            metasListaIndicadores: EndPoints.uri('/generic/metas-lista-indicadores'),
+            metasListaIndicadoresAgencia: EndPoints.uri('/generic/metas-lista-indicadores-agencia'),
+            metasSgtePaso: EndPoints.uri('/generic/metas-sgte-paso'),
+            metasAnularAsesor: EndPoints.uri('/generic/metas-anular-asesor'),
+            metasUpdateMetaColocacion: EndPoints.uri('/generic/metas-update-meta-colocacion'),
+            obtenerInformacionUsuarios: EndPoints.uri('/generic/qry/tk/obtener-informacion-usuarios'),
+            metasAgregarAsesor: EndPoints.uri('/generic/metas-agregar-asesor'),
+            
         }
     };
     /**
