@@ -754,7 +754,7 @@ export class GestionPQRSComponent implements OnInit {
         let data = {
             idAdjunto: id,
         };
-        let url = `/file/load/mostrar-adjunto-pqrs`;
+        let url = `/file/load/mostrar-adjunto-pqrs_v1`;
         Swal.fire({
             title: 'Cargando',
             html: 'Buscando información de PQRS',

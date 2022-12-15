@@ -7,7 +7,7 @@ export const environment = {
     userName: "APPWEB",
     password: btoa("123456"),
     // apiUrl: "http://localhost:8010/",
-    apiUrl:"https://prometheus.fintra.co:8443/",
+    apiUrl:"https://40d2-181-57-229-82.ngrok.io/",
     // diego
     // apiUrl:"http://192.168.138.221:8010/",
     // apiUrl:"http://demo.fintra.co:8011/",
