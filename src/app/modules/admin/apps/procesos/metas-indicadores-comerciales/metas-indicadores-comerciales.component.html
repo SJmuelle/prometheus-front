@@ -16,7 +16,7 @@
                     <div
                         class="ml-1 text-md sm:text-xl font-sans tracking-tight truncate grid grid-cols-2 align-items-center">
                         <div class="grid">
-                            <small class="text-secondary text-md ">Periodo</small>
+                            <small class="text-secondary text-md ">Período</small>
                             <div class="flex gap-2 items-center text-md font-bold"><mat-icon
                                     class="icon-size-4 text-primary-700"
                                     svgIcon="heroicons_solid:calendar"></mat-icon><span
@@ -42,18 +42,18 @@
                             <div
                                 class=" py-4 prose prose-sm max-w-6xl mx-auto sm:mx-2 px-6 sm:px-10 rounded-2xl shadow overflow-hidden bg-card ">
                                 <h2 class=" text-md sm:text-xl  tracking-tight truncate font-bold">
-                                    Clonar periodo
+                                    Clonar período
                                 </h2>
                                 <form [formGroup]="form">
                                     <div class="grid grid-cols-3 gap-3 align-items-baseline mb-3">
                                         <mat-form-field class="w-100">
-                                            <mat-label>Periodo anterior</mat-label>
+                                            <mat-label>Período anterior</mat-label>
                                             <input type="month" matInput [formControlName]="'periodoAnterior'"
                                                 (change)="clonarPeriodo=false">
                                         </mat-form-field>
 
                                         <mat-form-field class="w-100">
-                                            <mat-label>Periodo actual </mat-label>
+                                            <mat-label>Período actual </mat-label>
                                             <input type="month" matInput [formControlName]="'periodoActual'"
                                                 (change)="clonarPeriodo=false">
                                         </mat-form-field>
@@ -65,14 +65,14 @@
                                 </form>
 
                                 <fuse-alert [type]="'primary'" *ngIf="clonarPeriodo">
-                                    <span fuseAlertTitle>Este periodo se encuentra clonado</span>
+                                    <span fuseAlertTitle>Este período se encuentra clonado</span>
                                     Puede seguir con el proceso dando click en la <mat-icon class="border-3 p-1"
                                         svgIcon="heroicons_outline:arrow-narrow-right"
                                         (click)="goToNextStep()"></mat-icon> o <a (click)="goToNextStep()">Siguiente</a>
                                 </fuse-alert>
                                 <fuse-alert [type]="'warning'" *ngIf="!clonarPeriodo">
-                                    <span fuseAlertTitle>Aún no se ha seleccionado un periodo para clonar</span>
-                                    Elija los periodos para seguir el flujo
+                                    <span fuseAlertTitle>Aún no se ha seleccionado un período para clonar</span>
+                                    Elija los períodos para seguir el flujo
                                 </fuse-alert>
                             </div>
                         </ng-template>
