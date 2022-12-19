@@ -53,7 +53,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
   agenciasStep = [
     {
       codigo: "ATL",
-      descripcion: "Atlantico",
+      descripcion: "Atlántico",
       mostrarNuevo: false
     },
     {
