@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { RangoComponent } from './rango/rango.component';
 
 @Component({
   selector: 'app-list',
@@ -16,10 +18,10 @@ export class ListComponent implements OnInit {
   filtrarTabla:string='';
   mostrar_form:boolean=true;
 
+  rangoFecha: any;
 
-  constructor(
-   private router: Router,
-    private _pqrService: PqrService) { }
+
+  constructor(private router: Router, private _pqrService: PqrService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.consulta();
@@ -30,7 +32,6 @@ export class ListComponent implements OnInit {
   }
 
   consulta(){
-
     Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
           .getListados('listar-pqrs-gestion')
@@ -43,9 +44,20 @@ export class ListComponent implements OnInit {
             }
           });
   }
+
   gestion(x){
     let url=`pqr/gestion/${x}`;
     this.router.navigateByUrl(url);
+  }
+
+  filtrarFecha(){
+    const dialogRef = this.dialog.open(RangoComponent, {
+      width: '25%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.rangoFecha = result;
+      console.log(this.rangoFecha)
+    });
   }
 
 }

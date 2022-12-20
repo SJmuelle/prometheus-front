@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Filtro por fecha</h2>
+<mat-dialog-content class="mat-typography">
+    <mat-form-field appearance="fill" class="w-full">
+        <mat-label>Ingrese un rango de fecha</mat-label>
+        <mat-date-range-input [formGroup]="rangeForm" [rangePicker]="picker">
+            <input matStartDate formControlName="minimo" placeholder="Fecha inicial">
+            <input matEndDate formControlName="maximo" placeholder="Fecha final">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="enviaRango()" class="text-white permitir bloquear" [disabled]="rangeForm.invalid">Buscar</button>
+    <button mat-button mat-dialog-close class="text-white bg-gray-400">Cerrar</button>
+</mat-dialog-actions>
