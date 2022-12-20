@@ -32,16 +32,27 @@ export class ListComponent implements OnInit {
 
   consulta(){
     Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        this._pqrService
-          .getListados('listar-pqrs-gestion')
-          .subscribe((response: any) => {
-            Swal.close();
-            if (response) {
-              this.listado = response;
-            } else {
-              this.listado = [];
-            }
-          });
+    this._pqrService.getListados('listar-pqrs-gestion').subscribe((response: any) => {
+      Swal.close();
+      if (response) {
+        this.listado = response;
+      } else {
+        this.listado = [];
+      }
+    });
+  }
+
+  filtrarPQRS(data){
+    let enviar = {
+      "details": data
+    }
+    this._pqrService.postFiltro('/credito/tk/property/consulta-pqrs-historico', enviar).subscribe((response:any)=>{
+      if (response) {
+        this.listado = response;
+      } else {
+        this.listado = [];
+      }
+    })
   }
 
   gestion(x){
@@ -55,6 +66,7 @@ export class ListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
+      this.filtrarPQRS(result)
     });
   }
 
