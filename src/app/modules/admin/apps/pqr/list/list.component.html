@@ -1,4 +1,4 @@
-<div class=" bg-white h-9/12 overflow-auto px-3 py-2 rounded-lg shadow w-100 m-4">
+<div class="bg-white h-screen px-3 py-2 rounded-lg shadow w-100">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2 text-gray-900">Gestión de PQRS</h2>
@@ -13,7 +13,7 @@
                             <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">Exportar</button>
                         </div>
                         <div>
-                            <button mat-button class="bg-gray-400 text-white" (click)="filtrarFecha()">Busqueda por fecha</button>
+                            <button mat-button class="bg-gray-400 text-white" (click)="filtrarFecha()">Busqueda especifica</button>
                         </div>
                     </div>
                 </span>
@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
-                        <div class="col-lg-12 ">
+                        <div class="col-lg-12 max-h-120 xl:max-h-140 overflow-auto">
                             <table class="w-full shadow p-1">
                                 <thead style="background-color: #F9FAFB;">
                                     <tr

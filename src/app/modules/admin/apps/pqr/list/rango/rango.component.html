@@ -1,16 +1,35 @@
-<h2 mat-dialog-title>Filtro por fecha</h2>
+<h2 mat-dialog-title>Elija su busqueda:</h2>
 <mat-dialog-content class="mat-typography">
-    <mat-form-field appearance="fill" class="w-full">
-        <mat-label>Ingrese un rango de fecha</mat-label>
-        <mat-date-range-input [formGroup]="rangeForm" [rangePicker]="picker">
-            <input matStartDate formControlName="minimo" placeholder="Fecha inicial">
-            <input matEndDate formControlName="maximo" placeholder="Fecha final">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
+    <div class="flex flex-col w-full">
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Ingrese un rango de fecha</mat-label>
+            <mat-date-range-input [formGroup]="rangeForm" [rangePicker]="picker">
+                <input matStartDate formControlName="minimo" placeholder="Fecha inicial">
+                <input matEndDate formControlName="maximo" placeholder="Fecha final">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <mat-form-field [formGroup]="idenForm" class="w-full">
+            <mat-label>Ingrese la identificación</mat-label>
+            <input matInput formControlName="identificacion">
+        </mat-form-field>
+        <mat-form-field [formGroup]="negForm" class="w-full">
+            <mat-label>Ingrese el negocio</mat-label>
+            <input matInput formControlName="negocio">
+        </mat-form-field>
+        <mat-form-field appearance="fill" [formGroup]="estadoForm" class="w-full">
+            <mat-label>Ingrese el estado</mat-label>
+            <mat-select formControlName="estado">
+              <mat-option *ngFor="let item of listEstado" [value]="item.id">
+                {{item.nombre}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    <button mat-button (click)="enviaRango()" class="text-white permitir bloquear" [disabled]="rangeForm.invalid">Buscar</button>
+    <button mat-button (click)="enviaRango()" class="text-white permitir bloquear" [disabled]="rangeForm.invalid && idenForm.invalid && negForm.invalid && estadoForm.invalid">Buscar</button>
     <button mat-button mat-dialog-close class="text-white bg-gray-400">Cerrar</button>
 </mat-dialog-actions>

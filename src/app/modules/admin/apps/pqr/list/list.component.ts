@@ -17,7 +17,6 @@ export class ListComponent implements OnInit {
   tamanoTabl:number=5;
   filtrarTabla:string='';
   mostrar_form:boolean=true;
-
   rangoFecha: any;
 
 
@@ -55,7 +54,7 @@ export class ListComponent implements OnInit {
       width: '25%'
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.rangoFecha = result;
+      console.log(result);
     });
   }
 
