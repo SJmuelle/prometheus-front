@@ -104,11 +104,11 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
               "unidadNegocio": this.fabricaDatos.unidadNegocio,
               "tipoTercero": 'T'
             }
-            this._decisionesService.comprobacionCampos(datoComprobacion)
-              .subscribe((res2) => {
-                debugger;
+            // this._decisionesService.comprobacionCampos(datoComprobacion)
+              // .subscribe((res2) => {
+                // debugger;
                 this.postDecicion()
-              })
+              // })
           })
       } else {
         this.postDecicion();
