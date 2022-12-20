@@ -56,7 +56,6 @@ export class ListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       this.rangoFecha = result;
-      console.log(this.rangoFecha)
     });
   }
 
