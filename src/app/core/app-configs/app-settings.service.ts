@@ -209,7 +209,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/documentos-requeridos-fabrica'),
             baseAdjunto: EndPoints.uri('/archivos/guardar/adjuntar-archivo'),
-            baseConsultar: EndPoints.uri('/pqrs/file/load/cre-consultar-documento'),
+            baseConsultar: EndPoints.uri('/archivos/obtener/cre-consultar-documento'),
             baseEliminar: EndPoints.uri('/archivos/inactivar/cre-inactivar-doc'),
             baseHistorico: EndPoints.uri('/archivos/consulta-historico-documentos-fabrica')
         }
