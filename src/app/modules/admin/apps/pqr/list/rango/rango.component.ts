@@ -18,7 +18,15 @@ export class RangoComponent implements OnInit {
   estadoForm: FormGroup;
   listEstado: any=[];
   details: any=[];
-  
+  dataFiltro:any = {
+    "entidad": "HISTORICO_PQRS",
+    "details":[
+      {
+        "tipo": "STATUS",
+        "buscar": ""
+      },
+    ]
+  };
 
   constructor(private fb: FormBuilder, private _pqrService: PqrService, public dialogRef: MatDialogRef<RangoComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
@@ -44,44 +52,44 @@ export class RangoComponent implements OnInit {
   enviaRango(): void {
     if (this.rangeForm.value.minimo!='') {
       let data = {
-        "tipo": "STATUS",
+        "tipo": "FECHA_INICIAL",
         "buscar": moment(this.rangeForm.value.minimo).format("YYYY-MM-DD")
       }
-      this.details.push(data)
+      this.dataFiltro.details.push(data)
     }
 
     if (this.rangeForm.value.maximo!='') {
       let data = {
-        "tipo": "STATUS",
+        "tipo": "FECHA_FINAL",
         "buscar": moment(this.rangeForm.value.maximo).format("YYYY-MM-DD")
       }
-      this.details.push(data)
+      this.dataFiltro.details.push(data)
     }
 
     if (this.idenForm.value.identificacion!='') {
       let data = {
-        "tipo": "STATUS",
+        "tipo": "IDENTIFICACION",
         "buscar": this.idenForm.value.identificacion
       }
-      this.details.push(data)
+      this.dataFiltro.details.push(data)
     }
 
     if (this.negForm.value.negocio!='') {
       let data = {
-        "tipo": "STATUS",
+        "tipo": "NEGOCIO",
         "buscar": this.negForm.value.negocio
       }
-      this.details.push(data)
+      this.dataFiltro.details.push(data)
     }
 
     if (this.estadoForm.value.estado!='') {
       let data = {
-        "tipo": "STATUS",
+        "tipo": "ESTADO",
         "buscar": this.estadoForm.value.estado
       }
-      this.details.push(data)
+      this.dataFiltro.details.push(data)
     }
-    this.dialogRef.close(this.details);
+    this.dialogRef.close(this.dataFiltro);
   }
 
   consultarEstado(){

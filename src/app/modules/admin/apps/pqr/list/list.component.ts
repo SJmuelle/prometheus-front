@@ -43,10 +43,7 @@ export class ListComponent implements OnInit {
   }
 
   filtrarPQRS(data){
-    let enviar = {
-      "details": data
-    }
-    this._pqrService.postFiltro('/credito/tk/property/consulta-pqrs-historico', enviar).subscribe((response:any)=>{
+    this._pqrService.postFiltro('/credito/tk/property/consulta-pqrs-historico', data).subscribe((response:any)=>{
       if (response) {
         this.listado = response;
       } else {
