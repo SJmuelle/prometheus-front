@@ -18,6 +18,7 @@ export class RangoComponent implements OnInit {
   estadoForm: FormGroup;
   listEstado: any=[];
   details: any=[];
+  
 
   constructor(private fb: FormBuilder, private _pqrService: PqrService, public dialogRef: MatDialogRef<RangoComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
@@ -43,35 +44,40 @@ export class RangoComponent implements OnInit {
   enviaRango(): void {
     if (this.rangeForm.value.minimo!='') {
       let data = {
-        "fechaInicial": moment(this.rangeForm.value.minimo).format("YYYY-MM-DD")
+        "tipo": "STATUS",
+        "buscar": moment(this.rangeForm.value.minimo).format("YYYY-MM-DD")
       }
       this.details.push(data)
     }
 
     if (this.rangeForm.value.maximo!='') {
       let data = {
-        "fechaFinal": moment(this.rangeForm.value.maximo).format("YYYY-MM-DD")
+        "tipo": "STATUS",
+        "buscar": moment(this.rangeForm.value.maximo).format("YYYY-MM-DD")
       }
       this.details.push(data)
     }
 
     if (this.idenForm.value.identificacion!='') {
       let data = {
-        "identificacion": this.idenForm.value.identificacion
+        "tipo": "STATUS",
+        "buscar": this.idenForm.value.identificacion
       }
       this.details.push(data)
     }
 
     if (this.negForm.value.negocio!='') {
       let data = {
-        "negocio": this.negForm.value.negocio
+        "tipo": "STATUS",
+        "buscar": this.negForm.value.negocio
       }
       this.details.push(data)
     }
 
     if (this.estadoForm.value.estado!='') {
       let data = {
-        "estado": this.estadoForm.value.estado
+        "tipo": "STATUS",
+        "buscar": this.estadoForm.value.estado
       }
       this.details.push(data)
     }
