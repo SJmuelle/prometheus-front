@@ -13,6 +13,7 @@ import moment from 'moment';
 export class RangoComponent implements OnInit {
 
   rangeForm: FormGroup;
+  pqrForm: FormGroup;
   idenForm: FormGroup;
   negForm: FormGroup;
   estadoForm: FormGroup;
@@ -30,6 +31,9 @@ export class RangoComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private _pqrService: PqrService, public dialogRef: MatDialogRef<RangoComponent>,
     @Inject(MAT_DIALOG_DATA) public data) {
+      this.pqrForm = this.fb.group({
+        id: ['', [Validators.required]]
+      }),
       this.rangeForm = this.fb.group({
         minimo: ['', [Validators.required]],
         maximo: ['', [Validators.required]]
@@ -50,6 +54,13 @@ export class RangoComponent implements OnInit {
   }
 
   enviaRango(): void {
+    if (this.pqrForm.value.id!='') {
+      let data = {
+        "tipo": "ID",
+        "buscar": this.pqrForm.value.id.toString()
+      }
+      this.dataFiltro.details.push(data)
+    }
     if (this.rangeForm.value.minimo!='') {
       let data = {
         "tipo": "FECHA_INICIAL",

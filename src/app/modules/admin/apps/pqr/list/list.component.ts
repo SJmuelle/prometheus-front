@@ -43,9 +43,9 @@ export class ListComponent implements OnInit {
   }
 
   filtrarPQRS(data){
-    this._pqrService.postFiltro('/credito/tk/property/consulta-pqrs-historico', data).subscribe((response:any)=>{
+    this._pqrService.postFiltro('/credito/tk/property/busqueda-historial-pqrs', data).subscribe((response:any)=>{
       if (response) {
-        this.listado = response;
+        this.listado = response.data.historicoPqrs;
       } else {
         this.listado = [];
       }
@@ -63,7 +63,9 @@ export class ListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.filtrarPQRS(result)
+      if (result!=undefined) {
+        this.filtrarPQRS(result) 
+      }
     });
   }
 
