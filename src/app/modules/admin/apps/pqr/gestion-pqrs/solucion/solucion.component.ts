@@ -285,6 +285,7 @@ export class SolucionComponent implements OnInit {
                                     idComentario: response.data.respuesta,
                                     fuente: 'registro-pqrs',
                                     identificador: 'pqrs' + this.pqrid,
+                                    idpqrs: this.pqrid,
                                     file:this.evidencia
                                 };
         
@@ -392,6 +393,7 @@ export class SolucionComponent implements OnInit {
                                     idComentario: response.data.respuesta,
                                     fuente: 'registro-pqrs',
                                     identificador: 'pqrs' + this.pqrid,
+                                    idpqrs: this.pqrid,
                                     file:this.evidencia
                                 };
         
@@ -501,6 +503,7 @@ export class SolucionComponent implements OnInit {
                                 idComentario: response.data.respuesta,
                                 fuente: 'registro-pqrs',
                                 identificador: 'pqrs' + this.pqrid,
+                                idpqrs: this.pqrid,
                                 file:this.evidencia
                             };
                             
