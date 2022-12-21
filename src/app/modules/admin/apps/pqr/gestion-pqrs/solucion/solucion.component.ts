@@ -43,6 +43,7 @@ export class SolucionComponent implements OnInit {
     envioCorreo: boolean=false;
     mensajeQuill: string;
     envio: string;
+    cargandoEnvdio:boolean;
     constructor(
         private _pqrService: PqrService,
         public dialog: MatDialog,
@@ -185,6 +186,7 @@ export class SolucionComponent implements OnInit {
     }
 
     guardar() {
+        this.cargandoEnvdio = true;
         if(this.envioCorreo==true){
             this.envio='S'
             if(this.editor.editorElem.outerText.length>650){
@@ -199,7 +201,7 @@ export class SolucionComponent implements OnInit {
         }else{
             this.envio='N'
         }
-
+        console.log(this.envio)
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento_area.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal ? this.solucionCausal: 0;
@@ -583,7 +585,8 @@ export class SolucionComponent implements OnInit {
                 }
             });
             
-        }        
+        } 
+        this.cargandoEnvdio = false;       
     }
 
     limpiar() {
