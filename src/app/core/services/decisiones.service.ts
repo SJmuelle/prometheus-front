@@ -50,6 +50,19 @@ export class DecisionesService {
       .pipe(catchError(this.handleError));
   }
 
+    /**
+ * @description: Obtiene el listado de causales
+ */
+    public getCauDesestimiento(numeroSolicitud): Observable<any> {
+      let data = {
+        numeroSolicitud: numeroSolicitud,
+      }
+      // return this._http.post(`${this._appSettings.decision.url.baseCausalRechazo}`, data).pipe(catchError(this.handleError));;
+      return this._http
+        .post(this._appSettings.decision.url.baseCauDesestimiento, data)
+        .pipe(catchError(this.handleError));
+    }
+  
 
   /**
    * @description: Asegurar que los campos de valor tengan formato de numero
