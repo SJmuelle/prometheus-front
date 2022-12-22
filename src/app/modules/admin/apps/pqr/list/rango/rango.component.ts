@@ -41,9 +41,6 @@ export class RangoComponent implements OnInit {
       this.idenForm = this.fb.group({
         identificacion: ['', [Validators.required]]
       }),
-      this.negForm = this.fb.group({
-        negocio: ['', [Validators.required]]
-      }),
       this.estadoForm = this.fb.group({
         estado: ['', [Validators.required]]
       })
@@ -85,18 +82,10 @@ export class RangoComponent implements OnInit {
       this.dataFiltro.details.push(data)
     }
 
-    if (this.negForm.value.negocio!='') {
-      let data = {
-        "tipo": "NEGOCIO",
-        "buscar": this.negForm.value.negocio
-      }
-      this.dataFiltro.details.push(data)
-    }
-
     if (this.estadoForm.value.estado!='') {
       let data = {
         "tipo": "ESTADO",
-        "buscar": this.estadoForm.value.estado
+        "buscar": this.estadoForm.value.estado.toString()
       }
       this.dataFiltro.details.push(data)
     }

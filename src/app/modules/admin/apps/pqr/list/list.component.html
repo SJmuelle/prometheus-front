@@ -10,13 +10,31 @@
                 <span class="leading-none col-lg-4 col-sm-12">
                     <div class="leading-tight titulo_tabs flex flex-row gap-3">
                         <div>
-                            <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">Exportar</button>
+                            <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
+                                <div class="flex flex-row gap-1.5 w-full" matPrefix>
+                                    <div>
+                                        <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
+                                    </div>
+                                    <div class="margin-button">
+                                        Exportar
+                                    </div>
+                                </div>
+                            </button>
                         </div>
                         <div>
-                            <button mat-button class="bg-gray-400 text-white" (click)="filtrarFecha()">Búsqueda específica</button>
+                            <button mat-button class="bg-gray-400 text-white gap-2" (click)="filtrarFecha()">
+                                <div class="flex flex-row gap-1.5 w-full" matPrefix>
+                                    <div>
+                                        <mat-icon svgIcon="heroicons_outline:search-circle" class="text-white"></mat-icon>
+                                    </div>
+                                    <div class="margin-button">
+                                        Búsqueda específica
+                                    </div>
+                                </div>
+                            </button>
                         </div>
                         <div>
-                            <button mat-button class="permitir bloquear text-white" [disabled]="filRegistros==maxRegistros" (click)="consulta()">Restablecer</button>
+                            <button mat-button class="permitir bloquear text-white" *ngIf="filRegistros!=maxRegistros" (click)="consulta()">Restablecer</button>
                         </div>
                     </div>
                 </span>

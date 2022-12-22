@@ -66,7 +66,7 @@ export class ListComponent implements OnInit {
 
   filtrarFecha(){
     const dialogRef = this.dialog.open(RangoComponent, {
-      width: '25%'
+      width: '35%'
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
