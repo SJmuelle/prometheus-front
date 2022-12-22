@@ -209,7 +209,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/documentos-requeridos-fabrica'),
             baseAdjunto: EndPoints.uri('/archivos/guardar/adjuntar-archivo'),
-            baseConsultar: EndPoints.uri('/pqrs/file/load/cre-consultar-documento'),
+            baseConsultar: EndPoints.uri('/archivos/obtener/cre-consultar-documento'),
             baseEliminar: EndPoints.uri('/archivos/inactivar/cre-inactivar-doc'),
             baseHistorico: EndPoints.uri('/archivos/consulta-historico-documentos-fabrica')
         }
@@ -225,6 +225,7 @@ export class AppSettingsService {
             baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
+            baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
