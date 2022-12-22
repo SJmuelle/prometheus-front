@@ -50,6 +50,14 @@
             </ng-container>
         </ng-container>
 
+        <ng-container *ngIf="!permisoEditar">
+            <ng-container *ngIf="fabricaDatos.agenda!='DE'">
+                <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
+                    (click)="abrirDecisionDesistir()" [ngClass]="animacionVer==true?'show':'hidden'">
+                    <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
+                </button>
+            </ng-container>
+        </ng-container>
 
         <button mat-fab class="mx-3 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
             <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>

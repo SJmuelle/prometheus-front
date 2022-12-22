@@ -1,25 +1,22 @@
 <h2 mat-dialog-title>Decisión</h2>
 <mat-dialog-content>
-  <form [formGroup]="DecisionForm">
+  <form [formGroup]="form">
     <div class="flex flex-col w-100">
       <div class="w-full">
         <mat-form-field class="w-full" appearance="fill">
           <mat-label>Decisión</mat-label>
-          <mat-select formControlName="decision" (selectionChange)="getlistadoCausales()">
+          <mat-select formControlName="decision" (selectionChange)="getlistadoCausales()"  [disabled]="fabricaDatos.agenda != 'DE'">
             <mat-option *ngFor="let item of listadoDeciones" value="{{item.codigoOpcion}}">{{item.descripcionOpcion}}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="frm.decision.errors?.required">
-            Campo requerido.
-          </mat-error>
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
         </mat-form-field>
       </div>
-      <div *ngIf="DecisionForm.value.decision!='A'">
+      <div *ngIf="form.value.decision!='A'">
         <mat-form-field class="w-full" appearance="fill">
           <mat-label>Causal </mat-label>
-          <mat-select formControlName="causal" [required]="visible==true">
-            <mat-option *ngFor="let item of listadoCausales" value="{{item.idCausal}}">{{item.descripcionCausal}}
+          <mat-select formControlName="causal" >
+            <mat-option  *ngFor="let item of listadoCausales" value="{{item.idCausal}}">{{item.descripcionCausal}}
             </mat-option>
           </mat-select>
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
@@ -29,7 +26,7 @@
         <mat-form-field class="w-full" appearance="fill">
           <mat-label>Cupo</mat-label>
           <input matInput type="text" autocomplete="off" [formControlName]="'cupo'"
-          (keyup)="DecisionForm.controls['cupo'].setValue(utility.formatearNumero(DecisionForm.value.cupo)); "
+          (keyup)="form.controls['cupo'].setValue(utility.formatearNumero(form.value.cupo)); "
           >
           <span matPrefix>$&nbsp;</span>
         </mat-form-field>
@@ -38,7 +35,7 @@
       <div class="w-full">
         <mat-form-field class="w-full" appearance="fill">
           <mat-label>Comentario</mat-label>
-          <textarea class="tamano" matInput type="text" formControlName="comentario" rows="3"
+          <textarea class="tamano" matInput type="text" formControlName="comentario" rows="5"
             autocomplete="off"></textarea>
 
         </mat-form-field>
@@ -51,7 +48,7 @@
 <mat-dialog-actions>
   <div class="flex flex-row items-center justify-end sm:justify-end w-full">
     <button mat-raised-button color="primary" type="button" (click)="guardar()"
-      [disabled]="DecisionForm.invalid">Guardar
+      [disabled]="form.invalid">Guardar
       decisión</button>
     <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" mat-dialog-close
       id="cancelar">Cancelar</button>

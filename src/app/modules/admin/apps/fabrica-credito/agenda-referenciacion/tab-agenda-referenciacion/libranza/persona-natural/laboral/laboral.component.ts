@@ -57,6 +57,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
 */
   private getFabricaCreditoAgenda(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    debugger
     const datosSolicitud: any = {
       "numeroSolicitud": this.numeroSolicitud,
       "tipo": "L",
@@ -93,6 +94,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
 
   public onPostDatos(): void {
     const datos: any = this.form.getRawValue();
+    debugger
     let data = {
       numeroSolicitud: this.numeroSolicitud,
       unidadNegocio: this.fabricaDatos.unidadNegocio,
