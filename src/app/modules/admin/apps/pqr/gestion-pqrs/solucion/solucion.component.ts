@@ -269,7 +269,6 @@ export class SolucionComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this.seguimiento.detalle = this.editor.editorElem.outerText;
-                debugger;
                 this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
                     Swal.close();
                     if (response) {

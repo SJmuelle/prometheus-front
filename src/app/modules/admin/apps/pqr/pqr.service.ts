@@ -134,7 +134,6 @@ export class PqrService {
 
     // NUEVO METODO PARA ENVIAR CORREOS
     envioCorreos(url, pqrs, tipo, descripcion = '', adjuntos='', mensaje?,envioCorreo?) {
-        debugger
         let data = {
             pqrs: parseInt(pqrs),
             tipo: tipo,
