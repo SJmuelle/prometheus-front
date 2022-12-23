@@ -100,6 +100,14 @@ export class PqrService {
         );
     }
 
+    postFiltro(url: string, data: any): Observable<any> {
+        return this._utility.postQueryServer1(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
     CreatePqrs(url: string, data: any): Observable<any> {
         return this._utility.postFile(url, data).pipe(
             map((result: any) => {
