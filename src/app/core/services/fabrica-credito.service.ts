@@ -45,15 +45,15 @@ export class FabricaCreditoService {
         return this._http.post(this._appSettings.fabricaDatos.url.resumenes, datos);
 
     }
-        /**
-    * @description: resumenes de credito
-    */
-         public getHistoricoCliente(datos): Observable<any> {
-            // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);
-            // return this._http.post(this._appSettings.fabricaDatos.url.historicoCliente, datos);
-            const { numeroSolicitud } = datos;
+    /**
+* @description: resumenes de credito
+*/
+    public getHistoricoCliente(datos): Observable<any> {
+        // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);
+        // return this._http.post(this._appSettings.fabricaDatos.url.historicoCliente, datos);
+        const { numeroSolicitud } = datos;
         return this._http.get(`${this._appSettings.fabricaDatos.url.historicoCliente}/${numeroSolicitud}`);
-        }
+    }
 
     /**
 * @description: resumenes de credito
@@ -106,4 +106,17 @@ export class FabricaCreditoService {
         return this._http.get(`${this._appSettings.fabricaDatos.url.baseRepresentante}/${solicitud}`);
     }
 
+    /**
+ * @description: Get Datos del titular
+ */
+    public busquedaGeneral(data: any): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.trazabilidadBusqueda}`, data);
+    }
+
+    /**
+* @description: Get Datos del titular
+*/
+    public trazabilidadBusquedaFiltro(data: any): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.trazabilidadBusquedaFiltro}`, data);
+    }
 }
