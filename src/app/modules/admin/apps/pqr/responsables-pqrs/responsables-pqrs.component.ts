@@ -140,7 +140,7 @@ export class ResponsablesPQRSComponent implements OnInit {
     }
     Swal.fire({ title: 'Cargando', html: 'Guardando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
     this._pqrService
-      .Create(url, data )
+      .Create(url, data)
       .subscribe((response: any) => {
         Swal.close();
         if (response) {
