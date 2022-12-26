@@ -117,7 +117,7 @@ export class ResponsablesPQRSComponent implements OnInit {
   consultaListado(){
     Swal.fire({ title: 'Cargando', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._pqrService
-          .getListados(`/tk/select-areas`)
+          .getListados(`tk/select-areas`)
           .subscribe((response: any) => {
             Swal.close();
             if (response) {
