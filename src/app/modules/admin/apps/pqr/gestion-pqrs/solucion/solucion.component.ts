@@ -43,6 +43,7 @@ export class SolucionComponent implements OnInit {
     envioCorreo: boolean=false;
     mensajeQuill: string;
     envio: string;
+    cargandoEnvdio:boolean;
     constructor(
         private _pqrService: PqrService,
         public dialog: MatDialog,
@@ -185,6 +186,7 @@ export class SolucionComponent implements OnInit {
     }
 
     guardar() {
+        this.cargandoEnvdio = true;
         if(this.envioCorreo==true){
             this.envio='S'
             if(this.editor.editorElem.outerText.length>650){
@@ -199,7 +201,7 @@ export class SolucionComponent implements OnInit {
         }else{
             this.envio='N'
         }
-
+        console.log(this.envio)
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento_area.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal ? this.solucionCausal: 0;
@@ -267,7 +269,6 @@ export class SolucionComponent implements OnInit {
                     },
                 }).then((result) => {});
                 this.seguimiento.detalle = this.editor.editorElem.outerText;
-                debugger;
                 this._pqrService.Create(url, this.seguimiento).subscribe((response: any) => {
                     Swal.close();
                     if (response) {
@@ -285,6 +286,7 @@ export class SolucionComponent implements OnInit {
                                     idComentario: response.data.respuesta,
                                     fuente: 'registro-pqrs',
                                     identificador: 'pqrs' + this.pqrid,
+                                    idpqrs: this.pqrid,
                                     file:this.evidencia
                                 };
         
@@ -392,6 +394,7 @@ export class SolucionComponent implements OnInit {
                                     idComentario: response.data.respuesta,
                                     fuente: 'registro-pqrs',
                                     identificador: 'pqrs' + this.pqrid,
+                                    idpqrs: this.pqrid,
                                     file:this.evidencia
                                 };
         
@@ -501,6 +504,7 @@ export class SolucionComponent implements OnInit {
                                 idComentario: response.data.respuesta,
                                 fuente: 'registro-pqrs',
                                 identificador: 'pqrs' + this.pqrid,
+                                idpqrs: this.pqrid,
                                 file:this.evidencia
                             };
                             
@@ -580,7 +584,8 @@ export class SolucionComponent implements OnInit {
                 }
             });
             
-        }        
+        } 
+        this.cargandoEnvdio = false;       
     }
 
     limpiar() {
