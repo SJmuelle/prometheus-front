@@ -19,22 +19,47 @@
                             <mat-label>Identificación del cliente</mat-label>
                             <input matInput autocomplete="off" formControlName="buscar">
                         </mat-form-field>
-                        <mat-form-field appearance="fill" class="w-100"  formGroupName="negocio">
-                            <mat-label>Unidad de negocio</mat-label>
-                            <input matInput autocomplete="off" formControlName="buscar"> 
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" class="w-100" formGroupName="pagaduria">
-                            <mat-label>Pagaduria</mat-label>
-                            <input matInput autocomplete="off" formControlName="buscar"> 
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" class="w-100" formGroupName="estado">
-                            <mat-label>Estado</mat-label>
-                            <input matInput autocomplete="off" formControlName="buscar">
-                        </mat-form-field>
-                        <mat-form-field appearance="fill" class="w-100" formGroupName="subestado">
-                            <mat-label>Subestado</mat-label>
-                            <input matInput autocomplete="off" formControlName="buscar">
-                        </mat-form-field>
+                      
+                        <ng-container *ngIf="unidad$ | async as negocios">
+                            <mat-form-field class="w-full" appearance="fill" formGroupName="negocio">
+                                <mat-label>Unidad de negocio</mat-label>
+                                <mat-select [value]="''" [formControlName]="'buscar'">
+                                    <mat-option  [value]="''">Seleccione</mat-option>
+                                    <mat-option *ngFor="let neg of negocios.data" [value]="neg.codigoOpcion">{{neg.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf="pagaduria$ | async as pagadurias">
+                            <mat-form-field class="w-full" appearance="fill" formGroupName="pagaduria">
+                                <mat-label>Pagaduria</mat-label>
+                                <mat-select [value]="''" [formControlName]="'buscar'">
+                                    <mat-option  [value]="''">Seleccione</mat-option>
+                                    <mat-option *ngFor="let pag of pagadurias.data" [value]="pag.codigo">{{pag.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf="estados$ | async as estados">
+                            <mat-form-field class="w-full" appearance="fill" formGroupName="estado">
+                                <mat-label>Estado</mat-label>
+                                <mat-select [value]="''" [formControlName]="'buscar'">
+                                    <mat-option  [value]="''">Seleccione</mat-option>
+                                    <mat-option *ngFor="let est of estados.data" [value]="est.codigo" (click)="getSubestados(est.codigo)">{{est.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf="subestados$ | async as subestados">
+                            <mat-form-field class="w-full" appearance="fill" formGroupName="subestado">
+                                <mat-label>Subestado</mat-label>
+                                <mat-select [value]="''" [formControlName]="'buscar'">
+                                    <mat-option  [value]="''">Seleccione</mat-option>
+                                    <mat-option *ngFor="let sub of subestados.data" [value]="sub.codigo">{{sub.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
                     </form>
                     <form [formGroup]="formPeriodo" >
                         <mat-form-field appearance="fill" class="w-100" >
@@ -48,6 +73,8 @@
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
                     </form>
+                    <button mat-raised-button class="w-100" (click)="formPeriodo.reset();form.reset()">Limpiar filtros</button>
+                    <!-- <button mat-raised-button color="primary" class="w-100">Filtrar</button> -->
                 </div>
             </div>
 
@@ -68,7 +95,7 @@
                                 <button class="block sm:hidden -ml-3 sm:ml-0 mb-2 sm:mb-0 order-first sm:order-last"
                                     mat-icon-button (click)="matDrawer.toggle()">
                                     <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
-                                </button>Trazabilidad de cré dito
+                                </button>Trazabilidad de crédito
                             </div>
                             <div class="flex items-center">
                                 <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
@@ -103,13 +130,13 @@
                                     <td rowspan="2" class="pl-6">
                                         <div class="ml-2.5">
                                             <mat-icon class="cursor-pointer" svgIcon="manage_search"
-                                                (click)="goResumen(item)" matTooltip="Gestionar"></mat-icon>
+                                                (click)="goResumen(item)" matTooltip="Ver resumen"></mat-icon>
                                         </div>
                                     </td>
                                     <td rowspan="2" class="pr-2">
                                         <div class="ml-2.5">
                                             <mat-icon class="cursor-pointer" [svgIcon]="'mat_outline:task'"
-                                                (click)="goResumen(item)" matTooltip="Gestionar"></mat-icon>
+                                                (click)="onGetAgenda(item)"  matTooltip="Ver gestión"></mat-icon>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-0" rowspan="2">
@@ -179,8 +206,8 @@
                                             <small class="text-accent-600 text-xs">
                                                 Monto
                                             </small>
-                                            <span class="text-base text-black font-medium">
-                                                $ {{item.monto | number}}
+                                            <span class="text-xs text-black font-medium">
+                                                ${{item.monto | number}}
                                             </span>
                                         </div>
                                     </td>

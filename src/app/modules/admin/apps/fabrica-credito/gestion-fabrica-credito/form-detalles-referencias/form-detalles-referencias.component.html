@@ -138,7 +138,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button
+        <button mat-raised-button  *ngIf="!permisoEditar"
                 color="primary"
                 type="button"
                 (click)="onActualizar()"

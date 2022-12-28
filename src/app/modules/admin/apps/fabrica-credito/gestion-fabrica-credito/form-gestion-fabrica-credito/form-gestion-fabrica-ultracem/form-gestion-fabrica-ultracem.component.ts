@@ -18,6 +18,7 @@ import { FormDialogoChecklistComponent } from '../../form-dialogo-checklist/form
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 import { FormularioCreditoInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dialog-decision.component';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-gestion-fabrica-ultracem',
@@ -58,7 +59,8 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     public redeonlyForm: { id: boolean; numeroSolicitud: boolean; emision: boolean; fechaIngresoFabrica: boolean; descripcionEstado: boolean; descripcionOrigen: boolean; codigoSubEstado: boolean; cupoTotal: boolean; cupoReservado: boolean; cupoDisponible: boolean; score: boolean; descripcionSubestado: boolean; descripcionScore: boolean; nivelEndeudamiento: boolean; comprasSemanales: boolean; antiguedadComprasSemanales: boolean; ventasMensuales: boolean; activos: boolean; declarante: boolean; codigoDepartamentoNegocio: boolean; descripcionDepartamentoNegocio: boolean; codigoCiudadNegocio: boolean; descripcionCiudadNegocio: boolean; codigoBarrioNegocio: boolean; descripcionBarrioNegocio: boolean; direccionNegocio: boolean; telefonoNegocio: boolean; telefono: boolean; antiguedadNegocio: boolean; camaraComercio: boolean; nitNegocio: boolean; tipo: boolean; tipoDocumento: boolean; identificacion: boolean; digitoVerificacion: boolean; nombreCompleto: boolean; nombreNegocio: boolean; fechaMatricula: boolean; primerNombre: boolean; segundoNombre: boolean; primerApellido: boolean; segundoApellido: boolean; celular: boolean; email: boolean; genero: boolean; nacionalidad: boolean; fechaNacimiento: boolean; codigoDepartamentoNacimiento: boolean; codigoCiudadNacimiento: boolean; tipoVivienda: boolean; codigoDepartamento: boolean; descripcionDepartamento: boolean; codigoCiudad: boolean; descripcionCiudad: boolean; codigoBarrio: boolean; descripcionBarrio: boolean; direccionResidencial: boolean; nivelEstudio: boolean; viveEnNegocio: boolean; descripcionTipo: boolean; };
     public animacionVer: boolean = true;
     public dialog_a_mostrar: string = '';
-    unidadNegocio: any;
+    public unidadNegocio: any;
+    public permisoEditar:boolean=false;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -69,6 +71,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         private genericaServices: GenericasService,
         private _dialog: MatDialog,
         public utility: UtilityService,
+        public _permisosService: PermisosService
     ) {
 
         if (!this.numeroSolicitud) {
@@ -91,6 +94,10 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         this.getDeclarante();
         this.getCamaraComercio();
         this.listenFormulario();
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if(this.permisoEditar){
+            this.form.disable();
+        }
     }
     /**
      * @description:
@@ -150,12 +157,6 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
      * @description: Modal de decision
      */
     public onDialogoDecision(): void {
-        // this.fabricaCreditoService.getCantidadDatos('data')
-        //     .subscribe(({ data }) => {
-        //         if (data) {
-
-        //         }
-        // });
         let dialogRef;
         switch (this.dialog_a_mostrar) {
             case 'CHECKLIST':

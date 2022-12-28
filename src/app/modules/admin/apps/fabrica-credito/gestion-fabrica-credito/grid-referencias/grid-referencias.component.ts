@@ -5,6 +5,7 @@ import {ReferenciasService} from "../../../../../../core/services/referencias.se
 import {MatDialog} from "@angular/material/dialog";
 import {FormDialogReferenciasComponent} from "../form-dialog-referencias/form-dialog-referencias.component";
 import {FormDetallesReferenciasComponent} from "../form-detalles-referencias/form-detalles-referencias.component";
+import { PermisosService } from 'app/core/services/permisos.service';
 
 
 @Component({
@@ -17,10 +18,14 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
   public esVer: boolean = false;
   public subscription$: Subscription;
   @Input() datos: any;
+  public permisoEditar:boolean=false;
+
   constructor(
       private route: ActivatedRoute,
       private referenciasService: ReferenciasService,
-      private _dialog: MatDialog
+      private _dialog: MatDialog,
+      public _permisosService: PermisosService
+
   ) {
 
 
@@ -29,6 +34,8 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
   ngOnInit(): void {
       this.cargarReferencias();
       this.escuchaObservable();
+      this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+
   }
   /**
    * @description: Abre el dialogo de nueva referencia
