@@ -414,14 +414,13 @@ export class CreacionPQRSComponent implements OnInit {
                     idPqrspadre: '',
                     fechaSolucion: this.datos.fechaParaSolucion,
                     primerContacto: this.datos.primerContacto,
-                    file: this.crearJsonAdjuntos(),
+                    file: [],
                     hijos: this.crearJsonHijas(),
                     user: this.UsuarioSaggics
                 };
                 let url = '/crear-pqrs';
 
                 this.crearJsonHijas();
-
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Guardando información de PQRS',
@@ -435,6 +434,38 @@ export class CreacionPQRSComponent implements OnInit {
                             if (response) {
                                 if (response.status == 200) {
 
+                                    let urlproc = `id_comentario_pqrs/${response.data.pqrs}`;
+                                    this._pqrService.getListados(urlproc).subscribe((resid:any) =>{
+                                        if (this.evidencia.length > 0) {
+                                            let data = {
+                                                idComentario: resid[0].id.toString(),
+                                                fuente: 'registro-pqrs',
+                                                identificador: 'pqrs' + response.data.pqrs,
+                                                idpqrs: response.data.pqrs,
+                                                file:this.evidencia
+                                            };
+                                            url = '/file/cargar-archivo-pqrs';
+                                            Swal.fire({
+                                                title: 'Cargando',
+                                                html: 'Guardando documento de PQRS',
+                                                timer: 500000,
+                                                didOpen: () => {
+                                                    Swal.showLoading();
+                                                },
+                                            }).then((result) => {});
+                                            this._pqrService.postFile(url, data).subscribe((response: any) => {
+                                                Swal.close();
+                                                if (response) {
+                                                    Swal.fire(
+                                                        '¡Información!',
+                                                        `Se guardó el registro con éxito`,
+                                                        'success'
+                                                    ).then((resultado) => {});
+                                                }
+                                            });
+                                        }
+                                    });
+
                                     let dato = {
                                         id:response.data.pqrs,
                                         tipo_solicitante:this.datos.solicitante,
@@ -442,10 +473,7 @@ export class CreacionPQRSComponent implements OnInit {
                                     };
 
                                     if (dato.tipo_solicitante!=undefined && dato.segmento_actual!=undefined) {
-                                        this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => {
-                                           
-                                        })
-                                    }else{
+                                        this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => {})
                                     }
 
                                     let datos = {
@@ -453,9 +481,7 @@ export class CreacionPQRSComponent implements OnInit {
                                         user:""
                                     }
                                     this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response:any)=>{
-                                        if (response) {
-                                            
-                                        }
+                                        if (response) {}
                                     })
                                     Swal.fire({
                                         title: 'Información',
@@ -520,6 +546,7 @@ export class CreacionPQRSComponent implements OnInit {
                     extension: nombre[1].toLowerCase(),
                     fuente: 'registro-pqrs',
                     identificador: 'pqrs' + ind,
+                    idpqrs: ind,
                     base64: element.file,
                     descripcion: element.descripcion,
                 };
@@ -768,7 +795,7 @@ export class CreacionPQRSComponent implements OnInit {
                         : this.datos.descripcion,
                 idPqrspadre: '',
                 fechaSolucion: element.fechaParaSolucion,
-                file: this.crearJsonAdjuntos(),
+                file: [],
                 primerContacto: false,
                 user: this.UsuarioSaggics,
             });
