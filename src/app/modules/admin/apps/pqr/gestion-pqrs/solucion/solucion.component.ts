@@ -201,7 +201,6 @@ export class SolucionComponent implements OnInit {
         }else{
             this.envio='N'
         }
-        console.log(this.envio)
         this.seguimiento.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento_area.idTipoComentario = parseInt(this.idTipoComentario);
         this.seguimiento.idSolucion = this.solucionCausal ? this.solucionCausal: 0;
