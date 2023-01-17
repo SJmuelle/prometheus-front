@@ -64,7 +64,7 @@ import { GridHistoricoClienteComponent } from './grid-historico-cliente/grid-his
 import { RecalcularOfertaLibranzaComponent } from './recalcular-oferta-libranza/recalcular-oferta-libranza.component';
 import { RecalcularOfertaConsumoPlexaComponent } from './recalcular-oferta-consumo-plexa/recalcular-oferta-consumo-plexa.component';
 import { ModalRecalcularComponent } from './modal-recalcular/modal-recalcular.component';
-
+import { FormDialogAnalisisFinancieroComponent } from './form-dialog-analisis-financiero/form-dialog-analisis-financiero.component';
 
 @NgModule({
     declarations: [
@@ -99,7 +99,8 @@ import { ModalRecalcularComponent } from './modal-recalcular/modal-recalcular.co
         GridHistoricoClienteComponent,
         RecalcularOfertaLibranzaComponent,
         RecalcularOfertaConsumoPlexaComponent,
-        ModalRecalcularComponent
+        ModalRecalcularComponent,
+        FormDialogAnalisisFinancieroComponent
     ],
     imports: [
         CommonModule,
@@ -133,8 +134,9 @@ import { ModalRecalcularComponent } from './modal-recalcular/modal-recalcular.co
         MatAutocompleteModule,
         QuillModule,
         MatMenuModule,
-        MatSliderModule
-        // FabricaOpcionesModule
+        MatSliderModule,
+        // FabricaOpcionesModule,
+        
     ],
 
     exports: [

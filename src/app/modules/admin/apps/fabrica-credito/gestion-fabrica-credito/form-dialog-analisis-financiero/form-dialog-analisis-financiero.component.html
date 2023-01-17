@@ -1,0 +1,330 @@
+<div class="h-full">
+    <h2 mat-dialog-title>Análisis financiero</h2>
+    <div class="overflow-y-auto mat-typographyn">
+        <form style="height: 474px;" [formGroup]="analisisForm">
+            <!-- <span class="bg-gray-200 p-0 rounded-1 mb-1.5 text-dark w-full flex justify-center">Datos de
+                operación</span> -->
+            <div class="flex justify-between gap-3">
+                <mat-form-field appearance="fill"
+                    class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full h-4 fuse-mat-dense">
+                    <div class="text-secondary font-semibold" matPrefix>
+                        <p>
+                            Venta total mensual
+                        </p>
+                    </div>
+                    $ <input formControlName="ventasMensuales" (keyup)="analisisForm.controls['ventasMensuales']"
+                        matInput type="number"
+                        matTooltip="Venta total del negocio, incluyendo cemento y otros productos." autocomplete="off">
+                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill"
+                    class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense">
+                    <div class="text-secondary font-semibold" matPrefix>
+                        <p>
+                            (-) Costo de transacción
+                        </p>
+                    </div>
+                    $ <input formControlName="costoOperacionBalance" matInput type="number" matTooltip="Se toma por default un costo del 75%, de acuerdo al listado estándar de márgenes de
+                    contribución para actividad ferretería." [readonly]="true" autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill"
+                    class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense">
+                    <div class="text-secondary font-semibold" matPrefix>
+                        <div>
+                            (=) Utilidad bruta
+                        </div>
+                    </div>
+                    $ <input formControlName="utilidadBrutaBalance" matInput type="number" [required]="true"
+                        matTooltip="Venta total mensual - costo de operación" [readonly]="true" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <span
+                class="bg-accent-200 p-0 rounded-1 mb-1.5 mt-2 text-dark w-full flex justify-center font-semibold">Datos
+                de operación</span>
+            <div class="flex flex-col gap-0.5">
+                <div class="flex justify-between gap-2">
+                    <mat-form-field appearance="fill"
+                        class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                        <div class="w-40 text-secondary font-semibold" matPrefix>
+                            <p>
+                                Gastos de personal
+                            </p>
+                        </div>
+                        $ <input formControlName="gastoPersonalBalance" matInput type="number" required
+                            autocomplete="off">
+                        <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill"
+                        class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                        <div class="w-40 text-secondary font-semibold" matPrefix>
+                            <p>
+                                Servicios públicos
+                            </p>
+                        </div>
+                        $ <input formControlName="costoServiciosBalance" matInput type="number" required
+                            autocomplete="off">
+                        <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill"
+                        class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                        <div class="w-40 text-secondary font-semibold" matPrefix>
+                            <p>
+                                Arriendo del local
+                            </p>
+                        </div>
+                        $ <input formControlName="costoArriendoBalance" matInput type="number" required
+                            autocomplete="off">
+                        <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex justify-between gap-2">
+                    <mat-form-field appearance="fill"
+                        class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                        <div class="w-40 text-secondary font-semibold" matPrefix>
+                            <div>
+                                Otros gastos
+                            </div>
+                        </div>
+                        $ <input formControlName="otrosGastosOperativosBalance" matInput type="number" required
+                            autocomplete="off">
+                        <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill"
+                        class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                        <div class="w-40 text-secondary font-semibold" matPrefix>
+                            <div>
+                                (-) Total de gastos
+                            </div>
+                        </div>
+                        $ <input formControlName="totalGastosBalance" matInput type="number"
+                            matTooltip="Sumatoria de gastos de personal, servicios públicos del negocio, arriendo del local y otros gastos operativos."
+                            required [readonly]="true" autocomplete="off">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill"
+                        class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                        <div class="w-40 text-secondary font-semibold" matPrefix>
+                            <p>
+                                (=) Utilidad operativa
+                            </p>
+                        </div>
+                        $ <input formControlName="utilidadOperativaBalance" matInput type="number" required
+                            [readonly]="true" autocomplete="off">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="flex justify-between gap-3">
+
+                <div class="w-full">
+                    <span
+                        class="bg-accent-200 p-0 rounded-1 mb-2 mt-2 text-dark w-full flex justify-center font-semibold">Activo
+                        corriente</span>
+                    <div>
+                        <div class="flex justify-between gap-3">
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <div>
+                                        Inventario
+                                    </div>
+                                </div>
+                                $ <input formControlName="inventarioActualBalance" matInput type="number" required
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <div>
+                                        Ahorros
+                                    </div>
+                                </div>
+                                $ <input formControlName="ahorroMensualBalance" matInput type="number" required
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <p>
+                                        Efectivo
+                                    </p>
+                                </div>
+                                $ <input formControlName="dineroEfectivoBalance" matInput type="number" required
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <p>
+                                        Por cobrar
+                                    </p>
+                                </div>
+                                $ <input formControlName="dineroPorCobrarBalance" matInput type="number" required
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <p>
+                                        Corriente
+                                    </p>
+                                </div>
+                                $ <input formControlName="totalActivoCorrienteBalance" matInput type="number" required
+                                    [readonly]="true" autocomplete="off">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <p>
+                                        Total activos
+                                    </p>
+                                </div>
+                                $ <input formControlName="totalActivosBalance" matInput type="number" required
+                                    matTooltip="Campo digitado por el cliente a través del formulario web."
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="fill"
+                            class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                            <div class="w-20 text-secondary font-semibold" matPrefix>
+                                <p>
+                                    Activo fijo
+                                </p>
+                            </div>
+                            $ <input formControlName="totalActivoFijoBalance" matInput type="number" required
+                                [readonly]="true" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <span
+                        class="bg-accent-200 p-0 rounded-1 mb-2 mt-2 text-dark w-full flex justify-center font-semibold">Pasivo
+                        corriente</span>
+                    <div>
+                        <div class="flex justify-between gap-3">
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <div>
+                                        Proveedores
+                                    </div>
+                                </div>
+                                $ <input formControlName="dineroProveedoresBalance" matInput type="number" required
+                                    matTooltip="Otros terceros hace referencia a personas naturales o entidades que no reporten en centrales."
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <div>
+                                        Crédito
+                                    </div>
+                                </div>
+                                $ <input formControlName="cuotasCreditosBalance" matInput type="number" required
+                                    matTooltip=" El valor total de dos meses de cuotas registradas en centrales."
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <p>
+                                        Corto plazo
+                                    </p>
+                                </div>
+                                $ <input formControlName="pasivoCortoBalance" matInput type="number" required
+                                    [readonly]="true" autocomplete="off">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill"
+                                class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                                <div class="w-20 text-secondary font-semibold" matPrefix>
+                                    <p>
+                                        Largo plazo
+                                    </p>
+                                </div>
+                                $ <input formControlName="pasivoLargoBalance" matInput type="number" required
+                                    autocomplete="off">
+                                <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <mat-form-field appearance="fill"
+                            class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                            <div class="w-20 text-secondary font-semibold" matPrefix>
+                                <p>
+                                    Total pasivo
+                                </p>
+                            </div>
+                            $ <input formControlName="totalPasivoBalance" matInput type="number" required
+                                [readonly]="true" autocomplete="off">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill"
+                            class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense mb-1">
+                            <div class="w-20 text-secondary font-semibold" matPrefix>
+                                <p>
+                                    Patrimonio
+                                </p>
+                            </div>
+                            $ <input formControlName="totalPatrimonioBalance" matInput type="number" required
+                                [readonly]="true" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <span
+                class="bg-accent-200 p-0 rounded-1 mb-1.5 text-dark w-full flex justify-center font-semibold">Indicadores</span>
+            <div class="flex justify-between gap-3">
+                <mat-form-field appearance="fill"
+                    class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense">
+                    <div class="text-secondary font-semibold" matPrefix>
+                        <p>
+                            Razón corriente
+                        </p>
+                    </div>
+                    <input formControlName="razonCorrienteBalance" matInput type="number" [readonly]="true"
+                        autocomplete="off">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill"
+                    class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense">
+                    <div class="text-secondary font-semibold" matPrefix>
+                        <p>
+                            Endeudamiento
+                        </p>
+                    </div>
+                    <input formControlName="nivelEndeudamientoBalance" matInput type="number" [readonly]="true"
+                        autocomplete="off">%
+                </mat-form-field>
+
+                <mat-form-field appearance="fill"
+                    class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense">
+                    <div class="text-secondary font-semibold" matPrefix>
+                        <div>
+                            Capital de trabajo
+                        </div>
+                    </div>
+                    $ <input formControlName="capitalTrabajoBalance" matInput type="number" [required]="true"
+                        autocomplete="off">
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div class="mt-4">
+        <button mat-button class="color_fintra text-white" (click)="sendForm()">
+            Guardar análisis
+        </button>
+        <button mat-button mat-dialog-close>Cerrar</button>
+    </div>
+</div>

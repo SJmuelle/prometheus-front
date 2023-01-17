@@ -376,4 +376,14 @@ export class AppSettingsService {
 
         }
     };
+
+    /**
+     * @description: End-Point
+     */
+    public analisisFinanciero = {
+        url: {
+            base: EndPoints.uri('/generic/qry/info-analisis-financiero'),
+            guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
+             }
+        };
 }
