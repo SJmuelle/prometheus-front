@@ -22,6 +22,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public referencia: string = this.route.snapshot.paramMap.get('referencia');
   public tipoReferenciacion: string = this.route.snapshot.paramMap.get('tipoReferenciacion');
+  public tipoPersona: string = this.route.snapshot.paramMap.get('tipoPersona');
   public CodUnidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public unidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public fabrica_datos: any = {};
@@ -62,7 +63,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       case 'L':
         this.titulo = "Laboral"
         break;
-        case 'F':
+      case 'F':
         this.titulo = "Familiar"
         break;
       default:
@@ -191,14 +192,16 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
+        if (data) {
+          this.tipoDocumento = data.tipoDocumento;
+          const datosDocumentos: any = {
+            numeroSolicitud: datosSolicitud.numeroSolicitud,
+            tipoDocumento: this.tipoDocumento
+          };
+          this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
+          this.fabrica_datos = data;
+        }this.tipoDocumento = data.tipoDocumento;
 
-        this.tipoDocumento = data.tipoDocumento;
-        const datosDocumentos: any = {
-          numeroSolicitud: datosSolicitud.numeroSolicitud,
-          tipoDocumento: this.tipoDocumento
-        };
-        this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-        this.fabrica_datos = data;
       });
   }
 

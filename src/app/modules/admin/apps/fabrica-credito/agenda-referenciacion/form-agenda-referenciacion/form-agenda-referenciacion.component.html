@@ -8,7 +8,7 @@
             <div class="flex flex-col items-start p-8 border-b">
 
                 <!-- Back to courses -->
-                <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="'../../'">
+                <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="'../../../..'">
                     <span class="inline-flex items-center">
                         <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:arrow-sm-left'">
                         </mat-icon>
@@ -34,7 +34,7 @@
                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_outline:calendar'">
                     </mat-icon>
                     <div class="py-0.5 px-1  text-sm font-semibold ml-1.5 ">
-                        Fecha de la solicitud {{fabrica_datos.emision}}
+                        Fecha de la solicitud {{fabrica_datos.emision}}-{{fabrica_datos.tipoDocumento}}
                     </div>
                 </div>
 
@@ -112,7 +112,7 @@
                 <ng-container [ngSwitch]="unidadNegocio">
                     <ng-container  *ngSwitchCase="'32'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
-                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
+                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'"  [tipoDocumento]="tipoDocumento" >
                             </ULTRACEM-NATURAL-TITULAR>
                             <ULTRACEM-NATURAL-COMERCIAL [currentStep]="currentStep" *ngSwitchCase="'C'">
                             </ULTRACEM-NATURAL-COMERCIAL>
