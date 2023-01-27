@@ -238,6 +238,17 @@
                                                     <b>{{ oferta.tasa | number }}%</b>
                                                 </div>
                                             </div>
+                                            <div class="flex">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'">
+                                                </mat-icon>
+                                                <div class="ml-2 leading-5">
+                                                    Cartera a pagar real:
+                                                    <b>${{
+                                                        oferta.carteraAPagarSeleccionadas | number
+                                                        }}</b>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex items-center justify-content-center">
@@ -258,7 +269,7 @@
                                                     [svgIcon]="'heroicons_solid:check'">
                                                 </mat-icon>
                                                 <div class="ml-2 leading-5">
-                                                    Cartera a pagar:
+                                                    Cartera a pagar saneamiento:
                                                     <b>${{
                                                         oferta.carteraPagar | number
                                                         }}</b>
