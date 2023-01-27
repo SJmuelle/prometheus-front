@@ -76,6 +76,8 @@ export class AppSettingsService {
             checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito'),
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
+            agendaReferenciacionPregunta: EndPoints.uri('/credito/fabrica/consulta-preguntas-referenciacion'),
+            agendaReferenciacionGuardarPregunta: EndPoints.uri('/credito/fabrica/guardado-preguntas-referenciacion'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
             historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
