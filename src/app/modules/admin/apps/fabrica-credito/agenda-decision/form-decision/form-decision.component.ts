@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 })
 export class FormDecisionComponent implements OnInit, OnDestroy {
   public unSubscribe$: Subject<any> = new Subject<any>();
-  DecisionForm: FormGroup;//formulario para hacer las validaciones requeridas
+  form: FormGroup;//formulario para hacer las validaciones requeridas
   numPattern: any = /(0|[1-9][0-9]*)$/; // expresion regular para validar que solo se digitan numeros.
   porcenPattern: any = /^((100(\.0{1,2})?)|(\d{1,2}(\.\d{1,2})?))$/; // expresion regular para escribir valores porcentuales.
   visible: boolean = false; // esconder o mostrar el input causal
@@ -26,12 +26,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   listadoDeciones: any = [];// listado de decisiones
   listadoCausales: any = [];// listado de causales
 
-  /**
-   * @description: control del formulario creado.
-   */
-  get frm() {
-    return this.DecisionForm.controls;
-  }
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public fabricaDatos: any,
@@ -40,7 +35,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     private dialog: MatDialogRef<FormDecisionComponent>,
     public utility: UtilityService,
     public _decisionesService: DecisionesService) {
-    this.DecisionForm = this.fb.group({
+    this.form = this.fb.group({
       decision: ['', [Validators.required]],
       causal: [''],
       cupo: [''],
@@ -50,7 +45,8 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.consultaDecisiones();
-    this.DecisionForm.controls['cupo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.cupoTotal)));
+    this.form.controls['cupo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.cupoTotal)));
+
   }
 
 
@@ -59,6 +55,17 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       console.log(response);
       if (response) {
         this.listadoDeciones = response.data;
+        debugger
+        if (this.fabricaDatos.agenda != 'DE') {
+
+
+          this.form.controls['decision'].setValue('D')
+          this.form.value.decision = 'D'
+          // this.form.controls['decision'].disable();
+          this.consultaCauDesestimiento();
+          this.form.get('causal').setValidators([Validators.required, Validators.minLength(1)])
+          this.form.get('causal').updateValueAndValidity();
+        }
       }
     })
   }
@@ -71,8 +78,16 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       }
     })
   }
+  private consultaCauDesestimiento() {
+    this._decisionesService.getCauDesestimiento(this.fabricaDatos.numeroSolicitud).subscribe((response: any) => {
+      console.log(response);
+      if (response) {
+        this.listadoCausales = response.data;
+      }
+    })
+  }
   private consultaCausalesAprobacion() {
-    this._decisionesService.getCausalesAprobacion(this.fabricaDatos.numeroSolicitud, this.DecisionForm.value.decision).subscribe((response: any) => {
+    this._decisionesService.getCausalesAprobacion(this.fabricaDatos.numeroSolicitud, this.form.value.decision).subscribe((response: any) => {
       console.log(response);
       if (response) {
         this.listadoCausales = response.data;
@@ -81,16 +96,32 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   }
 
   public getlistadoCausales() {
-    if (this.DecisionForm.value.decision == 'R') {
-      this.consultaCausalesRechazo();
-    } else {
-      this.consultaCausalesAprobacion();
+    switch (this.form.value.decision) {
+      case 'R':
+        this.consultaCausalesRechazo();
+        this.form.get('causal').setValidators([Validators.required])
+
+        break;
+      case 'D':
+        this.consultaCauDesestimiento();
+        this.form.get('causal').setValidators([Validators.required])
+        break;
+      default:
+        this.consultaCausalesAprobacion();
+        this.form.get('causal').setValidators(null)
+
+        break;
     }
+
   }
 
 
   public guardar() {
-    if (this.DecisionForm.value.decision == 'R') {
+    debugger
+    if(!this.form.valid){
+      return
+    }
+    if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D')) {
       this.postDecicion();
     } else {
       if (this.fabricaDatos.unidadNegocio == 22) {
@@ -106,7 +137,6 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             }
             this._decisionesService.comprobacionCampos(datoComprobacion)
               .subscribe((res2) => {
-                debugger;
                 this.postDecicion()
               })
           })
@@ -118,13 +148,13 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
   private postDecicion() {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-    let datos={
-      numeroSolicitud:this.fabricaDatos.numeroSolicitud,
-      concepto:this.DecisionForm.value.decision,
-      cupo:Number( this.utility.enviarNumero(String(this.DecisionForm.value.cupo))),
-      comentario:this.DecisionForm.value.comentario,
-      causal:Number(this.DecisionForm.value.causal),
-      unidadNegocio:this.fabricaDatos.unidadNegocio,
+    let datos = {
+      numeroSolicitud: this.fabricaDatos.numeroSolicitud,
+      concepto: this.form.value.decision,
+      cupo: Number(this.utility.enviarNumero(String(this.form.value.cupo))),
+      comentario: this.form.value.comentario,
+      causal: Number(this.form.value.causal),
+      unidadNegocio: this.fabricaDatos.unidadNegocio,
     }
     this._decisionesService.postGuardado(datos).subscribe((response: any) => {
       Swal.close()
@@ -142,28 +172,11 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
           this.dialog.close();
           this.router.navigate(['/credit-factory/agenda-decision']);
         }, 10000);
-      } 
+      }
     })
   }
 
 
-  /**
-   * @description: Captura el mensaje de la respuesta
-   */
-  private mostrarAlerta(respuesta: any): void {
-    Swal.fire({
-      icon: respuesta.icon,
-      title: respuesta.title,
-      text: respuesta.text,
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.dialog.close();
-      }
-    });
-    setTimeout(() => {
-      this.dialog.close();
-    }, 1000);
-  }
 
   ngOnDestroy(): void {
     this.unSubscribe$.unsubscribe();

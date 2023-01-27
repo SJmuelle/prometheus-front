@@ -149,17 +149,23 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         this.abrirModal('recalcular')
       }
     });
-
-
   }
+
+    /**
+     * @description: Modal de decision
+     */
+    public abrirDecisionDesistir(): void {
+      this.abrirModal('decision')
+    }
 
   abrirModal(tipo: string) {
     switch (tipo) {
       case "decision":
         const dialogRef = this._dialog.open(FormDecisionComponent, {
-          width: '30%',
+          width: '60%',
           data: this.fabricaDatos,
-          disableClose: false
+          disableClose: false,
+         
         });
         dialogRef.afterClosed().subscribe((res) => {
           if (res == true) {

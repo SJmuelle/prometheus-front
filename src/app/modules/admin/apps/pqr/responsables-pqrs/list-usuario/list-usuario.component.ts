@@ -16,9 +16,8 @@ export class ListUsuarioComponent implements OnInit {
 
   }
   buscarUsuario() {
-  
     if(this.filtrarTabla.length>3){
-      let url = `/cargar-usuarios/${this.filtrarTabla}`;
+      let url = `cargar-usuarios/${this.filtrarTabla}`;
       Swal.fire({ title: 'Cargando', html: 'Buscando información de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
       this._pqrService
         .getListados(url)

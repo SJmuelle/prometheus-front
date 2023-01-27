@@ -172,6 +172,7 @@ export class GestionPQRSComponent implements OnInit {
                         idProcedimiento: this.procedimientoid,
                         identificador:'pqrs',
                         file:this.evidencia,
+                        idpqrs: this.pqrid,
                         user: ""
                     };
                     this._pqrService.postFile(url, data).subscribe((response: any) => {
@@ -590,7 +591,7 @@ export class GestionPQRSComponent implements OnInit {
                             );
                             this.onTabChanged(2);
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            if (this.archivo[0].idComentario==0) {
+                            if (this.archivo.length < 1) {
                                 if (data.respuesta == true) {
                                     this._pqrService.enviaCorreos(
                                         url,
