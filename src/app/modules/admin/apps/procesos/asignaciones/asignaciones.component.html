@@ -1,0 +1,125 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- Drawer content -->
+    <div class="flex flex-col overflow-hidden">
+        <!-- Header -->
+        <mat-progress-bar class="flex-0 h-0.5 " [value]="100 * (currentStep + 1) / (totalsteps+1)">
+        </mat-progress-bar>
+
+        <div class="bg-card pt-4 shadow mb-2">
+            <div class="grid grid-cols-2 justify-between w-full align-items-center px-12 mb-2">
+                <div class="text-right pr-5 border-r-2 align-self-end">
+                    <h2 class="ml-2.5 text-md sm:text-xl font-bold font-sans tracking-tight truncate ">
+                       Asignaciones
+                    </h2>
+                </div>
+                <div class="grid grid-cols-6 ">
+                    
+
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Main -->
+        <div class="flex-auto overflow-y-auto h-screen" cdkScrollable>
+            <!-- Steps -->
+            <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
+                <ng-container>
+                    <mat-tab *ngIf="currentStep==0">
+                        <ng-template matTabContent>
+                            <div
+                                class=" py-4 prose prose-sm max-w-6xl mx-auto sm:mx-2 px-6 sm:px-10 rounded-2xl shadow overflow-hidden bg-card ">
+                                <h2 class="flex flex-col text-md sm:text-xl  tracking-tight truncate font-bold">
+                                    Asignaciones
+                                </h2>
+                                <form>
+                                    <div class=" gap-3 align-items-baseline mb-3">
+
+                                        <div class="flex items-center justify-center w-full">
+                                            <label for="file"
+                                                class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer  hover:bg-gray-100 ">
+                                                <div class="flex flex-col items-center justify-center">
+                                                    <svg aria-hidden="true" class="w-10 mt-3 text-gray-400"
+                                                        fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                                                        </path>
+                                                    </svg>
+                                                    <p class=" text-sm text-gray-500 p-0"><span
+                                                            class="font-semibold">Click para subir</span> o arrastrar y soltar</p>
+                                                    <p class="text-xs text-gray-500 p-0">Archivo Excel (MAX. 10mb)</p>
+                                                </div>
+                                                <input type="file" class="hidden"  (change)="subirArchivo($event)" id="file" accept=".xls,.xlsx" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <fuse-alert [type]="'warning'" *ngIf="!asignacionExcel">
+                                    <span fuseAlertTitle>Aún no ha subido el archivo de asignación </span>
+                                    Suba o arrastra un archivo tipo excel para seguir el proceso
+                                </fuse-alert>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+
+                    <mat-tab *ngIf="currentStep==1">
+                        <ng-template matTabContent>
+                            <div
+                                class="relative prose prose-sm max-w-6xl mx-auto sm:mx-2    rounded-2xl shadow overflow-hidden bg-card  ">
+
+                                <table class="p-0 m-0">
+                                    <thead class="bg-accent-50">
+                                        <tr
+                                            class="text-md font-semibold tracking-wide text-left text-gray-400  border-b ">
+                                            <th class="w-30 px-4 py-3">
+                                                NEGOCIO
+                                            </th>
+                                            <th class="min-w-50 px-4 py-3">
+                                                RESPONSABLE
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let item of listRowsExcel">
+                                            <td class="px-2 text-sm border  text-left">
+                                                {{item.NEGOCIO}}
+                                            </td>
+                                            <td class="px-2 text-sm border  text-left">
+                                                {{item.RESPONSABLE}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </ng-container>
+            </mat-tab-group>
+        </div>
+
+
+        <!-- Progress & Navigation - Mobile -->
+        <div class=" flex items-center p-4 border-t bg-card">
+            <div class="flex items-center justify-center ml-1 lg:ml-2 font-medium leading-5">
+                <span>{{currentStep + 1}}</span>
+                <span class="mx-0.5 text-hint">/</span>
+                <span>{{totalsteps + 1}}</span>
+            </div>
+            <mat-progress-bar class="flex-auto ml-6 rounded-full" [value]="100 * (currentStep + 1) / (totalsteps+1)">
+            </mat-progress-bar>
+            <button class="ml-4" mat-icon-button (click)="goToPreviousStep()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-left'"></mat-icon>
+            </button>
+            <button class="ml-0.5" mat-icon-button (click)="goToNextStep()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-right'"></mat-icon>
+            </button>
+        </div>
+    </div>
+
+
+</div>

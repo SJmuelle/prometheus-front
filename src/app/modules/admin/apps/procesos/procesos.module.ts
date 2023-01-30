@@ -20,11 +20,13 @@ import { SharedModule } from 'app/shared/shared.module';
 import { FuseAlertModule } from '@fuse/components/alert';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AsignacionesComponent } from './asignaciones/asignaciones.component';
 
 
 @NgModule({
   declarations: [
-    MetasIndicadoresComercialesComponent
+    MetasIndicadoresComercialesComponent,
+    AsignacionesComponent
   ],
   imports: [
     CommonModule,
