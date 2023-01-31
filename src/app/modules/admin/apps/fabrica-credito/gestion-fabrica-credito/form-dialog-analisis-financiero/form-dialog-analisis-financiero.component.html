@@ -12,8 +12,8 @@
                             Venta total mensual
                         </p>
                     </div>
-                    $ <input formControlName="ventasMensuales" (keyup)="analisisForm.controls['ventasMensuales']"
-                        matInput type="number"
+                    $ <input formControlName="ventasMensuales" type="text" mask="separator.0" thousandSeparator="."
+                        matInput 
                         matTooltip="Venta total del negocio, incluyendo cemento y otros productos." autocomplete="off">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
@@ -25,7 +25,7 @@
                             (-) Costo de transacción
                         </p>
                     </div>
-                    $ <input formControlName="costoOperacionBalance" matInput type="number" matTooltip="Se toma por default un costo del 75%, de acuerdo al listado estándar de márgenes de
+                    $ <input formControlName="costoOperacionBalance" matInput  type="text" mask="separator.0" thousandSeparator="." matTooltip="Se toma por default un costo del 75%, de acuerdo al listado estándar de márgenes de
                     contribución para actividad ferretería." [readonly]="true" autocomplete="off">
                 </mat-form-field>
 
@@ -36,7 +36,7 @@
                             (=) Utilidad bruta
                         </div>
                     </div>
-                    $ <input formControlName="utilidadBrutaBalance" matInput type="number" [required]="true"
+                    $ <input formControlName="utilidadBrutaBalance" matInput  type="text" mask="separator.0" thousandSeparator="." [required]="true"
                         matTooltip="Venta total mensual - costo de operación" [readonly]="true" autocomplete="off">
                 </mat-form-field>
             </div>
@@ -52,7 +52,7 @@
                                 Gastos de personal
                             </p>
                         </div>
-                        $ <input formControlName="gastoPersonalBalance" matInput type="number" required
+                        $ <input formControlName="gastoPersonalBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                             autocomplete="off">
                         <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
@@ -63,7 +63,7 @@
                                 Servicios públicos
                             </p>
                         </div>
-                        $ <input formControlName="costoServiciosBalance" matInput type="number" required
+                        $ <input formControlName="costoServiciosBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                             autocomplete="off">
                         <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
@@ -74,7 +74,7 @@
                                 Arriendo del local
                             </p>
                         </div>
-                        $ <input formControlName="costoArriendoBalance" matInput type="number" required
+                        $ <input formControlName="costoArriendoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                             autocomplete="off">
                         <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
@@ -87,7 +87,7 @@
                                 Otros gastos
                             </div>
                         </div>
-                        $ <input formControlName="otrosGastosOperativosBalance" matInput type="number" required
+                        $ <input formControlName="otrosGastosOperativosBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                             autocomplete="off">
                         <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
@@ -98,7 +98,7 @@
                                 (-) Total de gastos
                             </div>
                         </div>
-                        $ <input formControlName="totalGastosBalance" matInput type="number"
+                        $ <input formControlName="totalGastosBalance" matInput  type="text" mask="separator.0" thousandSeparator="."
                             matTooltip="Sumatoria de gastos de personal, servicios públicos del negocio, arriendo del local y otros gastos operativos."
                             required [readonly]="true" autocomplete="off">
                     </mat-form-field>
@@ -109,7 +109,7 @@
                                 (=) Utilidad operativa
                             </p>
                         </div>
-                        $ <input formControlName="utilidadOperativaBalance" matInput type="number" required
+                        $ <input formControlName="utilidadOperativaBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                             [readonly]="true" autocomplete="off">
                     </mat-form-field>
                 </div>
@@ -129,7 +129,7 @@
                                         Inventario
                                     </div>
                                 </div>
-                                $ <input formControlName="inventarioActualBalance" matInput type="number" required
+                                $ <input formControlName="inventarioActualBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
@@ -140,7 +140,7 @@
                                         Ahorros
                                     </div>
                                 </div>
-                                $ <input formControlName="ahorroMensualBalance" matInput type="number" required
+                                $ <input formControlName="ahorroMensualBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
@@ -153,7 +153,7 @@
                                         Efectivo
                                     </p>
                                 </div>
-                                $ <input formControlName="dineroEfectivoBalance" matInput type="number" required
+                                $ <input formControlName="dineroEfectivoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
@@ -164,7 +164,7 @@
                                         Por cobrar
                                     </p>
                                 </div>
-                                $ <input formControlName="dineroPorCobrarBalance" matInput type="number" required
+                                $ <input formControlName="dineroPorCobrarBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
@@ -177,7 +177,7 @@
                                         Corriente
                                     </p>
                                 </div>
-                                $ <input formControlName="totalActivoCorrienteBalance" matInput type="number" required
+                                $ <input formControlName="totalActivoCorrienteBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     [readonly]="true" autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="fill"
@@ -187,7 +187,7 @@
                                         Total activos
                                     </p>
                                 </div>
-                                $ <input formControlName="totalActivosBalance" matInput type="number" required
+                                $ <input formControlName="totalActivosBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     matTooltip="Campo digitado por el cliente a través del formulario web."
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -201,7 +201,7 @@
                                     Activo fijo
                                 </p>
                             </div>
-                            $ <input formControlName="totalActivoFijoBalance" matInput type="number" required
+                            $ <input formControlName="totalActivoFijoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                 [readonly]="true" autocomplete="off">
                         </mat-form-field>
                     </div>
@@ -219,7 +219,7 @@
                                         Proveedores
                                     </div>
                                 </div>
-                                $ <input formControlName="dineroProveedoresBalance" matInput type="number" required
+                                $ <input formControlName="dineroProveedoresBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     matTooltip="Otros terceros hace referencia a personas naturales o entidades que no reporten en centrales."
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -231,7 +231,7 @@
                                         Crédito
                                     </div>
                                 </div>
-                                $ <input formControlName="cuotasCreditosBalance" matInput type="number" required
+                                $ <input formControlName="cuotasCreditosBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     matTooltip=" El valor total de dos meses de cuotas registradas en centrales."
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -245,7 +245,7 @@
                                         Corto plazo
                                     </p>
                                 </div>
-                                $ <input formControlName="pasivoCortoBalance" matInput type="number" required
+                                $ <input formControlName="pasivoCortoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     [readonly]="true" autocomplete="off">
                             </mat-form-field>
                             <mat-form-field appearance="fill"
@@ -255,7 +255,7 @@
                                         Largo plazo
                                     </p>
                                 </div>
-                                $ <input formControlName="pasivoLargoBalance" matInput type="number" required
+                                $ <input formControlName="pasivoLargoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                     autocomplete="off">
                                 <mat-icon class="icon-size-5" [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
@@ -267,7 +267,7 @@
                                     Total pasivo
                                 </p>
                             </div>
-                            $ <input formControlName="totalPasivoBalance" matInput type="number" required
+                            $ <input formControlName="totalPasivoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                 [readonly]="true" autocomplete="off">
                         </mat-form-field>
                         <mat-form-field appearance="fill"
@@ -277,7 +277,7 @@
                                     Patrimonio
                                 </p>
                             </div>
-                            $ <input formControlName="totalPatrimonioBalance" matInput type="number" required
+                            $ <input formControlName="totalPatrimonioBalance" matInput  type="text" mask="separator.0" thousandSeparator="." required
                                 [readonly]="true" autocomplete="off">
                         </mat-form-field>
                     </div>
@@ -293,7 +293,7 @@
                             Razón corriente
                         </p>
                     </div>
-                    <input formControlName="razonCorrienteBalance" matInput type="number" [readonly]="true"
+                    <input formControlName="razonCorrienteBalance" matInput  type="text" mask="separator.0" thousandSeparator="." [readonly]="true"
                         autocomplete="off">
                 </mat-form-field>
 
@@ -304,7 +304,7 @@
                             Endeudamiento
                         </p>
                     </div>
-                    <input formControlName="nivelEndeudamientoBalance" matInput type="number" [readonly]="true"
+                    <input formControlName="nivelEndeudamientoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." [readonly]="true"
                         autocomplete="off">%
                 </mat-form-field>
 
@@ -315,7 +315,7 @@
                             Capital de trabajo
                         </div>
                     </div>
-                    $ <input formControlName="capitalTrabajoBalance" matInput type="number" [required]="true"
+                    $ <input formControlName="capitalTrabajoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." [required]="true"
                         autocomplete="off">
                 </mat-form-field>
             </div>
