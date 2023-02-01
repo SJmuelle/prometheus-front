@@ -65,42 +65,48 @@ export class UltracemTitularComponent implements OnInit {
       "tipoReferencia": this.tipoReferenciacion,
       "tipoDocumento": this.tipoDocPersona
     };
+    const datosSolicitudUsuario: any = {
+      "numeroSolicitud": Number(this.numeroSolicitud),
+      "unidadNegocio": Number(this.CodUnidadNegocio),
+      "tipoTercero": this.tipoPersona,
+      "identificacion":this.identificacion,
+      "tipoReferencia": this.tipoReferenciacion,
+      "tipoDocumento": this.tipoDocPersona
+    };
     this.fabricaCreditoService.obtenerPreguntaAgendaReferenciacion(datosSolicitud)
       .subscribe(({ data }) => {
-        Swal.close();
         let info = data.sort((a, b) => Number(a.orden) - Number(b.orden));
-        this.dataNecesaria =
-        {
-          session: [
 
+        this.fabricaCreditoService.obtenerDatoAgendaReferenciacion(datosSolicitudUsuario)
+          .subscribe(({ data }) => {
+            Swal.close();
+            this.dataNecesaria =
             {
-              id: 0,
-              titulo: 'Datos de la llamada'
-            },
-            {
-              id: 1,
-              titulo: 'Información del titular'
-            },
-            {
-              id: 2,
-              titulo: 'Preguntas a la referencia'
-            },
-            {
-              id: 3,
-              titulo: 'Aprobación de la referenciación'
+              session: [
+
+                {
+                  id: 0,
+                  titulo: 'Datos de la llamada'
+                },
+                {
+                  id: 1,
+                  titulo: 'Información del titular'
+                },
+                {
+                  id: 2,
+                  titulo: 'Preguntas a la referencia'
+                },
+                {
+                  id: 3,
+                  titulo: 'Aprobación de la referenciación'
+                }
+
+              ],
+              datosUsuario:data,
+              preguntas: info
             }
 
-          ],
-          datosUsuario:
-          {
-            telefono: 112943,
-            correo: "shirleyjohanna_2012@hotmai.com",
-            nombre: "Shirley Johanna Muelle Camargo",
-
-          },
-          preguntas: info
-        }
-
+          });
       });
   }
 
@@ -203,7 +209,7 @@ export class UltracemTitularComponent implements OnInit {
                 confirmButtonText: 'Cerrar',
               }).then();
               // break;
-              detener=true;
+              detener = true;
               return;
 
             }
