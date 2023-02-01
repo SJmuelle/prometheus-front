@@ -25,10 +25,10 @@
 
         <ng-container *ngIf="!permisoEditar">
             <ng-container *ngIf="fabricaDatos.agenda!='DE'">
-                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoDecision()"
+                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoAnalisis()"
                     [ngClass]="animacionVer==true?'show':'hidden'"
-                    matTooltip="{{dialogMostrar=='SIGUIENTE'?'Siguiente 22':'Check list'}}">
-                    <mat-icon [svgIcon]="dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'">
+                    [matTooltip]="toolText">
+                    <mat-icon [svgIcon]="iconoSvg">
                     </mat-icon>
                 </button>
             </ng-container>

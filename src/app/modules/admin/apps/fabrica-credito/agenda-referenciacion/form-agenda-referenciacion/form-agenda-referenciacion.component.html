@@ -114,10 +114,10 @@
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'"  [tipoDocumento]="tipoDocumento" >
                             </ULTRACEM-NATURAL-TITULAR>
-                            <ULTRACEM-NATURAL-COMERCIAL [currentStep]="currentStep" *ngSwitchCase="'C'">
-                            </ULTRACEM-NATURAL-COMERCIAL>
-                            <ULTRACEM-NATURAL-PERSONAL [currentStep]="currentStep" *ngSwitchCase="'P'">
-                            </ULTRACEM-NATURAL-PERSONAL>
+                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'C'"  [tipoDocumento]="tipoDocumento" >
+                            </ULTRACEM-NATURAL-TITULAR>
+                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'P'"  [tipoDocumento]="tipoDocumento" >
+                            </ULTRACEM-NATURAL-TITULAR>
                         </ng-container>
                     </ng-container>
                     <ng-container *ngSwitchCase="'22'">
