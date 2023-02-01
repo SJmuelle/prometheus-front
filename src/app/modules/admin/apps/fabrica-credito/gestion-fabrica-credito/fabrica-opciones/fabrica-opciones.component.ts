@@ -172,6 +172,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       if (res == true) {
         this.abrirModal('recalcular')
       }
+    }else{
+      if (res == true) {
+        this.abrirDecisionDesistir();
+      }
     }
     });
   }
