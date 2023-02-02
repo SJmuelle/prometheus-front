@@ -22,7 +22,7 @@
                     class="fuse-mat-no-subscript fuse-mat-emphasized-affix w-full fuse-mat-dense">
                     <div class="text-secondary font-semibold" matPrefix>
                         <p>
-                            (-) Costo de transacción
+                            (-) Costo de operación
                         </p>
                     </div>
                     $ <input formControlName="costoOperacionBalance" matInput  type="text" mask="separator.0" thousandSeparator="." matTooltip="Se toma por default un costo del 75%, de acuerdo al listado estándar de márgenes de
@@ -304,7 +304,7 @@
                             Endeudamiento
                         </p>
                     </div>
-                    <input formControlName="nivelEndeudamientoBalance" matInput  type="text" mask="separator.0" thousandSeparator="." [readonly]="true"
+                    <input formControlName="nivelEndeudamientoBalance" matInput  type="text" [readonly]="true"
                         autocomplete="off">%
                 </mat-form-field>
 

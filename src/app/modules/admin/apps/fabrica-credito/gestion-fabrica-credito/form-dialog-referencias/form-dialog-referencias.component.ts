@@ -151,7 +151,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de barrios
      */
     private getParentesco(): void {
-            this.parentescos$ = this.genericaServices.getParetensco();
+        this.parentescos$ = this.genericaServices.getParetensco();
     }
 
 
