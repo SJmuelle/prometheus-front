@@ -12,7 +12,7 @@
                 <div>
                     <form [formGroup]="form" >
                         <mat-form-field appearance="fill" class="w-100"  formGroupName="solicitud">
-                            <mat-label>Codigo de solicitud</mat-label>
+                            <mat-label>Código de solicitud</mat-label>
                             <input matInput autocomplete="off" formControlName="buscar">
                         </mat-form-field>
                         <mat-form-field appearance="fill" class="w-100"  formGroupName="identificacion">
@@ -73,7 +73,8 @@
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
                     </form>
-                    <button mat-raised-button class="w-100" (click)="armarForm()">Limpiar filtros</button>
+                    <button mat-raised-button class="w-100 bg-blue-700 text-white" (click)="consultaFiltro()">Consulta filtro</button>
+                    <button mat-raised-button class="w-100 mt-3" (click)="armarForm()">Limpiar filtros</button>
                     <!-- <button mat-raised-button color="primary" class="w-100">Filtrar</button> -->
                 </div>
             </div>

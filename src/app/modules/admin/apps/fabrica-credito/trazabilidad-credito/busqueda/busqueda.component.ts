@@ -30,6 +30,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
     public pagaduria$: Observable<any>;
     public estados$: Observable<any>;
     public subestados$: Observable<any>;
+    datos: { entidad: string; details: any; };
 
     constructor(
         private _fabricaCreditoService: FabricaCreditoService,
@@ -44,7 +45,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
         this.getPagadurias();
         this.getEstado();
         this.consulta('');
-        localStorage.setItem("trazabilidad","no")
+        localStorage.setItem("trazabilidad", "no")
         // Subscribe to media query change
         this._fuseMediaWatcherService.onMediaChange$
             .subscribe(({ matchingAliases }) => {
@@ -63,20 +64,24 @@ export class BusquedaComponent implements OnInit, OnDestroy {
         this.formPeriodo.valueChanges.subscribe((e: any) => {
             if (this.formPeriodo.valid) {
                 if ((e.fechaInicial != null) && (e.fechaInicial != '') && (e.fechaFinal != '') && (e.fechaFinal != null)) {
-                    let data = [];
-                    data.push({
-                        buscar:
-                            // e.fechaFinal._i.date+'-'+e.fechaFinal._i.month+'-'+e.fechaFinal._i.year,
-                            `${e.fechaFinal._i.date > 9 ? '0' : ''}${e.fechaFinal._i.date}${e.fechaFinal._i.month > 9 ? '0' : ''}${e.fechaFinal._i.month}${e.fechaFinal._i.year}`,
-                        tipo: "FECHA_FINAL"
-                    });
-                    data.push({
-                        buscar:
-                            `${e.fechaInicial._i.date > 9 ? '0' : ''}${e.fechaInicial._i.date}${e.fechaInicial._i.month > 9 ? '0' : ''}${e.fechaInicial._i.month}${e.fechaInicial._i.year}`,
-                        tipo: "FECHA_INICIAL"
-                    });
+                    let fechaFinal = moment(e.fechaFinal._d).format("YYYY-MM-DD");
+                    let fechaInicial = moment(e.fechaInicial._d).format("YYYY-MM-DD");
+  
+                    this.form.controls.fechaInicial=new FormGroup({
+                        tipo: new FormControl('FECHA_INICIAL'),
+                        buscar: new FormControl(fechaInicial)
+                    })
+                    this.form.controls.fechaIFinal=new FormGroup({
+                        tipo: new FormControl('FECHA_FINAL'),
+                        buscar: new FormControl(fechaFinal)
+                    })
+                    // this.form.value
+                    setTimeout(() => {
+                        let data=this.form.value
+                        this.armarConsulta( Object.values(data))
+                    }, 1000);
+                
 
-                    this.armarConsulta(data)
                 }
 
             }
@@ -84,7 +89,6 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
         this.form.valueChanges.subscribe((e: any) => {
             let data = Object.values(e)
-            console.log(data)
             this.armarConsulta(data)
         })
     }
@@ -116,7 +120,11 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
     }
 
-    consultaFiltro(dato) {
+    consultaFiltro() {
+        let dato = this.datos;
+        if(dato==null){
+            return
+        }
         Swal.fire({ title: 'Cargando', html: 'Buscando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._fabricaCreditoService
             .trazabilidadBusquedaFiltro(dato)
@@ -147,7 +155,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
          * @description: abre el resumen
     */
     public goResumen(data: any): void {
-        localStorage.setItem("trazabilidad","si")
+        localStorage.setItem("trazabilidad", "si")
         //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
         const { numeroSolicitud, identificacion } = data;
         this.router.navigate(['/credit-factory/trazabilidad/detalle-trazabilidad/', numeroSolicitud, identificacion]);
@@ -213,7 +221,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
      */
     public onGetAgenda(data: any): void {
         //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-        localStorage.setItem("trazabilidad","si")
+        localStorage.setItem("trazabilidad", "si")
         const { numeroSolicitud, identificacion } = data;
         this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
     }
@@ -244,8 +252,14 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                 entidad: 'TRAZABILIDAD',
                 details: filtered
             }
-            this.consultaFiltro(dataEnvio)
+            this.datos = dataEnvio
+        }else{
+            this.datos = null
         }
+    }
+
+    private armarConsultaFecha(data) {
+        this.datos.details = data
     }
 
     /**
