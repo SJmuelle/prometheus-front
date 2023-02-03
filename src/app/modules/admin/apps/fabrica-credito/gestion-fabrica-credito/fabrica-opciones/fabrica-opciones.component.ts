@@ -40,8 +40,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     public _permisosService: PermisosService
   ) {
-    router.events.subscribe((url: any) => console.log(url));
-    this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
+    // router.events.subscribe((url: any) => console.log(url));
+    this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
   }
 
 
@@ -100,6 +100,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
  * @description: Valida que el campo solo sea numeros
  */
   public irAtras() {
+    if(this.permisoEditar){
+      this.redireccionar('trazabilidad');
+      return
+    }
     switch (this.fabricaDatos.agenda) {
       case 'CO':
         this.redireccionar('agenda-completion');

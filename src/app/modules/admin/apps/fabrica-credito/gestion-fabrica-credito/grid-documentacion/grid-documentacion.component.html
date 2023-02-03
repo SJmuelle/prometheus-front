@@ -34,7 +34,7 @@
                     <th class="px-4 py-3">Usuario</th>
                     <th class="px-4 py-3">Requerido</th>
                     <th class="px-4 py-3">Cargado</th>
-                    <th class="px-4 py-3">Acción</th>
+                    <th class="px-4 py-3"  *ngIf="!permisoEditar">Acción</th>
                     <th class="px-4 py-4 text-center">Fecha de cargue</th>
                     <th class="px-4 py-3">Descargar</th>
                     <th class="px-4 py-3">Histórico</th>
@@ -56,7 +56,7 @@
                         <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                         <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
                         <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}</td>
-                        <td class="px-2 text-sm border text-center">
+                        <td class="px-2 text-sm border text-center"  *ngIf="!permisoEditar">
                             <ng-container *ngIf="item.archivoCargado === 'N'">
                                 <input type="file" #fileInput (change)="subirArchivo($event, item)" class="d-none"
                                     [accept]="'image/jpeg,image/png,application/pdf'">
