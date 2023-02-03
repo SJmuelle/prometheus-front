@@ -34,6 +34,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         private matDialog: MatDialog
     ) {
         this.crearFormulario();
+        debugger
         const numeroSolicitud: string = data.numeroSolicitud;
         this.form.controls.numeroSolicitud.setValue(numeroSolicitud);
     }
@@ -127,7 +128,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de departamento
      */
     private getTiposReferencia(): void {
-        this.tiposReferencia$ = this.genericaServices.getTiposReferencias();
+        this.tiposReferencia$ = this.genericaServices.getTiposReferenciasXsolicitud(this.data.numeroSolicitud);
     }
     /**
      * @description: Obtiene el listado de departamento

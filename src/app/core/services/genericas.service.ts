@@ -205,6 +205,16 @@ export class GenericasService {
     }
 
     /**
+     * @description: Obtiene listado de tipos de referencia
+     */
+    public getTiposReferenciasXsolicitud(numeroSolicitud): Observable<any> {
+        // const params: string = 'TIPO-REFERENCIA';
+        return this._http.get(`${this._appSettings.referenciaCliente.url.tipoReferencia}/${numeroSolicitud}`);
+
+        // return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
    * @description: Obtiene listado de tipos de referencia
    */
     public getTiposCompra(): Observable<any> {
@@ -233,7 +243,7 @@ export class GenericasService {
     * @description: Obtiene listado de tipos de Paretensco
     */
     public getSelectDinamico(data): Observable<any> {
-      
+
         return this._http.get(`${this._appSettings.genericas.url.base}/${data}`);
     }
 

@@ -495,11 +495,7 @@
                   <ng-template matTabLabel>Referencias</ng-template>
                   <app-grid-referencias></app-grid-referencias>
               </mat-tab>
-              <ng-container *ngIf="agenda_fabrica !== 'CO'">
-                  <mat-tab>
-                      <ng-template matTabLabel>Análisis financiero</ng-template>
-                  </mat-tab>
-              </ng-container>
+      
               <ng-container *ngIf="(agenda_fabrica !== 'CM')">
                   <mat-tab>
                       <ng-template matTabLabel>Políticas</ng-template>

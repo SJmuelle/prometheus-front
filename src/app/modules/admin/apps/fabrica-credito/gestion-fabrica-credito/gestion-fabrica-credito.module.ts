@@ -68,6 +68,7 @@ import { FormDialogAnalisisFinancieroComponent } from './form-dialog-analisis-fi
 import { NgxMaskModule } from 'ngx-mask';
 // import { IConfig, NgxMaskModule } from 'ngx-mask';
 // import { IConfig, NgxMaskModule } from 'ngx-mask';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
@@ -145,6 +146,7 @@ import { NgxMaskModule } from 'ngx-mask';
         // NgxMaskModule.forRoot(maskConfig),
         // NgxMaskModule.forRoot(maskConfigFunction),
         NgxMaskModule.forRoot(),
+        MatProgressBarModule
     ],
 
     exports: [

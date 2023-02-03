@@ -285,7 +285,9 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/informacion-cliente-referenciar'),
             baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
-            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud')
+            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud'),
+            tipoReferencia: EndPoints.uri('/generic/qry/informacion-titular-referenciacion'),
+
         }
     };
     /**
