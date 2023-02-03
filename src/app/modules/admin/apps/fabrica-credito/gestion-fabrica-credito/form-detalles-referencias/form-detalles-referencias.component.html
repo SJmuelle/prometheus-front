@@ -3,10 +3,10 @@
         <span >Referencia personal</span>
     </ng-container>
     <ng-container *ngIf="form.controls['tipo'].value === 'C'">
-        <span >Referencia personal</span>
+        <span >Referencia comercial</span>
     </ng-container>
     <ng-container *ngIf="form.controls['tipo'].value === 'F'">
-        <span >Referencia Familiar</span>
+        <span >Referencia familiar</span>
     </ng-container>
 </h2>
 <mat-dialog-content>
@@ -15,7 +15,7 @@
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                         <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value === 'CO'">
+                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                                 <mat-form-field class="w-full fuse-mat-dense">
                                     <mat-label>Razón social</mat-label>
                                     <input matInput type="text" placeholder="Nombre completo" [formControlName]="'nombreCompleto'">
@@ -49,8 +49,8 @@
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Teléfono / Celular</mat-label>
-                                <input matInput type="text" placeholder="Número celular" [formControlName]="'celular'">
-                                <mat-error *ngIf="soloNumero('celular')">
+                                <input matInput type="text" placeholder="Número celular"  mask="(000) 000 00 00"   [formControlName]="'celular'">
+                                <mat-error *ngIf="soloNumero('celular')" >
                                     Este campo solo acepta números.
                                 </mat-error>
                             </mat-form-field>

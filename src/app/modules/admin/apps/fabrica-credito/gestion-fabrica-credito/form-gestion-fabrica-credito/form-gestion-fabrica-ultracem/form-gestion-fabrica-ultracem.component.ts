@@ -106,6 +106,22 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         this.verComentarios = event;
         this.minimizarComentarios = event;
     }
+
+    cambiaDireccionNegocio(){
+        debugger
+        if( this.form.value.viveEnNegocio=='S'){
+            this.form.controls.codigoDepartamentoNegocio.setValue(this.form.value.codigoDepartamento);
+            this.form.controls.descripcionDepartamentoNegocio.setValue(this.form.value.descripcionDepartamento);
+            this.form.controls.codigoCiudadNegocio.setValue(this.form.value.codigoCiudad);
+            this.form.controls.descripcionCiudadNegocio.setValue(this.form.value.descripcionCiudad);
+            this.form.controls.codigoBarrioNegocio.setValue(Number(this.form.value.codigoBarrio));
+            this.form.controls.descripcionBarrioNegocio.setValue(this.form.value.descripcionBarrio);
+            this.form.controls.direccionNegocio.setValue(this.form.value.direccionResidencial);
+
+        }
+       
+    }
+
     /**
      * @description: Minimiza el componente comentarios
      */
@@ -239,6 +255,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     }
 
     public openModalNegocio(): void {
+        if(this.form.value.viveEnNegocio=='S'){ return}
         const dialogRef = this._dialog.open(DirectionsComponent, {
             width: '60%',
             data: {

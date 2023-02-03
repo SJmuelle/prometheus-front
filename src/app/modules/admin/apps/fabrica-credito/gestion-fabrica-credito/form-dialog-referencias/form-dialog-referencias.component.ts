@@ -136,6 +136,14 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private getDepartamentos(): void {
         this.departamentos$ = this.departamentosCiudadService.getDepartamentos();
     }
+    
+    /**
+     * @description: Departamento de nacimiento
+     */
+    public seleccionDepartamentoNacimiento(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudades(codigo);
+    }
     /**
      * @description: Obtiene el listado de ciudades
      */
@@ -218,7 +226,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoPais: codigoPais,
             codigoDepartamento: codigoDepartamento,
             codigoCiudad: codigoCiudad,
-            codigoBarrio: Number(codigoBarrio),
+            codigoBarrio: Number(0),
             direccion: direccion,
             antiguedad: Number(antiguedad),
         };
@@ -238,7 +246,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoPais: codigoPais,
             codigoDepartamento: codigoDepartamento,
             codigoCiudad: codigoCiudad,
-            codigoBarrio: codigoBarrio,
+            codigoBarrio: 0,
             direccion: direccion,
             antiguedad: Number(antiguedad),
         };
@@ -324,7 +332,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['codigoDepartamento'].setValidators(Validators.required);
                     this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoCiudad'].setValidators(Validators.required);
-                    this.form.controls['codigoBarrio'].setValidators(Validators.required);
                     this.form.controls['antiguedad'].setValidators(Validators.required);
                     break;
 

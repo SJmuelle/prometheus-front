@@ -8,3 +8,13 @@ input[type=number]::-webkit-outer-spin-button {
 -webkit-appearance: none;
 margin: 0;
 }
+
+.bloqueado{
+    color: #b1b1b1;
+    
+    // color: #1111
+}
+
+.bloqueadoLabel{
+    text-decoration: underline;
+}
