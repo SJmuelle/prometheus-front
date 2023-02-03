@@ -114,9 +114,32 @@ export class FabricaCreditoService {
     }
 
     /**
-* @description: Get Datos del titular
-*/
+    * @description: Get Datos del titular
+    */
     public trazabilidadBusquedaFiltro(data: any): Observable<any> {
         return this._http.post(`${this._appSettings.fabricaDatos.url.trazabilidadBusquedaFiltro}`, data);
+    }
+    /**
+     * @description: Get step  Agendabreferenciacuoin
+     */
+    public obtenerPreguntaAgendaReferenciacion(datos): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionPregunta}`, datos);
+    }
+
+    /**
+     * @description: Get step  Agendabreferenciacuoin
+     */
+    public obtenerDatoAgendaReferenciacion(datos): Observable<any> {
+        const { numeroSolicitud, tipoReferencia, identificacion } = datos;
+        return this._http.get(`${this._appSettings.fabricaDatos.url.agendaReferenciacionInformacion}/${numeroSolicitud}/${identificacion}/${tipoReferencia}`);
+
+        // return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionPregunta}`, datos);
+    }
+
+    /**
+ * @description: Get step  Agendabreferenciacuoin
+ */
+    public GuardarPreguntaAgendaReferenciacion(datos): Observable<any> {
+        return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionGuardarPregunta}`, datos);
     }
 }

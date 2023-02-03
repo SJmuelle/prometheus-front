@@ -76,6 +76,9 @@ export class AppSettingsService {
             checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito'),
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
+            agendaReferenciacionPregunta: EndPoints.uri('/credito/fabrica/consulta-preguntas-referenciacion'),
+            agendaReferenciacionInformacion: EndPoints.uri('/generic/qry/informacion-titular-referenciacion'),
+            agendaReferenciacionGuardarPregunta: EndPoints.uri('/credito/fabrica/guardado-preguntas-referenciacion'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
             historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
@@ -256,7 +259,7 @@ export class AppSettingsService {
             metasUpdateMetaColocacion: EndPoints.uri('/generic/metas-update-meta-colocacion'),
             obtenerInformacionUsuarios: EndPoints.uri('/generic/qry/tk/obtener-informacion-usuarios'),
             metasAgregarAsesor: EndPoints.uri('/generic/metas-agregar-asesor'),
-            
+
         }
     };
     /**
@@ -376,6 +379,16 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/obtener-salario-min-vigente'),
 
+        }
+    };
+
+    /**
+     * @description: End-Point
+     */
+    public analisisFinanciero = {
+        url: {
+            base: EndPoints.uri('/generic/qry/info-analisis-financiero'),
+            guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
         }
     };
 }

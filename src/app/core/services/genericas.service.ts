@@ -230,6 +230,14 @@ export class GenericasService {
     }
 
     /**
+    * @description: Obtiene listado de tipos de Paretensco
+    */
+    public getSelectDinamico(data): Observable<any> {
+      
+        return this._http.get(`${this._appSettings.genericas.url.base}/${data}`);
+    }
+
+    /**
 * @description: Obtiene listado de tipos de Paretensco
 */
     public getTipoVia(): Observable<any> {
