@@ -830,7 +830,7 @@
                                 </mat-form-field>
                             </div>
                         </ng-container>
-                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end" *ngIf="!permisoEditar">
                             <button mat-raised-button color="primary" type="button" (click)="onPostDatos()"    [disabled]="form.invalid">
                                 Guardar
                             </button>
