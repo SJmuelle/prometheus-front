@@ -177,8 +177,8 @@ export class ResumenComponent implements OnInit {
                 icono: "heroicons_outline:briefcase",
                 color: "bg-blue-100 text-blue-800",
                 label: "",
-                valor: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.ocupacion.toLowerCase(),
-                valor2: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.actividadEconomica.toLowerCase(),
+                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.actividadEconomica.toLowerCase(),
+                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.ocupacion.toLowerCase(),
                 valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica.toLowerCase()
               },
               {
@@ -432,28 +432,28 @@ export class ResumenComponent implements OnInit {
                 clase: "bg-purple-100",
                 color: "bg-blue-100 text-blue-800",
                 label: "Razón corriente",
-                valor: "$" + data.resumenIndicadores.razonCorriente
+                valor: "$" + this.separatos(data.resumenIndicadores.razonCorrienteUltracem)
               },
               {
                 icono: "heroicons_outline:academic-cap",
                 clase: "bg-purple-100",
                 color: "bg-blue-100 text-blue-800",
                 label: "Capital de Trabajo",
-                valor: "$" + data.resumenIndicadores.capitalTrabajo
+                valor: "$" + this.separatos(data.resumenIndicadores.capitalTrabajoUltracem)
               },
               {
                 icono: "heroicons_outline:academic-cap",
                 clase: "bg-purple-100",
                 color: "bg-blue-100 text-blue-800",
                 label: "Endeudamiento",
-                valor: "$" + data.resumenIndicadores.endeudamiento
+                valor: "$" + this.separatos(data.resumenIndicadores.capitalTrabajoUltracem)
               },
               {
                 icono: "heroicons_outline:academic-cap",
                 clase: "bg-purple-100",
                 color: "bg-blue-100 text-blue-800",
                 label: "Nivel de riesgo",
-                valor: data.resumenIndicadores.nivelRiesgo
+                valor: data.resumenIndicadores.nivelRiesgoUltracem
               }
             ]
           },
@@ -611,7 +611,8 @@ export class ResumenComponent implements OnInit {
   }
 
   separatos(numb) {
-    let str = numb.toString().split(".");
+    let num=Math.trunc(numb)
+    let str = num.toString().split(".");
     str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return str.join(".");
   }
