@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-detalles-referencias',
@@ -23,6 +24,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
     public ciudades$: Observable<any>;
     public subscription$: Subscription;
     public parentescos$: Observable<any>;
+    public permisoEditar:boolean=false;
 
     @Output() cerrarFormulario: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(
@@ -32,7 +34,9 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         private departamentosCiudadService: DepartamentosCiudadesService,
         private _dialogo: MatDialog,
         private route: ActivatedRoute,
-        private _matDialog: MatDialogRef<FormDetallesReferenciasComponent>
+        private _matDialog: MatDialogRef<FormDetallesReferenciasComponent>,
+        public _permisosService: PermisosService
+
     ) { }
 
     ngOnInit(): void {
@@ -43,6 +47,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         this.getEstadosReferencias();
         this.getDepartamentos();
         this.escuchaObservable();
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if(this.permisoEditar){
+            this.form.disable();
+        }
     }
     public onDialogo(): void {
         this._matDialog.close();

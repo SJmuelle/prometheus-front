@@ -83,6 +83,8 @@ export class AppSettingsService {
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
             historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
+            trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
+            trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
         }
     };
     /**
@@ -285,7 +287,9 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/informacion-cliente-referenciar'),
             baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
-            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud')
+            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud'),
+            tipoReferencia: EndPoints.uri('/generic/qry/obtener-tipos-referencia-unidad-negocio'),
+
         }
     };
     /**

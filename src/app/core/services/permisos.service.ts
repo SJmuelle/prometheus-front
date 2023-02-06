@@ -10,5 +10,10 @@ export class PermisosService {
   permisoPorModuleTrazxabilidad(ruta: any){
     return  ruta.includes('trazabilidad');
   }
+  permisoPorModuleTrazabilidad(){
+    let trazabilidad = localStorage.getItem("trazabilidad");
+
+    return  trazabilidad=='si';
+  }
 
 }

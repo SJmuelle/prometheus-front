@@ -231,14 +231,15 @@
                                       <mat-select
                                           (selectionChange)="seleccionDepartamentoNacimiento($event)"
                                           [value]="'seleccione'"
-                                          [formControlName]="'codigoDepartamentoNacimiento'">
+                                          [formControlName]="'codigoDepartamentoNacimiento'"
+                                          >
                                           <mat-option disabled [value]="'seleccione'">Seleccione
                                           </mat-option>
                                           <mat-option *ngFor="let departamento of departamentos.data"
                                               [value]="departamento.codigo">{{departamento.nombre}}
                                           </mat-option>
                                       </mat-select>
-                                      <mat-icon class="icon-size-5" matSuffix
+                                      <mat-icon class="icon-size-5" matSuffix 
                                           [svgIcon]="'mat_outline:edit'"></mat-icon>
                                   </mat-form-field>
                               </ng-container>
@@ -325,6 +326,7 @@
                                   <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                       <mat-label>¿Vive en el mismo lugar del negocio?</mat-label>
                                       <mat-select [value]="'seleccione'"
+                                              (selectionChange)="cambiaDireccionNegocio()" 
                                           [formControlName]="'viveEnNegocio'">
                                           <mat-option disabled [value]="'seleccione'">Seleccione
                                           </mat-option>
@@ -391,32 +393,42 @@
                               <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                   <mat-label>Departamento del negocio</mat-label>
                                   <input matInput type="text"
+                                  [attr.disabled]="form.controls['viveEnNegocio'].value == 'S'"
                                       [formControlName]="'descripcionDepartamentoNegocio'"
                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"
+                                  *ngIf="form.controls['viveEnNegocio'].value != 'S'"
+                                  >
                                   </mat-icon>
                               </mat-form-field>
                               <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                   <mat-label>Ciudad / municipio del negocio</mat-label>
                                   <input matInput type="text"
                                       [formControlName]="'descripcionCiudadNegocio'"
+                                      [attr.disabled]="form.controls['viveEnNegocio'].value == 'S'"
                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"
+                                  *ngIf="form.controls['viveEnNegocio'].value != 'S'"
+                                  >
                                   </mat-icon>
                               </mat-form-field>
                               <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                   <mat-label>Barrio</mat-label>
                                   <input matInput type="text"
                                       [formControlName]="'descripcionBarrioNegocio'"
+                                      [attr.disabled]="form.controls['viveEnNegocio'].value == 'S'"
                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"
+                                  *ngIf="form.controls['viveEnNegocio'].value != 'S'">
                                   </mat-icon>
                               </mat-form-field>
                               <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                   <mat-label>Dirección del negocio</mat-label>
                                   <input matInput type="text" [formControlName]="'direccionNegocio'"
+                                  [attr.disabled]="form.controls['viveEnNegocio'].value == 'S'"
                                       (keydown)="openModalNegocio()" (click)="openModalNegocio()">
-                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                  <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"
+                                  *ngIf="form.controls['viveEnNegocio'].value != 'S'">
                                   </mat-icon>
                               </mat-form-field>
                           </div>
@@ -473,7 +485,7 @@
                               </mat-form-field>
                           </div>
                       </ng-container>
-                      <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                      <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end"  *ngIf="!permisoEditar">
                           <button mat-raised-button color="primary" type="button" [disabled]="!form.valid"
                               (click)="onPostDatos()">
                               Guardar
@@ -495,14 +507,10 @@
                   <ng-template matTabLabel>Referencias</ng-template>
                   <app-grid-referencias></app-grid-referencias>
               </mat-tab>
-              <ng-container *ngIf="agenda_fabrica !== 'CO'">
+      
+              <ng-container *ngIf="(agenda_fabrica !== 'CM')">
                   <mat-tab>
-                      <ng-template matTabLabel>Análisis financiero</ng-template>
-                  </mat-tab>
-              </ng-container>
-              <ng-container *ngIf="(agenda_fabrica !== 'CO') && (agenda_fabrica !== 'RE')">
-                  <mat-tab>
-                      <ng-template matTabLabel>Politicas</ng-template>
+                      <ng-template matTabLabel>Políticas</ng-template>
                       <app-grid-politicas></app-grid-politicas>
                   </mat-tab>
               </ng-container>

@@ -220,8 +220,11 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
         this.analisisForm.controls['capitalTrabajoBalance'].setValue(sumatoria);
 
         sumatoria = Number(e) / Number(this.analisisForm.value.pasivoCortoBalance);
+        let totalValor = Math.round(sumatoria);
+        let valor: string = totalValor.toFixed(0);
         if (this.analisisForm.value.pasivoCortoBalance != 0) {
-          this.analisisForm.controls['razonCorrienteBalance'].setValue(sumatoria);
+
+          this.analisisForm.controls['razonCorrienteBalance'].setValue(valor);
         } else {
           this.analisisForm.controls['razonCorrienteBalance'].setValue(0);
         }
@@ -235,7 +238,10 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
 
         sumatoria = (Number(this.analisisForm.value.totalPasivoBalance) / Number(e)) * 100
         if (Number(e) != 0) {
-          this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(sumatoria);
+          let total = Math.round(sumatoria);
+          let f: string = total.toFixed(0);
+
+          this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(f);
         } else {
           this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(0);
         }
@@ -255,8 +261,10 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
         sumatoria = (Number(e) / Number(this.analisisForm.value.totalActivosBalance)) * 100
         this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(sumatoria);
 
+        let total = Math.round(sumatoria);
+        let f: string = total.toFixed(0);
         if (Number(this.analisisForm.value.totalActivosBalance) != 0) {
-          this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(sumatoria);
+          this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(f);
         } else {
           this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(0);
         }
@@ -269,8 +277,10 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
         this.analisisForm.controls['capitalTrabajoBalance'].setValue(sumatoria);
 
         sumatoria = Number(this.analisisForm.value.totalActivoCorrienteBalance) / Number(e);
+        totalValor = Math.round(sumatoria);
+        valor = totalValor.toFixed(0);
         if (Number(e) != 0) {
-          this.analisisForm.controls['razonCorrienteBalance'].setValue(sumatoria);
+          this.analisisForm.controls['razonCorrienteBalance'].setValue(valor);
         } else {
           this.analisisForm.controls['razonCorrienteBalance'].setValue(0);
         }
@@ -290,8 +300,12 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
     this.AnalisisFinancieroService.getAnalisis(numeroSolicitud).subscribe(({ data }) => {
       this.analisisForm.patchValue(data);
       this.dataAnalisis = data;
+      let total;
       let res = (data.ventasMensuales * data.porcentajeCosto) / 100;
       this.analisisForm.controls['costoOperacionBalance'].setValue(res);
+
+      res = (data.ventasMensuales - (data.ventasMensuales * data.porcentajeCosto) / 100);
+      this.analisisForm.controls['utilidadBrutaBalance'].setValue(res);
 
       res = (Number(data.inventarioActualBalance) + Number(data.ahorroMensualBalance) + Number(data.dineroEfectivoBalance) + Number(data.dineroPorCobrarBalance));
       this.analisisForm.controls['totalActivoCorrienteBalance'].setValue(res);
@@ -305,12 +319,17 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
       res = (Number(data.pasivoCortoBalance) + Number(data.pasivoLargoBalance));
       this.analisisForm.controls['totalPasivoBalance'].setValue(res);
 
+      res = (Number(data.pasivoCortoBalance) + Number(data.pasivoLargoBalance));
+      this.analisisForm.controls['totalPasivoBalance'].setValue(res);
+
       res = (Number(data.totalActivosBalance) - Number(data.totalPasivoBalance));
       this.analisisForm.controls['totalPatrimonioBalance'].setValue(res);
 
       res = (Number(data.totalActivoCorrienteBalance) / Number(data.pasivoCortoBalance)) * 100;
       if (Number(data.pasivoCortoBalance) != 0) {
-        this.analisisForm.controls['razonCorrienteBalance'].setValue(res);
+        total = Math.round(res);
+        let f: string = total.toFixed(0);
+        this.analisisForm.controls['razonCorrienteBalance'].setValue(f);
       } else {
         this.analisisForm.controls['razonCorrienteBalance'].setValue(0);
       }
@@ -318,12 +337,20 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
       res = (Number(data.totalActivoCorrienteBalance) - Number(data.pasivoCortoBalance));
       this.analisisForm.controls['capitalTrabajoBalance'].setValue(res);
 
-      res = (Number(data.totalPasivoBalance) / Number(data.totalActivosBalance)) * 100;
+      res = (parseInt(data.totalPasivoBalance) / parseInt(data.totalActivosBalance)) * 100;
       if (Number(data.totalActivosBalance) != 0) {
-        this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(res);
+        total = Math.round(res);
+        let f: string = total.toFixed(0);
+        this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(f);
       } else {
         this.analisisForm.controls['nivelEndeudamientoBalance'].setValue(0);
       }
+
+      res = Number(this.analisisForm.value.otrosGastosOperativosBalance) + Number(this.analisisForm.value.gastoPersonalBalance) + Number(this.analisisForm.value.costoServiciosBalance) + Number(this.analisisForm.value.costoArriendoBalance);
+      this.analisisForm.controls['totalGastosBalance'].setValue(res);
+
+
+
     })
   }
 }
