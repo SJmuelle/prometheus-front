@@ -30,9 +30,12 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     public departamentos$: Observable<any>;
     public departamentosNacimiento$: Observable<any>;
     public departamentosNegocio$: Observable<any>;
+    public departamentosExpedicion$: Observable<any>;
+
     public ciudades$: Observable<any>;
     public ciudadesNacimiento$: Observable<any>;
     public ciudadesNegocio$: Observable<any>;
+    public ciudadesExpedicion$: Observable<any>;
     public barrios$: Observable<any>;
     public barriosNegocio$: Observable<any>;
     public tipoDocumentos$: Observable<any>;
@@ -60,7 +63,8 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     public animacionVer: boolean = true;
     public dialog_a_mostrar: string = '';
     public unidadNegocio: any;
-    public permisoEditar:boolean=false;
+    public permisoEditar: boolean = false;
+    fabricaDatos: any;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -84,6 +88,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.createFormulario();
         this.getDepartamentos();
+        this.getDepartamentosExpedicion();
         this.getDepartamentoNacimiento();
         this.getDepartamentoNegocio();
         this.getTiposDocumentos();
@@ -95,7 +100,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         this.getCamaraComercio();
         this.listenFormulario();
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
-        if(this.permisoEditar){
+        if (this.permisoEditar) {
             this.form.disable();
         }
     }
@@ -107,9 +112,9 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         this.minimizarComentarios = event;
     }
 
-    cambiaDireccionNegocio(){
+    cambiaDireccionNegocio() {
         debugger
-        if( this.form.value.viveEnNegocio=='S'){
+        if (this.form.value.viveEnNegocio == 'S') {
             this.form.controls.codigoDepartamentoNegocio.setValue(this.form.value.codigoDepartamento);
             this.form.controls.descripcionDepartamentoNegocio.setValue(this.form.value.descripcionDepartamento);
             this.form.controls.codigoCiudadNegocio.setValue(this.form.value.codigoCiudad);
@@ -119,7 +124,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
             this.form.controls.direccionNegocio.setValue(this.form.value.direccionResidencial);
 
         }
-       
+
     }
 
     /**
@@ -195,11 +200,11 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
                     minWidth: '30%',
                     minHeight: '30%',
-                   data: { 
-                        numeroSolicitud: this.numeroSolicitud, 
-                        etapa: 1, 
-                        idAgenda:this.agenda_fabrica,     
-                      },
+                    data: {
+                        numeroSolicitud: this.numeroSolicitud,
+                        etapa: 1,
+                        idAgenda: this.agenda_fabrica,
+                    },
                     disableClose: false,
                 });
                 dialogRef.afterClosed().toPromise().then(() => {
@@ -255,7 +260,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     }
 
     public openModalNegocio(): void {
-        if(this.form.value.viveEnNegocio=='S'){ return}
+        if (this.form.value.viveEnNegocio == 'S') { return }
         const dialogRef = this._dialog.open(DirectionsComponent, {
             width: '60%',
             data: {
@@ -303,14 +308,39 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         this.router.navigate(['/credit-factory/credit-management/commentaries', this.numeroSolicitud]);
     }
 
+      /**
+     * @description:
+     */
+      private validarCampos(valor1, valor2) {
+        if (valor1 == valor2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * @description:
      */
     public onPostDatos(): void {
         if (this.form.valid) {
+            // let modificadoPolitica="";
+
+            if (
+                this.validarCampos(this.form.value.antiguedadNegocio, this.fabricaDatos.antiguedadNegocio)
+                &&
+                this.validarCampos(this.form.value.fechaNacimiento,  this.fabricaDatos.fechaNacimiento)
+            ) {
+                this.form.controls['modificadoPolitica'].setValue('N')
+            } else {
+                this.form.controls['modificadoPolitica'].setValue('S')
+            }
+
+
+
             const datos: FormularioCreditoInterface = this.form.getRawValue();
-            const { fechaNacimiento, fechaMatricula, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
+            const { fechaNacimiento, fechaExpedicionDocumento, fechaMatricula, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
             const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
+            const fechaExpedicionFormato = moment(fechaExpedicionDocumento).format('YYYY-MM-DD');
             const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
             const compraSemanal = Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
             const ventasMensuales = Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
@@ -324,6 +354,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
             delete data.comprasSemanales;
             delete data.activos;
             const datosFormularios: FormularioCreditoInterface = {
+                fechaExpedicionDocumento: fechaExpedicionFormato,
                 fechaNacimiento: fechaNacimientoFormato,
                 fechaMatricula: fechaMatriculaFormato,
                 comprasSemanales: compraSemanal,
@@ -358,6 +389,36 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
         }
     }
 
+    public validacion(tipo: string, titulo: string) {
+       
+        let mensaje = `¿Estás seguro de editar el campo de ${titulo}?, Este campo modifica el motor de decisión y políticas SARC.`;
+        Swal.fire({
+            title: 'Guardar información',
+            html: mensaje,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+            } else {
+                switch (tipo) {
+                    case 'ANT':
+                        this.form.controls['antiguedadNegocio'].setValue(String(this.fabricaDatos.antiguedadNegocio));
+                        break;
+                    case 'FEN':
+                        this.form.controls['fechaNacimiento'].setValue(String(this.fabricaDatos.fechaNacimiento));
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+
     /**
      * @description: Obtiene la data para cargar al formulario
      */
@@ -374,6 +435,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
                 this.unidadNegocio = data.unidadNegocio;
+                this.fabricaDatos = data;
                 this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
                 this.createValidacion()
                 if (data.tipoDocumento === 'NIT') {
@@ -386,6 +448,9 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
                 }
                 if (data.codigoDepartamentoNacimiento) {
                     this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
+                }
+                if (data.codigoDepartamentoExpedicion) {
+                    this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
                 }
                 if (data.codigoDepartamentoNegocio) {
                     this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
@@ -439,6 +504,14 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     }
 
     /**
+     * @description: Departamento de nacimiento
+     */
+    public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudadesExpedicion(codigo);
+    }
+
+    /**
      * @description: Departamento de negocio
      */
     public seleccionDepartamentoNegocio(event: MatSelectChange): void {
@@ -466,13 +539,21 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtiene el listado de departamento
      */
+    private getDepartamentosExpedicion(): void {
+        this.departamentosExpedicion$ = this.departamentosCiudadesService.getDepartamentos();
+    }
+
+    /**
+     * @description: Obtiene el listado de departamento
+     */
     private getDepartamentos(): void {
         this.departamentos$ = this.departamentosCiudadesService.getDepartamentos();
     }
 
+
     /**
-     * @description: Obtiene listado de departamento nacimiento
-     */
+ * @description: Obtiene listado de departamento nacimiento
+ */
     private getDepartamentoNacimiento(): void {
         this.departamentosNacimiento$ = this.departamentosCiudadesService.getDepartamentos();
     }
@@ -490,6 +571,14 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     private getCiudades(codigo: string): void {
         this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
     }
+
+    /**
+     * @description: Obtiene listado de ciudades nacimiento
+     */
+    private getCiudadesExpedicion(codigo: string): void {
+        this.ciudadesExpedicion$ = this.departamentosCiudadesService.getCiudades(codigo);
+    }
+
 
     /**
      * @description: Obtiene listado de ciudades nacimiento
@@ -709,7 +798,10 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
             nivelEstudio: [''],
             viveEnNegocio: [''],
             descripcionTipo: [''],
-
+            fechaExpedicionDocumento: [''],
+            codigoDepartamentoExpedicion: [''],
+            codigoCiudadExpedicion: [''],
+            modificadoPolitica:[''],
         });
     }
 

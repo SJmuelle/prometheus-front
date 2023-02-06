@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
 import { ModalRecalcularComponent } from '../modal-recalcular/modal-recalcular.component';
 import { FormDialogAnalisisFinancieroComponent } from 'app/modules/admin/apps/fabrica-credito/gestion-fabrica-credito/form-dialog-analisis-financiero/form-dialog-analisis-financiero.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-fabrica-opciones',
@@ -284,7 +285,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         minWidth: '80%',
         height: '620px',
         data: {
-          numeroSolicitud: this.numeroSolicitud
+          numeroSolicitud: this.numeroSolicitud,
+          permiso:false
         },
         disableClose: false,
       });
@@ -298,4 +300,27 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       this.onDialogoDecision();
     }
   }
+
+    /**
+ * @description: Modal de decision
+ */
+    public onDialogoAnalisisConsulta(): void {
+      let dialogRef;
+      if (this.fabricaDatos.unidadNegocio == 32 && this.fabricaDatos.validacionAnalisisFinanciero == 'S') {
+        dialogRef = this._dialog.open(FormDialogAnalisisFinancieroComponent, {
+          minWidth: '80%',
+          height: '620px',
+          data: {
+            numeroSolicitud: this.numeroSolicitud,
+            permiso:true
+          },
+          disableClose: false,
+        });
+        dialogRef.afterClosed().toPromise().then((res) => {
+
+        });
+      }else{
+        Swal.fire('Informacion', 'Aun no se ha configurado el analisi financiero', 'warning');  
+      }
+    }
 }
