@@ -10,22 +10,23 @@
                 <div class="text-3xl font-semibold tracking-tight leading-8">Filtros
                 </div>
                 <div>
-                    <form [formGroup]="form" >
-                        <mat-form-field appearance="fill" class="w-100"  formGroupName="solicitud">
+                    <form [formGroup]="form">
+                        <mat-form-field appearance="fill" class="w-100" formGroupName="solicitud">
                             <mat-label>Código de solicitud</mat-label>
                             <input matInput autocomplete="off" formControlName="buscar">
                         </mat-form-field>
-                        <mat-form-field appearance="fill" class="w-100"  formGroupName="identificacion">
+                        <mat-form-field appearance="fill" class="w-100" formGroupName="identificacion">
                             <mat-label>Identificación del cliente</mat-label>
                             <input matInput autocomplete="off" formControlName="buscar">
                         </mat-form-field>
-                      
+
                         <ng-container *ngIf="unidad$ | async as negocios">
                             <mat-form-field class="w-full" appearance="fill" formGroupName="negocio">
                                 <mat-label>Unidad de negocio</mat-label>
                                 <mat-select [value]="''" [formControlName]="'buscar'">
-                                    <mat-option  [value]="''">Seleccione</mat-option>
-                                    <mat-option *ngFor="let neg of negocios.data" [value]="neg.codigoOpcion">{{neg.descripcionOpcion}}
+                                    <mat-option [value]="''">Seleccione</mat-option>
+                                    <mat-option *ngFor="let neg of negocios.data"
+                                        [value]="neg.codigoOpcion">{{neg.descripcionOpcion}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -34,7 +35,7 @@
                             <mat-form-field class="w-full" appearance="fill" formGroupName="pagaduria">
                                 <mat-label>Pagaduria</mat-label>
                                 <mat-select [value]="''" [formControlName]="'buscar'">
-                                    <mat-option  [value]="''">Seleccione</mat-option>
+                                    <mat-option [value]="''">Seleccione</mat-option>
                                     <mat-option *ngFor="let pag of pagadurias.data" [value]="pag.codigo">{{pag.nombre}}
                                     </mat-option>
                                 </mat-select>
@@ -44,8 +45,9 @@
                             <mat-form-field class="w-full" appearance="fill" formGroupName="estado">
                                 <mat-label>Estado</mat-label>
                                 <mat-select [value]="''" [formControlName]="'buscar'">
-                                    <mat-option  [value]="''">Seleccione</mat-option>
-                                    <mat-option *ngFor="let est of estados.data" [value]="est.codigo" (click)="getSubestados(est.codigo)">{{est.nombre}}
+                                    <mat-option [value]="''">Seleccione</mat-option>
+                                    <mat-option *ngFor="let est of estados.data" [value]="est.codigo"
+                                        (click)="getSubestados(est.codigo)">{{est.nombre}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -54,15 +56,15 @@
                             <mat-form-field class="w-full" appearance="fill" formGroupName="subestado">
                                 <mat-label>Subestado</mat-label>
                                 <mat-select [value]="''" [formControlName]="'buscar'">
-                                    <mat-option  [value]="''">Seleccione</mat-option>
+                                    <mat-option [value]="''">Seleccione</mat-option>
                                     <mat-option *ngFor="let sub of subestados.data" [value]="sub.codigo">{{sub.nombre}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
                     </form>
-                    <form [formGroup]="formPeriodo" >
-                        <mat-form-field appearance="fill" class="w-100" >
+                    <form [formGroup]="formPeriodo">
+                        <mat-form-field appearance="fill" class="w-100">
                             <mat-label>Periodo</mat-label>
                             <mat-date-range-input [rangePicker]="picker">
                                 <input matStartDate placeholder="Inicial" formControlName="fechaInicial">
@@ -73,7 +75,8 @@
                             <mat-date-range-picker #picker></mat-date-range-picker>
                         </mat-form-field>
                     </form>
-                    <button mat-raised-button class="w-100 bg-blue-700 text-white" (click)="consultaFiltro()">Consulta filtro</button>
+                    <button mat-raised-button class="w-100 bg-blue-700 text-white" (click)="consultaFiltro()">Consulta
+                        filtro</button>
                     <button mat-raised-button class="w-100 mt-3" (click)="armarForm()">Limpiar filtros</button>
                     <!-- <button mat-raised-button color="primary" class="w-100">Filtrar</button> -->
                 </div>
@@ -82,7 +85,7 @@
         </mat-drawer>
 
         <!-- Drawer content -->
-        <mat-drawer-content class="flex flex-col" fuseScrollReset>
+        <mat-drawer-content class="flex flex-col " fuseScrollReset>
 
             <!-- Main -->
             <div class="flex-auto">
@@ -116,7 +119,7 @@
                 </div>
 
                 <!-- Contacts list -->
-                <div class="vh68 card mx-10 overflow-auto p-3 rounded-xl">
+                <div class="vh68 card mx-10 overflow-auto rounded-xl ">
                     <table class="p-0">
                         <tbody class="bg-white">
                             <ng-container *ngFor="let item of listados; let i = index;">
@@ -137,7 +140,7 @@
                                     <td rowspan="2" class="pr-2">
                                         <div class="ml-2.5">
                                             <mat-icon class="cursor-pointer" [svgIcon]="'mat_outline:task'"
-                                                (click)="onGetAgenda(item)"  matTooltip="Ver gestión"></mat-icon>
+                                                (click)="onGetAgenda(item)" matTooltip="Ver gestión"></mat-icon>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-0" rowspan="2">
@@ -379,10 +382,15 @@
                     </table>
 
                     <!-- No contacts -->
-                    <ng-template #noContacts>
-                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No hay
-                            resultados</div>
-                    </ng-template>
+                    <ng-container *ngIf="listados.length==0">
+
+                        <div class="text-2xl font-semibold tracking-tight text-center">
+
+                            <img src="assets/images/animaciones/nodata.gif" class="w-60 mx-auto my-0">
+                            <p> Por favor seleccionar un filtro válido </p>
+
+                        </div>
+                    </ng-container>
 
                 </div>
             </div>

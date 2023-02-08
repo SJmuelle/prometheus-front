@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import moment from "moment";
 import 'moment/locale/es';
+import { PermisosService } from 'app/core/services/permisos.service';
 @Component({
   selector: 'app-grid-oferta-libranza',
   templateUrl: './grid-oferta-libranza.component.html',
@@ -15,15 +16,20 @@ export class GridOfertaLibranzaComponent implements OnInit {
   public listadoOferta$: Observable<any>;
   public capacidadPago$: Observable<any>;
   capacidadOferta: boolean = true;
-
+  public permisoEditar:boolean=false;
+  
   constructor(
     private route: ActivatedRoute,
-    private ofertaService: OfertaService
+    private ofertaService: OfertaService,
+    public _permisosService: PermisosService
+
   ) { }
 
   ngOnInit() {
     this.getListadoOferta(Number(this.numeroSolicitud));
     this.getCapacidadPago(Number(this.numeroSolicitud));
+    this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+
   }
 
 
