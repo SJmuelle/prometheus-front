@@ -8,8 +8,11 @@ export class PermisosService {
   constructor() { }
 
   permisoPorModuleTrazxabilidad(ruta: any){
-    return  ruta.includes('trazabilidad');
+    let valor=  ruta.includes('trazabilidad')|| this.permisoPorModuleTrazabilidad();
+    debugger
+    return valor
   }
+
   permisoPorModuleTrazabilidad(){
     let trazabilidad = localStorage.getItem("trazabilidad");
 
