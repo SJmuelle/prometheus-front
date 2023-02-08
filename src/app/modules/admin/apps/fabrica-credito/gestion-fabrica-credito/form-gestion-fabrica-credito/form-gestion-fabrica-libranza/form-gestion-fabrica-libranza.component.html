@@ -772,11 +772,11 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <mat-tab *ngIf="agenda_fabrica == 'CM'">
+                <mat-tab *ngIf="agenda_fabrica == 'CM' || permisoEditar">
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera></app-grid-cartera>
                 </mat-tab>
-                <mat-tab *ngIf="agenda_fabrica != 'CM'">
+                <mat-tab *ngIf="(agenda_fabrica != 'CM') && (!permisoEditar)">
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>

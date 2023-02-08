@@ -44,7 +44,6 @@ export class BusquedaComponent implements OnInit, OnDestroy {
         this.getUnidades();
         this.getPagadurias();
         this.getEstado();
-        this.consulta('');
         localStorage.setItem("trazabilidad", "no")
         // Subscribe to media query change
         this._fuseMediaWatcherService.onMediaChange$
@@ -75,11 +74,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                         tipo: new FormControl('FECHA_FINAL'),
                         buscar: new FormControl(fechaFinal)
                     })
-                    // this.form.value
-                    setTimeout(() => {
-                        let data=this.form.value
-                        this.armarConsulta( Object.values(data))
-                    }, 1000);
+                  
                 
 
                 }
@@ -141,15 +136,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
     }
 
-    onKeyUp(event) {
-        let data = event.target.value;
-        if (data.length > 5) {
-            this.consulta(data);
-        }
-        if (data.length === 0) {
-            this.consulta('');
-        }
-    }
+
 
     /**
          * @description: abre el resumen
