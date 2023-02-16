@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { PagoMasivoService } from 'app/core/services/pago-masivo.service';
-import {MatDialog} from '@angular/material/dialog'; 
+import { MatDialog } from '@angular/material/dialog';
 import { ConveniosComponent } from './convenios/convenios.component';
 import * as XLSX from 'xlsx';
 import moment from 'moment';
@@ -17,8 +17,8 @@ export class ImportFileComponent implements OnInit {
   cabeceras: any = [];
   ejemplos: any = [];
   igual: boolean;
-  listAsignados: any = {"details":[]};
-  filtrarTabla:string=''; // filtrar la tabla
+  listAsignados: any = { "details": [] };
+  filtrarTabla: string = ''; // filtrar la tabla
   chequeada: boolean = false;
   @ViewChild('fileInput') fileInput: ElementRef;
 
@@ -27,20 +27,20 @@ export class ImportFileComponent implements OnInit {
   ngOnInit() {
     this.ejemplos = [
       "Identificacion",
-      "Fecha Pago",
+      "Fecha_pago",
       "Banco",
       "Sucursal",
-      "Valor Aplicar Neto",
-      "Comision Recaudo"
+      "valor_aplicar_neto",
+      "comision_recaudo"
     ]
   }
 
-  mostrarConvenios(){
-    const dialogRef = this.dialog.open(ConveniosComponent,{
+  mostrarConvenios() {
+    const dialogRef = this.dialog.open(ConveniosComponent, {
       width: '40%',
       disableClose: true
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
   subirArchivo(event) {
@@ -51,27 +51,27 @@ export class ImportFileComponent implements OnInit {
     lector.readAsBinaryString(seleccionado);
     lector.onload = (event) => {
       let datoBinario = event.target.result;
-      let workbook = XLSX.read(datoBinario, {type:'binary'})
+      let workbook = XLSX.read(datoBinario, { type: 'binary' })
       let hoja = workbook.SheetNames[0];
       const data = XLSX.utils.sheet_to_json(workbook.Sheets[hoja]);
       this.listRowsExcel = data;
-      this.cabeceras=Object.keys(this.listRowsExcel[0])
+      this.cabeceras = Object.keys(this.listRowsExcel[0])
       this.comparar(this.cabeceras, this.ejemplos)
-      if (this.igual==true) {
+      if (this.igual == true) {
         for (let index = 0; index < this.listRowsExcel.length; index++) {
           const element = this.listRowsExcel[index];
-          element['nitTransportadora']=element['Identificacion'];
+          element['nitTransportadora'] = element['Identificacion'];
           delete element['Identificacion'];
-          element['fechaPago']=element['Fecha Pago'];
-          delete element['Fecha Pago'];
-          element['banco']=element['Banco'];
+          element['fechaPago'] = element['Fecha_pago'];
+          delete element['Fecha_pago'];
+          element['banco'] = element['Banco'];
           delete element['Banco'];
-          element['sucursal']=element['Sucursal'];
+          element['sucursal'] = element['Sucursal'];
           delete element['Sucursal'];
-          element['valorAplicar']=element['Valor Aplicar Neto'];
-          delete element['Valor Aplicar Neto'];
-          element['comisionRecaudo']=element['Comision Recaudo'];
-          delete element['Comision Recaudo'];
+          element['valorAplicar'] = element['valor_aplicar_neto'];
+          delete element['valor_aplicar_neto'];
+          element['comisionRecaudo'] = element['comision_recaudo'];
+          delete element['comision_recaudo'];
           element.chequeado = false;
         }
       } else {
@@ -80,7 +80,7 @@ export class ImportFileComponent implements OnInit {
         Swal.fire({
           title: 'Archivo incorrecto',
           icon: 'info',
-          imageUrl: 'assets/images/estructuras.png',
+          imageUrl: 'assets/images/import-file/estructuras.png',
           imageWidth: 400,
           html: '<p class="text-justify">Los archivos a importar deben cumplir con la estructura mostrada.</p>'
         })
@@ -89,18 +89,18 @@ export class ImportFileComponent implements OnInit {
     this.fileInput.nativeElement.value = '';
   }
 
-  comparar(cabeceras:any[], ejemplo:any[]){
+  comparar(cabeceras: any[], ejemplo: any[]) {
     if (cabeceras.length == ejemplo.length) {
       for (let i = 0; i < cabeceras.length; i++) {
         const elementoUno = cabeceras[i];
         const elementoDos = ejemplo[i]
-        if(elementoUno[i] == elementoDos[i]){
+        if (elementoUno[i] == elementoDos[i]) {
           this.igual = true;
-        }else{
+        } else {
           this.igual = false;
         }
       }
-    }else{
+    } else {
       this.igual = false;
     }
   }
@@ -115,31 +115,31 @@ export class ImportFileComponent implements OnInit {
       return;
     }
     if (this.chequeada == true) {
-      this.listAsignados.details=[];
-      for (const item of this.listRowsExcel){
+      this.listAsignados.details = [];
+      for (const item of this.listRowsExcel) {
         this.listAsignados.details.push({
-          "nitTransportadora": item.nitTransportadora.toString(),         
+          "nitTransportadora": item.nitTransportadora.toString(),
           "fechaPago": moment(item.fechaPago).format("YYYY-MM-DD"),
           "banco": item.banco,
           "sucursal": item.sucursal,
-          "valorAplicar":item.valorAplicar.toString(),
-          "comisionRecaudo":item.comisionRecaudo.toString()
+          "valorAplicar": item.valorAplicar.toString(),
+          "comisionRecaudo": item.comisionRecaudo.toString()
         })
       }
-    }else{
-      this.listAsignados.details=[];
+    } else {
+      this.listAsignados.details = [];
     }
     this.listRowsExcel.forEach(t => (t.chequeado = completed));
   }
 
-  acumular(item, event){
+  acumular(item, event) {
     let data = {
-      "nitTransportadora": item.nitTransportadora.toString(),         
+      "nitTransportadora": item.nitTransportadora.toString(),
       "fechaPago": moment(item.fechaPago).format("YYYY-MM-DD"),
       "banco": item.banco,
       "sucursal": item.sucursal,
-      "valorAplicar":item.valorAplicar.toString(),
-      "comisionRecaudo":item.comisionRecaudo.toString()
+      "valorAplicar": item.valorAplicar.toString(),
+      "comisionRecaudo": item.comisionRecaudo.toString()
     }
 
     if (event.checked) {
@@ -158,7 +158,7 @@ export class ImportFileComponent implements OnInit {
 
   }
 
-  enviar(){
+  enviar() {
     Swal.fire({
       title: 'Cargando',
       html: 'Enviando informacion de pago',
@@ -167,7 +167,7 @@ export class ImportFileComponent implements OnInit {
       timer: 500000,
       didOpen: () => {
         Swal.showLoading()
-        this.pago.postPagoMasivo(this.listAsignados).subscribe(res =>{
+        this.pago.postPagoMasivo(this.listAsignados).subscribe(res => {
           const dataBuscar = this.listRowsExcel.filter(data => data.chequeado == true);
           for (let index = 0; index < dataBuscar.length; index++) {
             let idx = this.listRowsExcel.indexOf(dataBuscar[index]);
@@ -180,7 +180,7 @@ export class ImportFileComponent implements OnInit {
               'Se ha realizado el pago exitosamente.',
               'success'
             )
-          }else{
+          } else {
             Swal.fire(
               'Error',
               'No se ha podido realizar el pago, porfavor intente mas tarde.',
@@ -196,7 +196,7 @@ export class ImportFileComponent implements OnInit {
         })
       }
     })
-    
+
   }
 
 }
