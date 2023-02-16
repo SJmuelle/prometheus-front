@@ -12,6 +12,7 @@ import {AgendaFormalizacionModule} from "./agenda-formalizacion/agenda-formaliza
 import { ReferidosModule } from './referidos/referidos.module';
 import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitudes.module';
 import { EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
+import { FormulariosModule } from './formularios/formularios.module';
 
 
 const routes: Routes = [
@@ -72,7 +73,10 @@ const routes: Routes = [
                 loadChildren: () => AsignarSolicitudesModule,
                 resolve  : {EdicionTrazabilidadResolver}
             },
-
+            {
+                path: 'formularios',
+                loadChildren: () => FormulariosModule
+            }
         ]
     }
 ];
