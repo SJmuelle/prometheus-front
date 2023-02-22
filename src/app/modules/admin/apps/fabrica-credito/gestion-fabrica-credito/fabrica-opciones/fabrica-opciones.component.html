@@ -38,7 +38,7 @@
             <ng-container *ngIf="fabricaDatos.agenda!='RE'">
                 <button mat-fab class="mx-1 bg-gray-500 roll-in-blurred-right" (click)="onDialogoAnalisisConsulta()"
                     [ngClass]="animacionVer==true?'show':'hidden'"
-                    [matTooltip]="toolText">
+                    matTooltip="Análisis financiero">
                     <mat-icon [svgIcon]="'heroicons_outline:calculator'">
                     </mat-icon>
                 </button>
