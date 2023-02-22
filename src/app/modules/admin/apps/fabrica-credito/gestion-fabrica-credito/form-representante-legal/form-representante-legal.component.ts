@@ -90,7 +90,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
             // console.log(datos);
             const { fechaNacimiento, fechaExpedicionDocumento, ...data } = datos;
             const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
-            const fechaExpedicionDocumentoFormato = moment().format('YYYY-MM-DD');
+            const fechaExpedicionDocumentoFormato = moment(fechaExpedicionDocumento).format('YYYY-MM-DD');
             const datosFormulario: FormularioRepresentanteInterface = {
                 fechaNacimiento: fechaNacimientoFormato,
                 fechaExpedicionDocumento: fechaExpedicionDocumentoFormato,
