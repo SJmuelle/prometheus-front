@@ -12,6 +12,7 @@ import { FormControl } from "@angular/forms";
 import { MatSelectChange } from "@angular/material/select";
 import moment from "moment";
 import 'moment/locale/es';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-grid-documentacion',
@@ -32,13 +33,16 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public habilitarComparar: boolean = false;
     public datosDocumentosHistorico: any[] = [];
     public identificacion: string;
+    public permisoEditar:boolean=false;
 
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
     constructor(
         private route: ActivatedRoute,
         private documentosServices: DocumentosAdjuntosService,
         private fabricaCreditoService: FabricaCreditoService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        public _permisosService: PermisosService
+
     ) {
         this.identificacion = this.route.snapshot.paramMap.get('id');
         this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
@@ -46,6 +50,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+       
     }
     /**
     * @description: Escucha el observable

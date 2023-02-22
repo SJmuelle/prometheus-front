@@ -1,0 +1,18 @@
+.sombra-personalizada{
+   
+        -webkit-box-shadow: inset 10px 10px 5px 0px rgb(0 0 0 / 75%);
+        -moz-box-shadow: inset 10px 10px 5px 0px rgba(0,0,0,0.75);
+        box-shadow: inset 0px 0px 2px 0px rgb(0 0 0 / 75%);
+    
+}
+
+.agregar-asesor{
+    top: 1px;
+    right: 0px;
+    padding: 1px;
+    width: 100%;
+}
+
+.mat-mdc-form-field + .mat-mdc-form-field {
+    margin-left: 8px;
+  }

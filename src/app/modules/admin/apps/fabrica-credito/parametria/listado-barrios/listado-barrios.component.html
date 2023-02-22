@@ -1,0 +1,112 @@
+<div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+    <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
+        <h2 class="text-gray-900 col-span-12 mb-4">Listado de barrios</h2>
+        <div class="col-span-12 grid grid-cols-4 gap-4">
+
+            <mat-form-field class="flex-auto w-100">
+                <mat-label>Departamento</mat-label>
+                <mat-select [(ngModel)]="datos.departamento" name="direccion"
+                    (ngModelChange)="consultaMunicipio(datos.departamento);">
+                    <mat-option value="" disabled>Seleccionar</mat-option>
+                    <mat-option value="{{item.codigo}}" *ngFor="let item of listadoDepartamento">
+                        {{item.nombre}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="flex-auto w-100">
+                <mat-label>Municipio / Ciudad</mat-label>
+                <mat-select [(ngModel)]="datos.municipio" name="municipio" (ngModelChange)="listarBarrios(datos.municipio);" >
+                    <mat-option value="" disabled>Seleccionar</mat-option>
+                    <mat-option value="{{item.codigo}}" *ngFor="let item of listadoCiudades">
+                        {{item.nombre}} </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+
+
+
+        <div class="col-span-12 grid grid-cols-12" >
+            <div class="col-span-6" *ngIf="datos.municipio">
+                <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+                    Crear nuevo
+                </button>
+            </div>
+            <div class="col-span-6 justify-self-end"  *ngIf="listado.length>0">
+                <input class="border rounded p-2 bg-gray-100  w-90 filtrado"  type="text"
+                    autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
+                    (ngModelChange)="page = 1" />
+                <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100 filtrado ml-4" (change)="page = 1"
+                    [(ngModel)]="tamanoTabl" >
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden" *ngIf="listado.length>0">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr class="text-md font-semibold
+                        tracking-wide text-left text-gray-400
+                         border-b border-gray-600">
+                    <th class="px-4 py-3 text-center w-0">Editar</th>
+                    <th class="px-4 py-3 text-center">Código</th>
+                    <th class="px-4 py-3 text-center">Nombre del barrio</th>
+                    <th class="px-4 py-3 text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700" *ngFor="
+                        let item of listado
+                            | filter: filtrarTabla
+                            | paginate
+                                : {
+                                        itemsPerPage: tamanoTabl,
+                                        currentPage: page
+                                    }
+                    ">
+                    <td class="px-2 text-sm border text-center" (click)="abrirModal(item, 'A')">
+                        <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.id }}
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.barrio }}
+                    </td>
+                    <td class="px-2 text-sm border text-center w-0">
+                        <div [ngClass]="
+                                item.estado == 'Inactivo'
+                                    ? 'bg-pink-300'
+                                    : 'bg-green-300'
+                            ">
+                            <span class="
+                                    px-2
+                                    py-1
+                                    font-semibold
+                                    leading-tight
+                                    text-gray-700
+                                    rounded-sm
+                                    w-0
+                                ">
+                                {{ item.estado }}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="grid ">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
+    </div>
+
+    <div class="flex justify-center"  *ngIf="listado.length==0">
+        <img class="w-140" src="assets/images/animaciones/nodata.gif">
+        <div class="text-gray-600 text-center mt-2 font-medium"></div>
+    </div>
+</div>

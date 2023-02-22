@@ -1,0 +1,320 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- Drawer content -->
+    <div class="flex flex-col overflow-hidden">
+        <!-- Header -->
+        <mat-progress-bar class="flex-0 h-0.5 " [value]="100 * (currentStep + 1) / (totalsteps+1)">
+        </mat-progress-bar>
+        <div *ngIf="currentStep!=0" class="bg-card pt-4 shadow mb-2">
+            <div class="grid grid-cols-2 justify-between w-full align-items-center px-12 mb-2">
+                <div class="text-right pr-5 border-r-2 align-self-end">
+                    <h2 class="ml-2.5 text-md sm:text-xl font-bold font-sans tracking-tight truncate ">
+                        Listado de metas de colocación
+                    </h2>
+                </div>
+                <div class="grid grid-cols-6 ">
+                    <div
+                        class="ml-1 text-md sm:text-xl font-sans tracking-tight truncate grid grid-cols-2 align-items-center">
+                        <div class="grid">
+                            <small class="text-secondary text-md ">Período</small>
+                            <div class="flex gap-2 items-center text-md font-bold"><mat-icon
+                                    class="icon-size-4 text-primary-700"
+                                    svgIcon="heroicons_solid:calendar"></mat-icon><span
+                                    class="font-semibold">{{this.form.value.periodoActual}}</span></div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Main -->
+        <div class="flex-auto overflow-y-auto h-screen" cdkScrollable>
+            <!-- Steps -->
+            <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
+                <ng-container>
+                    <mat-tab *ngIf="currentStep==0">
+                        <ng-template matTabContent>
+                            <div
+                                class=" py-4 prose prose-sm max-w-6xl mx-auto sm:mx-2 px-6 sm:px-10 rounded-2xl shadow overflow-hidden bg-card ">
+                                <h2 class=" text-md sm:text-xl  tracking-tight truncate font-bold">
+                                    Clonar período
+                                </h2>
+                                <form [formGroup]="form">
+                                    <div class="grid grid-cols-3 gap-3 align-items-baseline mb-3">
+                                        <mat-form-field class="w-100">
+                                            <mat-label>Período anterior</mat-label>
+                                            <input type="month" matInput [formControlName]="'periodoAnterior'"
+                                                (change)="clonarPeriodo=false">
+                                        </mat-form-field>
+
+                                        <mat-form-field class="w-100">
+                                            <mat-label>Período actual </mat-label>
+                                            <input type="month" matInput [formControlName]="'periodoActual'"
+                                                (change)="clonarPeriodo=false">
+                                        </mat-form-field>
+                                        <div>
+                                            <button mat-raised-button color="primary" [disabled]="clonarPeriodo"
+                                                (click)="metasClonarPeriodo()">Clonar metas</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <fuse-alert [type]="'primary'" *ngIf="clonarPeriodo">
+                                    <span fuseAlertTitle>Este período se encuentra clonado</span>
+                                    Puede seguir con el proceso dando click en la <mat-icon class="border-3 p-1"
+                                        svgIcon="heroicons_outline:arrow-narrow-right"
+                                        (click)="goToNextStep()"></mat-icon> o <a (click)="goToNextStep()">Siguiente</a>
+                                </fuse-alert>
+                                <fuse-alert [type]="'warning'" *ngIf="!clonarPeriodo">
+                                    <span fuseAlertTitle>Aún no se ha seleccionado un período para clonar</span>
+                                    Elija los períodos para seguir el flujo
+                                </fuse-alert>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+
+                    <mat-tab *ngIf="currentStep==1">
+                        <ng-template matTabContent>
+                            <div
+                                class="relative prose prose-sm max-w-6xl mx-auto sm:mx-2    rounded-2xl shadow overflow-hidden bg-card  ">
+
+                                <ng-container *ngFor="let item2 of agenciasStep;let i=index">
+                                    <div class="mb-2">
+                                        <mat-accordion>
+                                            <mat-expansion-panel
+                                                (opened)="setStep(i);metasListaIndicadoresAgencia(item2.codigo)" hideToggle>
+                                                <mat-expansion-panel-header>
+    
+                                                    <mat-panel-description>
+                                                        <div class="flex justify-between w-100">
+                                                            <div class="grid">
+                                                                <small class="text-secondary text-md ">Agencia</small>
+                                                                <div class="flex gap-2 items-center text-md font-bold">
+                                                                    <mat-icon class="icon-size-4 text-primary-700"
+                                                                        svgIcon="heroicons_solid:library"></mat-icon><span
+                                                                        class="font-semibold"> {{item2.descripcion}} </span>
+                                                                </div>
+                                                            </div>
+    
+                                                            <div class="grid" *ngIf="dataTotal.length>0">
+                                                                <small class="text-secondary text-md ">Total</small>
+                                                                <div class="flex gap-2 items-center text-md font-bold">
+                                                                    <mat-icon class="icon-size-4 text-primary-700"
+                                                                        svgIcon="heroicons_solid:cash"></mat-icon><span
+                                                                        class="font-semibold"> ${{dataTotal[i+1].total |
+                                                                        number }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+                                                <div class="my-2 card rounded-2xl">
+                                                    <div class="bg-primary-700 rounded-t-2xl hover:shadow cursor-pointer text-white  py-2 px-4 "
+                                                        (click)="item2.mostrarNuevo=!item2.mostrarNuevo"
+                                                        [ngClass]="!item2.mostrarNuevo?'rounded-b-2xl':'rounded-b-none'"
+                                                    >
+                                                    <div class="flex justify-between">
+                                                        <span>      
+                                                            Agregar nuevo asesor a {{item2.descripcion}}
+                                                        </span>
+
+                                                        <mat-icon class="text-white" [svgIcon]="!item2.mostrarNuevo?'heroicons_outline:chevron-down':'heroicons_outline:chevron-up'"></mat-icon>
+                                                    </div>
+                                                     
+                                                    </div>
+                                                    <form [formGroup]="formNuevo" class="px-4 py-2" *ngIf="item2.mostrarNuevo">
+                                                        <div class="grid grid-cols-10 gap-2 align-items-baseline">
+
+                                                            <mat-form-field class="col-span-3" appearance="fill">
+                                                                <mat-label>Nombre
+                                                                </mat-label>
+                                                                <input type="text" aria-label="nombre" matInput
+                                                                    [formControl]="myControl" [matAutocomplete]="auto"
+                                                                    autocomplete="off">
+                                                                <mat-autocomplete autoActiveFirstOption
+                                                                    #auto="matAutocomplete">
+                                                                    <mat-option
+                                                                        *ngFor="let option of filteredOptions | async"
+                                                                        [value]="option.nombre"
+                                                                        (click)="agregarAsesor(option.idUsuario)">
+                                                                        {{option.nombre}}
+                                                                    </mat-option>
+                                                                </mat-autocomplete>
+                                                            </mat-form-field>
+
+                                                            <mat-form-field appearance="fill" class="col-span-2">
+                                                                <mat-label>Asesor</mat-label>
+                                                                <input matInput type="text" autocomplete="off"
+                                                                    [disabled]="true" [formControlName]="'asesor'">
+                                                            </mat-form-field>
+
+                                                            <mat-form-field appearance="fill" class="col-span-2">
+                                                                <mat-label>Tipo de asesor</mat-label>
+                                                                <mat-select [formControlName]="'tipoAsesor'">
+                                                                    <mat-option value="Gestor">Gestor</mat-option>
+                                                                    <mat-option value="Jefe">Jefe</mat-option>
+                                                                    <mat-option value="Junior">Junior</mat-option>
+                                                                    <mat-option value="Senior">Senior</mat-option>
+                                                                    <mat-option value="Supernumerario">Super
+                                                                        numerario</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+
+                                                            <mat-form-field appearance="fill" class="col-span-2">
+                                                                <span matPrefix>$ &nbsp;</span>
+                                                                <mat-label>Meta de colocación</mat-label>
+                                                                <input matInput type="text" autocomplete="off"
+                                                                    [formControlName]="'metaColocacion'"
+                                                                    (keyup)="formNuevo.controls['metaColocacion'].setValue(utility.formatearNumero(formNuevo.value.metaColocacion)); ">
+                                                            </mat-form-field>
+
+                                                            <div>
+                                                                <button mat-raised-button color="primary"
+                                                                    (click)="metasAgregarAsesor(item2.codigo)">Guardar</button>
+                                                            </div>
+
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                
+                                                <table class="p-0 m-0">
+                                                    <thead class="bg-accent-50">
+                                                        <tr
+                                                            class="text-md font-semibold tracking-wide text-left text-gray-400  border-b ">
+                                                            <th class="w-30 px-4 py-3">
+                                                                Identificación
+                                                            </th>
+                                                            <th class="min-w-50 px-4 py-3">
+                                                                Nombre
+                                                            </th>
+                                                            <th class="px-4 py-3">
+                                                                Asesor
+                                                            </th>
+                                                            <th class="px-4 py-3">
+                                                                Tipo asesor
+                                                            </th>
+                                                            <th class="px-4 py-3">
+                                                                Meta colocación
+                                                            </th>
+                                                            <th class="px-4 py-3" colspan="2">
+                                                                Opciones
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of dataAgencia">
+                                                            <td class="px-2 text-sm border  text-left">
+                                                                {{item.identificacion}}
+                                                            </td>
+                                                            <td class="px-2 text-sm border  text-left">
+                                                                {{item.nombre}}
+                                                            </td>
+                                                            <td class="px-2 text-sm border  text-left">
+                                                                {{item.asesor}}
+                                                            </td>
+                                                            <td class="px-2 text-sm border  text-left">
+                                                                {{item.tipoAsesor}}
+                                                            </td>
+                                                            <td class="px-2 text-sm border  text-right w-40"
+                                                                *ngIf="item.editar">
+                                                                ${{item.metaColocacion | number}}
+                                                            </td>
+                                                            <td class="text-sm sombra-personalizada px-2 w-40 border-3"
+                                                                *ngIf="!item.editar">
+                                                                <div class="grid grid-cols-5">
+                                                                    <mat-icon class="icon-size-4"
+                                                                        svgIcon="attach_money"></mat-icon>
+                                                                    <input class="col-span-3" type="text"
+                                                                        [(ngModel)]="item.formatoMetaColocacion"
+                                                                        name="name{{item.identificacion}}"
+                                                                        (keyup)="item.formatoMetaColocacion=utility.formatearNumero(item.formatoMetaColocacion,item2.codigo);">
+                                                                    <mat-icon class="icon-size-4" svgIcon="save"
+                                                                        (click)="metasUpdateMetaColocacion(item,item2.codigo)"></mat-icon>
+                                                                </div>
+                                                            </td>
+                                                            <td class="px-2 text-sm border  text-center">
+                                                                <mat-icon class="icon-size-4" svgIcon="edit"
+                                                                    *ngIf="item.editar"
+                                                                    (click)="item.editar=false"></mat-icon>
+                                                                <mat-icon class="icon-size-4" svgIcon="edit_off"
+                                                                    *ngIf="!item.editar"
+                                                                    (click)="item.editar=true"></mat-icon>
+                                                            </td>
+                                                            <td class="px-2 text-sm border  text-center">
+                                                                <mat-icon class="icon-size-4"
+                                                                    svgIcon="heroicons_outline:eye-off"
+                                                                    (click)="metasAnularAsesor(item.asesor,item2.codigo)"></mat-icon>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </mat-expansion-panel>
+                                        </mat-accordion>
+                                    </div>
+                                 
+                                </ng-container>
+
+                                <mat-card *ngIf="dataTotal.length>0" class=" bg-accent-100">
+
+                                    <div class="flex justify-between w-100 ">
+                                        <div class="grid">
+
+                                            <div class="flex gap-2 items-center text-md font-bold">
+                                                <mat-icon class=" text-primary-700"
+                                                    svgIcon="heroicons_solid:library"></mat-icon><span
+                                                    class="font-semibold text-2xl">Todas las agencias </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="grid" *ngIf="dataTotal.length>0">
+                                            <small class="text-secondary text-md ">Total</small>
+                                            <div class="flex gap-2 items-center text-md font-bold">
+                                                <mat-icon class="text-primary-700"
+                                                    svgIcon="heroicons_solid:cash"></mat-icon><span
+                                                    class="font-semibold text-xl"> ${{dataTotal[0].total | number
+                                                    }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <mat-card-actions class="text-center">
+                                        <button mat-raised-button color="primary"
+                                            (click)="metasSgtePaso()">Terminar</button>
+                                    </mat-card-actions>
+                                </mat-card>
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                </ng-container>
+            </mat-tab-group>
+        </div>
+
+
+        <!-- Progress & Navigation - Mobile -->
+        <div class=" flex items-center p-4 border-t bg-card">
+            <div class="flex items-center justify-center ml-1 lg:ml-2 font-medium leading-5">
+                <span>{{currentStep + 1}}</span>
+                <span class="mx-0.5 text-hint">/</span>
+                <span>{{totalsteps + 1}}</span>
+            </div>
+            <mat-progress-bar class="flex-auto ml-6 rounded-full" [value]="100 * (currentStep + 1) / (totalsteps+1)">
+            </mat-progress-bar>
+            <button class="ml-4" mat-icon-button (click)="goToPreviousStep()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-left'"></mat-icon>
+            </button>
+            <button class="ml-0.5" mat-icon-button (click)="goToNextStep()">
+                <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-right'"></mat-icon>
+            </button>
+        </div>
+    </div>
+
+
+</div>
