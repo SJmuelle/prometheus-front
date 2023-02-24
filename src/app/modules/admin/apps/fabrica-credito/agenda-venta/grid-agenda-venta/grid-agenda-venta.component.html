@@ -1,0 +1,291 @@
+<div class="h-full h-screen overflow-auto w-full pb-40">
+    <div class="flex flex-col flex-auto">
+
+        <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+
+            <!-- Title and action buttons -->
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center ml-6">
+                    <div class="flex-0 w-16 h-16  overflow-hidden">
+                        <img src="assets/images/agendas/Ventas.png" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 mx-3">
+                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda de venta digital
+                        </div>
+                        <div class="flex items-center">
+                            <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                            <div class="font-medium tracking-tight text-secondary">
+                                Completa el formulario
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="grid grid-cols-1 w-full px-5 pt-3">
+            <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full relative">
+                <mat-progress-bar class="barra" mode="determinate" [value]="porcentaje"></mat-progress-bar>
+
+                <div class="flex items-center justify-between">
+
+                    <div class="text-secondary font-medium"> <input
+                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                            autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                            placeholder="Filtrar..."></div>
+
+                    <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
+                        (change)="page=1">
+                        <option value="10">10</option>
+                        <option value="20"> 20</option>
+                        <option value="30"> 30</option>
+                    </select>
+
+                </div>
+                <div class="w-full  overflow-auto mt-2">
+                    <table class="p-0">
+
+                        <tbody class="bg-white">
+
+                            <ng-container
+                                *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+
+                                <tr class="text-gray-700 border-t border-b ">
+                                    <td rowspan="2" class="py-3 text-sm my-3">
+                                        <div class="text-gray-700 grid-cols-2 grid">
+                                            <div class="py-0 text-sm">
+                                                <button mat-icon-button matTooltip="Gestionar"
+                                                    (click)="onGetAgenda(item)">
+                                                    <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                                </button>
+                                            </div>
+
+                                            <div class="py-0 text-sm ">
+                                                <button mat-icon-button matTooltip="Desisitir">
+                                                    <mat-icon svgIcon="heroicons_outline:logout"></mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="px-2 pb-0 pt-1" rowspan="2">
+                                        <div class="flex flex-column " rowspan="2">
+                                            <div class="flex-0 w-12 overflow-hidden">
+                                                <!-- <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover"> -->
+                                                <div class="relative flex flex-0 items-center justify-center w-10 h-10">
+                                                    <div
+                                                        class="-ml-0.5 absolute bottom-0 flex-0 h-2 ng-star-inserted right-0 ring-2 ring-bg-card rounded-full text-on-primary w-2" [ngClass]="item.online=='S'?'bg-green-600':'bg-red-600'">
+                                                    </div>
+                                                    <img alt="linea de negocio"
+                                                        class=""
+                                                        [src]="item.urlIconoUnidad" >
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+
+                                    </td>
+                                    <td class="px-2 pb-0 pt-1">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Solicitud:</small>
+                                            <span class="text-md text-black font-medium"> {{
+                                                item.numeroSolicitud}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="px-2 pb-0 pt-1">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Identificación: </small>
+                                            <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 pb-0 pt-1" colspan="3">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Cliente: </small>
+                                            <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-2 pb-0 pt-1">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">Monto: </small>
+                                            <span class="text-lg text-black font-medium">
+                                                ${{ item.monto | number:0}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td rowspan="2">
+                                        <div class="flex w-24">
+                                            <div class="flex flex-column ">
+                                                <small class="text-accent-600 text-xs">
+                                                    Fecha solicitud
+                                                </small>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                    </mat-icon>
+
+                                                    {{ cambiarFecha(item.fechaEmision) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                    </mat-icon>
+                                                    {{ cambiarHora(item.fechaEmision) }}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    </mat-icon>
+                                                    {{item.diasTotalesCredito}} horas
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="text-gray-700 border-t border-b ">
+                                    <td class="px-2  pb-1 pt-1">
+                                        <div class="flex flex-column ">
+
+                                            <span class="text-md text-black font-medium" matTooltip="Agencia">
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:location-marker"></mat-icon>
+                                                {{ item.agencia}}
+                                            </span>
+
+                                        </div>
+                                    </td>
+
+                                    <td class="px-2  pb-1 pt-1">
+                                        <div class="flex flex-column ">
+                                            <span class="text-md text-black font-medium" matTooltip="Asesor">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesor==''?'Usuario web':item.asesor}}
+                                            </span>
+                                        </div>
+                                    </td>
+
+
+                                    <td class="px-2  pb-1 pt-1" colspan="3">
+                                        <div class="flex flex-column ">
+                                            <span class="text-md text-black font-medium" matTooltip="Mail">
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:mail"></mat-icon>
+                                                {{ item.email}}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                    <td class="px-2  pb-1 pt-1">
+                                        <div class="flex flex-column ">
+                                            <span class="text-md text-black font-medium" matTooltip="celular">
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:phone"></mat-icon>
+                                                {{ item.celular}}
+                                            </span>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                                <tr *ngIf="item.mostrarDevolucion=='v'">
+                                    <td class="p-3 bg-hover" colspan="10">
+                                        <div class="flex justify-between">
+                                            <div
+                                                class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
+                                                <!-- Item content -->
+                                                <div
+                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
+                                                    <!-- titulo -->
+                                                    <div class="text-end">
+                                                        <div
+                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
+                                                            Última devolución
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Info -->
+                                                    <div class="flex items-center w-full">
+                                                        <!-- name -->
+                                                        <div class="mr-2 font-semibold truncate">
+                                                            <span>Usuario: </span> {{ item.usuarioDevolucion}}
+                                                        </div>
+
+                                                        <!-- Date -->
+                                                        <div
+                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                            {{ cambiarFecha(item.fechaDevolucion) }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Subject -->
+                                                    <div class="flex items-center w-full">
+                                                        <span class="mr-2 font-semibold truncate">
+                                                            <span>Causal: </span> {{item.causalDevolucion}}
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- observacion -->
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
+                                                        {{item.observacionDevolucion}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="relative flex border-t w-100 first:border-0 bg-white  text-md">
+                                                <!-- Item content -->
+                                                <div
+                                                    class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
+                                                    <!-- titulo -->
+                                                    <div class="text-end">
+                                                        <div
+                                                            class="py-0.5 text-sm font-semibold text-gray-800 bg-hover ng-star-inserted">
+                                                            Último Reintegro
+                                                        </div>
+                                                    </div>
+                                                    <!-- Info -->
+                                                    <div class="flex items-center w-full">
+                                                        <!-- Sender name -->
+                                                        <div class="mr-2 font-semibold truncate">
+                                                            <span>Usuario: </span> {{ item.usuarioReintegroDevolucion}}
+                                                        </div>
+
+                                                        <!-- Date -->
+                                                        <div
+                                                            class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                            {{ cambiarFecha(item.fechaReintegroDevolucion) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Subject -->
+                                                    <div class="flex items-center w-full">
+                                                        <span class="mr-2 font-semibold truncate">
+                                                            <span>Concepto: </span> {{item.causalReintegroDevolucion}}
+                                                        </span>
+                                                    </div>
+                                                    <!-- observacion -->
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
+                                                        {{item.observacionReintegroDevolucion}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex items-center mt-auto">
+                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+                    </pagination-controls>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -13,6 +13,7 @@ import { ReferidosModule } from './referidos/referidos.module';
 import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitudes.module';
 import { EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
 import { FormulariosModule } from './formularios/formularios.module';
+import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
 
 
 const routes: Routes = [
@@ -52,6 +53,11 @@ const routes: Routes = [
             {
                 path: 'agenda-decision',
                 loadChildren: () => AgendaDecisionModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
+                path: 'agenda-venta-digital',
+                loadChildren: () => AgendaVentaModule,
                 resolve  : {EdicionTrazabilidadResolver}
             },
             {

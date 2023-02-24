@@ -64,6 +64,23 @@ export class AppSettingsService {
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/GC'),
         }
     };
+
+        /**
+ * @description: End-point agenda de venta
+ */
+        public agendaVenta = {
+            url: {
+                base: EndPoints.uri('/generic/qry/tk/agenda-ventas-digitales'),
+            }
+        };
+
+    public formulario = {
+        url: {
+            // https://prometheus.fintra.co:8443/api-fintra/api/credito/tk/property/parametros-cargue-inicial
+            microcredito: EndPoints.uri('/generic/qry/agendas-credito/GC'),
+            cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
+        }
+    }
     /**
      * @description: End-point fabrica de datos
      */
