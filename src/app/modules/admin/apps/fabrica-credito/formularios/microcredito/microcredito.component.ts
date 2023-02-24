@@ -49,11 +49,13 @@ export class MicrocreditoComponent implements OnInit {
 
   private cargueInicial() {
     let data = {
-      "entidad": "CONFIG-MICRO",
-      "unidadNegocio": 1
+      entidad: "CONFIG-MICRO",
+      unidadNegocio: 1
     };
     this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
       if (resp) {
+        console.log('resp', resp);
+
         this.dataInicial = resp.data
       }
     })

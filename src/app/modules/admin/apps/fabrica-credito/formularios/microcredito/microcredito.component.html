@@ -15,8 +15,7 @@
     <form [formGroup]="form">
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
             <div class="col-lg-12 col-sm-12 cursor-pointer font-semibold mb-2 ml-3 mt-1 pl-0 text-2xl md:col-span-4">
-                Datos
-                básicos
+                Datos básicos
             </div>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Tipo de identificación</mat-label>
@@ -54,10 +53,11 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nivel de estudio </mat-label>
                 <mat-select formControlName="nivelEstudio">
-                    <mat-option *ngFor="let nivelEstudio of dataInicial?.nivelEstudio"
+                    <mat-option *ngFor="let nivelEstudio of dataInicial?.nivelesEstudio"
                         [value]="nivelEstudio.codigoOpcion">{{nivelEstudio.descripcionOpcion}}
                     </mat-option>
                 </mat-select>
+
             </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -80,16 +80,15 @@
                 <mat-label>¿ Comercializas productos o servicios?</mat-label>
                 <mat-select formControlName="tipoActividad">
                     <mat-option *ngFor="let actividadesMicro of dataInicial?.actividadesMicro"
-                        [value]="actividadesMicro.codigo">{{actividadesMicro.nombre}}
+                        [value]="actividadesMicro.codigo">{{actividadesMicro.valor}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿ Tu negocio está registrado en cámara de comercio?</mat-label>
                 <mat-select formControlName="tipoActividad">
-                    <mat-option value="S">Si, estoy reguistrado
-                    </mat-option>
-                    <mat-option value="N">No, no estoy reguistrado
+                    <mat-option *ngFor="let camaraComercio of dataInicial?.camaraComercio"
+                        [value]="camaraComercio.codigo">{{camaraComercio.valor}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -97,7 +96,7 @@
                 <mat-label>¿ En qué tipo de local queda tu negocio?</mat-label>
                 <mat-select formControlName="tipoLocal">
                     <mat-option *ngFor="let tiposLocales of dataInicial?.tiposLocales"
-                        [value]="tiposLocales.codigo">{{tiposLocales.nombre}}
+                        [value]="tiposLocales.codigo">{{tiposLocales.valor}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -111,20 +110,20 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>Actividad Especifica</mat-label>
+                <mat-label>Actividad específica</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="antiguedadActividad">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿ Cuánto tiempo en (meses) llevas ejerciendo esta actividad? </mat-label>
+                <mat-label>¿Cuánto tiempo en (meses) llevas ejerciendo esta actividad? </mat-label>
                 <input matInput type="number" autocomplete="off" formControlName="antiguedadNegocio">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿ Cuánto tiempo en (meses)tiene tu negocio?</mat-label>
+                <mat-label>¿Cuánto tiempo en (meses) tiene tu negocio?</mat-label>
                 <input matInput type="number" autocomplete="off" formControlName="antiguedadActividad">
             </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿En que departamento de colombia queda tu negocio?</mat-label>
+                <mat-label>¿En qué departamento de colombia queda tu negocio?</mat-label>
                 <input matInput type="text" autocomplete="off">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -137,11 +136,11 @@
             </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿ Cuánto dinero necesitas para tu negocio?</mat-label>
+                <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
                 <input matInput type="number" autocomplete="off">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿ En cuántos meses vas a pagar tu crédito?</mat-label>
+                <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
                 <input matInput type="number" autocomplete="off">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -149,9 +148,6 @@
                 <input matInput type="text" autocomplete="off">
             </mat-form-field>
         </div>
-
-
-
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 sm:flex sm:justify-end">
             <button mat-raised-button color="primary" type="button">
                 Guardar
