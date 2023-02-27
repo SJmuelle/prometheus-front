@@ -130,9 +130,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
           this.form.patchValue(resp.data);
         }
       })
-    } else {
-      this.form.reset();
-    }
+    } 
   }
 
   private cargueInicial() {
