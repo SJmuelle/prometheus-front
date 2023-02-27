@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: 'microcredito',
     component: MicrocreditoComponent
+  },
+  {
+    path: 'microcredito/:unidadNegocio/:tipoIdentificacion/:identificacion',
+    component: MicrocreditoComponent
   }
 ];
 

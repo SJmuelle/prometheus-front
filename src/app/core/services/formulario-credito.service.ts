@@ -25,4 +25,31 @@ export class FormularioCreditoService {
         return res;
       }));
   }
+  cargueActividadEconomica(nivelEstudio,tipoActividad,camaraComercio) {
+    return this._utilityService.getQuery(`${this._appSettings.formulario.url.cargueActividadEconomica}/${nivelEstudio}/${camaraComercio}/${tipoActividad}`)
+      .pipe(map((res: any) => {
+        return res;
+      }));
+  }
+  cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion,unidadNegocio) {
+    return this._utilityService.getQuery(`${this._appSettings.formulario.url.cargueSolicitudesFormularioSimulaciones}/${unidadNegocio}/${tipoDocumento}/${identificacion}`)
+      .pipe(map((res: any) => {
+        return res;
+      }));
+  }
+
+
+  listarCiudadesMicro(departamento) {
+    return this._utilityService.getQuery(`${this._appSettings.formulario.url.listarCiudadesMicro}/${departamento}`)
+      .pipe(map((res: any) => {
+        return res;
+      }));
+  }
+
+  listarBarriosMicro(ciudad) {
+    return this._utilityService.getQuery(`${this._appSettings.formulario.url.listarBarriosMicro}/${ciudad}`)
+      .pipe(map((res: any) => {
+        return res;
+      }));
+  }
 }
