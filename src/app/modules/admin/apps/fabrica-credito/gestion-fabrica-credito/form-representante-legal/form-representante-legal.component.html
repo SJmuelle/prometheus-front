@@ -208,7 +208,7 @@
             </mat-form-field>
             <ng-container *ngIf="departamentos$ | async as departamentos">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                    <mat-label>Departamento de expedicion</mat-label>
+                    <mat-label>Departamento de expedición</mat-label>
                     <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
                         [formControlName]="'codigoDepartamentoExpedicion'">
                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
@@ -221,7 +221,7 @@
             </ng-container>
             <ng-container *ngIf="ciudades$ | async as ciudades">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                    <mat-label>Ciudad / municipio de residencia</mat-label>
+                    <mat-label>Ciudad / municipio de expedición</mat-label>
                     <mat-select (selectionChange)="seleccionCiudad($event)" [value]="'seleccione'"
                         [formControlName]="'codigoCiudadExpedicion'">
                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
