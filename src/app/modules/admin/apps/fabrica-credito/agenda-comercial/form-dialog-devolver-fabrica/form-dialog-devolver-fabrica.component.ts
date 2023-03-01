@@ -72,7 +72,7 @@ export class FormDialogDevolverFabricaComponent implements OnInit {
             }
         } else {
             const data: any = this.form.getRawValue();
-            // debugger;
+            // ;
             this.postCambioEstado({
                 numeroSolicitud: this.data.numeroSolicitud,
                 estado: 'RE',
@@ -91,7 +91,7 @@ export class FormDialogDevolverFabricaComponent implements OnInit {
     }
 
     private postDevolverFabrica(data: any): void {
-        // debugger;
+        // ;
         Swal.fire({
             title: 'Cargando',
             html: 'Guardando información',
@@ -104,7 +104,7 @@ export class FormDialogDevolverFabricaComponent implements OnInit {
             .postComentarioDevolver(data)
             .subscribe((res) => {
                 Swal.close();
-                // debugger;
+                // ;
                 if (res.data.respuesta == 0) {
                     Swal.fire('Completado', res.data.msg, 'success');
                     this.onCerrar();

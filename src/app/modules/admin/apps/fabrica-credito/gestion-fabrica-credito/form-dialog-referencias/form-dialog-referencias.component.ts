@@ -34,7 +34,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         private matDialog: MatDialog
     ) {
         this.crearFormulario();
-        debugger
+        
         const numeroSolicitud: string = data.numeroSolicitud;
         this.form.controls.numeroSolicitud.setValue(numeroSolicitud);
     }

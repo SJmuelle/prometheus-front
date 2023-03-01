@@ -78,7 +78,7 @@ export class RecalcularOfertaConsumoPlexaComponent implements OnInit {
       .SelectOfertaConsumo(data)
       .subscribe((res) => {
         Swal.close();
-        // debugger
+        // 
         if (res.msg == 'OK') {
           this.listadoOferta = res.data;
           this.getCapacidadPago(Number(this.numeroSolicitud));
@@ -104,7 +104,7 @@ export class RecalcularOfertaConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud)
       .subscribe(({ data }) => {
         Swal.close();
-        // debugger
+        // 
         this.datosCompletoSolicitud = data;
         // this.getActividadEconomica(data.ocupacion);
         this.llenarDatosFormOferta(data)
@@ -112,7 +112,7 @@ export class RecalcularOfertaConsumoPlexaComponent implements OnInit {
         if (this.datosCompletoSolicitud.tipoCredito) {
           this.genericaServices.getParametriaTipoCredito(this.datosCompletoSolicitud.tipoCredito)
             .subscribe(({ data }) => {
-              // debugger;
+              // ;
               this.plazoMaximo = data.plazoMaximo;
               this.plazoMinimo = data.plazoMinimo;
               this.formOferta.controls['plazo'].setValidators([Validators.required, Validators.max(this.plazoMaximo), Validators.min(this.plazoMinimo)])
@@ -124,7 +124,7 @@ export class RecalcularOfertaConsumoPlexaComponent implements OnInit {
   }
 
   public validacionPlazo(data: string) {
-    // debugger;
+    // ;
     let plazo = Number(this.utility.enviarNumero(data));
     let cambiar = false;
     if ((plazo > this.plazoMaximo) || (plazo < this.plazoMinimo)) {

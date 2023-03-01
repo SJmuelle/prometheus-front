@@ -218,7 +218,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     validaForm(tab) {
-        // debugger;
+        // ;
         switch (tab) {
             case 1:
                 if (
@@ -321,7 +321,7 @@ export class CreacionPQRSComponent implements OnInit {
         this._pqrService
             .getListados(urlinfoCliente)
             .subscribe((response: any) => {
-                // debugger;
+                // ;
                 if (response) {
                     Swal.fire(
                         '¡Advertencia!',
@@ -608,7 +608,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardHijos(respuesta, dataPadre, url) {
-        //debugger;
+        //;
         this.causalesLegales.forEach((element) => {
             let dataHijos = {
                 empresa: 'FINV',
@@ -698,7 +698,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     mostrarDireccion() {
-        // debugger;
+        // ;
         const dialogRef = this.dialog.open(DirectionsComponent, {
             width: '60%',
             data: {

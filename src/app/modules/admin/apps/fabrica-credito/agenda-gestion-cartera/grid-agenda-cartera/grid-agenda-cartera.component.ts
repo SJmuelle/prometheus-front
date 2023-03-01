@@ -93,7 +93,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
    * @description: Guarda el comentario para devolvee
    */
   public onComentario(data): void {
-    //  debugger
+    //  
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -115,7 +115,7 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
  * @description: Guarda el comentario para devolvee
  */
   public onComentarioRechazar(data): void {
-    //  debugger
+    //  
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {

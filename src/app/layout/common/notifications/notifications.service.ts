@@ -155,7 +155,7 @@ export class NotificationsService {
             switchMap((notifications) =>
                 this._utility.getQuery(url, true).pipe(
                     map((isUpdated: boolean) => {
-                        // debugger;
+                        // ;
                         // Go through all notifications and set them as read
                         notifications.forEach((notification, index) => {
                             notifications[index].read = 't';

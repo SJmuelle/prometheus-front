@@ -124,7 +124,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
    * @description: Guarda el comentario para devolvee
    */
     public onComentarioRechazar(data): void {
-      //  debugger
+      //  
       const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
         width: '30%',
         data: {

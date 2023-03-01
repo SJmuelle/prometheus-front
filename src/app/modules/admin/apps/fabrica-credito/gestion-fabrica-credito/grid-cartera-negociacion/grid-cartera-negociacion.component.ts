@@ -82,7 +82,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
       numeroSolicitud: Number(this.numeroSolicitud),
       gestionCartera: event
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',

@@ -39,7 +39,7 @@ export class RecalcularOfertaLibranzaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    debugger
+    
     this.createFormulario();
     this.getListadoOferta(Number(this.numeroSolicitud));
     this.getCapacidadPago(Number(this.numeroSolicitud));

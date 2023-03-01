@@ -18,7 +18,7 @@ export class ListadoPreguntasReferenciacionFormComponent implements OnInit {
     private _utility: UtilityService) { }
 
   ngOnInit(): void {
-      // debugger;
+      // ;
       this.datos = this.data;
       if (this.datos.titulo != 'N') {
         this.datos.tipoIdentificacion = this.datos.tipoIdentificacion == 'CC' ? 'Persona natural' : 'Persona juridica'

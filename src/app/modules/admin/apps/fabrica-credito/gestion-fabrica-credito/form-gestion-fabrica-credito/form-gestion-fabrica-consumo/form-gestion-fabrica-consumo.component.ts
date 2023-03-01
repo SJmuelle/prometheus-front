@@ -245,7 +245,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
                 if (tipo == 'N') {
                     this.form.controls[variable].setValue(this.utility.formatearNumero(String(this.fabricaDatos[variable])));
                 } else if (tipo == 'D') {
-                    debugger
+                    
                     if (this.fabricaDatos.codigoDepartamento) {
                         this.getCiudades(this.fabricaDatos.codigoDepartamento);
                         this.form.controls['codigoDepartamento'].setValue(String(this.fabricaDatos.codigoDepartamento));
@@ -397,7 +397,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                debugger
+                
                 this.postFormularioFabrica(datosFormularios);
             }
         });

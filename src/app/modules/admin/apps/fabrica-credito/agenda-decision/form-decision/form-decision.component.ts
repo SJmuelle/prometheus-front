@@ -55,7 +55,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       console.log(response);
       if (response) {
         this.listadoDeciones = response.data;
-        debugger
+        
         if (this.fabricaDatos.agenda != 'DE') {
 
 
@@ -117,7 +117,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
 
   public guardar() {
-    debugger
+    
     if(!this.form.valid){
       return
     }

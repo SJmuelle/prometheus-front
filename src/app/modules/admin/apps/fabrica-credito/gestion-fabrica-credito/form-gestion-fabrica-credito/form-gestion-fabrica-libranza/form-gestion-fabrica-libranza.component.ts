@@ -398,7 +398,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
         const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
         const plazoFormato = Number(this.form.value.plazo);
-        // debugger
+        // 
         const codigoBarrioFormato = codigoBarrio == undefined ? 0 : Number(codigoBarrio)
         // descuentoNomina
         delete data.ventasMensuales;

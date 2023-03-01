@@ -113,7 +113,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     }
 
     cambiaDireccionNegocio() {
-        debugger
+        
         if (this.form.value.viveEnNegocio == 'S') {
             this.form.controls.codigoDepartamentoNegocio.setValue(this.form.value.codigoDepartamento);
             this.form.controls.descripcionDepartamentoNegocio.setValue(this.form.value.descripcionDepartamento);

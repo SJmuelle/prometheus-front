@@ -151,7 +151,7 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       }
       // const data: any = this.form.getRawValue();
      
-      // debugger;
+      // ;
       console.log(datosFormularios);
       
       Swal.fire({

@@ -118,7 +118,7 @@ export class DecisionesService {
 
   //Funcion para el Manejo de errores
   handleError = (err: any): Observable<HttpEvent<any>> => {
-    // debugger;
+    // ;
     let errorMessage = 'No hay respuesta, favor intente nuevamente';
     let icon: string = 'question';
     // console.log("Algo se daño");

@@ -66,7 +66,7 @@ export class GridCarteraComponent implements OnInit {
     let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',
@@ -79,7 +79,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
-        debugger
+        
         this.totales = res.data
 
       });
@@ -98,7 +98,7 @@ export class GridCarteraComponent implements OnInit {
       numeroSolicitud: Number(this.numeroSolicitud),
       gestionCartera: event
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',
