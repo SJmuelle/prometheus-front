@@ -14,6 +14,8 @@ import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitu
 import { EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
 import { FormulariosModule } from './formularios/formularios.module';
 import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
+import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
+import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
 
 
 const routes: Routes = [
@@ -82,6 +84,14 @@ const routes: Routes = [
             {
                 path: 'formularios',
                 loadChildren: () => FormulariosModule
+            },
+            {
+                path: 'agenda-comite-comercial',
+                loadChildren: () => AgendaComiteComercialModule
+            },
+            {
+                path: 'agenda-visitas',
+                loadChildren: () => AgendaVisitasModule
             }
         ]
     }
