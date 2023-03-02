@@ -151,9 +151,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
       return;
     }
     let data = this.form.value;
-    const { barrioNegocio } = data;
+    const { barrioNegocio, valorCredito } = data;
     delete data.barrioNegocio
     data.barrioNegocio = Number(barrioNegocio)
+    delete data.valorCredito
+    data.valorCredito = Number(valorCredito)
     data.autorizacionCentrales = 'S',
       data.terminosCondiciones = 'S',
       data.clausulaVeracidad = 'S',
