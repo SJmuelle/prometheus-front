@@ -64,17 +64,14 @@
                     </ng-container>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Valor solicitado</mat-label>
-                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'"
-                            (keyup)="form.controls['valorSolicitadoWeb'].setValue(utility.formatearNumero(form.value.valorSolicitadoWeb)); ">
+                        <input matInput type="text" [formControlName]="'valorSolicitadoWeb'">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Monto crédito</mat-label>
-                        <input matInput type="text" [formControlName]="'valorSolicitado'"
-                            (keyup)="form.controls['valorSolicitado'].setValue(utility.formatearNumero(form.value.valorSolicitado)); "
-                            (change)="validacion('MO')">
+                        <input matInput type="number" [formControlName]="'valorSolicitado'" (change)="validacion('MO')">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Plazo</mat-label>
@@ -138,6 +135,7 @@
             </div>
         </mat-expansion-panel>
         <!--Panel datos de riesgo-->
+
         <!--Panel informacion del titular-->
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
@@ -154,12 +152,10 @@
                                 <mat-label>Tipo de solicitante</mat-label>
                                 <input matInput type="text" [formControlName]="'descripcionTipo'" [readonly]="true">
                             </mat-form-field>
-                            <ng-container *ngIf="tipoDocumentos$ | async as documentos">
-                                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                    <mat-label>Tipo de documento</mat-label>
-                                    <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true">
-                                </mat-form-field>
-                            </ng-container>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Tipo de documento</mat-label>
+                                <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true">
+                            </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>No. de identificación</mat-label>
                                 <input matInput type="text" [formControlName]="'identificacion'" [readonly]="true">
@@ -192,7 +188,6 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Primer nombre</mat-label>
@@ -227,7 +222,6 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="tipoEstadoCivil$ | async as tipoEstadoCivil">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -272,7 +266,6 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Fecha de nacimiento </mat-label>
@@ -309,20 +302,18 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Fecha de expedición </mat-label>
                                 <input matInput [matDatepicker]="fechaExpedicionDocumento"
-                                    [formControlName]="'fechaExpedicionDocumento'" [readonly]="true">
+                                    [formControlName]="'fechaExpedicion'" [readonly]="true">
                                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
                             </mat-form-field>
                             <ng-container *ngIf="departamentosExpedicion$ | async as departamentos">
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                                    <mat-label>Departamento de expedición documento</mat-label>
+                                    <mat-label>Departamento de expedición</mat-label>
                                     <mat-select (selectionChange)="seleccionDepartamentoExpedicion($event)"
                                         [value]="'seleccione'" [formControlName]="'codigoDepartamentoExpedicion'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -485,8 +476,6 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del
                             negocio</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
@@ -554,7 +543,7 @@
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="camaraComercio$ | async as camara">
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                                    <mat-label>¿ Tu negocio está registrado en cámara de comercio?	
+                                    <mat-label>¿ Tu negocio está registrado en cámara de comercio?
                                     </mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
                                         [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
@@ -601,7 +590,7 @@
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="camaraComercio$ | async as camara">
                                 <mat-form-field class="w-100 px-3 fuse-mat-dense">
-                                    <mat-label>Nombre comercial microempresa:
+                                    <mat-label>Nombre comercial microempresa
                                     </mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
                                         [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
@@ -615,7 +604,6 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <div class="w-1/4 px-3 fuse-mat-dense grid grid-cols-2 gap-3">
                                 <mat-form-field class="fuse-mat-dense">
@@ -737,7 +725,6 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del conyuge</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -812,8 +799,6 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="tipoEstadoCivil$ | async as tipoEstadoCivil">
                                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -848,7 +833,6 @@
                             </mat-form-field>
 
                         </div>
-
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Télefono de la empresa</mat-label>
@@ -857,7 +841,6 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de desembolso</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
@@ -900,12 +883,10 @@
                             En caso de no poseer cuenta bancaria autorizo a FINTRA S.A.S para que el monto aprobado sea
                             desembolsado de la forma que la compañía asigne en el momento de la transacción.
                         </span>
-
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de tercero</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <ng-container *ngIf="entidadBancaria$ | async as entidadBancaria">
-                                <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                                <mat-form-field class=" px-3 fuse-mat-dense">
                                     <mat-label>¿El titular requiere de un tercero para la solicitud de crédito?
                                     </mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
@@ -920,7 +901,6 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información legal - cliente PEP</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -964,7 +944,6 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información legal -Datos Sagrilaft</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -1044,9 +1023,6 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
-
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información legal -Declaraciones y
                             Autorizaciones</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
@@ -1065,8 +1041,6 @@
                                 </mat-form-field>
                             </ng-container>
                         </div>
-
-
                         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end" *ngIf="!permisoEditar">
                             <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                                 Guardar
@@ -1080,6 +1054,15 @@
                         <app-form-representante-legal></app-form-representante-legal>
                     </mat-tab>
                 </ng-container>
+
+                <mat-tab>
+                    <ng-template matTabLabel>Codeudor </ng-template>
+                    <form-codeudor></form-codeudor>
+                </mat-tab>
+                <mat-tab>
+                    <ng-template matTabLabel>Codeudor </ng-template>
+                    <form-deudor-solitario></form-deudor-solitario>
+                </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Documentación</ng-template>
                     <app-grid-documentacion></app-grid-documentacion>
@@ -1088,11 +1071,6 @@
                     <ng-template matTabLabel>Referencias</ng-template>
                     <app-grid-referencias></app-grid-referencias>
                 </mat-tab>
-                <!-- <ng-container *ngIf="agenda_fabrica !== 'CO'">
-                    <mat-tab>
-                        <ng-template matTabLabel>Análisis financiero</ng-template>
-                    </mat-tab>
-                </ng-container> -->
                 <ng-container *ngIf="agenda_fabrica != 'GC' && agenda_fabrica != 'CM'">
                     <mat-tab>
                         <ng-template matTabLabel>Politicas</ng-template>

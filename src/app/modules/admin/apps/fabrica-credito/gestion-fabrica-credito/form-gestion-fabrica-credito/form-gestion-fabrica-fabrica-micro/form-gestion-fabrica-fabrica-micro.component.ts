@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormularioCreditoInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
+import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { AgendaCompletacionService } from 'app/core/services/agenda-completacion.service';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -129,89 +129,19 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
   }
 
 
+  // private cargueInicial() {
+  //   let data = {
+  //     entidad: "CONFIG-MICRO",
+  //     unidadNegocio: 1
+  //   };
+  //   this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
+  //     if (resp) {
+  //       this.dataInicial = resp.data
+  //     }
+  //   })
+  // }
 
 
-  public openModalDirection(): void {
-    const dialogRef = this._dialog.open(DirectionsComponent, {
-      width: '60%',
-      data: {
-        departamento: '',
-        municipio: '',
-        barrio: '',
-        direccion: '',
-      },
-      disableClose: false
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-      const dataModal: any = res;
-      if (dataModal.departamento != undefined) {
-        this.form.controls.codigoDepartamento.setValue(dataModal.departamento);
-        this.form.controls.descripcionDepartamento.setValue(dataModal.departamentoNombre);
-        this.form.controls.codigoCiudad.setValue(dataModal.municipio);
-        this.form.controls.descripcionCiudad.setValue(dataModal.municipioNombre);
-        this.form.controls.codigoBarrio.setValue((dataModal.codigoBarrio));
-        this.form.controls.descripcionBarrio.setValue(dataModal.barrio);
-        this.form.controls.direccionResidencial.setValue(
-          (dataModal.viaNombre == undefined
-            ? ''
-            : `${dataModal.viaNombre}`) +
-          (dataModal.callePrincipal == undefined
-            ? ''
-            : ` ${dataModal.callePrincipal}`) +
-          (dataModal.numero == undefined
-            ? ''
-            : ` # ${dataModal.numero}`) +
-          (dataModal.numero2 == undefined
-            ? ''
-            : ` - ${dataModal.numero2}`) +
-          (dataModal.complemento == undefined
-            ? ''
-            : ` ${dataModal.complemento}`));
-      }
-    });
-  }
-
-  public openModalNegocio(): void {
-    const dialogRef = this._dialog.open(DirectionsComponent, {
-      width: '60%',
-      data: {
-        departamento: '',
-        municipio: '',
-        barrio: '',
-        direccion: '',
-      },
-      disableClose: false
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-      const dataModal: any = res;
-      if (dataModal.departamento != undefined) {
-        this.form.controls.codigoDepartamentoNegocio.setValue(dataModal.departamento);
-        this.form.controls.descripcionDepartamentoNegocio.setValue(dataModal.departamentoNombre);
-        this.form.controls.codigoCiudadNegocio.setValue(dataModal.municipio);
-        this.form.controls.descripcionCiudadNegocio.setValue(dataModal.municipioNombre);
-        this.form.controls.codigoBarrioNegocio.setValue((dataModal.codigoBarrio));
-        this.form.controls.descripcionBarrioNegocio.setValue(dataModal.barrio);
-        this.form.controls.direccionNegocio.setValue(
-          (dataModal.viaNombre == undefined
-            ? ''
-            : `${dataModal.viaNombre}`) +
-          (dataModal.callePrincipal == undefined
-            ? ''
-            : ` ${dataModal.callePrincipal}`) +
-          (dataModal.numero == undefined
-            ? ''
-            : ` # ${dataModal.numero}`) +
-          (dataModal.numero2 == undefined
-            ? ''
-            : ` - ${dataModal.numero2}`) +
-          (dataModal.complemento == undefined
-            ? ''
-            : ` ${dataModal.complemento}`));
-      }
-    });
-  }
 
 
   /**
@@ -228,123 +158,33 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
   }
 
 
-  /**
-   * @description: Direcciona al componente comentarios
-   */
-  public onComentarios(): void {
-    this.router.navigate(['/credit-factory/credit-management/commentaries', this.numeroSolicitud]);
-  }
 
-  /**
-   * @description:
-   */
-  public validarCampos(valor1, valor2) {
-    if (valor1 == valor2) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+
+
   /**
    * @description:
    */
   public onPostDatos(): void {
-    // if (this.form.valid) {
-
-    // alert(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
-    let salarioBasicoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico));
-    let descuentoNominaAnterior = this.utility.formatearNumero(String(this.fabricaDatos.descuentoNomina));
-    let comisionesHorasExtrasAnterior = this.utility.formatearNumero(String(this.fabricaDatos.comisionesHorasExtras));
-    let otrosIngresosAnterior = this.utility.formatearNumero(String(this.fabricaDatos.otrosIngresos));
-    let plazoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.plazo));
-    let montoAnterior = this.utility.formatearNumero(String(this.fabricaDatos.monto));
-    if (
-      this.validarCampos(this.form.value.salarioBasico, salarioBasicoAnterior)
-      &&
-      this.validarCampos(this.form.value.comisionesHorasExtras, comisionesHorasExtrasAnterior)
-      &&
-      this.validarCampos(this.form.value.descuentoNomina, descuentoNominaAnterior)
-      &&
-      this.validarCampos(this.form.value.otrosIngresos, otrosIngresosAnterior)
-      &&
-      this.validarCampos(this.form.value.plazo, plazoAnterior)
-      &&
-      this.validarCampos(this.form.value.monto, montoAnterior)
-    ) {
-      this.form.controls['modificado'].setValue('N')
-    } else {
-      this.form.controls['modificado'].setValue('S')
-    }
-    if (
-      this.validarCampos(this.form.value.pagaduria, this.fabricaDatos.pagaduria)
-      &&
-      this.validarCampos(this.form.value.tipoContrato, this.fabricaDatos.tipoContrato)
-      &&
-      this.validarCampos(this.form.value.fechaVinculacion, this.fabricaDatos.fechaVinculacion)
-      &&
-      this.validarCampos(this.form.value.genero, this.fabricaDatos.genero)
-      &&
-      this.validarCampos(this.form.value.fechaNacimiento, this.fabricaDatos.fechaNacimiento)
-    ) {
-      this.form.controls['modificadoPolitica'].setValue('N')
-    } else {
-      this.form.controls['modificadoPolitica'].setValue('S')
-    }
-    const datos: FormularioCreditoInterface = this.form.getRawValue();
-    const { codigoBarrio, fechaNacimiento, otrosIngresos, ingresos, fechaVinculacion, plazo, fechaFinalizacionContrato, valorSolicitado, salarioBasico, fechaExpedicionDocumento, antiguedadComprasSemanales, score, cupoTotal, cupoReservado, cupoDisponible, nivelEndeudamiento, ...data } = datos;
-
-    const fechaNacimientoFormato = moment(fechaNacimiento).format('YYYY-MM-DD');
-    const fechaVinculacionFormato = moment(fechaVinculacion).format('YYYY-MM-DD');
-    const fechaFinalizacionContratoFormato = moment(fechaFinalizacionContrato).format('YYYY-MM-DD');
-    // const fechaMatriculaFormato = moment(fechaMatricula).format('YYYY-MM-DD');
-    const fechaExpedicionDocumentoFormato = moment(fechaExpedicionDocumento).format('YYYY-MM-DD')
-    const compraSemanal = Number(this.utility.enviarNumero(this.form.value.comprasSemanales));
-    const ventasMensuales = Number(this.utility.enviarNumero(this.form.value.ventasMensuales));
-    const scoreFormato = Number(this.form.value.score);
-    const cupoTotalFormato = Number(this.utility.enviarNumero(this.form.value.cupoTotal));
-    const salarioBasicoformato = Number(this.utility.enviarNumero(this.form.value.salarioBasico));
-    const cupoReservadoFormato = Number(this.utility.enviarNumero(this.form.value.cupoReservado));
-    const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
-    const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
-    const activos = Number(this.utility.enviarNumero(this.form.value.activos));
-    const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
-    const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
-    const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
-    const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
-    const ingresosFormato = Number(this.utility.enviarNumero(this.form.value.ingresos));
-    const plazoFormato = Number(this.form.value.plazo);
-    // 
-    const codigoBarrioFormato = codigoBarrio == undefined ? 0 : Number(codigoBarrio)
-    // descuentoNomina
-    delete data.ventasMensuales;
-    delete data.comprasSemanales;
-    delete data.activos;
-    delete data.comisionesHorasExtras;
-    delete data.descuentoNomina;
-
+    const datos: FormularioCreditoMicro = this.form.getRawValue();
+    const { numeroHijos, barrioResidencia, antiguedadActividad, personasACargo, fechaNacimiento, fechaExpedicion, fechaDesvinculacionPublico, fechaDesvinculacionExpuesta, ...data } = datos;
+    const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
+    const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
+    const fechaDesvinculacionPublicoFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
+    const fechaDesvinculacionExpuestaFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
+    const numeroHijosFormato = Number(numeroHijos);
+    const barrioResidenciaFormato = Number(barrioResidencia);
+    const antiguedadActividadFormato = Number(antiguedadActividad);
+    const personasACargoFormato = Number(personasACargo);
     // delete data.otrosIngresos;
-    const datosFormularios: FormularioCreditoInterface = {
-      otrosIngresos: otrosIngresosFormato,
-      plazo: plazoFormato,
-      ingresos: ingresosFormato,
-      descuentoNomina: descuentoNominaFormato,
-      comisionesHorasExtras: comisionesHorasExtrasFormato,
-      fechaFinalizacionContrato: fechaFinalizacionContratoFormato,
-      fechaVinculacion: fechaVinculacionFormato,
-      valorSolicitado: valorSolicitadoFormato,
-      salarioBasico: salarioBasicoformato,
+    const datosFormularios: FormularioCreditoMicro = {
       fechaNacimiento: fechaNacimientoFormato,
-      fechaExpedicionDocumento: fechaExpedicionDocumentoFormato,
-      comprasSemanales: compraSemanal,
-      ventasMensuales: ventasMensuales,
-      activos: activos,
-      antiguedadComprasSemanales: Number(antiguedadComprasSemanales),
-      score: Number(scoreFormato),
-      nivelEndeudamiento: Number(nivelEndeudamientoFormato),
-      cupoTotal: Number(cupoTotalFormato),
-      cupoReservado: Number(cupoReservadoFormato),
-      cupoDisponible: Number(cupoDisponbileFormato),
-      codigoBarrio: codigoBarrioFormato,
+      fechaExpedicion: fechaExpedicionFormato,
+      fechaDesvinculacionPublico: fechaDesvinculacionPublicoFormato,
+      fechaDesvinculacionExpuesta: fechaDesvinculacionExpuestaFormato,
+      numeroHijos: numeroHijosFormato,
+      barrioResidencia: barrioResidenciaFormato,
+      antiguedadActividad: antiguedadActividadFormato,
+      personasACargo: personasACargoFormato,
       ...data
     };
     Swal.fire({
@@ -359,13 +199,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     }).then((result) => {
       if (result.isConfirmed) {
         this.postFormularioFabrica(datosFormularios);
-        // console.log(this.form.getRawValue());
-        // console.log(datosFormularios);
       }
     });
-    // } else {
-    //     this.form.markAllAsTouched();
-    // }
   }
 
   /**
@@ -386,7 +221,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.unidadNegocio = data.unidadNegocio;
         this.fabricaDatos = data;
         this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
-        this.createValidacion()
         if (data.tipoDocumento === 'NIT') {
           const digitoVerificacion: string = this.calcularDigitoVerificacion(data.identificacion);
           const diitoString: string = digitoVerificacion.toString();
@@ -710,7 +544,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
   /**
    * @description: Guardado de datos fabrica
    */
-  private postFormularioFabrica(datos: FormularioCreditoInterface): void {
+  private postFormularioFabrica(datos: FormularioCreditoMicro): void {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
       .subscribe(() => {
@@ -791,250 +625,117 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
    */
   private createFormulario(): void {
     this.form = this.fb.group({
-      id: undefined,
       numeroSolicitud: [''],
-      emision: [''],
-      fechaIngresoFabrica: [''],
-      descripcionEstado: [''],
-      descripcionOrigen: [''],
-      codigoSubEstado: [''],
-      cupoTotal: [''],
-      cupoReservado: [''],
-      cupoDisponible: [''],
-      score: [''],
-      descripcionSubestado: [''],
-      contadorEmbargos: [''],
-      descripcionScore: [''],
-      nivelEndeudamiento: [''],
-      comprasSemanales: [''],
-      antiguedadComprasSemanales: [''],
-      ventasMensuales: [''],
-      activos: [''],
-      declarante: ['', [Validators.required]],
-      codigoDepartamentoNegocio: [''],
-      descripcionDepartamentoNegocio: [''],
-      codigoCiudadNegocio: [''],
-      descripcionCiudadNegocio: [''],
-      codigoBarrioNegocio: [''],
-      descripcionBarrioNegocio: [''],
-      direccionNegocio: [''],
-      telefonoNegocio: ['', [Validators.pattern(/^[0-9]*$/)]],
-      telefono: [''],
-      antiguedadNegocio: [''],
-      camaraComercio: [''],
-      nitNegocio: ['', [Validators.pattern(/^[0-9]*$/)]],
       tipo: [''],
       tipoDocumento: [''],
-      identificacion: ['', [Validators.required, Validators.pattern(/^[0-9]*$/)]],
-      digitoVerificacion: [''],
-      nombreCompleto: ['', [Validators.required]],
-      nombreNegocio: [''],
-      fechaMatricula: [''],
-      fechaExpedicionDocumento: [''],
-      primerNombre: ['', [Validators.required]],
+      identificacion: [''],
+      nombreCompleto: [''],
+      celular: [''],
+      primerNombre: [''],
       segundoNombre: [''],
-      primerApellido: ['', [Validators.required]],
+      primerApellido: [''],
       segundoApellido: [''],
-      celular: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+      estadoCivil: [''],
       email: [''],
       genero: [''],
       nacionalidad: [''],
       fechaNacimiento: [''],
-      codigoDepartamentoNacimiento: [''],
-      codigoCiudadNacimiento: [''],
-      tipoVivienda: [''],
-      codigoDepartamento: [''],
-      descripcionDepartamento: [''],
-      codigoCiudad: [''],
-      descripcionCiudad: [''],
-      codigoBarrio: [''],
-      descripcionBarrio: [''],
-      direccionResidencial: [''],
       nivelEstudio: [''],
-      viveEnNegocio: [''],
-      descripcionTipo: [''],
-      valorSolicitado: [''],
-      tipoCredito: [''],
-      tipoContrato: [''],
-      destinoCredito: [''],
-      plazo: [''],
-      cargo: [''],
-      estadoCivil: [''],
-      estrato: [''],
-      otroDestinoCredito: [''],
+      numeroHijos: [''],
+      personasACargo: [''],
+      fechaExpedicion: [''],
+      codigoDepartamentoExpedicion: [''],
       codigoCiudadExpedicion: [''],
-      salarioBasico: [''],
-      numeroCuentaBancaria: [''],
-      descuentoNomina: [""],
-      comisionesHorasExtras: [""],
-      modificado: [''],
-      aplicaIngresos: [''],
-      descripcionOtrosIngresos: [''],
-      otrosIngresos: [''],
-      otraPagaduria: [''],
-      pagaduria: [''],
-      ingresos: [''],
+      estrato: [''],
+      codigoDepartamento: [''],
+      codigoCiudad: [''],
+      barrioResidencia: [''],
+      direccionResidencial: [''],
+      direccionTipoVia: [''],
+      direccionViaPrincipal: [''],
+      direccionNumeroVia: [''],
+      direccionDistanciaVia: [''],
+      direccionComplemento: [''],
+      tipoVivienda: [''],
+      annosTiempoResidencia: [''],
+      mesesTiempoResidencia: [''],
+      tipoActividad: [''],
+      actividadEconomica: [''],
+      actividadEspecifica: [''],
+      antiguedadActividad: [''],
+      antiguedadNegocio: [''],
+      camaraComercio: [''],
+      tieneRut: [''],
+      nitNegocio: [''],
+      nombreNegocio: [''],
+      codigoDepartamentoNegocio: [''],
+      codigoCiudadNegocio: [''],
+      codigoBarrioNegocio: [''],
+      direccionNegocio: [''],
+      direccionNegocioVia: [''],
+      direccionNegocioPrincipal: [''],
+      direccionNegocioNroVia: [''],
+      direccionNegocioDistanciaVia: [''],
+      direccionNegocioCompleto: [''],
+      telefonoNegocio: [''],
+      tipoLocal: [''],
+      antiguedadLocal: [''],
+      nombreArrendador: [''],
+      celularArrendador: [''],
+      tipoUbicacionNegocio: [''],
+      numeroEmpleados: [''],
+      nombreAtiendeNegocio: [''],
+      tieneOtrosPuntos: [''],
+      tipoDocumentoConyuge: [''],
+      identificacionConyuge: [''],
+      nombreCompletoConyuge: [''],
+      celularConyuge: [''],
+      primerNombreConyuge: [''],
+      segundoNombreConyuge: [''],
+      primerApellidoConyuge: [''],
+      segundoApellidoConyuge: [''],
+      emailConyuge: [''],
+      tipoEmpleoConyuge: [''],
+      nombreEmpresaConyuge: [''],
+      cargoConyuge: [''],
+      salarioConyuge: [''],
+      telefonoEmpresaConyuge: [''],
+      poseeCuentaBancaria: [''],
       tipoCuentaBancaria: [''],
       entidadBancaria: [''],
-      fechaVinculacion: [''],
-      fechaFinalizacionContrato: [''],
-      codigoDepartamentoExpedicion: [''],
-      modificadoPolitica: [''],
-      aplicaDetalleOferta: [''],
-      aplicaCodeudor: [''],
-      creditoTitularLineas: [''],
-      creditoCodeudorLineas: [''],
-      sanamientoFinanciero: [''],
-      aplicaEmbargo: [''],
-      valorSolicitadoWeb: ['']
+      numeroCuentaBancaria: [''],
+      autorizacionBanco: [''],
+      tipoDeudor: [''],
+      legalCargoPublico: [''],
+      cargoPublico: [''],
+      entidadPublico: [''],
+      vinculadoActualPublico: [''],
+      fechaDesvinculacionPublico: [''],
+      legalPersonalExpuesta: [''],
+      vinculacionExpuesta: [''],
+      nombreExpuesta: [''],
+      tipoIdentificacionExpuesta: [''],
+      identificacionExpuesta: [''],
+      nacionalidadExpuesta: [''],
+      entidadExpuesta: [''],
+      cargoExpuesta: [''],
+      vinculadoActualExpuesta: [''],
+      fechaDesvinculacionExpuesta: [''],
+      legalDesarrollaActividadApnfd: [''],
+      legalCargoPartidoPolitico: [''],
+      legalOperacionCriptomoneda: [''],
+      tipoOperacionCriptomoneda: [''],
+      legalOperacionExtranjera: [''],
+      tipoOperacionExtranjera: [''],
+      declaroIngresoDeclaracionAuto: [''],
+      otroIngresoDeclaracionAuto: [''],
+      autoricacionDatosPersonalClaracionAuto: [''],
+      clausulaAnticurrupcionClaracionAuto: [''],
+      plazo: [''],
+      modificadaSolicitud: [''],
+      valorSolicitado: [''],
+      destinoCredito: [''],
     });
-  }
-
-  /**
-  * @description :creando el validaciones
-  */
-  private createValidacion(): void {
-    switch (this.agenda_fabrica) {
-      case 'CM':
-        this.redeonlyForm = {
-          id: true,
-          numeroSolicitud: true,
-          emision: true,
-          fechaIngresoFabrica: true,
-          descripcionEstado: true,
-          descripcionOrigen: true,
-          codigoSubEstado: true,
-          cupoTotal: true,
-          cupoReservado: true,
-          cupoDisponible: true,
-          score: true,
-          descripcionSubestado: true,
-          descripcionScore: true,
-          nivelEndeudamiento: true,
-          comprasSemanales: true,
-          antiguedadComprasSemanales: true,
-          ventasMensuales: true,
-          activos: true,
-          declarante: true,
-          codigoDepartamentoNegocio: true,
-          descripcionDepartamentoNegocio: true,
-          codigoCiudadNegocio: true,
-          descripcionCiudadNegocio: true,
-          codigoBarrioNegocio: true,
-          descripcionBarrioNegocio: true,
-          direccionNegocio: true,
-          telefonoNegocio: true,
-          telefono: true,
-          antiguedadNegocio: true,
-          camaraComercio: true,
-          nitNegocio: true,
-          tipo: true,
-          tipoDocumento: true,
-          identificacion: true,
-          digitoVerificacion: true,
-          nombreCompleto: true,
-          nombreNegocio: true,
-          fechaMatricula: true,
-          fechaExpedicionDocumento: false,
-          primerNombre: true,
-          segundoNombre: true,
-          primerApellido: true,
-          segundoApellido: true,
-          celular: true,
-          email: true,
-          genero: true,
-          nacionalidad: true,
-          fechaNacimiento: true,
-          codigoDepartamentoNacimiento: true,
-          codigoCiudadNacimiento: true,
-          tipoVivienda: false,
-          codigoDepartamento: false,
-          descripcionDepartamento: false,
-          codigoCiudad: false,
-          descripcionCiudad: false,
-          codigoBarrio: false,
-          descripcionBarrio: false,
-          direccionResidencial: false,
-          nivelEstudio: false,
-          viveEnNegocio: false,
-          descripcionTipo: false,
-          tipoEstadoCivil: false,
-          tipoCredito: false,
-
-        };
-        break;
-
-      default:
-        this.redeonlyForm = {
-          id: true,
-          numeroSolicitud: true,
-          emision: true,
-          fechaIngresoFabrica: true,
-          descripcionEstado: true,
-          descripcionOrigen: true,
-          codigoSubEstado: true,
-          cupoTotal: true,
-          cupoReservado: true,
-          cupoDisponible: true,
-          score: true,
-          descripcionSubestado: true,
-          descripcionScore: true,
-          nivelEndeudamiento: false,
-          comprasSemanales: false,
-          antiguedadComprasSemanales: false,
-          ventasMensuales: false,
-          activos: false,
-          declarante: false,
-          codigoDepartamentoNegocio: false,
-          descripcionDepartamentoNegocio: false,
-          codigoCiudadNegocio: false,
-          descripcionCiudadNegocio: false,
-          codigoBarrioNegocio: false,
-          descripcionBarrioNegocio: false,
-          direccionNegocio: false,
-          telefonoNegocio: false,
-          telefono: false,
-          antiguedadNegocio: false,
-          camaraComercio: true,
-          nitNegocio: true,
-          tipo: true,
-          tipoDocumento: true,
-          identificacion: true,
-          digitoVerificacion: true,
-          nombreCompleto: true,
-          nombreNegocio: false,
-          fechaMatricula: false,
-          fechaExpedicionDocumento: false,
-          primerNombre: false,
-          segundoNombre: false,
-          primerApellido: true,
-          segundoApellido: false,
-          celular: false,
-          email: false,
-          genero: false,
-          nacionalidad: false,
-          fechaNacimiento: true,
-          codigoDepartamentoNacimiento: false,
-          codigoCiudadNacimiento: false,
-          tipoVivienda: false,
-          codigoDepartamento: false,
-          descripcionDepartamento: false,
-          codigoCiudad: false,
-          descripcionCiudad: false,
-          codigoBarrio: false,
-          descripcionBarrio: false,
-          direccionResidencial: false,
-          nivelEstudio: false,
-          viveEnNegocio: false,
-          descripcionTipo: false,
-          tipoEstadoCivil: false,
-          tipoCredito: false,
-
-        };
-        break;
-    }
-
-
   }
 
   /**
