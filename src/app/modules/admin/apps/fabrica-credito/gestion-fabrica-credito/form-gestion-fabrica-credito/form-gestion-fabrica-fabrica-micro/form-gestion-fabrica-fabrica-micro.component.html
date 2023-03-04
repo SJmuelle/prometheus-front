@@ -68,11 +68,11 @@
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Monto crédito</mat-label>
-                        <input matInput type="number" [formControlName]="'valorSolicitado'" (change)="validacion('MO')">
+                        <input matInput  type="text" mask="separator.0" thousandSeparator="." [formControlName]="'valorSolicitado'" (change)="validacion('MO')">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Plazo</mat-label>
-                        <input matInput type="text" [formControlName]="'plazo'" [required]="true"
+                        <input matInput  type="text" mask="separator.0" thousandSeparator="."[formControlName]="'plazo'" [required]="true"
                             (change)="validacion('PL')">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
@@ -417,6 +417,8 @@
                                     <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
+                                        <mat-option  [value]="'Calle'">Calle
+                                        </mat-option>
                                         <mat-option *ngFor="let tipoVia of dataInicial?.direccionTipoVia"
                                             [value]="tipoVia.nombre">
                                             {{tipoVia.nombre}}
@@ -627,6 +629,8 @@
                                     <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
+                                        <mat-option  [value]="'Calle'">Calle
+                                        </mat-option>
                                         <mat-option *ngFor="let tipoVia of dataInicial?.direccionTipoVia"
                                             [value]="tipoVia.nombre">
                                             {{tipoVia.nombre}}
@@ -668,11 +672,9 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option  [value]="'Calle'">Calle
-                                    </mat-option>
                                     <mat-option *ngFor="let item of dataInicial?.tiposVivienda"
-                                        [value]="item.codigoOpcion">
-                                        {{item.descripcionOpcion}}
+                                        [value]="item.codigo">
+                                        {{item.nombre}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -834,7 +836,7 @@
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de tercero</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
 
-                            <mat-form-field class=" px-3 fuse-mat-dense">
+                            <mat-form-field class=" px-3 fuse-mat-dense w-100">
                                 <mat-label>¿El titular requiere de un tercero para la solicitud de crédito?
                                 </mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">

@@ -201,7 +201,7 @@ export interface FormularioCreditoMicro {
     fechaExpedicion: String;
     codigoDepartamentoExpedicion: String;
     codigoCiudadExpedicion: String;
-    estrato: String;
+    estrato: Number;
     codigoDepartamento: String;
     codigoCiudad: String;
     barrioResidencia: Number;
@@ -286,9 +286,9 @@ export interface FormularioCreditoMicro {
     otroIngresoDeclaracionAuto: String;
     autoricacionDatosPersonalClaracionAuto: String;
     clausulaAnticurrupcionClaracionAuto: String;
-    plazo: String;
+    plazo: Number;
     modificadaSolicitud: String;
-    valorSolicitado: String;
+    valorSolicitado: Number;
     destinoCredito: String;
 }
 

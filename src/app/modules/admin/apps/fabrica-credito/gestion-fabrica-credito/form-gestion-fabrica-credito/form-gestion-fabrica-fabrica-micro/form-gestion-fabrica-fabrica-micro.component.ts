@@ -76,7 +76,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
    */
   public onPostDatos(): void {
     const datos: FormularioCreditoMicro = this.form.getRawValue();
-    const { numeroHijos, barrioResidencia, antiguedadActividad, personasACargo, fechaNacimiento, fechaExpedicion, fechaDesvinculacionPublico, fechaDesvinculacionExpuesta, ...data } = datos;
+    const { numeroHijos, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaNacimiento, fechaExpedicion, fechaDesvinculacionPublico, fechaDesvinculacionExpuesta, estrato, ...data } = datos;
     const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
     const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
     const fechaDesvinculacionPublicoFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
@@ -85,6 +85,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     const barrioResidenciaFormato = Number(barrioResidencia);
     const antiguedadActividadFormato = Number(antiguedadActividad);
     const personasACargoFormato = Number(personasACargo);
+    const estratoFormato = Number(estrato)
+    const valorSolicitadoFormato = Number(valorSolicitado)
+    const plazoFormato = Number(plazo);
     // delete data.otrosIngresos;
     const datosFormularios: FormularioCreditoMicro = {
       fechaNacimiento: fechaNacimientoFormato,
@@ -95,6 +98,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
       barrioResidencia: barrioResidenciaFormato,
       antiguedadActividad: antiguedadActividadFormato,
       personasACargo: personasACargoFormato,
+      estrato: estratoFormato,
+      valorSolicitado: valorSolicitadoFormato,
+      plazo: plazoFormato,
       ...data
     };
     Swal.fire({
@@ -120,11 +126,38 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
 
 
-    this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud,'T').pipe(takeUntil(this.unSubscribe$))
+    this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
-      Swal.close();
-      this.form.patchValue(data);
-    });
+        Swal.close();
+        this.form.patchValue(data);
+
+        if (data.codigoDepartamento) {
+          this.getCiudades(data.codigoDepartamento);
+        }
+        if (data.codigoDepartamentoNacimiento) {
+          this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
+        }
+        if (data.codigoDepartamentoNegocio) {
+          this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
+        }
+        if (data.codigoCiudad) {
+          this.getBarrios(data.codigoCiudad);
+        }
+        if (data.codigoCiudadNegocio) {
+          this.getBarriosNegocio(data.codigoCiudadNegocio);
+        }
+      });
+
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    };
+    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+      .subscribe(({ data }) => {
+        Swal.close();
+        this.unidadNegocio = data.unidadNegocio;
+        this.fabricaDatos=data.fabricaDatos;
+      });
   }
 
   /**
