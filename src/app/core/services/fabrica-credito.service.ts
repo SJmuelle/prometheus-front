@@ -22,6 +22,13 @@ export class FabricaCreditoService {
     }
 
     /**
+     * @description: Get datos fabrica Agenda
+     */
+    public getInformacionTipoTercero(numeroSolicitud, tipo): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.informacionTercero}/${numeroSolicitud}/${tipo}`);
+    }
+
+    /**
      * @description: Get datos fabrica Agenda referenciacion
      */
     public getDatosFabricaAgendaReferenciacion(datos): Observable<any> {
