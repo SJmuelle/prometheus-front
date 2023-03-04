@@ -71,6 +71,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
     }
 
+
     /**
      * @description:
      */
@@ -155,7 +156,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
-                console.log(data,"data fabricaCreditoService");
+                // este dato no llega de la anterior api endpoint
+
+
+                this.form.patchValue({ descripcionTipo: data.descripcionTipo,
+                codigoBarrio: data.codigoBarrio});
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data.fabricaDatos;
             });
@@ -285,55 +290,56 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form = this.fb.group({
             numeroSolicitud: [''],
             tipo: [''],
+            creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
             emision: [''],
             tipoDocumento: [''],
             identificacion: [''],
             nombreCompleto: [''],
-            celular: [''],
+            celular: ['', [Validators.required,Validators.minLength(7),Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             tipoCredito: [''],
-            primerNombre: [''],
+            primerNombre: ['',[Validators.required, Validators.email,Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
             descripcionEstado: [''],
             descripcionSubestado: [''],
-            segundoNombre: [''],
+            segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
             primerApellido: [''],
             segundoApellido: [''],
-            estadoCivil: [''],
-            email: [''],
-            genero: [''],
-            nacionalidad: [''],
+            estadoCivil: ['', [Validators.required]],
+            email: ['', [Validators.required, Validators.email]],
+            genero: ['', [Validators.required]],
+            nacionalidad: ['',[Validators.required]],
             fechaNacimiento: [''],
-            nivelEstudio: [''],
-            numeroHijos: [''],
-            personasACargo: [''],
-            fechaExpedicion: [''],
-            codigoDepartamentoExpedicion: [''],
-            codigoCiudadExpedicion: [''],
-            estrato: [''],
-            codigoDepartamento: [''],
+            nivelEstudio: ['' , [Validators.required]],
+            numeroHijos: ['', [Validators.required,Validators.minLength(0)]],
+            personasACargo: ['', [Validators.required, Validators.minLength(0)]],
+            fechaExpedicion: ['', [Validators.required]],
+            codigoDepartamentoExpedicion: ['', Validators.required],
+            codigoCiudadExpedicion: ['', [Validators.required]],
+            estrato: ['', [Validators.required]],
+            codigoDepartamento: ['', [Validators.required]],
             codigoCiudad: [''],
-            barrioResidencia: [''],
-            direccionResidencial: [''],
-            direccionTipoVia: [''],
-            direccionViaPrincipal: [''],
-            direccionNumeroVia: [''],
-            direccionDistanciaVia: [''],
+            barrioResidencia: ['', Validators.required],
+            direccionResidencial: ['', [Validators.required]],
+            direccionTipoVia: ['',[Validators.required]],
+            direccionViaPrincipal: ['',[Validators.required]],
+            direccionNumeroVia: ['',[Validators.required]],
+            direccionDistanciaVia: ['',[Validators.required]],
             direccionComplemento: [''],
-            tipoVivienda: [''],
+            tipoVivienda: ['',Validators.required],
             annosTiempoResidencia: [''],
             mesesTiempoResidencia: [''],
             tipoActividad: [''],
-            actividadEconomica: [''],
-            actividadEspecifica: [''],
+            actividadEconomica: ['', Validators.required],
+            actividadEspecifica: ['', Validators.required],
             antiguedadActividad: [''],
             antiguedadNegocio: [''],
-            camaraComercio: [''],
+            camaraComercio: ['', [Validators.required]],
             tieneRut: [''],
             nitNegocio: [''],
             nombreNegocio: [''],
-            codigoDepartamentoNegocio: [''],
-            codigoCiudadNegocio: [''],
-            codigoBarrioNegocio: [''],
+            codigoDepartamentoNegocio: ['', [Validators.required]],
+            codigoCiudadNegocio: ['', Validators.required],
+            codigoBarrioNegocio: ['', Validators.required],
             direccionNegocio: [''],
             direccionNegocioVia: [''],
             direccionNegocioPrincipal: [''],
@@ -376,6 +382,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             fechaDesvinculacionPublico: [''],
             legalPersonalExpuesta: [''],
             vinculacionExpuesta: [''],
+            familiarDePersonaExpuestaPyP: [''],
+            cargoRecursosPartidoPolitico: [''],
             nombreExpuesta: [''],
             tipoIdentificacionExpuesta: [''],
             identificacionExpuesta: [''],
@@ -394,15 +402,21 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             otroIngresoDeclaracionAuto: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            plazo: [''],
+            plazo: ['', [Validators.required,Validators.minLength(0)]],
             descripcionTipo: [''],
             titularMicro: [''],
             aplicaCodeudor: [''],
             valorSolicitadoWeb: [''],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
-            valorSolicitado: [''],
-            destinoCredito: [''],
+            valorSolicitado: ['', [Validators.required,Validators.minLength(0)]],
+            destinoCredito: ['', [Validators.required]],
+            codeudorMicro: [''],
+            codigoBarrio: ['', [Validators.required]],
+            datosCargoPublico: [''],
+            entidad: [''],
+            vinculadoActualmente: [''],
+            fechaDesvinculacion: ['']
         });
     }
 
