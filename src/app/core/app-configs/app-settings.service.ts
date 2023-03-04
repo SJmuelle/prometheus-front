@@ -91,7 +91,7 @@ export class AppSettingsService {
     public fabricaDatos = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-fabrica'),
-            informacionTercero: EndPoints.uri('/generic/qry/informacion-tipo-tercero/'),
+            informacionTercero: EndPoints.uri('/generic/qry/informacion-tipo-tercero'),
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
