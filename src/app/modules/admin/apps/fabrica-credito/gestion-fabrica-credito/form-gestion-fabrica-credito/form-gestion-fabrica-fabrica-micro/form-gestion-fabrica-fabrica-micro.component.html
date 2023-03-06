@@ -795,8 +795,19 @@
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de desembolso</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
-
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                                <mat-label>¿Posee cuenta Bancaria?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'poseeCuentaBancaria'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            
+                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'" class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Entidad bancaria</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -808,7 +819,7 @@
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-                            <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'" class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Tipo de cuenta</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoCuentaBancaria'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -820,14 +831,14 @@
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-                            <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'" class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Número de cuenta</mat-label>
                                 <input matInput type="text" [formControlName]="'numeroCuentaBancaria'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-                        <span class="bg-blue-100 px-3 mx-4 mb-8">
+                        <span *ngIf="form.controls.poseeCuentaBancaria.value === 'N'" class="bg-blue-100 px-3 mx-4 mb-8">
                             En caso de no poseer cuenta bancaria autorizo a FINTRA S.A.S para que el monto aprobado sea
                             desembolsado de la forma que la compañía asigne en el momento de la transacción.
                         </span>
