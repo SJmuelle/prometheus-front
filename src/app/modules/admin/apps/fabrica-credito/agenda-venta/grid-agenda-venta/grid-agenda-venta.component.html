@@ -61,10 +61,10 @@
                                                     (click)="onGetAgenda(item)">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                                 </button>
-                                            </div>
+                                            </div> 
 
                                             <div class="py-0 text-sm ">
-                                                <button mat-icon-button matTooltip="Desisitir">
+                                                <button mat-icon-button matTooltip="Desisitir" (click)="desistir(item.numeroSolicitud,item.identificacion)">
                                                     <mat-icon svgIcon="heroicons_outline:logout"></mat-icon>
                                                 </button>
                                             </div>

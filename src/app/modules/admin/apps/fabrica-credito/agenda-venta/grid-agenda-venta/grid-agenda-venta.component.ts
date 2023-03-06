@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 import { AgendaVentaService } from 'app/core/services/agenda-venta.service';
+import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 
 @Component({
   selector: 'app-grid-agenda-venta',
@@ -25,31 +27,33 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
-  minuto=0;
+  minuto = 0;
   porcentaje: number;
   constructor(
     private _agendaVentaService: AgendaVentaService,
     // private agendaCarteraService: AgendaCarteraService,
     private _matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private _dialog: MatDialog,
+    private fabricaCreditoService: FabricaCreditoService,
+
   ) { }
 
   ngOnInit(): void {
     this.cambiarEstado(true);
     this.getAgenda();
 
+
     setInterval(() => {
-      // this.getAgenda();
-      this.minuto=0;
+      this.getAgenda();
+      this.minuto = 0;
     }, 30000);
 
     setInterval(() => {
-      this.minuto=this.minuto+1;
-      this.porcentaje=(this.minuto * 100) / 30;
-     //si el 30 es el 100% cuanto es valor de x, cuanto porcentaje seria el 10
+      this.minuto = this.minuto + 1;
+      this.porcentaje = (this.minuto * 100) / 30;
     }, 1000);
 
-    //contador
   }
 
 
@@ -119,6 +123,28 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
    */
   public cambiarEstado(estado) {
     this.mostrarTotales = estado;
+  }
+
+  desistir(numeroSolicitud, identificacion) {
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    };
+    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({ data }) => {
+        const dialogRef = this._dialog.open(FormDecisionComponent, {
+          width: '60%',
+          data: data,
+          disableClose: false,
+
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+
+          this.getAgenda();
+          this.minuto = 0;
+
+        })
+      })
   }
 
 
