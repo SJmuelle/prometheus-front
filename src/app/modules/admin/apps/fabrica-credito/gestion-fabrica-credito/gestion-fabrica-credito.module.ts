@@ -70,6 +70,8 @@ import { NgxMaskModule } from 'ngx-mask';
 // import { IConfig, NgxMaskModule } from 'ngx-mask';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FormGestionFabricaFabricaMicroComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-fabrica-micro/form-gestion-fabrica-fabrica-micro.component';
+import { FormCodeudorComponent } from './form-codeudor/form-codeudor.component';
+import { FormDeudorSolitarioComponent } from './form-deudor-solitario/form-deudor-solitario.component';
 
 
 
@@ -108,7 +110,9 @@ import { FormGestionFabricaFabricaMicroComponent } from './form-gestion-fabrica-
         RecalcularOfertaConsumoPlexaComponent,
         ModalRecalcularComponent,
         FormDialogAnalisisFinancieroComponent,
-        FormGestionFabricaFabricaMicroComponent
+        FormGestionFabricaFabricaMicroComponent,
+        FormCodeudorComponent,
+        FormDeudorSolitarioComponent
     ],
     imports: [
         CommonModule,

@@ -69,16 +69,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       if ((this.tipoIdentificacion) && (this.identificacion)) {
-        
         this.form.controls.tipoDocumento.setValue(this.tipoIdentificacion);
         this.form.controls.identificacion.setValue(this.identificacion);
         this.solicitudesFormularioSimulaciones()
         this.editable=true;
       }
     }, 1000);
-
-
-
   }
 
   private cargueActividadEconomica() {
