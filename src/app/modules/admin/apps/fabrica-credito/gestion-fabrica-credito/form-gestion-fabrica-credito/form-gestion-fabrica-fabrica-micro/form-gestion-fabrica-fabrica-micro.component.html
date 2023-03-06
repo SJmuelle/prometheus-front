@@ -538,9 +538,15 @@
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>¿ Tienes RUT?
                                 </mat-label>
-                                <input autocomplete="off" matInput type="number"
-                                    [formControlName]="'antiguedadActividad'" min="0" max="11">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tieneRut'"
+                                [matTooltip]="'¿ Tienes RUT?'">
+                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                </mat-option>
+                                <mat-option value="S">Si
+                                </mat-option>
+                                <mat-option value="S">No
+                                </mat-option>
+                            </mat-select>
                             </mat-form-field>
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label> N° de ID en camára de comercio
