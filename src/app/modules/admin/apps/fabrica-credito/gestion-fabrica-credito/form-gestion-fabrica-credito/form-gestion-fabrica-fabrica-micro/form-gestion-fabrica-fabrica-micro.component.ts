@@ -159,8 +159,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 // este dato no llega de la anterior api endpoint
 
 
-                this.form.patchValue({ descripcionTipo: data.descripcionTipo,
-                codigoBarrio: data.codigoBarrio});
+                this.form.patchValue({
+                    descripcionTipo: data.descripcionTipo,
+                    codigoBarrio: data.codigoBarrio
+                });
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data.fabricaDatos;
             });
@@ -296,9 +298,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             tipoDocumento: [''],
             identificacion: [''],
             nombreCompleto: [''],
-            celular: ['', [Validators.required,Validators.minLength(7),Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             tipoCredito: [''],
-            primerNombre: ['',[Validators.required, Validators.email,Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+            primerNombre: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
             descripcionEstado: [''],
             descripcionSubestado: [''],
             segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
@@ -307,10 +309,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             estadoCivil: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
             genero: ['', [Validators.required]],
-            nacionalidad: ['',[Validators.required]],
+            nacionalidad: ['', [Validators.required]],
             fechaNacimiento: [''],
-            nivelEstudio: ['' , [Validators.required]],
-            numeroHijos: ['', [Validators.required,Validators.minLength(0)]],
+            nivelEstudio: ['', [Validators.required]],
+            numeroHijos: ['', [Validators.required, Validators.minLength(0)]],
             personasACargo: ['', [Validators.required, Validators.minLength(0)]],
             fechaExpedicion: ['', [Validators.required]],
             codigoDepartamentoExpedicion: ['', Validators.required],
@@ -320,12 +322,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             codigoCiudad: [''],
             barrioResidencia: ['', Validators.required],
             direccionResidencial: ['', [Validators.required]],
-            direccionTipoVia: ['',[Validators.required]],
-            direccionViaPrincipal: ['',[Validators.required]],
-            direccionNumeroVia: ['',[Validators.required]],
-            direccionDistanciaVia: ['',[Validators.required]],
+            direccionTipoVia: ['', [Validators.required]],
+            direccionViaPrincipal: ['', [Validators.required]],
+            direccionNumeroVia: ['', [Validators.required]],
+            direccionDistanciaVia: ['', [Validators.required]],
             direccionComplemento: [''],
-            tipoVivienda: ['',Validators.required],
+            tipoVivienda: ['', Validators.required],
             annosTiempoResidencia: [''],
             mesesTiempoResidencia: [''],
             tipoActividad: [''],
@@ -402,14 +404,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             otroIngresoDeclaracionAuto: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            plazo: ['', [Validators.required,Validators.minLength(0)]],
+            plazo: ['', [Validators.required, Validators.minLength(0)]],
             descripcionTipo: [''],
             titularMicro: [''],
             aplicaCodeudor: [''],
             valorSolicitadoWeb: [''],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
-            valorSolicitado: ['', [Validators.required,Validators.minLength(0)]],
+            valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
             destinoCredito: ['', [Validators.required]],
             codeudorMicro: [''],
             codigoBarrio: ['', [Validators.required]],
