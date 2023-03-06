@@ -397,7 +397,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             legalDesarrollaActividadApnfd: [''],
             legalCargoPartidoPolitico: [''],
             legalOperacionCriptomoneda: [''],
-            tipoOperacionCriptomoneda: [''],
+            tipoOperacionCripto: [''],
             legalOperacionExtranjera: [''],
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: [''],
