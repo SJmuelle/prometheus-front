@@ -68,12 +68,13 @@
                 <div class="-mx-3 md:flex mb-2">
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Monto crédito</mat-label>
-                        <input matInput  type="text" mask="separator.0" thousandSeparator="." [formControlName]="'valorSolicitado'" (change)="validacion('MO')">
+                        <input matInput type="text" mask="separator.0" thousandSeparator="."
+                            [formControlName]="'valorSolicitado'" (change)="validacion('MO')">
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                         <mat-label>Plazo</mat-label>
-                        <input matInput  type="text" mask="separator.0" thousandSeparator="."[formControlName]="'plazo'" [required]="true"
-                            (change)="validacion('PL')">
+                        <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'plazo'"
+                            [required]="true" (change)="validacion('PL')">
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -284,13 +285,13 @@
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Numero de hijos</mat-label>
-                                <input matInput type="text" [formControlName]="'numeroHijo'">
+                                <input matInput type="text" [formControlName]="'numeroHijos'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>Persona a cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'personaCargo'">
+                                <mat-label>Personas a cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'personasACargo'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
@@ -417,7 +418,7 @@
                                     <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option  [value]="'Calle'">Calle
+                                        <mat-option [value]="'Calle'">Calle
                                         </mat-option>
                                         <mat-option *ngFor="let tipoVia of dataInicial?.direccionTipoVia"
                                             [value]="tipoVia.nombre">
@@ -460,8 +461,7 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposVivienda"
-                                        [value]="item.codigo">
+                                    <mat-option *ngFor="let item of dataInicial?.tiposVivienda" [value]="item.codigo">
                                         {{item.nombre}}
                                     </mat-option>
                                 </mat-select>
@@ -489,7 +489,7 @@
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Actividad económica
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
+                                <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'"
                                     [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
@@ -502,7 +502,7 @@
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Actividad Especifica
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
+                                <mat-select [value]="'seleccione'" [formControlName]="'actividadEspecifica'"
                                     [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
@@ -538,9 +538,15 @@
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>¿ Tienes RUT?
                                 </mat-label>
-                                <input autocomplete="off" matInput type="number"
-                                    [formControlName]="'antiguedadActividad'" min="0" max="11">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tieneRut'"
+                                [matTooltip]="'¿ Tienes RUT?'">
+                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                </mat-option>
+                                <mat-option value="S">Si
+                                </mat-option>
+                                <mat-option value="S">No
+                                </mat-option>
+                            </mat-select>
                             </mat-form-field>
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label> N° de ID en camára de comercio
@@ -609,7 +615,7 @@
                             <ng-container *ngIf="barrios$ | async as barrios">
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                     <mat-label>Barrio de residencia</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoBarrio'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoBarrioNegocio'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
@@ -629,7 +635,7 @@
                                     <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option  [value]="'Calle'">Calle
+                                        <mat-option [value]="'Calle'">Calle
                                         </mat-option>
                                         <mat-option *ngFor="let tipoVia of dataInicial?.direccionTipoVia"
                                             [value]="tipoVia.nombre">
@@ -672,8 +678,7 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposVivienda"
-                                        [value]="item.codigo">
+                                    <mat-option *ngFor="let item of dataInicial?.tiposVivienda" [value]="item.codigo">
                                         {{item.nombre}}
                                     </mat-option>
                                 </mat-select>
@@ -756,11 +761,11 @@
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Tipo de empleo</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'estadoCivil'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoEmpleoConyuge'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.ocupacion"
-                                        [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                    <mat-option *ngFor="let item of dataInicial?.ocupaciones"
+                                        [value]="item.codigo">{{item.nombre}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -768,19 +773,19 @@
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Nombre de la empresa</mat-label>
-                                <input matInput type="text" [formControlName]="'nacionalidad'">
+                                <input matInput type="text" [formControlName]="'nombreEmpresaConyuge'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'nacionalidad'">
+                                <input matInput type="text" [formControlName]="'cargoConyuge'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Salario</mat-label>
-                                <input matInput type="text" [formControlName]="'nacionalidad'">
+                                <input matInput type="text" [formControlName]="'salarioConyuge'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
@@ -789,15 +794,26 @@
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Télefono de la empresa</mat-label>
-                                <input matInput type="text" [formControlName]="'nacionalidad'">
+                                <input matInput type="text" [formControlName]="'telefonoEmpresaConyuge'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información de desembolso</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
-
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                                <mat-label>¿Posee cuenta Bancaria?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'poseeCuentaBancaria'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            
+                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'" class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Entidad bancaria</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -809,27 +825,26 @@
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-                            <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'" class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Tipo de cuenta</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoCuentaBancaria'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposCuentas"
-                                        [value]="item.codigo">
+                                    <mat-option *ngFor="let item of dataInicial?.tiposCuentas" [value]="item.codigo">
                                         {{item.nombre}}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
-                            <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
+                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'" class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Número de cuenta</mat-label>
                                 <input matInput type="text" [formControlName]="'numeroCuentaBancaria'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-                        <span class="bg-blue-100 px-3 mx-4 mb-8">
+                        <span *ngIf="form.controls.poseeCuentaBancaria.value === 'N'" class="bg-blue-100 px-3 mx-4 mb-8">
                             En caso de no poseer cuenta bancaria autorizo a FINTRA S.A.S para que el monto aprobado sea
                             desembolsado de la forma que la compañía asigne en el momento de la transacción.
                         </span>
@@ -856,7 +871,7 @@
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿Ha ocupado cargos públicos?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'operacionMonedaExtranjera'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublico'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">Si
@@ -869,7 +884,7 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿Es familiar de persona expuesta política y públicamente?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'operacionMonedaExtranjera'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'familiarDePersonaExpuestaPyP'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">Si
@@ -883,7 +898,7 @@
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿ Tiene a su cargo la dirección de recursos en algún partido político
                                     ?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'operacionMonedaExtranjera'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'cargoRecursosPartidoPolitico'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">Si
@@ -895,12 +910,109 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
+                        <span *ngIf="form.controls.cargoPublico.value === 'S'"
+                            class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público</span>
 
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal -Datos Sagrilaft</span>
+                        <div *ngIf="form.controls.cargoPublico.value === 'S'" class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'datosCargoPublico'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Entidad</mat-label>
+                                <input matInput type="text" [formControlName]="'entidad'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Estás vinculado actualmente?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualmente'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="form.controls.vinculadoActualmente.value === 'N'"
+                                class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Fecha de desvinculación</mat-label>
+                                <input matInput [matDatepicker]="fechaDesvinculacion"
+                                    [formControlName]="'fechaDesvinculacion'" [readonly]="true">
+                                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacion" [disabled]="false">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #fechaDesvinculacion readonly></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <span *ngIf="form.controls.familiarDePersonaExpuestaPyP.value === 'S'"
+                        class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público-Familiar</span>
+                        <div *ngIf="form.controls.familiarDePersonaExpuestaPyP.value === 'S'" class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Vinculación / Relación</mat-label>
+                                <input matInput type="text" [formControlName]="'vinculacionRelacion'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Nombre y apellido</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicNombreYapellido'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Tipo de ID</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublicTipoID'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    N° de identificación</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicIDNumber'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    Nacionalidad</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicNacionalidad'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    Entidad</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicEntidad'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    Cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicCargo'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Estás vinculado actualmente?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublicVinculado'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field *ngIf="form.controls.cargoPublicVinculado.value === 'N'"
+                                class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Fecha de desvinculación</mat-label>
+                                <input matInput [matDatepicker]="fechaDesvinculacion"
+                                    [formControlName]="'cargoPublicFechaDesvinculacion'" [readonly]="true">
+                                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacion" [disabled]="false">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #fechaDesvinculacion readonly></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal -Datos
+                            Sagrilaft</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿Realiza operaciones con moneda extranjera? </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'operacionMonedaExtranjera'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'legalOperacionExtranjera'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">Si
@@ -913,13 +1025,12 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Que tipo de operacíon</mat-label>
-                                <input matInput type="text" [formControlName]="'DescripcionOperacionMonedaExtranjera'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="primerNombre">
-                                    Este campo es requerido.
-                                </mat-error>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionExtranjera'">
+                                <mat-option *ngFor="let item of dataInicial?.tipoOperacionExtranjera"
+                                [value]="item.codigo">
+                                {{item.nombre}}
+                            </mat-option>
+                        </mat-select>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>¿Realiza operaciones con criptomoneda?</mat-label>
@@ -936,13 +1047,12 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Que tipo de operacíón realiza</mat-label>
-                                <input matInput type="text" [formControlName]="'DescripcionOperacionCriptomoneda'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="primerNombre">
-                                    Este campo es requerido.
-                                </mat-error>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCripto'">
+                                    <mat-option *ngFor="let item of dataInicial?.tipoOperacionCripto"
+                                        [value]="item.codigo">
+                                        {{item.nombre}}
+                                    </mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                         <div class="-mx-3 md:flex mt-3 mb-2">
@@ -1002,7 +1112,7 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab>
+                <mat-tab disabled>
                     <ng-template matTabLabel>Codeudor </ng-template>
                     <form-codeudor></form-codeudor>
                 </mat-tab>
