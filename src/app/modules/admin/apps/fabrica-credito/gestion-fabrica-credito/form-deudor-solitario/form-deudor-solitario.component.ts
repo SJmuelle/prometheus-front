@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
+import { FormularioDeudorSolidarioInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
@@ -23,6 +25,8 @@ export class FormDeudorSolitarioComponent implements OnInit {
   public barrios$: Observable<any>;
   public tipoVia$: Observable<any>;
   public tipoVivienda$: Observable<any>;
+  public subscription$: Subscription;
+  public dataInicial: any
   public unSubscribe$: Subject<any> = new Subject<any>();
   //variables iniciales
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -34,6 +38,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
     private departamentosCiudadesService: DepartamentosCiudadesService,
     private route: ActivatedRoute,
     private fabricaCreditoService: FabricaCreditoService,
+    private _formularioCreditoService: FormularioCreditoService,
   ) {
     if (!this.numeroSolicitud) {
       return;
@@ -51,6 +56,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
     this.getDepartamentos();
     this.getTipoVia();
     this.getTiposVivienda();
+    this.cargueInicial();
   }
 
   /**
@@ -82,7 +88,28 @@ export class FormDeudorSolitarioComponent implements OnInit {
       direccionDistanciaVia: [''],
       direccionComplemento: [''],
       tipoVivienda: [''],
-      parentesco: ['']
+      parentesco: [''],
+      cargoPublico: [''],
+      familiarDePersonaExpuestaPyP: [''],
+      cargoRecursosPartidoPolitico: [''],
+      datosCargoPublico: [''],
+      entidad: [''],
+      vinculadoActualmente: [''],
+      fechaDesvinculacion: [''],
+      vinculacionRelacion: [''],
+      cargoPublicNombreYapellido: [''],
+      cargoPublicTipoID: [''],
+      cargoPublicIDNumber: [''],
+      cargoPublicNacionalidad: [''],
+      cargoPublicEntidad: [''],
+      cargoPublicCargo: [''],
+      cargoPublicVinculado: [''],
+      cargoPublicFechaDesvinculacion: [''],
+      legalOperacionExtranjera: [''],
+      tipoOperacionExtranjera: [''],
+      entidadBancaria: [''],
+      tipoOperacionCripto: [''],
+      // entidadBancaria: [''],
     });
   }
 
@@ -102,41 +129,20 @@ export class FormDeudorSolitarioComponent implements OnInit {
         if (data.codigoCiudad) {
           this.getBarrios(data.codigoCiudad);
         }
-        // console.log(data.parentesco);
-        
-        // if (data.parentesco) {
-        //   this.formDeudorSolidario.controls['parentesco'].setValue(data.parentesco);
-        // }
-        // if (data.tipoDocumento) {
-        //   this.formDeudorSolidario.controls['tipoDocumento'].setValue(data.tipoDocumento);
-        // }
-        // if (data.identificacion) {
-        //   this.formDeudorSolidario.controls['identificacion'].setValue(data.identificacion);
-        // }
-        // if (data.celular) {
-        //   this.formDeudorSolidario.controls['celular'].setValue(data.celular);
-        // }
-        // if (data.primerNombre) {
-        //   this.formDeudorSolidario.controls['primerNombre'].setValue(data.primerNombre);
-        // }
-        // if (data.segundoNombre) {
-        //   this.formDeudorSolidario.controls['segundoNombre'].setValue(data.segundoNombre);
-        // }
-        // if (data.primerApellido) {
-        //   this.formDeudorSolidario.controls['primerApellido'].setValue(data.primerApellido);
-        // }
-        // if (data.segundoApellido) {
-        //   this.formDeudorSolidario.controls['segundoApellido'].setValue(data.segundoApellido);
-        // }
-        // if (data.primerApellido) {
-        //   this.formDeudorSolidario.controls['primerApellido'].setValue(data.primerApellido);
-        // }
-        // if (data.segundoApellido) {
-        //   this.formDeudorSolidario.controls['segundoApellido'].setValue(data.segundoApellido);
-        // }
       });
   }
 
+  private cargueInicial() {
+    let data = {
+      entidad: "CONFIG-MICRO",
+      unidadNegocio: 1
+    };
+    this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
+      if (resp) {
+        this.dataInicial = resp.data
+      }
+    })
+  }
   /**
      * @description: Selecciona el codigo para cargar el api ciudades
      *
@@ -211,7 +217,40 @@ export class FormDeudorSolitarioComponent implements OnInit {
        * @description:
        */
   public onPostDatos(): void {
-    
+    let data = {
+      tipo: 'S',
+      recurso: "tab-actualizar-solidario-microcredito",
+      numeroSolicitud: this.numeroSolicitud,
+      ...this.formDeudorSolidario.value
+    }
+    console.log(data);
+
+    this.postFormularioDeudorSolidario(data);
+  }
+
+  /**
+     * @description: Guardado de datos fabrica
+     */
+  private postFormularioDeudorSolidario(datos: FormularioDeudorSolidarioInterface): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
+      .subscribe(() => {
+        Swal.fire(
+          'Completado',
+          'Información guardada con éxito',
+          'success'
+        );
+        setTimeout(() => {
+          location.reload()
+        }, 1000);
+        //   this.router.navigate(['/credit-factory/agenda-completion']);
+      }, (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ha ocurrido un error',
+          text: error.error.msg,
+        });
+      });
   }
 
 }
