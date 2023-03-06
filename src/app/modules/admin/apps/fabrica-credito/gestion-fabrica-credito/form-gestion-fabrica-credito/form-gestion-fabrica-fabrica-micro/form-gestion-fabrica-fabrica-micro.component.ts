@@ -102,6 +102,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             estrato: estratoFormato,
             valorSolicitado: valorSolicitadoFormato,
             plazo: plazoFormato,
+            modificadaSolicitud:'N',
             ...data
         };
         Swal.fire({
