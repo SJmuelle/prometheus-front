@@ -896,7 +896,7 @@
                         <span *ngIf="form.controls.cargoPublico.value === 'S'"
                             class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público</span>
 
-                        <div *ngIf="form.controls.cargoPublico.value === 'S'" class="-mx-3 md:flex mt-3 mb-2">
+                        <div *ngIf="form.controls.cargoPublico.value === 'S'" class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Cargo</mat-label>
                                 <input matInput type="text" [formControlName]="'datosCargoPublico'">
@@ -926,7 +926,70 @@
                                 <mat-datepicker #fechaDesvinculacion readonly></mat-datepicker>
                             </mat-form-field>
                         </div>
+                        <span *ngIf="form.controls.familiarDePersonaExpuestaPyP.value === 'S'"
+                        class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público-Familiar</span>
+                        <div *ngIf="form.controls.familiarDePersonaExpuestaPyP.value === 'S'" class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Vinculación / Relación</mat-label>
+                                <input matInput type="text" [formControlName]="'vinculacionRelacion'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Nombre y apellido</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicNombreYapellido'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Tipo de ID</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublicTipoID'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    N° de identificación</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicIDNumber'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    Nacionalidad</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicNacionalidad'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    Entidad</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicEntidad'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>
+                                    Cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoPublicCargo'">
+                            </mat-form-field>
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>¿Estás vinculado actualmente?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublicVinculado'">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si
+                                    </mat-option>
+                                    <mat-option [value]="'N'">No
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
 
+                            <mat-form-field *ngIf="form.controls.cargoPublicVinculado.value === 'N'"
+                                class="w-1/2 px-3 fuse-mat-dense">
+                                <mat-label>Fecha de desvinculación</mat-label>
+                                <input matInput [matDatepicker]="fechaDesvinculacion"
+                                    [formControlName]="'cargoPublicFechaDesvinculacion'" [readonly]="true">
+                                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacion" [disabled]="false">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #fechaDesvinculacion readonly></mat-datepicker>
+                            </mat-form-field>
+                        </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal -Datos
                             Sagrilaft</span>
                         <div class="-mx-3 md:flex mt-3 mb-2">

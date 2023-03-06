@@ -418,7 +418,17 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             datosCargoPublico: [''],
             entidad: [''],
             vinculadoActualmente: [''],
-            fechaDesvinculacion: ['']
+            fechaDesvinculacion: [''],
+            // Datos Cargo publico Familiar
+            vinculacionRelacion: [""],
+            cargoPublicNombreYapellido: [""],
+            cargoPublicTipoID: [""],
+            cargoPublicIDNumber: [""],
+            cargoPublicNacionalidad: [""],
+            cargoPublicEntidad: [""],
+            cargoPublicCargo: [""],
+            cargoPublicVinculado: [""],
+            cargoPublicFechaDesvinculacion: [""]
         });
     }
 
