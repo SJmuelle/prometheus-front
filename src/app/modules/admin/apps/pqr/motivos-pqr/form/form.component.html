@@ -1,0 +1,95 @@
+<h2 mat-dialog-title  *ngIf="datos.titulo != 'D'">{{datos.titulo=='N'?'Nuevo':'Actualizar'}} motivo</h2>
+<h2 mat-dialog-title  *ngIf="datos.titulo == 'D'">Causales asignadas</h2>
+<div class="bg-white col-lg-12 col-sm-12  5 " *ngIf="datos.titulo != 'D'">
+    <div class="row">
+        <div class="bg-white col l12">
+            <div class="row justify-start ">
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" name="motivo" [(ngModel)]="datos.motivo"
+                            [disabled]="datos.titulo!='N'" [required]="datos.titulo=='N'">
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Aplica submotivo?</mat-label>
+                        <mat-select [(ngModel)]="datos.aplica_subm" name="aplica_subm" [required]="datos.titulo=='N'"
+                            [disabled]="datos.estado!='A'">
+                            <mat-option value="S">Si</mat-option>
+                            <mat-option value="N">No</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:library'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.aplica_subm=='S'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Submotivo1</mat-label>
+                        <input matInput type="text" min="1" autocomplete="off" name="submotivo1"
+                            [(ngModel)]="datos.submotivo1" [required]="datos.aplica_subm=='S'"
+                            [disabled]="datos.estado!='A'">
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.aplica_subm=='S'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Submotivo2</mat-label>
+                        <input matInput type="text" min="1" autocomplete="off" name="submotivo2"
+                            [(ngModel)]="datos.submotivo2" [disabled]="datos.estado!='A'">
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.aplica_subm=='S'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Submotivo3</mat-label>
+                        <input matInput type="text" min="1" autocomplete="off" name="submotivo3"
+                            [(ngModel)]="datos.submotivo3" [disabled]="datos.estado!='A'">
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Asociar causales</mat-label>
+                        <mat-select [(ngModel)]="datos.details" name="details" multiple [disabled]="datos.estado!='A'"
+                            [required]="datos.titulo=='N'">
+                            <mat-option [value]="causal.id"
+                                *ngFor="let causal of causales">{{causal.causalPqrs}}</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
+                    <mat-form-field class="flex-auto w-100">
+                        <mat-label>Estado</mat-label>
+                        <mat-select [(ngModel)]="datos.estado" name="estado">
+                            <mat-option value="A">Activo</mat-option>
+                            <mat-option value="I">Inactivo</mat-option>
+                        </mat-select>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white col-lg-12 col-sm-12  5 " *ngIf="datos.titulo == 'D'">
+    <div class="row">
+        <div class="bg-white col l12">
+            <div class="row justify-start ">
+                <div class="col-sm-12 col-lg-12" *ngFor="let causales of datos.details">
+                    {{cargarNombre(causales)}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button mat-button class="color_fintra text-white" (click)="guardar()" *ngIf="datos.titulo != 'D'">Guardar </button>
+    <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
+</mat-dialog-actions>

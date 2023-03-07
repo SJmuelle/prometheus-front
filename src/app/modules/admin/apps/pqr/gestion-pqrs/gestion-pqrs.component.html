@@ -242,6 +242,16 @@
                                         <div class="capitalize" style="font-size: 16px;">{{datos.solucionPqrs}}
                                         </div>
                                     </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm text-secondary font-bold">Motivo</div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.motivo}}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-2">
+                                        <div class="text-sm text-secondary font-bold">Submotivo</div>
+                                        <div class="capitalize" style="font-size: 16px;">{{datos.submotivo}}
+                                        </div>
+                                    </div>
                                     <div class="col-sm-6 col-lg-3">
                                         <div class="text-sm text-secondary font-bold">Responsable
                                         </div>
@@ -604,7 +614,7 @@
                                 <div class="flex flex-col">
                                     <div class="flex flex-col sm:flex-row sm:justify-between mb-2">
                                         <div>
-                                            <button mat-button class="permitir bloquear text-white w-100 sm:w-36" (click)="agregarcomentario()" [disabled]="datos.estado=='Cerrado'">Agregar comentario</button>
+                                            <button mat-button class="permitir bloquear text-white w-100 sm:w-36" (click)="agregarcomentario()">Agregar comentario</button>
                                         </div>
                                         <div class="mt-2 leading-tight sm:text-end sm:mt-0">
                                             <input class="border rounded p-2 bg-gray-100"
