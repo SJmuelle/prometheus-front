@@ -67,6 +67,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
+                console.log(resp.data);
             }
         })
     }
@@ -130,6 +131,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
+                console.log(data);
                 this.form.patchValue(data);
 
                 if (data.codigoDepartamento) {
@@ -275,7 +277,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'success'
                 );
                 setTimeout(() => {
-                     location.reload()
+                    //  location.reload()
+                    console.log(datos);
+
                 }, 1000);
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
@@ -287,6 +291,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             });
     }
 
+                console.log('denegado')
 
     /**
      * @description :creando el formulario
