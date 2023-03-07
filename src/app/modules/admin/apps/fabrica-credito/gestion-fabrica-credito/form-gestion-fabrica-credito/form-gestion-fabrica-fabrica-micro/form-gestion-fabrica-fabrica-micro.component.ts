@@ -74,6 +74,19 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     }
 
 
+    public validationPost(): void {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            console.log(this.form, this.form.valid);
+            Object.keys(this.form.controls).forEach(key => {
+                // Get errors of every form control
+                console.log(this.form.get(key).errors, key);
+              });
+          }else{
+            this.onPostDatos();
+          }
+    }
+
     /**
      * @description:
      */
@@ -138,7 +151,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 console.log(data);
                 this.form.patchValue(data);
-
+                console.log('Form valid', this.form.valid);
+                
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento); 
                 }
@@ -156,6 +170,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 }
                 if (data.estrato) {
                     this.form.controls.estrato.setValue(data.estrato.toString());
+                }
+                if(data.codigoDepartamentoExpedicion){
+                    this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
                 }
             });
 
@@ -352,7 +369,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             codigoCiudadExpedicion: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
             codigoDepartamento: ['', [Validators.required]],
-            codigoCiudad: [''],
+            codigoCiudad: ['',Validators.required],
             barrioResidencia: ['', Validators.required],
             direccionResidencial: ['', [Validators.required]],
             direccionTipoVia: ['', [Validators.required]],
@@ -361,83 +378,82 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             direccionDistanciaVia: ['', [Validators.required]],
             direccionComplemento: [''],
             tipoVivienda: ['', Validators.required],
-            annosTiempoResidencia: [''],
-            mesesTiempoResidencia: [''],
-            tipoActividad: [''],
+            annosTiempoResidencia: ['',[Validators.required, Validators.minLength(0)]],
+            mesesTiempoResidencia: ['',[Validators.required, Validators.minLength(0)]],
+            tipoActividad: ['', Validators.required],
             actividadEconomica: ['', Validators.required],
             actividadEspecifica: ['', Validators.required],
-            antiguedadActividad: [''],
-            antiguedadNegocio: [''],
+            antiguedadActividad: ['', [Validators.required,Validators.minLength(0),Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            antiguedadNegocio: ['', [Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             camaraComercio: ['', [Validators.required]],
-            tieneRut: [''],
-            nitNegocio: [''],
-            nombreNegocio: [''],
+            tieneRut: ['', Validators.required],
+            nitNegocio: ['', [Validators.required,Validators.maxLength(10),Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            nombreNegocio: ['', Validators.required],
             codigoDepartamentoNegocio: ['', [Validators.required]],
             codigoCiudadNegocio: ['', Validators.required],
             codigoBarrioNegocio: ['', Validators.required],
             segmento: [''],
             direccionNegocio: [''],
-            direccionNegocioVia: [''],
-            direccionNegocioPrincipal: [''],
-            direccionNegocioNroVia: [''],
-            direccionNegocioDistanciaVia: [''],
+            direccionNegocioVia: ['', Validators.required],
+            direccionNegocioPrincipal: ['',Validators.required],
+            direccionNegocioNroVia: ['',Validators.required],
+            direccionNegocioDistanciaVia: ['',Validators.required],
             direccionNegocioCompleto: [''],
-            telefonoNegocio: [''],
-            tipoLocal: [''],
-            antiguedadLocal: [''],
-            nombreArrendador: [''],
-            celularArrendador: [''],
-            tipoUbicacionNegocio: [''],
-            numeroEmpleados: [''],
-            nombreAtiendeNegocio: [''],
-            tieneOtrosPuntos: [''],
-            tipoDocumentoConyuge: [''],
-            identificacionConyuge: [''],
+            telefonoNegocio: ['',[Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7),Validators.maxLength(10)]],
+            tipoLocal: ['',Validators.required],
+            antiguedadLocal: ['',Validators.required],
+            nombreArrendador: ['', [Validators.required, Validators.maxLength(30)]],
+            celularArrendador: ['',[Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7),Validators.maxLength(10)]],
+            tipoUbicacionNegocio: ['', Validators.required],
+            numeroEmpleados: ['',[Validators.required]],
+            nombreAtiendeNegocio: ['', Validators.required],
+            tieneOtrosPuntos: ['', Validators.required],
+            tipoDocumentoConyuge: ['', Validators.required],
+            identificacionConyuge: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
             nombreCompletoConyuge: [''],
-            celularConyuge: [''],
-            primerNombreConyuge: [''],
+            celularConyuge: ['', [Validators.required,Validators.minLength(7), Validators.maxLength(10),Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            primerNombreConyuge: ['', Validators.required],
             segundoNombreConyuge: [''],
             primerApellidoConyuge: [''],
             segundoApellidoConyuge: [''],
-            emailConyuge: [''],
-            tipoEmpleoConyuge: [''],
-            nombreEmpresaConyuge: [''],
-            cargoConyuge: [''],
-            salarioConyuge: [''],
-            telefonoEmpresaConyuge: [''],
-            poseeCuentaBancaria: [''],
-            tipoCuentaBancaria: [''],
-            entidadBancaria: [''],
-            numeroCuentaBancaria: [''],
+            emailConyuge: ['',[Validators.required,Validators.email]],
+            tipoEmpleoConyuge: ['', Validators.required],
+            nombreEmpresaConyuge: ['',Validators.required],
+            cargoConyuge: ['', Validators.required],
+            salarioConyuge: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            telefonoEmpresaConyuge: ['', Validators.required],
+            poseeCuentaBancaria: ['', Validators.required],
+            tipoCuentaBancaria: ['', Validators.required],
+            entidadBancaria: ['', Validators.required],
+            numeroCuentaBancaria: ['', Validators.required],
             autorizacionBanco: [''],
-            tipoDeudor: [''],
-            legalCargoPublico: [''],
-            cargoPublico: [''],
+            tipoDeudor: ['', Validators.required],
+            legalCargoPublico: ['', Validators.required],
             entidadPublico: [''],
-            vinculadoActualPublico: [''],
-            fechaDesvinculacionPublico: [''],
-            legalPersonalExpuesta: [''],
+            vinculadoActualPublico: ['', Validators.required],
+            fechaDesvinculacionPublico: ['', Validators.required],
+            legalPersonalExpuesta: ['', Validators.required],
             tiposTercerosSolicitud: [''],
-            vinculacionExpuesta: [''],
+            vinculacionExpuesta: ['',[Validators.required,Validators.max(50)]],
             familiarDePersonaExpuestaPyP: [''],
             cargoRecursosPartidoPolitico: [''],
-            nombreExpuesta: [''],
+            nombreExpuesta: ['', [Validators.required, Validators.maxLength(100)]],
             tipoIdentificacionExpuesta: [''],
-            identificacionExpuesta: [''],
-            nacionalidadExpuesta: [''],
-            entidadExpuesta: [''],
-            cargoExpuesta: [''],
-            vinculadoActualExpuesta: [''],
-            fechaDesvinculacionExpuesta: [''],
-            legalDesarrollaActividadApnfd: [''],
-            legalCargoPartidoPolitico: [''],
-            legalOperacionCriptomoneda: [''],
+            identificacionExpuesta: ['',[Validators.required,Validators.minLength(5),Validators.maxLength(10),Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            nacionalidadExpuesta: ['', Validators.required],
+            entidadExpuesta: ['', [Validators.required,Validators.maxLength(150)]],
+            cargoExpuesta: ['',[Validators.required,Validators.maxLength(80)]],
+            vinculadoActualExpuesta: ['', Validators.required],
+            fechaDesvinculacionExpuesta: ['', Validators.required],
+            legalDesarrollaActividadApnfd: ['', Validators.required],
+            legalCargoPartidoPolitico: ['', Validators.required],
+            legalOperacionCriptomoneda: ['', Validators.required],
             tipoOperacionCripto: [''],
-            tipoOperacionCriptomoneda: [''],
-            legalOperacionExtranjera: [''],
-            tipoOperacionExtranjera: [''],
-            declaroIngresoDeclaracionAuto: [''],
-            otroIngresoDeclaracionAuto: [''],
+            tipoOperacionCriptomoneda: ['', Validators.required],
+            legalOperacionExtranjera: ['', Validators.required],
+            tipoOperacionExtranjera: ['', Validators.required],
+            declaroIngresoDeclaracionAuto: ['', Validators.required],
+            otroIngresoDeclaracionAuto: ['', Validators.required],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
             plazo: ['', [Validators.required, Validators.minLength(0)]],
@@ -451,7 +467,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             destinoCredito: ['', [Validators.required]],
             codeudorMicro: [''],
             codigoBarrio: ['', [Validators.required]],
-            datosCargoPublico: [''],
+            cargoPublico: ['', [Validators.required,Validators.maxLength(80)]],
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
