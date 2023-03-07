@@ -830,7 +830,7 @@
                                 </mat-form-field>
                             </div>
                         </ng-container>
-                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+                        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end" *ngIf="!permisoEditar">
                             <button mat-raised-button color="primary" type="button" (click)="onPostDatos()"    [disabled]="form.invalid">
                                 Guardar
                             </button>
@@ -851,7 +851,7 @@
                     <ng-template matTabLabel>Referencias</ng-template>
                     <app-grid-referencias></app-grid-referencias>
                 </mat-tab>
-                <ng-container *ngIf="form.controls['tipoCliente'].value === 'CON'">
+                <ng-container *ngIf="form.controls['tipoCliente'].value === 'PRO'">
                     <mat-tab>
                         <ng-template matTabLabel>Conductores</ng-template>
                         <app-grid-conductores-consumo></app-grid-conductores-consumo>

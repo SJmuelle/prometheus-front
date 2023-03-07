@@ -18,6 +18,7 @@ import { FormDialogoChecklistComponent } from '../../form-dialogo-checklist/form
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 import { FormularioCreditoPlexa } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dialog-decision.component';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-gestion-fabrica-consumo',
@@ -79,6 +80,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
     public salarioBasico: number;
     public fabricaDatos;
     public unidadNegocio: any;
+    public permisoEditar:boolean=false;
     constructor(
         private fabricaCreditoService: FabricaCreditoService,
         private route: ActivatedRoute,
@@ -87,6 +89,8 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
         private genericaServices: GenericasService,
         private _dialog: MatDialog,
         public utility: UtilityService,
+        public _permisosService: PermisosService
+
     ) {
 
         if (!this.numeroSolicitud) {
@@ -97,6 +101,7 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
     }
 
     ngOnInit(): void {
+   
         this.createFormulario();
         this.getDepartamentos();
         this.getDepartamentoNacimiento();
@@ -128,6 +133,11 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
         this.gettipoViaNegocio();
         this.form.get('entidadBancaria')?.valueChanges.subscribe(id => { this.validacionEntidad(id) })
         this.form.get('ocupacion')?.valueChanges.subscribe(id => { this.getActividadEconomica(id); })
+
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if(this.permisoEditar){
+            this.form.disable();
+        }
     }
 
 
@@ -268,8 +278,8 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
             this.form.controls.modificadoPlazo.setValue('S')
         }
 
-        let ingresosDiarios=Number(this.utility.enviarNumero(datos.ingresosDiarios.toString()));
-        let compraDia=Number(this.utility.enviarNumero(datos.compraDia.toString()));
+        let ingresosDiarios = Number(this.utility.enviarNumero(datos.ingresosDiarios.toString()));
+        let compraDia = Number(this.utility.enviarNumero(datos.compraDia.toString()));
         if (
             (ingresosDiarios != this.fabricaDatos.ingresosDiarios) ||
             (compraDia != this.fabricaDatos.compraDia) ||
@@ -282,10 +292,9 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
         if (
             (datos.fechaNacimiento != this.fabricaDatos.fechaNacimiento) ||
             (datos.codigoDepartamento != this.fabricaDatos.codigoDepartamento) ||
-            (datos.codigoCiudad != this.fabricaDatos.codigoCiudad)||
+            (datos.codigoCiudad != this.fabricaDatos.codigoCiudad) ||
             (datos.fechaAntiguedadNegocio != this.fabricaDatos.fechaAntiguedadNegocio)
-            ) 
-        {
+        ) {
             this.form.controls.modificadoPolitica.setValue('S')
         } else {
             this.form.controls.modificadoPolitica.setValue('N')
@@ -981,8 +990,8 @@ export class FormGestionFabricaConsumoComponent implements OnInit {
             direccionNumeroVia: [''],
             direccionDistanciaVia: [''],
             direccionComplemento: [''],
-            annosTiempoResidencia: ['' , [Validators.required]],
-            mesesTiempoResidencia: ['' , [Validators.required]],
+            annosTiempoResidencia: ['', [Validators.required]],
+            mesesTiempoResidencia: ['', [Validators.required]],
             tipoCliente: [''],
             descripcionTipoCliente: [''],
             tarjetaPropiedad: [''],

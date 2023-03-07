@@ -205,6 +205,16 @@ export class GenericasService {
     }
 
     /**
+     * @description: Obtiene listado de tipos de referencia
+     */
+    public getTiposReferenciasXsolicitud(numeroSolicitud): Observable<any> {
+        // const params: string = 'TIPO-REFERENCIA';
+        return this._http.get(`${this._appSettings.referenciaCliente.url.tipoReferencia}/${numeroSolicitud}`);
+
+        // return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
    * @description: Obtiene listado de tipos de referencia
    */
     public getTiposCompra(): Observable<any> {
@@ -233,7 +243,7 @@ export class GenericasService {
     * @description: Obtiene listado de tipos de Paretensco
     */
     public getSelectDinamico(data): Observable<any> {
-      
+
         return this._http.get(`${this._appSettings.genericas.url.base}/${data}`);
     }
 
@@ -253,5 +263,27 @@ export class GenericasService {
             nombreEntidad: nombre
         }
         return this._http.post(this._appSettings.busquedaEntidadFinanciera.url.base, data);
+    }
+
+       /**
+     * @description: Obtiene unidades de negocio
+     */
+       public getUnidadesNegocio(): Observable<any> {
+        const params: string = 'UNIDAD-NEGOCIO';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+     * @description: Obtiene estados de creditos
+     */
+    public getEstadoCredito(): Observable<any> {
+        const params: string = 'estados-creditos';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
+    /**
+     * @description: Obtiene los subestados
+     */
+    public postSubEstados(data: any): Observable<any> {
+        const params: string = 'subestados-creditos';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}/${data}`);
     }
 }
