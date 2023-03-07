@@ -147,6 +147,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 if (data.codigoCiudadNegocio) {
                     this.getBarriosNegocio(data.codigoCiudadNegocio);
                 }
+                if(data.estrato){
+                    this.form.controls.estrato.setValue(data.estrato.toString());
+                }
             });
 
         const datosSolicitud: any = {
@@ -272,7 +275,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'success'
                 );
                 setTimeout(() => {
-                    location.reload()
+                     location.reload()
                 }, 1000);
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
@@ -299,8 +302,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             identificacion: [''],
             nombreCompleto: [''],
             celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            tipoCredito: [''],
-            primerNombre: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+            descripcionTipoCredito: [''],
+            primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
             descripcionEstado: [''],
             descripcionSubestado: [''],
             segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
@@ -342,6 +345,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             codigoDepartamentoNegocio: ['', [Validators.required]],
             codigoCiudadNegocio: ['', Validators.required],
             codigoBarrioNegocio: ['', Validators.required],
+            segmento: [''],
             direccionNegocio: [''],
             direccionNegocioVia: [''],
             direccionNegocioPrincipal: [''],
