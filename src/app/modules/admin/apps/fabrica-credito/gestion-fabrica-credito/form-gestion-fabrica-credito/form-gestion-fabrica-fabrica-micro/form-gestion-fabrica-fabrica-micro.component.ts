@@ -29,6 +29,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public salarioBasico: number;
     public fabricaDatos;
     public unidadNegocio: any;
+    public dataGeneralIncial: any;
     public permisoEditar: boolean = false;
     public dataInicial: any
     public ciudades$: Observable<any>;
@@ -78,11 +79,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaNacimiento, fechaExpedicion, fechaDesvinculacionPublico, fechaDesvinculacionExpuesta, estrato, ...data } = datos;
+        const { numeroHijos, autorizacionBanco, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
-        const fechaDesvinculacionPublicoFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
-        const fechaDesvinculacionExpuestaFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
+        const fechaDesvinculacionPublicoFormato = moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD');
+        const fechaDesvinculacionExpuestaFormato = moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD');
         const numeroHijosFormato = Number(numeroHijos);
         const barrioResidenciaFormato = Number(barrioResidencia);
         const antiguedadActividadFormato = Number(antiguedadActividad);
@@ -90,7 +91,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const estratoFormato = Number(estrato)
         const valorSolicitadoFormato = Number(valorSolicitado)
         const plazoFormato = Number(plazo);
-        // delete data.otrosIngresos;
+        const autorizacionBancoFormato = autorizacionBanco ? 'S' : 'N';
+        const modificadaSolicitudFormato = valorSolicitadoFormato
+        // delete data.otrosIngresos; modificadaSolicitud 
         const datosFormularios: FormularioCreditoMicro = {
             fechaNacimiento: fechaNacimientoFormato,
             fechaExpedicion: fechaExpedicionFormato,
@@ -102,6 +105,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             personasACargo: personasACargoFormato,
             estrato: estratoFormato,
             valorSolicitado: valorSolicitadoFormato,
+            autorizacionBanco: autorizacionBancoFormato,
             plazo: plazoFormato,
             ...data
         };
@@ -131,11 +135,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
+                this.dataGeneralIncial = data;
                 console.log(data);
                 this.form.patchValue(data);
 
                 if (data.codigoDepartamento) {
-                    this.getCiudades(data.codigoDepartamento);
+                    this.getCiudades(data.codigoDepartamento); 
                 }
                 if (data.codigoDepartamentoNacimiento) {
                     this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
@@ -149,7 +154,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 if (data.codigoCiudadNegocio) {
                     this.getBarriosNegocio(data.codigoCiudadNegocio);
                 }
-                if(data.estrato){
+                if (data.estrato) {
                     this.form.controls.estrato.setValue(data.estrato.toString());
                 }
             });
@@ -291,7 +296,27 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             });
     }
 
+    public validacionCampos(campo: string, modificado: string, variable: string): void {
+        let mensaje = `<p>¿Estás seguro de editar el campo de <strong>${campo}</strong>?, ${modificado}.</p>`;
+        Swal.fire({
+            title: 'Guardar información',
+            html: mensaje,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(this.form.controls[variable].value);
+                
+            } else {
                 console.log('denegado')
+                    this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
+            }
+        });
+    }
 
     /**
      * @description :creando el formulario
@@ -312,13 +337,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionEstado: [''],
             descripcionSubestado: [''],
             segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
-            primerApellido: [''],
-            segundoApellido: [''],
+            primerApellido: ['',[Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+            segundoApellido: ['',[ Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
             estadoCivil: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
             genero: ['', [Validators.required]],
             nacionalidad: ['', [Validators.required]],
-            fechaNacimiento: [''],
+            fechaNacimiento: ['', Validators.required],
             nivelEstudio: ['', [Validators.required]],
             numeroHijos: ['', [Validators.required, Validators.minLength(0)]],
             personasACargo: ['', [Validators.required, Validators.minLength(0)]],
@@ -392,6 +417,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             vinculadoActualPublico: [''],
             fechaDesvinculacionPublico: [''],
             legalPersonalExpuesta: [''],
+            tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
             familiarDePersonaExpuestaPyP: [''],
             cargoRecursosPartidoPolitico: [''],
@@ -407,6 +433,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             legalCargoPartidoPolitico: [''],
             legalOperacionCriptomoneda: [''],
             tipoOperacionCripto: [''],
+            tipoOperacionCriptomoneda: [''],
             legalOperacionExtranjera: [''],
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: [''],
@@ -417,7 +444,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionTipo: [''],
             titularMicro: [''],
             aplicaCodeudor: [''],
-            valorSolicitadoWeb: [''],
+            valorSolicitadoWeb: ['', [Validators.required, Validators.min(0)]],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
             valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
@@ -428,16 +455,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
-            // Datos Cargo publico Familiar
-            vinculacionRelacion: [""],
-            cargoPublicNombreYapellido: [""],
-            cargoPublicTipoID: [""],
-            cargoPublicIDNumber: [""],
-            cargoPublicNacionalidad: [""],
-            cargoPublicEntidad: [""],
-            cargoPublicCargo: [""],
-            cargoPublicVinculado: [""],
-            cargoPublicFechaDesvinculacion: [""]
         });
     }
 
