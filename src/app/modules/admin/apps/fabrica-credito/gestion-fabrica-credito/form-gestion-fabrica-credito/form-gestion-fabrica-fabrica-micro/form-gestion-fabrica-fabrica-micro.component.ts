@@ -12,6 +12,7 @@ import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import { FuseValidators } from '@fuse/validators';
 
 @Component({
     selector: 'form-gestion-fabrica-fabrica-micro',
@@ -49,12 +50,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         public _permisosService: PermisosService,
         private _formularioCreditoService: FormularioCreditoService,
     ) {
-        this.cargueInicial();
-        this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+        this.createFormulario();
+
     }
 
     ngOnInit(): void {
-        this.createFormulario();
+        this.cargueInicial();
+        this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
         if (this.permisoEditar) {
             this.form.disable();
@@ -369,7 +371,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             nivelEstudio: ['', [Validators.required]],
             numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            fechaExpedicion: ['', [Validators.required]],
+            fechaExpedicion: ['', [Validators.required,this.validatedDate.bind(this)]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
@@ -436,7 +438,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             legalCargoPublico: ['', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
-            fechaDesvinculacionPublico: ['', Validators.required],
+            fechaDesvinculacionPublico: [''],
             legalPersonalExpuesta: ['', Validators.required],
             tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
@@ -476,11 +478,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
-        });
+        },
+        );
     }
 
     public validacion(tipo: string) {
-        if (this.form.controls['aplicaIngresos'].value == 'N') {
+        if (this.form.controls['aplicaIngresos']?.value == 'N') {
             this.form.controls['otrosIngresos'].setValue("0");
             this.form.controls['ingresos'].setValue("0");
             this.form.controls['descripcionOtrosIngresos'].setValue("");
@@ -619,7 +622,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             +
             Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
             ;
-        this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
+        this.form.controls['ingresos']?.setValue(this.utility.formatearNumero(String(sum)));
 
     }
 
@@ -752,7 +755,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
         this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
             if (e === 'N') {
-                this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required])
+                this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required,this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionPublico')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -802,7 +805,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
         this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
             if (e === 'N') {
-                this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required])
+                this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required,this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -865,15 +868,18 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         
     }
 
-    private validatedDate(date: AbstractControl) {
-        const data: string | null = date.value;
-        const year = this.fechaActual.year();
-        const month = this.fechaActual.month() + 1;
-        const dateForm = data?.split("-")
-        if (!data || dateForm[0] > year || (dateForm[0] == year && dateForm[1] > month)) {
-            return { periodoActual: true }
+    private validatedDate(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        const date =  moment(valueControl).format('YYYY-MM-DD') 
+        const errors = {dateError: true};
+         
+        // Set the validation error on the matching control
+        if(this.fechaActual.isBefore(date)){
+
+            return errors
+        }else{
+            return null
         }
-        return null
     }
 
     get primerNombre(): ValidatorFn {
