@@ -58,6 +58,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if (this.permisoEditar) {
             this.form.disable();
         }
+
     }
 
     private cargueInicial() {
@@ -371,7 +372,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             codigoDepartamento: ['', [Validators.required]],
             codigoCiudad: ['',Validators.required],
             barrioResidencia: ['', Validators.required],
-            direccionResidencial: ['', [Validators.required]],
+            direccionResidencial: [''],
             direccionTipoVia: ['', [Validators.required]],
             direccionViaPrincipal: ['', [Validators.required]],
             direccionNumeroVia: ['', [Validators.required]],
@@ -414,7 +415,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             celularConyuge: ['', [Validators.required,Validators.minLength(7), Validators.maxLength(10),Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             primerNombreConyuge: ['', Validators.required],
             segundoNombreConyuge: [''],
-            primerApellidoConyuge: [''],
+            primerApellidoConyuge: ['', Validators.required],
             segundoApellidoConyuge: [''],
             emailConyuge: ['',[Validators.required,Validators.email]],
             tipoEmpleoConyuge: ['', Validators.required],
@@ -616,6 +617,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             ;
         this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
 
+    }
+
+    public addValidation(){
+        this.form.get('camaraComercio').valueChanges.subscribe((e: string) => {
+            if(e === 'S'){
+                this.form.get('tieneRut')?.setValidators([Validators.required])
+            }
+        })
     }
 
     get primerNombre(): ValidatorFn {
