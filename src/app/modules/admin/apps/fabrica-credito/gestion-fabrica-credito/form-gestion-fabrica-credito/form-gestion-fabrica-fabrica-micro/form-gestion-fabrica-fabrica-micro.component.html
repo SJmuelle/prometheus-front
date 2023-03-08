@@ -151,7 +151,7 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>No. de identificación</mat-label>
-                                <input matInput type="text" [formControlName]="'identificacion'" [readonly]="true">
+                                <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'identificacion'" [readonly]="true">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
                                 </mat-icon>
                             </mat-form-field>
@@ -163,7 +163,7 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Teléfono / Celular </mat-label>
-                                <input matInput type="text" [formControlName]="'celular'" [required]="true">
+                                <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'" [required]="true">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
@@ -314,7 +314,7 @@
                             </mat-form-field>
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                                <mat-label>Numero de hijos</mat-label>
+                                <mat-label>Número de hijos</mat-label>
                                 <input matInput type="text" [formControlName]="'numeroHijos'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -445,7 +445,7 @@
 
                             <ng-container *ngIf="ciudades$ | async as ciudades">
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                                    <mat-label>Ciudad de residencia</mat-label>
+                                    <mat-label>Ciudad del negocio</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
                                         (selectionChange)="seleccionCiudad($event)">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -463,7 +463,7 @@
                             </ng-container>
                             <ng-container *ngIf="barrios$ | async as barrios">
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                                    <mat-label>Barrio de residencia</mat-label>
+                                    <mat-label>Barrio del negocio</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
@@ -574,14 +574,8 @@
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Actividad económica
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'"
-                                    [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="let tiposLocales of dataInicial?.tiposLocales"
-                                        [value]="tiposLocales.codigo">{{tiposLocales.valor}}
-                                    </mat-option>
-                                </mat-select>
+                                <input matInput type="text" [formControlName]="'actividadEconomica'">
+                                
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="form.controls.actividadEconomica.errors?.required">
                                     Este campo es requerido.
@@ -658,14 +652,11 @@
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.maxLength">
-                                    Longitud minima y máxima de 10 digítos
-                                </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.minLength">
                                     Longitud minima y máxima de 10 digítos
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.pattern">
-                                    Solo se pueden ingresar numeros
+                                    Solo se pueden ingresar números
                                 </mat-error>
                             </mat-form-field>
                             
@@ -703,7 +694,7 @@
 
                             <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
                                 <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                                    <mat-label>Ciudad de residencia</mat-label>
+                                    <mat-label>Municipio / ciudad</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'"
                                         (selectionChange)="seleccionCiudadNegocio($event)">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -804,12 +795,12 @@
                                     Este campo es requerido.
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.pattern">
-                                    Solo se aceptan numeros
+                                    Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Teléfono / celular del negocio:</mat-label>
-                                <input matInput type="number" [formControlName]="'telefonoNegocio'">
+                                <input matInput type="text"  mask="(000) 000 00 00" [formControlName]="'telefonoNegocio'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="form.controls.telefonoNegocio.errors?.required">
@@ -822,7 +813,7 @@
                                     Debe tener maximo 10 digitos
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.telefonoNegocio.errors?.parrent">
-                                    Solo se aceptan numeros
+                                    Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -882,7 +873,7 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Teléfono/ celular del arrendador</mat-label>
-                                <input matInput type="text" [formControlName]="'celularArrendador'">
+                                <input matInput  mask="(000) 000 00 00" type="text" [formControlName]="'celularArrendador'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="form.controls.celularArrendador.errors?.required">
@@ -956,8 +947,8 @@
                             </mat-form-field>
 
                         </div>
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del conyuge</span>
-                        <div class="-mx-3 md:flex mt-3 mb-2">
+                        <span *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'" class="bg-gray-200 p-1.5 rounded-1 text-dark">Información del conyuge</span>
+                        <div *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'" class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Primer nombre</mat-label>
                                 <input matInput type="text" [formControlName]="'primerNombreConyuge'"
@@ -994,7 +985,7 @@
                                 
                             </mat-form-field>
                         </div>
-                        <div class="-mx-3 md:flex mb-2 mt-3">
+                        <div *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'" class="-mx-3 md:flex mb-2 mt-3">
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Tipo de documento</mat-label>
@@ -1011,13 +1002,13 @@
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>No. de identificación</mat-label>
-                                <input matInput type="text" [formControlName]="'identificacionConyuge'">
+                                <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'identificacionConyuge'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Teléfono / Celular </mat-label>
-                                <input matInput type="text" [formControlName]="'celularConyuge'">
+                                <input  mask="(000) 000 00 00" matInput type="text" [formControlName]="'celularConyuge'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="form.controls.celularConyuge.errors?.required">
@@ -1034,7 +1025,7 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="-mx-3 md:flex mt-3 mb-2">
+                        <div  *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'" class="-mx-3 md:flex mt-3 mb-2">
 
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Tipo de empleo</mat-label>
@@ -1151,9 +1142,10 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div *ngIf="form.controls.poseeCuentaBancaria.value === 'N'" class="-mx-3 md:flex mt-3 mb-2">
-                            <span 
-                            class="bg-blue-100 px-3 mx-4 mb-8">
+                        <div *ngIf="form.controls.poseeCuentaBancaria.value === 'N'" class="-mx-3 md:flex mt-3 mb-2" 
+                        >
+                            <span [ngClass]="form.controls.autorizacionBanco.errors?.required ?'bg-red-100 text-red-700 ':'bg-blue-100 '"
+                            class="px-3 mx-4 mb-8">
                             <mat-checkbox matInput [formControlName]="'autorizacionBanco'">  </mat-checkbox>
                             En caso de no poseer cuenta bancaria autorizo a FINTRA S.A.S para que el monto aprobado sea
                             desembolsado de la forma que la compañía asigne en el momento de la transacción.
@@ -1297,19 +1289,19 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Tipo de ID</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumentoConyuge'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoIdentificacionExpuesta'">
                                     <mat-option *ngFor="let item of dataInicial?.tiposDocumentos"
                                     [value]="item.codigo">{{item.valor}}
                                 </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="form.controls.tipoDocumentoConyuge.errors?.required">
+                            <mat-error *ngIf="form.controls.tipoIdentificacionExpuesta.errors?.required">
                                 Este campo es requerido.
                             </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>
                                     N° de identificación</mat-label>
-                                <input matInput type="text" [formControlName]="'identificacionExpuesta'">
+                                <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'identificacionExpuesta'">
                                 <mat-error *ngIf="form.controls.identificacionExpuesta.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>

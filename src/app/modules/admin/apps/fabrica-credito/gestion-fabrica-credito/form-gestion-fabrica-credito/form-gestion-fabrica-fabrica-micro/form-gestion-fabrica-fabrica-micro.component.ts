@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-credito.interface';
@@ -38,6 +38,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public barrios$: Observable<any>;
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
+    fechaActual: any = moment().locale("co");
 
     constructor(
         private fabricaCreditoService: FabricaCreditoService,
@@ -93,7 +94,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos, autorizacionBanco, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+        const { numeroHijos, autorizacionBanco,telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
         const fechaDesvinculacionPublicoFormato = moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD');
@@ -106,7 +107,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const valorSolicitadoFormato = Number(valorSolicitado)
         const plazoFormato = Number(plazo);
         const autorizacionBancoFormato = autorizacionBanco ? 'S' : 'N';
-        const modificadaSolicitudFormato = valorSolicitadoFormato
+        const modificadaSolicitudFormato = valorSolicitadoFormato;
+        const telefonoNegocioFormato = telefonoNegocio.toString();
         // delete data.otrosIngresos; modificadaSolicitud 
         const datosFormularios: FormularioCreditoMicro = {
             fechaNacimiento: fechaNacimientoFormato,
@@ -121,6 +123,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             valorSolicitado: valorSolicitadoFormato,
             autorizacionBanco: autorizacionBancoFormato,
             plazo: plazoFormato,
+            telefonoNegocio: telefonoNegocioFormato,
             ...data
         };
         Swal.fire({
@@ -362,10 +365,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             email: ['', [Validators.required, Validators.email]],
             genero: ['', [Validators.required]],
             nacionalidad: ['', [Validators.required]],
-            fechaNacimiento: ['', Validators.required],
+            fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
-            numeroHijos: ['', [Validators.required, Validators.minLength(0)]],
-            personasACargo: ['', [Validators.required, Validators.minLength(0)]],
+            numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             fechaExpedicion: ['', [Validators.required]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
@@ -375,13 +378,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             barrioResidencia: ['', Validators.required],
             direccionResidencial: [''],
             direccionTipoVia: ['', [Validators.required]],
-            direccionViaPrincipal: ['', [Validators.required]],
-            direccionNumeroVia: ['', [Validators.required]],
+            direccionViaPrincipal: ['', [Validators.required, Validators.min(0)]],
+            direccionNumeroVia: ['', [Validators.required, Validators.min(0)]],
             direccionDistanciaVia: ['', [Validators.required]],
             direccionComplemento: [''],
             tipoVivienda: ['', Validators.required],
-            annosTiempoResidencia: ['', [Validators.required, Validators.minLength(0)]],
-            mesesTiempoResidencia: ['', [Validators.required, Validators.minLength(0)]],
+            annosTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
+            mesesTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
             tipoActividad: ['', Validators.required],
             actividadEconomica: ['', Validators.required],
             actividadEspecifica: ['', Validators.required],
@@ -411,15 +414,15 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             nombreAtiendeNegocio: ['', Validators.required],
             tieneOtrosPuntos: ['', Validators.required],
             tipoDocumentoConyuge: [''],
-            identificacionConyuge: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(10)]],
+            identificacionConyuge: [''],
             nombreCompletoConyuge: [''],
-            celularConyuge: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            primerNombreConyuge: ['', Validators.required],
+            celularConyuge: [''],
+            primerNombreConyuge: [''],
             segundoNombreConyuge: [''],
-            primerApellidoConyuge: ['', Validators.required],
+            primerApellidoConyuge: [''],
             segundoApellidoConyuge: [''],
-            emailConyuge: ['', [Validators.required, Validators.email]],
-            tipoEmpleoConyuge: ['', Validators.required],
+            emailConyuge: [''],
+            tipoEmpleoConyuge: [''],
             nombreEmpresaConyuge: [''],
             cargoConyuge: [''],
             salarioConyuge: [''],
@@ -627,7 +630,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             if (e === 'S') {
                 this.form.get('tieneRut')?.setValidators([Validators.required])
                 this.form.get('tieneRut')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.minLength(10), Validators.max(9999999999)])
                 this.form.get('nitNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -683,7 +686,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('entidadBancaria')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('tipoCuentaBancaria')?.setValidators([Validators.required])
                 this.form.get('tipoCuentaBancaria')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('numeroCuentaBancaria')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('numeroCuentaBancaria')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.min(0)])
                 this.form.get('numeroCuentaBancaria')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -693,6 +696,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('tipoCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('numeroCuentaBancaria')?.setValidators(null)
                 this.form.get('numeroCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
+            }
+
+            if(e === 'N'){
+                this.form.get('autorizacionBanco')?.setValidators([Validators.requiredTrue])
+                this.form.get('autorizacionBanco')?.enable({ emitEvent: true, onlySelf: true })
+            }else{
+                this.form.get('autorizacionBanco')?.setValidators(null)
+                this.form.get('autorizacionBanco')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
 
@@ -753,12 +764,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         // Datos cargo publico familiar 
         this.form.get('legalPersonalExpuesta').valueChanges.subscribe((e: string) => {
             if (e === 'S') {
-                this.form.get('vinculacionExpuesta')?.setValidators( [Validators.required, Validators.max(50)])
+                this.form.get('vinculacionExpuesta')?.setValidators([Validators.required, Validators.max(50)])
                 this.form.get('vinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('nombreExpuesta')?.setValidators([Validators.required, Validators.maxLength(100)])
                 this.form.get('nombreExpuesta')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('tipoDocumentoConyuge')?.setValidators([Validators.required])
-                this.form.get('tipoDocumentoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoIdentificacionExpuesta')?.setValidators([Validators.required])
+                this.form.get('tipoIdentificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('identificacionExpuesta')?.setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('identificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('nacionalidadExpuesta')?.setValidators([Validators.required])
@@ -775,8 +786,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('vinculacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('nombreExpuesta')?.setValidators(null)
                 this.form.get('nombreExpuesta')?.disable({ emitEvent: true, onlySelf: true })
-                this.form.get('tipoDocumentoConyuge')?.setValidators(null)
-                this.form.get('tipoDocumentoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoIdentificacionExpuesta')?.setValidators(null)
+                this.form.get('tipoIdentificacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('identificacionExpuesta')?.setValidators(null)
                 this.form.get('identificacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('nacionalidadExpuesta')?.setValidators(null)
@@ -801,7 +812,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
 
         // declaro ingresos Otros declaroIngresoDeclaracionAuto
-        this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
+        this.form.get('declaroIngresoDeclaracionAuto').valueChanges.subscribe((e: string) => {
+            console.log(e, "declaroIngresoDeclaracionAuto");
+
             if (e === 'OT') {
                 this.form.get('otroIngresoDeclaracionAuto')?.setValidators([Validators.required])
                 this.form.get('otroIngresoDeclaracionAuto')?.enable({ emitEvent: true, onlySelf: true })
@@ -811,6 +824,56 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('otroIngresoDeclaracionAuto')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
+
+        // conyuge form si aplica Casado o union libre
+        this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
+            console.log(e, "declaroIngresoDeclaracionAuto");
+
+            if (e === 'CA' || e === 'UL') {
+                this.form.get('primerNombreConyuge')?.setValidators([Validators.required])
+                this.form.get('primerNombreConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('primerApellidoConyuge')?.setValidators([Validators.required])
+                this.form.get('primerApellidoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoDocumentoConyuge')?.setValidators([Validators.required])
+                this.form.get('tipoDocumentoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('identificacionConyuge')?.setValidators([Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('identificacionConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('celularConyuge')?.setValidators([Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('celularConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('emailConyuge')?.setValidators([Validators.required, Validators.email])
+                this.form.get('emailConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoEmpleoConyuge')?.setValidators([Validators.required])
+                this.form.get('tipoEmpleoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('primerNombreConyuge')?.setValidators(null)
+                this.form.get('primerNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('primerApellidoConyuge')?.setValidators(null)
+                this.form.get('primerApellidoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoDocumentoConyuge')?.setValidators(null)
+                this.form.get('tipoDocumentoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('identificacionConyuge')?.setValidators(null)
+                this.form.get('identificacionConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('celularConyuge')?.setValidators(null)
+                this.form.get('celularConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('emailConyuge')?.setValidators(null)
+                this.form.get('emailConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoEmpleoConyuge')?.setValidators(null)
+                this.form.get('tipoEmpleoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+        
+    }
+
+    private validatedDate(date: AbstractControl) {
+        const data: string | null = date.value;
+        const year = this.fechaActual.year();
+        const month = this.fechaActual.month() + 1;
+        const dateForm = data?.split("-")
+        if (!data || dateForm[0] > year || (dateForm[0] == year && dateForm[1] > month)) {
+            return { periodoActual: true }
+        }
+        return null
     }
 
     get primerNombre(): ValidatorFn {
