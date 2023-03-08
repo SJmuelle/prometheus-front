@@ -590,14 +590,7 @@
                             <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
                                 <mat-label>Actividad Especifica
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'actividadEspecifica'"
-                                    [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="let camaraComercio of dataInicial?.camaraComercio"
-                                        [value]="camaraComercio.codigo">{{camaraComercio.valor}}
-                                    </mat-option>
-                                </mat-select>
+                                <input matInput type="text" [formControlName]="'actividadEspecifica'">
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="form.controls.actividadEspecifica.errors?.required">
                                     Este campo es requerido.
