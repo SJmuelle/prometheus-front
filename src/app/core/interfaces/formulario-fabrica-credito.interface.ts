@@ -290,6 +290,8 @@ export interface FormularioCreditoMicro {
     modificadaSolicitud: String;
     valorSolicitado: Number;
     destinoCredito: String;
+    declaraRenta:String;
+    actividadNoDesignada:String
 }
 
 export interface FormularioDatosTitularInterface {
