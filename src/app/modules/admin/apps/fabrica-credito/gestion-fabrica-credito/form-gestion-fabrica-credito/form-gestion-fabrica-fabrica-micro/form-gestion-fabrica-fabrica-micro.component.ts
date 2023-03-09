@@ -198,7 +198,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     codigoBarrio: data.codigoBarrio
                 });
                 this.unidadNegocio = data.unidadNegocio;
-                this.fabricaDatos = data.fabricaDatos;
+                this.fabricaDatos = data;
+                
             });
     }
 
@@ -566,7 +567,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                         +
                         Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
                         ;
-                    this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
+                    this.form.controls['ingresos']?.setValue(this.utility.formatearNumero(String(sum)));
 
                 } else {
                     switch (tipo) {
@@ -601,7 +602,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                             this.form.controls['fechaVinculacion'].setValue(String(this.fabricaDatos.fechaVinculacion));
                             break;
                         case 'GEN':
-                            this.form.controls['genero'].setValue(String(this.fabricaDatos.genero));
+                            this.form.controls['genero']?.setValue(String(this.fabricaDatos?.genero));
                             break;
                         case 'FEN':
                             this.form.controls['fechaNacimiento'].setValue(String(this.fabricaDatos.fechaNacimiento));
