@@ -15,8 +15,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
   listadoActividadEconomica: any[];
   listadoCiudades: any[];
   listadoBarrios: any[];
-  editable=true;
-  public unidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
+  editable = true;
+  public unidadNegocio: 1;
   public tipoIdentificacion: string = this.route.snapshot.paramMap.get('tipoIdentificacion');
   public identificacion: string = this.route.snapshot.paramMap.get('identificacion');
   public unSubscribe$: Subject<any> = new Subject<any>();
@@ -119,8 +119,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     const datos = this.form.getRawValue();
     const { tipoDocumento, identificacion, } = datos;
     if ((tipoDocumento) && (identificacion)) {
-
-      this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, this.unidadNegocio).subscribe((resp: any) => {
+      this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 1).subscribe((resp: any) => {
         if (resp) {
           this.form.patchValue(resp.data);
         }
