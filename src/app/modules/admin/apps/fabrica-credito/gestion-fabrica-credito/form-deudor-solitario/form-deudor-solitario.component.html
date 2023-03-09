@@ -42,7 +42,9 @@
         <div class="-mx-3 md:flex mb-2">
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nombre completo del deudor solidario</mat-label>
-                <input matInput type="text" [readonly]="true" [readonly]="true" disabled>
+                <input matInput type="text" [formControlName]="'nombreCompleto'"
+                    [value]="formDeudorSolidario.controls.primerNombre.value+' '+formDeudorSolidario.controls.segundoNombre.value+' '+formDeudorSolidario.controls.primerApellido.value+' '+formDeudorSolidario.controls.segundoApellido.value"
+                    [readonly]="true" [readonly]="true" disabled>
             </mat-form-field>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -95,8 +97,7 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Departamento de residencia</mat-label>
                     <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
-                        [formControlName]="'codigoDepartamento'"
-                        (selectionChange)="validacionCampos('departamento de residencia','políticas SARC de esta solicitud','codigoDepartamento','D')">
+                        [formControlName]="'codigoDepartamento'">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let departamento of departamentos.data"
@@ -111,7 +112,6 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Ciudad de residencia</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
-                        (selectionChange)="validacionCampos('ciudad de residencia','políticas SARC de esta solicitud','codigoCiudad','C')"
                         (selectionChange)="seleccionCiudad($event)">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
@@ -126,7 +126,7 @@
             <ng-container *ngIf="barrios$ | async as barrios">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Barrio de residencia</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'codigoBarrio'">
+                    <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
@@ -201,27 +201,12 @@
                     </mat-icon>
                 </mat-form-field>
             </ng-container>
-            <ng-container>
-                <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                    <mat-label>Años de residencia</mat-label>
-                    <input matInput type="number" [formControlName]="'annosTiempoResidencia'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                </mat-form-field>
-                <mat-form-field class="w-1/4 px-3 fuse-mat-dense">
-                    <mat-label>Meses de residencia</mat-label>
-                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0"
-                        max="11">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                </mat-form-field>
-            </ng-container>
         </div>
         <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información legal - cliente PEP</span>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿Ha ocupado cargos públicos?</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublico'">
+                <mat-select [value]="'seleccione'" [formControlName]="'legalCargoPublico'">
                     <mat-option disabled [value]="''">Seleccione
                     </mat-option>
                     <mat-option [value]="'S'">Si
@@ -231,10 +216,13 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.legalCargoPublico.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿Es familiar de persona expuesta política y públicamente?</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'familiarDePersonaExpuestaPyP'">
+                <mat-select [value]="'seleccione'" [formControlName]="'legalPersonalExpuesta'">
                     <mat-option disabled [value]="''">Seleccione
                     </mat-option>
                     <mat-option [value]="'S'">Si
@@ -244,11 +232,14 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿ Tiene a su cargo la dirección de recursos en algún partido político
                     ?</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'cargoRecursosPartidoPolitico'">
+                <mat-select [value]="'seleccione'" [formControlName]="'legalCargoPartidoPolitico'">
                     <mat-option disabled [value]="''">Seleccione
                     </mat-option>
                     <mat-option [value]="'S'">Si
@@ -258,23 +249,33 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.legalCargoPartidoPolitico.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
         </div>
-        <span *ngIf="formDeudorSolidario.controls.cargoPublico.value === 'S'" class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos
-            cargo público</span>
+        <span *ngIf="formDeudorSolidario.controls.legalCargoPublico.value === 'S'"
+            class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público</span>
 
-        <div *ngIf="formDeudorSolidario.controls.cargoPublico.value === 'S'" class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+        <div *ngIf="formDeudorSolidario.controls.legalCargoPublico.value === 'S'"
+            class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Cargo</mat-label>
-                <input matInput type="text" [formControlName]="'datosCargoPublico'">
+                <input matInput type="text" [formControlName]="'cargoPublico'">
+                <mat-error *ngIf="formDeudorSolidario.controls.cargoPublico.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Entidad</mat-label>
-                <input matInput type="text" [formControlName]="'entidad'">
+                <input matInput type="text" [formControlName]="'entidadPublico'">
+                <mat-error *ngIf="formDeudorSolidario.controls.entidadPublico.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿Estás vinculado actualmente?</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualmente'">
+                <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualPublico'">
                     <mat-option disabled [value]="''">Seleccione
                     </mat-option>
                     <mat-option [value]="'S'">Si
@@ -282,61 +283,87 @@
                     <mat-option [value]="'N'">No
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formDeudorSolidario.controls.vinculadoActualPublico.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualmente.value === 'N'" class="w-1/2 px-3 fuse-mat-dense">
+            <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualPublico.value === 'N'"
+                class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacion" [formControlName]="'fechaDesvinculacion'"
-                    [readonly]="true">
-                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacion" [disabled]="false">
+                <input matInput [matDatepicker]="fechaDesvinculacionPublico"
+                    [formControlName]="'fechaDesvinculacionPublico'" [readonly]="true">
+                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                 </mat-datepicker-toggle>
-                <mat-datepicker #fechaDesvinculacion readonly></mat-datepicker>
+                <mat-datepicker #fechaDesvinculacionPublico readonly></mat-datepicker>
+                <mat-error *ngIf="formDeudorSolidario.controls.fechaDesvinculacionPublico.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
         </div>
-        <span *ngIf="formDeudorSolidario.controls.familiarDePersonaExpuestaPyP.value === 'S'"
+        <span *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.value === 'S'"
             class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público-Familiar</span>
-        <div *ngIf="formDeudorSolidario.controls.familiarDePersonaExpuestaPyP.value === 'S'" class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+        <div *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.value === 'S'"
+            class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Vinculación / Relación</mat-label>
-                <input matInput type="text" [formControlName]="'vinculacionRelacion'">
+                <input matInput type="text" [formControlName]="'vinculacionExpuesta'">
+                <mat-error *ngIf="formDeudorSolidario.controls.vinculacionExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Nombre y apellido</mat-label>
-                <input matInput type="text" [formControlName]="'cargoPublicNombreYapellido'">
+                <input matInput type="text" [formControlName]="'nombreExpuesta'">
+                <mat-error *ngIf="formDeudorSolidario.controls.nombreExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Tipo de ID</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublicTipoID'">
-                    <mat-option disabled [value]="''">Seleccione
-                    </mat-option>
-                    <mat-option [value]="'S'">Si
-                    </mat-option>
-                    <mat-option [value]="'N'">No
+                <mat-select [value]="'seleccione'" [formControlName]="'tipoIdentificacionExpuesta'">
+                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{item.valor}}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formDeudorSolidario.controls.tipoIdentificacionExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>
                     N° de identificación</mat-label>
-                <input matInput type="text" [formControlName]="'cargoPublicIDNumber'">
+                <input matInput type="text" mask="separator.0" thousandSeparator="."
+                    [formControlName]="'identificacionExpuesta'">
+                <mat-error *ngIf="formDeudorSolidario.controls.identificacionExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>
                     Nacionalidad</mat-label>
-                <input matInput type="text" [formControlName]="'cargoPublicNacionalidad'">
+                <input matInput type="text" [formControlName]="'nacionalidadExpuesta'">
+                <mat-error *ngIf="formDeudorSolidario.controls.nacionalidadExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>
                     Entidad</mat-label>
-                <input matInput type="text" [formControlName]="'cargoPublicEntidad'">
+                <input matInput type="text" [formControlName]="'entidadExpuesta'">
+                <mat-error *ngIf="formDeudorSolidario.controls.entidadExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>
                     Cargo</mat-label>
-                <input matInput type="text" [formControlName]="'cargoPublicCargo'">
+                <input matInput type="text" [formControlName]="'cargoExpuesta'">
+                <mat-error *ngIf="formDeudorSolidario.controls.cargoExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿Estás vinculado actualmente?</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'cargoPublicVinculado'">
+                <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualExpuesta'">
                     <mat-option disabled [value]="''">Seleccione
                     </mat-option>
                     <mat-option [value]="'S'">Si
@@ -344,15 +371,22 @@
                     <mat-option [value]="'N'">No
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="formDeudorSolidario.controls.vinculadoActualExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
 
-            <mat-form-field *ngIf="formDeudorSolidario.controls.cargoPublicVinculado.value === 'N'" class="w-1/2 px-3 fuse-mat-dense">
+            <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualExpuesta.value === 'N'"
+                class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacion"
-                    [formControlName]="'cargoPublicFechaDesvinculacion'" [readonly]="true">
-                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacion" [disabled]="false">
+                <input matInput [matDatepicker]="fechaDesvinculacionExpuesta"
+                    [formControlName]="'fechaDesvinculacionExpuesta'">
+                <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionExpuesta" [disabled]="false">
                 </mat-datepicker-toggle>
-                <mat-datepicker #fechaDesvinculacion readonly></mat-datepicker>
+                <mat-datepicker #fechaDesvinculacionExpuesta readonly></mat-datepicker>
+                <mat-error *ngIf="formDeudorSolidario.controls.fechaDesvinculacionExpuesta.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
         </div>
         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal -Datos
@@ -370,15 +404,26 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.legalOperacionExtranjera.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+            <mat-form-field *ngIf="formDeudorSolidario.controls.legalOperacionExtranjera.value == 'S'"
+                class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Que tipo de operacíon</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionExtranjera'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionExtranjera" [value]="item.codigo">
                         {{item.nombre}}
                     </mat-option>
                 </mat-select>
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.tipoOperacionExtranjera.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
+        </div>
+        <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿Realiza operaciones con criptomoneda?</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'legalOperacionCriptomoneda'">
@@ -391,14 +436,23 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.legalOperacionCriptomoneda.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+            <mat-form-field *ngIf="formDeudorSolidario.controls.legalOperacionCriptomoneda.value == 'S'"
+                class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Que tipo de operacíón realiza</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCripto'">
+                <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCriptomoneda'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionCripto" [value]="item.codigo">
                         {{item.nombre}}
                     </mat-option>
                 </mat-select>
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.tipoOperacionCriptomoneda.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
@@ -415,8 +469,11 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.legalDesarrollaActividadApnfd.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+            <!-- <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>¿Es responsable de declarar renta y complementarios?
                 </mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
@@ -429,7 +486,7 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
-            </mat-form-field>
+            </mat-form-field> -->
         </div>
 
 
@@ -448,11 +505,23 @@
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.declaroIngresoDeclaracionAuto.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="formDeudorSolidario.controls.declaroIngresoDeclaracionAuto.value === 'OT'"
+                class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Otro</mat-label>
+                <input matInput type="text" [formControlName]="'otroIngresoDeclaracionAuto'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.otroIngresoDeclaracionAuto.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()"
-                [disabled]="formDeudorSolidario.invalid">
+            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                 Guardar
             </button>
         </div>
