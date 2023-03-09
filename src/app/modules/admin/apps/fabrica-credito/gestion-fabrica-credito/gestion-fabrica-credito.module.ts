@@ -72,7 +72,6 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FormGestionFabricaFabricaMicroComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-fabrica-micro/form-gestion-fabrica-fabrica-micro.component';
 import { FormCodeudorComponent } from './form-codeudor/form-codeudor.component';
 import { FormDeudorSolitarioComponent } from './form-deudor-solitario/form-deudor-solitario.component';
-import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 
 
 
@@ -118,7 +117,7 @@ import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-refe
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
-       
+
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,
@@ -153,8 +152,7 @@ import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-refe
         // NgxMaskModule.forRoot(maskConfig),
         // NgxMaskModule.forRoot(maskConfigFunction),
         NgxMaskModule.forRoot(),
-        MatProgressBarModule,
-        // AgendaReferenciacionModule,
+        MatProgressBarModule
     ],
 
     exports: [

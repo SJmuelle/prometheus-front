@@ -386,31 +386,3 @@ export interface FormularioRepresentanteInterface {
     codigoCiudadExpedicion?: string;
     modificadoPolitica?: string;
 }
-
-export interface FormularioDeudorSolidarioInterface {
-    recurso?: string;
-    numeroSolicitud?: string;
-    tipo?: string;
-    tipoDocumento?: string;
-    identificacion?: string;
-    nombreCompleto?: string;
-    celular?: string;
-    primerNombre?: string;
-    segundoNombre?: string;
-    primerApellido?: string;
-    segundoApellido?: string;
-    estadoCivil?: string;
-    email?: string;
-    genero?: string;
-    codigoDepartamento?: string;
-    codigoCiudad?: string;
-    barrioResidencia?: string;
-    direccionResidencial?: string;
-    direccionTipoVia?: string;
-    direccionViaPrincipal?: string;
-    direccionNumeroVia?: number;
-    direccionDistanciaVia?: string;
-    direccionComplemento?: string;
-    tipoVivienda?: string;
-    parentesco?: string;
-}

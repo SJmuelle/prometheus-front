@@ -5,7 +5,7 @@
       <div class="w-full">
         <mat-form-field class="w-full" appearance="fill">
           <mat-label>Decisión</mat-label>
-          <mat-select formControlName="decision" (selectionChange)="getlistadoCausales()">
+          <mat-select formControlName="decision" (selectionChange)="getlistadoCausales()"  [disabled]="fabricaDatos.agenda != 'DE'">
             <mat-option *ngFor="let item of listadoDeciones" value="{{item.codigoOpcion}}">{{item.descripcionOpcion}}
             </mat-option>
           </mat-select>

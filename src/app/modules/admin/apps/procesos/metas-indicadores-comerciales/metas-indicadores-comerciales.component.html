@@ -70,7 +70,7 @@
                                         svgIcon="heroicons_outline:arrow-narrow-right"
                                         (click)="goToNextStep()"></mat-icon> o <a (click)="goToNextStep()">Siguiente</a>
                                 </fuse-alert>
-                                <fuse-alert [type]="'warning'" *ngIf="form.invalid">
+                                <fuse-alert [type]="'warning'" *ngIf="!clonarPeriodo">
                                     <span fuseAlertTitle>Aún no se ha seleccionado un período para clonar</span>
                                     Elija los períodos para seguir el flujo
                                 </fuse-alert>

@@ -38,33 +38,6 @@ export class PqrService {
         );
     }
 
-    setMotivos() {
-        let url: string = `select-pqrs-motivos`;
-        return this._utility.getQuery(url, true).pipe(
-            map((res: any) => {
-                return res.data;
-            })
-        );
-    }
-
-    setCausalesMotivos() {
-        let url: string = `select-causales-pqrs`;
-        return this._utility.getQuery(url, true).pipe(
-            map((res: any) => {
-                return res.data;
-            })
-        );
-    }
-
-    setCausalesMotivosId(id: number) {
-        let url: string = `select-causales-motivos/${id}`;
-        return this._utility.getQuery(url, true).pipe(
-            map((res: any) => {
-                return res.data;
-            })
-        );
-    }
-
     setHistorial() {
         let url: string = `select_pqrs_historico`;
         return this._utility.getQuery(url, true).pipe(
@@ -234,14 +207,6 @@ export class PqrService {
 
     postFile(url: string, data: any): Observable<any> {
         return this._utility.postFile(url, data).pipe(
-            map((result: any) => {
-                return result;
-            })
-        );
-    }
-
-    saveMotivoPQRS(url: string, data: any): Observable<any> {
-        return this._utility.postQuery(url, data).pipe(
             map((result: any) => {
                 return result;
             })
