@@ -322,7 +322,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             });
     }
 
-    public validacionCampos(campo: string, modificado: string, variable: string): void {
+    public validacionCampos(campo: string, modificado: string, variable: string, type: String): void {
         let mensaje = `<p>¿Estás seguro de editar el campo de <strong>${campo}</strong>?, ${modificado}.</p>`;
         Swal.fire({
             title: 'Guardar información',
@@ -339,7 +339,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
             } else {
                 console.log('denegado')
-                this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
+                if(type === "INTEGER"){
+
+                    this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
+                }
+                if(type === "STRING"){
+                    this.form.controls[variable].setValue(this.dataGeneralIncial[variable].toString());
+                }
             }
         });
     }
