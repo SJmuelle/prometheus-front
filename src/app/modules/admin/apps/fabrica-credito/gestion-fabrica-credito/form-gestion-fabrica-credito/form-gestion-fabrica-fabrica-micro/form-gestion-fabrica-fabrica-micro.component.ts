@@ -99,8 +99,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const { numeroHijos, autorizacionBanco,telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
-        const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "";
-        const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta ? moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD'): "";
+        const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
+        const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta ? moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD'): "0099-01-01";
         const numeroHijosFormato = Number(numeroHijos);
         const barrioResidenciaFormato = Number(barrioResidencia);
         const antiguedadActividadFormato = Number(antiguedadActividad);
@@ -140,7 +140,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(datosFormularios);
                 this.postFormularioFabrica(datosFormularios);
             }
         });
@@ -304,9 +303,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'success'
                 );
                 setTimeout(() => {
-                    //  location.reload()
-                    console.log(datos);
-
+                      location.reload()
                 }, 1000);
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
@@ -412,6 +409,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             direccionNegocioCompleto: [''],
             telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)]],
             tipoLocal: ['', Validators.required],
+            tipoLocalCalulado: [''],
             antiguedadLocal: ['', Validators.required],
             nombreArrendador: [''],
             celularArrendador: [''],
@@ -483,10 +481,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
-            actividadNoDesignada:['']
+            actividadNoDesignada:[''],
+            ubicacionNegocioCalculado: ['']
         },
         );
     }
+
 
     public validacion(tipo: string) {
         if (this.form.controls['aplicaIngresos']?.value == 'N') {
@@ -872,6 +872,26 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
         
+
+        this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
+            console.log(e);
+            // Local comercial propio
+            if(e === '1'){
+                this.form.controls.tipoLocalCalulado.setValue('Propio.')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
+            }
+            else if(e === '2'){
+                this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
+            }else if(e === '3'){
+                this.form.controls.tipoLocalCalulado.setValue('Propio.')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+            }
+            else if(e === '4'){
+                this.form.controls.tipoLocalCalulado.setValue('No tiene.')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+            }
+        })
     }
 
     private validatedDate(control: AbstractControl) {
