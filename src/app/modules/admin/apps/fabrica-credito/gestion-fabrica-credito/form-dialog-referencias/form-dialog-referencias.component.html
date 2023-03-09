@@ -16,6 +16,19 @@
                 <div class="bg-white flex flex-col">
                     <div class="md:flex">
                         <!--{{form.controls.tipo.value}}-->
+                        <ng-container *ngIf="tiposTercero$ | async as items">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Tipo de tercero</mat-label>
+                                <mat-select [formControlName]="'tipoTercero'">
+                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                        {{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <!--{{form.controls.tipo.value}}-->
                         <ng-container *ngIf="tiposReferencia$ | async as items">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Tipo de referencia</mat-label>

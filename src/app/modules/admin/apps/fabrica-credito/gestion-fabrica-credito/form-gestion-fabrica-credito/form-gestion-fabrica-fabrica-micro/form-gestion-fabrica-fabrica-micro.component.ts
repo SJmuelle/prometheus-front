@@ -99,8 +99,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const { numeroHijos, autorizacionBanco,telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
-        const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
-        const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta ? moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD'): "0099-01-01";
+        const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "";
+        const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta ? moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD'): "";
         const numeroHijosFormato = Number(numeroHijos);
         const barrioResidenciaFormato = Number(barrioResidencia);
         const antiguedadActividadFormato = Number(antiguedadActividad);
@@ -125,6 +125,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             valorSolicitado: valorSolicitadoFormato,
             autorizacionBanco: autorizacionBancoFormato,
             plazo: plazoFormato,
+            modificadaSolicitud:'N',
             telefonoNegocio: telefonoNegocioFormato,
             ...data
         };
@@ -198,9 +199,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     codigoBarrio: data.codigoBarrio
                 });
                 this.unidadNegocio = data.unidadNegocio;
-                this.fabricaDatos = data;
-                console.log(this.fabricaDatos, "fabrica Datos");
-                
+                this.fabricaDatos = data.fabricaDatos;
             });
     }
 
@@ -419,7 +418,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             antiguedadLocal: ['', Validators.required],
             nombreArrendador: [''],
             celularArrendador: [''],
-            tipoUbicacionNegocio: [''],
+            tipoUbicacionNegocio: ['', Validators.required],
             numeroEmpleados: ['', [Validators.required]],
             nombreAtiendeNegocio: ['', Validators.required],
             tieneOtrosPuntos: ['', Validators.required],
@@ -574,7 +573,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                         +
                         Number(this.utility.enviarNumero(this.form.value.otrosIngresos))
                         ;
-                    this.form.controls['ingresos']?.setValue(this.utility.formatearNumero(String(sum)));
+                    this.form.controls['ingresos'].setValue(this.utility.formatearNumero(String(sum)));
 
                 } else {
                     switch (tipo) {
@@ -609,7 +608,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                             this.form.controls['fechaVinculacion'].setValue(String(this.fabricaDatos.fechaVinculacion));
                             break;
                         case 'GEN':
-                            this.form.controls['genero']?.setValue(String(this.fabricaDatos?.genero));
+                            this.form.controls['genero'].setValue(String(this.fabricaDatos.genero));
                             break;
                         case 'FEN':
                             this.form.controls['fechaNacimiento'].setValue(String(this.fabricaDatos.fechaNacimiento));

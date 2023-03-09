@@ -1,6 +1,6 @@
 <div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
     <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Tipo de PQRS</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Motivo de PQRS</h2>
         <div class="col-span-12 grid grid-cols-12">
             <div class="col-span-6">
                 <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
@@ -28,9 +28,12 @@
                         tracking-wide text-left text-gray-400
                         capitalize border-b border-gray-600">
                     <th class="px-4 py-3 text-center">Editar</th>
-                    <th class="px-4 py-3 text-center">Tipos</th>
-                    <th class="px-4 py-3 text-center">Legal</th>
-                    <th class="px-4 py-3 text-center">Tiempo de solución</th>
+                    <th class="px-4 py-3 text-center">Motivo</th>
+                    <th class="px-2 py-2 text-center">Aplica submotivo</th>
+                    <th class="px-4 py-3 text-center">Submotivo1</th>
+                    <th class="px-4 py-3 text-center">Submotivo2</th>
+                    <th class="px-4 py-3 text-center">Submotivo3</th>
+                    <th class="px-4 py-3 text-center">Causales</th>
                     <th class="px-4 py-3 text-center">Estado</th>
                 </tr>
             </thead>
@@ -39,13 +42,20 @@
                     *ngFor=" let item of listado | filter: filtrarTabla | paginate : { itemsPerPage: tamanoTabl, currentPage: page }">
                     <td class="px-2 text-sm border text-center w-0" (click)="abrirModal(item,'A')"><mat-icon
                             svgIcon="heroicons_outline:pencil-alt"></mat-icon></td>
-                    <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
-                    <td class="px-2 text-sm border text-center">{{ item.legal}}</td>
-                    <td class="px-2 text-sm border text-center">{{ item.diasSolucion}}</td>
+                    <td class="px-2 text-sm border py-1 text-center">{{ item.motivo}}</td>
+                    <td class="px-2 text-sm border text-center">{{ item.aplica_subm ? 'Si' : 'No'}}</td>
+                    <td class="px-2 text-sm border text-center">{{ item.submotivo1 != "" ? item.submotivo1 : 'N/A'}}
+                    </td>
+                    <td class="px-2 text-sm border text-center">{{ item.submotivo2 != "" ? item.submotivo2 : 'N/A'}}
+                    </td>
+                    <td class="px-2 text-sm border text-center">{{ item.submotivo3 != "" ? item.submotivo3 : 'N/A'}}
+                    </td>
+                    <td class="px-2 text-sm border text-center" (click)="abrirModal(item,'D')"><mat-icon
+                            svgIcon="heroicons_outline:eye"></mat-icon></td>
                     <td class="px-2 text-sm border text-center w-0">
-                        <div [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
+                        <div [ngClass]="item.estado=='A'?'bg-pink-300':'bg-green-300'">
                             <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
-                                {{ item.estado}} </span>
+                                {{ item.estado === 'A' ? 'Inactivo' : 'Activo'}} </span>
                         </div>
                 </tr>
             </tbody>
