@@ -23,6 +23,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatMenuModule} from '@angular/material/menu';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatSelectModule,     
     MatExpansionModule,  
     AgendaReferenciacionModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatMenuModule
   ]
 })
 export class AgendaVentaModule { }

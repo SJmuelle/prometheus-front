@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { Subject } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -15,7 +15,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
   listadoActividadEconomica: any[];
   listadoCiudades: any[];
   listadoBarrios: any[];
-  editable=true;
+  editable = true;
   public unidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public tipoIdentificacion: string = this.route.snapshot.paramMap.get('tipoIdentificacion');
   public identificacion: string = this.route.snapshot.paramMap.get('identificacion');
@@ -25,6 +25,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private _formularioCreditoService: FormularioCreditoService,
     private route: ActivatedRoute,
+    private router: Router,
 
   ) { }
 
@@ -40,7 +41,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
       fechaNacimiento: ['', [Validators.required]],
       nivelEstudio: ['', [Validators.required]],
       estrato: ['', [Validators.required]],
-      genero: ['', [Validators.required]],
+      genero: [''],
       tipoActividad: ['', [Validators.required]],
       camaraComercio: ['', [Validators.required]],
       tipoLocal: ['', [Validators.required]],
@@ -53,7 +54,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
       barrioNegocio: ['', [Validators.required]],
       valorCredito: ['', [Validators.required]],
       plazoCredito: ['', [Validators.required]],
-      codigoAsesor: ['', [Validators.required]],
+      asesorMicro: [''],
 
     });
 
@@ -72,7 +73,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this.form.controls.tipoDocumento.setValue(this.tipoIdentificacion);
         this.form.controls.identificacion.setValue(this.identificacion);
         this.solicitudesFormularioSimulaciones()
-        this.editable=true;
+        this.editable = true;
       }
     }, 1000);
   }
@@ -80,7 +81,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
   private cargueActividadEconomica() {
     const datos = this.form.getRawValue();
     const { nivelEstudio, tipoActividad, camaraComercio } = datos;
-    if ((nivelEstudio) && (nivelEstudio != null) && (tipoActividad) && (tipoActividad != null) && (camaraComercio)&&(camaraComercio != null)) {
+    if ((nivelEstudio) && (nivelEstudio != null) && (tipoActividad) && (tipoActividad != null) && (camaraComercio) && (camaraComercio != null)) {
       this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).subscribe((resp: any) => {
         if (resp) {
           this.listadoActividadEconomica = resp.data
@@ -91,7 +92,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
   }
 
-  public listarBarrios(){
+  public listarBarrios() {
     const datos = this.form.getRawValue();
     const { ciudadNegocio } = datos;
     this._formularioCreditoService.listarBarriosMicro(ciudadNegocio).subscribe((resp: any) => {
@@ -103,7 +104,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     })
   }
 
-  public listarCiudades(){
+  public listarCiudades() {
     const datos = this.form.getRawValue();
     const { departamentoNegocio } = datos;
     this._formularioCreditoService.listarCiudadesMicro(departamentoNegocio).subscribe((resp: any) => {
@@ -123,9 +124,24 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
       this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, this.unidadNegocio).subscribe((resp: any) => {
         if (resp) {
           this.form.patchValue(resp.data);
+
+
+          if (resp.data.departamentoNegocio) {
+            this.listarCiudades();
+          }
+          if (resp.data.ciudadNegocio) {
+            this.listarBarrios();
+          }
+          this.cargueActividadEconomica()
+          setTimeout(() => {
+            this.form.controls['ciudadNegocio'].setValue(resp.data.ciudadNegocio);
+            this.form.controls['barrioNegocio'].setValue(resp.data.barrioNegocio.toString());
+            this.form.controls['actividadEconomica'].setValue(resp.data.actividadEconomica);
+          }, 2500);
+
         }
       })
-    } 
+    }
   }
 
   private cargueInicial() {
@@ -165,10 +181,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         ).then((result) => {
           if (result) {
             this.form.reset();
+            this.router.navigate([`/credit-factory/agenda-venta-digital`]);
           }
         })
         setTimeout(() => {
           this.form.reset();
+          this.router.navigate([`/credit-factory/agenda-venta-digital`]);
         }, 2000);
       }, (error) => {
         Swal.fire({

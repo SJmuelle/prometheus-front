@@ -311,6 +311,7 @@ export class AppSettingsService {
             baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
             baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud'),
             tipoReferencia: EndPoints.uri('/generic/qry/obtener-tipos-referencia-unidad-negocio'),
+            tipoTercero: EndPoints.uri('/generic/qry/obtener-tipos-referencia-tercero'),
 
         }
     };

@@ -125,6 +125,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             valorSolicitado: valorSolicitadoFormato,
             autorizacionBanco: autorizacionBancoFormato,
             plazo: plazoFormato,
+            modificadaSolicitud:'N',
             telefonoNegocio: telefonoNegocioFormato,
             ...data
         };

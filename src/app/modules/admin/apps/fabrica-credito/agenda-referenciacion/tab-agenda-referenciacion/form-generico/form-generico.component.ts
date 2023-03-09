@@ -1,18 +1,19 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { UtilityService } from 'app/resources/services/utility.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'ULTRACEM-NATURAL-TITULAR',
-  templateUrl: './titular.component.html',
-  styleUrls: ['./titular.component.scss'],
+  selector: 'form-generico-referenciacion',
+  templateUrl: './form-generico.component.html',
+  styleUrls: ['./form-generico.component.scss']
 })
-export class UltracemTitularComponent implements OnInit {
+export class FormGenericoComponent implements OnInit {
+
   @Input() currentStep: number;
   @Input() tipoDocumento: string = "CC"
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -41,9 +42,20 @@ export class UltracemTitularComponent implements OnInit {
     private genericaServices: GenericasService,
     private route: ActivatedRoute,
     private router: Router,
-
+    public dialogRef: MatDialogRef<FormGenericoComponent>,
+    @Inject(MAT_DIALOG_DATA) public data,
   ) {
-
+    if (data) {
+      this.currentStep=data.currentStep
+      this.tipoDocumento =data.tipoDocumento 
+      this.numeroSolicitud=data.numeroSolicitud
+      this.identificacion=data.identificacion
+      this.referencia=data.referencia
+      this.tipoReferenciacion=data.tipoReferenciacion
+      this.tipoPersona=data.tipoPersona
+      this.CodUnidadNegocio=data.CodUnidadNegocio
+      this.tipoDocPersona=data.tipoDocPersona
+    }
 
   }
 
@@ -57,7 +69,6 @@ export class UltracemTitularComponent implements OnInit {
     * @description: Obtiene la data para cargar al formulario
   */
   private getFabricaCreditoAgenda(): void {
-    debugger
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     const datosSolicitud: any = {
       "numeroSolicitud": Number(this.numeroSolicitud),
@@ -70,7 +81,7 @@ export class UltracemTitularComponent implements OnInit {
       "numeroSolicitud": Number(this.numeroSolicitud),
       "unidadNegocio": Number(this.CodUnidadNegocio),
       "tipoTercero": this.tipoPersona,
-      "identificacion":this.identificacion,
+      "identificacion": this.identificacion,
       "tipoReferencia": this.tipoReferenciacion,
       "tipoDocumento": this.tipoDocPersona
     };
@@ -103,7 +114,7 @@ export class UltracemTitularComponent implements OnInit {
                 }
 
               ],
-              datosUsuario:data,
+              datosUsuario: data,
               preguntas: info
             }
 
@@ -312,7 +323,6 @@ export class UltracemTitularComponent implements OnInit {
   public getTiposDocumentos(recurso): void {
     this.data$ = this.genericaServices.getSelectDinamico(recurso);
   }
-
 
 
 

@@ -20,6 +20,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     public ciudades$: Observable<any>;
     public barrios$: Observable<any>;
     public tiposReferencia$: Observable<any>;
+    public tiposTercero$: Observable<any>;
+    // public Referencia$: Observable<any>;
     public parentescos$: Observable<any>;
     public form: FormGroup;
     public subscription$: Subscription;
@@ -34,7 +36,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         private matDialog: MatDialog
     ) {
         this.crearFormulario();
-        
+
         const numeroSolicitud: string = data.numeroSolicitud;
         this.form.controls.numeroSolicitud.setValue(numeroSolicitud);
     }
@@ -42,6 +44,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getDepartamentos();
         this.getTiposReferencia();
+        this.getTiposTercero();
         this.getParentesco();
         this.estadoFormulario();
     }
@@ -133,10 +136,16 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtiene el listado de departamento
      */
+    private getTiposTercero(): void {
+        this.tiposTercero$ = this.genericaServices.getTiposTercero(this.data.numeroSolicitud);
+    }
+    /**
+     * @description: Obtiene el listado de departamento
+     */
     private getDepartamentos(): void {
         this.departamentos$ = this.departamentosCiudadService.getDepartamentos();
     }
-    
+
     /**
      * @description: Departamento de nacimiento
      */
@@ -167,6 +176,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private crearFormulario(): void {
         this.form = this.fb.group({
             numeroSolicitud: [''],
+            tipoTercero: [''],
             primerNombre: ['', [Validators.required]],
             segundoNombre: [''],
             primerApellido: ['', [Validators.required]],
@@ -208,7 +218,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad,
             codigoBarrio,
             direccion,
-            antiguedad
+            antiguedad,
+            tipoTercero,
 
         } = datos;
         const formPersonal = {
@@ -228,6 +239,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad: codigoCiudad,
             codigoBarrio: Number(0),
             direccion: direccion,
+            tipoTercero: tipoTercero,
             antiguedad: Number(antiguedad),
         };
         console.log(formPersonal);
@@ -238,7 +250,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             segundoNombre: segundoNombre,
             primerApellido: primerApellido,
             segundoApellido: segundoApellido,
-            nombreCompleto: nombreCompleto,
+            nombreCompleto: `${primerNombre + ' '}${segundoNombre ? segundoNombre + ' ' : ''}${primerApellido && segundoApellido ? primerApellido + ' ' : primerApellido}${segundoApellido ? segundoApellido : ''}`,
             tipo: tipo,
             parentesco: parentesco,
             telefono: telefono,
@@ -248,40 +260,27 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad: codigoCiudad,
             codigoBarrio: 0,
             direccion: direccion,
+            tipoTercero: tipoTercero,
             antiguedad: Number(antiguedad),
         };
         console.log(formComercial);
+        let data;
         if (tipo === 'P') {
-            this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
-                this.onCerrar();
-                this.referenciasService.eventos$.emit(true);
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                );
-            });
+            data=formPersonal
         } else if (tipo === 'F') {
-            this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
-                this.onCerrar();
-                this.referenciasService.eventos$.emit(true);
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                );
-            });
+            data=formPersonal 
         } else {
-            this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
-                this.onCerrar();
-                this.referenciasService.eventos$.emit(true);
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                );
-            });
+            data=formComercial
         }
+        this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
+            this.onCerrar();
+            this.referenciasService.eventos$.emit(true);
+            Swal.fire(
+                'Completado',
+                'Información guardada con éxito',
+                'success'
+            );
+        });
     }
 
     private estadoFormulario(): void {
