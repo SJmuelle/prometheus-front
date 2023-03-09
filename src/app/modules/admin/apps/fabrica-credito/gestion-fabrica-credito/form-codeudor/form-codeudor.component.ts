@@ -1,4 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { Subject, Observable, Subscription } from 'rxjs';
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { UtilityService } from 'app/resources/services/utility.service';
+import { PermisosService } from 'app/core/services/permisos.service';
+import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import { takeUntil } from 'rxjs/operators';
+import moment from 'moment';
+import Swal from 'sweetalert2';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'form-codeudor',
@@ -7,9 +19,628 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormCodeudorComponent implements OnInit {
 
-  constructor() { }
+  //variables iniciales
+  public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
+  public identificacion: string = this.route.snapshot.paramMap.get('id');
+  //cancelar subsicripciones
+  public unSubscribe$: Subject<any> = new Subject<any>();
+  public form: FormGroup;
+  public subscription$: Subscription;
+  public salarioBasico: number;
+  public fabricaDatos;
+  public unidadNegocio: any;
+  public dataGeneralIncial: any;
+  public permisoEditar: boolean = false;
+  public dataInicial: any
+  public ciudades$: Observable<any>;
+  public ciudadesNacimiento$: Observable<any>;
+  public ciudadesNegocio$: Observable<any>;
+  public barrios$: Observable<any>;
+  public barriosNegocio$: Observable<any>;
+  public ciudadesExpedicion$: Observable<any>;
+  fechaActual: any = moment().locale("co");
 
-  ngOnInit(): void {
+  constructor(private fabricaCreditoService: FabricaCreditoService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private departamentosCiudadesService: DepartamentosCiudadesService,
+    public utility: UtilityService,
+    public _permisosService: PermisosService,
+    private _formularioCreditoService: FormularioCreditoService,) {
+    this.createFormulario();
   }
 
+  ngOnInit(): void {
+    this.cargueInicial();
+    this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+    this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+    if (this.permisoEditar) {
+      this.form.disable();
+    }
+    //  this.addValidation()
+  }
+
+  /**
+    * @description: Obtiene la data para cargar al formulario
+    */
+  private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+
+
+    this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'C').pipe(takeUntil(this.unSubscribe$))
+      .subscribe(({ data }) => {
+        Swal.close();
+        this.dataGeneralIncial = data;
+        console.log(data);
+        this.form.patchValue(data);
+        console.log('Form valid', this.form.valid);
+
+        if (data.codigoDepartamento) {
+          this.getCiudades(data.codigoDepartamento);
+        }
+        if (data.codigoDepartamentoNacimiento) {
+          this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
+        }
+        if (data.codigoDepartamentoNegocio) {
+          this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
+        }
+        if (data.codigoCiudad) {
+          this.getBarrios(data.codigoCiudad);
+        }
+        if (data.codigoCiudadNegocio) {
+          this.getBarriosNegocio(data.codigoCiudadNegocio);
+        }
+        if (data.estrato) {
+          this.form.controls.estrato.setValue(data.estrato.toString());
+        }
+        if (data.codigoDepartamentoExpedicion) {
+          this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
+        }
+      });
+
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    }
+    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+      .subscribe(({ data }) => {
+        Swal.close();
+        // este dato no llega de la anterior api endpoint
+        this.form.patchValue({
+          descripcionTipo: data.descripcionTipo,
+          codigoBarrio: data.codigoBarrio
+        });
+        this.unidadNegocio = data.unidadNegocio;
+        this.fabricaDatos = data.fabricaDatos;
+      });
+  }
+
+
+  private cargueInicial() {
+    let data = {
+      entidad: "CONFIG-MICRO",
+      unidadNegocio: 1
+    };
+    this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
+      if (resp) {
+        this.dataInicial = resp.data
+        console.log(resp.data);
+      }
+    })
+  }
+  /**
+    * @description :creando el formulario
+    */
+  private createFormulario(): void {
+    this.form = this.fb.group({
+      // informacion personal 
+      descripcionTipo: [''],
+      tipoDocumento: ['', Validators.required],
+      identificacion: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      nombreCompleto: [''],
+      celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+      segundoNombre: [''],
+      primerApellido: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+      segundoApellido: [''],
+      estadoCivil: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      genero: ['', [Validators.required]],
+      nacionalidad: [''], // validacion condicional, verificar en el excel
+      fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this)]],
+      nivelEstudio: ['', Validators.required],
+      numeroHijos: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.min(0)]],
+      personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this)]],
+      codigoDepartamentoExpedicion: ['', Validators.required],
+      codigoCiudadExpedicion: ['', [Validators.required]],
+      estrato: ['', [Validators.required]],
+      codigoDepartamento: ['', [Validators.required]],
+      codigoCiudad: ['', Validators.required],
+      barrioResidencia: ['', Validators.required],
+      direccionResidencial: ['', [Validators.required]],
+      tipoVivienda: ['', [Validators.required]],
+      annosTiempoResidencia: ['', [Validators.required, Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      mesesTiempoResidencia: ['', [Validators.required, Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+
+      // fin  informacion personal
+
+      creditoTitularLineas: [''],
+      emision: [''],
+      descripcionTipoCredito: [''],
+      descripcionEstado: [''],
+      descripcionSubestado: [''],
+      direccionTipoVia: ['', [Validators.required]],
+      direccionViaPrincipal: ['', [Validators.required, Validators.min(0)]],
+      direccionNumeroVia: ['', [Validators.required, Validators.min(0)]],
+      direccionDistanciaVia: ['', [Validators.required]],
+      direccionComplemento: [''],
+      tipoActividad: ['', Validators.required],
+      antiguedadActividad: ['', [Validators.required, Validators.minLength(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      antiguedadNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      tieneRut: [''],
+      nitNegocio: [''],
+      segmento: [''],
+
+      nombreArrendador: [''],
+      celularArrendador: [''],
+      poseeCuentaBancaria: ['', Validators.required],
+      tipoCuentaBancaria: [''],
+      entidadBancaria: [''],
+      numeroCuentaBancaria: [''],
+      autorizacionBanco: [''],
+      tipoDeudor: ['', Validators.required],
+      legalCargoPublico: ['', Validators.required],
+      entidadPublico: [''],
+      vinculadoActualPublico: [''],
+      fechaDesvinculacionPublico: [''],
+      legalPersonalExpuesta: ['', Validators.required],
+      tiposTercerosSolicitud: [''],
+      vinculacionExpuesta: [''],
+      familiarDePersonaExpuestaPyP: [''],
+      cargoRecursosPartidoPolitico: [''],
+      nombreExpuesta: [''],
+      tipoIdentificacionExpuesta: [''],
+      identificacionExpuesta: [''],
+      nacionalidadExpuesta: [''],
+      entidadExpuesta: [''],
+      cargoExpuesta: [''],
+      vinculadoActualExpuesta: [''],
+      fechaDesvinculacionExpuesta: [''],
+      legalDesarrollaActividadApnfd: ['', Validators.required],
+      legalCargoPartidoPolitico: ['', Validators.required],
+      legalOperacionCriptomoneda: ['', Validators.required],
+      tipoOperacionCripto: [''],
+      tipoOperacionCriptomoneda: [''],
+      legalOperacionExtranjera: ['', Validators.required],
+      tipoOperacionExtranjera: [''],
+      declaroIngresoDeclaracionAuto: ['', Validators.required],
+      otroIngresoDeclaracionAuto: [''],
+      autoricacionDatosPersonalClaracionAuto: [''],
+      clausulaAnticurrupcionClaracionAuto: [''],
+      plazo: ['', [Validators.required, Validators.minLength(0)]],
+
+      titularMicro: [''],
+      aplicaCodeudor: [''],
+      valorSolicitadoWeb: ['', [Validators.required, Validators.min(0)]],
+      creditoCodeudorLineas: [''],
+      modificadaSolicitud: [''],
+      valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
+      destinoCredito: ['', [Validators.required]],
+      codeudorMicro: [''],
+      cargoPublico: [''],
+      entidad: [''],
+      vinculadoActualmente: [''],
+      fechaDesvinculacion: [''],
+
+      // campos faltantes Informacion de actividad economica
+      ocupacion: ['', [Validators.required]],
+      // el form solo de muestra si su ocupacion es empleado
+      nombreEmpresa: [''],
+      telefonoEmpresa: [''],
+      direccionEmpresa: [''],
+      //  telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)]],
+      tipoContrato: [''],
+      cargo: [''],
+      salarioBasico: [''],
+      fechaIngresoFabrica: [''],
+
+      // el form solo de muestra si su ocupacion es independiente
+      actividadEconomica: [''],
+      actividadEspecifica: [''],
+      nombreNegocio: [''],
+      camaraComercio: [''],
+      numeroCaramaraComercio: [''],
+      experienciaActividad: [''],
+      codigoDepartamentoNegocio: [''],
+      codigoCiudadNegocio: [''],
+      codigoBarrioNegocio: [''],
+      direccionNegocioVia: [''],
+      direccionNegocioPrincipal: [''],
+      direccionNegocioNroVia: [''],
+      direccionNegocioDistanciaVia: [''],
+      direccionNegocioCompleto: [''],
+      telefonoNegocio: [''],
+      tipoUbicacionNegocio: [''],
+      tipoLocal: [''],
+      antiguedadLocal: [''],
+      numeroEmpleados: [''],
+      estabilidadPuesto: [''],
+      // estabilidad puesto de trabajo
+      tieneOtrosPuntos: [''],
+      nombreAtiendeNegocio: [''],
+
+      // el form solo de muestra si su ocupacion es pensionado
+      tiempoPensionado: [''],
+    },
+    );
+  }
+
+  private validatedDate(control: AbstractControl) {
+    const valueControl = control?.value ?? '';
+    const date = moment(valueControl).format('YYYY-MM-DD')
+    const errors = { dateError: true };
+
+    // Set the validation error on the matching control
+    if (this.fechaActual.isBefore(date)) {
+
+      return errors
+    } else {
+      return null
+    }
+  }
+
+
+
+  /**
+    * @description: Departamento de nacimiento
+    */
+  public seleccionDepartamento(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.getCiudades(codigo);
+  }
+
+  /**
+   * @description: Departamento de nacimiento
+   */
+  public seleccionDepartamentoNacimiento(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.getCiudadesNacimiento(codigo);
+  }
+
+  /**
+   * @description: Departamento de negocio
+   */
+  public seleccionDepartamentoNegocio(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.getCiudadesNegocio(codigo);
+  }
+
+  /**
+  * @description: Departamento de expedicion
+  */
+  public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.getCiudadesExpedicion(codigo);
+  }
+
+  /**
+   * @description: Selecciona el codigo para cargar el api barrios
+   *
+   */
+  public seleccionCiudad(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.getBarrios(codigo);
+  }
+
+  /**
+   * @description: Selecciona el codigo para cargar el api barrios
+   */
+  public seleccionCiudadNegocio(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.getBarriosNegocio(codigo);
+  }
+
+  /**
+   * @description: Obtiene el listado de ciudades
+   */
+  private getCiudades(codigo: string): void {
+    this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+
+  /**
+   * @description: Obtiene listado de ciudades nacimiento
+   */
+  private getCiudadesNacimiento(codigo: string): void {
+    this.ciudadesNacimiento$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+
+  /**
+   * @description: Obtiene listado de ciudades negocio
+   */
+  private getCiudadesNegocio(codigo: string): void {
+    this.ciudadesNegocio$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+
+  /**
+  * @description: Obtiene listado de ciudades negocio
+  */
+  private getCiudadesExpedicion(codigo: string): void {
+    this.ciudadesExpedicion$ = this.departamentosCiudadesService.getCiudades(codigo);
+  }
+
+  /**
+   * @description: Obtiene el listado de barrios
+   */
+  private getBarrios(codigo: string): void {
+    this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
+  }
+
+  /**
+   * @description: Obtiene el listado de barrios del negocio
+   */
+  private getBarriosNegocio(codigo: string): void {
+    this.barriosNegocio$ = this.departamentosCiudadesService.getBarrios(codigo);
+  }
+
+  // validaciones dinamicas
+  public addValidation() {
+    // ocupacion Empleado
+    this.form.get('ocupacion').valueChanges.subscribe((e: string) => {
+      if(e === 'EPLDO'){
+        this.form.get('nombreEmpresa')?.setValidators([Validators.required])
+        this.form.get('nombreEmpresa')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('telefonoEmpresa')?.setValidators([Validators.required, Validators.minLength(7),Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+        this.form.get('telefonoEmpresa')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionEmpresa')?.setValidators([Validators.required,Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)])
+        this.form.get('direccionEmpresa')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoContrato')?.setValidators([Validators.required])
+        this.form.get('tipoContrato')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('cargo')?.setValidators([Validators.required])
+        this.form.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('salarioBasico')?.setValidators([Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+        this.form.get('salarioBasico')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('fechaIngresoFabrica')?.setValidators([Validators.required])
+        this.form.get('fechaIngresoFabrica')?.enable({ emitEvent: true, onlySelf: true })
+      }else{
+        this.form.get('nombreEmpresa')?.setValidators(null)
+        this.form.get('nombreEmpresa')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('telefonoEmpresa')?.setValidators(null)
+        this.form.get('telefonoEmpresa')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionEmpresa')?.setValidators(null)
+        this.form.get('direccionEmpresa')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoContrato')?.setValidators(null)
+        this.form.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('cargo')?.setValidators(null)
+        this.form.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('salarioBasico')?.setValidators(null)
+        this.form.get('salarioBasico')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('fechaIngresoFabrica')?.setValidators(null)
+        this.form.get('fechaIngresoFabrica')?.disable({ emitEvent: true, onlySelf: true })
+      }
+      // independiente y sus derivados
+      if(e === 'INDEFO' || e === 'PROIN' || e === 'INDNFO'){
+        this.form.get('actividadEconomica')?.setValidators([Validators.required])
+        this.form.get('actividadEconomica')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('actividadEspecifica')?.setValidators([Validators.required])
+        this.form.get('actividadEspecifica')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('nombreNegocio')?.setValidators([Validators.required])
+        this.form.get('nombreNegocio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('camaraComercio')?.setValidators([Validators.required])
+        this.form.get('camaraComercio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('numeroCaramaraComercio')?.setValidators([Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(10), Validators.maxLength(10)])
+        this.form.get('numeroCaramaraComercio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('experienciaActividad')?.setValidators([Validators.required])
+        this.form.get('experienciaActividad')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('codigoCiudadNegocio')?.setValidators([Validators.required])
+        this.form.get('codigoCiudadNegocio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('codigoDepartamentoNegocio')?.setValidators([Validators.required])
+        this.form.get('codigoDepartamentoNegocio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioVia')?.setValidators([Validators.required])
+        this.form.get('direccionNegocioVia')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioPrincipal')?.setValidators([Validators.required])
+        this.form.get('direccionNegocioPrincipal')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioNroVia')?.setValidators([Validators.required])
+        this.form.get('direccionNegocioNroVia')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioDistanciaVia')?.setValidators([Validators.required])
+        this.form.get('direccionNegocioDistanciaVia')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioCompleto')?.setValidators([Validators.required])
+        this.form.get('direccionNegocioCompleto')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('telefonoNegocio')?.setValidators([Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)])
+        this.form.get('telefonoNegocio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoUbicacionNegocio')?.setValidators([Validators.required])
+        this.form.get('tipoUbicacionNegocio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoLocal')?.setValidators([Validators.required])
+        this.form.get('tipoLocal')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('antiguedadLocal')?.setValidators([Validators.required])
+        this.form.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('numeroEmpleados')?.setValidators([Validators.required])
+        this.form.get('numeroEmpleados')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('tieneOtrosPuntos')?.setValidators([Validators.required])
+        this.form.get('tieneOtrosPuntos')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('nombreAtiendeNegocio')?.setValidators([Validators.required])
+        this.form.get('nombreAtiendeNegocio')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('estabilidadPuesto')?.setValidators([Validators.required])
+        this.form.get('estabilidadPuesto')?.enable({ emitEvent: true, onlySelf: true })
+      }else{
+        this.form.get('actividadEconomica')?.setValidators(null)
+        this.form.get('actividadEconomica')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('actividadEspecifica')?.setValidators(null)
+        this.form.get('actividadEspecifica')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('nombreNegocio')?.setValidators(null)
+        this.form.get('nombreNegocio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('camaraComercio')?.setValidators(null)
+        this.form.get('camaraComercio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('numeroCaramaraComercio')?.setValidators(null)
+        this.form.get('numeroCaramaraComercio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('experienciaActividad')?.setValidators(null)
+        this.form.get('experienciaActividad')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('codigoCiudadNegocio')?.setValidators(null)
+        this.form.get('codigoCiudadNegocio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('codigoDepartamentoNegocio')?.setValidators(null)
+        this.form.get('codigoDepartamentoNegocio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioVia')?.setValidators(null)
+        this.form.get('direccionNegocioVia')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioPrincipal')?.setValidators(null)
+        this.form.get('direccionNegocioPrincipal')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioNroVia')?.setValidators(null)
+        this.form.get('direccionNegocioNroVia')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioDistanciaVia')?.setValidators(null)
+        this.form.get('direccionNegocioDistanciaVia')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('direccionNegocioCompleto')?.setValidators(null)
+        this.form.get('direccionNegocioCompleto')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('telefonoNegocio')?.setValidators(null)
+        this.form.get('telefonoNegocio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoUbicacionNegocio')?.setValidators(null)
+        this.form.get('tipoUbicacionNegocio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoLocal')?.setValidators(null)
+        this.form.get('tipoLocal')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('antiguedadLocal')?.setValidators(null)
+        this.form.get('antiguedadLocal')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('numeroEmpleados')?.setValidators(null)
+        this.form.get('numeroEmpleados')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('tieneOtrosPuntos')?.setValidators(null)
+        this.form.get('tieneOtrosPuntos')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('nombreAtiendeNegocio')?.setValidators(null)
+        this.form.get('nombreAtiendeNegocio')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('estabilidadPuesto')?.setValidators(null)
+        this.form.get('estabilidadPuesto')?.disable({ emitEvent: true, onlySelf: true })
+      }
+      // pensionado
+      if(e === "PENSI"){
+        this.form.get('nombreEmpresa')?.setValidators([Validators.required])
+        this.form.get('nombreEmpresa')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('salarioBasico')?.setValidators([Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+        this.form.get('salarioBasico')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('tiempoPensionado')?.setValidators([Validators.required,Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+        this.form.get('tiempoPensionado')?.enable({ emitEvent: true, onlySelf: true })
+      }else{
+        this.form.get('nombreEmpresa')?.setValidators(null)
+        this.form.get('nombreEmpresa')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('salarioBasico')?.setValidators(null)
+        this.form.get('salarioBasico')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('tiempoPensionado')?.setValidators(null)
+        this.form.get('tiempoPensionado')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+    // operacion Extranjera moneda Form
+    this.form.get('legalOperacionExtranjera').valueChanges.subscribe((e: string) => {
+      if (e === 'S') {
+        this.form.get('tipoOperacionExtranjera')?.setValidators([Validators.required])
+        this.form.get('tipoOperacionExtranjera')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('tipoOperacionExtranjera')?.setValidators(null)
+        this.form.get('tipoOperacionExtranjera')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+
+    // operacion cripto moneda Form
+    this.form.get('legalOperacionCriptomoneda').valueChanges.subscribe((e: string) => {
+      if (e === 'S') {
+        this.form.get('tipoOperacionCriptomoneda')?.setValidators([Validators.required])
+        this.form.get('tipoOperacionCriptomoneda')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('tipoOperacionCriptomoneda')?.setValidators(null)
+        this.form.get('tipoOperacionCriptomoneda')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+
+    // Datos cargo publico familiar 
+    this.form.get('legalPersonalExpuesta').valueChanges.subscribe((e: string) => {
+      if (e === 'S') {
+        this.form.get('vinculacionExpuesta')?.setValidators([Validators.required, Validators.max(50)])
+        this.form.get('vinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('nombreExpuesta')?.setValidators([Validators.required, Validators.maxLength(100)])
+        this.form.get('nombreExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoIdentificacionExpuesta')?.setValidators([Validators.required])
+        this.form.get('tipoIdentificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('identificacionExpuesta')?.setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+        this.form.get('identificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('nacionalidadExpuesta')?.setValidators([Validators.required])
+        this.form.get('nacionalidadExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('entidadExpuesta')?.setValidators([Validators.required, Validators.maxLength(150)])
+        this.form.get('entidadExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('cargoExpuesta')?.setValidators([Validators.required, Validators.maxLength(80)])
+        this.form.get('cargoExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('vinculadoActualExpuesta')?.setValidators([Validators.required])
+        this.form.get('vinculadoActualExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('vinculacionExpuesta')?.setValidators(null)
+        this.form.get('vinculacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('nombreExpuesta')?.setValidators(null)
+        this.form.get('nombreExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('tipoIdentificacionExpuesta')?.setValidators(null)
+        this.form.get('tipoIdentificacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('identificacionExpuesta')?.setValidators(null)
+        this.form.get('identificacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('nacionalidadExpuesta')?.setValidators(null)
+        this.form.get('nacionalidadExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('entidadExpuesta')?.setValidators(null)
+        this.form.get('entidadExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('cargoExpuesta')?.setValidators(null)
+        this.form.get('cargoExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('vinculadoActualExpuesta')?.setValidators(null)
+        this.form.get('vinculadoActualExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+    this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
+      if (e === 'N') {
+        this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required, this.validatedDate.bind(this)])
+        this.form.get('fechaDesvinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('fechaDesvinculacionExpuesta')?.setValidators(null)
+        this.form.get('fechaDesvinculacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+
+    // declaro ingresos Otros declaroIngresoDeclaracionAuto
+    this.form.get('declaroIngresoDeclaracionAuto').valueChanges.subscribe((e: string) => {
+      console.log(e, "declaroIngresoDeclaracionAuto");
+
+      if (e === 'OT') {
+        this.form.get('otroIngresoDeclaracionAuto')?.setValidators([Validators.required])
+        this.form.get('otroIngresoDeclaracionAuto')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('otroIngresoDeclaracionAuto')?.setValidators(null)
+        this.form.get('otroIngresoDeclaracionAuto')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+
+    // cargo publico 
+    this.form.get('legalCargoPublico').valueChanges.subscribe((e: string) => {
+      if (e === 'S') {
+        this.form.get('cargoPublico')?.setValidators([Validators.required, Validators.maxLength(80)])
+        this.form.get('cargoPublico')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('entidadPublico')?.setValidators([Validators.required, Validators.maxLength(150)])
+        this.form.get('entidadPublico')?.enable({ emitEvent: true, onlySelf: true })
+        this.form.get('vinculadoActualPublico')?.setValidators([Validators.required])
+        this.form.get('vinculadoActualPublico')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('cargoPublico')?.setValidators(null)
+        this.form.get('cargoPublico')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('entidadPublico')?.setValidators(null)
+        this.form.get('entidadPublico')?.disable({ emitEvent: true, onlySelf: true })
+        this.form.get('vinculadoActualPublico')?.setValidators(null)
+        this.form.get('vinculadoActualPublico')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+    this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
+      if (e === 'N') {
+        this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required, this.validatedDate.bind(this)])
+        this.form.get('fechaDesvinculacionPublico')?.enable({ emitEvent: true, onlySelf: true })
+      }
+      else {
+        this.form.get('fechaDesvinculacionPublico')?.setValidators(null)
+        this.form.get('fechaDesvinculacionPublico')?.disable({ emitEvent: true, onlySelf: true })
+      }
+    })
+
+  }
 }
+

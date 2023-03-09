@@ -835,14 +835,14 @@
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Ubicación del negocio</mat-label>
-                                <input [readonly]="true" matInput type="number" [formControlName]="'tipoUbicacionNegocio'">
+                                <input [readonly]="true" matInput type="text" [formControlName]="'ubicacionNegocioCalculado'">
                             </mat-form-field>
 
                         </div>
                         <div class="-mx-3 md:flex mt-3 mb-2">
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label> Tipo de local </mat-label>
-                                <input [readonly]="true" matInput type="number" [formControlName]="'tipoLocal'">
+                                <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'">
                             </mat-form-field>
                             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                                 <mat-label>Antigüedad en el local actual</mat-label>
@@ -1496,7 +1496,7 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab disabled>
+                <mat-tab >
                     <ng-template matTabLabel>Codeudor </ng-template>
                     <form-codeudor></form-codeudor>
                 </mat-tab>
