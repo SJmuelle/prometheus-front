@@ -386,8 +386,7 @@
                 </mat-form-field>
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Meses de residencia</mat-label>
-                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0"
-                        max="11">
+                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
