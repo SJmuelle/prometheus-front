@@ -51,21 +51,27 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
 
   consultaDecisiones() {
-    this._decisionesService.getOpciones().subscribe((response: any) => {
+    this.fabricaDatos.agenda
+    let agenda;
+    if(this.fabricaDatos.agenda != 'DE'){
+      agenda='COMPLETACION';
+    }else{
+      agenda='DECISION';
+    }
+    this._decisionesService.getOpciones(agenda).subscribe((response: any) => {
       console.log(response);
       if (response) {
         this.listadoDeciones = response.data;
-        debugger
-        if (this.fabricaDatos.agenda != 'DE') {
+        // if (this.fabricaDatos.agenda != 'DE') {
 
 
-          this.form.controls['decision'].setValue('D')
-          this.form.value.decision = 'D'
-          // this.form.controls['decision'].disable();
-          this.consultaCauDesestimiento();
-          this.form.get('causal').setValidators([Validators.required, Validators.minLength(1)])
-          this.form.get('causal').updateValueAndValidity();
-        }
+        //   this.form.controls['decision'].setValue('D')
+        //   this.form.value.decision = 'D'
+        //   // this.form.controls['decision'].disable();
+        //   this.consultaCauDesestimiento();
+        //   this.form.get('causal').setValidators([Validators.required, Validators.minLength(1)])
+        //   this.form.get('causal').updateValueAndValidity();
+        // }
       }
     })
   }
