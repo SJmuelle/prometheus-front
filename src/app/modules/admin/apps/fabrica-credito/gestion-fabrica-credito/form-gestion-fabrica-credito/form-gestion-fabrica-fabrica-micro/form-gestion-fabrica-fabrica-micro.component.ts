@@ -190,15 +190,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
-                // este dato no llega de la anterior api endpoint
-
-
                 this.form.patchValue({
                     descripcionTipo: data.descripcionTipo,
                     codigoBarrio: data.codigoBarrio
                 });
                 this.unidadNegocio = data.unidadNegocio;
-                this.fabricaDatos = data.fabricaDatos;
+                this.fabricaDatos = data;
             });
     }
 
@@ -479,10 +476,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             destinoCredito: ['', [Validators.required]],
             codeudorMicro: [''],
             codigoBarrio: ['', [Validators.required]],
+            declaraRenta: ['', [Validators.required]],
             cargoPublico: [''],
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
+            actividadNoDesignada:[''],
             ubicacionNegocioCalculado: ['']
         },
         );

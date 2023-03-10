@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
-import { FormularioDeudorSolidarioInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
+import { FormularioCreditoMicro, FormularioDeudorSolidarioInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
+import moment from 'moment';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -32,6 +33,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public formDeudorSolidario: FormGroup;
+  fechaActual: any = moment().locale("co");
   constructor(
     private fb: FormBuilder,
     private genericaServices: GenericasService,
@@ -64,53 +66,151 @@ export class FormDeudorSolitarioComponent implements OnInit {
      */
   private createFormulario(): void {
     this.formDeudorSolidario = this.fb.group({
-      recurso: [''],
-      numeroSolicitud: [''],
-      tipo: [''],
+      creditoTitularLineas: [''],
+      fechaIngresoFabrica: [''],
+      emision: [''],
       tipoDocumento: [''],
       identificacion: [''],
       nombreCompleto: [''],
-      celular: [''],
-      primerNombre: [''],
-      segundoNombre: [''],
-      primerApellido: [''],
-      segundoApellido: [''],
+      celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+      descripcionTipoCredito: [''],
+      primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+      descripcionEstado: [''],
+      descripcionSubestado: [''],
+      segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+      primerApellido: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+      segundoApellido: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
       estadoCivil: [''],
-      email: [''],
+      email: ['', [Validators.required, Validators.email]],
       genero: [''],
-      codigoDepartamento: [''],
-      codigoCiudad: [''],
-      barrioResidencia: [''],
+      nacionalidad: [''],
+      fechaNacimiento: [''],
+      nivelEstudio: [''],
+      numeroHijos: [''],
+      personasACargo: [''],
+      fechaExpedicion: [''],
+      codigoDepartamentoExpedicion: [''],
+      codigoCiudadExpedicion: [''],
+      estrato: [''],
+      codigoDepartamento: ['', [Validators.required]],
+      codigoCiudad: ['', Validators.required],
+      barrioResidencia: ['', Validators.required],
       direccionResidencial: [''],
-      direccionTipoVia: [''],
-      direccionViaPrincipal: [''],
-      direccionNumeroVia: [''],
-      direccionDistanciaVia: [''],
+      direccionTipoVia: ['', [Validators.required]],
+      direccionViaPrincipal: ['', [Validators.required, Validators.min(0)]],
+      direccionNumeroVia: ['', [Validators.required, Validators.min(0)]],
+      direccionDistanciaVia: ['', [Validators.required]],
       direccionComplemento: [''],
-      tipoVivienda: [''],
-      parentesco: [''],
-      cargoPublico: [''],
+      tipoVivienda: ['', Validators.required],
+      annosTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
+      mesesTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
+      tipoActividad: [''],
+      actividadEconomica: [''],
+      actividadEspecifica: [''],
+      antiguedadActividad: [''],
+      antiguedadNegocio: [''],
+      camaraComercio: [''],
+      tieneRut: [''],
+      nitNegocio: [''],
+      nombreNegocio: [''],
+      codigoDepartamentoNegocio: [''],
+      codigoCiudadNegocio: [''],
+      codigoBarrioNegocio: [''],
+      segmento: [''],
+      direccionNegocio: [''],
+      direccionNegocioVia: [''],
+      direccionNegocioPrincipal: [''],
+      direccionNegocioNroVia: [''],
+      direccionNegocioDistanciaVia: [''],
+      direccionNegocioCompleto: [''],
+      telefonoNegocio: [''],
+      tipoLocal: [''],
+      antiguedadLocal: [''],
+      nombreArrendador: [''],
+      celularArrendador: [''],
+      tipoUbicacionNegocio: [''],
+      numeroEmpleados: [''],
+      nombreAtiendeNegocio: [''],
+      tieneOtrosPuntos: [''],
+      tipoDocumentoConyuge: [''],
+      identificacionConyuge: [''],
+      nombreCompletoConyuge: [''],
+      celularConyuge: [''],
+      primerNombreConyuge: [''],
+      segundoNombreConyuge: [''],
+      primerApellidoConyuge: [''],
+      segundoApellidoConyuge: [''],
+      emailConyuge: [''],
+      tipoEmpleoConyuge: [''],
+      nombreEmpresaConyuge: [''],
+      cargoConyuge: [''],
+      salarioConyuge: [''],
+      telefonoEmpresaConyuge: [''],
+      poseeCuentaBancaria: [''],
+      tipoCuentaBancaria: [''],
+      entidadBancaria: [''],
+      numeroCuentaBancaria: [''],
+      autorizacionBanco: [''],
+      tipoDeudor: [''],
+      legalCargoPublico: ['', Validators.required],
+      entidadPublico: [''],
+      vinculadoActualPublico: [''],
+      fechaDesvinculacionPublico: [''],
+      legalPersonalExpuesta: ['', Validators.required],
+      tiposTercerosSolicitud: [''],
+      vinculacionExpuesta: [''],
       familiarDePersonaExpuestaPyP: [''],
       cargoRecursosPartidoPolitico: [''],
-      datosCargoPublico: [''],
+      nombreExpuesta: [''],
+      tipoIdentificacionExpuesta: [''],
+      identificacionExpuesta: [''],
+      nacionalidadExpuesta: [''],
+      entidadExpuesta: [''],
+      cargoExpuesta: [''],
+      vinculadoActualExpuesta: [''],
+      fechaDesvinculacionExpuesta: [''],
+      legalDesarrollaActividadApnfd: ['', Validators.required],
+      legalCargoPartidoPolitico: ['', Validators.required],
+      legalOperacionCriptomoneda: ['', Validators.required],
+      tipoOperacionCripto: [''],
+      tipoOperacionCriptomoneda: [''],
+      legalOperacionExtranjera: ['', Validators.required],
+      tipoOperacionExtranjera: [''],
+      declaroIngresoDeclaracionAuto: ['', Validators.required],
+      otroIngresoDeclaracionAuto: [''],
+      autoricacionDatosPersonalClaracionAuto: [''],
+      clausulaAnticurrupcionClaracionAuto: [''],
+      plazo: [''],
+      descripcionTipo: [''],
+      titularMicro: [''],
+      aplicaCodeudor: [''],
+      valorSolicitadoWeb: [''],
+      creditoCodeudorLineas: [''],
+      modificadaSolicitud: [''],
+      valorSolicitado: [''],
+      destinoCredito: [''],
+      codeudorMicro: [''],
+      codigoBarrio: [''],
+      cargoPublico: [''],
       entidad: [''],
       vinculadoActualmente: [''],
       fechaDesvinculacion: [''],
-      vinculacionRelacion: [''],
-      cargoPublicNombreYapellido: [''],
-      cargoPublicTipoID: [''],
-      cargoPublicIDNumber: [''],
-      cargoPublicNacionalidad: [''],
-      cargoPublicEntidad: [''],
-      cargoPublicCargo: [''],
-      cargoPublicVinculado: [''],
-      cargoPublicFechaDesvinculacion: [''],
-      legalOperacionExtranjera: [''],
-      tipoOperacionExtranjera: [''],
-      entidadBancaria: [''],
-      tipoOperacionCripto: [''],
-      // entidadBancaria: [''],
+      parentesco: [''],
     });
+  }
+
+  private validatedDate(control: AbstractControl) {
+    const valueControl = control?.value ?? '';
+    const date = moment(valueControl).format('YYYY-MM-DD')
+    const errors = { dateError: true };
+
+    // Set the validation error on the matching control
+    if (this.fechaActual.isBefore(date)) {
+
+      return errors
+    } else {
+      return null
+    }
   }
 
   /**
@@ -217,13 +317,14 @@ export class FormDeudorSolitarioComponent implements OnInit {
        * @description:
        */
   public onPostDatos(): void {
+    this.formDeudorSolidario.controls.fechaDesvinculacionPublico.setValue(moment(this.formDeudorSolidario.controls.fechaDesvinculacionPublico.value.toString()).format('YYYY-MM-DD'));
+    this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.setValue(moment(this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.value.toString()).format('YYYY-MM-DD'));
     let data = {
       tipo: 'S',
       recurso: "tab-actualizar-solidario-microcredito",
-      numeroSolicitud: this.numeroSolicitud,
+      numeroSolicitud: Number(this.numeroSolicitud),
       ...this.formDeudorSolidario.value
     }
-    console.log(data);
 
     this.postFormularioDeudorSolidario(data);
   }
@@ -231,7 +332,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
   /**
      * @description: Guardado de datos fabrica
      */
-  private postFormularioDeudorSolidario(datos: FormularioDeudorSolidarioInterface): void {
+  private postFormularioDeudorSolidario(datos: FormularioCreditoMicro): void {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
       .subscribe(() => {
