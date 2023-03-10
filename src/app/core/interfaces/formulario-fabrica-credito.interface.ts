@@ -181,7 +181,10 @@ export interface FormularioCreditoPlexa {
 
 export interface FormularioCreditoMicro {
     numeroSolicitud: String;
+    fechaVinculacion: String;
     tipo: String;
+    fechaDesvinculacion: String;
+    fechaIngresoFabrica: String,
     tipoDocumento: String;
     identificacion: String;
     nombreCompleto: String;
@@ -290,8 +293,8 @@ export interface FormularioCreditoMicro {
     modificadaSolicitud: String;
     valorSolicitado: Number;
     destinoCredito: String;
-    declaraRenta:String;
-    actividadNoDesignada:String
+    declaraRenta: String;
+    actividadNoDesignada: String
 }
 
 export interface FormularioDatosTitularInterface {
