@@ -69,8 +69,8 @@ export class FormDeudorSolitarioComponent implements OnInit {
       creditoTitularLineas: [''],
       fechaIngresoFabrica: [''],
       emision: [''],
-      tipoDocumento: [''],
-      identificacion: [''],
+      tipoDocumento: ['', Validators.required],
+      identificacion: ['', Validators.required],
       nombreCompleto: [''],
       celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
       descripcionTipoCredito: [''],
@@ -102,8 +102,8 @@ export class FormDeudorSolitarioComponent implements OnInit {
       direccionDistanciaVia: ['', [Validators.required]],
       direccionComplemento: [''],
       tipoVivienda: ['', Validators.required],
-      annosTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
-      mesesTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
+      annosTiempoResidencia: [''],
+      mesesTiempoResidencia: [''],
       tipoActividad: [''],
       actividadEconomica: [''],
       actividadEspecifica: [''],
@@ -195,22 +195,8 @@ export class FormDeudorSolitarioComponent implements OnInit {
       entidad: [''],
       vinculadoActualmente: [''],
       fechaDesvinculacion: [''],
-      parentesco: [''],
+      parentesco: ['', Validators.required],
     });
-  }
-
-  private validatedDate(control: AbstractControl) {
-    const valueControl = control?.value ?? '';
-    const date = moment(valueControl).format('YYYY-MM-DD')
-    const errors = { dateError: true };
-
-    // Set the validation error on the matching control
-    if (this.fechaActual.isBefore(date)) {
-
-      return errors
-    } else {
-      return null
-    }
   }
 
   /**
@@ -313,6 +299,21 @@ export class FormDeudorSolitarioComponent implements OnInit {
     this.tipoVivienda$ = this.genericaServices.getTipoViviendas();
   }
 
+  public validationPost(): void {
+    console.log(this.formDeudorSolidario.valid);
+
+    if (this.formDeudorSolidario.invalid) {
+      this.formDeudorSolidario.markAllAsTouched();
+      // console.log(this.formDeudorSolidario, this.formDeudorSolidario.valid);
+      Object.keys(this.formDeudorSolidario.controls).forEach(key => {
+        // Get errors of every form control
+        // console.log(this.formDeudorSolidario.get(key).errors, key);
+      });
+    } else {
+      this.onPostDatos();
+    }
+  }
+
   /**
        * @description:
        */
@@ -326,7 +327,20 @@ export class FormDeudorSolitarioComponent implements OnInit {
       ...this.formDeudorSolidario.value
     }
 
-    this.postFormularioDeudorSolidario(data);
+    Swal.fire({
+      title: 'Guardar información',
+      text: '¿Está seguro de guardar información?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#a3a0a0',
+      confirmButtonText: 'Guardar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postFormularioDeudorSolidario(data);
+      }
+    });
   }
 
   /**

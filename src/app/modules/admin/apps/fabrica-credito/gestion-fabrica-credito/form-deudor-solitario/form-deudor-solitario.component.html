@@ -8,7 +8,7 @@
             <ng-container *ngIf="parentescos$ | async as parentescos">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de parentesco</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'parentesco'">
+                    <mat-select [value]="'seleccione'" [formControlName]="'parentesco'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let parentesco of parentescos.data"
@@ -16,12 +16,15 @@
                         </mat-option>
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.parentesco.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container *ngIf="tipoDocumentos$ | async as tipoDocumentos">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de documento</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'">
+                    <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let tipoDocumento of tipoDocumentos.data"
@@ -29,13 +32,19 @@
                         </mat-option>
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.tipoDocumento.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>N° de identificación</mat-label>
-                    <input matInput type="text" [formControlName]="'identificacion'">
+                    <input matInput type="text" [formControlName]="'identificacion'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.identificacion.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
         </div>
@@ -49,15 +58,21 @@
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Teléfono / Celular</mat-label>
-                    <input matInput type="text" [formControlName]="'celular'">
+                    <input matInput type="text" [formControlName]="'celular'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.celular.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Correo electrónico</mat-label>
-                    <input matInput type="text" [formControlName]="'email'">
+                    <input matInput type="text" [formControlName]="'email'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.email.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
         </div>
@@ -65,8 +80,11 @@
             <ng-container>
                 <mat-form-field class="w-full px-3 fuse-mat-dense">
                     <mat-label>Primer nombre</mat-label>
-                    <input matInput type="text" [formControlName]="'primerNombre'">
+                    <input matInput type="text" [formControlName]="'primerNombre'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.primerNombre.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
@@ -79,8 +97,11 @@
             <ng-container>
                 <mat-form-field class="w-full px-3 fuse-mat-dense">
                     <mat-label>Primer apellido</mat-label>
-                    <input matInput type="text" [formControlName]="'primerApellido'">
+                    <input matInput type="text" [formControlName]="'primerApellido'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.primerApellido.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
@@ -97,7 +118,7 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Departamento de residencia</mat-label>
                     <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
-                        [formControlName]="'codigoDepartamento'">
+                        [formControlName]="'codigoDepartamento'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let departamento of departamentos.data"
@@ -106,13 +127,16 @@
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.codigoDepartamento.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container *ngIf="ciudades$ | async as ciudades">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Ciudad de residencia</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
-                        (selectionChange)="seleccionCiudad($event)">
+                        (selectionChange)="seleccionCiudad($event)" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
@@ -121,12 +145,15 @@
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.codigoCiudad.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container *ngIf="barrios$ | async as barrios">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Barrio de residencia</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'">
+                    <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
@@ -135,6 +162,9 @@
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.barrioResidencia.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
         </div>
@@ -142,7 +172,7 @@
             <ng-container *ngIf="tipoVia$ | async as tipoVias">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de via de residencia</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'">
+                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let tipoVia of tipoVias.data" [value]="tipoVia.nombre">
@@ -151,30 +181,42 @@
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.direccionTipoVia.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Via principal</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionViaPrincipal'">
+                    <input matInput type="text" [formControlName]="'direccionViaPrincipal'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.direccionViaPrincipal.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Número vía</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionNumeroVia'">
+                    <input matInput type="text" [formControlName]="'direccionNumeroVia'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.direccionNumeroVia.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Distancia vía</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionDistanciaVia'">
+                    <input matInput type="text" [formControlName]="'direccionDistanciaVia'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
+                    <mat-error *ngIf="formDeudorSolidario.controls.direccionDistanciaVia.errors?.required">
+                        Este campo es requerido.
+                    </mat-error>
                 </mat-form-field>
             </ng-container>
         </div>
@@ -521,7 +563,7 @@
             </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+            <button mat-raised-button color="primary" type="button" (click)="validationPost()">
                 Guardar
             </button>
         </div>
