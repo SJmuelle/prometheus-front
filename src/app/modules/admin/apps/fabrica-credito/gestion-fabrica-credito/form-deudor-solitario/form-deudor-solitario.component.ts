@@ -196,6 +196,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
       vinculadoActualmente: [''],
       fechaDesvinculacion: [''],
       parentesco: ['', Validators.required],
+      declaraRenta:['']
     });
   }
 
@@ -318,9 +319,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
        * @description:
        */
   public onPostDatos(): void {
-    this.formDeudorSolidario.controls.fechaDesvinculacionPublico.setValue(moment(this.formDeudorSolidario.controls.fechaDesvinculacionPublico.value.toString()).format('YYYY-MM-DD'));
-    this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.setValue(moment(this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.value.toString()).format('YYYY-MM-DD'));
-    let data = {
+     let data = {
       tipo: 'S',
       recurso: "tab-actualizar-solidario-microcredito",
       numeroSolicitud: Number(this.numeroSolicitud),

@@ -44,7 +44,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
-    this.agendaComercialService.getAgendaComercial().pipe(
+    this.agendaComercialService.getAgendaComiteComercial().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
 
@@ -136,7 +136,7 @@ export class GridAgendaComiteComercialComponent implements OnInit, OnDestroy {
    */
   private getTotalesAgendaComercial(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getTotalesAgendaComercial().pipe(
+    this.agendaComercialService.getTotalesAgendaComiteComercial().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       if (res.status === 200) {
