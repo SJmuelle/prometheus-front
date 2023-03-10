@@ -180,6 +180,7 @@ export interface FormularioCreditoPlexa {
 }
 
 export interface FormularioCreditoMicro {
+    experienciaActividad: String,
     numeroSolicitud: String;
     fechaVinculacion: String;
     tipo: String;

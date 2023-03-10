@@ -68,7 +68,7 @@ export class FormCodeudorComponent implements OnInit {
     if (this.permisoEditar) {
       this.form.disable();
     }
-    this.addValidation()
+   
   }
 
   /**
@@ -91,12 +91,15 @@ export class FormCodeudorComponent implements OnInit {
       .getInformacionTipoTercero(numeroSolicitud, 'C')
       .pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
-        console.log(data, 'Codeudor Data backedn');
 
         Swal.close();
         this.dataGeneralIncial = data;
-        console.log(data);
+        console.log(data, 'Backend data');
         this.form.patchValue(data);
+
+        // formatear data para los select
+        this.form.controls.experienciaActividad.setValue(Number(this.form.controls.experienciaActividad.value))
+        this.addValidation();
         console.log('Form valid', this.form.valid);
 
         if (data.codigoDepartamento) {
@@ -286,7 +289,7 @@ export class FormCodeudorComponent implements OnInit {
       direccionNumeroVia: ['', [Validators.required, Validators.min(0)]],
       direccionDistanciaVia: ['', [Validators.required]],
       direccionComplemento: [''],
-      tipoActividad: ['', Validators.required],
+      tipoActividad: [''],
       antiguedadActividad: [
         '',
         [
@@ -303,7 +306,6 @@ export class FormCodeudorComponent implements OnInit {
         ],
       ],
       tieneRut: [''],
-      nitNegocio: [''],
       segmento: [''],
 
       nombreArrendador: [''],
@@ -380,7 +382,7 @@ export class FormCodeudorComponent implements OnInit {
       actividadEspecifica: [''],
       nombreNegocio: [''],
       camaraComercio: [''],
-      numeroCaramaraComercio: [''],
+      nitNegocio: [''],
       experienciaActividad: [''],
       codigoDepartamentoNegocio: [''],
       codigoCiudadNegocio: [''],
@@ -444,13 +446,13 @@ export class FormCodeudorComponent implements OnInit {
     const codigo: string = event.value;
     this.getCiudadesNegocio(codigo);
   }
-  
+
   /**
    * @description: Departamento de expedicion
   */
- public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
-   const codigo: string = event.value;
-   this.form.controls.codigoBarrioNegocio.setValue('');
+  public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
+    const codigo: string = event.value;
+    this.form.controls.codigoBarrioNegocio.setValue('');
     this.getCiudadesExpedicion(codigo);
   }
 
@@ -631,13 +633,40 @@ export class FormCodeudorComponent implements OnInit {
           .get('camaraComercio')
           ?.setValidators([Validators.required]);
         this.form
-          .get('camaraComercio')
-          ?.enable({ emitEvent: true, onlySelf: true });
-        if (this.form.controls.camaraComercio.value === 'S') {
-          console.log('asignar validaciones');
+          .get('camaraComercio')?.enable({ emitEvent: true, onlySelf: true })
+
+        this.form
+          .get('direccionNegocioVia')
+          ?.setValidators([Validators.required]);
+        this.form
+          .get('direccionNegocioVia')?.enable({ emitEvent: true, onlySelf: true });
+
+        this.form
+          .get('direccionNegocioPrincipal')
+          ?.setValidators([Validators.required]);
+        this.form
+          .get('direccionNegocioPrincipal')?.enable({ emitEvent: true, onlySelf: true });
+
+        this.form
+          .get('direccionNegocioNroVia')
+          ?.setValidators([Validators.required]);
+        this.form
+          .get('direccionNegocioNroVia')?.enable({ emitEvent: true, onlySelf: true });
+
+        this.form
+          .get('direccionNegocioDistanciaVia')
+          ?.setValidators([Validators.required]);
+        this.form
+          .get('direccionNegocioDistanciaVia')?.enable({ emitEvent: true, onlySelf: true });
+
+       
+
+        
+          if (this.form.controls.camaraComercio.value === 'S') {
+          console.log(this.form.controls.camaraComercio.value,'asignar camara comercio value');
 
           this.form
-            .get('numeroCaramaraComercio')
+            .get('nitNegocio')
             ?.setValidators([
               Validators.required,
               Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
@@ -645,15 +674,14 @@ export class FormCodeudorComponent implements OnInit {
               Validators.maxLength(10),
             ]);
           this.form
-            .get('numeroCaramaraComercio')
+            .get('nitNegocio')
             ?.enable({ emitEvent: true, onlySelf: true });
         } else {
-          console.log('asignarnt validaciones');
           this.form
-            .get('numeroCaramaraComercio')
+            .get('nitNegocio')
             ?.setValidators(null);
           this.form
-            .get('numeroCaramaraComercio')
+            .get('nitNegocio')
             ?.disable({ emitEvent: true, onlySelf: true });
         }
 
@@ -790,6 +818,16 @@ export class FormCodeudorComponent implements OnInit {
         this.form
           .get('estabilidadPuesto')
           ?.disable({ emitEvent: true, onlySelf: true });
+
+        this.form.get('direccionNegocioVia')?.setValidators(null);
+        this.form.get('direccionNegocioVia')?.disable({ emitEvent: true, onlySelf: true });
+        this.form.get('direccionNegocioPrincipal')?.setValidators(null);
+        this.form.get('direccionNegocioPrincipal')?.disable({ emitEvent: true, onlySelf: true });
+        this.form.get('direccionNegocioNroVia')?.setValidators(null);
+        this.form.get('direccionNegocioNroVia')?.disable({ emitEvent: true, onlySelf: true });
+        this.form.get('direccionNegocioDistanciaVia')?.setValidators(null);
+        this.form.get('direccionNegocioDistanciaVia')?.disable({ emitEvent: true, onlySelf: true });
+
       }
       // pensionado
       if (e === 'PENSI') {
@@ -1134,7 +1172,7 @@ export class FormCodeudorComponent implements OnInit {
    */
   public onPostDatos(): void {
     const datos: FormularioCreditoMicro = this.form.getRawValue();
-    const { numeroHijos, fechaIngresoFabrica, fechaVinculacion, fechaDesvinculacion, autorizacionBanco, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+    const { numeroHijos, fechaIngresoFabrica,experienciaActividad, fechaVinculacion, fechaDesvinculacion, autorizacionBanco, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
     const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
     const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
     const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
@@ -1151,9 +1189,11 @@ export class FormCodeudorComponent implements OnInit {
     const plazoFormato = Number(plazo);
     const autorizacionBancoFormato = autorizacionBanco ? 'S' : 'N';
     const modificadaSolicitudFormato = valorSolicitadoFormato;
+    const experienciaActividadFormato = experienciaActividad.toString();
     const telefonoNegocioFormato = telefonoNegocio.toString();
     // delete data.otrosIngresos; modificadaSolicitud
     const datosFormularios: FormularioCreditoMicro = {
+      experienciaActividad: experienciaActividadFormato,
       fechaVinculacion: fechaVinculacionFormato,
       fechaDesvinculacion: fechaDesvinculacionFormato,
       fechaIngresoFabrica: fechaIngresoFabricaFormato,
@@ -1202,7 +1242,7 @@ export class FormCodeudorComponent implements OnInit {
           'success'
         );
         setTimeout(() => {
-          location.reload()
+       //   location.reload()
         }, 1000);
         //   this.router.navigate(['/credit-factory/agenda-completion']);
       }, (error) => {
