@@ -331,7 +331,9 @@ export class AppSettingsService {
     public agendaComercial = {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
-            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM')
+            baseComite: EndPoints.uri('/generic/qry/agendas-credito/CC'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM'),
+            totaleComite: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CC')
         }
     };
 
