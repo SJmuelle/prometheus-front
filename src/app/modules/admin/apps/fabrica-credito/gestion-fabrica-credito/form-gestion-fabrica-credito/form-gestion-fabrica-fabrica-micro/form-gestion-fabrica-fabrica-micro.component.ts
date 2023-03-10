@@ -158,6 +158,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 console.log(data);
                 this.form.patchValue(data);
+                this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value  === 'S')
                 console.log('Form valid', this.form.valid);
 
                 if (data.codigoDepartamento) {
