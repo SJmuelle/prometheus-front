@@ -661,7 +661,7 @@
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
-                    <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones"
+                    <mat-option *ngFor="let ocupacion of dataInicial?.tipoUbicacion"
                         [value]="ocupacion.codigo">{{ocupacion.nombre}}
                     </mat-option>
                 </mat-select>

@@ -44,6 +44,8 @@ export class FormCodeudorComponent implements OnInit {
     public barrios$: Observable<any>;
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
+    listadoCiudades: any[];
+  listadoBarrios: any[];
     fechaActual: any = moment().locale('co');
 
     constructor(
@@ -155,10 +157,22 @@ export class FormCodeudorComponent implements OnInit {
             .subscribe((resp: any) => {
                 if (resp) {
                     this.dataInicial = resp.data;
-                    console.log(resp.data);
+                    console.log(resp.data , 'Datos iniciales');
                 }
             });
     }
+    public listarCiudades() {
+      const datos = this.form.getRawValue();
+      const { departamentoNegocio } = datos;
+      this._formularioCreditoService.listarCiudadesMicro(departamentoNegocio).subscribe((resp: any) => {
+        if (resp) {
+          this.listadoCiudades = resp.data
+        } else {
+          this.listadoCiudades = []
+        }
+      })
+    }
+
     /**
      * @description :creando el formulario
      */
