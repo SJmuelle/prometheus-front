@@ -548,34 +548,34 @@
                 </mat-error>
             </mat-form-field>
 
-            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Nombre comercial microempresa</mat-label>
-                    <input autocomplete="off" matInput type="text" [formControlName]="'nombreNegocio'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.nombreNegocio.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Registra en Cámara de Comercio
-                    </mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
-                        [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
-                        <mat-option disabled [value]="'seleccione'">Seleccione
-                        </mat-option>
-                        <mat-option value="S">Si
-                        </mat-option>
-                        <mat-option value="N">No
-                        </mat-option>
-                    </mat-select>
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                    <mat-error *ngIf="form.controls.camaraComercio.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-            </div>
+
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Nombre comercial microempresa</mat-label>
+                <input autocomplete="off" matInput type="text" [formControlName]="'nombreNegocio'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="form.controls.nombreNegocio.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Registra en Cámara de Comercio
+                </mat-label>
+                <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
+                    [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
+                    <mat-option disabled [value]="'seleccione'">Seleccione
+                    </mat-option>
+                    <mat-option value="S">Si
+                    </mat-option>
+                    <mat-option value="N">No
+                    </mat-option>
+                </mat-select>
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                <mat-error *ngIf="form.controls.camaraComercio.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+
             <mat-form-field *ngIf="form.controls.camaraComercio.value === 'S' && (form.controls.ocupacion.value === 'INDNFO' ||
             form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDEFO'
             )">
@@ -605,7 +605,8 @@
             <mat-form-field>
                 <mat-label>Departamento del negocio
                 </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'codigoDepartamentoNegocio'" (selectionChange)="seleccionDepartamento($event)" >
+                <mat-select [value]="'seleccione'" [formControlName]="'codigoDepartamentoNegocio'"
+                    (selectionChange)="seleccionDepartamento($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let departamento of dataInicial?.departamentosMicro"
@@ -620,7 +621,8 @@
             <ng-container *ngIf="ciudades$ | async as ciudades">
                 <mat-form-field>
                     <mat-label>Municipio / Ciudad del negocio</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'" (selectionChange)="seleccionCiudad($event)">
+                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'"
+                        (selectionChange)="seleccionCiudad($event)">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
