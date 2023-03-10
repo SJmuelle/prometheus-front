@@ -448,7 +448,7 @@
                             <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Tipo de via</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'" (selectionChange)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let tipoVia of dataInicial?.nomenclarturas"
@@ -464,7 +464,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Via principal</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionViaPrincipal'">
+                                    <input matInput type="text" [formControlName]="'direccionViaPrincipal'" (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="form.controls.direccionViaPrincipal.errors?.required">
@@ -475,7 +475,7 @@
                             <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Número vía</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionNumeroVia'">
+                                    <input matInput type="text" [formControlName]="'direccionNumeroVia'" (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="form.controls.direccionNumeroVia.errors?.required">
@@ -484,7 +484,7 @@
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Distancia vía</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionDistanciaVia'">
+                                    <input matInput type="text" [formControlName]="'direccionDistanciaVia'" (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="form.controls.direccionDistanciaVia.errors?.required">
