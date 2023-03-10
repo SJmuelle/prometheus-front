@@ -1202,7 +1202,7 @@ export class FormCodeudorComponent implements OnInit {
           'success'
         );
         setTimeout(() => {
-          // location.reload()
+          location.reload()
         }, 1000);
         //   this.router.navigate(['/credit-factory/agenda-completion']);
       }, (error) => {
