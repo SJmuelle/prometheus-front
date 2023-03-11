@@ -151,7 +151,8 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de nacimiento </mat-label>
-                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
+                <input matInput [readonly]="true" [matDatepicker]="fechaNacimiento"
+                    [formControlName]="'fechaNacimiento'"
                     (dateChange)="validacionCampos('Fecha de nacimiento','Este campo modifica el motor de decisión y políticas SARC','fechaNacimiento','STRING')">
                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
                 </mat-datepicker-toggle>
@@ -273,7 +274,7 @@
 
             <ng-container *ngIf="ciudades$ | async as ciudades">
                 <mat-form-field>
-                    <mat-label>Ciudad del negocio</mat-label>
+                    <mat-label>Ciudad</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
                         (selectionChange)="seleccionCiudad($event)">
                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -292,7 +293,7 @@
 
             <ng-container *ngIf="barrios$ | async as barrios">
                 <mat-form-field>
-                    <mat-label>Barrio del negocio</mat-label>
+                    <mat-label>Barrio</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
@@ -386,7 +387,8 @@
                 </mat-form-field>
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Meses de residencia</mat-label>
-                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0">
+                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'"
+                        min="0">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
@@ -580,7 +582,8 @@
             )">
                 <mat-label>N° de ID en Cámara de Comercio
                 </mat-label>
-                <input autocomplete="off" maxlength="13" matInput type="text" mask="separator.0" thousandSeparator="."  [formControlName]="'nitNegocio'">
+                <input autocomplete="off" maxlength="13" matInput type="text" mask="separator.0" thousandSeparator="."
+                    [formControlName]="'nitNegocio'">
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                 <mat-error *ngIf="form.controls.nitNegocio.errors?.required">
                     Este campo es requerido.
@@ -605,7 +608,7 @@
                 <mat-label>Departamento del negocio
                 </mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'codigoDepartamentoNegocio'"
-                    (selectionChange)="seleccionDepartamento($event)">
+                    (selectionChange)="seleccionDepartamentoNegocio($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let departamento of dataInicial?.departamentosMicro"
@@ -617,11 +620,11 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <ng-container *ngIf="ciudades$ | async as ciudades">
+            <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
                 <mat-form-field>
                     <mat-label>Municipio / Ciudad del negocio</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'"
-                        (selectionChange)="seleccionCiudad($event)">
+                        (selectionChange)="seleccionCiudadNegocio($event)">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
@@ -652,6 +655,10 @@
                     </mat-error>
                 </mat-form-field>
             </ng-container>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3" *ngIf="(form.controls.ocupacion.value === 'INDNFO' ||
+            form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDEFO'
+            )">
             <mat-form-field class="sm:col-span-2 md:col-span-3">
                 <mat-label>Dirección del negocio</mat-label>
                 <input matInput type="text" [readOnly]="true" [formControlName]="'direccionNegocio'">
@@ -676,7 +683,7 @@
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Via principal</mat-label>
                     <input
-                    (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
+                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
                         matInput type="text" [formControlName]="'direccionNegocioPrincipal'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -689,7 +696,7 @@
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Número vía</mat-label>
                     <input matInput type="text"
-                    (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
+                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
                         [formControlName]="'direccionNegocioNroVia'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -700,7 +707,7 @@
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Distancia vía</mat-label>
                     <input matInput type="text"
-                    (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
+                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
                         [formControlName]="'direccionNegocioDistanciaVia'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -709,7 +716,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <mat-form-field class="col-span-2">
+            <mat-form-field>
                 <mat-label>Complemento</mat-label>
                 <input matInput type="text" [formControlName]="'direccionNegocioCompleto'">
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -718,6 +725,9 @@
                     </mat-error>
                 </mat-icon>
             </mat-form-field>
+        </div>
+        <div *ngIf="form.controls.ocupacion.value === 'INDEFO' || form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDNFO'"
+            class="grid gap-2 sm:grid-cols-4 grid-cols-1">
             <mat-form-field class="sm:col-span-2 md:col-span-3">
                 <mat-label>Teléfono / celular del negocio</mat-label>
                 <input matInput type="text" mask="(000) 000 00 00" [formControlName]="'telefonoNegocio'">

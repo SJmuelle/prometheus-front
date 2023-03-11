@@ -27,8 +27,8 @@ import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-c
 export class FormCodeudorComponent implements OnInit {
     //variables iniciales
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
-    
-    
+
+
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     //cancelar subsicripciones
     public unSubscribe$: Subject<any> = new Subject<any>();
@@ -87,7 +87,7 @@ export class FormCodeudorComponent implements OnInit {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
 
         this.fabricaCreditoService
             .getInformacionTipoTercero(numeroSolicitud, 'C')
@@ -105,29 +105,29 @@ export class FormCodeudorComponent implements OnInit {
                 this.addValidation();
                 console.log('Form valid', this.form.valid);
 
-                if (data.codigoDepartamento) {
+                if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
                 }
-                if (data.codigoDepartamentoNacimiento) {
+                if (data?.codigoDepartamentoNacimiento) {
                     this.getCiudadesNacimiento(
                         data.codigoDepartamentoNacimiento
                     );
                 }
-                if (data.codigoDepartamentoNegocio) {
+                if (data?.codigoDepartamentoNegocio) {
                     this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
                 }
-                if (data.codigoCiudad) {
+                if (data?.codigoCiudad) {
                     this.getBarrios(data.codigoCiudad);
                 }
-                if (data.codigoCiudadNegocio) {
+                if (data?.codigoCiudadNegocio) {
                     this.getBarriosNegocio(data.codigoCiudadNegocio);
                 }
-                if (data.estrato) {
+                if (data?.estrato) {
                     this.form.controls.estrato.setValue(
                         data.estrato.toString()
                     );
                 }
-                if (data.codigoDepartamentoExpedicion) {
+                if (data?.codigoDepartamentoExpedicion) {
                     this.getCiudadesExpedicion(
                         data.codigoDepartamentoExpedicion
                     );
@@ -339,13 +339,14 @@ export class FormCodeudorComponent implements OnInit {
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
             plazo: [''],
+            recurso: [''],
 
             titularMicro: [''],
             aplicaCodeudor: [''],
-            valorSolicitadoWeb: [''],
+            valorSolicitadoWeb: [0],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
-            valorSolicitado: [''],
+            valorSolicitado: [0],
             destinoCredito: [''],
             codeudorMicro: [''],
             cargoPublico: [''],
@@ -354,6 +355,9 @@ export class FormCodeudorComponent implements OnInit {
             fechaDesvinculacion: [''],
             tipo: ['C'],
             numeroSolicitud: [''],
+
+            // Data requerida por el backend
+            descripcionGenero: [''],
 
             // campos faltantes Informacion de actividad economica
             ocupacion: ['', [Validators.required]],
@@ -376,7 +380,7 @@ export class FormCodeudorComponent implements OnInit {
             experienciaActividad: [''],
             codigoDepartamentoNegocio: [''],
             codigoCiudadNegocio: [''],
-            codigoBarrioNegocio: [''],
+            codigoBarrioNegocio: ['0'],
             direccionNegocioVia: [''],
             direccionNegocioPrincipal: [''],
             direccionNegocioNroVia: [''],
@@ -442,7 +446,6 @@ export class FormCodeudorComponent implements OnInit {
      */
     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
         const codigo: string = event.value;
-        this.form.controls.codigoBarrioNegocio.setValue('');
         this.getCiudadesExpedicion(codigo);
     }
 
@@ -513,6 +516,30 @@ export class FormCodeudorComponent implements OnInit {
 
     // validaciones dinamicas
     public addValidation() {
+
+        // camara de comercio
+        this.form.get('camaraComercio').valueChanges.subscribe((e: string) => {
+            const ocup = this.form.controls.ocupacion.value;
+            if ((ocup !== 'EPLDO' &&
+                (ocup === 'INDEFO' || ocup === 'PROIN' || ocup === 'INDNFO')) && this.form.controls.camaraComercio.value === 'S') {
+                this.form
+                    .get('nitNegocio')
+                    ?.setValidators([
+                        Validators.required,
+                        Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
+                        Validators.minLength(10),
+                        Validators.maxLength(10),
+                    ]);
+                this.form
+                    .get('nitNegocio')
+                    ?.enable({ emitEvent: true, onlySelf: true });
+            } else {
+                this.form.get('nitNegocio')?.setValidators(null);
+                this.form
+                    .get('nitNegocio')
+                    ?.disable({ emitEvent: true, onlySelf: true });
+            }
+        })
         // ocupacion Empleado
         this.form.get('ocupacion').valueChanges.subscribe((e: string) => {
             if (
@@ -658,29 +685,7 @@ export class FormCodeudorComponent implements OnInit {
                     .get('direccionNegocioDistanciaVia')
                     ?.enable({ emitEvent: true, onlySelf: true });
 
-                if (this.form.controls.camaraComercio.value === 'S') {
-                    console.log(
-                        this.form.controls.camaraComercio.value,
-                        'asignar camara comercio value'
-                    );
 
-                    this.form
-                        .get('nitNegocio')
-                        ?.setValidators([
-                            Validators.required,
-                            Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                            Validators.minLength(10),
-                            Validators.maxLength(10),
-                        ]);
-                    this.form
-                        .get('nitNegocio')
-                        ?.enable({ emitEvent: true, onlySelf: true });
-                } else {
-                    this.form.get('nitNegocio')?.setValidators(null);
-                    this.form
-                        .get('nitNegocio')
-                        ?.disable({ emitEvent: true, onlySelf: true });
-                }
 
                 this.form
                     .get('experienciaActividad')
@@ -1209,8 +1214,8 @@ export class FormCodeudorComponent implements OnInit {
             : '0099-01-01';
         const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta
             ? moment(fechaDesvinculacionExpuesta.toString()).format(
-                  'YYYY-MM-DD'
-              )
+                'YYYY-MM-DD'
+            )
             : '0099-01-01';
         const fechaIngresoFabricaFormato = fechaIngresoFabrica
             ? moment(fechaIngresoFabrica.toString()).format('YYYY-MM-DD')
@@ -1232,11 +1237,9 @@ export class FormCodeudorComponent implements OnInit {
         const modificadaSolicitudFormato = valorSolicitadoFormato;
         const experienciaActividadFormato = experienciaActividad.toString();
         const telefonoNegocioFormato = telefonoNegocio.toString();
-        const numeroSolicitud = this.form.controls['numeroSolicitud'].value === '' ? Number(this.numeroSolicitud) :  this.form.controls.numeroSolicitud.value;
-       
-       console.log('numeroSolicitud',numeroSolicitud);
-       console.log('dataaa', data);
-       delete data.numeroSolicitud;
+        const numeroSolicitud = this.form.controls['numeroSolicitud'].value === '' ? Number(this.numeroSolicitud) : this.form.controls.numeroSolicitud.value;
+
+        delete data.numeroSolicitud;
         // delete data.otrosIngresos; modificadaSolicitud
         const datosFormularios: FormularioCreditoMicro = {
             numeroSolicitud,
@@ -1288,7 +1291,7 @@ export class FormCodeudorComponent implements OnInit {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
             .postDatosFabricaCredita(datos)
             .subscribe(
@@ -1299,7 +1302,7 @@ export class FormCodeudorComponent implements OnInit {
                         'success'
                     );
                     setTimeout(() => {
-                           location.reload()
+                        location.reload()
                     }, 1000);
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
