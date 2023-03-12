@@ -70,7 +70,6 @@ export class FormCodeudorComponent implements OnInit {
         if (this.permisoEditar) {
             this.form.disable();
         }
-        console.log(this.numeroSolicitud, 'numero de solicitud');
     }
 
     /**
@@ -95,7 +94,6 @@ export class FormCodeudorComponent implements OnInit {
             .subscribe(({ data }) => {
                 Swal.close();
                 this.dataGeneralIncial = data;
-                console.log(data, 'Backend data');
                 this.form.patchValue(data);
 
                 // formatear data para los select
@@ -103,7 +101,6 @@ export class FormCodeudorComponent implements OnInit {
                     Number(this.form.controls.experienciaActividad.value)
                 );
                 this.addValidation();
-                console.log('Form valid', this.form.valid);
 
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -163,7 +160,6 @@ export class FormCodeudorComponent implements OnInit {
             .subscribe((resp: any) => {
                 if (resp) {
                     this.dataInicial = resp.data;
-                    console.log(resp.data, 'Datos iniciales');
                 }
             });
     }
@@ -1054,7 +1050,6 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('declaroIngresoDeclaracionAuto')
             .valueChanges.subscribe((e: string) => {
-                console.log(e, 'declaroIngresoDeclaracionAuto');
 
                 if (e === 'OT') {
                     this.form
@@ -1161,9 +1156,7 @@ export class FormCodeudorComponent implements OnInit {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(this.form.controls[variable].value);
             } else {
-                console.log('denegado');
                 if (type === 'INTEGER') {
                     this.form.controls[variable].setValue(
                         Number(this.dataGeneralIncial[variable])
@@ -1319,7 +1312,6 @@ export class FormCodeudorComponent implements OnInit {
     public validationPost(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
-            console.log(this.form, this.form.valid);
             Object.keys(this.form.controls).forEach((key) => {
                 // Get errors of every form control
                 console.log(this.form.get(key).errors, key);
