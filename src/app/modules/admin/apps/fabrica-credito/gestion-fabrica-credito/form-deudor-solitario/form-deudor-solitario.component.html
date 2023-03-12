@@ -169,10 +169,18 @@
             </ng-container>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Dirección completa</mat-label>
+                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
+            </mat-form-field>
+        </div>
+        <div class="-mx-3 md:flex mt-3 mb-2">
             <ng-container *ngIf="tipoVia$ | async as tipoVias">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de via de residencia</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'" [required]="">
+                    <mat-select
+                        (selectionChange)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        [value]="'seleccione'" [formControlName]="'direccionTipoVia'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let tipoVia of tipoVias.data" [value]="tipoVia.nombre">
@@ -189,7 +197,9 @@
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Via principal</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionViaPrincipal'" [required]="">
+                    <input
+                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        matInput type="text" [formControlName]="'direccionViaPrincipal'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.direccionViaPrincipal.errors?.required">
@@ -200,7 +210,9 @@
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Número vía</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionNumeroVia'" [required]="">
+                    <input
+                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        matInput type="text" [formControlName]="'direccionNumeroVia'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.direccionNumeroVia.errors?.required">
@@ -211,7 +223,9 @@
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Distancia vía</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionDistanciaVia'" [required]="">
+                    <input
+                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        matInput type="text" [formControlName]="'direccionDistanciaVia'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.direccionDistanciaVia.errors?.required">

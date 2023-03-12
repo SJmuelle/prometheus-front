@@ -212,7 +212,6 @@ export class FormDeudorSolitarioComponent implements OnInit {
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'S').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
-                console.log(data, 'Data inicial backend');
                 this.formDeudorSolidario.patchValue(data);
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -305,14 +304,12 @@ export class FormDeudorSolitarioComponent implements OnInit {
     }
 
     public validationPost(): void {
-        console.log(this.formDeudorSolidario.valid);
 
         if (this.formDeudorSolidario.invalid) {
             this.formDeudorSolidario.markAllAsTouched();
-            // console.log(this.formDeudorSolidario, this.formDeudorSolidario.valid);
             Object.keys(this.formDeudorSolidario.controls).forEach(key => {
                 // Get errors of every form control
-                // console.log(this.formDeudorSolidario.get(key).errors, key);
+                console.log(this.formDeudorSolidario.get(key).errors, key);
             });
         } else {
             this.onPostDatos();
