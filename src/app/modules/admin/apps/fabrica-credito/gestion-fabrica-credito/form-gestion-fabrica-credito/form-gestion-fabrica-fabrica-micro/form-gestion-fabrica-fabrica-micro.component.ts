@@ -73,7 +73,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log(resp.data);
+                console.log(resp.data, "data fabrica fabrica");
             }
         })
     }
