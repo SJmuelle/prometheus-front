@@ -1017,7 +1017,7 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de residecia
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de ubicación
                             del negocio</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                             <mat-form-field>
@@ -1053,7 +1053,7 @@
 
                             <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
                                 <mat-form-field>
-                                    <mat-label>Municipio / ciudad</mat-label>
+                                    <mat-label>Municipio / Ciudad del negocio</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="
                                             'codigoCiudadNegocio'
                                         " (selectionChange)="
