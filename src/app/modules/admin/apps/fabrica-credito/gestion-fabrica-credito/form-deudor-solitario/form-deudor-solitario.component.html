@@ -179,7 +179,7 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de via de residencia</mat-label>
                     <mat-select
-                        (selectionChange)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        (selectionChange)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value)"
                         [value]="'seleccione'" [formControlName]="'direccionTipoVia'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
@@ -198,7 +198,7 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Via principal</mat-label>
                     <input
-                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value )"
                         matInput type="text" [formControlName]="'direccionViaPrincipal'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -211,7 +211,7 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Número vía</mat-label>
                     <input
-                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value)"
                         matInput type="text" [formControlName]="'direccionNumeroVia'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -224,7 +224,7 @@
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Distancia vía</mat-label>
                     <input
-                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value)"
+                        (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value)"
                         matInput type="text" [formControlName]="'direccionDistanciaVia'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -238,7 +238,7 @@
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Complemento</mat-label>
-                    <input matInput type="text" [formControlName]="'direccionComplemento'">
+                    <input (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value)" matInput type="text" [formControlName]="'direccionComplemento'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                 </mat-form-field>

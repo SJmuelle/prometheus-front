@@ -501,7 +501,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
             actividadNoDesignada:[''],
-            ubicacionNegocioCalculado: ['']
+            ubicacionNegocioCalculado: [''],
+            tipoVereda: ['', Validators.required],
+            descripcionVereda: ['', Validators.required],
+            tipoVeredaNegocio: ['', Validators.required],
+            descripcionVeredaNegocio: ['', Validators.required]
         },
         );
     }
