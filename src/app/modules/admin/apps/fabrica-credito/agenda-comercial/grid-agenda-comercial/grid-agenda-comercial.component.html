@@ -201,9 +201,15 @@
                                             <ng-container>
                                                     <span class="text-md text-black font-medium" matTooltip="Asesor">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesor==''?'Usuario web':item.asesor}} 
+                                                {{ item.asesorComercial==''?'Usuario web':item.asesorComercial}} 
                                             </span>
                                             </ng-container>
+                                            <ng-container *ngIf="item.unidadNegocioFabrica === 1">
+                                                <span class="text-md text-black font-medium" matTooltip="Asesor micro">
+                                            <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                            {{ item.asesorMicro==''?'No registro':item.asesorMicro}} 
+                                        </span>
+                                        </ng-container>
                                                 </div>
                                             </td>
                                             <td class="px-2 pb-1 pt-1">
