@@ -1,12 +1,65 @@
 <ng-container>
+    <div class="gap-10 grid grid-cols-3 mb-30 mx-15 relative">
+        <!-- // Posicionamiento de las ofertas ( 3 cajitas máximas) -->
+        <fuse-card
+            class="shadow flex-col ring-2 ring-primary overflow-visible py-6 px-7"
+        >
+            <strong>Oferta n°1</strong> Oferta con el monto y plazo que el
+            cliente esta solicitando. Sin compra de cartera
+            <br />
+            <br />
+            En caso de que no sea viable por politica el monto o plazo deberá
+            habilitarse botón aqui que diga
+            <strong>solicitar excepción</strong> aparte del botón de
+            <strong>"seleccionar".</strong>
+            <br />
+            <br />
+            <strong
+                >Debe tener leyenda que indique: Que si esta oferta es escogida
+                deberá entrar a revisión de la excepción</strong
+            >
+            <br />
+            <br />
+            <strong
+                >esta opción siempre será la deseable. Asi sea que el ha marcado
+                compra de cartera en el destino del crédito.</strong
+            >
+        </fuse-card>
+        <fuse-card
+            class="shadow flex-col ring-2 ring-primary overflow-visible py-6 px-7"
+        >
+            <strong>Oferta n°2</strong> Oferta que incluye compra de cartera y
+            que sea con el monto y plazo que por politica si aplica de acuerdo
+            del titular.
+            <br />
+            <br />
+            Aqui tendrá botón de <strong>"Seleccionar"</strong>
+            <br />
+            <br />
+            <strong>Esta opción siempre será la que le aplica</strong>
+        </fuse-card>
+
+        <fuse-card
+            class="shadow flex-col ring-2 ring-primary overflow-visible py-6 px-7"
+        >
+            <strong>Oferta n°3</strong> Oferta que aplica según piloto o
+            retanqueo express. aqui tendrá botón de
+            <strong>"Seleccionar"</strong>
+        </fuse-card>
+        <!-- // Posicionamiento de las ofertas ( 3 cajitas máximas)  FIN-->
+    </div>
+
     <div class="gap-20 grid grid-cols-2 mb-30 mx-15 borderFintra relative">
-        <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
+        <div
+            class="absolute inset-x-0 -top-4 flex items-center justify-center z-20"
+        >
             <div
                 class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none bg-primary text-on-primary"
             >
-                Ofertas según tipo de créditos 
+                Ofertas según tipo de créditos
             </div>
         </div>
+
         <fuse-card
             class="shadow flex-col px-3 py-4 ring-2 ring-primary overflow-visible"
         >
@@ -19,7 +72,7 @@
             <div
                 class="text-2xl font-bold tracking-tight leading-tight text-center m-0 mt-3"
             >
-                Disponible cuota titular
+                Valor estimado a deseembolsar
             </div>
             <div
                 class="flex items-baseline whitespace-nowrap justify-center text-center mt-2 mb-4"
@@ -47,18 +100,167 @@
                 <div>
                     Cuota: <b> ${{ 54000 | number }} </b>
                 </div>
-                <div>
-                    Tasa: <b> {{ 3 }} % </b>
-                </div>
             </div>
-
+            <div class="inset-x-0 -top-4 flex items-center justify-center">
+                <button
+                    class="fuse-mat-button-large mt-10"
+                    mat-flat-button
+                    [color]="'primary'"
+                >
+                    Seleccionar
+                </button>
+            </div>
             <div class="flex flex-col mt-6">
                 <div
                     class="flex flex-col mt-2 text-secondary text-center font-bold text-xl"
                 >
                     <div>Detalles adicionales</div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 py-4 px-2">
+                    <div class="flex items-center justify-content-center">
+                        <div class="space-y-2">
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Salario básico:
+                                    <b>${{ 25000900 | number }}</b>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Comisiones extras:
+                                    <b>${{ 0 | number }}</b>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Descuentos de ley:
+                                    <b>${{ 200000 | number }}</b>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Fecha primera cuota:
+                                    <b class="capitalize">{{ "2023-01-02" }}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="space-y-2">
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Ingresos brutos:
+                                    <b>${{ 2300000 | number }}</b>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    50% ingresos brutos:
+                                    <b>${{ 1200000 | number }}</b>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Factor embargo:
+                                    <b>${{ 0 | number }}</b>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <mat-icon
+                                    class="icon-size-5 text-green-600"
+                                    [svgIcon]="'heroicons_solid:check'"
+                                ></mat-icon>
+                                <div class="ml-2 leading-5">
+                                    Descuento de nomina:
+                                    <b>${{ 900000 | number }}</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fuse-card>
+        <fuse-card
+            class="shadow flex-col px-3 py-4 ring-2 ring-primary overflow-visible"
+        >
+            <div
+                class="mt-3 text-3xl font-bold tracking-tight leading-tight text-center"
+            >
+                <!-- {{item.nombreOferta}} -->
+                Capacidad de pago
+            </div>
+            <div
+                class="text-2xl font-bold tracking-tight leading-tight text-center m-0 mt-3"
+            >
+                Valor estimado a deseembolsar
+            </div>
+            <div
+                class="flex items-baseline whitespace-nowrap justify-center text-center mt-2 mb-4"
+            >
+                <div
+                    class="text-4xl font-semibold leading-tight tracking-tight justify-center text-center"
+                >
+                    <ng-container>
+                        <b [ngClass]="'verde'">
+                            $
+                            {{ 68419 | number }}
+                        </b>
+                    </ng-container>
+                </div>
+            </div>
+            <!-- Price details -->
+            <div class="flex flex-col text-secondary text-center">
+                <div>
+                    Plazo: <b> {{ 60 }} meses </b>
+                </div>
+                <div>
+                    Cuota: <b> ${{ 54000 | number }} </b>
+                </div>
+            </div>
+            <div class="inset-x-0 -top-4 flex items-center justify-center">
+                <button
+                    class="fuse-mat-button-large mt-10"
+                    mat-flat-button
+                    [color]="'primary'"
+                >
+                    Seleccionar
+                </button>
+            </div>
+            <div class="flex flex-col mt-6">
+                <div
+                    class="flex flex-col mt-2 text-secondary text-center font-bold text-xl"
+                >
+                    <div>Detalles adicionales</div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 py-4 px-2">
                     <div class="flex items-center justify-content-center">
                         <div class="space-y-2">
                             <div class="flex">
