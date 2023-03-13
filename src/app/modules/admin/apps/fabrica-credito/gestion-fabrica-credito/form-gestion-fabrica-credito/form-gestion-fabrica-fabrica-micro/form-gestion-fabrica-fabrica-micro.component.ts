@@ -39,6 +39,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public barrios$: Observable<any>;
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
+    public actividadEconomica: any;
     fechaActual: any = moment().locale("co");
 
     constructor(
@@ -72,7 +73,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log(resp.data);
+                console.log(resp.data, "data fabrica fabrica");
             }
         })
     }
@@ -182,6 +183,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 if (data.codigoDepartamentoExpedicion) {
                     this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
                 }
+                if(data.tipoActividad){
+                    this.getActividadEconomica();   
+                }
             });
 
         const datosSolicitud: any = {
@@ -284,6 +288,20 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
     }
 
+    private getActividadEconomica():void{
+        const tipoActividad = this.form.controls.tipoActividad.value;
+        const nivelEstudio = this.form.controls.nivelEstudio.value;
+        const camaraComercio = this.form.controls.camaraComercio.value;
+
+        if(tipoActividad && nivelEstudio && camaraComercio){
+            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio,tipoActividad,camaraComercio).subscribe(res => {
+                this.actividadEconomica = res.data
+                console.log(this.actividadEconomica, "Actividad economica");
+            });
+        }
+
+        
+    }
     /**
      * @description: Obtiene el listado de barrios del negocio
      */
@@ -483,7 +501,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
             actividadNoDesignada:[''],
-            ubicacionNegocioCalculado: ['']
+            ubicacionNegocioCalculado: [''],
+            tipoVereda: ['', Validators.required],
+            descripcionVereda: ['', Validators.required],
+            tipoVeredaNegocio: ['', Validators.required],
+            descripcionVeredaNegocio: ['', Validators.required]
         },
         );
     }

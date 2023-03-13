@@ -73,6 +73,7 @@ import { FormGestionFabricaFabricaMicroComponent } from './form-gestion-fabrica-
 import { FormCodeudorComponent } from './form-codeudor/form-codeudor.component';
 import { FormDeudorSolitarioComponent } from './form-deudor-solitario/form-deudor-solitario.component';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
+import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.component';
 
 
 
@@ -113,7 +114,8 @@ import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-refe
         FormDialogAnalisisFinancieroComponent,
         FormGestionFabricaFabricaMicroComponent,
         FormCodeudorComponent,
-        FormDeudorSolitarioComponent
+        FormDeudorSolitarioComponent,
+        GridOfertaMicroComponent
     ],
     imports: [
         CommonModule,

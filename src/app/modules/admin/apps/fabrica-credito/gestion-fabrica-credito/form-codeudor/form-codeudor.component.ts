@@ -397,6 +397,10 @@ export class FormCodeudorComponent implements OnInit {
 
             // el form solo de muestra si su ocupacion es pensionado
             tiempoPensionado: [''],
+            tipoVereda: [''],
+            descripcionVereda: [''],
+            tipoVeredaNegocio: [''],
+            descripcionVeredaNegocio: ['']
         });
     }
 

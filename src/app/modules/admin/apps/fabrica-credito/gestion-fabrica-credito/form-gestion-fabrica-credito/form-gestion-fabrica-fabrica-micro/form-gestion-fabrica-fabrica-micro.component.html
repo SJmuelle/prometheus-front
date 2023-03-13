@@ -4,47 +4,57 @@
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <strong class="mr-2">Datos de la solicitud de Microcrédito </strong> | {{fabricaDatos.nombreAgenda}}
+                    <strong class="mr-2">Datos de la solicitud de Microcrédito
+                    </strong>
+                    | {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
                         <mat-label>No. de solicitud</mat-label>
-                        <input matInput type="number" [formControlName]="'numeroSolicitud'" [readonly]="true">
+                        <input matInput type="number" [formControlName]="'numeroSolicitud'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Fecha de solicitud</mat-label>
-                        <input matInput type="text" [formControlName]="'emision'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'emision'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Fecha de ingreso a fábrica</mat-label>
-                        <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Estado</mat-label>
-                        <input matInput type="text" [formControlName]="'descripcionEstado'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'descripcionEstado'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Subestado</mat-label>
-                        <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true" />
                     </mat-form-field>
                 </div>
-                <span class="bg-gray-200 p-1.5 rounded-1  text-dark font-bold mt-4 mb-3">Información del crédito</span>
+                <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del crédito</span>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
                         <mat-label>Tipo de crédito</mat-label>
                         <input matInput type="text" disabled [formControlName]="'descripcionTipoCredito'"
-                            [readonly]="true">
+                            [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
-                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'"
-                            (selectionChange)="validacionCampos('Destino del crédito','Este campo modifica el motor de decisión y políticas SARC','destinoCredito','STRING')">
+                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'" (selectionChange)="
+                                validacionCampos(
+                                    'Destino del crédito',
+                                    'Este campo modifica el motor de decisión y políticas SARC',
+                                    'destinoCredito',
+                                    'STRING'
+                                )
+                            ">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option *ngFor="let item of dataInicial?.destinoCreditosMicro" [value]="item.codigo">
-                                {{item.nombre}}
+                            <mat-option *ngFor="
+                                    let item of dataInicial?.destinoCreditosMicro
+                                " [value]="item.codigo">
+                                {{ item.nombre }}
                             </mat-option>
                         </mat-select>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -52,22 +62,34 @@
                     <mat-form-field>
                         <mat-label>Valor solicitado</mat-label>
                         <input matInput type="text" mask="separator.0" [formControlName]="'valorSolicitadoWeb'"
-                            [readonly]="true">
+                            [readonly]="true" />
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
                         <mat-label>Monto crédito</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
-                            [formControlName]="'valorSolicitado'" (change)="validacion('MO')"
-                            (change)="validacionCampos('Monto crédito','Este campo actualiza la capacidad de pago del cliente','valorSolicitado', 'INTEGER')">
+                            [formControlName]="'valorSolicitado'" (change)="validacion('MO')" (change)="
+                                validacionCampos(
+                                    'Monto crédito',
+                                    'Este campo actualiza la capacidad de pago del cliente',
+                                    'valorSolicitado',
+                                    'INTEGER'
+                                )
+                            " />
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Plazo</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'plazo'"
-                            [required]="true" (change)="validacion('PL')"
-                            (change)="validacionCampos('Plazo','Este campo actualiza la capacidad de pago del cliente','plazo', 'INTEGER')">
+                            [required]="true" (change)="validacion('PL')" (change)="
+                                validacionCampos(
+                                    'Plazo',
+                                    'Este campo actualiza la capacidad de pago del cliente',
+                                    'plazo',
+                                    'INTEGER'
+                                )
+                            " />
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field>
@@ -75,31 +97,27 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'aplicaCodeudor'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option value="S">Si aplica
-                            </mat-option>
-                            <mat-option value="N">No aplica
-                            </mat-option>
+                            <mat-option value="S">Si aplica </mat-option>
+                            <mat-option value="N">No aplica </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
                         <mat-label>Titular en micro</mat-label>
-                        <input matInput type="text" [formControlName]="'titularMicro'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'titularMicro'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Codeudor en micro</mat-label>
-                        <input matInput type="text" [formControlName]="'codeudorMicro'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'codeudorMicro'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Crédito titular en otras lineas</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoTitularLineas'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option value="S">Si aplica
-                            </mat-option>
-                            <mat-option value="N">No aplica
-                            </mat-option>
+                            <mat-option value="S">Si aplica </mat-option>
+                            <mat-option value="N">No aplica </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
@@ -107,15 +125,13 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoCodeudorLineas'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option value="S">Si aplica
-                            </mat-option>
-                            <mat-option value="N">No aplica
-                            </mat-option>
+                            <mat-option value="S">Si aplica </mat-option>
+                            <mat-option value="N">No aplica </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Segmento</mat-label>
-                        <input matInput type="text" [formControlName]="'segmento'" [readonly]="true">
+                        <input matInput type="text" [formControlName]="'segmento'" [readonly]="true" />
                     </mat-form-field>
                 </div>
             </div>
@@ -126,7 +142,8 @@
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <strong class="mr-2">Descripción del crédito </strong> | {{fabricaDatos.nombreAgenda}}
+                    <strong class="mr-2">Descripción del crédito </strong> |
+                    {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-tab-group [animationDuration]="'0'">
@@ -136,86 +153,168 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Tipo de solicitante</mat-label>
-                                <input matInput type="text" [formControlName]="'descripcionTipo'" [readonly]="true">
+                                <input matInput type="text" [formControlName]="'descripcionTipo'" [readonly]="true" />
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Tipo de documento</mat-label>
-                                <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true">
+                                <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true" />
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>No. de identificación</mat-label>
                                 <input matInput type="text" mask="separator.0" thousandSeparator="."
-                                    [formControlName]="'identificacion'" [readonly]="true">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
+                                    [formControlName]="'identificacion'" [readonly]="true" />
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="
+                                        'heroicons_outline:identification'
+                                    ">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / Celular </mat-label>
                                 <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'"
-                                    [required]="true">
+                                    [required]="true" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
-                                    <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es
-                                        requerido.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan
-                                        números.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud
-                                        mínima son 7 dígitos.</mat-error>
-                                    <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud
-                                        máxima son 11 dígitos.</mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.celular.dirty ||
+                                        form.controls.celular.touched
+                                    ">
+                                    <mat-error *ngIf="
+                                            form.controls.celular.errors
+                                                ?.required
+                                        ">Este campo es requerido.</mat-error>
+                                    <mat-error *ngIf="
+                                            form.controls.celular.errors
+                                                ?.pattern
+                                        ">Solo se aceptan números.</mat-error>
+                                    <mat-error *ngIf="
+                                            form.controls.celular.errors
+                                                ?.minlength
+                                        ">Longitud mínima son 7
+                                        dígitos.</mat-error>
+                                    <mat-error *ngIf="
+                                            form.controls.celular.errors
+                                                ?.maxlength
+                                        ">Longitud máxima son 11
+                                        dígitos.</mat-error>
                                 </mat-error>
                             </mat-form-field>
                         </div>
                         <div class="grid grid-cols-1">
                             <mat-form-field class="col-span-2">
                                 <mat-label>Nombre completo del titular</mat-label>
-                                <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true">
+                                <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true" />
                             </mat-form-field>
                         </div>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Primer nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'primerNombre'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'primerNombre'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.primerNombre.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.primerNombre.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.primerNombre.errors?.pattern">
-                                    No se permiten caracteres especiales ni números
+                                <mat-error *ngIf="
+                                        form.controls.primerNombre.errors
+                                            ?.pattern
+                                    ">
+                                    No se permiten caracteres especiales ni
+                                    números
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoNombre'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'segundoNombre'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.segundoNombre.errors?.pattern">
-                                    No se permiten caracteres especiales ni números
+                                <mat-error *ngIf="
+                                        form.controls.segundoNombre.errors
+                                            ?.pattern
+                                    ">
+                                    No se permiten caracteres especiales ni
+                                    números
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Primer apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'primerApellido'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'primerApellido'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="primerApellido">Este campo es requerido.</mat-error>
-                                <mat-error *ngIf="form.controls.primerApellido.errors?.pattern">
-                                    No se permiten caracteres especiales ni números
+                                <mat-error *ngIf="
+                                        form.controls.primerApellido.errors
+                                            ?.pattern
+                                    ">
+                                    No se permiten caracteres especiales ni
+                                    números
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoApellido'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'segundoApellido'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.segundoApellido.errors?.pattern">
-                                    No se permiten caracteres especiales ni números
+                                <mat-error *ngIf="
+                                        form.controls.segundoApellido.errors
+                                            ?.pattern
+                                    ">
+                                    No se permiten caracteres especiales ni
+                                    números
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -227,20 +326,23 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'estadoCivil'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.estadoCivil"
-                                        [value]="item.codigo">{{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.estadoCivil
+                                        " [value]="item.codigo">{{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.estadoCivil.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.estadoCivil.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Email</mat-label>
-                                <input matInput type="text" [formControlName]="'email'">
+                                <input matInput type="text" [formControlName]="'email'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="form.controls.email.errors?.required">
@@ -250,30 +352,39 @@
                                     Correo invalido
                                 </mat-error>
                             </mat-form-field>
-                            <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
-
+                            <ng-container *ngIf="
+                                    form.controls['tipoDocumento'].value ===
+                                    'CC'
+                                ">
                                 <mat-form-field>
                                     <mat-label>Género</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'genero'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let genero of dataInicial?.generos"
-                                            [value]="genero.codigo">{{genero.nombre}}
+                                        <mat-option *ngFor="
+                                                let genero of dataInicial?.generos
+                                            " [value]="genero.codigo">{{ genero.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.genero.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.genero.errors
+                                                ?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field>
                                     <mat-label>Nacionalidad</mat-label>
-                                    <input matInput type="text" [formControlName]="'nacionalidad'">
+                                    <input matInput type="text" [formControlName]="'nacionalidad'" />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.nacionalidad.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.nacionalidad.errors
+                                                ?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
@@ -283,52 +394,79 @@
                             <mat-form-field>
                                 <mat-label>Fecha de nacimiento </mat-label>
                                 <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
-                                    (dateChange)="validacionCampos('Fecha de nacimiento','Este campo modifica el motor de decisión y políticas SARC','fechaNacimiento','STRING')">
+                                    (dateChange)="
+                                        validacionCampos(
+                                            'Fecha de nacimiento',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'fechaNacimiento',
+                                            'STRING'
+                                        )
+                                    " />
                                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaNacimiento></mat-datepicker>
-                                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.fechaNacimiento.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Nivel de estudio</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'nivelEstudio'">
+                                <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
+                                    [formControlName]="'nivelEstudio'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.nivelesEstudio"
-                                        [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.nivelesEstudio
+                                        " [value]="item.codigoOpcion">{{ item.descripcionOpcion }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.nivelEstudio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.nivelEstudio.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Número de hijos</mat-label>
-                                <input matInput type="text" [formControlName]="'numeroHijos'">
+                                <input matInput type="text" [formControlName]="'numeroHijos'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.numeroHijos.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.numeroHijos.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.numeroHijos.errors?.minLength">
+                                <mat-error *ngIf="
+                                        form.controls.numeroHijos.errors
+                                            ?.minLength
+                                    ">
                                     No puede ser menor de 0
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Personas a cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'personasACargo'">
+                                <input matInput type="text" [formControlName]="'personasACargo'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.personasACargo.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.personasACargo.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.personasACargo.errors?.minLength">
+                                <mat-error *ngIf="
+                                        form.controls.personasACargo.errors
+                                            ?.minLength
+                                    ">
                                     No puede ser menor de 0
                                 </mat-error>
                             </mat-form-field>
@@ -337,28 +475,39 @@
                             <mat-form-field>
                                 <mat-label>Fecha de expedición </mat-label>
                                 <input matInput [matDatepicker]="fechaExpedicionDocumento"
-                                    [formControlName]="'fechaExpedicion'" [readonly]="true">
+                                    [formControlName]="'fechaExpedicion'" [readonly]="true" />
                                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
-                                <mat-error *ngIf="form.controls.fechaExpedicion.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.fechaExpedicion.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
                             <mat-form-field>
                                 <mat-label>Departamento de expedición</mat-label>
-                                <mat-select (selectionChange)="seleccionDepartamentoExpedicion($event)"
-                                    [value]="'seleccione'" [formControlName]="'codigoDepartamentoExpedicion'">
+                                <mat-select (selectionChange)="
+                                        seleccionDepartamentoExpedicion($event)
+                                    " [value]="'seleccione'" [formControlName]="
+                                        'codigoDepartamentoExpedicion'
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let departamento of dataInicial?.deparamentosGenerales"
-                                        [value]="departamento.codigo">{{departamento.nombre}}
+                                    <mat-option *ngFor="
+                                            let departamento of dataInicial?.deparamentosGenerales
+                                        " [value]="departamento.codigo">{{ departamento.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.codigoDepartamentoExpedicion.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls
+                                            .codigoDepartamentoExpedicion.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -366,16 +515,21 @@
                             <ng-container *ngIf="ciudadesExpedicion$ | async as ciudades">
                                 <mat-form-field>
                                     <mat-label>Ciudad de expedición</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadExpedicion'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="
+                                            'codigoCiudadExpedicion'
+                                        ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
-                                            {{ciudad.nombre}}
+                                            {{ ciudad.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.codigoCiudadExpedicion.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.codigoCiudadExpedicion
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
@@ -384,20 +538,24 @@
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de
                             residencia</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-
                             <mat-form-field>
                                 <mat-label>Departamento de residencia</mat-label>
-                                <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
-                                    [formControlName]="'codigoDepartamento'">
+                                <mat-select (selectionChange)="
+                                        seleccionDepartamento($event)
+                                    " [value]="'seleccione'" [formControlName]="'codigoDepartamento'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let departamento of dataInicial?.deparamentosGenerales"
-                                        [value]="departamento.codigo">{{departamento.nombre}}
+                                    <mat-option *ngFor="
+                                            let departamento of dataInicial?.deparamentosGenerales
+                                        " [value]="departamento.codigo">{{ departamento.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.codigoDepartamento.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.codigoDepartamento.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -406,16 +564,21 @@
                                 <mat-form-field>
                                     <mat-label>Ciudad de residencia</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
-                                        (selectionChange)="seleccionCiudad($event)">
+                                        (selectionChange)="
+                                            seleccionCiudad($event)
+                                        ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
-                                            {{ciudad.nombre}}
+                                            {{ ciudad.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.codigoCiudad.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.codigoCiudad.errors
+                                                ?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
@@ -428,287 +591,517 @@
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
-                                            {{barrio.nombre}}
+                                            {{ barrio.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.barrioResidencia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.barrioResidencia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                             </ng-container>
                         </div>
 
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
+                      
                             <mat-form-field class="sm:col-span-2 md:col-span-3">
                                 <mat-label>Dirección completa</mat-label>
-                                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
+                                <input matInput type="text" [formControlName]="'direccionResidencial'"
+                                    readonly="true" />
                             </mat-form-field>
-                            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
+                            <div class="grid gap-2 sm:grid-cols-5 grid-cols-1">
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Tipo de via</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'" (selectionChange)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'"
+                                        (selectionChange)="
+                                            form.controls.direccionResidencial.setValue(
+                                                form.controls.direccionTipoVia
+                                                    .value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionViaPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNumeroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionDistanciaVia
+                                                        .value +
+                                                    ' ' + form.controls.direccionComplemento.value
+                                            )
+                                        ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let tipoVia of dataInicial?.nomenclarturas"
-                                            [value]="tipoVia.nombre">
-                                            {{tipoVia.nombre}}
+                                        <mat-option *ngFor="
+                                                let tipoVia of dataInicial?.nomenclarturas
+                                            " [value]="tipoVia.nombre">
+                                            {{ tipoVia.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionTipoVia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.direccionTipoVia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Via principal</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionViaPrincipal'" (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
+                                    <input matInput type="text" [formControlName]="
+                                            'direccionViaPrincipal'
+                                        " (keyup)="
+                                            form.controls.direccionResidencial.setValue(
+                                                form.controls.direccionTipoVia
+                                                    .value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionViaPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNumeroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionDistanciaVia
+                                                        .value +
+                                                        ' ' + form.controls.direccionComplemento.value
+                                            )
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionViaPrincipal.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.direccionViaPrincipal
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
-                            </div>
-                            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
+                            
+ 
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Número vía</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionNumeroVia'" (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
+                                    <input matInput type="text" [formControlName]="'direccionNumeroVia'" (keyup)="
+                                            form.controls.direccionResidencial.setValue(
+                                                form.controls.direccionTipoVia
+                                                    .value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionViaPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNumeroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionDistanciaVia
+                                                        .value +
+                                                        ' ' + form.controls.direccionComplemento.value
+                                            )
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionNumeroVia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.direccionNumeroVia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Distancia vía</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionDistanciaVia'" (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
+                                    <input matInput type="text" [formControlName]="
+                                            'direccionDistanciaVia'
+                                        " (keyup)="
+                                            form.controls.direccionResidencial.setValue(
+                                                form.controls.direccionTipoVia
+                                                    .value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionViaPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNumeroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionDistanciaVia
+                                                        .value +
+                                                        ' ' + form.controls.direccionComplemento.value
+                                            )
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionDistanciaVia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.direccionDistanciaVia
+                                                .errors?.required
+                                        ">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Complemento</mat-label>
+                                    <input (keyup)="
+                                    form.controls.direccionResidencial.setValue(
+                                        form.controls.direccionTipoVia
+                                            .value +
+                                            ' ' +
+                                            form.controls
+                                                .direccionViaPrincipal
+                                                .value +
+                                            ' # ' +
+                                            form.controls
+                                                .direccionNumeroVia
+                                                .value +
+                                            ' - ' +
+                                            form.controls
+                                                .direccionDistanciaVia
+                                                .value +
+                                                ' ' + form.controls.direccionComplemento.value
+                                    )
+                                " matInput type="text" [formControlName]="'direccionComplemento'" />
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
+                                <mat-form-field>
+                                    <mat-label>Vereda / Corregimiento</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoVereda'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tiposVereda
+                                        " [value]="item.codigo">{{ item.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="
+                                            form.controls.tipoVereda.errors
+                                                ?.required
+                                        ">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Descripción</mat-label>
+                                    <input matInput type="text" [formControlName]="'descripcionVereda'" />
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                    <mat-error *ngIf="
+                                            form.controls.descripcionVereda.errors
+                                                ?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                             </div>
-                            <mat-form-field>
-                                <mat-label>Complemento</mat-label>
-                                <input matInput type="text" [formControlName]="'direccionComplemento'">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                            </mat-form-field>
-
-                            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
+                            <div class="grid gap-2 sm:grid-cols-3 grid-cols-1">
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Años de residencia</mat-label>
-                                    <input matInput type="number" [formControlName]="'annosTiempoResidencia'">
+                                    <input matInput type="number" [formControlName]="
+                                            'annosTiempoResidencia'
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.annosTiempoResidencia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.annosTiempoResidencia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Meses de residencia</mat-label>
-                                    <input autocomplete="off" matInput type="number"
-                                        [formControlName]="'mesesTiempoResidencia'" min="0" max="11">
+                                    <input autocomplete="off" matInput type="number" [formControlName]="
+                                            'mesesTiempoResidencia'
+                                        " min="0" max="11" />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.mesesTiempoResidencia
+                                                .errors?.required
+                                        ">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Tipo de vivienda</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="
+                                                let item of dataInicial?.tiposVivienda
+                                            " [value]="item.codigo">
+                                            {{ item.nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                    <mat-error *ngIf="
+                                            form.controls.tipoVivienda.errors
+                                                ?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <mat-form-field>
-                                <mat-label>Tipo de vivienda</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposVivienda" [value]="item.codigo">
-                                        {{item.nombre}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoVivienda.errors?.required">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field>
                                 <mat-label>Estrato</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'estrato'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.estratosVivienda"
-                                        [value]="item.codigo">
-                                        {{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.estratosVivienda
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.estrato.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.estrato.errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                        </div>
+                        
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
                             negocio</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>¿Comercializas productos o servicios?
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoActividad'"
-                                    [matTooltip]="'¿Se encuentra registrado en camára de comercio?'">
+                                <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
+                                    [formControlName]="'tipoActividad'" [matTooltip]="
+                                        '¿Se encuentra registrado en camára de comercio?'
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let actividadesMicro of dataInicial?.actividadesMicro"
-                                        [value]="actividadesMicro.codigo">{{actividadesMicro.valor}}
+                                    <mat-option *ngFor="
+                                            let actividadesMicro of dataInicial?.actividadesMicro
+                                        " [value]="actividadesMicro.codigo">{{ actividadesMicro.valor }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.tipoActividad.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoActividad.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field>
-                                <mat-label>Actividad económica
-                                </mat-label>
-                                <input matInput type="text" [formControlName]="'actividadEconomica'"
-                                    (change)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC','actividadEconomica','STRING')">
 
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.actividadEconomica.errors?.required">
+                            <mat-form-field>
+                                <mat-label>Actividad económica </mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let actividad of actividadEconomica" [value]="actividad.codigo">
+                                        {{ actividad.valor }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                            form.controls.actividadEconomica
+                                                .errors?.required
+                                        ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Actividad Especifica
-                                </mat-label>
-                                <input matInput type="text" [formControlName]="'actividadEspecifica'">
+                                <mat-label>Actividad Especifica </mat-label>
+                                <input matInput type="text" [formControlName]="'actividadEspecifica'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.actividadEspecifica.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.actividadEspecifica.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>¿ Cuánto tiempo en (meses) llevas ejerciendo esta actividad?
+                                <mat-label>¿ Cuánto tiempo en (meses) llevas
+                                    ejerciendo esta actividad?
                                 </mat-label>
                                 <input autocomplete="off" matInput type="number"
-                                    [formControlName]="'antiguedadActividad'">
+                                    [formControlName]="'antiguedadActividad'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.antiguedadActividad.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadActividad.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.antiguedadActividad.errors?.minLength">
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadActividad.errors
+                                            ?.minLength
+                                    ">
                                     No puede ser menor de 0
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.antiguedadActividad.errors?.pattern">
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadActividad.errors
+                                            ?.pattern
+                                    ">
                                     Debe ser numerico
                                 </mat-error>
-
                             </mat-form-field>
                         </div>
 
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
-                                <mat-label>¿El negocio está registrado en cámara de comercio?
+                                <mat-label>¿El negocio está registrado en cámara de
+                                    comercio?
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'"
-                                    [matTooltip]="'¿Se encuentra registrado en camára de comercio?'"
-                                    (selectionChange)="validacionCampos('¿El negocio está registrado en cámara de comercio?','Este campo modifica el motor de decisión y políticas SARC','camaraComercio','STRING')">
+                                <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
+                                    [formControlName]="'camaraComercio'" [matTooltip]="
+                                        '¿Se encuentra registrado en camára de comercio?'
+                                    " (selectionChange)="
+                                        validacionCampos(
+                                            '¿El negocio está registrado en cámara de comercio?',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'camaraComercio',
+                                            'STRING'
+                                        )
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option value="S">Si, el cliente tiene camara de comercio
                                     </mat-option>
-                                    <mat-option value="N">No, el cliente no maneja camara de comercio
+                                    <mat-option value="N">No, el cliente no maneja camara de
+                                        comercio
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.camaraComercio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.camaraComercio.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.camaraComercio.value === 'S'">
-                                <mat-label>¿ Tienes RUT?
-                                </mat-label>
+                            <mat-form-field *ngIf="
+                                    form.controls.camaraComercio.value === 'S'
+                                ">
+                                <mat-label>¿ Tienes RUT? </mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tieneRut'"
                                     [matTooltip]="'¿ Tienes RUT?'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option value="S">Si
-                                    </mat-option>
-                                    <mat-option value="N">No
-                                    </mat-option>
+                                    <mat-option value="S">Si </mat-option>
+                                    <mat-option value="N">No </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.tieneRut.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tieneRut.errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.camaraComercio.value === 'S'">
-                                <mat-label> N° de ID en camára de comercio
+                            <mat-form-field *ngIf="
+                                    form.controls.camaraComercio.value === 'S'
+                                ">
+                                <mat-label>
+                                    N° de ID en camára de comercio
                                 </mat-label>
-                                <input autocomplete="off" matInput type="number" [formControlName]="'nitNegocio'">
+                                <input autocomplete="off" matInput type="number" [formControlName]="'nitNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.nitNegocio.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.minLength">
+                                <mat-error *ngIf="
+                                        form.controls.nitNegocio.errors
+                                            ?.minLength
+                                    ">
                                     Longitud minima y máxima de 10 digítos
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.pattern">
+                                <mat-error *ngIf="
+                                        form.controls.nitNegocio.errors?.pattern
+                                    ">
                                     Solo se pueden ingresar números
                                 </mat-error>
                             </mat-form-field>
-
                         </div>
                         <div class="grid gap-3 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>Nombre comercial microempresa
                                 </mat-label>
-                                <input autocomplete="off" matInput type="text" [formControlName]="'nombreNegocio'">
+                                <input autocomplete="off" matInput type="text" [formControlName]="'nombreNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.nombreNegocio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.nombreNegocio.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de residecia
-                            del
-                            negocio</span>
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de ubicación
+                            del negocio</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                             <mat-form-field>
                                 <mat-label>Departamento del negocio</mat-label>
-                                <mat-select (selectionChange)="seleccionDepartamentoNegocio($event)"
-                                    [value]="'seleccione'" [formControlName]="'codigoDepartamentoNegocio'"
-                                    (selectionChange)="validacionCampos('Departamento del negocio','Este campo modifica el motor de decisión y políticas SARC','codigoDepartamentoNegocio','STRING')">
+                                <mat-select (selectionChange)="
+                                        seleccionDepartamentoNegocio($event)
+                                    " [value]="'seleccione'" [formControlName]="
+                                        'codigoDepartamentoNegocio'
+                                    " (selectionChange)="
+                                        validacionCampos(
+                                            'Departamento del negocio',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'codigoDepartamentoNegocio',
+                                            'STRING'
+                                        )
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let departamento of dataInicial?.deparamentosGenerales"
-                                        [value]="departamento.codigo">{{departamento.nombre}}
+                                    <mat-option *ngFor="
+                                            let departamento of dataInicial?.deparamentosGenerales
+                                        " [value]="departamento.codigo">{{ departamento.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.codigoDepartamentoNegocio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.codigoDepartamentoNegocio
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
                             <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
                                 <mat-form-field>
-                                    <mat-label>Municipio / ciudad</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'"
-                                        (selectionChange)="seleccionCiudadNegocio($event)">
+                                    <mat-label>Municipio / Ciudad del negocio</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="
+                                            'codigoCiudadNegocio'
+                                        " (selectionChange)="
+                                            seleccionCiudadNegocio($event)
+                                        ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
-                                            {{ciudad.nombre}}
+                                            {{ ciudad.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.codigoCiudadNegocio.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.codigoCiudadNegocio
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
@@ -716,16 +1109,21 @@
                             <ng-container *ngIf="barriosNegocio$ | async as barrios">
                                 <mat-form-field>
                                     <mat-label>Barrio del negocio</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoBarrioNegocio'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="
+                                            'codigoBarrioNegocio'
+                                        ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
-                                            {{barrio.nombre}}
+                                            {{ barrio.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.codigoBarrioNegocio.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.codigoBarrioNegocio
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
@@ -734,31 +1132,77 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                             <mat-form-field class="md:col-span-3 sm:grid-cols-2">
                                 <mat-label>Dirección negocio</mat-label>
-                                <input matInput type="text" [formControlName]="'direccionNegocio'" readonly="true">
+                                <input matInput type="text" [formControlName]="'direccionNegocio'" readonly="true" />
                             </mat-form-field>
                             <div class="grid grid-cols-2 gap-3">
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Tipo de via</mat-label>
-                                    <mat-select (selectionChange)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)" [value]="'seleccione'" [formControlName]="'direccionNegocioVia'">
+                                    <mat-select (selectionChange)="
+                                            form.controls.direccionNegocio.setValue(
+                                                form.controls
+                                                    .direccionNegocioVia.value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionNegocioPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNegocioNroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionNegocioDistanciaVia
+                                                        .value + ' ' + form.controls.direccionNegocioCompleto.value
+                                            )
+                                        " [value]="'seleccione'" [formControlName]="
+                                            'direccionNegocioVia'
+                                        ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let tipoVia of dataInicial?.nomenclarturas"
-                                            [value]="tipoVia.nombre">
-                                            {{tipoVia.nombre}}
+                                        <mat-option *ngFor="
+                                                let tipoVia of dataInicial?.nomenclarturas
+                                            " [value]="tipoVia.nombre">
+                                            {{ tipoVia.nombre }}
                                         </mat-option>
                                     </mat-select>
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionNegocioVia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.direccionNegocioVia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Via principal</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionNegocioPrincipal'" (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)">
+                                    <input matInput type="text" [formControlName]="
+                                            'direccionNegocioPrincipal'
+                                        " (keyup)="
+                                            form.controls.direccionNegocio.setValue(
+                                                form.controls
+                                                    .direccionNegocioVia.value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionNegocioPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNegocioNroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionNegocioDistanciaVia
+                                                        .value + ' ' + form.controls.direccionNegocioCompleto.value
+                                            )
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionNegocioPrincipal.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls
+                                                .direccionNegocioPrincipal
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
@@ -766,85 +1210,209 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Número vía</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionNegocioNroVia'" (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)">
+                                    <input matInput type="text" [formControlName]="
+                                            'direccionNegocioNroVia'
+                                        " (keyup)="
+                                            form.controls.direccionNegocio.setValue(
+                                                form.controls
+                                                    .direccionNegocioVia.value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionNegocioPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNegocioNroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionNegocioDistanciaVia
+                                                        .value + ' ' + form.controls.direccionNegocioCompleto.value
+                                            )
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionNegocioNroVia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls.direccionNegocioNroVia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                                 <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Distancia vía</mat-label>
-                                    <input matInput type="text" [formControlName]="'direccionNegocioDistanciaVia'" (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)">
+                                    <input matInput type="text" [formControlName]="
+                                            'direccionNegocioDistanciaVia'
+                                        " (keyup)="
+                                            form.controls.direccionNegocio.setValue(
+                                                form.controls
+                                                    .direccionNegocioVia.value +
+                                                    ' ' +
+                                                    form.controls
+                                                        .direccionNegocioPrincipal
+                                                        .value +
+                                                    ' # ' +
+                                                    form.controls
+                                                        .direccionNegocioNroVia
+                                                        .value +
+                                                    ' - ' +
+                                                    form.controls
+                                                        .direccionNegocioDistanciaVia
+                                                        .value + ' ' + form.controls.direccionNegocioCompleto.value
+                                            )
+                                        " />
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
-                                    <mat-error *ngIf="form.controls.direccionNegocioDistanciaVia.errors?.required">
+                                    <mat-error *ngIf="
+                                            form.controls
+                                                .direccionNegocioDistanciaVia
+                                                .errors?.required
+                                        ">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
                             </div>
                             <mat-form-field>
                                 <mat-label>Complemento</mat-label>
-                                <input matInput type="text" [formControlName]="'direccionNegocioCompleto'">
+                                <input (keyup)="
+                                form.controls.direccionNegocio.setValue(
+                                    form.controls
+                                        .direccionNegocioVia.value +
+                                        ' ' +
+                                        form.controls
+                                            .direccionNegocioPrincipal
+                                            .value +
+                                        ' # ' +
+                                        form.controls
+                                            .direccionNegocioNroVia
+                                            .value +
+                                        ' - ' +
+                                        form.controls
+                                            .direccionNegocioDistanciaVia
+                                            .value + ' ' + form.controls.direccionNegocioCompleto.value
+                                )
+                            " matInput type="text" [formControlName]="
+                                        'direccionNegocioCompleto'
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
-                                <mat-label>¿ Cuánto tiempo en (meses)tiene tu negocio?</mat-label>
-                                <input matInput type="number" [formControlName]="'antiguedadNegocio'"
-                                    (change)="validacion('FEN')"
-                                    (change)="validacionCampos('¿Cuánto tiempo en (meses)tiene tu negocio?','Este campo modifica el motor de decisión y políticas SARC','antiguedadNegocio', 'INTEGER')">
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.required">
+                                <mat-label>Vereda / Corregimiento</mat-label>
+                            <mat-select [value]="'seleccione'" [formControlName]="'tipoVeredaNegocio'">
+                                <mat-option disabled [value]="'seleccione'">Seleccione
+                                </mat-option>
+                                <mat-option *ngFor="
+                                        let item of dataInicial?.tiposVereda
+                                    " [value]="item.codigo">{{ item.nombre }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="
+                                        form.controls.tipoVeredaNegocio.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.pattern">
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Descripción</mat-label>
+                                <input matInput type="text" [formControlName]="'descripcionVeredaNegocio'" />
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.descripcionVeredaNegocio.errors
+                                            ?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
+                            <mat-form-field>
+                                <mat-label>¿ Cuánto tiempo en (meses)tiene tu
+                                    negocio?</mat-label>
+                                <input matInput type="number" [formControlName]="'antiguedadNegocio'"
+                                    (change)="validacion('FEN')" (change)="
+                                        validacionCampos(
+                                            '¿Cuánto tiempo en (meses)tiene tu negocio?',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'antiguedadNegocio',
+                                            'INTEGER'
+                                        )
+                                    " />
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadNegocio.errors
+                                            ?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadNegocio.errors
+                                            ?.pattern
+                                    ">
                                     Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / celular del negocio:</mat-label>
                                 <input matInput type="text" mask="(000) 000 00 00"
-                                    [formControlName]="'telefonoNegocio'">
+                                    [formControlName]="'telefonoNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.telefonoNegocio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.telefonoNegocio.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.telefonoNegocio.errors?.minLength">
+                                <mat-error *ngIf="
+                                        form.controls.telefonoNegocio.errors
+                                            ?.minLength
+                                    ">
                                     Debe tener minimo 7 digitos
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.telefonoNegocio.errors?.maxLength">
+                                <mat-error *ngIf="
+                                        form.controls.telefonoNegocio.errors
+                                            ?.maxLength
+                                    ">
                                     Debe tener maximo 10 digitos
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.telefonoNegocio.errors?.parrent">
+                                <mat-error *ngIf="
+                                        form.controls.telefonoNegocio.errors
+                                            ?.parrent
+                                    ">
                                     Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
 
                             <mat-form-field>
-                                <mat-label>¿ En qué tipo de local queda tu negocio?</mat-label>
+                                <mat-label>¿ En qué tipo de local queda tu
+                                    negocio?</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoLocal'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposLocales"
-                                        [value]="item.codigo">{{item.valor}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tiposLocales
+                                        " [value]="item.codigo">{{ item.valor }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoLocal.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoLocal.errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Ubicación del negocio</mat-label>
-                                <input [readonly]="true" matInput type="text"
-                                    [formControlName]="'ubicacionNegocioCalculado'">
+                                <input [readonly]="true" matInput type="text" [formControlName]="
+                                        'ubicacionNegocioCalculado'
+                                    " />
                             </mat-form-field>
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información básica del
@@ -852,21 +1420,32 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label> Tipo de local </mat-label>
-                                <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'">
+                                <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'" />
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Antigüedad en el local actual</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'antiguedadLocal'"
-                                    (selectionChange)="validacionCampos('Antigüedad en el local actual','Este campo modifica el motor de decisión y políticas SARC','antiguedadLocal','STRING')">
+                                    (selectionChange)="
+                                        validacionCampos(
+                                            'Antigüedad en el local actual',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'antiguedadLocal',
+                                            'STRING'
+                                        )
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.antiguedadLocal"
-                                        [value]="item.codigo">{{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.antiguedadLocal
+                                        " [value]="item.codigo">{{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.antiguedadLocal.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadLocal.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -875,26 +1454,38 @@
                             class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                             <mat-form-field>
                                 <mat-label>Nombre del arrendador</mat-label>
-                                <input matInput type="text" [formControlName]="'nombreArrendador'">
+                                <input matInput type="text" [formControlName]="'nombreArrendador'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.nombreArrendador.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.nombreArrendador.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono/ celular del arrendador</mat-label>
                                 <input matInput mask="(000) 000 00 00" type="text"
-                                    [formControlName]="'celularArrendador'">
+                                    [formControlName]="'celularArrendador'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.celularArrendador.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.celularArrendador.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.celularArrendador.errors?.maxLength">
+                                <mat-error *ngIf="
+                                        form.controls.celularArrendador.errors
+                                            ?.maxLength
+                                    ">
                                     Maximo 10 digitos.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.celularArrendador.errors?.minLength">
+                                <mat-error *ngIf="
+                                        form.controls.celularArrendador.errors
+                                            ?.minLength
+                                    ">
                                     Minimo 10 digitos.
                                 </mat-error>
                             </mat-form-field>
@@ -903,16 +1494,27 @@
                             <mat-form-field>
                                 <mat-label>Tipo de ubicación del negocio</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'"
-                                    (selectionChange)="validacionCampos('Tipo de ubicación del negocio','Este campo modifica el motor de decisión y políticas SARC','tipoUbicacionNegocio','STRING')">
+                                    (selectionChange)="
+                                        validacionCampos(
+                                            'Tipo de ubicación del negocio',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'tipoUbicacionNegocio',
+                                            'STRING'
+                                        )
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.ubicacionesLocal"
-                                        [value]="item.codigo">{{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.ubicacionesLocal
+                                        " [value]="item.codigo">{{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoUbicacionNegocio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoUbicacionNegocio
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -921,22 +1523,30 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'numeroEmpleados'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.numeroEmpleados"
-                                        [value]="item.codigo">{{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.numeroEmpleados
+                                        " [value]="item.codigo">{{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.numeroEmpleados.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.numeroEmpleados.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label> ¿Quién atiende el negocio?</mat-label>
-                                <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'">
+                                <mat-label>
+                                    ¿Quién atiende el negocio?</mat-label>
+                                <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.nombreAtiendeNegocio.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.nombreAtiendeNegocio
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -945,72 +1555,134 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'tieneOtrosPuntos'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option value="S">Si
-                                    </mat-option>
-                                    <mat-option value="N">No
-                                    </mat-option>
+                                    <mat-option value="S">Si </mat-option>
+                                    <mat-option value="N">No </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.tieneOtrosPuntos.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tieneOtrosPuntos.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <span
-                            *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'"
-                            class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
+                        <span *ngIf="
+                                form.controls.estadoCivil.value === 'CA' ||
+                                form.controls.estadoCivil.value === 'UL'
+                            " class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
                             conyuge</span>
-                        <div *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'"
-                            class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div *ngIf="
+                                form.controls.estadoCivil.value === 'CA' ||
+                                form.controls.estadoCivil.value === 'UL'
+                            " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Primer nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'primerNombreConyuge'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'primerNombreConyuge'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.primerNombreConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.primerNombreConyuge.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoNombreConyuge'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'segundoNombreConyuge'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Primer apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'primerApellidoConyuge'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'primerApellidoConyuge'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.primerApellidoConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.primerApellidoConyuge
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoApellidoConyuge'"
-                                    (keyup)="form.controls.nombreCompleto.setValue(form.controls.primerNombre.value+' '+form.controls.segundoNombre.value+' '+form.controls.primerApellido.value+' '+form.controls.segundoApellido.value)">
+                                <input matInput type="text" [formControlName]="'segundoApellidoConyuge'" (keyup)="
+                                        form.controls.nombreCompleto.setValue(
+                                            form.controls.primerNombre.value +
+                                                ' ' +
+                                                form.controls.segundoNombre
+                                                    .value +
+                                                ' ' +
+                                                form.controls.primerApellido
+                                                    .value +
+                                                ' ' +
+                                                form.controls.segundoApellido
+                                                    .value
+                                        )
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-
                             </mat-form-field>
                         </div>
-                        <div *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'"
-                            class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
-
+                        <div *ngIf="
+                                form.controls.estadoCivil.value === 'CA' ||
+                                form.controls.estadoCivil.value === 'UL'
+                            " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Tipo de documento</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumentoConyuge'">
-                                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos"
-                                        [value]="item.codigo">{{item.valor}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tiposDocumentos
+                                        " [value]="item.codigo">{{ item.valor }}
                                     </mat-option>
                                 </mat-select>
 
-                                <mat-error *ngIf="form.controls.tipoDocumentoConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoDocumentoConyuge
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1018,84 +1690,118 @@
                             <mat-form-field>
                                 <mat-label>No. de identificación</mat-label>
                                 <input matInput type="text" mask="separator.0" thousandSeparator="."
-                                    [formControlName]="'identificacionConyuge'">
+                                    [formControlName]="'identificacionConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / Celular </mat-label>
-                                <input mask="(000) 000 00 00" matInput type="text" [formControlName]="'celularConyuge'">
+                                <input mask="(000) 000 00 00" matInput type="text"
+                                    [formControlName]="'celularConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.celularConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.celularConyuge.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Email</mat-label>
-                                <input matInput type="text" [formControlName]="'emailConyuge'">
+                                <input matInput type="text" [formControlName]="'emailConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.emailConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.emailConyuge.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div *ngIf="form.controls.estadoCivil.value === 'CA' || form.controls.estadoCivil.value === 'UL'"
-                            class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
-
+                        <div *ngIf="
+                                form.controls.estadoCivil.value === 'CA' ||
+                                form.controls.estadoCivil.value === 'UL'
+                            " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Tipo de empleo</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoEmpleoConyuge'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.ocupaciones"
-                                        [value]="item.codigo">{{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.ocupaciones
+                                        " [value]="item.codigo">{{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                                <mat-error *ngIf="form.controls.tipoEmpleoConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoEmpleoConyuge.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="form.controls.tipoEmpleoConyuge.value === 'EPLDO'">
+                            <mat-form-field *ngIf="
+                                    form.controls.tipoEmpleoConyuge.value ===
+                                    'EPLDO'
+                                ">
                                 <mat-label>Nombre de la empresa</mat-label>
-                                <input matInput type="text" [formControlName]="'nombreEmpresaConyuge'">
+                                <input matInput type="text" [formControlName]="'nombreEmpresaConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.nombreEmpresaConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.nombreEmpresaConyuge
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.tipoEmpleoConyuge.value === 'EPLDO'">
+                            <mat-form-field *ngIf="
+                                    form.controls.tipoEmpleoConyuge.value ===
+                                    'EPLDO'
+                                ">
                                 <mat-label>Cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'cargoConyuge'">
+                                <input matInput type="text" [formControlName]="'cargoConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.cargoConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.cargoConyuge.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.tipoEmpleoConyuge.value === 'EPLDO'">
+                            <mat-form-field *ngIf="
+                                    form.controls.tipoEmpleoConyuge.value ===
+                                    'EPLDO'
+                                ">
                                 <mat-label>Salario</mat-label>
-                                <input matInput type="text" [formControlName]="'salarioConyuge'" mask="separator.0">
+                                <input matInput type="text" [formControlName]="'salarioConyuge'" mask="separator.0" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.salarioConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.salarioConyuge.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-
                         </div>
-                        <div *ngIf="form.controls.tipoEmpleoConyuge.value === 'EPLDO'"
-                            class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div *ngIf="
+                                form.controls.tipoEmpleoConyuge.value ===
+                                'EPLDO'
+                            " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Télefono de la empresa</mat-label>
-                                <input matInput type="text" [formControlName]="'telefonoEmpresaConyuge'">
+                                <input matInput type="text" [formControlName]="'telefonoEmpresaConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.telefonoEmpresaConyuge.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.telefonoEmpresaConyuge
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1108,159 +1814,204 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'poseeCuentaBancaria'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.poseeCuentaBancaria.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.poseeCuentaBancaria.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'">
+                            <mat-form-field *ngIf="
+                                    form.controls.poseeCuentaBancaria.value ===
+                                    'S'
+                                ">
                                 <mat-label>Entidad bancaria</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'entidadBancaria'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="let item of dataInicial?.bancos" [value]="item.codigo">
-                                        {{item.nombre}}
+                                        {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.entidadBancaria.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.entidadBancaria.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'">
+                            <mat-form-field *ngIf="
+                                    form.controls.poseeCuentaBancaria.value ===
+                                    'S'
+                                ">
                                 <mat-label>Tipo de cuenta</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoCuentaBancaria'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposCuentas" [value]="item.codigo">
-                                        {{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tiposCuentas
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoCuentaBancaria.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoCuentaBancaria.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.poseeCuentaBancaria.value === 'S'">
+                            <mat-form-field *ngIf="
+                                    form.controls.poseeCuentaBancaria.value ===
+                                    'S'
+                                ">
                                 <mat-label>Número de cuenta</mat-label>
-                                <input matInput type="text" [formControlName]="'numeroCuentaBancaria'">
+                                <input matInput type="text" [formControlName]="'numeroCuentaBancaria'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.numeroCuentaBancaria.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.numeroCuentaBancaria
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div *ngIf="form.controls.poseeCuentaBancaria.value === 'N'" class="grid gap-3 grid-cols-1">
-                            <span
-                                [ngClass]="form.controls.autorizacionBanco.errors?.required ?'bg-red-100 text-red-700 ':'bg-blue-100 '"
-                                class="px-3 mx-4 mb-8">
-                                <mat-checkbox matInput [formControlName]="'autorizacionBanco'"> </mat-checkbox>
-                                En caso de no poseer cuenta bancaria autorizo a FINTRA S.A.S para que el monto aprobado
-                                sea
-                                desembolsado de la forma que la compañía asigne en el momento de la transacción.
+                        <div *ngIf="
+                                form.controls.poseeCuentaBancaria.value === 'N'
+                            " class="grid gap-3 grid-cols-1">
+                            <span [ngClass]="
+                                    form.controls.autorizacionBanco.errors
+                                        ?.required
+                                        ? 'bg-red-100 text-red-700 '
+                                        : 'bg-blue-100 '
+                                " class="px-3 mx-4 mb-8">
+                                <mat-checkbox matInput [formControlName]="'autorizacionBanco'">
+                                </mat-checkbox>
+                                En caso de no poseer cuenta bancaria autorizo a
+                                FINTRA S.A.S para que el monto aprobado sea
+                                desembolsado de la forma que la compañía asigne
+                                en el momento de la transacción.
                             </span>
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de
                             tercero</span>
-                        <div class="grid gap-3 grid-cols-1 ">
-
+                        <div class="grid gap-3 grid-cols-1">
                             <mat-form-field>
-                                <mat-label>¿El titular requiere de un tercero para la solicitud de crédito?
+                                <mat-label>¿El titular requiere de un tercero para la
+                                    solicitud de crédito?
                                 </mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoDeudor'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.tiposTercerosSolicitud"
-                                        [value]="item.codigo">
-                                        {{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tiposTercerosSolicitud
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoDeudor.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoDeudor.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información legal -
-                            cliente
-                            PEP</span>
+                            cliente PEP</span>
                         <div class="grid gap-3 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Ha ocupado cargos públicos?</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'legalCargoPublico'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.legalCargoPublico.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.legalCargoPublico.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>¿Es familiar de persona expuesta política y públicamente?</mat-label>
+                                <mat-label>¿Es familiar de persona expuesta política y
+                                    públicamente?</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'legalPersonalExpuesta'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.legalPersonalExpuesta.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.legalPersonalExpuesta
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>¿ Tiene a su cargo la dirección de recursos en algún partido político
-                                    ?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'legalCargoPartidoPolitico'">
+                                <mat-label>¿ Tiene a su cargo la dirección de recursos
+                                    en algún partido político ?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'legalCargoPartidoPolitico'
+                                    ">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.legalCargoPartidoPolitico.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.legalCargoPartidoPolitico
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <span *ngIf="form.controls.legalCargoPublico.value === 'S'"
-                            class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Datos cargo público</span>
+                        <span *ngIf="
+                                form.controls.legalCargoPublico.value === 'S'
+                            " class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Datos cargo
+                            público</span>
 
-                        <div *ngIf="form.controls.legalCargoPublico.value === 'S'"
-                            class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div *ngIf="
+                                form.controls.legalCargoPublico.value === 'S'
+                            " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'cargoPublico'">
-                                <mat-error *ngIf="form.controls.cargoPublico.errors?.required">
+                                <input matInput type="text" [formControlName]="'cargoPublico'" />
+                                <mat-error *ngIf="
+                                        form.controls.cargoPublico.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Entidad</mat-label>
-                                <input matInput type="text" [formControlName]="'entidadPublico'">
-                                <mat-error *ngIf="form.controls.entidadPublico.errors?.required">
+                                <input matInput type="text" [formControlName]="'entidadPublico'" />
+                                <mat-error *ngIf="
+                                        form.controls.entidadPublico.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1269,113 +2020,158 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualPublico'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.vinculadoActualPublico.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.vinculadoActualPublico
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.vinculadoActualPublico.value === 'N'">
+                            <mat-form-field *ngIf="
+                                    form.controls.vinculadoActualPublico
+                                        .value === 'N'
+                                ">
                                 <mat-label>Fecha de desvinculación</mat-label>
-                                <input matInput [matDatepicker]="fechaDesvinculacionPublico"
-                                    [formControlName]="'fechaDesvinculacionPublico'" [readonly]="true">
+                                <input matInput [matDatepicker]="fechaDesvinculacionPublico" [formControlName]="
+                                        'fechaDesvinculacionPublico'
+                                    " [readonly]="true" />
                                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaDesvinculacionPublico readonly></mat-datepicker>
-                                <mat-error *ngIf="form.controls.fechaDesvinculacionPublico.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.fechaDesvinculacionPublico
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <span *ngIf="form.controls.legalPersonalExpuesta.value === 'S'"
-                            class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Datos cargo
+                        <span *ngIf="
+                                form.controls.legalPersonalExpuesta.value ===
+                                'S'
+                            " class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Datos cargo
                             público-Familiar</span>
-                        <div *ngIf="form.controls.legalPersonalExpuesta.value === 'S'"
-                            class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div *ngIf="
+                                form.controls.legalPersonalExpuesta.value ===
+                                'S'
+                            " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Vinculación / Relación</mat-label>
-                                <input matInput type="text" [formControlName]="'vinculacionExpuesta'">
-                                <mat-error *ngIf="form.controls.vinculacionExpuesta.errors?.required">
+                                <input matInput type="text" [formControlName]="'vinculacionExpuesta'" />
+                                <mat-error *ngIf="
+                                        form.controls.vinculacionExpuesta.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Nombre y apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'nombreExpuesta'">
-                                <mat-error *ngIf="form.controls.nombreExpuesta.errors?.required">
+                                <input matInput type="text" [formControlName]="'nombreExpuesta'" />
+                                <mat-error *ngIf="
+                                        form.controls.nombreExpuesta.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Tipo de ID</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoIdentificacionExpuesta'">
-                                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos"
-                                        [value]="item.codigo">{{item.valor}}
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'tipoIdentificacionExpuesta'
+                                    ">
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tiposDocumentos
+                                        " [value]="item.codigo">{{ item.valor }}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.tipoIdentificacionExpuesta.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoIdentificacionExpuesta
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>
-                                    N° de identificación</mat-label>
+                                <mat-label> N° de identificación</mat-label>
                                 <input matInput type="text" mask="separator.0" thousandSeparator="."
-                                    [formControlName]="'identificacionExpuesta'">
-                                <mat-error *ngIf="form.controls.identificacionExpuesta.errors?.required">
+                                    [formControlName]="'identificacionExpuesta'" />
+                                <mat-error *ngIf="
+                                        form.controls.identificacionExpuesta
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>
-                                    Nacionalidad</mat-label>
-                                <input matInput type="text" [formControlName]="'nacionalidadExpuesta'">
-                                <mat-error *ngIf="form.controls.nacionalidadExpuesta.errors?.required">
+                                <mat-label> Nacionalidad</mat-label>
+                                <input matInput type="text" [formControlName]="'nacionalidadExpuesta'" />
+                                <mat-error *ngIf="
+                                        form.controls.nacionalidadExpuesta
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>
-                                    Entidad</mat-label>
-                                <input matInput type="text" [formControlName]="'entidadExpuesta'">
-                                <mat-error *ngIf="form.controls.entidadExpuesta.errors?.required">
+                                <mat-label> Entidad</mat-label>
+                                <input matInput type="text" [formControlName]="'entidadExpuesta'" />
+                                <mat-error *ngIf="
+                                        form.controls.entidadExpuesta.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>
-                                    Cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'cargoExpuesta'">
-                                <mat-error *ngIf="form.controls.cargoExpuesta.errors?.required">
+                                <mat-label> Cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'cargoExpuesta'" />
+                                <mat-error *ngIf="
+                                        form.controls.cargoExpuesta.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>¿Estás vinculado actualmente?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualExpuesta'">
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'vinculadoActualExpuesta'
+                                    ">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.vinculadoActualExpuesta.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.vinculadoActualExpuesta
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field *ngIf="form.controls.vinculadoActualExpuesta.value === 'N'">
+                            <mat-form-field *ngIf="
+                                    form.controls.vinculadoActualExpuesta
+                                        .value === 'N'
+                                ">
                                 <mat-label>Fecha de desvinculación</mat-label>
-                                <input matInput [matDatepicker]="fechaDesvinculacionExpuesta"
-                                    [formControlName]="'fechaDesvinculacionExpuesta'">
+                                <input matInput [matDatepicker]="
+                                        fechaDesvinculacionExpuesta
+                                    " [formControlName]="
+                                        'fechaDesvinculacionExpuesta'
+                                    " />
                                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionExpuesta" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaDesvinculacionExpuesta readonly></mat-datepicker>
-                                <mat-error *ngIf="form.controls.fechaDesvinculacionExpuesta.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls
+                                            .fechaDesvinculacionExpuesta.errors
+                                            ?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1384,126 +2180,170 @@
                             Sagrilaft</span>
                         <div class="grid grid-cols-1">
                             <mat-form-field>
-                                <mat-label>¿Realiza operaciones con moneda extranjera? </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'legalOperacionExtranjera'">
-                                    <mat-option disabled [value]="''">Seleccione
-                                    </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="form.controls.legalOperacionExtranjera.errors?.required">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.legalOperacionExtranjera.value == 'S'">
-                                <mat-label>Que tipo de operación</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionExtranjera'">
-                                    <mat-option *ngFor="let item of dataInicial?.tipoOperacionExtranjera"
-                                        [value]="item.codigo">
-                                        {{item.nombre}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoOperacionExtranjera.errors?.required">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-label>¿Realiza operaciones con criptomoneda?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'legalOperacionCriptomoneda'">
-                                    <mat-option disabled [value]="''">Seleccione
-                                    </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="form.controls.legalOperacionCriptomoneda.errors?.required">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.legalOperacionCriptomoneda.value == 'S'">
-                                <mat-label>Que tipo de operacíón realiza</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCriptomoneda'">
-                                    <mat-option *ngFor="let item of dataInicial?.tipoOperacionCripto"
-                                        [value]="item.codigo">
-                                        {{item.nombre}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="form.controls.tipoOperacionCriptomoneda.errors?.required">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-label>¿Desarrolla actividades y profesiones no financieras designadas (APNFD)?
+                                <mat-label>¿Realiza operaciones con moneda extranjera?
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'legalDesarrollaActividadApnfd'">
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'legalOperacionExtranjera'
+                                    ">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.legalOperacionExtranjera
+                                            .errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="
+                                    form.controls.legalOperacionExtranjera
+                                        .value == 'S'
+                                ">
+                                <mat-label>Que tipo de operación</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'tipoOperacionExtranjera'
+                                    ">
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tipoOperacionExtranjera
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.legalDesarrollaActividadApnfd.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.tipoOperacionExtranjera
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>¿Es responsable de declarar renta y complementarios?
+                                <mat-label>¿Realiza operaciones con
+                                    criptomoneda?</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'legalOperacionCriptomoneda'
+                                    ">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.legalOperacionCriptomoneda
+                                            .errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field *ngIf="
+                                    form.controls.legalOperacionCriptomoneda
+                                        .value == 'S'
+                                ">
+                                <mat-label>Que tipo de operacíón realiza</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'tipoOperacionCriptomoneda'
+                                    ">
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.tipoOperacionCripto
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.tipoOperacionCriptomoneda
+                                            .errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>¿Desarrolla actividades y profesiones no
+                                    financieras designadas (APNFD)?
+                                </mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'legalDesarrollaActividadApnfd'
+                                    ">
+                                    <mat-option disabled [value]="''">Seleccione
+                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls
+                                            .legalDesarrollaActividadApnfd
+                                            .errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>¿Es responsable de declarar renta y
+                                    complementarios?
                                 </mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'declaraRenta'">
-                                    <mat-option disabled [value]="''">Seleccione    
+                                    <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
-                                    <mat-option [value]="'S'">Si
-                                    </mat-option>
-                                    <mat-option [value]="'N'">No
-                                    </mat-option>
+                                    <mat-option [value]="'S'">Si </mat-option>
+                                    <mat-option [value]="'N'">No </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                         </div>
 
-
-
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información legal
                             -Declaraciones y
                             Autorizaciones</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
-                                <mat-label>El cliente declara que sus ingresos provienen de</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'declaroIngresoDeclaracionAuto'">
+                                <mat-label>El cliente declara que sus ingresos
+                                    provienen de</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="
+                                        'declaroIngresoDeclaracionAuto'
+                                    ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option *ngFor="let item of dataInicial?.declaracionIngresos"
-                                        [value]="item.codigo">
-                                        {{item.nombre}}
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.declaracionIngresos
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.declaroIngresoDeclaracionAuto.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls
+                                            .declaroIngresoDeclaracionAuto
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.declaroIngresoDeclaracionAuto.value === 'OT'">
+                            <mat-form-field *ngIf="
+                                    form.controls.declaroIngresoDeclaracionAuto
+                                        .value === 'OT'
+                                ">
                                 <mat-label>Otro</mat-label>
-                                <input matInput type="text" [formControlName]="'otroIngresoDeclaracionAuto'">
+                                <input matInput type="text" [formControlName]="
+                                        'otroIngresoDeclaracionAuto'
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
-                                <mat-error *ngIf="form.controls.otroIngresoDeclaracionAuto.errors?.required">
+                                <mat-error *ngIf="
+                                        form.controls.otroIngresoDeclaracionAuto
+                                            .errors?.required
+                                    ">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1545,12 +2385,21 @@
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>
-                <mat-tab>
-                    <ng-template matTabLabel>Capacidad de pago y ofertas</ng-template>
-                    <app-grid-oferta-libranza></app-grid-oferta-libranza>
-                </mat-tab> -->
+                -->
+
+                <ng-container>
+                    <mat-tab>
+                        <ng-template matTabLabel>Capacidad de pago y ofertas</ng-template>
+                        <app-grid-oferta-micro></app-grid-oferta-micro>
+                    </mat-tab>
+                </ng-container>
+                <ng-container>
+                    <mat-tab>
+                        <ng-template matTabLabel>Cliente</ng-template>
+                        <grid-historico-cliente></grid-historico-cliente>
+                    </mat-tab>
+                </ng-container>
             </mat-tab-group>
         </mat-expansion-panel>
-
     </mat-accordion>
 </form>

@@ -1,7 +1,7 @@
 
 <div class="mb-30 relative">
     <ng-container *ngFor="let item of datosGeneral;  index as i;">
-        <div class="bg-card overflow-hidden p-6 pb-3 relative rounded-2xl shadow">
+        <div class="bg-card overflow-hidden p-6 pb-3 relative rounded-2xl shadow mb-3">
             <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                 <mat-icon class="icon-size-24 opacity-25 text-blue-600" [svgIcon]="'attach_money'">
                 </mat-icon>
@@ -67,7 +67,7 @@
         </div>
     </ng-container>
 
-    <div *ngIf="datosGeneral" class="flex justify-center">
+    <div *ngIf="!datosGeneral" class="flex justify-center">
         <img class="w-30" src="assets/images/animaciones/nodata.gif">
     </div>
 </div>
