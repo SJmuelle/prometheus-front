@@ -508,7 +508,7 @@ export class CreacionPQRSComponent implements OnInit {
 
                                     let dataMotivo = {
                                         id: response.data.pqrs,
-                                        motivo: this.datos.motivo != undefined ? Number(this.datos.motivo) : "N/A",
+                                        motivo: this.datos.motivo != undefined ? Number(this.datos.motivo) : 0,
                                         submotivo: this.datos.submotivo != undefined ? this.datos.submotivo : "N/A"
                                     }
                                     
