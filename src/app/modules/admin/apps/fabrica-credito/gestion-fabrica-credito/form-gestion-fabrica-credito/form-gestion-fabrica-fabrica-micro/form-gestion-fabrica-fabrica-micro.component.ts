@@ -75,7 +75,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log(resp.data, "data fabrica fabrica");
             }
         })
     }
@@ -159,12 +158,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             .subscribe(({ data }) => {
                 Swal.close();
                 this.dataGeneralIncial = data;
-                console.log(data);
                 this.form.patchValue(data);
                 this.formatearDataInicial();
                 
-                
-                console.log('Form valid', this.form.valid);
 
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -205,6 +201,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 });
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
+
+                console.log(data, "Fabrica credito data inicial");
+                
             });
     }
 
@@ -312,7 +311,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if(tipoActividad && nivelEstudio && camaraComercio){
             this._formularioCreditoService.cargueActividadEconomica(nivelEstudio,tipoActividad,camaraComercio).subscribe(res => {
                 this.actividadEconomica = res.data
-                console.log(this.actividadEconomica, "Actividad economica");
             });
         }
 
@@ -363,10 +361,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(this.form.controls[variable].value);
 
             } else {
-                console.log('denegado')
                 if(type === "INTEGER"){
 
                     this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
@@ -879,7 +875,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // declaro ingresos Otros declaroIngresoDeclaracionAuto
         this.form.get('declaroIngresoDeclaracionAuto').valueChanges.subscribe((e: string) => {
-            console.log(e, "declaroIngresoDeclaracionAuto");
 
             if (e === 'OT') {
                 this.form.get('otroIngresoDeclaracionAuto')?.setValidators([Validators.required])
@@ -893,7 +888,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // conyuge form si aplica Casado o union libre
         this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
-            console.log(e, "declaroIngresoDeclaracionAuto");
 
             if (e === 'CA' || e === 'UL') {
                 this.form.get('primerNombreConyuge')?.setValidators([Validators.required])
@@ -931,7 +925,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         
 
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
-            console.log(e);
             // Local comercial propio
             if(e === '1'){
                 this.form.controls.tipoLocalCalulado.setValue('Propio.')
