@@ -21,14 +21,14 @@
                     </mat-error>
                 </mat-form-field>
             </ng-container>
-            <ng-container *ngIf="tipoDocumentos$ | async as tipoDocumentos">
-                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
+
+                <mat-form-field *ngIf="dataInicial" class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de documento</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
-                        <mat-option *ngFor="let tipoDocumento of tipoDocumentos.data"
-                            [value]="tipoDocumento.codigoOpcion">{{tipoDocumento.descripcionOpcion}}
+                        <mat-option *ngFor="let tipoDocumento of dataInicial.tiposDocumentos"
+                            [value]="tipoDocumento.codigo">{{tipoDocumento.valor}}
                         </mat-option>
                     </mat-select>
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -36,7 +36,6 @@
                         Este campo es requerido.
                     </mat-error>
                 </mat-form-field>
-            </ng-container>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>N° de identificación</mat-label>
