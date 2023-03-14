@@ -168,7 +168,7 @@ export class GridAgendasVisitasComponent implements OnInit {
   cambiarHora(date) {
     if (date) {
       moment.locale('es');
-      return moment(date).format('H:MM a')
+      return moment(date).format('hh:mm A')
     }
     return 'No registra';
   }
