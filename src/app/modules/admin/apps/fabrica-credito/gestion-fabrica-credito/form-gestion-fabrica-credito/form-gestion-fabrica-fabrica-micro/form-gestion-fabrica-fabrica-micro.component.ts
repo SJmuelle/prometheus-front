@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
@@ -40,6 +40,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
     public actividadEconomica: any;
+
     fechaActual: any = moment().locale("co");
 
     constructor(
@@ -50,6 +51,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         public utility: UtilityService,
         public _permisosService: PermisosService,
         private _formularioCreditoService: FormularioCreditoService,
+        private el: ElementRef
     ) {
         this.createFormulario();
 
@@ -82,11 +84,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public validationPost(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
-            console.log(this.form, this.form.valid);
             Object.keys(this.form.controls).forEach(key => {
                 // Get errors of every form control
-                console.log(this.form.get(key).errors, key);
+                console.log(this.form.get(key).errors, key);               
             });
+            this.scrollToFirstInvalidControl();
         } else {
             this.onPostDatos();
         }
@@ -159,7 +161,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 console.log(data);
                 this.form.patchValue(data);
-                this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value  === 'S')
+                this.formatearDataInicial();
+                
+                
                 console.log('Form valid', this.form.valid);
 
                 if (data.codigoDepartamento) {
@@ -202,6 +206,18 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
             });
+    }
+
+    public formatearDataInicial(): void{
+        this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value  === 'S');
+
+        //fechas
+        
+        this.form.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.form.controls.fechaDesvinculacionExpuesta.setValue('');
+        this.form.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.form.controls.fechaDesvinculacionPublico.setValue('');
+        this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
+        this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
+
     }
 
     /**
@@ -363,6 +379,23 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     }
 
     /**
+     * @description hace scroll al primerer input invalido, puede ser un input o select
+     */
+    private scrollToFirstInvalidControl() {
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+        
+        if(!firstInvalidControl){
+             firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+             if(!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+             }
+        }
+        console.log("firstInvalidControl", firstInvalidControl);
+        
+        firstInvalidControl?.focus(); //without smooth behavior
+      }
+
+    /**
      * @description :creando el formulario
      */
     private createFormulario(): void {
@@ -375,6 +408,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             tipoDocumento: [''],
             identificacion: [''],
             nombreCompleto: [''],
+            descripcionTipoDocumento: [''],
             celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             descripcionTipoCredito: [''],
             primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],

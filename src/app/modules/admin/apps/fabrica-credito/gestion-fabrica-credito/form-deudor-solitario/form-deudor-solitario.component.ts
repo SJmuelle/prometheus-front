@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
@@ -41,6 +41,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
         private route: ActivatedRoute,
         private fabricaCreditoService: FabricaCreditoService,
         private _formularioCreditoService: FormularioCreditoService,
+        private el: ElementRef,
     ) {
         if (!this.numeroSolicitud) {
             return;
@@ -67,7 +68,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
     private createFormulario(): void {
         this.formDeudorSolidario = this.fb.group({
             creditoTitularLineas: [''],
-            fechaIngresoFabrica: ['0099-01-01'],
+            fechaIngresoFabrica: [''],
             emision: [''],
             tipoDocumento: ['', Validators.required],
             identificacion: ['', Validators.required],
@@ -84,11 +85,11 @@ export class FormDeudorSolitarioComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             genero: [''],
             nacionalidad: [''],
-            fechaNacimiento: ['0099-01-01'],
+            fechaNacimiento: [''],
             nivelEstudio: [''],
             numeroHijos: [''],
             personasACargo: [''],
-            fechaExpedicion: ['0099-01-01'],
+            fechaExpedicion: [''],
             codigoDepartamentoExpedicion: [''],
             codigoCiudadExpedicion: [''],
             estrato: [''],
@@ -155,7 +156,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
             legalCargoPublico: ['', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
-            fechaDesvinculacionPublico: ['0099-01-01'],
+            fechaDesvinculacionPublico: [''],
             legalPersonalExpuesta: ['', Validators.required],
             tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
@@ -168,7 +169,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
             entidadExpuesta: [''],
             cargoExpuesta: [''],
             vinculadoActualExpuesta: [''],
-            fechaDesvinculacionExpuesta: ['0099-01-01'],
+            fechaDesvinculacionExpuesta: [''],
             legalDesarrollaActividadApnfd: ['', Validators.required],
             legalCargoPartidoPolitico: ['', Validators.required],
             legalOperacionCriptomoneda: ['', Validators.required],
@@ -194,7 +195,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
             cargoPublico: [''],
             entidad: [''],
             vinculadoActualmente: [''],
-            fechaDesvinculacion: ['0099-01-01'],
+            fechaDesvinculacion: [''],
             parentesco: ['', Validators.required],
             declaraRenta: [''],
 
@@ -213,6 +214,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
             .subscribe(({ data }) => {
                 Swal.close();
                 this.formDeudorSolidario.patchValue(data);
+                this.formatearDataInicial();
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
                 }
@@ -311,6 +313,7 @@ export class FormDeudorSolitarioComponent implements OnInit {
                 // Get errors of every form control
                 console.log(this.formDeudorSolidario.get(key).errors, key);
             });
+            this.scrollToFirstInvalidControl();
         } else {
             this.onPostDatos();
         }
@@ -324,9 +327,12 @@ export class FormDeudorSolitarioComponent implements OnInit {
             tipo: 'S',
             recurso: "tab-actualizar-solidario-microcredito",
             numeroSolicitud: Number(this.numeroSolicitud),
-            ...this.formDeudorSolidario.value
+            ...this.formDeudorSolidario.value,
+            fechaDesvinculacionExpuesta: this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.value === '' ? '0099-01-01' : this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.value,
+            fechaDesvinculacionPublico: this.formDeudorSolidario.controls.fechaDesvinculacionPublico.value === '' ? '0099-01-01' : this.formDeudorSolidario.controls.fechaDesvinculacionPublico.value,
+            fechaDesvinculacion: this.formDeudorSolidario.controls.fechaDesvinculacion.value === '' ? '0099-01-01' : this.formDeudorSolidario.controls.fechaDesvinculacion.value,
         }
-
+        
         Swal.fire({
             title: 'Guardar información',
             text: '¿Está seguro de guardar información?',
@@ -366,6 +372,36 @@ export class FormDeudorSolitarioComponent implements OnInit {
                     text: error.error.msg,
                 });
             });
+    }
+
+    
+    /**
+     * @description hace scroll al primerer input invalido, puede ser un input o select
+     */
+    private scrollToFirstInvalidControl() {
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+        
+        if(!firstInvalidControl){
+             firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+             if(!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+             }
+        }
+        console.log("firstInvalidControl", firstInvalidControl);
+        
+        firstInvalidControl?.focus(); //without smooth behavior
+      }
+
+
+      public formatearDataInicial(): void{
+
+        //fechas
+        
+        this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.formDeudorSolidario.controls.fechaDesvinculacionExpuesta.setValue('');
+        this.formDeudorSolidario.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.formDeudorSolidario.controls.fechaDesvinculacionPublico.setValue('');
+        this.formDeudorSolidario.controls.fechaNacimiento.value === '0099-01-01' && this.formDeudorSolidario.controls.fechaNacimiento.setValue('');
+        this.formDeudorSolidario.controls.fechaExpedicion.value === '0099-01-01' && this.formDeudorSolidario.controls.fechaExpedicion.setValue('');
+
     }
 
 }

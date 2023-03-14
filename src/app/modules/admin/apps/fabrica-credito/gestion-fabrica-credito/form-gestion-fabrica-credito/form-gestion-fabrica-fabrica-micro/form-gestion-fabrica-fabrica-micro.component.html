@@ -97,8 +97,8 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'aplicaCodeudor'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option value="S">Si aplica </mat-option>
-                            <mat-option value="N">No aplica </mat-option>
+                            <mat-option value="S">SI APLICA </mat-option>
+                            <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -116,8 +116,8 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoTitularLineas'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option value="S">Si aplica </mat-option>
-                            <mat-option value="N">No aplica </mat-option>
+                            <mat-option value="S">SI APLICA </mat-option>
+                            <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
@@ -125,8 +125,8 @@
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoCodeudorLineas'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
-                            <mat-option value="S">Si aplica </mat-option>
-                            <mat-option value="N">No aplica </mat-option>
+                            <mat-option value="S">SI APLICA </mat-option>
+                            <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field>
@@ -157,7 +157,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Tipo de documento</mat-label>
-                                <input matInput type="text" [formControlName]="'tipoDocumento'" [readonly]="true" />
+                                <input matInput type="text" [formControlName]="'descripcionTipoDocumento'" [readonly]="true" />
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>No. de identificación</mat-label>
@@ -975,10 +975,9 @@
                                     ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option value="S">Si, el cliente tiene camara de comercio
+                                    <mat-option value="S">SI
                                     </mat-option>
-                                    <mat-option value="N">No, el cliente no maneja camara de
-                                        comercio
+                                    <mat-option value="N">NO
                                     </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -997,8 +996,8 @@
                                     [matTooltip]="'¿ Tienes RUT?'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option value="S">Si </mat-option>
-                                    <mat-option value="N">No </mat-option>
+                                    <mat-option value="S">SI </mat-option>
+                                    <mat-option value="N">NO </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="
                                         form.controls.tieneRut.errors?.required
@@ -1557,8 +1556,8 @@
                                 <mat-select [value]="'seleccione'" [formControlName]="'tieneOtrosPuntos'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
-                                    <mat-option value="S">Si </mat-option>
-                                    <mat-option value="N">No </mat-option>
+                                    <mat-option value="S">SI </mat-option>
+                                    <mat-option value="N">NO </mat-option>
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
