@@ -21,10 +21,11 @@ export class DecisionesService {
   /**
    *@description: Obtiene el listado de opciones
    */
-  public getOpciones(): Observable<any> {
-    return this._http.get(this._appSettings.decision.url.base);
+  public getOpciones(agenda): Observable<any> {
+    return this._http.get(this._appSettings.decision.url.base+agenda);
   }
 
+  
   /**
    * @description: Obtiene el listado de causales aprobacion
    */
