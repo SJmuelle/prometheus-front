@@ -28,13 +28,15 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public archivoDerecha: any = {};
     public longitudArchivos: number = 0;
     public documentos: any[] = [];
+    public documentosCodeudor : any[] = [];
+    public documentosDeudor : any[] = [];
     public documentoComparado: FormControl = new FormControl('seleccione');
     public numeroSolicitud: string;
     public habilitarComparar: boolean = false;
     public datosDocumentosHistorico: any[] = [];
     public identificacion: string;
-    public permisoEditar:boolean=false;
-
+    public permisoEditar: boolean = false;
+    public panelOpenState: boolean=false;
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
     constructor(
         private route: ActivatedRoute,
@@ -51,7 +53,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
     ngOnInit(): void {
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
-       
+
     }
     /**
     * @description: Escucha el observable
@@ -145,7 +147,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         if (files && files.length) {
             const fileToRead = files[0];
             let ext = fileToRead.name.split(".")
-            ext = ext[(ext.length-1)].toUpperCase();
+            ext = ext[(ext.length - 1)].toUpperCase();
             if (ext != 'PDF') {
                 Swal.fire(
                     '¡Información!',
@@ -181,9 +183,33 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
 
     private getDocumentos(datos: any): void {
+        this.documentosCodeudor = [];
+        this.documentosDeudor = [];
+        this.documentos = [];
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
-            this.documentos = res.data;
+            debugger
+            for (const item of res.data) {
+                switch (item.tipoTercero) {
+                    case 'C':
+                        this.documentosCodeudor.push(item)
+                        break;
+                    case 'S':
+                        this.documentosDeudor.push(item)
+                        break;
+                    default:
+                        this.documentos.push(item)
+                        break;
+                }
+            }
             this.documentos.map((x) => {
+                x['selected'] = false;
+                return x;
+            });
+            this.documentosCodeudor.map((x) => {
+                x['selected'] = false;
+                return x;
+            });
+            this.documentosDeudor.map((x) => {
                 x['selected'] = false;
                 return x;
             });

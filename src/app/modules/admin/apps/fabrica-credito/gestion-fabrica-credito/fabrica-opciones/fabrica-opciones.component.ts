@@ -128,6 +128,9 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       case 'FO':
         this.redireccionar('agenda-formalizacion');
         break;
+      case 'VI':
+        this.redireccionar('agenda-visitas');
+        break;
       default:
         this.redireccionar('trazabilidad');
         break;

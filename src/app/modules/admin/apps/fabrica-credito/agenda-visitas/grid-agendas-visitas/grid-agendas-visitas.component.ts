@@ -43,7 +43,7 @@ export class GridAgendasVisitasComponent implements OnInit {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
-    this.agendaComercialService.getAgendaComercial().pipe(
+    this.agendaComercialService.getAgendaVisitas().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
 
@@ -135,7 +135,7 @@ export class GridAgendasVisitasComponent implements OnInit {
    */
   private getTotalesAgendaComercial(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getTotalesAgendaComercial().pipe(
+    this.agendaComercialService.getTotalesAgendaVisita().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       if (res.status === 200) {

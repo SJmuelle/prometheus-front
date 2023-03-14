@@ -90,3 +90,11 @@ table {
     color: #4abbec !important;
 }
 
+
+input{
+    text-transform: uppercase;
+}
+
+.not-uppercase{
+    text-transform: none;
+}

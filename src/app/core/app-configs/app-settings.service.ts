@@ -332,8 +332,10 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
             baseComite: EndPoints.uri('/generic/qry/agendas-credito/CC'),
+            baseVisitas: EndPoints.uri('/generic/qry/agendas-credito/VI'),
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM'),
-            totaleComite: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CC')
+            totaleComite: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CC'),
+            totaleVisitas: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/VI')
         }
     };
 
