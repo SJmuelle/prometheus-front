@@ -38,10 +38,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <mat-form-field class="col-span-2">
-            <mat-label>Nombre completo del titular</mat-label>
-            <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true">
-        </mat-form-field>
+        
 
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
@@ -89,6 +86,10 @@
                 </mat-error>
             </mat-form-field>
         </div>
+        <mat-form-field class="col-span-2">
+            <mat-label>Nombre completo del titular</mat-label>
+            <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true">
+        </mat-form-field>
         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información personal del
             codeudor</span>
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
@@ -311,10 +312,7 @@
         </div>
 
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-            <mat-form-field class="sm:col-span-2 md:col-span-3">
-                <mat-label>Dirección completa</mat-label>
-                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
-            </mat-form-field>
+            
             <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Tipo de via</mat-label>
@@ -369,12 +367,15 @@
                 </mat-form-field>
             </div>
             <mat-form-field>
-                <mat-label>Complemento</mat-label>
+                <mat-label class="fuse-mat-dense">Complemento</mat-label>
                 <input matInput type="text" [formControlName]="'direccionComplemento'">
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
             </mat-form-field>
-
+            <mat-form-field class="sm:col-span-2 md:col-span-3">
+                <mat-label>Dirección completa</mat-label>
+                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
+            </mat-form-field>
             <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Años de residencia</mat-label>
@@ -659,10 +660,7 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3" *ngIf="(form.controls.ocupacion.value === 'INDNFO' ||
             form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDEFO'
             )">
-            <mat-form-field class="sm:col-span-2 md:col-span-3">
-                <mat-label>Dirección del negocio</mat-label>
-                <input matInput type="text" [readOnly]="true" [formControlName]="'direccionNegocio'">
-            </mat-form-field>
+            
             <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Tipo de via</mat-label>
@@ -724,6 +722,10 @@
                         Este campo es requerido.
                     </mat-error>
                 </mat-icon>
+            </mat-form-field>
+            <mat-form-field class="sm:col-span-2 md:col-span-3">
+                <mat-label>Dirección del negocio</mat-label>
+                <input matInput type="text" [readonly]="true" [formControlName]="'direccionNegocio'">
             </mat-form-field>
         </div>
         <div *ngIf="form.controls.ocupacion.value === 'INDEFO' || form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDNFO'"

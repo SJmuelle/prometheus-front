@@ -168,12 +168,7 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>Dirección completa</mat-label>
-                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
-            </mat-form-field>
-        </div>
+        
         <div class="-mx-3 md:flex mt-3 mb-2">
             <ng-container *ngIf="tipoVia$ | async as tipoVias">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -233,8 +228,6 @@
                     </mat-error>
                 </mat-form-field>
             </ng-container>
-        </div>
-        <div class="-mx-3 md:flex mt-3 mb-2">
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Complemento</mat-label>
@@ -243,6 +236,16 @@
                     </mat-icon>
                 </mat-form-field>
             </ng-container>
+        </div>
+        <div class="-mx-3 md:flex mt-3 mb-2">
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Dirección completa</mat-label>
+                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
+            </mat-form-field>
+        </div>
+        <div class="-mx-3 md:flex mt-3 mb-2">
+           
+            
             <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de vivienda</mat-label>
