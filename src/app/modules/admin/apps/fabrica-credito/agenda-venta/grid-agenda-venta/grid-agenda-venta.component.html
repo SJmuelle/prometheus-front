@@ -173,11 +173,11 @@
                                         </div>
                                     </td>
 
-                                    <td class="px-2  pb-1 pt-1">
+                                    <td *ngIf="item.idUnidadNegocio !== 1" class="px-2  pb-1 pt-1">
                                         <div class="flex flex-column ">
                                             <span class="text-md text-black font-medium" matTooltip="Asesor">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesor==''?'Usuario web':item.asesorComercial}}
+                                                {{ item.asesorComercial==''?'Usuario web':item.asesorComercial}}
                                             </span>
                                         </div>
                                     </td>
@@ -185,7 +185,8 @@
                                     <td *ngIf="item.idUnidadNegocio === 1" class="px-2  pb-1 pt-1">
                                         <div class="flex flex-column ">
                                             <span class="text-md text-black font-medium" matTooltip="Asesor micro">
-                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
                                             </span>
                                         </div>

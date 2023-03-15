@@ -214,21 +214,32 @@
                                     <td class="px-2  pb-1 pt-1">
                                         <div class="flex flex-column ">
 
-                                            <span class="text-md text-black font-medium" matTooltip="Agencia">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Agencia">
                                                 <mat-icon class="icon-size-3"
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
                                             <ng-container>
-                                                <span class="text-md text-black font-medium" matTooltip="Asesor">
-                                                    <mat-icon class="icon-size-3"
+                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                    matTooltip="Asesor Comercial">
+                                                    <mat-icon class="icon-size-3 "
                                                         svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesor==''?'Usuario web':item.asesorComercial}}
+                                                    {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                                </span>
+                                            </ng-container>
+                                            <ng-container>
+                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                    matTooltip="Asesor fábrica">
+                                                    <mat-icon class="icon-size-3 text-blue-500"
+                                                        svgIcon="heroicons_solid:user"></mat-icon>
+                                                    {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
                                                 </span>
                                             </ng-container>
                                             <ng-container *ngIf="item.unidadNegocioFabrica === 1">
-                                                <span class="text-md text-black font-medium" matTooltip="Asesor micro">
-                                                    <mat-icon class="icon-size-3"
+                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                    matTooltip="Asesor micro">
+                                                    <mat-icon class="icon-size-3 text-green-500"
                                                         svgIcon="heroicons_solid:user"></mat-icon>
                                                     {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
                                                 </span>
