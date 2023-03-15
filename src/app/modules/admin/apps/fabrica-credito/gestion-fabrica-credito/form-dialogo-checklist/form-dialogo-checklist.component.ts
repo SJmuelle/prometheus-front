@@ -72,8 +72,8 @@ export class FormDialogoChecklistComponent implements OnInit {
     }
     this.matDialogRef.close();
     let dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-      minWidth: '30%',
-      minHeight: '30%',
+      minWidth: '50%',
+      minHeight: '50%',
       data: {
         numeroSolicitud: this.data.numeroSolicitud,
         etapa: 1,

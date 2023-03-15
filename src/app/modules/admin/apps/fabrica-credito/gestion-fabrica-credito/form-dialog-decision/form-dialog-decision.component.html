@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{tituloModal}}</h2>
 <mat-dialog-content>
-    <div class="row">
+    <div class="row mb-4">
         <div class="col-md-12 col-md-12 col-lg-12">
             <form [formGroup]="form">
                 <!--{{form.getRawValue() | json}}-->
@@ -37,19 +37,31 @@
                         <ng-container *ngIf="form.controls.concepto.value === 'A'">
                             <div class="md:flex">
                                 <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                    <mat-label>Valor cupo</mat-label>
+                                    <mat-label>Monto aprobado</mat-label>
+                                    <span matTextPrefix>$&nbsp;</span>
                                     <input matInput type="text" [formControlName]="'cupo'"
                                         (keyup)="form.controls['cupo'].setValue(utility.formatearNumero(form.value.cupo));">
+                                      
                                     <mat-error *ngIf="requeridoCupo">Este campo es requerido.</mat-error>
                                 </mat-form-field>
                             </div>
                         </ng-container>
                     </div>
+                    <ng-container *ngIf="mostrarPlazo">
+                        <div class="md:flex">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Plazo</mat-label>
+                                <input matInput type="number" [formControlName]="'plazo'">
+                                <mat-error *ngIf="requeridoCupo">Este campo es requerido.</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+
 
                     <div class="md:flex">
-                        <mat-form-field class="w-full mr-2 fuse-mat-dense h-70">
+                        <mat-form-field class="w-full mr-2 fuse-mat-dense">
                             <mat-label>Comentario: </mat-label>
-                            <textarea class="h-60" matInput [formControlName]="'comentario'" class="resize-none" rows="12"></textarea>
+                            <textarea matInput [formControlName]="'comentario'" class="resize-none" rows="4"></textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                         </mat-form-field>
                     </div>
