@@ -21,6 +21,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     public causal$: Observable<any>;
     mostrarAccion: boolean;
     mostrarCupo: boolean;
+    mostrarPlazo:boolean=false;
     tituloModal: string;
     listadoAgenda: any;
     constructor(
@@ -58,8 +59,13 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 this.mostrarAccion = true;
                 this.mostrarCupo = true;
                 this.tituloModal = "Decisión"
-
                 break;
+        }
+
+        if(this.data.idAgenda=='CC'){
+            this.tituloModal = "Aprobar crédito" 
+            this.mostrarCupo = true;
+            this.mostrarPlazo=true;
         }
     }
 
@@ -177,6 +183,14 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                     }
                     break;
             }
+            if(this.data.idAgenda=='CC'){
+                this.form.controls['cupo'].setValue('');
+                this.form.controls['cupo'].setValidators(Validators.required);
+                this.form.controls['cupo'].updateValueAndValidity();
+                this.form.controls['plazo'].setValue('');
+                this.form.controls['plazo'].setValidators(Validators.required);
+                this.form.controls['plazo'].updateValueAndValidity();
+            }
 
 
         });
@@ -190,7 +204,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             concepto: [''],
             cupo: [''],
             comentario: ['', [Validators.required]],
-            causal: [0]
+            causal: [0],
+            plazo:['']
         });
     }
     /**
@@ -382,6 +397,10 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
 
     get requeridoCupo(): any {
         return (this.form.controls.cupo.dirty || this.form.controls.cupo.touched);
+    }
+
+    get requeridoPlazo(): any {
+        return (this.form.controls.plazo.dirty || this.form.controls.plazo.touched);
     }
 
     get requeridoComentario(): any {

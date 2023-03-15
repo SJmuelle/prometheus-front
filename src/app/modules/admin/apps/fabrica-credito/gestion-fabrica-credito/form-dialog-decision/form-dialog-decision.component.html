@@ -45,6 +45,16 @@
                             </div>
                         </ng-container>
                     </div>
+                    <ng-container *ngIf="mostrarPlazo">
+                        <div class="md:flex">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Valor plazo</mat-label>
+                                <input matInput type="text" [formControlName]="'plazo'">
+                                <mat-error *ngIf="requeridoCupo">Este campo es requerido.</mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+
 
                     <div class="md:flex">
                         <mat-form-field class="w-full mr-2 fuse-mat-dense h-70">
