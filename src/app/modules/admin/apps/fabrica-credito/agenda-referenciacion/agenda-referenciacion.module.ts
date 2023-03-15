@@ -42,6 +42,9 @@ import { ComercialComponent } from './tab-agenda-referenciacion/ultracem/persona
 import { PersonalComponent } from './tab-agenda-referenciacion/ultracem/persona-natural/personal/personal.component';
 import { RepresentanteLegalComponent } from './tab-agenda-referenciacion/ultracem/persona-juridica/representante-legal/representante-legal.component';
 import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/persona-natural/laboral/laboral.component';
+import { FamiliarConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/familiar/familiar.component';
+import { PersonalConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/personal/personal.component';
+import { TitularConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/titular/titular.component';
 
 
 @NgModule({
@@ -58,7 +61,10 @@ import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/p
     LibranzaLaboralComponent,
     ComercialComponent,
     PersonalComponent,
-    RepresentanteLegalComponent
+    RepresentanteLegalComponent,
+    TitularConsumoPlexaComponent,
+    FamiliarConsumoPlexaComponent,
+    PersonalConsumoPlexaComponent,
   ],
     imports: [
         CommonModule,

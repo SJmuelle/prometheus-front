@@ -1,0 +1,16 @@
+.primario{
+    background: linear-gradient(271.07deg, #1C8BBB 0.81%, #4BBCED 99.09%);
+    color: #fff;
+}
+.segundario{
+    background: linear-gradient(270.57deg, #DDDDDD 2.95%, #F7F7F7 96.41%);
+    color: #252C30;
+}
+.card{
+    border: none;
+    .titleCard {
+        font-weight: 700;
+        font-size: 1.75rem;
+        text-align: center;
+    }
+}

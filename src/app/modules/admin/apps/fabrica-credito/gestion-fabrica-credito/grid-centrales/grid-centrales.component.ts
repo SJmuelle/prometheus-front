@@ -24,6 +24,7 @@ export class GridCentralesComponent implements OnInit {
         new EventEmitter<boolean>();
 
     public numeroIdentificacion;
+    public numeroSolicitud;
     public datosDocumentosCentrales: any[] = [];
 
     constructor(
@@ -31,6 +32,7 @@ export class GridCentralesComponent implements OnInit {
         private centralesService: CentralesService
     ) {
         this.numeroIdentificacion = this.route.snapshot.paramMap.get('id');
+        this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
         this.getDocumentoHistorico();
     }
 
@@ -55,6 +57,7 @@ export class GridCentralesComponent implements OnInit {
         }).then((result) => {});
         const data = {
             identificacion: this.numeroIdentificacion,
+            numeroSolicitud:Number(this.numeroSolicitud)
         };
         this.centralesService.getComentarios(data).subscribe((res) => {
             this.datosDocumentosCentrales = res.data;

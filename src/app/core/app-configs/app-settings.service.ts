@@ -47,7 +47,7 @@ export class AppSettingsService {
     /**
      * @description: End-point asignacion de creditos
      */
-     public asignacion = {
+    public asignacion = {
         url: {
             base: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos'),
             baseAsesor: EndPoints.uri('/generic/qry/tk/listado-analista'),
@@ -87,9 +87,15 @@ export class AppSettingsService {
             checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito'),
             step: EndPoints.uri('/generic/qry/obtener-steps-agenda-referenciacion'),
             agendaReferenciacion: EndPoints.uri('/credito/obtener-info-referencia-tipo'),
+            agendaReferenciacionPregunta: EndPoints.uri('/credito/fabrica/consulta-preguntas-referenciacion'),
+            agendaReferenciacionInformacion: EndPoints.uri('/generic/qry/informacion-titular-referenciacion'),
+            agendaReferenciacionGuardarPregunta: EndPoints.uri('/credito/fabrica/guardado-preguntas-referenciacion'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
+            historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
+            trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
+            trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
         }
     };
     /**
@@ -129,7 +135,7 @@ export class AppSettingsService {
     /**
      * @description: End-point Transferencias
      */
-     public transferencias = {
+    public transferencias = {
         url: {
             baseTransferencia: EndPoints.uriBase('/transferencia/transferencia-cxp-proveedor'),
             baseProveedor: EndPoints.uriBase('/generic/qry/buscar-proveedor'),
@@ -140,7 +146,7 @@ export class AppSettingsService {
     /**
      * @description: End-point Archivos de transferencias
      */
-     public archivos = {
+    public archivos = {
         url: {
             ListFiles: EndPoints.uriBase('/generic/qry/tk/transferencia-consultar-achivo'),
             DownFile: EndPoints.uriBase('/transferencia/obtener-achivo-base64')
@@ -160,6 +166,16 @@ export class AppSettingsService {
         }
     };
     /**
+     * @description: End-point referencias
+     */
+    public conductores = {
+        url: {
+            base: EndPoints.uri('/generic/qry/consulta-conductores'),
+            baseConductoresCrear: EndPoints.uri('/generic/cre-agregar-conductor-consumo'),
+            baseConductores: EndPoints.uri('/generic/cre-actualizar-conductor-consumo'),
+        }
+    };
+    /**
      * @description: End-point comentarios
      */
     public comentarios = {
@@ -175,6 +191,14 @@ export class AppSettingsService {
     public obtenerAgendaSolicitud = {
         url: {
             base: EndPoints.uri('/generic/qry/obtener-agenda-solicitud'),
+        }
+    };
+    /**
+* @description: End-point comentarios
+*/
+    public parametriaTipoCredito = {
+        url: {
+            base: EndPoints.uri('/generic/qry/consulta-parametria-negocios'),
         }
     };
     /**
@@ -201,7 +225,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/documentos-requeridos-fabrica'),
             baseAdjunto: EndPoints.uri('/archivos/guardar/adjuntar-archivo'),
-            baseConsultar: EndPoints.uri('/pqrs/file/load/cre-consultar-documento'),
+            baseConsultar: EndPoints.uri('/archivos/obtener/cre-consultar-documento'),
             baseEliminar: EndPoints.uri('/archivos/inactivar/cre-inactivar-doc'),
             baseHistorico: EndPoints.uri('/archivos/consulta-historico-documentos-fabrica')
         }
@@ -211,12 +235,13 @@ export class AppSettingsService {
      */
     public decision = {
         url: {
-            base: EndPoints.uri('/generic/qry/consulta-lista-generica/DECISION'),
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),    
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
+            baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
@@ -234,14 +259,31 @@ export class AppSettingsService {
     /**
      * @description: End-Point
      */
+    public procesos = {
+        url: {
+            // http://prometheus.fintra.co:8084/api-fintra/api/generic/metas-agregar-asesor
+            metasClonarPeriodo: EndPoints.uri('/generic/metas-clonar-periodo'),
+            metasListaIndicadores: EndPoints.uri('/generic/metas-lista-indicadores'),
+            metasListaIndicadoresAgencia: EndPoints.uri('/generic/metas-lista-indicadores-agencia'),
+            metasSgtePaso: EndPoints.uri('/generic/metas-sgte-paso'),
+            metasAnularAsesor: EndPoints.uri('/generic/metas-anular-asesor'),
+            metasUpdateMetaColocacion: EndPoints.uri('/generic/metas-update-meta-colocacion'),
+            obtenerInformacionUsuarios: EndPoints.uri('/generic/qry/tk/obtener-informacion-usuarios'),
+            metasAgregarAsesor: EndPoints.uri('/generic/metas-agregar-asesor'),
+
+        }
+    };
+    /**
+     * @description: End-Point
+     */
     public listadoCartera = {
         url: {
             base: EndPoints.uri('/credito/tk/array-padre-hija/recursos-obligaciones-carteras'),
             baseCompradas: EndPoints.uri('/generic/qry/tk/obligaciones-compradas-hijas'),
             update: EndPoints.uri('/generic/actualizar-cartera-libranza'),
             create: EndPoints.uri('/generic/agregar-cartera-en-mora'),
-            editar:EndPoints.uri("/generic/actualizar-cartera"),
-            guardarGestionCompra:EndPoints.uri("/generic/guardar-gestion-compra"),
+            editar: EndPoints.uri("/generic/actualizar-cartera"),
+            guardarGestionCompra: EndPoints.uri("/generic/guardar-gestion-compra"),
             pasarAgenda: EndPoints.uri('/generic/cre-valida-gestion-cartera'),
             validadorTotalLibranza: EndPoints.uri('/generic/validador-total-libranza'),
             //negociacion
@@ -256,7 +298,9 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/informacion-cliente-referenciar'),
             baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
-            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud')
+            baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud'),
+            tipoReferencia: EndPoints.uri('/generic/qry/obtener-tipos-referencia-unidad-negocio'),
+
         }
     };
     /**
@@ -294,8 +338,11 @@ export class AppSettingsService {
     public oferta = {
         url: {
             base: EndPoints.uri('/generic/obtener-detalle-oferta-libranza-seleccionada'),
+            consumo: EndPoints.uri('/generic/qry/obtener-oferta-plexa'),
             postSelectOferta: EndPoints.uri('/generic/actualizar-eleccion-oferta'),
+            postSelectOfertaConsumo: EndPoints.uri('/generic/validacion-oferta-consumo'),
             recalcularOferta: EndPoints.uri('/generic/recalcular-capacidad-pago-libranza'),
+            recalcularOfertaConsumo: EndPoints.uri('/generic/calcular-capacidad-pago-consumo'),
         }
     };
 
@@ -305,7 +352,7 @@ export class AppSettingsService {
     public capacidad = {
         url: {
             base: EndPoints.uri('/generic/obtener-capacidad-pago'),
-
+            consumo: EndPoints.uri('/generic/qry/consulta-capacidad-pago-consumo'),
         }
     };
 
@@ -316,6 +363,15 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/obtener-nombre-entidades'),
 
+        }
+    };
+
+    /**
+* @description: End-point agenda decision
+*/
+    public busquedaActividadEconomica = {
+        url: {
+            base: EndPoints.uri('/generic/listado-actividad-economica-consumo'),
         }
     };
 
@@ -336,6 +392,16 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/obtener-salario-min-vigente'),
 
+        }
+    };
+
+    /**
+     * @description: End-Point
+     */
+    public analisisFinanciero = {
+        url: {
+            base: EndPoints.uri('/generic/qry/info-analisis-financiero'),
+            guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
         }
     };
 }

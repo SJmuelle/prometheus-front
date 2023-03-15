@@ -18,6 +18,7 @@ import { FormDialogoChecklistComponent } from '../../form-dialogo-checklist/form
 import { DirectionsComponent } from 'app/shared/modal/directions/directions.component';
 import { FormularioCreditoInterface } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { FormDialogDecisionComponent } from '../../form-dialog-decision/form-dialog-decision.component';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-gestion-fabrica-libranza',
@@ -73,6 +74,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     public salarioBasico: number;
     public fabricaDatos;
     unidadNegocio: any;
+    public permisoEditar:boolean=false;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -83,6 +85,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         private genericaServices: GenericasService,
         private _dialog: MatDialog,
         public utility: UtilityService,
+        public _permisosService: PermisosService
+
     ) {
 
         if (!this.numeroSolicitud) {
@@ -117,6 +121,11 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.getPagaduria()
         this.getSalarioBasico()
         // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
+        
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if(this.permisoEditar){
+            this.form.disable();
+        }
     }
     /**
      * @description:

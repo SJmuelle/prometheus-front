@@ -20,7 +20,6 @@ import {AppSettingsService} from "./core/app-configs/app-settings.service";
 
 
 
-
 // import { FormControl } from '@angular/forms';
 
 
@@ -52,13 +51,16 @@ const routerConfig: ExtraOptions = {
         // FormControl,
         // 3rd party modules
         MarkdownModule.forRoot({}),
-        NgxPaginationModule
+        NgxPaginationModule,
+        // NgxMaskModule.forRoot(),
+        
+
     ],
     bootstrap   : [
         AppComponent
     ],
     providers: [
-        AppSettingsService
+        AppSettingsService,
     ]
 })
 export class AppModule

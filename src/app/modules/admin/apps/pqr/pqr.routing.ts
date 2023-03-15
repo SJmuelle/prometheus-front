@@ -13,6 +13,7 @@ import { HistorialPqrComponent } from './historial-pqr/historial-pqr.component';
 import { ListComponent } from './list/list.component';
 import { MensajeCreacionComponent } from './mensaje-creacion/mensaje-creacion.component';
 import { MensajeErrorComponent } from './mensaje-error/mensaje-error.component';
+import { MotivosPqrComponent } from './motivos-pqr/motivos-pqr.component';
 
 export const pqrRoutes: Route[] = [
     {
@@ -66,6 +67,10 @@ export const pqrRoutes: Route[] = [
             {
                 path: 'procedimientosPQRS',
                 component: ProcedimientosPQRSComponent,
+            },
+            {
+                path: 'motivosPQRS',
+                component: MotivosPqrComponent,
             },
         ],
     },

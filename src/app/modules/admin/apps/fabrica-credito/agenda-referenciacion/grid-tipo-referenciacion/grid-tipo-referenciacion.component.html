@@ -63,7 +63,7 @@
                                     </div>
                                     <div class="text-secondary text-md truncate" *ngIf="titular.email">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
-                                        </mat-icon>{{miniscula(laboral.email)}}
+                                        </mat-icon>{{miniscula(titular.email)}}
                                     </div>
                                     <div class="text-secondary text-md" *ngIf="titular.celular">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
@@ -76,9 +76,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="titular.identificacion+'/T/'+titular.tipoId+'/'+titular.tipoDocumento">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium">LLamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='22'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="titular.identificacion+'/T'">
+                                    <a class="flex items-center" [routerLink]="titular.identificacion+'/T/'+titular.tipoId+'/'+titular.tipoDocumento">
                                         <mat-icon class="mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
@@ -88,11 +98,11 @@
                             </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='32'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="titular.identificacion+'/T'">
+                                    <a class="flex items-center" [routerLink]="titular.identificacion+'/T/'+titular.tipoId+'/'+titular.tipoDocumento">
                                         <mat-icon class="mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
-                                        <span class="font-medium">Llamar</span>
+                                        <span class="font-medium">Llamar </span>
                                     </a>
                                 </div>
                             </ng-container>
@@ -121,7 +131,7 @@
                                     </div>
                                     <div class="text-secondary text-md" *ngIf="laboral.telefono">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
-                                        </mat-icon>{{laboral.telefono}}
+                                        </mat-icon>{{laboral.telefono}} 
                                     </div>
                                     <div class="text-secondary text-md truncate" *ngIf="laboral.email">
                                         <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
@@ -135,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                <a class="flex items-center" [routerLink]="laboral.identificacion+'/L'">
+                                <a class="flex items-center" [routerLink]="laboral.identificacion+'/L/'+laboral.tipoId+'/'+laboral.tipoDocumento">
                                     <mat-icon class="mr-2 bg-green-500 icon-size-8 text-white"
                                         [svgIcon]="'heroicons_solid:phone'">
                                     </mat-icon>
@@ -183,7 +193,7 @@
                             </div>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='22'">
                                 <div class="bg-gray-200 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="personal.identificacion+'/P'">
+                                    <a class="flex items-center" [routerLink]="personal.identificacion+'/P/'+personal.tipoId+'/'+personal.tipoDocumento">
                                         <mat-icon class="bg-gray-200 mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
@@ -192,9 +202,20 @@
                                     </a>
                                 </div>
                             </ng-container>
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="personal.identificacion+'/P/'+personal.tipoId+'/'+personal.tipoDocumento">
+                                        <mat-icon class=" mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class=" font-medium">Llamar</span>
+
+                                    </a>
+                                </div>
+                            </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='32'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="personal.identificacion+'/P'">
+                                    <a class="flex items-center" [routerLink]="personal.identificacion+'/P/'+personal.tipoId+'/'+personal.tipoDocumento">
                                         <mat-icon class="mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
@@ -243,7 +264,17 @@
                             </div>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='22'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="comercial.identificacion+'/C'">
+                                    <a class="flex items-center" [routerLink]="comercial.identificacion+'/C/'+comercial.tipoId+'/'+comercial.tipoDocumento">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium">Llamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="comercial.identificacion+'/C/'+comercial.tipoId+'/'+comercial.tipoDocumento">
                                         <mat-icon class="mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
@@ -252,12 +283,12 @@
                                 </div>
                             </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='32'">
-                                <div class="bg-gray-200 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center" [routerLink]="comercial.identificacion+'/C'">
-                                        <mat-icon class=" bg-gray-200 mr-2 icon-size-8 text-white"
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="comercial.identificacion+'/C/'+comercial.tipoId+'/'+comercial.tipoDocumento">
+                                        <mat-icon class=" 0 mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
-                                        <span class="font-medium bg-gray-200">Llamar</span>
+                                        <span class="font-medium ">Llamar</span>
                                     </a>
                                 </div>
                             </ng-container>
@@ -299,14 +330,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-200 flex items-center justify-center py-4 px-8 text-primary ">
-                                <a class="flex items-center" [routerLink]="familiar.identificacion+'/C'">
-                                    <mat-icon class="mr-2 bg-gray-200 icon-size-8 text-white"
-                                        [svgIcon]="'heroicons_solid:phone'">
-                                    </mat-icon>
-                                    <span class="font-medium bg-gray-200">Llamar</span>
-                                </a>
-                            </div>
+                       
+                            <ng-container *ngIf="fabricaDatos.unidadNegocio=='30'">
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center" [routerLink]="familiar.identificacion+'/F/'+familiar.tipoId+'/'+familiar.tipoDocumento">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium">Llamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
                         </div>
                     </ng-container>
                 </div>

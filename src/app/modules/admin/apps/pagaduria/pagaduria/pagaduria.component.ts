@@ -74,7 +74,7 @@ export class PagaduriaComponent implements OnInit {
           const extension = 'pdf'
           const link = document.createElement('a');
           document.body.appendChild(link);
-          link.href = `data:application/${extension};base64,${archivo}`;
+          link.href = `${archivo}`;
           link.target = '_self';
           link.download = response.data[0].filename
           link.click();

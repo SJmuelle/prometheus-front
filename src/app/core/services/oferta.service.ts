@@ -26,6 +26,18 @@ export class OfertaService {
   /**
  * @description:
  */
+  public getListadoOfertaConsumo(numeroSolicitud: number): Observable<any> {
+    let data = {
+      numeroSolicitud: numeroSolicitud
+    }
+    // return this._http.post(this._appSettings.oferta.url.consumo, data);
+    return this._http.get(`${this._appSettings.oferta.url.consumo}/${numeroSolicitud}`);
+
+  }
+
+  /**
+ * @description:
+ */
   public getCapacidadPago(numeroSolicitud: number): Observable<any> {
     let data = {
       numeroSolicitud: numeroSolicitud
@@ -50,4 +62,32 @@ export class OfertaService {
 
     return this._http.post(this._appSettings.oferta.url.recalcularOferta, data);
   }
+
+  // OFERTA CONSUMO
+  /**
+* @description:
+*/
+  public getCapacidadPagoConsumo(numeroSolicitud: number): Observable<any> {
+    let data = {
+      numeroSolicitud: numeroSolicitud
+    }
+    return this._http.get(`${this._appSettings.capacidad.url.consumo}/${numeroSolicitud}`);
+  }
+
+  /**
+* @description:
+*/
+  public recalcularOfertaConsumo(data: any): Observable<any> {
+
+    return this._http.post(this._appSettings.oferta.url.recalcularOfertaConsumo, data);
+  }
+
+    /**
+ * @description:
+ */
+     public SelectOfertaConsumo(data: any): Observable<any> {
+
+      return this._http.post(this._appSettings.oferta.url.postSelectOfertaConsumo, data);
+    }
+  
 }

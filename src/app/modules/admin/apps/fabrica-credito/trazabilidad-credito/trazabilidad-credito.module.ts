@@ -24,6 +24,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { DetalleTrazabilidadComponent } from './detalle-trazabilidad/detalle-trazabilidad.component';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
+import { FuseNavigationModule } from '@fuse/components/navigation';
 // import { FabricaOpcionesModule } from '../fabrica-opciones/fabrica-opciones.module';
 
 
@@ -55,7 +56,9 @@ import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-
     SharedModule,
     FuseDrawerModule,
     // FabricaOpcionesModule
-    GestionFabricaCreditoModule
+    GestionFabricaCreditoModule,
+    FuseNavigationModule,
+
 
   ]
 })
