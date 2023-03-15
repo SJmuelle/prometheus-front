@@ -182,6 +182,15 @@
                                         </div>
                                     </td>
 
+                                    <td *ngIf="item.idUnidadNegocio === 1" class="px-2  pb-1 pt-1">
+                                        <div class="flex flex-column ">
+                                            <span class="text-md text-black font-medium" matTooltip="Asesor micro">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
+                                            </span>
+                                        </div>
+                                    </td>
+
 
                                     <td class="px-2  pb-1 pt-1" colspan="3">
                                         <div class="flex flex-column ">
