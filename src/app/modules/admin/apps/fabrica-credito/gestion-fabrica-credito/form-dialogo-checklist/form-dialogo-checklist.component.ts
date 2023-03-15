@@ -5,6 +5,7 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormDialogDecisionComponent } from '../form-dialog-decision/form-dialog-decision.component';
+import moment from "moment";
 import 'moment/locale/es';
 @Component({
   selector: 'app-form-dialogo-checklist',
@@ -32,16 +33,16 @@ export class FormDialogoChecklistComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.data)
   }
-  decision(){
+  decision() {
     this.matDialogRef.close(true);
   }
 
   consulta() {
     this.total = 0;
-    let data= {
+    let data = {
       "numeroSolicitud": Number(this.data.numeroSolicitud),
-      "unidadNegocio":this.data.unidadNegocio,
-      "idAgenda":this.data.agenda,
+      "unidadNegocio": this.data.unidadNegocio,
+      "idAgenda": this.data.agenda,
       "tipoIdentificacion": this.data.tipoDocumento
     }
     this.fabricaCreditoService.getCheckList(data)
@@ -55,20 +56,28 @@ export class FormDialogoChecklistComponent implements OnInit {
               this.total++;
             }
           }
-          // this.form.controls.selectedTech.setValue(selecionado)
+          if (this.listado.length == 0) {
+            this.SiguienteEtapa();
+          }
+
+        } else {
+          this.SiguienteEtapa();
         }
       });
   }
 
   SiguienteEtapa() {
+    if(this.data.tipo=='D'){
+      this.decision()
+    }
     this.matDialogRef.close();
     let dialogRef = this._dialog.open(FormDialogDecisionComponent, {
       minWidth: '30%',
       minHeight: '30%',
-      data: { 
-        numeroSolicitud: this.data.numeroSolicitud, 
-        etapa: 1, 
-        idAgenda:this.data.agenda,     
+      data: {
+        numeroSolicitud: this.data.numeroSolicitud,
+        etapa: 1,
+        idAgenda: this.data.agenda,
       },
       disableClose: false,
     });

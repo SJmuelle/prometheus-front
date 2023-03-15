@@ -27,7 +27,7 @@ export class DevolucionesService {
   /**
    * @description: Causales de devoluciones
    */
-     public getCausalesDevoluciones(agenda: String): Observable<any> {
-      return this._http.get(`${this._appSettings.devoluciones.url.baseDevolucionCausal}/${agenda}`);
+     public getCausalesDevoluciones(agenda: String,numeroSolucitud: String): Observable<any> {
+      return this._http.get(`${this._appSettings.devoluciones.url.baseDevolucionCausal}/${agenda}/${numeroSolucitud}`);
     }
 }

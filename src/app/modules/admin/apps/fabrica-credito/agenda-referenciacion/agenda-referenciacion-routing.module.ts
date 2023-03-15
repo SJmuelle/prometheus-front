@@ -14,7 +14,7 @@ const routes: Routes = [
     component: GridTipoReferenciacionComponent
   },
   {
-    path: ':unidadNegocio/:num/:id/:referencia/:tipoReferenciacion',
+    path: ':unidadNegocio/:num/:id/:referencia/:tipoReferenciacion/:tipoPersona/:tipoDocPersona',
     component: FormAgendaReferenciacionComponent
     
   },

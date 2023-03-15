@@ -8,6 +8,9 @@ import { FormDialogoChecklistComponent } from 'app/modules/admin/apps/fabrica-cr
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
+import { ModalRecalcularComponent } from '../modal-recalcular/modal-recalcular.component';
+import { FormDialogAnalisisFinancieroComponent } from 'app/modules/admin/apps/fabrica-credito/gestion-fabrica-credito/form-dialog-analisis-financiero/form-dialog-analisis-financiero.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-fabrica-opciones',
@@ -28,6 +31,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public verCentrales: boolean = false;
   public minimizarCentrales: boolean = false;
   dialogMostrar: string;
+  toolText: string= 'Siguiente';
+  iconoSvg: string= '';
 
   constructor(
     private fabricaCreditoService: FabricaCreditoService,
@@ -36,8 +41,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     public _permisosService: PermisosService
   ) {
-    router.events.subscribe((url: any) => console.log(url));
-    this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
+    // router.events.subscribe((url: any) => console.log(url));
+    this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
   }
 
 
@@ -56,8 +61,29 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         this.fabricaDatos = data;
-        this.dialogMostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
-
+        // dialogMostrar=='SIGUIENTE'?'Siguiente':'Check list']
+        // dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'
+        if(data.unidadNegocio === 32){
+          if(data.validacionAnalisisFinanciero == 'S'){
+            if((data.cantidadCheckList != data.totalCheckList)){
+              this.toolText = 'Check list';
+              this.iconoSvg = 'check_circle';
+            }else{
+              this.toolText = 'Siguiente';
+              this.iconoSvg = 'next_plan';
+            }
+          }else{
+            this.toolText = 'Análisis Financiero';
+            this.iconoSvg = 'heroicons_outline:calculator';
+          }
+        }else{
+          if((data.cantidadCheckList != data.totalCheckList)){
+            this.toolText = 'Check list';
+            this.iconoSvg = 'check_circle';
+          }else{
+            this.toolText = 'Siguiente';
+            this.iconoSvg = 'next_plan';
+          }}
       });
   }
 
@@ -75,6 +101,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
  * @description: Valida que el campo solo sea numeros
  */
   public irAtras() {
+    if(this.permisoEditar){
+      this.redireccionar('trazabilidad');
+      return
+    }
     switch (this.fabricaDatos.agenda) {
       case 'CO':
         this.redireccionar('agenda-completion');
@@ -143,23 +173,58 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
-      
-      if(res==true){
+      if(this.fabricaDatos.unidadNegocio != 32){
+      if (res == true) {
+        this.abrirModal('recalcular')
+      }
+    }else{
+      if (res == true) {
+        this.abrirDecisionDesistir();
+      }
+    }
+    });
+  }
+
+  /**
+   * @description: Modal de decision
+   */
+  public abrirDecisionDesistir(): void {
+    this.abrirModal('decision')
+  }
+
+  abrirModal(tipo: string) {
+    switch (tipo) {
+      case "decision":
         const dialogRef = this._dialog.open(FormDecisionComponent, {
-          width: '30%',
+          width: '60%',
+          data: this.fabricaDatos,
+          disableClose: false,
+
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          if (res == true) {
+            this.irAtras()
+          }
+        })
+        break;
+      case "recalcular":
+        const dialogRec = this._dialog.open(ModalRecalcularComponent, {
+          width: '100%',
           data: this.fabricaDatos,
           disableClose: false
         });
-        dialogRef.afterClosed().subscribe((res) => {
-          if(res==true){
-            this.redireccionar('agenda-decision');
+        dialogRec.afterClosed().subscribe((res) => {
+          if (res == true) {
+            this.abrirModal('decision')
           }
         })
-      }
-    });
-
+        break;
+      default:
+        break;
+    }
 
   }
+
 
   /**
    * @description: Minimiza el componente comentarios
@@ -210,4 +275,52 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     this.unSubscribe$.unsubscribe();
   }
 
+  /**
+ * @description: Modal de decision
+ */
+  public onDialogoAnalisis(): void {
+    let dialogRef;
+    if (this.fabricaDatos.unidadNegocio == 32 && this.fabricaDatos.validacionAnalisisFinanciero == 'N') {
+      dialogRef = this._dialog.open(FormDialogAnalisisFinancieroComponent, {
+        minWidth: '80%',
+        height: '620px',
+        data: {
+          numeroSolicitud: this.numeroSolicitud,
+          permiso:false
+        },
+        disableClose: false,
+      });
+      dialogRef.afterClosed().toPromise().then((res) => {
+        if (res == true) {
+         this.onDialogoDecision();
+         this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+        }
+      });
+    }else{
+      this.onDialogoDecision();
+    }
+  }
+
+    /**
+ * @description: Modal de decision
+ */
+    public onDialogoAnalisisConsulta(): void {
+      let dialogRef;
+      if (this.fabricaDatos.unidadNegocio == 32 && this.fabricaDatos.validacionAnalisisFinanciero == 'S') {
+        dialogRef = this._dialog.open(FormDialogAnalisisFinancieroComponent, {
+          minWidth: '80%',
+          height: '620px',
+          data: {
+            numeroSolicitud: this.numeroSolicitud,
+            permiso:true
+          },
+          disableClose: false,
+        });
+        dialogRef.afterClosed().toPromise().then((res) => {
+
+        });
+      }else{
+        Swal.fire('Informacion', 'Aun no se ha configurado el analisi financiero', 'warning');  
+      }
+    }
 }

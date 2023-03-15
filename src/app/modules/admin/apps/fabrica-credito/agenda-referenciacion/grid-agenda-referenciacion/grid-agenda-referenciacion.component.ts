@@ -44,8 +44,9 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
         this.router.navigate([`credit-factory/credit-management/${numeroSolicitud}/${identificacion}`]);
     }
     public onGetGridRefrenciacion(data: any): void {
-        const { numeroSolicitud, identificacion, undadNegocio} = data;
-        this.router.navigate([`credit-factory/agenda-referencing/${undadNegocio}/${numeroSolicitud}/${identificacion}`]);
+        const { numeroSolicitud, identificacion, undadNegocio,unidadNegocioFabrica} = data;
+        // debugger;
+        this.router.navigate([`credit-factory/agenda-referencing/${unidadNegocioFabrica}/${numeroSolicitud}/${identificacion}`]);
     }
 
     public onOpenDialog(item: any): void {

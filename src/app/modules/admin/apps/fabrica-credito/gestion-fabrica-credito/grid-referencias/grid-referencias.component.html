@@ -1,6 +1,6 @@
 <div class="row" [ngSwitch]="esVer">
-    <div class="flex justify-end mb-4">
-        <ng-container *ngIf="!datos">
+    <div class="flex justify-end mb-4"  *ngIf="!permisoEditar">
+        <ng-container *ngIf="!datos" >
             <button mat-raised-button
                     color="accent"
                     type="button"

@@ -62,6 +62,8 @@
                     <th class="px-2 py-3 text-center" *ngIf="estado=='P'">Anexo</th>
                     <th class="px-2 py-3 text-center" *ngIf="estado=='R'">Fecha de rechazo</th>
                     <th class="px-2 py-3 text-center" *ngIf="estado=='A'">Fecha de aprobación</th>
+                    <th class="px-3 py-3 text-center" >N° Reactivación</th>
+                    <th class="px-3 py-3 text-center" >Fecha Reactivación</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -130,6 +132,8 @@
                     <td class="text-sm border text-center" *ngIf="estado=='R'">{{item.fecha_estado}}</td>
                     
                     <td class="text-sm border text-center" *ngIf="estado=='A'">{{item.fecha_estado}}</td>
+                    <td class="text-sm border text-center">{{item.cantidad_reactivado}}</td>
+                    <td class="text-sm border text-center">{{item.fecha_reactivacion}}</td>
                 </tr>
             </tbody>
         </table>
