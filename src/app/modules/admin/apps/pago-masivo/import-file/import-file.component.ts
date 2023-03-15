@@ -175,11 +175,20 @@ export class ImportFileComponent implements OnInit {
           }
           Swal.close();
           if (res) {
-            Swal.fire(
-              'Correcto',
-              'Se ha realizado el pago exitosamente.',
-              'success'
-            )
+            if (res.data.resultado == "OK") {
+              this.listAsignados = { "details": [] };
+              Swal.fire(
+                'Correcto',
+                'Se ha realizado el pago exitosamente.',
+                'success'
+              )
+            } else {
+              Swal.fire(
+                'Error',
+                res.data.resultado,
+                'error'
+              )
+            }
           } else {
             Swal.fire(
               'Error',
