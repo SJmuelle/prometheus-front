@@ -1,0 +1,59 @@
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg">
+  <div class="grid grid-cols-12 w-100 mb-2">
+    <h2 class="text-gray-900 col-span-12 mb-4">Importar pagos.</h2>
+  </div>
+  <div class="flex flex-row justify-between w-100">
+    <div class="flex flex-row gap-2">
+      <div>
+        <button class="color_fintra text-white" type="button" mat-raised-button (click)="fileInput.click()">Importar planilla</button>
+        <input hidden #fileInput type="file" (change)="subirArchivo($event)" id="file" accept=".xls,.xlsx">
+      </div>
+      <!-- <div>
+        <button class="color_fintra text-white" type="button" mat-raised-button (click)="mostrarConvenios()">Convenios</button>
+      </div> -->
+    </div>
+    <div>
+      <input class="border rounded p-2 bg-gray-100 w-72 xl:w-80 mr-0"
+                style="font-size: 10px; margin-right: 1em"
+                type="text"
+                autocomplete="off"
+                name="filtrarTabla"
+                [(ngModel)]="filtrarTabla"
+                placeholder="Buscar..." *ngIf="listRowsExcel.length > 0" />
+    </div>
+  </div>
+  <div class="mt-4 w-full lg:max-h-96 xl:max-h-160 shadow overflow-y-auto" *ngIf="listRowsExcel.length > 0">
+    <table>
+      <thead>
+        <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
+          <th class="px-4 py-3 text-center">
+            <mat-checkbox [checked]="chequeada" (change)="setAll($event.checked)"></mat-checkbox>
+          </th>
+          <th class="px-3 py-3 text-center" *ngFor="let item of cabeceras">{{item}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-gray-700" *ngFor="let item of listRowsExcel">
+          <td class="px-2 py-2 text-sm border text-center">
+            <mat-checkbox [(ngModel)]="item.chequeado" (ngModelChange)="updateAllComplete()" (change)="acumular(item, $event)"></mat-checkbox>
+          </td>
+          <td class="px-2 text-sm border text-center">{{item.nitTransportadora}}</td>
+          <td class="px-2 text-sm border text-center">{{item.fechaPago}}</td>
+          <td class="px-2 text-sm border text-center">{{item.banco}}</td>
+          <td class="px-2 text-sm border text-center">{{item.sucursal}}</td>
+          <td class="px-2 text-sm border text-center">$ {{item.valorAplicar | number}}</td>
+          <td class="px-2 text-sm border text-center">$ {{item.comisionRecaudo | number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="mt-3 flex flex-row justify-end" *ngIf="listRowsExcel.length > 0">
+    <button class="permitir bloquear text-white" type="button" mat-raised-button (click)="enviar()" [disabled]="listAsignados.details.length <1">Aceptar</button>
+  </div>
+  <div class="flex flex-row w-full justify-center" *ngIf="listRowsExcel.length<1">
+    <div class="flex flex-col">
+        <img class="lg:56 xl:h-96 lg:w-56 xl:w-96" src="assets/images/animaciones/nodata.gif">
+        <div class="text-gray-600 text-center mt-2 font-medium">No se ha cargado el archivo Excel.</div>
+    </div>
+  </div>
+</div>
