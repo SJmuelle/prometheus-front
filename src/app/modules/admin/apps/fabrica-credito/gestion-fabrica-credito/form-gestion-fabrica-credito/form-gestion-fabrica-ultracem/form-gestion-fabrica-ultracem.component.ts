@@ -198,8 +198,8 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
                 break;
             case 'SIGUIENTE':
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-                    minWidth: '30%',
-                    minHeight: '30%',
+                    minWidth: '50%',
+                    minHeight: '50%',
                     data: {
                         numeroSolicitud: this.numeroSolicitud,
                         etapa: 1,

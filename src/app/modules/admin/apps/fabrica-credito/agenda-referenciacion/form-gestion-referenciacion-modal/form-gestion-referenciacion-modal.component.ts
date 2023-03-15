@@ -314,8 +314,8 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
   cambioEstado(){
     const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
-        minWidth: '30%',
-        minHeight: '30%',
+        minWidth: '50%',
+        minHeight: '50%',
         data: { 
             numeroSolicitud: this.data.numeroSolicitud, 
             etapa: 2, 
@@ -329,8 +329,8 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
   }
   decision(){
     const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
-        minWidth: '30%',
-        minHeight: '30%',
+        minWidth: '50%',
+        minHeight: '50%',
         // data: {numeroSolicitud:this.data.numeroSolicitud, etapa:6},
         data: { 
             numeroSolicitud: this.data.numeroSolicitud, 

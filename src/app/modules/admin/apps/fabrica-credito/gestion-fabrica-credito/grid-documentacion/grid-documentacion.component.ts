@@ -187,7 +187,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         this.documentosDeudor = [];
         this.documentos = [];
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
-            debugger
             for (const item of res.data) {
                 switch (item.tipoTercero) {
                     case 'C':

@@ -250,6 +250,7 @@ export class AppSettingsService {
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
+            baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),

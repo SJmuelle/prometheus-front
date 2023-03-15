@@ -21,7 +21,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     public causal$: Observable<any>;
     mostrarAccion: boolean;
     mostrarCupo: boolean;
-    mostrarPlazo:boolean=false;
+    mostrarPlazo: boolean = false;
     tituloModal: string;
     listadoAgenda: any;
     constructor(
@@ -62,10 +62,16 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 break;
         }
 
-        if(this.data.idAgenda=='CC'){
-            this.tituloModal = "Aprobar crédito" 
+        if (this.data.idAgenda == 'CC') {
+            this.tituloModal = "Aprobar crédito"
             this.mostrarCupo = true;
-            this.mostrarPlazo=true;
+            this.mostrarPlazo = true;
+            this.form.controls['cupo'].setValue('');
+            this.form.controls['cupo'].setValidators(Validators.required);
+            this.form.controls['cupo'].updateValueAndValidity();
+            this.form.controls['plazo'].setValue('');
+            this.form.controls['plazo'].setValidators(Validators.required);
+            this.form.controls['plazo'].updateValueAndValidity();
         }
     }
 
@@ -113,6 +119,17 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
+                    if (this.data.idAgenda == 'CC') {
+                        let data_cambioEstado = {
+                            numeroSolicitud: data.numeroSolicitud,
+                            concepto: 'A',
+                            cupo: data.cupo,
+                            plazo: Number(data.plazo),
+                            comentario: data.comentario,
+                            causal: 0
+                        }
+                        this.postAprobado(data);
+                    }
                     switch (this.data.etapa) {
                         case 1:
                             let data_cambioEstado = {
@@ -183,7 +200,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                     }
                     break;
             }
-            if(this.data.idAgenda=='CC'){
+            if (this.data.idAgenda == 'CC') {
                 this.form.controls['cupo'].setValue('');
                 this.form.controls['cupo'].setValidators(Validators.required);
                 this.form.controls['cupo'].updateValueAndValidity();
@@ -205,7 +222,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             cupo: [''],
             comentario: ['', [Validators.required]],
             causal: [0],
-            plazo:['']
+            plazo: ['']
         });
     }
     /**
@@ -234,10 +251,10 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             respuesta = {
                                 icon: 'success',
                                 title: 'Mensaje',
-                                text: 'Ha cambiado el estado con éxito'
+                                text: 'Ha aprobado el cambio de agenda con éxito'
                             };
                             this.mostrarAlerta(respuesta);
-                        }else{
+                        } else {
                             respuesta = {
                                 icon: 'error',
                                 title: 'Mensaje',
@@ -250,7 +267,55 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         respuesta = {
                             icon: 'error',
                             title: 'Mensaje',
-                            text: 'Advertencia'
+                            text: res.data.msg
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    case 500:
+                        respuesta = {
+                            icon: 'error',
+                            title: 'Mensaje',
+                            text: 'Ha ocurrido un error'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    default:
+                        break;
+                }
+            });
+    }
+
+    /**
+     * @description: Guarda la aprobado
+     */
+    private postAprobado(data: any): void {
+        Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+        this.decisionService.postAprobado(data).pipe(takeUntil(this.unsuscribe$))
+            .subscribe((res) => {
+                let respuesta: any = {};
+                switch (res.status) {
+                    case 200:
+                        if (res.data.resultado == 'OK') {
+                            respuesta = {
+                                icon: 'success',
+                                title: 'Mensaje',
+                                text: 'Ha cambiado el estado con éxito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                        } else {
+                            respuesta = {
+                                icon: 'warning',
+                                title: 'Mensaje',
+                                text: 'El monto y/o Plazo ingresado no cumplen las políticas evaluadas en el crédito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }
+                        break;
+                    case 400:
+                        respuesta = {
+                            icon: 'error',
+                            title: 'Mensaje',
+                            text: res.data.msg
                         };
                         this.mostrarAlerta(respuesta);
                         break;
@@ -297,33 +362,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         });
     }
 
-    /**
-     * @description: redireciona a la grilla de completacion
-     */
-    private redireccionar() {
-        let agenda = '';
-        switch (this.data.idAgenda) {
-            case 'CO':
-                agenda = 'agenda-completion';
-                break;
-            case 'CM':
-                agenda = 'agenda-comercial';
-                break;
-            case 'RE':
-                agenda = 'agenda-referencing';
-                break;
-            case 'DE':
-                agenda = 'agenda-decision';
-                break;
-            case 'GC':
-                agenda = 'agenda-cartera';
-                break;
-            default:
-                agenda = 'trazabilidad';
-                break;
-        }
-        this.router.navigate([`/credit-factory/${agenda}`]);
-    }
+
     /**
      * @description: Guarda la decision
      */
@@ -341,11 +380,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                                 text: 'Ha cambiado el estado con éxito'
                             };
                             this.mostrarAlerta(respuesta);
-                            setTimeout(() => {
-                                //redireccionar
-                                this.redireccionar()
-                            }, 1000);
-                        }else{
+                        } else {
                             respuesta = {
                                 icon: 'warning',
                                 title: 'Mensaje',
@@ -360,7 +395,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                         respuesta = {
                             icon: 'warning',
                             title: 'Mensaje',
-                            text: 'Advertencia'
+                            text: res.data.msg
                         };
                         this.mostrarAlerta(respuesta);
                         break;
