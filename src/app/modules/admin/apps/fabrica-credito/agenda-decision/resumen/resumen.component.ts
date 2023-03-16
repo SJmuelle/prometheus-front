@@ -255,6 +255,34 @@ export class ResumenComponent implements OnInit {
                     {
                         titulo: "Información del codeudor",
                         tipo: "campos",
+                        icono: "feather:user",
+                        color: "text-blue-400",
+                        descripcion: "Actividad económica del titular",
+                        campos: [
+                            {
+                                icono: "heroicons_outline:user-circle",
+                                color: "bg-blue-100 text-blue-800",
+                                valor2: data.resumenCodeudor.nombreCompleto,
+                                valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCodeudor.tipoDocumento + " : </span> " + data.resumenCodeudor.identificacion,
+                                valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.ocupacion
+                            },
+                            {
+                                icono: "heroicons_outline:currency-dollar",
+                                color: "bg-yellow-100 text-yellow-800",
+                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCodeudor.actividadEconomica,
+                                valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica,
+                                valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCredito.salarioBasico),
+                            },
+                        ]
+                    },
+                )
+
+                
+                // datos indicadores
+                DatosCredito.push(
+                    {
+                        titulo: "Indicadores",
+                        tipo: "campos",
                         icono: "heroicons_outline:briefcase",
                         color: "text-gray-400",
                         descripcion: "Actividad económica del titular",
@@ -277,6 +305,7 @@ export class ResumenComponent implements OnInit {
                     },
                 )
                 break
+
             case 32:
                 DatosCredito.push(
                     {
