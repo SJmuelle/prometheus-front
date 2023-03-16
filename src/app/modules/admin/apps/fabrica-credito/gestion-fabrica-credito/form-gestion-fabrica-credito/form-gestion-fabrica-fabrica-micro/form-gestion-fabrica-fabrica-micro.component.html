@@ -448,9 +448,15 @@
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.numeroHijos.errors
-                                            ?.minLength
+                                            ?.min
                                     ">
                                     No puede ser menor de 0
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.numeroHijos.errors
+                                            ?.pattern
+                                    ">
+                                    Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
@@ -466,9 +472,15 @@
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.personasACargo.errors
-                                            ?.minLength
+                                            ?.min
                                     ">
                                     No puede ser menor de 0
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.personasACargo.errors
+                                            ?.pattern
+                                    ">
+                                    Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -818,6 +830,12 @@
                                         ">
                                     Este campo es requerido.
                                 </mat-error>
+                                <mat-error *ngIf="
+                                            form.controls.annosTiempoResidencia
+                                                .errors?.min
+                                        ">
+                                        No puede ser menor de 0
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field class="fuse-mat-dense">
                                 <mat-label>Meses de residencia</mat-label>
@@ -831,6 +849,12 @@
                                                 .errors?.required
                                         ">
                                     Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                            form.controls.mesesTiempoResidencia
+                                                .errors?.min
+                                        ">
+                                        No puede ser menor de 0
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
