@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 export class MicrocreditoComponent implements OnInit, OnDestroy {
   form: FormGroup;
   dataInicial;
+  dataGeneralIncial;
   listadoActividadEconomica: any[];
   listadoCiudades: any[];
   listadoBarrios: any[];
@@ -123,8 +124,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
       this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 1).subscribe((resp: any) => {
         if (resp) {
           this.form.patchValue(resp.data);
-
-
+          this.dataGeneralIncial = resp.data
+          
           if (resp.data.departamentoNegocio) {
             this.listarCiudades();
           }
@@ -151,6 +152,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
       if (resp) {
         this.dataInicial = resp.data
+        
       }
     })
   }
@@ -197,6 +199,35 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
 
   }
+
+
+  public validacionCampos(campo: string, modificado: string, variable: string, type: String): void {
+    let mensaje = `<p>¿Estás seguro de editar el campo de <strong>${campo}</strong>?, ${modificado}.</p>`;
+    Swal.fire({
+        title: 'Guardar información',
+        html: mensaje,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#a3a0a0',
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+        } else {
+          console.log("Type", type, "Variable", variable);
+          
+            if(type === "INTEGER"){
+
+                this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
+            }
+            if(type === "STRING"){
+                this.form.controls[variable].setValue(this.dataGeneralIncial[variable].toString());
+            }
+        }
+    });
+}
+
 
 
   ngOnDestroy(): void {

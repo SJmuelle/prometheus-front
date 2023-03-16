@@ -60,7 +60,7 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento">
+                <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento" (change)="validacionCampos('Fecha de nacimiento','Este campo modifica el motor de decisión y políticas SARC', 'fechaNacimiento', 'STRING')">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nivel de estudio </mat-label>
@@ -98,7 +98,7 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿ Tu negocio está registrado en cámara de comercio?</mat-label>
-                <mat-select formControlName="camaraComercio">
+                <mat-select formControlName="camaraComercio" (selectionChange)="validacionCampos('Tu negocio está registrado en cámara de comercio','Este campo modifica el motor de decisión y políticas SARC', 'camaraComercio', 'STRING')">
                     <mat-option *ngFor="let camaraComercio of dataInicial?.camaraComercio"
                         [value]="camaraComercio.codigo">{{camaraComercio.valor}}
                     </mat-option>
@@ -115,7 +115,7 @@
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Actividad económica </mat-label>
-                <mat-select formControlName="actividadEconomica">
+                <mat-select formControlName="actividadEconomica" (selectionChange)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC', 'actividadEconomica', 'INTEGER')">
                     <mat-option *ngFor="let ActividadEconomica of listadoActividadEconomica"
                         [value]="ActividadEconomica.codigo">{{ActividadEconomica.valor}}
                     </mat-option>
@@ -127,16 +127,16 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto tiempo en (meses) llevas ejerciendo esta actividad? </mat-label>
-                <input matInput type="number" autocomplete="off" formControlName="antiguedadNegocio">
+                <input matInput type="number" autocomplete="off" formControlName="antiguedadActividad">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto tiempo en (meses) tiene tu negocio?</mat-label>
-                <input matInput type="number" autocomplete="off" formControlName="antiguedadActividad">
+                <input matInput type="number" autocomplete="off" formControlName="antiguedadNegocio" (change)="validacionCampos('Cuánto tiempo en (meses) tiene tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'antiguedadNegocio', 'INTEGER')">
             </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué departamento de colombia queda tu negocio?</mat-label>
-                <mat-select formControlName="departamentoNegocio" (selectionChange)="listarCiudades()">
+                <mat-select formControlName="departamentoNegocio" (selectionChange)="validacionCampos('En qué departamento de colombia queda tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'departamentoNegocio', 'INTEGER')" (selectionChange)="listarCiudades()">
                     <mat-option *ngFor="let departamentosMicro of dataInicial?.departamentosMicro" 
                         [value]="departamentosMicro.codigo">{{departamentosMicro.valor}}
                     </mat-option>
@@ -144,7 +144,7 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué municipio o ciudad está tu negocio? </mat-label>
-                <mat-select formControlName="ciudadNegocio" (selectionChange)="listarBarrios()">
+                <mat-select formControlName="ciudadNegocio" (selectionChange)="validacionCampos('En qué municipio o ciudad está tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'ciudadNegocio', 'INTEGER')" (selectionChange)="listarBarrios()">
                     <mat-option *ngFor="let ciudades of listadoCiudades"
                         [value]="ciudades.codigo">{{ciudades.valor}}
                     </mat-option>
@@ -167,11 +167,11 @@
             </div>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
-                <input matInput type="text" autocomplete="off" formControlName="valorCredito" mask="separator.0" thousandSeparator=".">
+                <input matInput type="text" autocomplete="off" formControlName="valorCredito" (change)="validacionCampos('Cuánto dinero necesitas para tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'valorCredito', 'STRING')" mask="separator.0" thousandSeparator=".">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
-                <input matInput type="number" autocomplete="off" formControlName="plazoCredito">
+                <input matInput type="number" autocomplete="off" formControlName="plazoCredito" (change)="validacionCampos('En cuántos meses vas a pagar tu crédito','Este campo modifica el motor de decisión y políticas SARC', 'plazoCredito', 'INTEGER')">
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nombre del asesor</mat-label>
