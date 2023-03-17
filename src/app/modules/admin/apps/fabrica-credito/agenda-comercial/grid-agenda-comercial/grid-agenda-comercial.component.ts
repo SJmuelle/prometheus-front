@@ -169,8 +169,11 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
    */
   cambiarHora(date) {
     if(date){
-      moment.locale('es');
-      return moment(date).format('H:MM a')
+      
+      moment.locale('co');
+
+      
+      return moment(date).format('hh:mm A')
     }
     return 'No registra';
   }

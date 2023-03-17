@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
@@ -40,6 +40,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
     public actividadEconomica: any;
+
     fechaActual: any = moment().locale("co");
 
     constructor(
@@ -50,6 +51,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         public utility: UtilityService,
         public _permisosService: PermisosService,
         private _formularioCreditoService: FormularioCreditoService,
+        private el: ElementRef
     ) {
         this.createFormulario();
 
@@ -73,7 +75,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log(resp.data, "data fabrica fabrica");
             }
         })
     }
@@ -82,11 +83,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public validationPost(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
-            console.log(this.form, this.form.valid);
             Object.keys(this.form.controls).forEach(key => {
                 // Get errors of every form control
-                console.log(this.form.get(key).errors, key);
+                console.log(this.form.get(key).errors, key);               
             });
+            this.scrollToFirstInvalidControl();
         } else {
             this.onPostDatos();
         }
@@ -155,10 +156,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
-                console.log(data);
                 this.form.patchValue(data);
-                this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value  === 'S')
-                console.log('Form valid', this.form.valid);
+                this.formatearDataInicial();
+                
 
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -199,7 +199,22 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 });
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
+
+                console.log(data, "Fabrica credito data inicial");
+                
             });
+    }
+
+    public formatearDataInicial(): void{
+        this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value  === 'S');
+
+        //fechas
+        
+        this.form.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.form.controls.fechaDesvinculacionExpuesta.setValue('');
+        this.form.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.form.controls.fechaDesvinculacionPublico.setValue('');
+        this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
+        this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
+
     }
 
     /**
@@ -294,7 +309,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if(tipoActividad && nivelEstudio && camaraComercio){
             this._formularioCreditoService.cargueActividadEconomica(nivelEstudio,tipoActividad,camaraComercio).subscribe(res => {
                 this.actividadEconomica = res.data
-                console.log(this.actividadEconomica, "Actividad economica");
             });
         }
 
@@ -345,10 +359,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                console.log(this.form.controls[variable].value);
 
             } else {
-                console.log('denegado')
                 if(type === "INTEGER"){
 
                     this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
@@ -359,6 +371,23 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         });
     }
+
+    /**
+     * @description hace scroll al primerer input invalido, puede ser un input o select
+     */
+    private scrollToFirstInvalidControl() {
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+        
+        if(!firstInvalidControl){
+             firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+             if(!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+             }
+        }
+        console.log("firstInvalidControl", firstInvalidControl);
+        
+        firstInvalidControl?.focus(); //without smooth behavior
+      }
 
     /**
      * @description :creando el formulario
@@ -373,6 +402,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             tipoDocumento: [''],
             identificacion: [''],
             nombreCompleto: [''],
+            descripcionTipoDocumento: [''],
             celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             descripcionTipoCredito: [''],
             primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
@@ -843,7 +873,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // declaro ingresos Otros declaroIngresoDeclaracionAuto
         this.form.get('declaroIngresoDeclaracionAuto').valueChanges.subscribe((e: string) => {
-            console.log(e, "declaroIngresoDeclaracionAuto");
 
             if (e === 'OT') {
                 this.form.get('otroIngresoDeclaracionAuto')?.setValidators([Validators.required])
@@ -857,7 +886,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // conyuge form si aplica Casado o union libre
         this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
-            console.log(e, "declaroIngresoDeclaracionAuto");
 
             if (e === 'CA' || e === 'UL') {
                 this.form.get('primerNombreConyuge')?.setValidators([Validators.required])
@@ -895,7 +923,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         
 
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
-            console.log(e);
             // Local comercial propio
             if(e === '1'){
                 this.form.controls.tipoLocalCalulado.setValue('Propio.')

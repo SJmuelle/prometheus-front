@@ -57,7 +57,6 @@ export class UltracemTitularComponent implements OnInit {
     * @description: Obtiene la data para cargar al formulario
   */
   private getFabricaCreditoAgenda(): void {
-    debugger
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     const datosSolicitud: any = {
       "numeroSolicitud": Number(this.numeroSolicitud),

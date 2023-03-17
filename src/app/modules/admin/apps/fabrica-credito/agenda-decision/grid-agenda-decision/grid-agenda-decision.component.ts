@@ -176,7 +176,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
    */
   cambiarHora(date) {
     moment.locale('es');
-    return moment(date).format('H:MM a')
+    return moment(date).format('hh:mm A')
   }
 
   /**

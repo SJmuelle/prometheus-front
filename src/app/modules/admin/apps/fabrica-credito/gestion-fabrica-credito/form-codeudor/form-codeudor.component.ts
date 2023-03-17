@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -57,7 +57,8 @@ export class FormCodeudorComponent implements OnInit {
         private departamentosCiudadesService: DepartamentosCiudadesService,
         public utility: UtilityService,
         public _permisosService: PermisosService,
-        private _formularioCreditoService: FormularioCreditoService
+        private _formularioCreditoService: FormularioCreditoService,
+        private el: ElementRef
     ) {
         this.createFormulario();
     }
@@ -309,7 +310,7 @@ export class FormCodeudorComponent implements OnInit {
             entidadPublico: [''],
             vinculadoActualPublico: [''],
             fechaDesvinculacionPublico: [''],
-            declaraRenta: [''],
+            declaraRenta: ['', Validators.required],
             legalPersonalExpuesta: ['', Validators.required],
             tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
@@ -1320,8 +1321,37 @@ export class FormCodeudorComponent implements OnInit {
                 // Get errors of every form control
                 console.log(this.form.get(key).errors, key);
             });
+            this.scrollToFirstInvalidControl();
         } else {
             this.onPostDatos();
         }
     }
+
+    public formatearDataInicial(): void{
+
+        //fechas
+        
+        this.form.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.form.controls.fechaDesvinculacionExpuesta.setValue('');
+        this.form.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.form.controls.fechaDesvinculacionPublico.setValue('');
+        this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
+        this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
+
+    }
+
+        /**
+     * @description hace scroll al primerer input invalido, puede ser un input o select
+     */
+        private scrollToFirstInvalidControl() {
+            let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+            
+            if(!firstInvalidControl){
+                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+                 if(!firstInvalidControl) {
+                    firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+                 }
+            }
+            console.log("firstInvalidControl", firstInvalidControl);
+            
+            firstInvalidControl?.focus(); //without smooth behavior
+          }
 }
