@@ -460,7 +460,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             antiguedadLocal: ['', Validators.required],
             nombreArrendador: [''],
             celularArrendador: [''],
-            tipoUbicacionNegocio: ['', Validators.required],
+            tipoUbicacionNegocio: [''],
             numeroEmpleados: ['', [Validators.required]],
             nombreAtiendeNegocio: ['', Validators.required],
             tieneOtrosPuntos: ['', Validators.required],
@@ -690,7 +690,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             if (e === 'S') {
                 this.form.get('tieneRut')?.setValidators([Validators.required])
                 this.form.get('tieneRut')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.minLength(10), Validators.max(9999999999)])
+                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.minLength(10)])
                 this.form.get('nitNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -707,12 +707,16 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('nombreArrendador')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularArrendador')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)])
                 this.form.get('celularArrendador')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoUbicacionNegocio')?.setValidators([Validators.required])
+                this.form.get('tipoUbicacionNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
                 this.form.get('nombreArrendador')?.setValidators(null)
                 this.form.get('nombreArrendador')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularArrendador')?.setValidators(null)
                 this.form.get('celularArrendador')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoUbicacionNegocio')?.setValidators(null)
+                this.form.get('tipoUbicacionNegocio')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
         // Empleo conyuge empleado form

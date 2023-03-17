@@ -1035,7 +1035,7 @@
                                 <mat-label>
                                     N° de ID en camára de comercio
                                 </mat-label>
-                                <input autocomplete="off" matInput type="number" [formControlName]="'nitNegocio'" />
+                                <input autocomplete="off" matInput type="number" [formControlName]="'nitNegocio'" min="1000000000" max="9999999999" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.nitNegocio.errors
