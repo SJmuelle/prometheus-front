@@ -55,7 +55,7 @@
                     Este campo es requerido.
                 </mat-error>
                 <mat-error *ngIf="form.controls.primerNombre.errors?.pattern">
-                   No se aceptan caracteres especiales.
+                    No se aceptan caracteres especiales.
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -65,7 +65,7 @@
                     Este campo es requerido.
                 </mat-error>
                 <mat-error *ngIf="form.controls.primerApellido.errors?.pattern">
-                   No se aceptan caracteres especiales.
+                    No se aceptan caracteres especiales.
                 </mat-error>
             </mat-form-field>
 
@@ -73,10 +73,10 @@
                 <mat-label>Celular</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="celular" prefix="+57 "
                     mask="(000) 000 00 00">
-                    <mat-error *ngIf="form.controls.celular.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                    
+                <mat-error *ngIf="form.controls.celular.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Correo electrónico</mat-label>
@@ -84,7 +84,7 @@
                 <mat-error *ngIf="form.controls.email.errors?.required">
                     Este campo es requerido.
                 </mat-error>
-                <mat-error *ngIf="form.controls.email.errors?.email">   
+                <mat-error *ngIf="form.controls.email.errors?.email">
                     Email invalido.
                 </mat-error>
             </mat-form-field>
@@ -92,9 +92,9 @@
                 <mat-label>Fecha de nacimiento</mat-label>
                 <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento"
                     (change)="validacionCampos('Fecha de nacimiento','Este campo modifica el motor de decisión y políticas SARC', 'fechaNacimiento', 'STRING')">
-                    <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
+                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nivel de estudio </mat-label>
@@ -196,12 +196,12 @@
                 <mat-label>¿Cuánto tiempo en (meses) tiene tu negocio?</mat-label>
                 <input matInput type="number" autocomplete="off" formControlName="antiguedadNegocio"
                     (change)="validacionCampos('Cuánto tiempo en (meses) tiene tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'antiguedadNegocio', 'INTEGER')">
-                    <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                    <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.min">
-                        No se permiten números negativos
-                    </mat-error>
+                <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.min">
+                    No se permiten números negativos
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -231,7 +231,7 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué barrio queda tu negocio?</mat-label>
-                <mat-select formControlName="barrioNegocio">
+                <mat-select (selectionChange)="getAsesor()" formControlName="barrioNegocio">
                     <mat-option *ngFor="let barrios of listadoBarrios" [value]="barrios.codigo">{{barrios.upper}}
                     </mat-option>
                 </mat-select>
@@ -252,22 +252,22 @@
                 <input matInput type="text" autocomplete="off" formControlName="valorCredito"
                     (change)="validacionCampos('Cuánto dinero necesitas para tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'valorCredito', 'STRING')"
                     mask="separator.0" thousandSeparator=".">
-                    <mat-error *ngIf="form.controls.valorCredito.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
+                <mat-error *ngIf="form.controls.valorCredito.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
                 <input matInput type="number" autocomplete="off" formControlName="plazoCredito"
                     (change)="validacionCampos('En cuántos meses vas a pagar tu crédito','Este campo modifica el motor de decisión y políticas SARC', 'plazoCredito', 'INTEGER')">
-                    <mat-error *ngIf="form.controls.plazoCredito.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
+                <mat-error *ngIf="form.controls.plazoCredito.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Nombre del asesor</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
-                
+
             </mat-form-field>
         </div>
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 sm:flex sm:justify-end">

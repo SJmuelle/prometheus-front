@@ -65,14 +65,14 @@ export class AppSettingsService {
         }
     };
 
-        /**
- * @description: End-point agenda de venta
- */
-        public agendaVenta = {
-            url: {
-                base: EndPoints.uri('/generic/qry/tk/agenda-ventas-digitales'),
-            }
-        };
+    /**
+* @description: End-point agenda de venta
+*/
+    public agendaVenta = {
+        url: {
+            base: EndPoints.uri('/generic/qry/tk/agenda-ventas-digitales'),
+        }
+    };
 
     public formulario = {
         url: {
@@ -83,6 +83,7 @@ export class AppSettingsService {
             cargueSolicitudesFormularioSimulaciones: EndPoints.uri('/generic/qry/solicitudes-formulario-simulaciones'),
             listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
             listarBarriosMicro: EndPoints.uri('/generic/qry/listar-barrios-micro'),
+            nombreAsesorMicro: EndPoints.uri('/generic/qry/nombre-asesor-micro')
         }
     }
     /**
@@ -246,7 +247,7 @@ export class AppSettingsService {
      */
     public decision = {
         url: {
-            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),    
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
