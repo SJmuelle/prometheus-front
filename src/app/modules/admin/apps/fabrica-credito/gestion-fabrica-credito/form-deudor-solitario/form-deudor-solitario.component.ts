@@ -208,10 +208,8 @@ export class FormDeudorSolitarioComponent implements OnInit {
      * @description: Obtiene la data para cargar al formulario
      */
     private getInformacionCodeudorSolidario(numeroSolicitud: string, identificacion: string): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'S').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
-                Swal.close();
                 this.formDeudorSolidario.patchValue(data);
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);

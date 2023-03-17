@@ -150,12 +150,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtiene la data para cargar al formulario
      */
     private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
 
 
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
-                Swal.close();
                 this.dataGeneralIncial = data;
                 console.log(data);
                 this.form.patchValue(data);

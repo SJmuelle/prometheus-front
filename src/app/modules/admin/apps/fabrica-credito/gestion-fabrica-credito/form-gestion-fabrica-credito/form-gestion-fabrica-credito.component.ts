@@ -294,14 +294,12 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
      * @description: Obtiene la data para cargar al formulario
      */
     private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
         const datosSolicitud: any = {
             numeroSolicitud: numeroSolicitud,
             identificacion: identificacion
         };
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
-                Swal.close();
                 // console.log(data);
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
