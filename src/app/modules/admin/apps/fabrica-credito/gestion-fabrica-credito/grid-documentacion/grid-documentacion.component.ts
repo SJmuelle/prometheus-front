@@ -254,7 +254,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
 
     private getDocumento(datos: any): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         const datosDescargar = {
             numeroSolicitud: this.numeroSolicitud,
             idAdjunto: datos.idArchivoCargado,
@@ -269,7 +268,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             link.target = '_self';
             link.download = res.data.nombreArchivo;
             link.click();
-            Swal.close();
         });
     }
 
