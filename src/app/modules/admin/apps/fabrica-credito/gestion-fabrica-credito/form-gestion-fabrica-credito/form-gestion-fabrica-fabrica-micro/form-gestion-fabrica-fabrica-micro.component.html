@@ -82,7 +82,7 @@
                     <mat-form-field>
                         <mat-label>Plazo</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'plazo'"
-                            [required]="true" (change)="validacion('PL')" (change)="
+                            (change)="validacion('PL')" (change)="
                                 validacionCampos(
                                     'Plazo',
                                     'Este campo actualiza la capacidad de pago del cliente',
@@ -979,7 +979,7 @@
                                     ejerciendo esta actividad?
                                 </mat-label>
                                 <input autocomplete="off" matInput type="number"
-                                    [formControlName]="'antiguedadActividad'" />
+                                    [formControlName]="'antiguedadActividad'" min="0" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.antiguedadActividad.errors
@@ -989,7 +989,7 @@
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.antiguedadActividad.errors
-                                            ?.minLength
+                                            ?.min
                                     ">
                                     No puede ser menor de 0
                                 </mat-error>
@@ -997,7 +997,7 @@
                                         form.controls.antiguedadActividad.errors
                                             ?.pattern
                                     ">
-                                    Debe ser numerico
+                                    No se admiten caracteres especiales.
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -1054,8 +1054,10 @@
                                 <mat-label>
                                     N° de ID en camára de comercio
                                 </mat-label>
-                                <input autocomplete="off" matInput type="number" [formControlName]="'nitNegocio'"
-                                    min="1000000000" max="9999999999" />
+                                <input autocomplete="off"
+                                    matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
+                                    matInput type="number" [formControlName]="'nitNegocio'" min="1000000000"
+                                    max="9999999999" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.nitNegocio.errors
@@ -1063,16 +1065,11 @@
                                     ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.nitNegocio.errors
-                                            ?.minLength
-                                    ">
+                                <mat-error *ngIf="form.controls.nitNegocio.errors?.min">
                                     Longitud minima y máxima de 10 digítos
                                 </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.nitNegocio.errors?.pattern
-                                    ">
-                                    Solo se pueden ingresar números
+                                <mat-error *ngIf="form.controls.nitNegocio.errors?.max">
+                                    Longitud minima y máxima de 10 digítos
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -1387,7 +1384,7 @@
                             <mat-form-field>
                                 <mat-label>¿ Cuánto tiempo en (meses)tiene tu
                                     negocio?</mat-label>
-                                <input matInput type="number" [formControlName]="'antiguedadNegocio'"
+                                <input matInput type="number" min="0" [formControlName]="'antiguedadNegocio'"
                                     (change)="validacion('FEN')" (change)="
                                         validacionCampos(
                                             '¿Cuánto tiempo en (meses)tiene tu negocio?',
@@ -1406,9 +1403,15 @@
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.antiguedadNegocio.errors
+                                            ?.min
+                                    ">
+                                    No puede ser menor de 0
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadNegocio.errors
                                             ?.pattern
                                     ">
-                                    Solo se aceptan números
+                                    No se admiten caracteres especiales.
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
@@ -1743,11 +1746,34 @@
                             </mat-form-field>
 
                             <mat-form-field>
-                                <mat-label>No. de identificación</mat-label>
-                                <input matInput type="text" mask="separator.0" thousandSeparator="."
+                                <mat-label>N° de identificación</mat-label>
+                                <input matInput type="text" [minlength]="tipoDocumentoConyuge?.value === 'CE' ? 6 : 5"
+                                    [maxlength]="tipoDocumentoConyuge?.value === 'CE' ? 7 : 13"
+                                    [mask]="tipoDocumentoConyuge?.value === 'CE' ? '' : 'separator.0'"
+                                    [thousandSeparator]="tipoDocumentoConyuge?.value === 'CE' ? '' : '.'"
                                     [formControlName]="'identificacionConyuge'" />
+
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.identificacionConyuge
+                                            .errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.identificacionConyuge
+                                            .errors?.minlength
+                                    ">
+
+                                    No puede ser menor a {{tipoDocumentoConyuge?.value === 'CE' ? 6 : 5}} digitos
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.identificacionConyuge
+                                            .errors?.maxlength
+                                    ">
+                                    No puede ser menor a {{tipoDocumentoConyuge?.value === 'CE' ? 7 : 10}} digitos
+                                </mat-error>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / Celular </mat-label>
@@ -2159,13 +2185,30 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label> N° de identificación</mat-label>
-                                <input matInput type="text" mask="separator.0" thousandSeparator="."
+                                <input matInput type="text"
+                                    [mask]="tipoIdentificacionExpuesta?.value === 'CE' ? '' : 'separator.0'"
+                                    [thousandSeparator]="tipoIdentificacionExpuesta?.value === 'CE' ? '' : '.'"
+                                    [minlength]="tipoIdentificacionExpuesta?.value === 'CE' ? 6 : 5"
+                                    [maxlength]="tipoIdentificacionExpuesta?.value === 'CE' ? 7 : 13"
                                     [formControlName]="'identificacionExpuesta'" />
                                 <mat-error *ngIf="
                                         form.controls.identificacionExpuesta
                                             .errors?.required
                                     ">
                                     Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                                                                                    form.controls.identificacionExpuesta
+                                                                                                        .errors?.minlength
+                                                                                                ">
+
+                                    No puede ser menor a {{identificacionExpuesta?.value === 'CE' ? 6 : 5}} digitos
+                                </mat-error>
+                                <mat-error *ngIf="
+                                                                                                    form.controls.identificacionExpuesta
+                                                                                                        .errors?.maxlength
+                                                                                                ">
+                                    No puede ser menor a {{identificacionExpuesta?.value === 'CE' ? 7 : 10}} digitos
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>

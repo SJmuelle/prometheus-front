@@ -206,8 +206,6 @@ export class FormCodeudorComponent implements OnInit {
                 [
                     Validators.required,
                     Validators.minLength(7),
-                    Validators.maxLength(10),
-                    Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
                 ],
             ],
             nombreCompleto: [''],
@@ -417,6 +415,10 @@ export class FormCodeudorComponent implements OnInit {
             tipoVeredaNegocio: [''],
             descripcionVeredaNegocio: ['']
         });
+    }
+
+    get tipoDocumento(): AbstractControl {
+        return this.form.controls.tipoDocumento
     }
 
     private validatedDate(control: AbstractControl) {

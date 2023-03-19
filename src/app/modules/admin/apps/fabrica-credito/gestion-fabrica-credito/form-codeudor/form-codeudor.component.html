@@ -16,10 +16,21 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>No. de identificación</mat-label>
-                <input matInput type="text" mask="separator.0" thousandSeparator="."
-                    [formControlName]="'identificacion'" />
+                <input matInput type="text" [mask]="tipoDocumento?.value === 'CE' ? '' : 'separator.0'"
+                    [thousandSeparator]="tipoDocumento?.value === 'CE' ? '' :  '.'"
+                    [minlength]="tipoDocumento?.value === 'CE' ? 6 : 5"
+                    [maxlength]="tipoDocumento?.value === 'CE' ? 7 : 13" [formControlName]="'identificacion'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
                 </mat-icon>
+                <mat-error *ngIf="form.controls.identificacion.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.identificacion.errors?.minlength">
+                    No puede ser menor a {{tipoDocumento?.value === 'CE' ? 6 : 5}} digitos
+                </mat-error>
+                <mat-error *ngIf="form.controls.identificacion.errors?.maxlength">
+                    No puede ser menor a {{tipoDocumento?.value === 'CE' ? 7 : 10}} digitos
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Teléfono / Celular </mat-label>
@@ -154,7 +165,7 @@
                     Correo invalido
                 </mat-error>
             </mat-form-field>
-            <ng-container *ngIf="form.controls['tipoDocumento'].value === 'CC'">
+            <ng-container>
                 <mat-form-field>
                     <mat-label>Género</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'genero'">
@@ -1013,7 +1024,8 @@
             </mat-form-field>
             <mat-form-field class="sm:col-span-2 md:col-span-3">
                 <mat-label>¿Quién atiende el negocio?</mat-label>
-                <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'" />
+                <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'" matTooltip="En caso de enfermedad o situación que requiera la no presencia del
+titular" />
             </mat-form-field>
         </div>
         <!-- Si es pensionado -->

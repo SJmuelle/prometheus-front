@@ -51,10 +51,18 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         public utility: UtilityService,
         public _permisosService: PermisosService,
         private _formularioCreditoService: FormularioCreditoService,
-        private el: ElementRef
+        private el: ElementRef,
     ) {
         this.createFormulario();
 
+    }
+
+    get tipoDocumentoConyuge(): AbstractControl {
+        return this.form.controls.tipoDocumentoConyuge;
+    }
+
+    get tipoIdentificacionExpuesta(): AbstractControl {
+        return this.form.controls.tipoIdentificacionExpuesta;
     }
 
     ngOnInit(): void {
@@ -75,6 +83,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
+                console.log("Select", resp.data);
+
             }
         })
     }
@@ -834,7 +844,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('nombreExpuesta')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('tipoIdentificacionExpuesta')?.setValidators([Validators.required])
                 this.form.get('tipoIdentificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('identificacionExpuesta')?.setValidators([Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('identificacionExpuesta')?.setValidators([Validators.required])
                 this.form.get('identificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('nacionalidadExpuesta')?.setValidators([Validators.required])
                 this.form.get('nacionalidadExpuesta')?.enable({ emitEvent: true, onlySelf: true })
@@ -899,7 +909,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('primerApellidoConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('tipoDocumentoConyuge')?.setValidators([Validators.required])
                 this.form.get('tipoDocumentoConyuge')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('identificacionConyuge')?.setValidators([Validators.minLength(5), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('identificacionConyuge')?.setValidators([Validators.minLength(5), Validators.maxLength(10)])
                 this.form.get('identificacionConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularConyuge')?.setValidators([Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('celularConyuge')?.enable({ emitEvent: true, onlySelf: true })
@@ -941,6 +951,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }
             else if (e === '4') {
+                this.form.controls.tipoLocalCalulado.setValue('No tiene.')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+            }
+            else if (e === '5') {
+                this.form.controls.tipoLocalCalulado.setValue('Propio.')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+            }
+            else if (e === '6') {
                 this.form.controls.tipoLocalCalulado.setValue('No tiene.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }

@@ -62,7 +62,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.createFormulario();
-        
+
         // Carga de lista de valores
         this.getParentesco();
         this.getTiposDocumentos();
@@ -250,6 +250,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         });
     }
 
+    get tipoDocumento(): AbstractControl {
+        return this.formDeudorSolidario.controls.tipoDocumento
+    }
+
     /**
      * @description: Obtiene la data para cargar al formulario
      */
@@ -383,19 +387,19 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                     .value === ''
                     ? '0099-01-01'
                     : this.formDeudorSolidario.controls
-                          .fechaDesvinculacionExpuesta.value,
+                        .fechaDesvinculacionExpuesta.value,
             fechaDesvinculacionPublico:
                 this.formDeudorSolidario.controls.fechaDesvinculacionPublico
                     .value === ''
                     ? '0099-01-01'
                     : this.formDeudorSolidario.controls
-                          .fechaDesvinculacionPublico.value,
+                        .fechaDesvinculacionPublico.value,
             fechaDesvinculacion:
                 this.formDeudorSolidario.controls.fechaDesvinculacion.value ===
-                ''
+                    ''
                     ? '0099-01-01'
                     : this.formDeudorSolidario.controls.fechaDesvinculacion
-                          .value,
+                        .value,
         };
 
 
@@ -426,7 +430,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
             .postDatosFabricaCredita(datos)
             .subscribe(

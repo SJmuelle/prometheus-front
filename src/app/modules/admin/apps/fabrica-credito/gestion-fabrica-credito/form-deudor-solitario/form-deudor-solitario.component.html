@@ -39,10 +39,20 @@
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>N° de identificación</mat-label>
-                    <input matInput type="text" [formControlName]="'identificacion'" [required]="">
+                    <input matInput type="text" [formControlName]="'identificacion'"
+                        [mask]="tipoDocumento?.value === 'CE' ? '' : 'separator.0'"
+                        [thousandSeparator]="tipoDocumento?.value === 'CE' ? '' :  '.'"
+                        [minlength]="tipoDocumento?.value === 'CE' ? 6 : 5"
+                        [maxlength]="tipoDocumento?.value === 'CE' ? 7 : 13">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.identificacion.errors?.required">
                         Este campo es requerido.
+                    </mat-error>
+                    <mat-error *ngIf="formDeudorSolidario.controls.identificacion.errors?.minlength">
+                        No puede ser menor a {{tipoDocumento?.value === 'CE' ? 6 : 5}} digitos
+                    </mat-error>
+                    <mat-error *ngIf="formDeudorSolidario.controls.identificacion.errors?.maxlength">
+                        No puede ser menor a {{tipoDocumento?.value === 'CE' ? 7 : 10}} digitos
                     </mat-error>
                 </mat-form-field>
             </ng-container>
