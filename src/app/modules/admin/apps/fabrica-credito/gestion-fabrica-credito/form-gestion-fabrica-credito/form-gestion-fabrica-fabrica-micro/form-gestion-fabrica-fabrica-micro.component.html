@@ -505,18 +505,18 @@
                                     Este campo es requerido.
                                 </mat-error>
                                 <mat-error *ngIf="
-                                                                        form.controls.fechaExpedicion
-                                                                            .errors?.dateError
-                                                                    ">
+                                        form.controls.fechaExpedicion.errors
+                                            ?.dateError
+                                    ">
                                     La fecha no puede ser mayor al día de hoy.
                                 </mat-error>
                                 <mat-error *ngIf="
-                                                                                                        form.controls.fechaExpedicion
-                                                                                                            .errors?.expedicionDate
-                                                                                                    ">
-                                    La fecha no puede ser menor de 18 años de la fecha de nacimiento.
+                                        form.controls.fechaExpedicion.errors
+                                            ?.expedicionDate
+                                    ">
+                                    La fecha no puede ser menor de 18 años de la
+                                    fecha de nacimiento.
                                 </mat-error>
-
                             </mat-form-field>
 
                             <mat-form-field>
@@ -868,6 +868,12 @@
                                             .errors?.min
                                     ">
                                     No puede ser menor de 0
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.mesesTiempoResidencia
+                                            .errors?.max
+                                    ">
+                                    No puede ser mayor a 11
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
