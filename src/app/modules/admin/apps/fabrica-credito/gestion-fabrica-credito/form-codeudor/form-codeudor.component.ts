@@ -1,4 +1,4 @@
-import { Component, OnInit,ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -1321,16 +1321,18 @@ export class FormCodeudorComponent implements OnInit {
                 // Get errors of every form control
                 console.log(this.form.get(key).errors, key);
             });
-            this.scrollToFirstInvalidControl();
+            setTimeout(() => {
+                this.scrollToFirstInvalidControl();
+            }, 100);
         } else {
             this.onPostDatos();
         }
     }
 
-    public formatearDataInicial(): void{
+    public formatearDataInicial(): void {
 
         //fechas
-        
+
         this.form.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.form.controls.fechaDesvinculacionExpuesta.setValue('');
         this.form.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.form.controls.fechaDesvinculacionPublico.setValue('');
         this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
@@ -1338,20 +1340,20 @@ export class FormCodeudorComponent implements OnInit {
 
     }
 
-        /**
-     * @description hace scroll al primerer input invalido, puede ser un input o select
-     */
-        private scrollToFirstInvalidControl() {
-            let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
-            
-            if(!firstInvalidControl){
-                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
-                 if(!firstInvalidControl) {
-                    firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
-                 }
+    /**
+ * @description hace scroll al primerer input invalido, puede ser un input o select
+ */
+    private scrollToFirstInvalidControl() {
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+
+        if (!firstInvalidControl) {
+            firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+            if (!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
             }
-            console.log("firstInvalidControl", firstInvalidControl);
-            
-            firstInvalidControl?.focus(); //without smooth behavior
-          }
+        }
+        console.log("firstInvalidControl", firstInvalidControl);
+
+        firstInvalidControl?.focus(); //without smooth behavior
+    }
 }

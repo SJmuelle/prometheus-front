@@ -38,7 +38,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        
+
 
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
@@ -311,92 +311,94 @@
             </ng-container>
         </div>
 
-        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-            
-            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Tipo de via</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'"
-                        (selectionChange)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)">
-                        <mat-option disabled [value]="'seleccione'">Seleccione
-                        </mat-option>
-                        <mat-option *ngFor="let tipoVia of dataInicial?.nomenclarturas" [value]="tipoVia.nombre">
-                            {{tipoVia.nombre}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.direccionTipoVia.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Via principal</mat-label>
-                    <input
-                        (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)"
-                        matInput type="text" [formControlName]="'direccionViaPrincipal'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.direccionViaPrincipal.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Número vía</mat-label>
-                    <input matInput type="text"
-                        (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)"
-                        [formControlName]="'direccionNumeroVia'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.direccionNumeroVia.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Distancia vía</mat-label>
-                    <input matInput type="text"
-                        (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value)"
-                        [formControlName]="'direccionDistanciaVia'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.direccionDistanciaVia.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-            </div>
-            <mat-form-field>
-                <mat-label class="fuse-mat-dense">Complemento</mat-label>
-                <input matInput type="text" [formControlName]="'direccionComplemento'">
+
+
+        <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Tipo de via</mat-label>
+                <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'"
+                    (selectionChange)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value + ' ' + form.controls.direccionComplemento.value)">
+                    <mat-option disabled [value]="'seleccione'">Seleccione
+                    </mat-option>
+                    <mat-option *ngFor="let tipoVia of dataInicial?.nomenclarturas" [value]="tipoVia.nombre">
+                        {{tipoVia.nombre}}
+                    </mat-option>
+                </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="form.controls.direccionTipoVia.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
-            <mat-form-field class="sm:col-span-2 md:col-span-3">
-                <mat-label>Dirección completa</mat-label>
-                <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Via principal</mat-label>
+                <input
+                    (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value + ' ' + form.controls.direccionComplemento.value)"
+                    matInput type="text" [formControlName]="'direccionViaPrincipal'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="form.controls.direccionViaPrincipal.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
-            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Años de residencia</mat-label>
-                    <input matInput type="number" [formControlName]="'annosTiempoResidencia'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.annosTiempoResidencia.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field class="fuse-mat-dense">
-                    <mat-label>Meses de residencia</mat-label>
-                    <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'"
-                        min="0">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                    <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
-            </div>
+
+
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Número vía</mat-label>
+                <input matInput type="text"
+                    (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value + ' ' + form.controls.direccionComplemento.value)"
+                    [formControlName]="'direccionNumeroVia'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="form.controls.direccionNumeroVia.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Distancia vía</mat-label>
+                <input matInput type="text"
+                    (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value + ' ' + form.controls.direccionComplemento.value)"
+                    [formControlName]="'direccionDistanciaVia'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="form.controls.direccionDistanciaVia.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field class="sm:col-span-1 md:col-span-1">
+            <mat-label class="fuse-mat-dense">Complemento</mat-label>
+            <input matInput type="text" [formControlName]="'direccionComplemento'"
+                (keyup)="form.controls.direccionResidencial.setValue(form.controls.direccionTipoVia.value+' '+form.controls.direccionViaPrincipal.value+' # '+form.controls.direccionNumeroVia.value+' - '+form.controls.direccionDistanciaVia.value + ' ' + form.controls.direccionComplemento.value)">
+            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+            </mat-icon>
+        </mat-form-field>
+        <mat-form-field class="sm:col-span-1 md:col-span-1">
+            <mat-label>Dirección completa</mat-label>
+            <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
+        </mat-form-field>
+        <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Años de residencia</mat-label>
+                <input matInput type="number" [formControlName]="'annosTiempoResidencia'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="form.controls.annosTiempoResidencia.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="fuse-mat-dense">
+                <mat-label>Meses de residencia</mat-label>
+                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+                <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
             <mat-form-field>
                 <mat-label>Tipo de vivienda</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
@@ -657,15 +659,15 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3" *ngIf="(form.controls.ocupacion.value === 'INDNFO' ||
+        <ng-container *ngIf="(form.controls.ocupacion.value === 'INDNFO' ||
             form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDEFO'
             )">
-            
-            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
+
+            <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Tipo de via</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'direccionNegocioVia'"
-                        (selectionChange)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)">
+                        (selectionChange)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value + ' ' + form.controls.direccionNegocioCompleto.value)">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let tipoVia of dataInicial?.nomenclarturas" [value]="tipoVia.nombre">
@@ -681,7 +683,7 @@
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Via principal</mat-label>
                     <input
-                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
+                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value + ' ' + form.controls.direccionNegocioCompleto.value)"
                         matInput type="text" [formControlName]="'direccionNegocioPrincipal'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -689,12 +691,12 @@
                         Este campo es requerido.
                     </mat-error>
                 </mat-form-field>
-            </div>
-            <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
+
+
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Número vía</mat-label>
                     <input matInput type="text"
-                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
+                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value + ' ' + form.controls.direccionNegocioCompleto.value)"
                         [formControlName]="'direccionNegocioNroVia'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -705,7 +707,7 @@
                 <mat-form-field class="fuse-mat-dense">
                     <mat-label>Distancia vía</mat-label>
                     <input matInput type="text"
-                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value)"
+                        (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value + ' ' + form.controls.direccionNegocioCompleto.value)"
                         [formControlName]="'direccionNegocioDistanciaVia'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
@@ -714,20 +716,24 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <mat-form-field>
+
+            <mat-form-field class="sm:col-span-1 md:col-span-1">
                 <mat-label>Complemento</mat-label>
-                <input matInput type="text" [formControlName]="'direccionNegocioCompleto'">
+                <input matInput type="text"
+                    (keyup)="form.controls.direccionNegocio.setValue(form.controls.direccionNegocioVia.value+' '+form.controls.direccionNegocioPrincipal.value+' # '+form.controls.direccionNegocioNroVia.value+' - '+form.controls.direccionNegocioDistanciaVia.value + ' ' + form.controls.direccionNegocioCompleto.value)"
+                    [formControlName]="'direccionNegocioCompleto'">
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     <mat-error *ngIf="form.controls.direccionNegocioCompleto.errors?.required">
                         Este campo es requerido.
                     </mat-error>
                 </mat-icon>
             </mat-form-field>
-            <mat-form-field class="sm:col-span-2 md:col-span-3">
+
+            <mat-form-field class="sm:col-span-1 md:col-span-1">
                 <mat-label>Dirección del negocio</mat-label>
                 <input matInput type="text" [readonly]="true" [formControlName]="'direccionNegocio'">
             </mat-form-field>
-        </div>
+        </ng-container>
         <div *ngIf="form.controls.ocupacion.value === 'INDEFO' || form.controls.ocupacion.value === 'PROIN' || form.controls.ocupacion.value === 'INDNFO'"
             class="grid gap-2 sm:grid-cols-4 grid-cols-1">
             <mat-form-field class="sm:col-span-2 md:col-span-3">

@@ -22,20 +22,20 @@
                 </mat-form-field>
             </ng-container>
 
-                <mat-form-field *ngIf="dataInicial" class="w-1/2 px-3 fuse-mat-dense">
-                    <mat-label>Tipo de documento</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" [required]="">
-                        <mat-option disabled [value]="'seleccione'">Seleccione
-                        </mat-option>
-                        <mat-option *ngFor="let tipoDocumento of dataInicial.tiposDocumentos"
-                            [value]="tipoDocumento.codigo">{{tipoDocumento.valor}}
-                        </mat-option>
-                    </mat-select>
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-                    <mat-error *ngIf="formDeudorSolidario.controls.tipoDocumento.errors?.required">
-                        Este campo es requerido.
-                    </mat-error>
-                </mat-form-field>
+            <mat-form-field *ngIf="dataInicial" class="w-1/2 px-3 fuse-mat-dense">
+                <mat-label>Tipo de documento</mat-label>
+                <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" [required]="">
+                    <mat-option disabled [value]="'seleccione'">Seleccione
+                    </mat-option>
+                    <mat-option *ngFor="let tipoDocumento of dataInicial.tiposDocumentos"
+                        [value]="tipoDocumento.codigo">{{tipoDocumento.valor}}
+                    </mat-option>
+                </mat-select>
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                <mat-error *ngIf="formDeudorSolidario.controls.tipoDocumento.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
             <ng-container>
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>N° de identificación</mat-label>
@@ -167,7 +167,7 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        
+
         <div class="-mx-3 md:flex mt-3 mb-2">
             <ng-container *ngIf="tipoVia$ | async as tipoVias">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
@@ -227,14 +227,17 @@
                     </mat-error>
                 </mat-form-field>
             </ng-container>
-            <ng-container>
-                <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
-                    <mat-label>Complemento</mat-label>
-                    <input (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value)" matInput type="text" [formControlName]="'direccionComplemento'">
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                    </mat-icon>
-                </mat-form-field>
-            </ng-container>
+
+        </div>
+        <div class="-mx-3 md:flex mt-3 mb-2">
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Complemento</mat-label>
+                <input
+                    (keyup)="formDeudorSolidario.controls.direccionResidencial.setValue(formDeudorSolidario.controls.direccionTipoVia.value+' '+formDeudorSolidario.controls.direccionViaPrincipal.value+' # '+formDeudorSolidario.controls.direccionNumeroVia.value+' - '+formDeudorSolidario.controls.direccionDistanciaVia.value + ' ' + formDeudorSolidario.controls.direccionComplemento.value)"
+                    matInput type="text" [formControlName]="'direccionComplemento'">
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                </mat-icon>
+            </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -243,8 +246,8 @@
             </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
-           
-            
+
+
             <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
                 <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                     <mat-label>Tipo de vivienda</mat-label>
