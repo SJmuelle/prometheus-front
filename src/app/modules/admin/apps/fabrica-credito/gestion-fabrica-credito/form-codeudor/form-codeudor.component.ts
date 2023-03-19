@@ -95,13 +95,27 @@ export class FormCodeudorComponent implements OnInit {
             .subscribe(({ data }) => {
                 Swal.close();
                 this.dataGeneralIncial = data;
+
+                this.addValidation();
                 this.form.patchValue(data);
 
                 // formatear data para los select
                 this.form.controls.experienciaActividad.setValue(
                     Number(this.form.controls.experienciaActividad.value)
                 );
-                this.addValidation();
+
+                // formateo de fechas
+                const fechaDesExpuesta = this.form.controls.fechaDesvinculacionExpuesta.value;
+                this.form.controls.fechaDesvinculacionExpuesta.setValue(
+                    fechaDesExpuesta === '0099-01-01' ? '' : fechaDesExpuesta
+                )
+                const fechaDesPublico = this.form.controls.fechaDesvinculacionPublico.value;
+                this.form.controls.fechaDesvinculacionPublico.setValue(
+                    fechaDesPublico === '0099-01-01' ? '' : fechaDesPublico
+                )
+
+
+
 
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -1028,6 +1042,7 @@ export class FormCodeudorComponent implements OnInit {
                         ?.disable({ emitEvent: true, onlySelf: true });
                 }
             });
+
         this.form
             .get('vinculadoActualExpuesta')
             .valueChanges.subscribe((e: string) => {

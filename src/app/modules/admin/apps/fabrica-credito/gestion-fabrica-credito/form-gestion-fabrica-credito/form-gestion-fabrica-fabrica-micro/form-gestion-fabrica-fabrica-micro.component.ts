@@ -85,7 +85,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             this.form.markAllAsTouched();
             Object.keys(this.form.controls).forEach(key => {
                 // Get errors of every form control
-                console.log(this.form.get(key).errors, key);               
+                console.log(this.form.get(key).errors, key);
             });
             this.scrollToFirstInvalidControl();
         } else {
@@ -98,11 +98,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos, autorizacionBanco,telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+        const { numeroHijos, autorizacionBanco, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
         const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
-        const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta ? moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD'): "0099-01-01";
+        const fechaDesvinculacionExpuestaFormato = fechaDesvinculacionExpuesta ? moment(fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD') : "0099-01-01";
         const numeroHijosFormato = Number(numeroHijos);
         const barrioResidenciaFormato = Number(barrioResidencia);
         const antiguedadActividadFormato = Number(antiguedadActividad);
@@ -113,7 +113,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const autorizacionBancoFormato = autorizacionBanco ? 'S' : 'N';
         const modificadaSolicitudFormato = valorSolicitadoFormato;
         const telefonoNegocioFormato = telefonoNegocio.toString();
-        // delete data.otrosIngresos; modificadaSolicitud 
+        // delete data.otrosIngresos; modificadaSolicitud
         const datosFormularios: FormularioCreditoMicro = {
             fechaNacimiento: fechaNacimientoFormato,
             fechaExpedicion: fechaExpedicionFormato,
@@ -127,7 +127,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             valorSolicitado: valorSolicitadoFormato,
             autorizacionBanco: autorizacionBancoFormato,
             plazo: plazoFormato,
-            modificadaSolicitud:'N',
+            modificadaSolicitud: 'N',
             telefonoNegocio: telefonoNegocioFormato,
             ...data
         };
@@ -158,7 +158,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
                 this.formatearDataInicial();
-                
+
 
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -181,8 +181,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 if (data.codigoDepartamentoExpedicion) {
                     this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
                 }
-                if(data.tipoActividad){
-                    this.getActividadEconomica();   
+                if (data.tipoActividad) {
+                    this.getActividadEconomica();
                 }
             });
 
@@ -201,15 +201,15 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.fabricaDatos = data;
 
                 console.log(data, "Fabrica credito data inicial");
-                
+
             });
     }
 
-    public formatearDataInicial(): void{
-        this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value  === 'S');
+    public formatearDataInicial(): void {
+        this.form.controls.autorizacionBanco.setValue(this.form.controls.autorizacionBanco.value === 'S');
 
         //fechas
-        
+
         this.form.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.form.controls.fechaDesvinculacionExpuesta.setValue('');
         this.form.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.form.controls.fechaDesvinculacionPublico.setValue('');
         this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
@@ -301,18 +301,18 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
     }
 
-    private getActividadEconomica():void{
+    private getActividadEconomica(): void {
         const tipoActividad = this.form.controls.tipoActividad.value;
         const nivelEstudio = this.form.controls.nivelEstudio.value;
         const camaraComercio = this.form.controls.camaraComercio.value;
 
-        if(tipoActividad && nivelEstudio && camaraComercio){
-            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio,tipoActividad,camaraComercio).subscribe(res => {
+        if (tipoActividad && nivelEstudio && camaraComercio) {
+            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).subscribe(res => {
                 this.actividadEconomica = res.data
             });
         }
 
-        
+
     }
     /**
      * @description: Obtiene el listado de barrios del negocio
@@ -334,7 +334,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'success'
                 );
                 setTimeout(() => {
-                      location.reload()
+                    location.reload()
                 }, 1000);
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
@@ -361,11 +361,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             if (result.isConfirmed) {
 
             } else {
-                if(type === "INTEGER"){
+                if (type === "INTEGER") {
 
                     this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
                 }
-                if(type === "STRING"){
+                if (type === "STRING") {
                     this.form.controls[variable].setValue(this.dataGeneralIncial[variable].toString());
                 }
             }
@@ -377,17 +377,17 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     private scrollToFirstInvalidControl() {
         let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
-        
-        if(!firstInvalidControl){
-             firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
-             if(!firstInvalidControl) {
+
+        if (!firstInvalidControl) {
+            firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+            if (!firstInvalidControl) {
                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
-             }
+            }
         }
         console.log("firstInvalidControl", firstInvalidControl);
-        
+
         firstInvalidControl?.focus(); //without smooth behavior
-      }
+    }
 
     /**
      * @description :creando el formulario
@@ -405,12 +405,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionTipoDocumento: [''],
             celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             descripcionTipoCredito: [''],
-            primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+            primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)]],
             descripcionEstado: [''],
             descripcionSubestado: [''],
-            segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
-            primerApellido: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
-            segundoApellido: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)]],
+            segundoNombre: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)]],
+            primerApellido: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)]],
+            segundoApellido: ['', [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)]],
             estadoCivil: ['', [Validators.required]],
             email: ['', [Validators.required, Validators.email]],
             genero: ['', [Validators.required]],
@@ -419,7 +419,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             nivelEstudio: ['', [Validators.required]],
             numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            fechaExpedicion: ['', [Validators.required,this.validatedDate.bind(this)]],
+            fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this)]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
@@ -528,7 +528,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
-            actividadNoDesignada:[''],
+            actividadNoDesignada: [''],
             ubicacionNegocioCalculado: [''],
             tipoVereda: ['', Validators.required],
             descripcionVereda: ['', Validators.required],
@@ -762,10 +762,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('numeroCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
             }
 
-            if(e === 'N'){
+            if (e === 'N') {
                 this.form.get('autorizacionBanco')?.setValidators([Validators.requiredTrue])
                 this.form.get('autorizacionBanco')?.enable({ emitEvent: true, onlySelf: true })
-            }else{
+            } else {
                 this.form.get('autorizacionBanco')?.setValidators(null)
                 this.form.get('autorizacionBanco')?.disable({ emitEvent: true, onlySelf: true })
             }
@@ -795,7 +795,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
 
-        // cargo publico 
+        // cargo publico
         this.form.get('legalCargoPublico').valueChanges.subscribe((e: string) => {
             if (e === 'S') {
                 this.form.get('cargoPublico')?.setValidators([Validators.required, Validators.maxLength(80)])
@@ -816,7 +816,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
         this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
             if (e === 'N') {
-                this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required,this.validatedDate.bind(this)])
+                this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionPublico')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -825,7 +825,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
 
-        // Datos cargo publico familiar 
+        // Datos cargo publico familiar
         this.form.get('legalPersonalExpuesta').valueChanges.subscribe((e: string) => {
             if (e === 'S') {
                 this.form.get('vinculacionExpuesta')?.setValidators([Validators.required, Validators.max(50)])
@@ -865,8 +865,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
         this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
+
             if (e === 'N') {
-                this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required,this.validatedDate.bind(this)])
+                this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -892,9 +893,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
 
             if (e === 'CA' || e === 'UL') {
-                this.form.get('primerNombreConyuge')?.setValidators([Validators.required])
+                this.form.get('primerNombreConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
                 this.form.get('primerNombreConyuge')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('primerApellidoConyuge')?.setValidators([Validators.required])
+                this.form.get('primerApellidoConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
                 this.form.get('primerApellidoConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('tipoDocumentoConyuge')?.setValidators([Validators.required])
                 this.form.get('tipoDocumentoConyuge')?.enable({ emitEvent: true, onlySelf: true })
@@ -924,22 +925,22 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('tipoEmpleoConyuge')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
-        
+
 
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             // Local comercial propio
-            if(e === '1'){
+            if (e === '1') {
                 this.form.controls.tipoLocalCalulado.setValue('Propio.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
             }
-            else if(e === '2'){
+            else if (e === '2') {
                 this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
-            }else if(e === '3'){
+            } else if (e === '3') {
                 this.form.controls.tipoLocalCalulado.setValue('Propio.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }
-            else if(e === '4'){
+            else if (e === '4') {
                 this.form.controls.tipoLocalCalulado.setValue('No tiene.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }
@@ -948,14 +949,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     private validatedDate(control: AbstractControl) {
         const valueControl = control?.value ?? '';
-        const date =  moment(valueControl).format('YYYY-MM-DD') 
-        const errors = {dateError: true};
-         
+        const date = moment(valueControl).format('YYYY-MM-DD')
+        const errors = { dateError: true };
+
         // Set the validation error on the matching control
-        if(this.fechaActual.isBefore(date)){
+        if (this.fechaActual.isBefore(date)) {
 
             return errors
-        }else{
+        } else {
             return null
         }
     }

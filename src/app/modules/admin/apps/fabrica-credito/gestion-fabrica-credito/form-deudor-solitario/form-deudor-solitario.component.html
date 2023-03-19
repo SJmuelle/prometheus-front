@@ -359,6 +359,9 @@
                 <mat-error *ngIf="formDeudorSolidario.controls.fechaDesvinculacionPublico.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="formDeudorSolidario.controls.fechaDesvinculacionPublico.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
+                </mat-error>
             </mat-form-field>
         </div>
         <span *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.value === 'S'"
@@ -447,6 +450,9 @@
                 <mat-datepicker #fechaDesvinculacionExpuesta readonly></mat-datepicker>
                 <mat-error *ngIf="formDeudorSolidario.controls.fechaDesvinculacionExpuesta.errors?.required">
                     Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="formDeudorSolidario.controls.fechaDesvinculacionExpuesta.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
                 </mat-error>
             </mat-form-field>
         </div>
