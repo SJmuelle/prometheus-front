@@ -264,7 +264,7 @@ export class FormCodeudorComponent implements OnInit {
             ],
             fechaExpedicion: [
                 '',
-                [Validators.required, this.validatedDate.bind(this)],
+                [Validators.required, this.validatedDate.bind(this), this.validateExpedicion.bind(this)],
             ],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
@@ -1370,5 +1370,23 @@ export class FormCodeudorComponent implements OnInit {
         console.log("firstInvalidControl", firstInvalidControl);
 
         firstInvalidControl?.focus(); //without smooth behavior
+    }
+
+    private validateExpedicion(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        let date: any = moment(valueControl)
+
+        const errors = { expedicionDate: true };
+
+        const nacimientoDate: any = moment(this.form?.controls.fechaNacimiento.value || '').format('YYYY-MM-DD');
+        // Set the validation error on the matching control
+
+        date.subtract(18, 'years');
+        if (date.isBefore(nacimientoDate)) {
+
+            return errors
+        } else {
+            return null
+        }
     }
 }

@@ -59,12 +59,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     ngOnInit(): void {
         this.cargueInicial();
+        this.addValidation()
         this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
         if (this.permisoEditar) {
             this.form.disable();
         }
-        this.addValidation()
     }
 
     private cargueInicial() {
@@ -419,7 +419,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             nivelEstudio: ['', [Validators.required]],
             numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this)]],
+            fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this), this.validateExpedicion.bind(this)]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
@@ -954,6 +954,24 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // Set the validation error on the matching control
         if (this.fechaActual.isBefore(date)) {
+
+            return errors
+        } else {
+            return null
+        }
+    }
+
+    private validateExpedicion(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        let date: any = moment(valueControl)
+
+        const errors = { expedicionDate: true };
+
+        const nacimientoDate: any = moment(this.form?.controls.fechaNacimiento.value || '').format('YYYY-MM-DD');
+        // Set the validation error on the matching control
+
+        date.subtract(18, 'years');
+        if (date.isBefore(nacimientoDate)) {
 
             return errors
         } else {

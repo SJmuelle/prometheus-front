@@ -510,6 +510,13 @@
                                                                     ">
                                     La fecha no puede ser mayor al día de hoy.
                                 </mat-error>
+                                <mat-error *ngIf="
+                                                                                                        form.controls.fechaExpedicion
+                                                                                                            .errors?.expedicionDate
+                                                                                                    ">
+                                    La fecha no puede ser menor de 18 años de la fecha de nacimiento.
+                                </mat-error>
+
                             </mat-form-field>
 
                             <mat-form-field>
