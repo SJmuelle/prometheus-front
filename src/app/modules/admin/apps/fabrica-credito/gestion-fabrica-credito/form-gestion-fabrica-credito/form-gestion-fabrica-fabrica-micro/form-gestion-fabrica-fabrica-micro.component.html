@@ -650,7 +650,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="grid gap-2 sm:grid-cols-5 grid-cols-1">
+                        <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
                             <mat-form-field class="fuse-mat-dense">
                                 <mat-label>Tipo de via</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'"
@@ -813,7 +813,7 @@
                             <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
                         </mat-form-field>
 
-                        <div class="grid gap-2 sm:grid-cols-3 grid-cols-1">
+                        <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
                             <mat-form-field class="fuse-mat-dense">
                                 <mat-label>Años de residencia</mat-label>
                                 <input matInput type="number" [formControlName]="'annosTiempoResidencia'" />
@@ -871,24 +871,25 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
+                            <mat-form-field>
+                                <mat-label>Estrato</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'estrato'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="
+                                                                    let item of dataInicial?.estratosVivienda
+                                                                " [value]="item.codigo">
+                                        {{ item.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="form.controls.estrato.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
                         </div>
-                        <mat-form-field>
-                            <mat-label>Estrato</mat-label>
-                            <mat-select [value]="'seleccione'" [formControlName]="'estrato'">
-                                <mat-option disabled [value]="'seleccione'">Seleccione
-                                </mat-option>
-                                <mat-option *ngFor="
-                                        let item of dataInicial?.estratosVivienda
-                                    " [value]="item.codigo">
-                                    {{ item.nombre }}
-                                </mat-option>
-                            </mat-select>
-                            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                            </mat-icon>
-                            <mat-error *ngIf="form.controls.estrato.errors?.required">
-                                Este campo es requerido.
-                            </mat-error>
-                        </mat-form-field>
+
 
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
                             negocio</span>
@@ -1178,11 +1179,11 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                            <div class="grid grid-cols-2 gap-3">
-                                <mat-form-field class="fuse-mat-dense">
-                                    <mat-label>Tipo de via</mat-label>
-                                    <mat-select (selectionChange)="
+                        <div class="grid gap-3 sm:grid-cols-4 grid-cols-1 ">
+
+                            <mat-form-field class="fuse-mat-dense">
+                                <mat-label>Tipo de via</mat-label>
+                                <mat-select (selectionChange)="
                                             form.controls.direccionNegocio.setValue(
                                                 form.controls
                                                     .direccionNegocioVia.value +
@@ -1206,26 +1207,26 @@
                                         " [value]="'seleccione'" [formControlName]="
                                             'direccionNegocioVia'
                                         ">
-                                        <mat-option disabled [value]="'seleccione'">Seleccione
-                                        </mat-option>
-                                        <mat-option *ngFor="
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="
                                                 let tipoVia of dataInicial?.nomenclarturas
                                             " [value]="tipoVia.nombre">
-                                            {{ tipoVia.nombre }}
-                                        </mat-option>
-                                    </mat-select>
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                    <mat-error *ngIf="
+                                        {{ tipoVia.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
                                             form.controls.direccionNegocioVia
                                                 .errors?.required
                                         ">
-                                        Este campo es requerido.
-                                    </mat-error>
-                                </mat-form-field>
-                                <mat-form-field class="fuse-mat-dense">
-                                    <mat-label>Via principal</mat-label>
-                                    <input matInput type="text" [formControlName]="
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="fuse-mat-dense">
+                                <mat-label>Via principal</mat-label>
+                                <input matInput type="text" [formControlName]="
                                             'direccionNegocioPrincipal'
                                         " (keyup)="
                                             form.controls.direccionNegocio.setValue(
@@ -1249,21 +1250,21 @@
                                                         .value
                                             )
                                         " />
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                    <mat-error *ngIf="
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
                                             form.controls
                                                 .direccionNegocioPrincipal
                                                 .errors?.required
                                         ">
-                                        Este campo es requerido.
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
-                                <mat-form-field class="fuse-mat-dense">
-                                    <mat-label>Número vía</mat-label>
-                                    <input matInput type="text" [formControlName]="
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+
+
+                            <mat-form-field class="fuse-mat-dense">
+                                <mat-label>Número vía</mat-label>
+                                <input matInput type="text" [formControlName]="
                                             'direccionNegocioNroVia'
                                         " (keyup)="
                                             form.controls.direccionNegocio.setValue(
@@ -1287,18 +1288,18 @@
                                                         .value
                                             )
                                         " />
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                    <mat-error *ngIf="
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
                                             form.controls.direccionNegocioNroVia
                                                 .errors?.required
                                         ">
-                                        Este campo es requerido.
-                                    </mat-error>
-                                </mat-form-field>
-                                <mat-form-field class="fuse-mat-dense">
-                                    <mat-label>Distancia vía</mat-label>
-                                    <input matInput type="text" [formControlName]="
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="fuse-mat-dense">
+                                <mat-label>Distancia vía</mat-label>
+                                <input matInput type="text" [formControlName]="
                                             'direccionNegocioDistanciaVia'
                                         " (keyup)="
                                             form.controls.direccionNegocio.setValue(
@@ -1322,17 +1323,16 @@
                                                         .value
                                             )
                                         " />
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                    </mat-icon>
-                                    <mat-error *ngIf="
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
                                             form.controls
                                                 .direccionNegocioDistanciaVia
                                                 .errors?.required
                                         ">
-                                        Este campo es requerido.
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
                         </div>
                         <mat-form-field class="md:col-span-1 sm:grid-cols-1">
                             <mat-label>Complemento</mat-label>
@@ -1574,8 +1574,10 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>
-                                    ¿Quién atiende el negocio?</mat-label>
-                                <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'" />
+                                    Atiende el negocio</mat-label>
+                                <input matInput type="text"
+                                    matTooltip="En caso de enfermedad o situación que requiera la no presencia del titular"
+                                    [formControlName]="'nombreAtiendeNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
