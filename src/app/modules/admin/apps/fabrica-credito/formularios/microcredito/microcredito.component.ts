@@ -19,7 +19,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     editable = true;
     public unidadNegocio: 1;
     public tipoIdentificacion: string = this.route.snapshot.paramMap.get('tipoIdentificacion');
-    public identificacion: string = this.route.snapshot.paramMap.get('identificacion');
+    public identificacion: string = this.route.snapshot.paramMap.get('id');
+    public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
 
     constructor(

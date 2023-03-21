@@ -84,8 +84,8 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
      */
     public onGetAgenda(data: any): void {
         if (data) {
-            const { tipoDocumento, identificacion } = data;
-            this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}`]);
+            const { tipoDocumento, identificacion,numeroSolicitud } = data;
+            this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
         } else {
             //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
 

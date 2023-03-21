@@ -32,6 +32,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
+import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { QuillModule } from 'ngx-quill';
         MatMenuModule,
         MatSliderModule,
         NgxMaskModule.forRoot(),
-        MatProgressBarModule
+        MatProgressBarModule,
+        GestionFabricaCreditoModule
   ]
 })
 export class FormulariosModule { }

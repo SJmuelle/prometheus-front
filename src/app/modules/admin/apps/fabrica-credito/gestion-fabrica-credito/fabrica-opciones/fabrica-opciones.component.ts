@@ -107,6 +107,9 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       return
     }
     switch (this.fabricaDatos.agenda) {
+      case '':
+        this.redireccionar('agenda-venta-digital');
+        break;
       case 'CO':
         this.redireccionar('agenda-completion');
         break;

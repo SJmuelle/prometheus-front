@@ -8,10 +8,10 @@ const routes: Routes = [
     component: MicrocreditoComponent
   },
   {
-    path: 'microcredito/:unidadNegocio/:tipoIdentificacion/:identificacion',
+    path: 'microcredito/:unidadNegocio/:tipoIdentificacion/:id/:num',
     component: MicrocreditoComponent
   }
-];
+]; 
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
