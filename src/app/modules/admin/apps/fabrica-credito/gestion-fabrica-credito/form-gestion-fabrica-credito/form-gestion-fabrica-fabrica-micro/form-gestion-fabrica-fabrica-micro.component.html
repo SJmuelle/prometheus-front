@@ -675,9 +675,9 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field *ngIf="form.controls.tipoVereda.value === '1'" hideRequiredMarker>
                                 <mat-label>Nombre vereda</mat-label>
-                                <input matInput type="text" [formControlName]="'descripcionVereda'" />
+                                <input matInput type="text" [formControlName]="'descripcionVereda'" required="true"/>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1207,11 +1207,11 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field  *ngIf="form.controls.tipoVeredaNegocio.value === '1'" hideRequiredMarker>
                                 <mat-label>Nombre vereda</mat-label>
                                 <input matInput type="text" [formControlName]="
                                         'descripcionVeredaNegocio'
-                                    " />
+                                    "  required="true"/>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
