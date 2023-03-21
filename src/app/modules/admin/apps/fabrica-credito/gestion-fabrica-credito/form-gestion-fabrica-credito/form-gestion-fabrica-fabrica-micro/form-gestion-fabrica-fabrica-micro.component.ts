@@ -39,6 +39,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public barrios$: Observable<any>;
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
+    public plazosCredito$: Observable<any>;
     public actividadEconomica: any;
 
     fechaActual: any = moment().locale("co");
@@ -168,6 +169,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
                 this.formatearDataInicial();
+
 
 
                 if (data.codigoDepartamento) {
@@ -309,6 +311,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     private getBarrios(codigo: string): void {
         this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
+    }
+
+    /**
+     * @description: Obtener limite de plazos por el valor de credito
+     */
+    private getPlazosCredito(valorCredito: number){
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro(valorCredito)
     }
 
     private getActividadEconomica(): void {
@@ -470,7 +479,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             antiguedadLocal: ['', Validators.required],
             nombreArrendador: [''],
             celularArrendador: [''],
-            tipoUbicacionNegocio: [''],
+            tipoUbicacionNegocio: ['',Validators.required],
             numeroEmpleados: ['', [Validators.required]],
             nombreAtiendeNegocio: ['', Validators.required],
             tieneOtrosPuntos: ['', Validators.required],

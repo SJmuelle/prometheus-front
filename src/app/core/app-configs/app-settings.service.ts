@@ -83,7 +83,8 @@ export class AppSettingsService {
             cargueSolicitudesFormularioSimulaciones: EndPoints.uri('/generic/qry/solicitudes-formulario-simulaciones'),
             listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
             listarBarriosMicro: EndPoints.uri('/generic/qry/listar-barrios-micro'),
-            nombreAsesorMicro: EndPoints.uri('/generic/qry/nombre-asesor-micro')
+            nombreAsesorMicro: EndPoints.uri('/generic/qry/nombre-asesor-micro'),
+            validationPlazoMicro: EndPoints.uri('/generic/validacion-plazos-microcredito') 
         }
     }
     /**

@@ -76,7 +76,7 @@
                                     'valorSolicitado',
                                     'INTEGER'
                                 )
-                            " />
+                            " />    
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field>
@@ -1546,6 +1546,10 @@
                                     Minimo 10 digitos.
                                 </mat-error>
                             </mat-form-field>
+                            
+                        </div>
+                        
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Tipo de ubicación del negocio</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'"
@@ -1573,8 +1577,6 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                        </div>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                             <mat-form-field>
                                 <mat-label>N° de empleados</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'numeroEmpleados'">
