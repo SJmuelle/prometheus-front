@@ -60,7 +60,7 @@ export class FormularioCreditoService {
             }));
     }
     validationPlazoMicro(monto){
-        return this._utilityService.postQuery(`${this._appSettings.formulario.url.validationPlazoMicro}`, monto)
+        return this._utilityService.postQuery(this._appSettings.formulario.url.validationPlazoMicro, monto)
             .pipe(map((res: any) => {
                 return res;
             }));

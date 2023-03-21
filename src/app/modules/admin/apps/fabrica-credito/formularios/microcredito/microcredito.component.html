@@ -16,7 +16,7 @@
                             Complete el formulario
                         </div>
                     </div>
-                  
+
 
                 </div>
 
@@ -252,19 +252,32 @@
             </div>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
-                <input matInput type="text" autocomplete="off" formControlName="valorCredito"
-                    (change)="validacionCampos('Cuánto dinero necesitas para tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'valorCredito', 'STRING')"
-                    mask="separator.0" thousandSeparator=".">
+                <input matInput type="text" autocomplete="off" formControlName="valorCredito" (change)="validacionCampos('Cuánto dinero necesitas para tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'valorCredito', 'STRING');
+                    getPlazosCredito(this.form.controls.valorCredito.value)
+                    " mask="separator.0" thousandSeparator=".">
                 <mat-error *ngIf="form.controls.valorCredito.errors?.required">
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-full px-3 fuse-mat-dense">
+            <mat-form-field *ngIf="this.plazosCredito$ | async as plazos" class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
-                <input matInput type="number" autocomplete="off" formControlName="plazoCredito"
+                <input matInput type="number" autocomplete="off" [min]="plazos.data[0].plazoMinimo"
+                    [max]="plazos.data[0].plazoMaximo" formControlName="plazoCredito"
                     (change)="validacionCampos('En cuántos meses vas a pagar tu crédito','Este campo modifica el motor de decisión y políticas SARC', 'plazoCredito', 'INTEGER')">
                 <mat-error *ngIf="form.controls.plazoCredito.errors?.required">
                     Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="
+                form.controls.plazoCredito.errors
+                    ?.min
+            ">
+                    No puede ser menor a {{plazos.data[0].plazoMinimo}}
+                </mat-error>
+                <mat-error *ngIf="
+                form.controls.plazoCredito.errors
+                    ?.max
+            ">
+                    No puede ser mayor a {{plazos.data[0].plazoMaximo}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">

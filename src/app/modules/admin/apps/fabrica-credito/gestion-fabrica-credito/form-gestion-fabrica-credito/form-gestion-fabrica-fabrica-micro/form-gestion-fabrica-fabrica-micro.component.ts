@@ -169,7 +169,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
                 this.formatearDataInicial();
-
+                
+                this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
 
                 if (data.codigoDepartamento) {
@@ -317,7 +318,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtener limite de plazos por el valor de credito
      */
     private getPlazosCredito(valorCredito: number){
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro(valorCredito)
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
     }
 
     private getActividadEconomica(): void {
@@ -531,7 +532,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             otroIngresoDeclaracionAuto: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            plazo: ['', [Validators.required, Validators.minLength(0)]],
+            plazo: ['', [Validators.required]],
             descripcionTipo: [''],
             titularMicro: [''],
             aplicaCodeudor: [''],

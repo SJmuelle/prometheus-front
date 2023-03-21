@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 @Component({
     selector: 'app-microcredito',
@@ -22,6 +22,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
+    public plazosCredito$: Observable<any>;
 
     constructor(
         private fb: FormBuilder,
@@ -133,7 +134,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.patchValue(resp.data);
                     this.dataGeneralIncial = resp.data
                     console.log("Datos", resp.data);
-
+                    this.getPlazosCredito(this.form.controls.valorCredito.value)
 
                     if (resp.data.departamentoNegocio) {
                         this.listarCiudades();
@@ -164,6 +165,13 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
             }
         })
+    }
+
+    /**
+     * @description: Obtener limite de plazos por el valor de credito
+     */
+    public getPlazosCredito(valorCredito: number){
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
     }
 
 

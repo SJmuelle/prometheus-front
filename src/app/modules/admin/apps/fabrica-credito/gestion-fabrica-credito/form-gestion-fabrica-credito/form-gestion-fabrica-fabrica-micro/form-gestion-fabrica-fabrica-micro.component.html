@@ -75,14 +75,16 @@
                                     'Este campo actualiza la capacidad de pago del cliente',
                                     'valorSolicitado',
                                     'INTEGER'
-                                )
-                            " />    
+                                );
+                                getPlazosCredito(this.form.controls.valorSolicitado.value)
+                            " />
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field *ngIf="this.plazosCredito$ | async as plazos">
                         <mat-label>Plazo</mat-label>
-                        <input matInput type="text" mask="separator.0" thousandSeparator="." [formControlName]="'plazo'"
-                            (change)="validacion('PL')" (change)="
+                        <input matInput type="number" [min]="plazos.data[0].plazoMinimo"
+                            [max]="plazos.data[0].plazoMaximo" [formControlName]="'plazo'" (change)="validacion('PL')"
+                            (change)="
                                 validacionCampos(
                                     'Plazo',
                                     'Este campo actualiza la capacidad de pago del cliente',
@@ -91,6 +93,24 @@
                                 )
                             " />
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+                        <mat-error *ngIf="
+                                        form.controls.plazo.errors
+                                            ?.required
+                                    ">
+                            Este campo es requerido.
+                        </mat-error>
+                        <mat-error *ngIf="
+                                form.controls.plazo.errors
+                                    ?.min
+                            ">
+                            No puede ser menor a {{plazos.data[0].plazoMinimo}}
+                        </mat-error>
+                        <mat-error *ngIf="
+                                form.controls.plazo.errors
+                                    ?.max
+                            ">
+                            No puede ser mayor a {{plazos.data[0].plazoMaximo}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Aplica codeudor</mat-label>
@@ -1546,9 +1566,9 @@
                                     Minimo 10 digitos.
                                 </mat-error>
                             </mat-form-field>
-                            
+
                         </div>
-                        
+
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Tipo de ubicación del negocio</mat-label>
