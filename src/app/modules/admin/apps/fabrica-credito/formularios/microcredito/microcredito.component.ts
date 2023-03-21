@@ -58,6 +58,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             valorCredito: ['', [Validators.required]],
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
+            acepto: [false, [Validators.requiredTrue]],
+            aceptoAntilavado: [false, [Validators.requiredTrue]],
 
         });
 
