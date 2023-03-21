@@ -429,7 +429,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             identificacion: [''],
             nombreCompleto: [''],
             descripcionTipoDocumento: [''],
-            celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern('^[3][0-9]{9}$')]],
             descripcionTipoCredito: [''],
             primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)]],
             descripcionEstado: [''],

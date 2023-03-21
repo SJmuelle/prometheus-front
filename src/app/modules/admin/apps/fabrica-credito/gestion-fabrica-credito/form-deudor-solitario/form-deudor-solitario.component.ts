@@ -96,7 +96,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                     Validators.required,
                     Validators.minLength(7),
                     Validators.maxLength(10),
-                    Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
+                    Validators.pattern('^[3][0-9]{9}$'),
                 ],
             ],
             descripcionTipoCredito: [''],
@@ -225,8 +225,6 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: ['', Validators.required],
             otroIngresoDeclaracionAuto: [''],
-            autoricacionDatosPersonalClaracionAuto: [''],
-            clausulaAnticurrupcionClaracionAuto: [''],
             plazo: [''],
             descripcionTipo: [''],
             titularMicro: [''],
@@ -247,8 +245,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
-            acepto: [false, [Validators.requiredTrue]],
-            aceptoAntilavado: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
+            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
         });
     }
 

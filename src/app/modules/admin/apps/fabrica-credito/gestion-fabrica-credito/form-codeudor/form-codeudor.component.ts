@@ -215,7 +215,7 @@ export class FormCodeudorComponent implements OnInit {
                     Validators.required,
                     Validators.minLength(7),
                     Validators.maxLength(10),
-                    Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
+                    Validators.pattern('^[3][0-9]{9}$'),
                 ],
             ],
             primerNombre: [
@@ -529,6 +529,10 @@ export class FormCodeudorComponent implements OnInit {
     private getBarriosNegocio(codigo: string): void {
         this.barriosNegocio$ =
             this.departamentosCiudadesService.getBarrios(codigo);
+    }
+
+    public cambiarNacionalidad(e:   MatSelectChange){
+        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO(A)')
     }
 
     // validaciones dinamicas

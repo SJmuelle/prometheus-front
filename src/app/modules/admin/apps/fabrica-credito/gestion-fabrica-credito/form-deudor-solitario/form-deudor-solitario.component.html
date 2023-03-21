@@ -103,12 +103,20 @@
             </mat-form-field>
             <ng-container>
                 <mat-form-field class="w-1/2 px-2">
-                    <mat-label>Teléfono / Celular</mat-label>
-                    <input matInput type="text" [formControlName]="'celular'" [required]="">
+                    <mat-label>Celular</mat-label>
+                    <input matInput type="text" mask="(000) 000 00 00"  [formControlName]="'celular'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.celular.errors?.required">
                         Este campo es requerido.
                     </mat-error>
+                    <mat-error *ngIf="formDeudorSolidario.controls.celular.errors?.minLength">
+                        Longitud mínima son 7
+                        dígitos.
+                    </mat-error>
+                    <mat-error *ngIf="
+                    formDeudorSolidario.controls.celular.errors
+                                                ?.pattern
+                                        ">Debe comenzar en 3.</mat-error>
                 </mat-form-field>
             </ng-container>
             <ng-container>
@@ -603,10 +611,10 @@
 
         <div class="grid grid-cols-1">
             <mat-checkbox class="ml-3" formControlName="autoricacionDatosPersonalClaracionAuto"> <a
-                    href="./assets/documentos/terminos_condiciones.pdf" target="_blank">Autorización de
+                    href="./assets/documentos/terminos_condiciones.pdf" class="no-underline" target="_blank">Autorización de
                     tratamiento de datos personales</a> </mat-checkbox>
             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
-                    href="./assets/documentos/clausula_veracidad.pdf" target="_blank"> Cláusula de
+                    href="./assets/documentos/clausula_veracidad.pdf" class="no-underline" target="_blank"> Cláusula de
                     Anticorrupción y Antilavado </a></mat-checkbox>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">

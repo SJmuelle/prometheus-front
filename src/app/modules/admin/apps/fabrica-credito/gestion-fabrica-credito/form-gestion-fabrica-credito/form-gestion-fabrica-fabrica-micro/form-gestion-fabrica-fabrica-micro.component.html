@@ -191,7 +191,7 @@
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Teléfono / Celular </mat-label>
+                                <mat-label>Celular </mat-label>
                                 <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'"
                                     [required]="true" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -206,10 +206,6 @@
                                         ">Este campo es requerido.</mat-error>
                                     <mat-error *ngIf="
                                             form.controls.celular.errors
-                                                ?.pattern
-                                        ">Solo se aceptan números.</mat-error>
-                                    <mat-error *ngIf="
-                                            form.controls.celular.errors
                                                 ?.minlength
                                         ">Longitud mínima son 7
                                         dígitos.</mat-error>
@@ -218,6 +214,10 @@
                                                 ?.maxlength
                                         ">Longitud máxima son 11
                                         dígitos.</mat-error>
+                                        <mat-error *ngIf="
+                                            form.controls.celular.errors
+                                                ?.pattern
+                                        ">Debe comenzar en 3.</mat-error>
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -401,8 +401,8 @@
 
                                 <mat-form-field>
                                     <mat-label>Nacionalidad</mat-label>
-                                    <input matInput type="text" [formControlName]="'nacionalidad'" />
-                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    <input matInput type="text" [formControlName]="'nacionalidad'" [readonly]="form.controls.descripcionTipoDocumento.value === 'CÉDULA CIUDADANÍA'"/>
+                                    <mat-icon *ngIf="form.controls.descripcionTipoDocumento.value !== 'CÉDULA CIUDADANÍA'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="
                                             form.controls.nacionalidad.errors

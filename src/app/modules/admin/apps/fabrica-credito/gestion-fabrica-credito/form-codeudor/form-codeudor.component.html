@@ -7,7 +7,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Tipo de documento</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'">
+                <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" (selectionChange)="cambiarNacionalidad($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{ item.valor }}
@@ -33,7 +33,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Teléfono / Celular </mat-label>
+                <mat-label>Celular </mat-label>
                 <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'" [required]="true" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
@@ -42,7 +42,10 @@
                         form.controls.celular.touched
                     ">
                     <mat-error *ngIf="form.controls.celular.errors?.required">Este campo es requerido.</mat-error>
-                    <mat-error *ngIf="form.controls.celular.errors?.pattern">Solo se aceptan números.</mat-error>
+                    <mat-error *ngIf="
+                                            form.controls.celular.errors
+                                                ?.pattern
+                                        ">Debe comenzar en 3.</mat-error>
                     <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 7
                         dígitos.</mat-error>
                     <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11
@@ -184,8 +187,8 @@
 
                 <mat-form-field>
                     <mat-label>Nacionalidad</mat-label>
-                    <input matInput type="text" [formControlName]="'nacionalidad'" />
-                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                    <input matInput type="text" [formControlName]="'nacionalidad'" [readonly]="form.controls.tipoDocumento.value === 'CC'" />
+                    <mat-icon *ngIf="form.controls.tipoDocumento.value !== 'CC'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="form.controls.nacionalidad.errors?.required">
                         Este campo es requerido.
@@ -1392,11 +1395,11 @@ titular" />
             condiciones</span>
 
         <div class="grid grid-cols-1">
-            <mat-checkbox class="ml-3" formControlName="aceptoDatos"> <a
-                    href="./assets/documentos/terminos_condiciones.pdf" target="_blank">Autorización de
+            <mat-checkbox class="ml-3" formControlName="autoricacionDatosPersonalClaracionAuto"> <a
+                    href="./assets/documentos/terminos_condiciones.pdf" class="no-underline" target="_blank">Autorización de
                     tratamiento de datos personales</a> </mat-checkbox>
-            <mat-checkbox class="ml-3" formControlName="aceptoAntilavado"> <a
-                    href="./assets/documentos/clausula_veracidad.pdf" target="_blank"> Cláusula de
+            <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
+                    href="./assets/documentos/clausula_veracidad.pdf" class="no-underline" target="_blank"> Cláusula de
                     Anticorrupción y Antilavado </a></mat-checkbox>
         </div>
         <div class="flex justify-end" *ngIf="!permisoEditar">
