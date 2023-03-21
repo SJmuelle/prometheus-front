@@ -547,10 +547,10 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de activida Económica</span>
+        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de actividad económica</span>
         <mat-form-field>
             <mat-label>Ocupación </mat-label>
-            <mat-select [value]="'seleccione'" [formControlName]="'ocupacion'">
+            <mat-select [value]="'seleccione'" [formControlName]="'ocupacion'" (selectionChange)="cargarActividadEconomica($event)">
                 <mat-option disabled [value]="'seleccione'">Seleccione
                 </mat-option>
                 <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones" [value]="ocupacion.codigo">{{
@@ -647,15 +647,15 @@
                 form.controls.ocupacion.value === 'PROIN' ||
                 form.controls.ocupacion.value === 'INDNFO'
             " class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-            <mat-form-field>
+            <mat-form-field *ngIf="actividadEconomica$ | async as actividadEconomica">
                 <mat-label>Actividad económica </mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'" [matTooltip]="
                         '¿Se encuentra registrado en camára de comercio?'
                     ">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
-                    <mat-option *ngFor="let ocupacion of dataInicial?.actividadesMicro" [value]="ocupacion.codigo">{{
-                        ocupacion.valor }}
+                    <mat-option *ngFor="let ocupacion of actividadEconomica.data" [value]="ocupacion.codigo">{{
+                        ocupacion.nombre }}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -683,7 +683,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Registra en Cámara de Comercio </mat-label>
+                <mat-label>Registrado en cámara de comercio </mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'" [matTooltip]="
                         '¿Se encuentra registrado en camára de comercio?'
                     ">
@@ -704,7 +704,7 @@
                         form.controls.ocupacion.value === 'PROIN' ||
                         form.controls.ocupacion.value === 'INDEFO')
                 ">
-                <mat-label>N° de ID en Cámara de Comercio </mat-label>
+                <mat-label>N° de ID en cámara de comercio </mat-label>
                 <input autocomplete="off" maxlength="13" matInput type="text" mask="separator.0" thousandSeparator="."
                     [formControlName]="'nitNegocio'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -733,8 +733,8 @@
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="
-                            let departamento of dataInicial?.departamentosMicro
-                        " [value]="departamento.codigo">{{ departamento.valor }}
+                            let departamento of dataInicial?.deparamentosGenerales
+                        " [value]="departamento.codigo">{{ departamento.nombre }}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -1026,7 +1026,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="sm:col-span-2 md:col-span-3">
-                <mat-label>¿Quién atiende el negocio?</mat-label>
+                <mat-label>Nombre del que atiende el negocio</mat-label>
                 <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'" matTooltip="En caso de enfermedad o situación que requiera la no presencia del
 titular" />
             </mat-form-field>

@@ -1073,12 +1073,12 @@
                                     form.controls.camaraComercio.value === 'S'
                                 ">
                                 <mat-label>
-                                    N° de ID en camára de comercio
+                                    N° de ID en cámara de comercio
                                 </mat-label>
                                 <input autocomplete="off"
                                     matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
-                                    matInput type="number" [formControlName]="'nitNegocio'" min="1000000000"
-                                    max="9999999999" />
+                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="7"
+                                    maxLength="10" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.nitNegocio.errors
@@ -1086,11 +1086,17 @@
                                     ">
                                     Este campo es requerido.
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.min">
-                                    Longitud minima y máxima de 10 digítos
+                                <mat-error *ngIf="
+                                        form.controls.nitNegocio.errors
+                                            ?.pattern
+                                    ">
+                                    Solo se aceptan números
                                 </mat-error>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.max">
-                                    Longitud minima y máxima de 10 digítos
+                                <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
+                                    Longitud mínima de 7 dígitos
+                                </mat-error>
+                                <mat-error *ngIf="form.controls.nitNegocio.errors?.maxLength">
+                                    Longitud máxima de 10 dígitos
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -1403,7 +1409,7 @@
 
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
-                                <mat-label>¿ Cuánto tiempo en (meses)tiene tu
+                                <mat-label>¿Cuánto tiempo en (meses) tiene tu
                                     negocio?</mat-label>
                                 <input matInput type="number" min="0" [formControlName]="'antiguedadNegocio'"
                                     (change)="validacion('FEN')" (change)="
@@ -1501,23 +1507,17 @@
                                 <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'" />
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Antigüedad en el local actual</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'antiguedadLocal'"
-                                    (selectionChange)="
+                                <mat-label>Antigüedad en el local actual (meses)</mat-label>
+                                <input matInput  type="number" min="0" [formControlName]="'antiguedadLocal'"
+                                    (change)="
                                         validacionCampos(
                                             'Antigüedad en el local actual',
                                             'Este campo modifica el motor de decisión y políticas SARC',
                                             'antiguedadLocal',
                                             'STRING'
                                         )
-                                    ">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="
-                                            let item of dataInicial?.antiguedadLocal
-                                        " [value]="item.codigo">{{ item.nombre }}
-                                    </mat-option>
-                                </mat-select>
+                                    "/>
+     
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1525,6 +1525,12 @@
                                             ?.required
                                     ">
                                     Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.antiguedadLocal.errors
+                                            ?.min
+                                    ">
+                                    No puede ser menor a 0
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -1618,7 +1624,7 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label> Atiende el negocio</mat-label>
+                                <mat-label>Nombre del que atiende el negocio</mat-label>
                                 <input matInput type="text"
                                     matTooltip="En caso de enfermedad o situación que requiera la no presencia del titular"
                                     [formControlName]="'nombreAtiendeNegocio'" />

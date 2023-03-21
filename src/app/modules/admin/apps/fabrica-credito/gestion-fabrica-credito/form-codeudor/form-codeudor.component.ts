@@ -13,11 +13,12 @@ import {
 import { UtilityService } from 'app/resources/services/utility.service';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import moment from 'moment';
 import Swal from 'sweetalert2';
 import { MatSelectChange } from '@angular/material/select';
 import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-credito.interface';
+import { GenericasService } from 'app/core/services/genericas.service';
 
 @Component({
     selector: 'form-codeudor',
@@ -46,6 +47,7 @@ export class FormCodeudorComponent implements OnInit {
     public barrios$: Observable<any>;
     public barriosNegocio$: Observable<any>;
     public ciudadesExpedicion$: Observable<any>;
+    public actividadEconomica$: Observable<any>;
     listadoCiudades: any[];
     listadoBarrios: any[];
     fechaActual: any = moment().locale('co');
@@ -58,7 +60,8 @@ export class FormCodeudorComponent implements OnInit {
         public utility: UtilityService,
         public _permisosService: PermisosService,
         private _formularioCreditoService: FormularioCreditoService,
-        private el: ElementRef
+        private el: ElementRef,
+        private genericaServices: GenericasService,
     ) {
         this.createFormulario();
     }
@@ -175,6 +178,8 @@ export class FormCodeudorComponent implements OnInit {
             .subscribe((resp: any) => {
                 if (resp) {
                     this.dataInicial = resp.data;
+                    console.log("data inicial", this.dataInicial);
+                    
                 }
             });
     }
@@ -533,6 +538,15 @@ export class FormCodeudorComponent implements OnInit {
 
     public cambiarNacionalidad(e:   MatSelectChange){
         e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO(A)')
+    }
+
+    public cargarActividadEconomica(e: MatSelectChange){
+        console.log(e.value, "cargarActividadEconomica");
+        
+        if(e.value === 'INDEFO' || e.value === 'PROIN' || e.value === 'INDNFO'){
+            
+            this.actividadEconomica$ = this.genericaServices.postActividadEconomica(e.value)
+        }
     }
 
     // validaciones dinamicas

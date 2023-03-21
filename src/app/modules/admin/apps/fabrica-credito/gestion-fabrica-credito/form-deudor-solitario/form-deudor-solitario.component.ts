@@ -759,6 +759,12 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             });
     }
 
+    public cambiarNacionalidad(e: MatSelectChange){
+        if(e.value === 'CC'){
+            this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO(A)');
+        }
+    }
+
     private validatedDate(control: AbstractControl) {
         const valueControl = control?.value ?? '';
         const date = moment(valueControl).format('YYYY-MM-DD');

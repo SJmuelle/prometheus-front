@@ -282,7 +282,7 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <span class="bg-gray-200 p-1.5 rounded-1 text-dark">Información legal - cliente PEP</span>
+        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold ">Información legal - cliente PEP</span>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-2">
                 <mat-label>¿Ha ocupado cargos públicos?</mat-label>
@@ -335,7 +335,7 @@
             </mat-form-field>
         </div>
         <span *ngIf="formDeudorSolidario.controls.legalCargoPublico.value === 'S'"
-            class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público</span>
+            class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2 font-bold">Datos cargo público</span>
 
         <div *ngIf="formDeudorSolidario.controls.legalCargoPublico.value === 'S'"
             class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
@@ -384,7 +384,7 @@
             </mat-form-field>
         </div>
         <span *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.value === 'S'"
-            class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2">Datos cargo público-Familiar</span>
+            class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2 font-bold">Datos cargo público-familiar</span>
         <div *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.value === 'S'"
             class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
             <mat-form-field class="w-1/2 px-2">
@@ -403,7 +403,7 @@
             </mat-form-field>
             <mat-form-field class="w-1/2 px-2">
                 <mat-label>Tipo de ID</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'tipoIdentificacionExpuesta'">
+                <mat-select [value]="'seleccione'"  (selectionChange)="cambiarNacionalidad($event)" [formControlName]="'tipoIdentificacionExpuesta'">
                     <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{item.valor}}
                     </mat-option>
                 </mat-select>
@@ -423,7 +423,7 @@
             <mat-form-field class="w-1/2 px-2">
                 <mat-label>
                     Nacionalidad</mat-label>
-                <input matInput type="text" [formControlName]="'nacionalidadExpuesta'">
+                <input matInput type="text"  [formControlName]="'nacionalidadExpuesta'" [readonly]="formDeudorSolidario.controls.tipoIdentificacionExpuesta.value === 'CC'">
                 <mat-error *ngIf="formDeudorSolidario.controls.nacionalidadExpuesta.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -475,7 +475,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal -Datos
+        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal - datos
             Sagrilaft</span>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-2">
@@ -577,8 +577,8 @@
 
 
 
-        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal -Declaraciones y
-            Autorizaciones</span>
+        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal - declaraciones y
+            autorizaciones</span>
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-2">
                 <mat-label>El cliente declara que sus ingresos provienen de</mat-label>
