@@ -345,8 +345,6 @@ export class FormCodeudorComponent implements OnInit {
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: ['', Validators.required],
             otroIngresoDeclaracionAuto: [''],
-            autoricacionDatosPersonalClaracionAuto: [''],
-            clausulaAnticurrupcionClaracionAuto: [''],
             plazo: [''],
             recurso: [''],
 
@@ -414,8 +412,8 @@ export class FormCodeudorComponent implements OnInit {
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
             descripcionVeredaNegocio: [''],
-            acepto: [false, [Validators.requiredTrue]],
-            aceptoAntilavado: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
+            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
         });
     }
 

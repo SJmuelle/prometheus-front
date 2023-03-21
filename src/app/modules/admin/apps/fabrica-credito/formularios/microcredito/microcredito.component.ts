@@ -58,8 +58,10 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             valorCredito: ['', [Validators.required]],
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
-            antiguedadLocal: ['']
-
+            antiguedadLocal: [''],
+            autorizacionCentrales: ['', Validators.requiredTrue],
+            clausulaVeracidad: ['', Validators.requiredTrue],
+            terminosCondiciones: ['', Validators.requiredTrue]
         });
 
         this.agregarValidaciones();
@@ -153,6 +155,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     console.log("Datos", resp.data);
                     this.getPlazosCredito(resp.data?.valorCredito | 0);
                     this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
+                    this.form.controls.autorizacionCentrales.setValue(false);
+                    this.form.controls.clausulaVeracidad.setValue(false);
+                    this.form.controls.terminosCondiciones.setValue(false);
 
                     if (resp.data.departamentoNegocio) {
                         this.listarCiudades();
@@ -215,8 +220,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.unidadNegocio = 1,
             data.tipoTercero = 'T',
-            data.autoricacionDatosPersonalClaracionAuto = 'S',
-            data.clausulaAnticurrupcionClaracionAuto = 'S'
+            data.autorizacionCentrales = 'S',
+            data.clausulaVeracidad = 'S',
+            data.terminosCondiciones = 'S'
             
             this._formularioCreditoService.postDatos(data).subscribe(() => {
                 Swal.fire(

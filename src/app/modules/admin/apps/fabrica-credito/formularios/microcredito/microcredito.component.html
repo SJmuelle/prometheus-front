@@ -292,7 +292,20 @@
                 <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
 
             </mat-form-field>
-        </div>
+            <div class="grid grid-cols-1 mb-2">
+                <mat-checkbox class="ml-1 mb-0" formControlName="autorizacionCentrales"> <a
+                        href="./assets/documentos/autorizacion.pdf" class="text-md no-underline " target="_blank">Autorización de
+                        tratamiento de datos personales</a> </mat-checkbox>
+                <mat-checkbox class="ml-1 mb-0" formControlName="clausulaVeracidad"> <a
+                        href="./assets/documentos/clausula_veracidad.pdf" class="text-md no-underline" target="_blank"> Cláusula de
+                        Anticorrupción y Antilavado </a></mat-checkbox>
+                        <mat-checkbox class="ml-1 mb-0" formControlName="terminosCondiciones"> <a
+                            href="./assets/documentos/terminos_condiciones.pdf" class="text-md no-underline" target="_blank"> Terminos y condiciones </a></mat-checkbox>
+            </div>
+        </div>>
+
+        
+
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 sm:flex sm:justify-end">
             <button mat-raised-button color="primary" type="button" (click)="save()">
                 Guardar
