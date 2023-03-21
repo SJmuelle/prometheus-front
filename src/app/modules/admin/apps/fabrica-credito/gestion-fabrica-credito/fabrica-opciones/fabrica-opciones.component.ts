@@ -30,6 +30,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public minimizarDevoluciones: boolean = false;
   public verCentrales: boolean = false;
   public minimizarCentrales: boolean = false;
+  public habilitaDevolucion: boolean = true;
+  public habilitaSiguiente: boolean = true;
   dialogMostrar: string;
   toolText: string = 'Siguiente';
   iconoSvg: string = '';
@@ -41,13 +43,13 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     public _permisosService: PermisosService
   ) {
-    // router.events.subscribe((url: any) => console.log(url));
     this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
   }
 
 
   ngOnInit(): void {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+
   }
 
   /**
@@ -61,8 +63,6 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         this.fabricaDatos = data;
-        // dialogMostrar=='SIGUIENTE'?'Siguiente':'Check list']
-        // dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'
         if (data.unidadNegocio === 32) {
           if (data.validacionAnalisisFinanciero == 'S') {
             if ((data.cantidadCheckList != data.totalCheckList)) {
@@ -84,6 +84,49 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
             this.toolText = 'Siguiente';
             this.iconoSvg = 'next_plan';
           }
+        }
+
+        switch (this.fabricaDatos.agenda) {
+          case '':
+            this.habilitaDevolucion = false;
+            this.habilitaSiguiente = false;
+            break;
+          case 'CO':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'CC':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'CM':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'RE':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'DE':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'GC':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'FO':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'VI':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          default:
+            this.habilitaDevolucion = false;
+            this.habilitaSiguiente = false;
+            break;
         }
       });
   }
@@ -138,6 +181,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         this.redireccionar('trazabilidad');
         break;
     }
+
 
   }
 
