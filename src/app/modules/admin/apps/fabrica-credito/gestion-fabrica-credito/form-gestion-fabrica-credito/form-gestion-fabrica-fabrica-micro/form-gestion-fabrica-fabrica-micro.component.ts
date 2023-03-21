@@ -98,7 +98,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 // Get errors of every form control
                 console.log(this.form.get(key).errors, key);
             });
-            this.scrollToFirstInvalidControl();
+            setTimeout(() => {
+                this.scrollToFirstInvalidControl();
+            }, 200);
         } else {
             this.onPostDatos();
         }
@@ -109,7 +111,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos, autorizacionBanco, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+        const { numeroHijos, autorizacionBanco,autoricacionDatosPersonalClaracionAuto,clausulaAnticurrupcionClaracionAuto ,telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
         const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
@@ -140,6 +142,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             plazo: plazoFormato,
             modificadaSolicitud: 'N',
             telefonoNegocio: telefonoNegocioFormato,
+            autoricacionDatosPersonalClaracionAuto: 'S',
+            clausulaAnticurrupcionClaracionAuto: 'S',
             ...data
         };
         Swal.fire({
@@ -228,6 +232,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
         this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
 
+        this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(false);
+        this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(false);
     }
 
     /**
@@ -530,8 +536,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: ['', Validators.required],
             otroIngresoDeclaracionAuto: [''],
-            autoricacionDatosPersonalClaracionAuto: [''],
-            clausulaAnticurrupcionClaracionAuto: [''],
             plazo: ['', [Validators.required]],
             descripcionTipo: [''],
             titularMicro: [''],
@@ -551,9 +555,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             actividadNoDesignada: [''],
             ubicacionNegocioCalculado: [''],
             tipoVereda: ['', Validators.required],
-            descripcionVereda: ['', Validators.required],
-            tipoVeredaNegocio: ['', Validators.required],
-            descripcionVeredaNegocio: ['', Validators.required]
+            descripcionVereda: [''],
+            tipoVeredaNegocio: [''],
+            descripcionVeredaNegocio: [''],
+            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
+            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
         },
         );
     }
@@ -727,16 +733,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('nombreArrendador')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularArrendador')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)])
                 this.form.get('celularArrendador')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('tipoUbicacionNegocio')?.setValidators([Validators.required])
-                this.form.get('tipoUbicacionNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
                 this.form.get('nombreArrendador')?.setValidators(null)
                 this.form.get('nombreArrendador')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularArrendador')?.setValidators(null)
                 this.form.get('celularArrendador')?.disable({ emitEvent: true, onlySelf: true })
-                this.form.get('tipoUbicacionNegocio')?.setValidators(null)
-                this.form.get('tipoUbicacionNegocio')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
         // Empleo conyuge empleado form
@@ -973,6 +975,29 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }
         })
+
+        // veredas
+        this.form.get('tipoVereda').valueChanges.subscribe((e: string) => {
+            if(e === '1'){
+                this.form.get('descripcionVereda')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('descripcionVereda')?.setValidators([Validators.required])
+            }else{
+                this.form.get('descripcionVereda')?.setValidators(null)
+                this.form.get('descripcionVereda')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+        this.form.get('tipoVeredaNegocio').valueChanges.subscribe((e: string) => {
+            if(e === '1'){
+                this.form.get('descripcionVeredaNegocio')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('descripcionVeredaNegocio')?.setValidators([Validators.required])
+            }else{
+                this.form.get('descripcionVeredaNegocio')?.setValidators(null)
+                this.form.get('descripcionVeredaNegocio')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        
+
     }
 
     private validatedDate(control: AbstractControl) {
@@ -1020,7 +1045,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     }
 
     ngOnDestroy(): void {
-        this.unSubscribe$.unsubscribe();
+        this.unSubscribe$.next();
+        this.unSubscribe$.complete();
     }
 
 

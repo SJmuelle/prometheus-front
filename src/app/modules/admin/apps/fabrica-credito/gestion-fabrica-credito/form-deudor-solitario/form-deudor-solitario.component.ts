@@ -247,6 +247,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
+            acepto: [false, [Validators.requiredTrue]],
+            aceptoAntilavado: [false, [Validators.requiredTrue]],
         });
     }
 

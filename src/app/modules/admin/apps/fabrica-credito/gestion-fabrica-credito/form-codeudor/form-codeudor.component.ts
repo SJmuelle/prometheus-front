@@ -413,7 +413,9 @@ export class FormCodeudorComponent implements OnInit {
             tipoVereda: [''],
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
-            descripcionVeredaNegocio: ['']
+            descripcionVeredaNegocio: [''],
+            acepto: [false, [Validators.requiredTrue]],
+            aceptoAntilavado: [false, [Validators.requiredTrue]],
         });
     }
 

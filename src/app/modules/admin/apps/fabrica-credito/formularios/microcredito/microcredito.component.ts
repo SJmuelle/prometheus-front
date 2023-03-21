@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
@@ -29,7 +29,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         private _formularioCreditoService: FormularioCreditoService,
         private route: ActivatedRoute,
         private router: Router,
-
+        private el: ElementRef,
     ) { }
 
     ngOnInit(): void {
@@ -58,10 +58,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             valorCredito: ['', [Validators.required]],
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
-            acepto: [false, [Validators.requiredTrue]],
-            aceptoAntilavado: [false, [Validators.requiredTrue]],
+            antiguedadLocal: ['']
 
         });
+
+        this.agregarValidaciones();
 
         this.form.get('nivelEstudio')?.valueChanges.subscribe((e: string) => {
             this.cargueActividadEconomica()
@@ -95,6 +96,20 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         } else {
             this.listadoActividadEconomica = [];
         }
+    }
+
+    private agregarValidaciones(){
+        
+        this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
+            if (e !== '6') {
+                this.form.get('antiguedadLocal')?.setValidators([Validators.required])
+                this.form.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('antiguedadLocal')?.setValidators(null)
+                this.form.get('antiguedadLocal')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
     }
 
     public listarBarrios() {
@@ -136,7 +151,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.patchValue(resp.data);
                     this.dataGeneralIncial = resp.data
                     console.log("Datos", resp.data);
-                    this.getPlazosCredito(this.form.controls.valorCredito.value)
+                    this.getPlazosCredito(resp.data?.valorCredito | 0);
+                    this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
 
                     if (resp.data.departamentoNegocio) {
                         this.listarCiudades();
@@ -173,6 +189,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
      * @description: Obtener limite de plazos por el valor de credito
      */
     public getPlazosCredito(valorCredito: number){
+        console.log("Obteniendo");
+        
         this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
     }
 
@@ -180,9 +198,13 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     save(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
+            setTimeout(() => {
+                this.scrollToFirstInvalidControl();
+            }, 200);
             return;
         }
-        let data = this.form.value;
+        let data = this.form.getRawValue();
+
         const { barrioNegocio, valorCredito } = data;
         delete data.barrioNegocio
         data.barrioNegocio = Number(barrioNegocio)
@@ -193,6 +215,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.unidadNegocio = 1,
             data.tipoTercero = 'T',
+            data.autoricacionDatosPersonalClaracionAuto = 'S',
+            data.clausulaAnticurrupcionClaracionAuto = 'S'
+            
             this._formularioCreditoService.postDatos(data).subscribe(() => {
                 Swal.fire(
                     'Completado',
@@ -247,6 +272,22 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         });
     }
 
+    /**
+     * @description hace scroll al primerer input invalido, puede ser un input o select
+     */
+    private scrollToFirstInvalidControl() {
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+
+        if (!firstInvalidControl) {
+            firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+            if (!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+            }
+        }
+        console.log("firstInvalidControl", firstInvalidControl);
+
+        firstInvalidControl?.focus(); //without smooth behavior
+    }
 
 
     ngOnDestroy(): void {

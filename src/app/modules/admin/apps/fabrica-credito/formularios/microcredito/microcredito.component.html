@@ -165,6 +165,13 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
+            <mat-form-field *ngIf="form.controls.tipoLocal.value !== '6'" class="w-full px-3 fuse-mat-dense" hideRequiredMarker>
+                <mat-label>Antiguedad del local en meses </mat-label>
+                <input matInput type="number" autocomplete="off" formControlName="antiguedadLocal" >
+                <mat-error *ngIf="form.controls.antiguedadLocal.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Actividad económica </mat-label>
@@ -285,18 +292,6 @@
                 <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
 
             </mat-form-field>
-        </div>
-        <div class="bg-white shadow-md rounded px-8 pt-6 grid grid-cols-1   md:grid-cols-2">
-            <div
-                class="col-lg-12 col-sm-12 cursor-pointer font-bold mb-3 bg-accent-200 rounded-2 pl-4 mt-1 text-2xl md:col-span-2">
-                Terminos y condiciones
-            </div>
-            <div class="grid grid-cols-1">
-                <mat-checkbox class="ml-3" formControlName="aceptoDatos"> Autorización de
-                    tratamiento de datos personales </mat-checkbox>
-                <mat-checkbox class="ml-3" formControlName="aceptoAntilavado"> Cláusula de
-                    Anticorrupción y Antilavado </mat-checkbox>
-            </div>
         </div>
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 sm:flex sm:justify-end">
             <button mat-raised-button color="primary" type="button" (click)="save()">

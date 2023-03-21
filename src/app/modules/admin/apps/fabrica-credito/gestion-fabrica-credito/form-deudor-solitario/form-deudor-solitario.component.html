@@ -597,6 +597,17 @@
                 </mat-error>
             </mat-form-field>
         </div>
+        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Terminos y
+            condiciones</span>
+
+        <div class="grid grid-cols-1">
+            <mat-checkbox class="ml-3" formControlName="aceptoDatos"> <a
+                    href="./assets/documentos/terminos_condiciones.pdf" target="_blank">Autorización de
+                    tratamiento de datos personales</a> </mat-checkbox>
+            <mat-checkbox class="ml-3" formControlName="aceptoAntilavado"> <a
+                    href="./assets/documentos/clausula_veracidad.pdf" target="_blank"> Cláusula de
+                    Anticorrupción y Antilavado </a></mat-checkbox>
+        </div>
         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
             <button mat-raised-button color="primary" type="button" (click)="validationPost()">
                 Guardar
