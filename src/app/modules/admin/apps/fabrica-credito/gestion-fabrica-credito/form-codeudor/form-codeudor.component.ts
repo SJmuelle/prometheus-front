@@ -1218,6 +1218,8 @@ export class FormCodeudorComponent implements OnInit {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
         const {
             numeroHijos,
+            clausulaAnticurrupcionClaracionAuto,
+            autoricacionDatosPersonalClaracionAuto,
             fechaIngresoFabrica,
             experienciaActividad,
             fechaVinculacion,
@@ -1294,6 +1296,8 @@ export class FormCodeudorComponent implements OnInit {
             plazo: plazoFormato,
             modificadaSolicitud: 'N',
             telefonoNegocio: telefonoNegocioFormato,
+            clausulaAnticurrupcionClaracionAuto: 'S',
+            autoricacionDatosPersonalClaracionAuto: 'S',
             ...data,
         };
 

@@ -400,6 +400,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                     ? '0099-01-01'
                     : this.formDeudorSolidario.controls.fechaDesvinculacion
                         .value,
+                        clausulaAnticurrupcionClaracionAuto: 'S',
+                        autoricacionDatosPersonalClaracionAuto: 'S',
         };
 
 
