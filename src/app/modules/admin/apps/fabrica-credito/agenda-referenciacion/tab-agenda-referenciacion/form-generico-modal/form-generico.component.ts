@@ -44,6 +44,7 @@ export class FormGenericoComponent implements OnInit {
     private router: Router,
     public dialogRef: MatDialogRef<FormGenericoComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
+    
   ) {
     if (data) {
       this.currentStep=data.currentStep
@@ -290,9 +291,8 @@ export class FormGenericoComponent implements OnInit {
                   'success'
                 );
                 setTimeout(() => {
-                  this.router.navigate([`/credit-factory/agenda-referencing/${this.CodUnidadNegocio}/${this.numeroSolicitud}/${this.identificacion}`]);
-
-                }, 5000);
+                  this.dialogRef.close();
+                }, 1000);
               } else {
                 Swal.close();
                 Swal.fire(

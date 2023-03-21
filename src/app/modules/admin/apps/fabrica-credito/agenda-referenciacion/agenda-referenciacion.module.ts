@@ -45,7 +45,8 @@ import { LibranzaLaboralComponent } from './tab-agenda-referenciacion/libranza/p
 import { FamiliarConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/familiar/familiar.component';
 import { PersonalConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/personal/personal.component';
 import { TitularConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/titular/titular.component';
-import { FormGenericoComponent } from './tab-agenda-referenciacion/form-generico/form-generico.component';
+import { FormGenericoComponent } from './tab-agenda-referenciacion/form-generico-modal/form-generico.component';
+import { FormGenericoTabComponent } from './tab-agenda-referenciacion/form-generico-tab/form-generico-tab.component';
 
 
 @NgModule({
@@ -67,6 +68,7 @@ import { FormGenericoComponent } from './tab-agenda-referenciacion/form-generico
     FamiliarConsumoPlexaComponent,
     PersonalConsumoPlexaComponent,
     FormGenericoComponent,
+    FormGenericoTabComponent,
   ],
     imports: [
         CommonModule,
