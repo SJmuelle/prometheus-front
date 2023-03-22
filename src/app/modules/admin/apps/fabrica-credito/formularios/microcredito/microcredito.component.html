@@ -36,7 +36,7 @@
                 <mat-label>Tipo de identificación</mat-label>
                 <mat-select formControlName="tipoDocumento" (selectionChange)="solicitudesFormularioSimulaciones()">
                     <mat-option *ngFor="let tiposDocumentos of dataInicial?.tiposDocumentos"
-                        [value]="tiposDocumentos.codigo">{{tiposDocumentos.valor}}
+                        [value]="tiposDocumentos.codigo"  [disabled]="tiposDocumentos.codigo === 'CE'">{{tiposDocumentos.valor}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -48,7 +48,7 @@
                     Este campo es requerido.
                 </mat-error>
                 <mat-error *ngIf="form.controls.identificacion.errors?.pattern">
-                    Cantidad de numeros de 5-10.
+                    Cantidad de números de 5-10.
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -79,6 +79,9 @@
                 <mat-error *ngIf="form.controls.celular.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="form.controls.celular.errors?.pattern">
+                    Debe comenzar en 3 y tener 10 digitos
+                </mat-error>
 
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -97,6 +100,12 @@
                     (change)="validacionCampos('Fecha de nacimiento','Este campo modifica el motor de decisión y políticas SARC', 'fechaNacimiento', 'STRING')">
                 <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
                     Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
+                </mat-error>
+                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.dateMayor">
+                    La fecha tiene que ser 18 años menor al día de hoy.
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -176,7 +185,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Actividad económica </mat-label>
                 <mat-select formControlName="actividadEconomica"
-                    (selectionChange)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC', 'actividadEconomica', 'INTEGER')">
+                    (selectionChange)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC', 'actividadEconomica', 'STRING')">
                     <mat-option *ngFor="let ActividadEconomica of listadoActividadEconomica"
                         [value]="ActividadEconomica.codigo">{{ActividadEconomica.valor}}
                     </mat-option>
@@ -217,7 +226,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué departamento de colombia queda tu negocio?</mat-label>
                 <mat-select formControlName="departamentoNegocio"
-                    (selectionChange)="validacionCampos('En qué departamento de colombia queda tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'departamentoNegocio', 'INTEGER')"
+                    (selectionChange)="validacionCampos('En qué departamento de colombia queda tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'departamentoNegocio', 'STRING')"
                     (selectionChange)="listarCiudades()">
                     <mat-option *ngFor="let departamentosMicro of dataInicial?.departamentosMicro"
                         [value]="departamentosMicro.codigo">{{departamentosMicro.valor}}
@@ -230,7 +239,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué municipio o ciudad está tu negocio? </mat-label>
                 <mat-select formControlName="ciudadNegocio"
-                    (selectionChange)="validacionCampos('En qué municipio o ciudad está tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'ciudadNegocio', 'INTEGER')"
+                    (selectionChange)="validacionCampos('En qué municipio o ciudad está tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'ciudadNegocio', 'STRING')"
                     (selectionChange)="listarBarrios()">
                     <mat-option *ngFor="let ciudades of listadoCiudades" [value]="ciudades.codigo">{{ciudades.valor}}
                     </mat-option>
@@ -265,6 +274,12 @@
                 <mat-error *ngIf="form.controls.valorCredito.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="form.controls.valorCredito.errors?.min">
+                    Monto mínimo de 1.000.000
+                </mat-error>
+                <mat-error *ngIf="form.controls.valorCredito.errors?.max">
+                    Monto máximo de 100.000.000
+                </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="this.plazosCredito$ | async as plazos" class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
@@ -288,21 +303,19 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>Nombre del asesor</mat-label>
+                <mat-label>Asesor de micro credito</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
 
             </mat-form-field>
             <div class="grid grid-cols-1 mb-2">
                 <mat-checkbox class="ml-1 mb-0" formControlName="autorizacionCentrales"> <a
-                        href="./assets/documentos/autorizacion.pdf" class="text-md no-underline " target="_blank">Autorización de
-                        tratamiento de datos personales</a> </mat-checkbox>
+                        href="./assets/documentos/autorizacion.pdf" class="text-md no-underline " target="_blank">Autorización de consulta en centrales</a> </mat-checkbox>
                 <mat-checkbox class="ml-1 mb-0" formControlName="clausulaVeracidad"> <a
-                        href="./assets/documentos/clausula_veracidad.pdf" class="text-md no-underline" target="_blank"> Cláusula de
-                        Anticorrupción y Antilavado </a></mat-checkbox>
+                        href="./assets/documentos/clausula_veracidad.pdf" class="text-md no-underline" target="_blank"> Cláusula de Veracidad </a></mat-checkbox>
                         <mat-checkbox class="ml-1 mb-0" formControlName="terminosCondiciones"> <a
-                            href="./assets/documentos/terminos_condiciones.pdf" class="text-md no-underline" target="_blank"> Terminos y condiciones </a></mat-checkbox>
+                            href="./assets/documentos/terminos_condiciones.pdf" class="text-md no-underline" target="_blank"> Términos y condiciones </a></mat-checkbox>
             </div>
-        </div>>
+        </div>
 
         
 
