@@ -57,7 +57,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       case 'DE':
         agenda = 'DECISION';
         break;
-      case '':
+      case 'VD':
         agenda = 'VENTA-DIGITAL';
         break;
       default:

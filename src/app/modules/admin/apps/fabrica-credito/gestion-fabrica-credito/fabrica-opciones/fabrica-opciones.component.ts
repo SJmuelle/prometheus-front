@@ -87,9 +87,9 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         }
 
         switch (this.fabricaDatos.agenda) {
-          case '':
+          case 'VD':
             this.habilitaDevolucion = false;
-            this.habilitaSiguiente = false;
+            this.habilitaSiguiente = true;
             break;
           case 'CO':
             this.habilitaDevolucion = true;
@@ -150,7 +150,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       return
     }
     switch (this.fabricaDatos.agenda) {
-      case '':
+      case 'VD':
         this.redireccionar('agenda-venta-digital');
         break;
       case 'CO':
