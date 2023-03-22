@@ -155,9 +155,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     console.log("Datos", resp.data);
                     this.getPlazosCredito(resp.data?.valorCredito | 0);
                     this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
-                    this.form.controls.autorizacionCentrales.setValue(false);
-                    this.form.controls.clausulaVeracidad.setValue(false);
-                    this.form.controls.terminosCondiciones.setValue(false);
+                    this.form.controls.autorizacionCentrales.setValue(resp.data.autorizacionCentrales === 'S');
+                    this.form.controls.clausulaVeracidad.setValue(resp.data.clausulaVeracidad === 'S');
+                    this.form.controls.terminosCondiciones.setValue(resp.data.terminosCondiciones === 'S');
 
                     if (resp.data.departamentoNegocio) {
                         this.listarCiudades();
