@@ -185,7 +185,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             tipo: ['seleccione',],
             parentesco: [''],
             telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-            celular: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+            celular: ['', [Validators.required, Validators.pattern('^3[0-9]*$'), Validators.minLength(9), Validators.maxLength(11)]],
             codigoPais: [''],
             codigoDepartamento: [''],
             departamentoNombre: [''],
@@ -301,7 +301,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
-                    this.form.controls['antiguedad'].clearValidators();
+                    this.form.controls['antiguedad'].setValidators([Validators.required, Validators.pattern('^[1-9][0-9]*$')]);
                     break;
                 case 'F':
                     this.form.controls['nombreCompleto'].setValue('');
