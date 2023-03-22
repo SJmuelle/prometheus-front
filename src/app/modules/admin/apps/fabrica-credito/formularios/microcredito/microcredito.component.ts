@@ -41,7 +41,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             identificacion: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
             primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
-            celular: ['', [Validators.required,Validators.pattern('^[1-9][0-9]*$')]],
+            celular: ['', [Validators.required,Validators.pattern('^[3][0-9]{9}$')]],
             email: ['', [Validators.required, Validators.email]],
             fechaNacimiento: ['', [Validators.required,this.validatedDate.bind(this),this.validateMayorEdad.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
