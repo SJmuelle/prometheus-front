@@ -147,7 +147,7 @@ import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.
         MatRadioModule,
         FormsModule,
         MatAutocompleteModule,
-        QuillModule,
+        // QuillModule,
         MatMenuModule,
         MatSliderModule,
         // FabricaOpcionesModule,
@@ -156,6 +156,8 @@ import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.
         // NgxMaskModule.forRoot(maskConfigFunction),
         NgxMaskModule.forRoot(),
         MatProgressBarModule,
+        QuillModule.forRoot(),
+
         // AgendaReferenciacionModule,
     ],
 
