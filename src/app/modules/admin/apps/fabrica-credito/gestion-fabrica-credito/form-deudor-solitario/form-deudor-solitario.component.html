@@ -545,7 +545,10 @@
             <mat-form-field class="w-1/2 px-2">
                 <mat-label>¿Desarrolla actividades y profesiones no financieras designadas (APNFD)?
                 </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'legalDesarrollaActividadApnfd'">
+                <mat-select [value]="'seleccione'" matTooltip="*Actividades APNFD (Actividades y profesiones no financieras
+                designadas: se refiere según el GAFI: a) Casinos; b) agentes inmobiliarios; c) comerciantes
+                de metales preciosos; d) comerciantes de piedras preciosas; e) abogados, notarios, otros
+                profesionales jurídicos independientes o contadores." [formControlName]="'legalDesarrollaActividadApnfd'">
                     <mat-option disabled [value]="''">Seleccione
                     </mat-option>
                     <mat-option [value]="'S'">SI
