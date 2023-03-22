@@ -6,7 +6,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { FormDialogReferenciasComponent } from "../form-dialog-referencias/form-dialog-referencias.component";
 import { FormDetallesReferenciasComponent } from "../form-detalles-referencias/form-detalles-referencias.component";
 import { PermisosService } from 'app/core/services/permisos.service';
-import { FormGenericoComponent } from '../../agenda-referenciacion/tab-agenda-referenciacion/form-generico/form-generico.component';
+import { FormGenericoComponent } from '../../agenda-referenciacion/tab-agenda-referenciacion/form-generico-modal/form-generico.component';
 
 
 @Component({
