@@ -1077,7 +1077,7 @@
                                 </mat-label>
                                 <input autocomplete="off"
                                     matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
-                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="7"
+                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="9"
                                     maxLength="10" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
@@ -1093,7 +1093,7 @@
                                     Solo se aceptan números
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
-                                    Longitud mínima de 7 dígitos
+                                    Longitud mínima de 9 dígitos
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.maxLength">
                                     Longitud máxima de 10 dígitos
