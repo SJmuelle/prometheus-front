@@ -959,11 +959,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
             } else if (e === '3') {
-                this.form.controls.tipoLocalCalulado.setValue('Propio.')
+                this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }
             else if (e === '4') {
-                this.form.controls.tipoLocalCalulado.setValue('No tiene.')
+                this.form.controls.tipoLocalCalulado.setValue('Familiar.')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
             }
             else if (e === '5') {
