@@ -2319,7 +2319,7 @@
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información legal -Datos
                             Sagrilaft</span>
-                        <div class="grid grid-cols-1">
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Realiza operaciones con moneda extranjera?
                                 </mat-label>
@@ -2340,6 +2340,8 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
+                            
+                            <ng-container>
                             <mat-form-field *ngIf="
                                     form.controls.legalOperacionExtranjera
                                         .value == 'S'
@@ -2363,6 +2365,9 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Realiza operaciones con
                                     criptomoneda?</mat-label>
@@ -2406,6 +2411,8 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Desarrolla actividades y profesiones no
                                     financieras designadas (APNFD)?
