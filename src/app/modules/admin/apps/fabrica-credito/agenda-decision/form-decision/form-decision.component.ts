@@ -57,10 +57,12 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       case 'DE':
         agenda = 'DECISION';
         break;
-
+      case '':
+        agenda = 'VENTA-DIGITAL';
+        break;
       default:
         agenda = 'COMPLETACION';
-        break;
+      break;
     }
     this._decisionesService.getOpciones(agenda).subscribe((response: any) => {
       console.log(response);
