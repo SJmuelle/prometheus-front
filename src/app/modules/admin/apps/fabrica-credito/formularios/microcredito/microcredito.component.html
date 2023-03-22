@@ -176,7 +176,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Actividad económica </mat-label>
                 <mat-select formControlName="actividadEconomica"
-                    (selectionChange)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC', 'actividadEconomica', 'INTEGER')">
+                    (selectionChange)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC', 'actividadEconomica', 'STRING')">
                     <mat-option *ngFor="let ActividadEconomica of listadoActividadEconomica"
                         [value]="ActividadEconomica.codigo">{{ActividadEconomica.valor}}
                     </mat-option>
@@ -217,7 +217,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué departamento de colombia queda tu negocio?</mat-label>
                 <mat-select formControlName="departamentoNegocio"
-                    (selectionChange)="validacionCampos('En qué departamento de colombia queda tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'departamentoNegocio', 'INTEGER')"
+                    (selectionChange)="validacionCampos('En qué departamento de colombia queda tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'departamentoNegocio', 'STRING')"
                     (selectionChange)="listarCiudades()">
                     <mat-option *ngFor="let departamentosMicro of dataInicial?.departamentosMicro"
                         [value]="departamentosMicro.codigo">{{departamentosMicro.valor}}
@@ -230,7 +230,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué municipio o ciudad está tu negocio? </mat-label>
                 <mat-select formControlName="ciudadNegocio"
-                    (selectionChange)="validacionCampos('En qué municipio o ciudad está tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'ciudadNegocio', 'INTEGER')"
+                    (selectionChange)="validacionCampos('En qué municipio o ciudad está tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'ciudadNegocio', 'STRING')"
                     (selectionChange)="listarBarrios()">
                     <mat-option *ngFor="let ciudades of listadoCiudades" [value]="ciudades.codigo">{{ciudades.valor}}
                     </mat-option>
