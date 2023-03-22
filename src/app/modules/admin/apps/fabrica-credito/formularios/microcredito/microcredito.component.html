@@ -36,7 +36,7 @@
                 <mat-label>Tipo de identificación</mat-label>
                 <mat-select formControlName="tipoDocumento" (selectionChange)="solicitudesFormularioSimulaciones()">
                     <mat-option *ngFor="let tiposDocumentos of dataInicial?.tiposDocumentos"
-                        [value]="tiposDocumentos.codigo"  [disable]="tiposDocumentos.codigo === 'CE'">{{tiposDocumentos.valor}}
+                        [value]="tiposDocumentos.codigo"  [disabled]="tiposDocumentos.codigo === 'CE'">{{tiposDocumentos.valor}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
