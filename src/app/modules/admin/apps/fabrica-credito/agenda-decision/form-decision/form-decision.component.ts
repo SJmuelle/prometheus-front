@@ -177,11 +177,11 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
           'success'
         ).then((result) => {
           if (result) {
-            this.dialog.close();
+            this.dialog.close(true);
           }
         })
         setTimeout(() => {
-          this.dialog.close();
+          this.dialog.close(true);
           // this.router.navigate(['/credit-factory/agenda-decision']);
         }, 10000);
       }
