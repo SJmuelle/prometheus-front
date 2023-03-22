@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
 @Component({
@@ -23,6 +24,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
     public plazosCredito$: Observable<any>;
+    fechaActual: any = moment().locale('co');
 
     constructor(
         private fb: FormBuilder,
@@ -41,7 +43,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             celular: ['', [Validators.required,Validators.pattern('^[1-9][0-9]*$')]],
             email: ['', [Validators.required, Validators.email]],
-            fechaNacimiento: ['', [Validators.required]],
+            fechaNacimiento: ['', [Validators.required,this.validatedDate.bind(this),this.validateMayorEdad.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
             genero: [''],
@@ -97,6 +99,38 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             })
         } else {
             this.listadoActividadEconomica = [];
+        }
+    }
+
+    private validatedDate(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        const date = moment(valueControl).format('YYYY-MM-DD')
+        const errors = { dateError: true };
+
+        // Set the validation error on the matching control
+        if (this.fechaActual.isBefore(date)) {
+
+            return errors
+        } else {
+            return null
+        }
+    }
+
+    private validateMayorEdad(control: AbstractControl) {
+        const valueControl = control?.value ?? '';
+        const date = moment(valueControl).format('YYYY-MM-DD')
+        const errors = { dateMayor: true };
+
+        const fechaMayor =  moment().locale('co')
+        fechaMayor.subtract(18, 'years');
+        // Set the validation error on the matching control
+        console.log("years", fechaMayor, "fecha actual",this.fechaActual);
+        
+        if (fechaMayor.isBefore(date)) {
+
+            return errors
+        } else {
+            return null
         }
     }
 
@@ -158,6 +192,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.controls.autorizacionCentrales.setValue(resp.data.autorizacionCentrales === 'S');
                     this.form.controls.clausulaVeracidad.setValue(resp.data.clausulaVeracidad === 'S');
                     this.form.controls.terminosCondiciones.setValue(resp.data.terminosCondiciones === 'S');
+                    this.form.controls.fechaNacimiento.setValue(resp.data.fechaNacimiento === '0099-01-01' ? '' : resp.data.fechaNacimiento)
 
                     if (resp.data.departamentoNegocio) {
                         this.listarCiudades();
