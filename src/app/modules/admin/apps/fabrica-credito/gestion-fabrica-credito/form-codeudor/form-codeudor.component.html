@@ -507,14 +507,23 @@
                 <mat-error *ngIf="form.controls.annosTiempoResidencia.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="form.controls.annosTiempoResidencia.errors?.pattern">
+                    No se aceptan número negativos.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Meses de residencia</mat-label>
-                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0" />
+                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0" max="11"/>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
                     Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.pattern">
+                    No se aceptan número negativos.
+                </mat-error>
+                <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.max">
+                    Máximo 11 meses.
                 </mat-error>
             </mat-form-field>
         </div>
