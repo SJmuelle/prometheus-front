@@ -332,8 +332,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy(): void {
-        this.unSubscribe$.complete();
         this.unSubscribe$.next();
+        this.unSubscribe$.complete();
         // this.agendaCompletacionService.resetSeleccionAgenda();
     }
 }
