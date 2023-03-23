@@ -173,6 +173,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
                 this.formatearDataInicial();
+                this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
+                this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
+                
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
