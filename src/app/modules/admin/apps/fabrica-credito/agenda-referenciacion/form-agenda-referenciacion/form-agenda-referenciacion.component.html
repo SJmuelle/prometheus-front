@@ -12,7 +12,7 @@
                     <span class="inline-flex items-center">
                         <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:arrow-sm-left'">
                         </mat-icon>
-                        <span class="ml-1.5 font-medium leading-5">Volver al listado de referencias</span>
+                        <span class="ml-1.5 font-medium leading-5">Volver al listado de referencias {{unidadNegocio}}</span>
                     </span>
                 </a>
 
@@ -105,7 +105,7 @@
                 </h2>
             </div>
             <mat-progress-bar class="hidden lg:block flex-0 h-0.5 w-full"
-                [value]="100 * (currentStep + 1) / totalsteps">
+                [value]="100 * (currentStep + 1) / totalsteps"> 
             </mat-progress-bar>
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
@@ -144,7 +144,7 @@
                         </ng-container>
                     </ng-container>
                     <ng-container ngDefaultControl>
-                        <form-generico-tab></form-generico-tab>
+                        <form-generico-tab [currentStep]="currentStep" ></form-generico-tab>
                     </ng-container>
                 </ng-container>
 

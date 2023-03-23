@@ -204,7 +204,6 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().toPromise().then(() => {
-      this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
     });
 
   }
@@ -347,7 +346,6 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().toPromise().then((res) => {
         if (res == true) {
           this.onDialogoDecision();
-          this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
         }
       });
     } else {
