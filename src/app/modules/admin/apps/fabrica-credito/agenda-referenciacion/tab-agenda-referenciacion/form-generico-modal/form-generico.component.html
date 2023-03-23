@@ -1,4 +1,4 @@
-<mat-tab-group class="fuse-mat-no-header max-h-screen" [animationDuration]="'200'">
+<mat-tab-group class="fuse-mat-no-header h-140" [animationDuration]="'200'">
     <ng-container *ngIf="dataNecesaria">
         <ng-container [ngSwitch]="currentStep">
             <ng-container *ngFor="let item of dataNecesaria.session">
@@ -148,11 +148,11 @@
                                 Guardar
                             </button>
                             <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button"
-                            [mat-dialog-close]="false">
-                            Cerrar
-                        </button>
+                                [mat-dialog-close]="false">
+                                Cerrar
+                            </button>
                         </div>
-                       
+
 
                         <!-- fin guardado -->
 
