@@ -7,7 +7,8 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Tipo de documento</mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" (selectionChange)="cambiarNacionalidad($event)">
+                <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'"
+                    (selectionChange)="cambiarNacionalidad($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{ item.valor }}
@@ -34,7 +35,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Celular </mat-label>
-                <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'" [required]="true" />
+                <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="
@@ -187,8 +188,10 @@
 
                 <mat-form-field>
                     <mat-label>Nacionalidad</mat-label>
-                    <input matInput type="text" [formControlName]="'nacionalidad'" [readonly]="form.controls.tipoDocumento.value === 'CC'" />
-                    <mat-icon *ngIf="form.controls.tipoDocumento.value !== 'CC'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                    <input matInput type="text" [formControlName]="'nacionalidad'"
+                        [readonly]="form.controls.tipoDocumento.value === 'CC'" />
+                    <mat-icon *ngIf="form.controls.tipoDocumento.value !== 'CC'" class="icon-size-5" matSuffix
+                        [svgIcon]="'mat_outline:edit'">
                     </mat-icon>
                     <mat-error *ngIf="form.controls.nacionalidad.errors?.required">
                         Este campo es requerido.
@@ -547,10 +550,12 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de actividad económica</span>
+        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de actividad
+            económica</span>
         <mat-form-field>
             <mat-label>Ocupación </mat-label>
-            <mat-select [value]="'seleccione'" [formControlName]="'ocupacion'" (selectionChange)="cargarActividadEconomica($event)">
+            <mat-select [value]="'seleccione'" [formControlName]="'ocupacion'"
+                (selectionChange)="cargarActividadEconomica($event)">
                 <mat-option disabled [value]="'seleccione'">Seleccione
                 </mat-option>
                 <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones" [value]="ocupacion.codigo">{{
@@ -617,7 +622,9 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Salario</mat-label>
-                <input autocomplete="off" mask="separator.0" matInput type="text" [formControlName]="'salarioBasico'" />
+                <span matPrefix>$</span>
+                <input autocomplete="off" mask="separator.0" thousandSeparator="." matInput type="text"
+                    [formControlName]="'salarioBasico'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.salarioBasico.errors?.required">
@@ -938,7 +945,7 @@
                 form.controls.ocupacion.value === 'PROIN' ||
                 form.controls.ocupacion.value === 'INDNFO'
             " class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-            <mat-form-field class="sm:col-span-2 md:col-span-3">
+            <mat-form-field>
                 <mat-label>Teléfono / celular del negocio</mat-label>
                 <input matInput type="text" mask="(000) 000 00 00" [formControlName]="'telefonoNegocio'" />
             </mat-form-field>
@@ -1025,7 +1032,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="sm:col-span-2 md:col-span-3">
+            <mat-form-field>
                 <mat-label>Nombre del que atiende el negocio</mat-label>
                 <input matInput type="text" [formControlName]="'nombreAtiendeNegocio'" matTooltip="En caso de enfermedad o situación que requiera la no presencia del
 titular" />
@@ -1044,15 +1051,19 @@ titular" />
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>¿Hace cuánto está pensionado? (Meses)</mat-label>
-                <input autocomplete="off" matInput type="text" [formControlName]="'tiempoPensionado'" />
+                <input autocomplete="off" matInput type="number" [formControlName]="'tiempoPensionado'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.tiempoPensionado.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="form.controls.tiempoPensionado.errors?.pattern">
+                    Solo se aceptan números.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Salario</mat-label>
+                <span matPrefix>$</span>
                 <input autocomplete="off" matInput type="text" mask="separator.0" [formControlName]="'salarioBasico'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
@@ -1277,7 +1288,7 @@ titular" />
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="form.controls.legalOperacionExtranjera.value == 'S'">
-                <mat-label>Que tipo de operación</mat-label>
+                <mat-label>Tipo de operación</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionExtranjera'">
                     <mat-option *ngFor="
                             let item of dataInicial?.tipoOperacionExtranjera
@@ -1312,7 +1323,7 @@ titular" />
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="form.controls.legalOperacionCriptomoneda.value == 'S'">
-                <mat-label>Que tipo de operacíón realiza</mat-label>
+                <mat-label>Tipo de operación</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCriptomoneda'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionCripto" [value]="item.codigo">
                         {{ item.nombre }}
@@ -1335,7 +1346,8 @@ titular" />
                 <mat-select [value]="'seleccione'" matTooltip="*Actividades APNFD (Actividades y profesiones no financieras
                 designadas: se refiere según el GAFI: a) Casinos; b) agentes inmobiliarios; c) comerciantes
                 de metales preciosos; d) comerciantes de piedras preciosas; e) abogados, notarios, otros
-                profesionales jurídicos independientes o contadores." [formControlName]="'legalDesarrollaActividadApnfd'">
+                profesionales jurídicos independientes o contadores."
+                    [formControlName]="'legalDesarrollaActividadApnfd'">
                     <mat-option disabled [value]="''">Seleccione </mat-option>
                     <mat-option [value]="'S'">SI </mat-option>
                     <mat-option [value]="'N'">NO </mat-option>
@@ -1403,7 +1415,8 @@ titular" />
 
         <div class="grid grid-cols-1">
             <mat-checkbox class="ml-3" formControlName="autoricacionDatosPersonalClaracionAuto"> <a
-                    href="./assets/documentos/terminos_condiciones.pdf" class="no-underline" target="_blank">Autorización de
+                    href="./assets/documentos/terminos_condiciones.pdf" class="no-underline"
+                    target="_blank">Autorización de
                     tratamiento de datos personales</a> </mat-checkbox>
             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
                     href="./assets/documentos/clausula_veracidad.pdf" class="no-underline" target="_blank"> Cláusula de

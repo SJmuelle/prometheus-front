@@ -400,8 +400,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                     ? '0099-01-01'
                     : this.formDeudorSolidario.controls.fechaDesvinculacion
                         .value,
-                        clausulaAnticurrupcionClaracionAuto: 'S',
-                        autoricacionDatosPersonalClaracionAuto: 'S',
+            clausulaAnticurrupcionClaracionAuto: 'S',
+            autoricacionDatosPersonalClaracionAuto: 'S',
         };
 
 
@@ -497,6 +497,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario.controls.fechaExpedicion.value ===
             '0099-01-01' &&
             this.formDeudorSolidario.controls.fechaExpedicion.setValue('');
+
+        this.formDeudorSolidario.controls.autoricacionDatosPersonalClaracionAuto.setValue(this.formDeudorSolidario.controls.autoricacionDatosPersonalClaracionAuto.value === 'S')
+        this.formDeudorSolidario.controls.clausulaAnticurrupcionClaracionAuto.setValue(this.formDeudorSolidario.controls.clausulaAnticurrupcionClaracionAuto.value === 'S')
     }
 
     // validaciones dinamicas
@@ -761,8 +764,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             });
     }
 
-    public cambiarNacionalidad(e: MatSelectChange){
-        if(e.value === 'CC'){
+    public cambiarNacionalidad(e: MatSelectChange) {
+        if (e.value === 'CC') {
             this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO(A)');
         }
     }

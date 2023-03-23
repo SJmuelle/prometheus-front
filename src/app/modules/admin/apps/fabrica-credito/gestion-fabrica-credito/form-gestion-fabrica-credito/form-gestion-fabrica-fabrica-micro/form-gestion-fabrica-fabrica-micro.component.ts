@@ -111,7 +111,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos, autorizacionBanco,autoricacionDatosPersonalClaracionAuto,clausulaAnticurrupcionClaracionAuto ,telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+        const { numeroHijos, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
         const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
@@ -173,9 +173,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
                 this.formatearDataInicial();
-                
-                this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
+                this.getPlazosCredito(this.form.controls.valorSolicitado.value)
+                this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
+                this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
 
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -232,8 +233,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
         this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
 
-        this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(false);
-        this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(false);
     }
 
     /**
@@ -323,8 +322,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     /**
      * @description: Obtener limite de plazos por el valor de credito
      */
-    private getPlazosCredito(valorCredito: number){
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
+    private getPlazosCredito(valorCredito: number) {
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
     }
 
     private getActividadEconomica(): void {
@@ -486,7 +485,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             antiguedadLocal: ['', Validators.required],
             nombreArrendador: [''],
             celularArrendador: [''],
-            tipoUbicacionNegocio: ['',Validators.required],
+            tipoUbicacionNegocio: ['', Validators.required],
             numeroEmpleados: ['', [Validators.required]],
             nombreAtiendeNegocio: ['', Validators.required],
             tieneOtrosPuntos: ['', Validators.required],
@@ -716,7 +715,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             if (e === 'S') {
                 this.form.get('tieneRut')?.setValidators([Validators.required])
                 this.form.get('tieneRut')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('nitNegocio')?.setValidators([Validators.required,Validators.minLength(9), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.minLength(9), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('nitNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -978,25 +977,25 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // veredas
         this.form.get('tipoVereda').valueChanges.subscribe((e: string) => {
-            if(e === '1'){
+            if (e === '1') {
                 this.form.get('descripcionVereda')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('descripcionVereda')?.setValidators([Validators.required])
-            }else{
+            } else {
                 this.form.get('descripcionVereda')?.setValidators(null)
                 this.form.get('descripcionVereda')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
         this.form.get('tipoVeredaNegocio').valueChanges.subscribe((e: string) => {
-            if(e === '1'){
+            if (e === '1') {
                 this.form.get('descripcionVeredaNegocio')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('descripcionVeredaNegocio')?.setValidators([Validators.required])
-            }else{
+            } else {
                 this.form.get('descripcionVeredaNegocio')?.setValidators(null)
                 this.form.get('descripcionVeredaNegocio')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
 
-        
+
 
     }
 
@@ -1032,7 +1031,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         }
     }
 
-   
+
 
     get primerNombre(): ValidatorFn {
         return this.form.controls.primerNombre.errors?.required ||

@@ -102,6 +102,8 @@ export class FormCodeudorComponent implements OnInit {
                 this.addValidation();
                 this.form.patchValue(data);
 
+                this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
+                this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
                 // formatear data para los select
                 this.form.controls.experienciaActividad.setValue(
                     Number(this.form.controls.experienciaActividad.value)
@@ -179,7 +181,7 @@ export class FormCodeudorComponent implements OnInit {
                 if (resp) {
                     this.dataInicial = resp.data;
                     console.log("data inicial", this.dataInicial);
-                    
+
                 }
             });
     }
@@ -536,15 +538,15 @@ export class FormCodeudorComponent implements OnInit {
             this.departamentosCiudadesService.getBarrios(codigo);
     }
 
-    public cambiarNacionalidad(e:   MatSelectChange){
+    public cambiarNacionalidad(e: MatSelectChange) {
         e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO(A)')
     }
 
-    public cargarActividadEconomica(e: MatSelectChange){
+    public cargarActividadEconomica(e: MatSelectChange) {
         console.log(e.value, "cargarActividadEconomica");
-        
-        if(e.value === 'INDEFO' || e.value === 'PROIN' || e.value === 'INDNFO'){
-            
+
+        if (e.value === 'INDEFO' || e.value === 'PROIN' || e.value === 'INDNFO') {
+
             this.actividadEconomica$ = this.genericaServices.postActividadEconomica(e.value)
         }
     }

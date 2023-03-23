@@ -498,7 +498,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="formDeudorSolidario.controls.legalOperacionExtranjera.value == 'S'"
                 class="w-1/2 px-2">
-                <mat-label>Que tipo de operacíon</mat-label>
+                <mat-label>Tipo de operación</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionExtranjera'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionExtranjera" [value]="item.codigo">
                         {{item.nombre}}
@@ -530,7 +530,7 @@
             </mat-form-field>
             <mat-form-field *ngIf="formDeudorSolidario.controls.legalOperacionCriptomoneda.value == 'S'"
                 class="w-1/2 px-2">
-                <mat-label>Que tipo de operacíón realiza</mat-label>
+                <mat-label>Tipo de operación</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCriptomoneda'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionCripto" [value]="item.codigo">
                         {{item.nombre}}
