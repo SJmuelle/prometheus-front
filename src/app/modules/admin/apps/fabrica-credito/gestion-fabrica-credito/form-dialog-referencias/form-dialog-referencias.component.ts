@@ -270,8 +270,11 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         } else if (tipo === 'F') {
             data=formPersonal 
         } else {
+            formComercial.nombreCompleto = nombreCompleto === '' ? formComercial.nombreCompleto : nombreCompleto;
             data=formComercial
         }
+
+        
         this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
             this.onCerrar();
             this.referenciasService.eventos$.emit(true);
