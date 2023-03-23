@@ -101,9 +101,10 @@ export class FormCodeudorComponent implements OnInit {
 
                 this.addValidation();
                 this.form.patchValue(data);
-
-                this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
-                this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
+                console.log("data del form",data);
+                
+                this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
+                this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 // formatear data para los select
                 this.form.controls.experienciaActividad.setValue(
                     Number(this.form.controls.experienciaActividad.value)
@@ -414,7 +415,7 @@ export class FormCodeudorComponent implements OnInit {
             nombreAtiendeNegocio: [''],
 
             // el form solo de muestra si su ocupacion es pensionado
-            tiempoPensionado: [''],
+            tiempoPensionado: [0],
             tipoVereda: [''],
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
