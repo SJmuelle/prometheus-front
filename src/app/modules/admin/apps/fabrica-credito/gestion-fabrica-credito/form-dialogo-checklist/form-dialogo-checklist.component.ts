@@ -34,7 +34,7 @@ export class FormDialogoChecklistComponent implements OnInit {
     console.log(this.data)
   }
   decision() {
-    this.matDialogRef.close(true);
+    this.matDialogRef.close();
   }
 
   consulta() {
@@ -96,16 +96,9 @@ export class FormDialogoChecklistComponent implements OnInit {
       valorItem: item.seleccionado == 'f' ? true : false
     };
 
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Guardando...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
+
     this._utility.postQuery(url, data).subscribe((response: any) => {
-      Swal.close();
+    
       if (response) {
         if (response.status == 200) {
           if (!response.data.resultado.includes('OK')) {

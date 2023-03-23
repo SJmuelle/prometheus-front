@@ -374,7 +374,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
 
       });
     } else {
-      Swal.fire('Informacion', 'Aun no se ha configurado el analisi financiero', 'warning');
+      Swal.fire('Informacion', 'Aun no se ha configurado el analisis financiero', 'warning');
     }
   }
 }
