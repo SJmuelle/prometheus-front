@@ -104,25 +104,25 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                 '',
                 [
                     Validators.required,
-                    Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/),
+                    Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/),
                 ],
             ],
             descripcionEstado: [''],
             descripcionSubestado: [''],
             segundoNombre: [
                 '',
-                [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)],
+                [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)],
             ],
             primerApellido: [
                 '',
                 [
                     Validators.required,
-                    Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/),
+                    Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/),
                 ],
             ],
             segundoApellido: [
                 '',
-                [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$/)],
+                [Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)],
             ],
             estadoCivil: [''],
             email: ['', [Validators.required, Validators.email]],
@@ -367,7 +367,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                 // Get errors of every form control
                 console.log(this.formDeudorSolidario.get(key).errors, key);
             });
-            this.scrollToFirstInvalidControl();
+            setTimeout(() => {
+                
+                this.scrollToFirstInvalidControl();
+            }, 200);
         } else {
             this.onPostDatos();
         }

@@ -60,7 +60,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             valorCredito: ['', [Validators.required, Validators.min(1000000), Validators.max(100000000)]],
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
-            antiguedadLocal: [''],
+            antiguedadLocal: [0],
             autorizacionCentrales: ['', Validators.requiredTrue],
             clausulaVeracidad: ['', Validators.requiredTrue],
             terminosCondiciones: ['', Validators.requiredTrue]
@@ -332,7 +332,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy(): void {
-        this.unSubscribe$.unsubscribe();
+        this.unSubscribe$.complete();
+        this.unSubscribe$.next();
         // this.agendaCompletacionService.resetSeleccionAgenda();
     }
 }

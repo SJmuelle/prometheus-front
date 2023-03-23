@@ -730,7 +730,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             if (Number(e) === 2) {
                 this.form.get('nombreArrendador')?.setValidators([Validators.required, Validators.maxLength(30)])
                 this.form.get('nombreArrendador')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('celularArrendador')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)])
+                this.form.get('celularArrendador')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('celularArrendador')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -749,7 +749,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('cargoConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('salarioConyuge')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('salarioConyuge')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('telefonoEmpresaConyuge')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('telefonoEmpresaConyuge')?.setValidators([Validators.required])
                 this.form.get('telefonoEmpresaConyuge')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
