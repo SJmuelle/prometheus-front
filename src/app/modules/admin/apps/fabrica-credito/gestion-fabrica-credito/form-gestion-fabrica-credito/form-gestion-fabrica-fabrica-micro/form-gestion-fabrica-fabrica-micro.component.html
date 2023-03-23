@@ -214,7 +214,7 @@
                                                 ?.maxlength
                                         ">Longitud máxima son 11
                                         dígitos.</mat-error>
-                                        <mat-error *ngIf="
+                                    <mat-error *ngIf="
                                             form.controls.celular.errors
                                                 ?.pattern
                                         ">Debe comenzar en 3.</mat-error>
@@ -401,8 +401,11 @@
 
                                 <mat-form-field>
                                     <mat-label>Nacionalidad</mat-label>
-                                    <input matInput type="text" [formControlName]="'nacionalidad'" [readonly]="form.controls.descripcionTipoDocumento.value === 'CÉDULA CIUDADANÍA'"/>
-                                    <mat-icon *ngIf="form.controls.descripcionTipoDocumento.value !== 'CÉDULA CIUDADANÍA'" class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    <input matInput type="text" [formControlName]="'nacionalidad'"
+                                        [readonly]="form.controls.descripcionTipoDocumento.value === 'CÉDULA CIUDADANÍA'" />
+                                    <mat-icon
+                                        *ngIf="form.controls.descripcionTipoDocumento.value !== 'CÉDULA CIUDADANÍA'"
+                                        class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="
                                             form.controls.nacionalidad.errors
@@ -659,7 +662,7 @@
                         </div>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
-                                <mat-label>Vereda / Corregimiento</mat-label>
+                                <mat-label>Vereda</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVereda'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
@@ -675,10 +678,9 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.tipoVereda.value === '1'" >
+                            <mat-form-field *ngIf="form.controls.tipoVereda.value === '1'">
                                 <mat-label>Nombre vereda</mat-label>
-                                <input matInput type="text" [formControlName]="'descripcionVereda'"
-                                     />
+                                <input matInput type="text" [formControlName]="'descripcionVereda'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -854,7 +856,7 @@
                         </mat-form-field>
 
                         <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Años de residencia</mat-label>
                                 <input matInput type="number" [formControlName]="'annosTiempoResidencia'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -872,7 +874,7 @@
                                     No puede ser menor de 0
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Meses de residencia</mat-label>
                                 <input autocomplete="off" matInput type="number"
                                     [formControlName]="'mesesTiempoResidencia'" min="0" max="11" />
@@ -1077,7 +1079,7 @@
                                 </mat-label>
                                 <input autocomplete="off"
                                     matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
-                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="7"
+                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="9"
                                     maxLength="10" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
@@ -1093,7 +1095,7 @@
                                     Solo se aceptan números
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
-                                    Longitud mínima de 7 dígitos
+                                    Longitud mínima de 9 dígitos
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.maxLength">
                                     Longitud máxima de 10 dígitos
@@ -1198,7 +1200,7 @@
                         </div>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
-                                <mat-label>Vereda / Corregimiento</mat-label>
+                                <mat-label>Vereda</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVeredaNegocio'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
@@ -1214,11 +1216,11 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.tipoVeredaNegocio.value === '1'" >
+                            <mat-form-field *ngIf="form.controls.tipoVeredaNegocio.value === '1'">
                                 <mat-label>Nombre vereda</mat-label>
                                 <input matInput type="text" [formControlName]="
                                         'descripcionVeredaNegocio'
-                                    "  />
+                                    " />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1508,16 +1510,15 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Antigüedad en el local actual (meses)</mat-label>
-                                <input matInput  type="number" min="0" [formControlName]="'antiguedadLocal'"
-                                    (change)="
+                                <input matInput type="number" min="0" [formControlName]="'antiguedadLocal'" (change)="
                                         validacionCampos(
                                             'Antigüedad en el local actual',
                                             'Este campo modifica el motor de decisión y políticas SARC',
                                             'antiguedadLocal',
                                             'STRING'
                                         )
-                                    "/>
-     
+                                    " />
+
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1888,7 +1889,9 @@
                                     'EPLDO'
                                 ">
                                 <mat-label>Salario</mat-label>
-                                <input matInput type="text" [formControlName]="'salarioConyuge'" mask="separator.0" />
+                                <span matPrefix>$</span>
+                                <input matInput type="text" thousandSeparator="." [formControlName]="'salarioConyuge'"
+                                    mask="separator.0" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -2041,7 +2044,7 @@
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información legal -
                             cliente PEP</span>
-                        <div class="grid gap-3 grid-cols-1">
+                        <div class="grid gap-3 md:grid-cols-3 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Ha ocupado cargos públicos?</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'legalCargoPublico'">
@@ -2319,7 +2322,7 @@
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información legal -Datos
                             Sagrilaft</span>
-                        <div class="grid grid-cols-1">
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Realiza operaciones con moneda extranjera?
                                 </mat-label>
@@ -2340,29 +2343,34 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field *ngIf="
+
+                            <ng-container>
+                                <mat-form-field *ngIf="
                                     form.controls.legalOperacionExtranjera
                                         .value == 'S'
                                 ">
-                                <mat-label>Que tipo de operación</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="
+                                    <mat-label>Tipo de operación</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="
                                         'tipoOperacionExtranjera'
                                     ">
-                                    <mat-option *ngFor="
+                                        <mat-option *ngFor="
                                             let item of dataInicial?.tipoOperacionExtranjera
                                         " [value]="item.codigo">
-                                        {{ item.nombre }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="
+                                            {{ item.nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                    <mat-error *ngIf="
                                         form.controls.tipoOperacionExtranjera
                                             .errors?.required
                                     ">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                            </ng-container>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Realiza operaciones con
                                     criptomoneda?</mat-label>
@@ -2387,7 +2395,7 @@
                                     form.controls.legalOperacionCriptomoneda
                                         .value == 'S'
                                 ">
-                                <mat-label>Que tipo de operacíón realiza</mat-label>
+                                <mat-label>Tipo de operación</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="
                                         'tipoOperacionCriptomoneda'
                                     ">
@@ -2406,11 +2414,16 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
+                        </div>
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Desarrolla actividades y profesiones no
                                     financieras designadas (APNFD)?
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="
+                                <mat-select [value]="'seleccione'" matTooltip="*Actividades APNFD (Actividades y profesiones no financieras
+                                designadas: se refiere según el GAFI: a) Casinos; b) agentes inmobiliarios; c) comerciantes
+                                de metales preciosos; d) comerciantes de piedras preciosas; e) abogados, notarios, otros
+                                profesionales jurídicos independientes o contadores." [formControlName]="
                                         'legalDesarrollaActividadApnfd'
                                     ">
                                     <mat-option disabled [value]="''">Seleccione
