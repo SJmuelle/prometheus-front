@@ -1444,8 +1444,8 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Teléfono / celular del negocio:</mat-label>
-                                <input matInput type="text" mask="(000) 000 00 00"
+                                <mat-label>Teléfono / celular del negocio</mat-label>
+                                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
                                     [formControlName]="'telefonoNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -1457,15 +1457,15 @@
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.telefonoNegocio.errors
-                                            ?.minLength
+                                            ?.minlength
                                     ">
-                                    Debe tener minimo 7 digitos
+                                    Debe tener mínimo 7 dígitos
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.telefonoNegocio.errors
-                                            ?.maxLength
+                                            ?.maxlength
                                     ">
-                                    Debe tener maximo 10 digitos
+                                    Debe tener máximo 10 dígitos
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.telefonoNegocio.errors
@@ -1551,7 +1551,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono/ celular del arrendador</mat-label>
-                                <input matInput mask="(000) 000 00 00" type="text"
+                                <input matInput mask="(000) 000 00 00" type="text" [validation]="false" [minlength]="7" [maxlength]="16"
                                     [formControlName]="'celularArrendador'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -1563,15 +1563,15 @@
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.celularArrendador.errors
-                                            ?.maxLength
+                                            ?.minlength
                                     ">
-                                    Maximo 10 digitos.
+                                    Debe tener mínimo 7 dígitos
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.celularArrendador.errors
-                                            ?.minLength
+                                            ?.maxlength
                                     ">
-                                    Minimo 10 digitos.
+                                    Debe tener máximo 10 dígitos
                                 </mat-error>
                             </mat-form-field>
 
@@ -1807,7 +1807,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / Celular </mat-label>
-                                <input mask="(000) 000 00 00" matInput type="text"
+                                <input mask="(000) 000 00 00" matInput type="text" [validation]="false" [minlength]="7" [maxlength]="16"
                                     [formControlName]="'celularConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -1816,6 +1816,18 @@
                                             ?.required
                                     ">
                                     Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.celularConyuge.errors
+                                            ?.minlength
+                                    ">
+                                    Debe tener mínimo 7 dígitos
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.celularConyuge.errors
+                                            ?.maxlength
+                                    ">
+                                    Debe tener máximo 10 dígitos
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
@@ -1907,8 +1919,8 @@
                                 'EPLDO'
                             " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
-                                <mat-label>Télefono de la empresa</mat-label>
-                                <input matInput type="text" mask="(000) 000 00 00"
+                                <mat-label>Teléfono de la empresa</mat-label>
+                                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="6" [maxlength]="16"
                                     [formControlName]="'telefonoEmpresaConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -2044,7 +2056,7 @@
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información legal -
                             cliente PEP</span>
-                        <div class="grid gap-3 md:grid-cols-3 grid-cols-1">
+                        <div class="grid gap-3 md:grid-cols-1 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿Ha ocupado cargos públicos?</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'legalCargoPublico'">

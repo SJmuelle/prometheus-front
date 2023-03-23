@@ -14,6 +14,9 @@
                     <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{ item.valor }}
                     </mat-option>
                 </mat-select>
+                <mat-error *ngIf="form.controls.tipoDocumento.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>No. de identificación</mat-label>
@@ -588,13 +591,25 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Teléfono de la empresa</mat-label>
-                <input autocomplete="off" mask="(000) 000 00 00" matInput type="text"
+                <input autocomplete="off" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16" matInput type="text"
                     [formControlName]="'telefonoEmpresa'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.telefonoEmpresa.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="
+                form.controls.telefonoEmpresa.errors
+                    ?.minlength
+            ">
+            Debe tener mínimo 7 dígitos
+        </mat-error>
+        <mat-error *ngIf="
+                form.controls.telefonoEmpresa.errors
+                    ?.maxlength
+            ">
+            Debe tener máximo 10 dígitos
+        </mat-error>
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Dirección de la empresa</mat-label>
@@ -956,7 +971,19 @@
             " class="grid gap-2 sm:grid-cols-4 grid-cols-1">
             <mat-form-field>
                 <mat-label>Teléfono / celular del negocio</mat-label>
-                <input matInput type="text" mask="(000) 000 00 00" [formControlName]="'telefonoNegocio'" />
+                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16" [formControlName]="'telefonoNegocio'" />
+                <mat-error *ngIf="
+                form.controls.telefonoNegocio.errors
+                    ?.minlength
+            ">
+            Debe tener mínimo 7 dígitos
+        </mat-error>
+        <mat-error *ngIf="
+                form.controls.telefonoNegocio.errors
+                    ?.maxlength
+            ">
+            Debe tener máximo 10 dígitos
+        </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Ubicación del negocio </mat-label>
@@ -1380,6 +1407,12 @@ titular" />
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
+                <mat-error *ngIf="
+                        form.controls.declaraRenta.errors
+                            ?.required
+                    ">
+                    Este campo es requerido.
+                </mat-error>
             </mat-form-field>
         </div>
 

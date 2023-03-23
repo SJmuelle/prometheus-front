@@ -188,7 +188,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.unsubscribe$.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }
