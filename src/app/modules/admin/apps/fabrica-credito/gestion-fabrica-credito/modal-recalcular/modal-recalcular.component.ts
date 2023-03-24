@@ -18,6 +18,9 @@ export class ModalRecalcularComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data)
+    if(this.data.unidadNegocio==1){
+      this.matDialogRef.close(true);
+    }
   }
 
   decision() {
