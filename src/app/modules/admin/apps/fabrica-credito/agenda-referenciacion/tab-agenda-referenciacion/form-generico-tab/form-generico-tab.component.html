@@ -49,7 +49,7 @@
 
                                         <div *ngSwitchCase="'switch'">
                                             <ng-container *ngIf="pregunta.objHtml.switch.value!='NEUTRO'">
-                                                <div class="flex justify-between items-center">
+                                                <div class="flex justify-between items-center mt-2">
                                                     <p [innerHTML]="pregunta.pregunta"></p>
                                                     <div class="toggle-button-cover">
                                                         <div class="button-cover">
@@ -65,7 +65,7 @@
                                                 </div>
                                             </ng-container>
                                             <ng-container *ngIf="pregunta.objHtml.switch.value=='NEUTRO'">
-                                                <div class="flex justify-between items-center">
+                                                <div class="flex justify-between items-center mt-2">
                                                     <p [innerHTML]="pregunta.pregunta"></p>
                                                     <div class="toggle-button-cover"
                                                         (click)="pregunta.objHtml.switch.value='S';pregunta.objHtml.switch.valueBoleean=true;recorrerPregunta();">
@@ -85,7 +85,7 @@
 
                                         <!-- preguntas tipo select sin hijos   -->
                                         <div *ngSwitchCase="'select'">
-                                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                                            <mat-form-field class="w-1/2 fuse-mat-dense mt-4">
                                                 <mat-label>{{pregunta.pregunta}}</mat-label>
                                                 <mat-select [value]="''" [(ngModel)]="pregunta.objHtml.select.value">
                                                     <mat-option disabled [value]="''">Seleccione
