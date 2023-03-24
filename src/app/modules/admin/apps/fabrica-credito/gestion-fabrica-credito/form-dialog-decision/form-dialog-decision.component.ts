@@ -43,6 +43,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         console.log(this.data)
         this.getTipoComentario(this.data.idAgenda)
         this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
+        debugger
         switch (this.data.etapa) {
             case 1:
                 this.mostrarAccion = false;
@@ -80,7 +81,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
 * @description: Obtiene el listado de agenda de completacion
 */
     private getTipoComentario(agenda: string): void {
-        // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        // Swal.fire({ title: 'Cargando', html: 'Busc ando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this.decisionService.getAgendasFabrica(agenda).subscribe((res) => {
             // Swal.close();
             if (res.status === 200) {

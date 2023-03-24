@@ -34,7 +34,7 @@ export class FormDialogoChecklistComponent implements OnInit {
     console.log(this.data)
   }
   decision() {
-    this.matDialogRef.close();
+    this.matDialogRef.close(true);
   }
 
   consulta() {
@@ -69,11 +69,12 @@ export class FormDialogoChecklistComponent implements OnInit {
   SiguienteEtapa() {
     if(this.data.tipo=='D'){
       this.decision()
+      return
     }
     this.matDialogRef.close();
     let dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-      minWidth: '50%',
-      minHeight: '50%',
+      minWidth: '30%',
+      minHeight: '30%',
       data: {
         numeroSolicitud: this.data.numeroSolicitud,
         etapa: 1,
@@ -96,9 +97,16 @@ export class FormDialogoChecklistComponent implements OnInit {
       valorItem: item.seleccionado == 'f' ? true : false
     };
 
-
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
     this._utility.postQuery(url, data).subscribe((response: any) => {
-    
+      Swal.close();
       if (response) {
         if (response.status == 200) {
           if (!response.data.resultado.includes('OK')) {
