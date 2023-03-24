@@ -18,6 +18,7 @@ export class ModalRecalcularComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data)
+    // borrar esto cuando tengamso el motor 
     if(this.data.unidadNegocio==1){
       this.matDialogRef.close(true);
     }
