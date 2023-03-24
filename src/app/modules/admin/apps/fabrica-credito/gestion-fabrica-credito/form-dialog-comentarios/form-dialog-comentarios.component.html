@@ -14,7 +14,7 @@
                             <mat-label>Tipo de comentario </mat-label>
                             <!-- lo mando el jefe lucho Tipo de visibilidad a tipo de comentario -->
                             <mat-select formControlName="tipoComentario" >
-                                <mat-option value="{{listadoTipo[1].codigoOpcion}}">{{listadoTipo[1].descripcionOpcion}}
+                                <mat-option *ngFor="let tipo of listadoTipo" value="{{tipo.codigoOpcion}}">{{tipo.descripcionOpcion}}
                                 </mat-option>
                             </mat-select>
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
