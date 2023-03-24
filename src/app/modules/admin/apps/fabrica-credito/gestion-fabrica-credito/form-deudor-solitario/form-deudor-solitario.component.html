@@ -95,7 +95,7 @@
             </ng-container>
         </div>
         <div class="-mx-3 md:flex mb-2">
-            <mat-form-field class="w-full px-2">
+            <mat-form-field class="w-full px-2 mat-form-field-disabled">
                 <mat-label>Nombre completo del deudor solidario</mat-label>
                 <input matInput type="text" [formControlName]="'nombreCompleto'"
                     [value]="formDeudorSolidario.controls.primerNombre.value+' '+formDeudorSolidario.controls.segundoNombre.value+' '+formDeudorSolidario.controls.primerApellido.value+' '+formDeudorSolidario.controls.segundoApellido.value"
@@ -259,7 +259,7 @@
             </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-full px-2">
+            <mat-form-field class="w-full px-2 mat-form-field-disabled">
                 <mat-label>Dirección completa</mat-label>
                 <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
             </mat-form-field>

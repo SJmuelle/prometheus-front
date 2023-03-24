@@ -1,7 +1,7 @@
 <form [formGroup]="form">
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
-            <mat-form-field>
+            <mat-form-field class="mat-form-field-disabled">
                 <mat-label>Tipo de solicitante</mat-label>
                 <input matInput type="text" [formControlName]="'tipodeSolicitante'" [readonly]="true" />
             </mat-form-field>
@@ -14,6 +14,8 @@
                     <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{ item.valor }}
                     </mat-option>
                 </mat-select>
+                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
+                </mat-icon>
                 <mat-error *ngIf="form.controls.tipoDocumento.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -140,7 +142,7 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <mat-form-field class="col-span-2">
+        <mat-form-field class="col-span-2 mat-form-field-disabled">
             <mat-label>Nombre completo del titular</mat-label>
             <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true" />
         </mat-form-field>
@@ -497,7 +499,7 @@
             <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
             </mat-icon>
         </mat-form-field>
-        <mat-form-field class="sm:col-span-1 md:col-span-1">
+        <mat-form-field class="sm:col-span-1 md:col-span-1 mat-form-field-disabled">
             <mat-label>Dirección completa</mat-label>
             <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
         </mat-form-field>

@@ -11,30 +11,30 @@
             </mat-expansion-panel-header>
             <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>No. de solicitud</mat-label>
                         <input matInput type="number" [formControlName]="'numeroSolicitud'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled"> 
                         <mat-label>Fecha de solicitud</mat-label>
                         <input matInput type="text" [formControlName]="'emision'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Fecha de ingreso a fábrica</mat-label>
                         <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled"> 
                         <mat-label>Estado</mat-label>
                         <input matInput type="text" [formControlName]="'descripcionEstado'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Subestado</mat-label>
                         <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true" />
                     </mat-form-field>
                 </div>
                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del crédito</span>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Tipo de crédito</mat-label>
                         <input matInput type="text" disabled [formControlName]="'descripcionTipoCredito'"
                             [readonly]="true" />
@@ -59,7 +59,7 @@
                         </mat-select>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Valor solicitado</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
                             [formControlName]="'valorSolicitadoWeb'" [readonly]="true" />
@@ -123,11 +123,11 @@
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Titular en micro</mat-label>
                         <input matInput type="text" [formControlName]="'titularMicro'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Codeudor en micro</mat-label>
                         <input matInput type="text" [formControlName]="'codeudorMicro'" [readonly]="true" />
                     </mat-form-field>
@@ -149,7 +149,7 @@
                             <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field>
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Segmento</mat-label>
                         <input matInput type="text" [formControlName]="'segmento'" [readonly]="true" />
                     </mat-form-field>
@@ -171,17 +171,17 @@
                     <ng-template matTabLabel>Datos del titular</ng-template>
                     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
-                            <mat-form-field>
+                            <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>Tipo de solicitante</mat-label>
                                 <input matInput type="text" [formControlName]="'descripcionTipo'" [readonly]="true" />
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>Tipo de documento</mat-label>
                                 <input matInput type="text" [formControlName]="
                                         'descripcionTipoDocumento'
                                     " [readonly]="true" />
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>No. de identificación</mat-label>
                                 <input matInput type="text" mask="separator.0" thousandSeparator="."
                                     [formControlName]="'identificacion'" [readonly]="true" />
@@ -193,7 +193,7 @@
                             <mat-form-field>
                                 <mat-label>Celular </mat-label>
                                 <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'"
-                                    [required]="true" />
+                                    />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -850,7 +850,7 @@
                             <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                             </mat-icon>
                         </mat-form-field>
-                        <mat-form-field class="sm:col-span-1 md:col-span-1">
+                        <mat-form-field class="sm:col-span-1 md:col-span-1 mat-form-field-disabled">
                             <mat-label>Dirección completa</mat-label>
                             <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
                         </mat-form-field>
@@ -1404,7 +1404,7 @@
                             <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                             </mat-icon>
                         </mat-form-field>
-                        <mat-form-field class="md:col-span-1 sm:grid-cols-1">
+                        <mat-form-field class="md:col-span-1 sm:grid-cols-1 mat-form-field-disabled">
                             <mat-label>Dirección negocio</mat-label>
                             <input matInput type="text" [formControlName]="'direccionNegocio'" readonly="true" />
                         </mat-form-field>
@@ -1494,7 +1494,7 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>Ubicación del negocio</mat-label>
                                 <input [readonly]="true" matInput type="text" [formControlName]="
                                         'ubicacionNegocioCalculado'
@@ -1504,7 +1504,7 @@
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información básica del
                             negocio</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
-                            <mat-form-field>
+                            <mat-form-field class="mat-form-field-disabled">
                                 <mat-label> Tipo de local </mat-label>
                                 <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'" />
                             </mat-form-field>
