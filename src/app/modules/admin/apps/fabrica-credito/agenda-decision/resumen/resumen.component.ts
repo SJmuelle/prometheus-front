@@ -81,28 +81,27 @@ export class ResumenComponent implements OnInit {
                                 valor2: data.resumenCredito.nombreCompleto.toLowerCase(),
                                 valor: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion,
                                 valor3: data.resumenCredito.email,
-                                valor4: "<span class='text-sm font-medium text-secondary'> Edad: </span>" + data.resumenGeneral.edad + ' años',
                             },
                             {
                                 icono: "heroicons_outline:home",
                                 color: "bg-orange-100 text-orange-800",
                                 valor: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + data.resumenCredito.departamentoVivienda,
-                                valor2: "<span class='text-sm font-medium text-secondary'> Municipio: </span>" + data.resumenCredito.ciudadVivienda,
+                                valor2: "<span class='text-sm font-medium text-secondary'> Edad: </span>" + data.resumenGeneral.edad + ' años',
                                 valor3: "<span class='text-sm font-medium text-secondary'> Tipo vivienda: </span>" + data.resumenGeneral.tipoVivienda,
-                                valor4: "<span class='text-sm font-medium text-secondary'> Personas a cargo:</span> " + data.resumenGeneral.numeroPersonasACargo,
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
                                 color: "bg-yellow-100 text-yellow-800",
                                 valor: "<span class='text-sm font-medium text-secondary'> Tipo de cliente: </span>" + data.resumenGeneral.tipoSolicitante,
-                                valor2: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + data.resumenGeneral.tipoCredito,
+                                valor2: "<span class='text-sm font-medium text-secondary'> Personas a cargo:</span> " + data.resumenGeneral.numeroPersonasACargo,
                                 valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + data.resumenGeneral.segmento,
-                                valor4: "<span class='text-sm font-medium text-secondary'> Oficina: </span>" + data.resumenGeneral.agencia
                             },
                             {
                                 icono: "mat_outline:location_on",
                                 color: "bg-purple-100 text-purple-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Aplica deudor solidario: </span>" + data.resumenGeneral.tipoSolicitante
+                                valor: "<span class='text-sm font-medium text-secondary'> Aplica deudor solidario: </span>" + data.resumenGeneral.tipoSolicitante,
+                                valor2: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + data.resumenGeneral.tipoCredito,
+                                valor3: "<span class='text-sm font-medium text-secondary'> Oficina: </span>" + data.resumenGeneral.agencia
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
@@ -235,8 +234,7 @@ export class ResumenComponent implements OnInit {
                                 color: "bg-green-100 text-green-800",
                                 valor: "<span class='text-sm font-medium text-secondary'>Tipo ubicación: </span>" + data.resumenCredito.tipoUbicacionNegocio,
                                 valor2: "<span class='text-sm font-medium text-secondary'>Tipo local: </span>" + data.resumenCredito.tipoLocalNegocio,
-                                valor3: "<span class='text-sm font-medium text-secondary'>N° empleados: </span>" + data.resumenCredito.numeroEmpleados,
-                                valor4: "<span class='text-sm font-medium text-secondary'>Antiguedad negocio: </span>" + data.resumenCredito.antiguedadNegocio + " años",
+
                             },
 
                             {
@@ -245,6 +243,13 @@ export class ResumenComponent implements OnInit {
                                 valor: "<span class='text-sm font-medium text-secondary'>Destino crédito: </span>" + data.resumenGeneral.destinoCredito,
                                 valor2: "<span class='text-sm font-medium text-secondary'>Valor ventas: </span>" + data.resumenCredito.ventasMensuales,
                                 valor3: "<span class='text-sm font-medium text-secondary'>Valor coutas máx a pagar: </span>" + data.resumenCredito.valorCuotasCredito,
+                            },
+                            {
+                                icono: "heroicons_outline:library",
+                                color: "bg-green-100 text-green-800",
+                                valor3: "<span class='text-sm font-medium text-secondary'>N° empleados: </span>" + data.resumenCredito.numeroEmpleados,
+                                valor4: "<span class='text-sm font-medium text-secondary'>Antiguedad negocio: </span>" + data.resumenCredito.antiguedadNegocio + " años",
+
                             },
                         ]
                     },
@@ -262,48 +267,48 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:user-circle",
                                 color: "bg-blue-100 text-blue-800",
-                                valor2: data.resumenCodeudor.nombreCompleto,
+                                valor2: this.capitalize(data.resumenCodeudor.nombreCompleto),
                                 valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCodeudor.tipoDocumento + " : </span> " + data.resumenCodeudor.identificacion,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.ocupacion
+                                valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.descripcionOcupacion
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
                                 color: "bg-yellow-100 text-yellow-800",
                                 valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCodeudor.actividadEconomica,
-                                valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCredito.salarioBasico),
+                                valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCodeudor.actividadEspecifica,
+                                valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCodeudor.salarioBasico),
                             },
                         ]
                     },
                 )
 
-                
-                // datos indicadores
-                DatosCredito.push(
-                    {
-                        titulo: "Indicadores",
-                        tipo: "campos",
-                        icono: "heroicons_outline:briefcase",
-                        color: "text-gray-400",
-                        descripcion: "Actividad económica del titular",
-                        campos: [
-                            {
-                                icono: "heroicons_outline:user-circle",
-                                color: "bg-blue-100 text-blue-800",
-                                valor2: data.resumenCodeudor.nombreCompleto,
-                                valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCodeudor.tipoDocumento + " : </span> " + data.resumenCodeudor.identificacion,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.ocupacion
-                            },
-                            {
-                                icono: "heroicons_outline:currency-dollar",
-                                color: "bg-yellow-100 text-yellow-800",
-                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCodeudor.actividadEconomica,
-                                valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCredito.salarioBasico),
-                            },
-                        ]
-                    },
-                )
+
+                // // datos indicadores
+                // DatosCredito.push(
+                //     {
+                //         titulo: "Indicadores",
+                //         tipo: "campos",
+                //         icono: "heroicons_outline:briefcase",
+                //         color: "text-gray-400",
+                //         descripcion: "Actividad económica del titular",
+                //         campos: [
+                //             {
+                //                 icono: "heroicons_outline:user-circle",
+                //                 color: "bg-blue-100 text-blue-800",
+                //                 valor2: data.resumenCodeudor.nombreCompleto,
+                //                 valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCodeudor.tipoDocumento + " : </span> " + data.resumenCodeudor.identificacion,
+                //                 valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.ocupacion
+                //             },
+                //             {
+                //                 icono: "heroicons_outline:currency-dollar",
+                //                 color: "bg-yellow-100 text-yellow-800",
+                //                 valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCodeudor.actividadEconomica,
+                //                 valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica,
+                //                 valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCredito.salarioBasico),
+                //             },
+                //         ]
+                //     },
+                // )
                 break
 
             case 32:
@@ -750,6 +755,10 @@ export class ResumenComponent implements OnInit {
     public onCerrar(event): void {
         this.verComentarios = event;
 
+    }
+
+    capitalize(text: string) {
+        return text.charAt(0).toUpperCase() + text.slice(1).toLocaleLowerCase();
     }
 
     separatos(numb) {
