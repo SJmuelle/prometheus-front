@@ -35,6 +35,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public habilitarComparar: boolean = false;
     public datosDocumentosHistorico: any[] = [];
     public identificacion: string;
+    public documentoSelected: any;
     public permisoEditar: boolean = false;
     public panelOpenState: boolean=false;
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
@@ -90,24 +91,42 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
      * @description: Seleccion de check
      */
     public onSeleccionDocumento(event: MatCheckbox, item: any): void {
+        console.log("documentos", this.documentos);
+        
         if (event.checked) {
             this.documentos.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
+                    this.documentoSelected = x;               
                 }
                 return x;
             });
-            console.log('hola' + this.documentos);
+            this.documentosDeudor.map((x) => {
+                if (x.idArchivoCargado === item.idArchivoCargado) {
+                    x.selected = event.checked;
+                    this.documentoSelected = x;                 
+                }
+                return x;
+            });
+            this.documentosCodeudor.map((x) => {
+                if (x.idArchivoCargado === item.idArchivoCargado) {
+                    x.selected = event.checked;
+                    this.documentoSelected = x;                   
+                }
+                return x;
+            });
             const datos: any = {
                 numeroSolicitud: this.numeroSolicitud,
                 idAdjunto: item.idArchivoCargado
             };
+            
             this.seleccionDocumentoIzquierdo(datos);
         } else {
             this.longitudArchivos = 0;
             this.documentos.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
+                    this.documentoSelected = x;
                 }
                 return x;
             });
@@ -213,6 +232,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 return x;
             });
         });
+        
     }
 
     private guardarAdjunto(datos: any): void {
