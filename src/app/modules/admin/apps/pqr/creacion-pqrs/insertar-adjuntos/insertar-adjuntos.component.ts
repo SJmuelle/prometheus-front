@@ -44,7 +44,6 @@ export class InsertarAdjuntosComponent implements OnInit {
                 this.evidencia.ext = nombre[1].toLowerCase();
                 this.evidencia.nombre = nombre[0];
                 this.evidencia.peso = fileToRead.size / 1024;
-
                 if (this.evidencia.peso <= 10000) {
                     if (
                         this.evidencia.ext == 'pdf' ||
