@@ -69,7 +69,7 @@ export class FormGenericoTabComponent implements OnInit {
       "numeroSolicitud": Number(this.numeroSolicitud),
       "unidadNegocio": Number(this.CodUnidadNegocio),
       "tipoTercero": this.tipoPersona,
-      "identificacion":this.identificacion,
+      "identificacion":this.referencia,
       "tipoReferencia": this.tipoReferenciacion,
       "tipoDocumento": this.tipoDocPersona
     };
