@@ -420,6 +420,12 @@
                 <mat-error *ngIf="formDeudorSolidario.controls.identificacionExpuesta.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="formDeudorSolidario.controls.identificacionExpuesta.errors?.minlength">
+                    Longitud min 5.
+                </mat-error>
+                <mat-error *ngIf="formDeudorSolidario.controls.identificacionExpuesta.errors?.maxlength">
+                    Longitud max 10.
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="w-1/2 px-2">
                 <mat-label>
