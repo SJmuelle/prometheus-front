@@ -176,7 +176,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private crearFormulario(): void {
         this.form = this.fb.group({
             numeroSolicitud: [''],
-            tipoTercero: [''],
+            tipoTercero: ['', Validators.required],
             primerNombre: ['', [Validators.required]],
             segundoNombre: [''],
             primerApellido: ['', [Validators.required]],
@@ -288,6 +288,11 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
 
     private estadoFormulario(): void {
         this.form.controls['tipo'].setValue('P');
+        this.subscription$ = this.form.controls['parentesco'].valueChanges.subscribe(parentesco => {
+            if(parentesco === 'OT'){
+               // this.form.controls['primerNombre'].setValidators(Validators.required);
+            }
+        })
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
             switch (tipo) {
                 case 'P':
@@ -300,7 +305,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['celular'].setValue('');
                     this.form.controls['primerNombre'].setValidators(Validators.required);
                     this.form.controls['primerApellido'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
@@ -316,7 +320,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['celular'].setValue('');
                     this.form.controls['primerNombre'].setValidators(Validators.required);
                     this.form.controls['primerApellido'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
@@ -332,7 +335,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['primerApellido'].clearValidators();
                     this.form.controls['nombreCompleto'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoCiudad'].setValidators(Validators.required);
                     this.form.controls['antiguedad'].setValidators(Validators.required);
                     break;
@@ -347,7 +349,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['celular'].setValue('');
                     this.form.controls['primerNombre'].setValidators(Validators.required);
                     this.form.controls['primerApellido'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
