@@ -167,25 +167,19 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             const fileToRead = files[0];
             let ext = fileToRead.name.split(".")
             ext = ext[(ext.length - 1)].toUpperCase();
-            if (ext != 'PDF') {
-                Swal.fire(
-                    '¡Información!',
-                    'Solo se permite PDF',
-                    'error',
-                );
-                return;
-            }
+
             Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
 
             const reader = new FileReader();
             reader.readAsDataURL(fileToRead);
             reader.onloadend = () => {
                 const file: string | ArrayBuffer | null = reader.result;
+                
                 const extension: string = fileToRead.type.split('/')[1];
                 const fechaHoy = Date.now();
                 formulario = {
                     nombreArchivo: item.nombreArchivo + '' + fechaHoy,
-                    extension: extension,
+                    extension: ext.toLowerCase(),
                     fuente: 'archivo-multi',
                     identificador: '',
                     numeroSolicitud: this.datosDocumentos.numeroSolicitud,
@@ -251,7 +245,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         }, error => {
             Swal.fire(
                 '¡Información!',
-                'Ha ocurrido un error',
+                    error.error.msg,
                 'error',
             );
         });
