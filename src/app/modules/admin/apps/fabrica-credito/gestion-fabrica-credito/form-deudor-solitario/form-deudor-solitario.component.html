@@ -1,12 +1,12 @@
 <form [formGroup]="formDeudorSolidario">
     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
-        <div class="-mx-3 md:flex mb-2">
-            <mat-form-field class="w-1/2 px-2">
+        <div class="-mx-3 md:flex mb-2 flex-wrap">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Tipo de solicitante:</mat-label>
                 <input matInput type="text" value="Deudor solidario" [readonly]="true" disabled>
             </mat-form-field>
             <ng-container *ngIf="parentescos$ | async as parentescos">
-                <mat-form-field class="w-1/2 px-2">
+                <mat-form-field class="w-full px-2 md:w-1/2">
                     <mat-label>Tipo de parentesco</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'parentesco'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -22,7 +22,7 @@
                 </mat-form-field>
             </ng-container>
 
-            <mat-form-field *ngIf="dataInicial" class="w-1/2 px-2">
+            <mat-form-field *ngIf="dataInicial" class="w-full px-2 md:w-1/2">
                 <mat-label>Tipo de documento</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" [required]="">
                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -37,7 +37,7 @@
                 </mat-error>
             </mat-form-field>
             <ng-container>
-                <mat-form-field class="w-1/2 px-2">
+                <mat-form-field class="w-full px-2 md:w-1/2">
                     <mat-label>N° de identificación</mat-label>
                     <input matInput type="text" [formControlName]="'identificacion'"
                         [mask]="tipoDocumento?.value === 'CE' ? '' : 'separator.0'"
@@ -94,15 +94,15 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <div class="-mx-3 md:flex mb-2">
-            <mat-form-field class="w-full px-2">
+        <div class="-mx-3 md:flex mb-2 flex-wrap">
+            <mat-form-field class="w-full px-2 mat-form-field-disabled">
                 <mat-label>Nombre completo del deudor solidario</mat-label>
                 <input matInput type="text" [formControlName]="'nombreCompleto'"
                     [value]="formDeudorSolidario.controls.primerNombre.value+' '+formDeudorSolidario.controls.segundoNombre.value+' '+formDeudorSolidario.controls.primerApellido.value+' '+formDeudorSolidario.controls.segundoApellido.value"
                     [readonly]="true" [readonly]="true" disabled>
             </mat-form-field>
             <ng-container>
-                <mat-form-field class="w-1/2 px-2">
+                <mat-form-field class="w-full px-2 md:w-1/2">
                     <mat-label>Celular</mat-label>
                     <input matInput type="text" mask="(000) 000 00 00" [formControlName]="'celular'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -120,7 +120,7 @@
                 </mat-form-field>
             </ng-container>
             <ng-container>
-                <mat-form-field class="w-1/2 px-2">
+                <mat-form-field class="w-full px-2 md:w-1/2">
                     <mat-label>Correo electrónico</mat-label>
                     <input matInput type="text" [formControlName]="'email'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -259,16 +259,16 @@
             </mat-form-field>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-full px-2">
+            <mat-form-field class="w-full px-2 mat-form-field-disabled">
                 <mat-label>Dirección completa</mat-label>
                 <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true">
             </mat-form-field>
         </div>
-        <div class="-mx-3 md:flex mt-3 mb-2">
+        <div class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
 
 
             <ng-container *ngIf="tipoVivienda$ | async as tipoViviendas">
-                <mat-form-field class="w-1/2 px-2">
+                <mat-form-field class="w-full px-2 md:w-1/2">
                     <mat-label>Tipo de vivienda</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -339,21 +339,21 @@
 
         <div *ngIf="formDeudorSolidario.controls.legalCargoPublico.value === 'S'"
             class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Cargo</mat-label>
                 <input matInput type="text" [formControlName]="'cargoPublico'">
                 <mat-error *ngIf="formDeudorSolidario.controls.cargoPublico.errors?.required">
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Entidad</mat-label>
                 <input matInput type="text" [formControlName]="'entidadPublico'">
                 <mat-error *ngIf="formDeudorSolidario.controls.entidadPublico.errors?.required">
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>¿Estás vinculado actualmente?</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualPublico'">
                     <mat-option disabled [value]="''">Seleccione
@@ -368,7 +368,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualPublico.value === 'N'"
-                class="w-1/2 px-2">
+                class="w-full px-2 md:w-1/2">
                 <mat-label>Fecha de desvinculación</mat-label>
                 <input matInput [matDatepicker]="fechaDesvinculacionPublico"
                     [formControlName]="'fechaDesvinculacionPublico'" [readonly]="true">
@@ -387,21 +387,21 @@
             class="bg-gray-200 p-1.5 rounded-1 text-dark mb-2 font-bold">Datos cargo público-familiar</span>
         <div *ngIf="formDeudorSolidario.controls.legalPersonalExpuesta.value === 'S'"
             class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Vinculación / Relación</mat-label>
                 <input matInput type="text" [formControlName]="'vinculacionExpuesta'">
                 <mat-error *ngIf="formDeudorSolidario.controls.vinculacionExpuesta.errors?.required">
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Nombre y apellido</mat-label>
                 <input matInput type="text" [formControlName]="'nombreExpuesta'">
                 <mat-error *ngIf="formDeudorSolidario.controls.nombreExpuesta.errors?.required">
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Tipo de ID</mat-label>
                 <mat-select [value]="'seleccione'" (selectionChange)="cambiarNacionalidad($event)"
                     [formControlName]="'tipoIdentificacionExpuesta'">
@@ -412,7 +412,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>
                     N° de identificación</mat-label>
                 <input matInput type="text" mask="separator.0" thousandSeparator="."
@@ -427,7 +427,7 @@
                     Longitud max 10.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>
                     Nacionalidad</mat-label>
                 <input matInput type="text" [formControlName]="'nacionalidadExpuesta'"
@@ -436,7 +436,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>
                     Entidad</mat-label>
                 <input matInput type="text" [formControlName]="'entidadExpuesta'">
@@ -444,7 +444,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>
                     Cargo</mat-label>
                 <input matInput type="text" [formControlName]="'cargoExpuesta'">
@@ -452,7 +452,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>¿Estás vinculado actualmente?</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'vinculadoActualExpuesta'">
                     <mat-option disabled [value]="''">Seleccione
@@ -468,7 +468,7 @@
             </mat-form-field>
 
             <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualExpuesta.value === 'N'"
-                class="w-1/2 px-2">
+                class="w-full px-2 md:w-1/2">
                 <mat-label>Fecha de desvinculación</mat-label>
                 <input matInput [matDatepicker]="fechaDesvinculacionExpuesta"
                     [formControlName]="'fechaDesvinculacionExpuesta'">
@@ -485,8 +485,8 @@
         </div>
         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal - datos
             Sagrilaft</span>
-        <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-1/2 px-2">
+        <div class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>¿Realiza operaciones con moneda extranjera? </mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'legalOperacionExtranjera'">
                     <mat-option disabled [value]="''">Seleccione
@@ -503,7 +503,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="formDeudorSolidario.controls.legalOperacionExtranjera.value == 'S'"
-                class="w-1/2 px-2">
+                class="w-full px-2 md:w-1/2">
                 <mat-label>Tipo de operación</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionExtranjera'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionExtranjera" [value]="item.codigo">
@@ -517,8 +517,8 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-1/2 px-2">
+        <div class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>¿Realiza operaciones con criptomoneda?</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'legalOperacionCriptomoneda'">
                     <mat-option disabled [value]="''">Seleccione
@@ -535,7 +535,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="formDeudorSolidario.controls.legalOperacionCriptomoneda.value == 'S'"
-                class="w-1/2 px-2">
+                class="w-full px-2 md:w-1/2">
                 <mat-label>Tipo de operación</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoOperacionCriptomoneda'">
                     <mat-option *ngFor="let item of dataInicial?.tipoOperacionCripto" [value]="item.codigo">
@@ -549,8 +549,8 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-1/2 px-2">
+        <div class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>¿Desarrolla actividades y profesiones no financieras designadas (APNFD)?
                 </mat-label>
                 <mat-select [value]="'seleccione'" matTooltip="*Actividades APNFD (Actividades y profesiones no financieras
@@ -571,7 +571,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-1/2 px-2">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>¿Es responsable de declarar renta y complementarios?
                 </mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'declaraRenta'">
@@ -591,8 +591,8 @@
 
         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold">Información legal - declaraciones y
             autorizaciones</span>
-        <div class="-mx-3 md:flex mt-3 mb-2">
-            <mat-form-field class="w-1/2 px-2">
+        <div class="-mx-3 md:flex mt-3 mb-2 flex-wrap">
+            <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>El cliente declara que sus ingresos provienen de</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'declaroIngresoDeclaracionAuto'">
                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -608,7 +608,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field *ngIf="formDeudorSolidario.controls.declaroIngresoDeclaracionAuto.value === 'OT'"
-                class="w-1/2 px-2">
+                class="w-full px-2 md:w-1/2">
                 <mat-label>Otro</mat-label>
                 <input matInput type="text" [formControlName]="'otroIngresoDeclaracionAuto'">
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">

@@ -105,7 +105,7 @@ export class FormGenericoTabComponent implements OnInit {
               datosUsuario:data,
               preguntas: info
             }
-
+            this.recorrerPregunta();
           });
       });
   }

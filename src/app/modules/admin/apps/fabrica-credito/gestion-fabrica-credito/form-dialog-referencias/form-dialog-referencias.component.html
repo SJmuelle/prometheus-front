@@ -19,11 +19,14 @@
                         <ng-container *ngIf="tiposTercero$ | async as items">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Tipo de tercero</mat-label>
-                                <mat-select [formControlName]="'tipoTercero'">
+                                <mat-select [formControlName]="'tipoTercero'" [required]="true">
                                     <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
                                         {{item.descripcionOpcion}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error *ngIf="form.controls['tipoTercero'].errors?.required">
+                                    Este campo es requerido
+                                </mat-error>
                             </mat-form-field>
                         </ng-container>
                     </div>
@@ -37,13 +40,16 @@
                                         {{item.descripcionOpcion}}
                                     </mat-option>
                                 </mat-select>
+                                <mat-error *ngIf="form.controls['tipo'].errors?.required">
+                                    Este campo es requerido
+                                </mat-error>
                             </mat-form-field>
                         </ng-container>
                     </div>
                     <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
-                                <mat-label>Razon social</mat-label>
+                                <mat-label>Razón social</mat-label>
                                 <input matInput type="text" [formControlName]="'nombreCompleto'" [required]="true">
                             </mat-form-field>
                         </div>
@@ -83,6 +89,9 @@
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Antigüedad de ser cliente (meses)</mat-label>
                                 <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'" [required]="true">
+                                <mat-error *ngIf="form.controls['antiguedad'].errors?.required">
+                                    Este campo es requerido
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -91,6 +100,9 @@
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Tiempo conocido (meses)</mat-label>
                                 <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'" [required]="true">
+                                <mat-error *ngIf="form.controls['antiguedad'].errors?.required">
+                                    Este campo es requerido
+                                </mat-error>
                             </mat-form-field>
                         </div>
                     </ng-container>
@@ -163,7 +175,7 @@
                     <div class="md:flex">
                         <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                             <mat-label>Celular</mat-label>
-                            <input matInput type="text" mask="(000) 000 0000" [formControlName]="'celular'" [required]="true">
+                            <input matInput type="text" mask="(000) 000 0000" [validation]="false" [formControlName]="'celular'" [required]="true" >
                             <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
                                 <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
                                 <mat-error *ngIf="form.controls.celular.errors?.pattern">Debe iniciar por 3.</mat-error>
@@ -194,6 +206,19 @@
                             </mat-form-field>
                         </ng-container>
                     </div>
+                    <!-- <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'  && form.controls['parentesco'].value === 'OT'">
+   
+                        <ng-container *ngIf="parentescos$ | async as items">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Otro, indique cual.</mat-label>
+                                <mat-select [formControlName]="'parentesco'">
+                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                        {{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div> -->
                 </div>
             </form>
         </div>
@@ -201,7 +226,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()">
             Guardar
         </button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
