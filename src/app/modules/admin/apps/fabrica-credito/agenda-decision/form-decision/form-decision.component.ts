@@ -53,16 +53,10 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   consultaDecisiones() {
     this.fabricaDatos.agenda
     let agenda;
-    switch (this.fabricaDatos.agenda) {
-      case 'DE':
-        agenda = 'DECISION';
-        break;
-      case 'VD':
-        agenda = 'VENTA-DIGITAL';
-        break;
-      default:
-        agenda = 'COMPLETACION';
-      break;
+    if(this.fabricaDatos.agenda != 'DE'){
+      agenda='COMPLETACION';
+    }else{
+      agenda='DECISION';
     }
     this._decisionesService.getOpciones(agenda).subscribe((response: any) => {
       console.log(response);
@@ -129,8 +123,8 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
 
   public guardar() {
-
-    if (!this.form.valid) {
+    debugger
+    if(!this.form.valid){
       return
     }
     if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D')) {
