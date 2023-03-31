@@ -2541,11 +2541,11 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab>
+                <mat-tab [disabled]="form.controls['codeudorMicro'].value !== 'S'">
                     <ng-template matTabLabel>Codeudor </ng-template>
                     <form-codeudor></form-codeudor>
                 </mat-tab>
-                <mat-tab>
+                <mat-tab [disabled]="form.controls['aplicaDeudorSolidario'].value !== 'S'">
                     <ng-template matTabLabel>Deudor solidario </ng-template>
                     <form-deudor-solitario></form-deudor-solitario>
                 </mat-tab>
