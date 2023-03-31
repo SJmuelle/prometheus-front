@@ -2541,13 +2541,13 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab *ngIf="form.controls['codeudorMicro'].value === 'S'">
+                <mat-tab *ngIf="form.controls['tipoDeudor'].value === '1' || form.controls['tipoDeudor'].value === '3'">
                     <ng-template matTabLabel>
                         Codeudor
                     </ng-template>
                     <form-codeudor></form-codeudor>
                 </mat-tab>
-                <mat-tab *ngIf="form.controls['aplicaDeudorSolidario'].value === 'S'">
+                <mat-tab *ngIf="form.controls['tipoDeudor'].value === '2' || form.controls['tipoDeudor'].value === '3'">
                     <ng-template matTabLabel>
                         Deudor solidario
                     </ng-template>
