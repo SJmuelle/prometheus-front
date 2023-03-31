@@ -2049,7 +2049,9 @@
                                     </mat-option>
                                     <mat-option *ngFor="
                                             let item of dataInicial?.tiposTercerosSolicitud
-                                        " [value]="item.codigo">
+                                        "
+                                        [disabled]="form.controls['aplicaCodeudor']?.value === 'S' && item.codigo === '2'"
+                                        [value]="item.codigo">
                                         {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
