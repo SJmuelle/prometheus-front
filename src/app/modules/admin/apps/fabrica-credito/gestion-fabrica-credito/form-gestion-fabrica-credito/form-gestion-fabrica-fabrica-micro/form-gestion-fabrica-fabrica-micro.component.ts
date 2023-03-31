@@ -175,7 +175,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.formatearDataInicial();
                 this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
-                
+
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -424,6 +424,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form = this.fb.group({
             numeroSolicitud: [''],
             tipo: [''],
+            aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
             emision: [''],
