@@ -57,6 +57,12 @@
                                 {{ item.nombre }}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="
+                                        form.controls.destinoCredito.errors
+                                            ?.required
+                                    ">
+                            Este campo es requerido.
+                        </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field class="mat-form-field-disabled">
