@@ -8,6 +8,7 @@ import { UtilityService } from '../../../../../../resources/services/utility.ser
 import { takeUntil } from 'rxjs/operators';
 import { FormDialogListErrorDialogComponent } from '../../agenda-referenciacion/form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
 import { Router } from '@angular/router';
+import { toInteger } from 'lodash';
 
 @Component({
     selector: 'app-form-dialog-decision',
@@ -149,7 +150,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             })
                             break;
                         default:
+                            
                             this.postDecision(data);
+
                             break;
 
                     }
@@ -287,7 +290,11 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             if (res.data.estado == 1) {
                 this.modalDetalle(res.data.detalle)
             } else {
-                this.postCambioEstado(data_cambioEstado)
+                if(data_cambioEstado.agenda === 'CC'){
+                    this.postCambioEstadoMicro(data_cambioEstado)
+                }else{
+                    this.postCambioEstado(data_cambioEstado)
+                }
             }
 
         })
@@ -344,11 +351,71 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         }
         this.router.navigate([`/credit-factory/${agenda}`]);
     }
+
+    /**
+     * @description: Guarda la decision
+     */
+    private postCambioEstadoMicro(data: any): void {
+        Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+        
+        data.cupo = this.utility.enviarNumero(data.cupo);
+        this.decisionService.postAprobado({...this.form.getRawValue(),...data}).pipe(takeUntil(this.unsuscribe$))
+            .subscribe((res) => {
+                let respuesta: any = {};
+                switch (res.status) {
+                    case 200:
+                        if (res.data.respuesta == 'OK') {
+                            respuesta = {
+                                icon: 'success',
+                                title: 'Mensaje',
+                                text: 'Ha cambiado el estado con éxito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                            setTimeout(() => {
+                                //redireccionar
+                                this.redireccionar()
+                            }, 1000);
+                        } else {
+                            respuesta = {
+                                icon: 'warning',
+                                title: 'Mensaje',
+                                text: res.data.resultado
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }
+
+
+                        break;
+                    case 400:
+                        respuesta = {
+                            icon: 'warning',
+                            title: 'Mensaje',
+                            text: 'Advertencia'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    case 500:
+                        respuesta = {
+                            icon: 'error',
+                            title: 'Mensaje',
+                            text: 'Ha ocurrido un error'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    default:
+                        break;
+                }
+            });
+    }
+
     /**
      * @description: Guarda la decision
      */
     private postCambioEstado(data: any): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+        
+       
+
         this.decisionService.postCambioEstado(data).pipe(takeUntil(this.unsuscribe$))
             .subscribe((res) => {
                 let respuesta: any = {};
