@@ -275,7 +275,7 @@
                     Este campo es requerido.
                 </mat-error>
                 <mat-error *ngIf="form.controls.valorCredito.errors?.min">
-                    Monto mínimo de 1.000.000
+                    Monto mínimo de {{salarioMinimo}}
                 </mat-error>
                 <mat-error *ngIf="form.controls.valorCredito.errors?.max">
                     Monto máximo de 100.000.000

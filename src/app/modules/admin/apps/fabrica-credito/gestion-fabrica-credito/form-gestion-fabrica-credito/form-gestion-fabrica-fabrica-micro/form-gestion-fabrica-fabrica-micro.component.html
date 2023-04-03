@@ -84,6 +84,15 @@
                                 );
                                 getPlazosCredito(this.form.controls.valorSolicitado.value)
                             " />
+                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.min">
+                                Monto mínimo de {{salarioMinimo}}
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
+                                Monto máximo de 100.000.000
+                            </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field *ngIf="this.plazosCredito$ | async as plazos">
