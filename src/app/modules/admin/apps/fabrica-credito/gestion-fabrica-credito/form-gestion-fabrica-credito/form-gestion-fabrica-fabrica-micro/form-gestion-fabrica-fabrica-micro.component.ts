@@ -431,6 +431,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
+            tipoCredito: [''],
             emision: [''],
             tipoDocumento: [''],
             identificacion: [''],
