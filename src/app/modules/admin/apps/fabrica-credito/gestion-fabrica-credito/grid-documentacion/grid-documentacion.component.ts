@@ -38,6 +38,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public documentoSelected: any;
     public permisoEditar: boolean = false;
     public panelOpenState: boolean=false;
+
+    @Input() tipoDeudor: String;
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
     constructor(
         private route: ActivatedRoute,

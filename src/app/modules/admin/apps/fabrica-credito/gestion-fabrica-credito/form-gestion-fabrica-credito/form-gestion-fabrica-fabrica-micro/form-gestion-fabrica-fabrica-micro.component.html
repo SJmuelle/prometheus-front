@@ -2557,7 +2557,7 @@
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Documentación</ng-template>
-                    <app-grid-documentacion></app-grid-documentacion>
+                    <app-grid-documentacion [tipoDeudor]="form.controls['tipoDeudor'].value"></app-grid-documentacion>
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Referencias</ng-template>
