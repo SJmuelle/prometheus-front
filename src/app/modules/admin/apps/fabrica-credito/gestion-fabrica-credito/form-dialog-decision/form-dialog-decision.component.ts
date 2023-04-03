@@ -358,7 +358,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     private postCambioEstadoMicro(data: any): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
         
-        data.cupo = this.utility.enviarNumero(data.cupo);
+        data.cupo = toInteger(this.utility.enviarNumero(this.form.getRawValue().cupo))
+        
         this.decisionService.postAprobado({...this.form.getRawValue(),...data}).pipe(takeUntil(this.unsuscribe$))
             .subscribe((res) => {
                 let respuesta: any = {};
