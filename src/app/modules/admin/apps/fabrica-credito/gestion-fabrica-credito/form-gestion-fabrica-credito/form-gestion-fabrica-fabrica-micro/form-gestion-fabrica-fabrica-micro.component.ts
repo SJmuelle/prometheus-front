@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { FuseValidators } from '@fuse/validators';
+import { GenericasService } from 'app/core/services/genericas.service';
 
 @Component({
     selector: 'form-gestion-fabrica-fabrica-micro',
@@ -41,6 +42,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public ciudadesExpedicion$: Observable<any>;
     public plazosCredito$: Observable<any>;
     public actividadEconomica: any;
+    public salarioMinimo: number = 0;
 
     fechaActual: any = moment().locale("co");
 
@@ -53,6 +55,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         public _permisosService: PermisosService,
         private _formularioCreditoService: FormularioCreditoService,
         private el: ElementRef,
+        private genericaServices: GenericasService,
     ) {
         this.createFormulario();
 
@@ -74,6 +77,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if (this.permisoEditar) {
             this.form.disable();
         }
+        this.getSalarioMinimo();
     }
 
     private cargueInicial() {
@@ -175,7 +179,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.formatearDataInicial();
                 this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
-                
+
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -424,6 +428,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form = this.fb.group({
             numeroSolicitud: [''],
             tipo: [''],
+            aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
             emision: [''],
@@ -710,6 +715,16 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.controls['ingresos']?.setValue(this.utility.formatearNumero(String(sum)));
 
     }
+
+    private getSalarioMinimo(){
+        this.genericaServices.getSalarioBasico().subscribe(({data}) => {
+          
+           this.salarioMinimo = data.salarioMinimo;
+
+           
+           this.form.get('valorSolicitado').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
+       })
+   }
 
     // validaciones dinamicas
     public addValidation() {

@@ -15,7 +15,7 @@
                         <mat-label>No. de solicitud</mat-label>
                         <input matInput type="number" [formControlName]="'numeroSolicitud'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field class="mat-form-field-disabled"> 
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Fecha de solicitud</mat-label>
                         <input matInput type="text" [formControlName]="'emision'" [readonly]="true" />
                     </mat-form-field>
@@ -23,7 +23,7 @@
                         <mat-label>Fecha de ingreso a fábrica</mat-label>
                         <input matInput type="text" [formControlName]="'fechaIngresoFabrica'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field class="mat-form-field-disabled"> 
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Estado</mat-label>
                         <input matInput type="text" [formControlName]="'descripcionEstado'" [readonly]="true" />
                     </mat-form-field>
@@ -57,6 +57,12 @@
                                 {{ item.nombre }}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="
+                                        form.controls.destinoCredito.errors
+                                            ?.required
+                                    ">
+                            Este campo es requerido.
+                        </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field class="mat-form-field-disabled">
@@ -78,6 +84,15 @@
                                 );
                                 getPlazosCredito(this.form.controls.valorSolicitado.value)
                             " />
+                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.min">
+                                Monto mínimo de {{salarioMinimo}}
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
+                                Monto máximo de 100.000.000
+                            </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field *ngIf="this.plazosCredito$ | async as plazos">
@@ -123,13 +138,23 @@
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                    <mat-form-field class="mat-form-field-disabled">
+                    <mat-form-field>
                         <mat-label>Titular en micro</mat-label>
-                        <input matInput type="text" [formControlName]="'titularMicro'" [readonly]="true" />
+                        <mat-select [value]="'seleccione'" disabled [formControlName]="'titularMicro'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            </mat-option>
+                            <mat-option value="S">SI APLICA </mat-option>
+                            <mat-option value="N">NO APLICA </mat-option>
+                        </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="mat-form-field-disabled">
+                    <mat-form-field>
                         <mat-label>Codeudor en micro</mat-label>
-                        <input matInput type="text" [formControlName]="'codeudorMicro'" [readonly]="true" />
+                        <mat-select [value]="'seleccione'" disabled [formControlName]="'codeudorMicro'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            </mat-option>
+                            <mat-option value="S">SI APLICA </mat-option>
+                            <mat-option value="N">NO APLICA </mat-option>
+                        </mat-select>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Crédito titular en otras lineas</mat-label>
@@ -192,8 +217,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Celular </mat-label>
-                                <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'"
-                                    />
+                                <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1445,8 +1469,8 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / celular del negocio</mat-label>
-                                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
-                                    [formControlName]="'telefonoNegocio'" />
+                                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7"
+                                    [maxlength]="16" [formControlName]="'telefonoNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1551,8 +1575,8 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono/ celular del arrendador</mat-label>
-                                <input matInput mask="(000) 000 00 00" type="text" [validation]="false" [minlength]="7" [maxlength]="16"
-                                    [formControlName]="'celularArrendador'" />
+                                <input matInput mask="(000) 000 00 00" type="text" [validation]="false" [minlength]="7"
+                                    [maxlength]="16" [formControlName]="'celularArrendador'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1807,8 +1831,8 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Teléfono / Celular </mat-label>
-                                <input mask="(000) 000 00 00" matInput type="text" [validation]="false" [minlength]="7" [maxlength]="16"
-                                    [formControlName]="'celularConyuge'" />
+                                <input mask="(000) 000 00 00" matInput type="text" [validation]="false" [minlength]="7"
+                                    [maxlength]="16" [formControlName]="'celularConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1920,8 +1944,8 @@
                             " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Teléfono de la empresa</mat-label>
-                                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="6" [maxlength]="16"
-                                    [formControlName]="'telefonoEmpresaConyuge'" />
+                                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="6"
+                                    [maxlength]="16" [formControlName]="'telefonoEmpresaConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -2040,7 +2064,9 @@
                                     </mat-option>
                                     <mat-option *ngFor="
                                             let item of dataInicial?.tiposTercerosSolicitud
-                                        " [value]="item.codigo">
+                                        "
+                                        [disabled]="form.controls['aplicaCodeudor']?.value === 'S' && item.codigo === '2'"
+                                        [value]="item.codigo">
                                         {{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
@@ -2519,10 +2545,10 @@
 
                         <div class="grid grid-cols-1">
                             <mat-checkbox class="ml-3" formControlName="autoricacionDatosPersonalClaracionAuto"> <a
-                                    href="./assets/documentos/terminos_condiciones.pdf" target="_blank">Autorización de
+                                    href="./assets/documentos/documentosMicroForms/datos_personales.pdf" target="_blank">Autorización de
                                     tratamiento de datos personales</a> </mat-checkbox>
                             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
-                                    href="./assets/documentos/clausula_veracidad.pdf" target="_blank"> Cláusula de
+                                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" target="_blank"> Cláusula de
                                     Anticorrupción y Antilavado </a></mat-checkbox>
                         </div>
                         <div class="flex justify-end" *ngIf="!permisoEditar">
@@ -2532,17 +2558,21 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab>
-                    <ng-template matTabLabel>Codeudor </ng-template>
+                <mat-tab *ngIf="form.controls['tipoDeudor'].value === '1' || form.controls['tipoDeudor'].value === '3'">
+                    <ng-template matTabLabel>
+                        Codeudor
+                    </ng-template>
                     <form-codeudor></form-codeudor>
                 </mat-tab>
-                <mat-tab>
-                    <ng-template matTabLabel>Deudor solidario </ng-template>
+                <mat-tab *ngIf="form.controls['tipoDeudor'].value === '2' || form.controls['tipoDeudor'].value === '3'">
+                    <ng-template matTabLabel>
+                        Deudor solidario
+                    </ng-template>
                     <form-deudor-solitario></form-deudor-solitario>
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Documentación</ng-template>
-                    <app-grid-documentacion></app-grid-documentacion>
+                    <app-grid-documentacion [tipoDeudor]="form.controls['tipoDeudor'].value"></app-grid-documentacion>
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Referencias</ng-template>

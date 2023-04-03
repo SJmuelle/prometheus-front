@@ -8,6 +8,9 @@ import { UtilityService } from '../../../../../../resources/services/utility.ser
 import { takeUntil } from 'rxjs/operators';
 import { FormDialogListErrorDialogComponent } from '../../agenda-referenciacion/form-dialog-list-error-dialog/form-dialog-list-error-dialog.component';
 import { Router } from '@angular/router';
+import { toInteger } from 'lodash';
+import { GenericasService } from 'app/core/services/genericas.service';
+import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 
 @Component({
     selector: 'app-form-dialog-decision',
@@ -24,6 +27,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     mostrarPlazo: boolean = false;
     tituloModal: string;
     listadoAgenda: any;
+    public plazosCredito$: Observable<any>;
+    public salarioMinimo: number = 0;
+
     constructor(
         private fb: FormBuilder,
         private decisionService: DecisionService,
@@ -31,7 +37,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         private _dialog: MatDialogRef<FormDialogDecisionComponent>,
         public utility: UtilityService,
         public dialog: MatDialog,
-        private router: Router
+        private router: Router,
+        private genericaServices: GenericasService,
+        private _formularioCreditoService: FormularioCreditoService,
     ) {
         this.crearFormulario();
     }
@@ -73,8 +81,20 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             this.form.controls['plazo'].setValue('');
             this.form.controls['plazo'].setValidators(Validators.required);
             this.form.controls['plazo'].updateValueAndValidity();
+
+            this.getSalarioMinimo();
         }
     }
+
+
+    private getSalarioMinimo(){
+        this.genericaServices.getSalarioBasico().subscribe(({data}) => {
+          
+           this.salarioMinimo = data.salarioMinimo;
+           
+           this.form.get('cupo').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
+       })
+   }
 
 
     /**
@@ -149,7 +169,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             })
                             break;
                         default:
+                            
                             this.postDecision(data);
+
                             break;
 
                     }
@@ -287,7 +309,11 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             if (res.data.estado == 1) {
                 this.modalDetalle(res.data.detalle)
             } else {
-                this.postCambioEstado(data_cambioEstado)
+                if(data_cambioEstado.agenda === 'CC'){
+                    this.postCambioEstadoMicro(data_cambioEstado)
+                }else{
+                    this.postCambioEstado(data_cambioEstado)
+                }
             }
 
         })
@@ -344,11 +370,72 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         }
         this.router.navigate([`/credit-factory/${agenda}`]);
     }
+
+    /**
+     * @description: Guarda la decision
+     */
+    private postCambioEstadoMicro(data: any): void {
+        Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+        
+        data.cupo = toInteger(this.utility.enviarNumero(this.form.getRawValue().cupo))
+        
+        this.decisionService.postAprobado({...this.form.getRawValue(),...data}).pipe(takeUntil(this.unsuscribe$))
+            .subscribe((res) => {
+                let respuesta: any = {};
+                switch (res.status) {
+                    case 200:
+                        if (res.data.respuesta == 'OK') {
+                            respuesta = {
+                                icon: 'success',
+                                title: 'Mensaje',
+                                text: 'Ha cambiado el estado con éxito'
+                            };
+                            this.mostrarAlerta(respuesta);
+                            setTimeout(() => {
+                                //redireccionar
+                                this.redireccionar()
+                            }, 1000);
+                        } else {
+                            respuesta = {
+                                icon: 'warning',
+                                title: 'Mensaje',
+                                text: res.data.resultado
+                            };
+                            this.mostrarAlerta(respuesta);
+                        }
+
+
+                        break;
+                    case 400:
+                        respuesta = {
+                            icon: 'warning',
+                            title: 'Mensaje',
+                            text: 'Advertencia'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    case 500:
+                        respuesta = {
+                            icon: 'error',
+                            title: 'Mensaje',
+                            text: 'Ha ocurrido un error'
+                        };
+                        this.mostrarAlerta(respuesta);
+                        break;
+                    default:
+                        break;
+                }
+            });
+    }
+
     /**
      * @description: Guarda la decision
      */
     private postCambioEstado(data: any): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+        
+       
+
         this.decisionService.postCambioEstado(data).pipe(takeUntil(this.unsuscribe$))
             .subscribe((res) => {
                 let respuesta: any = {};
@@ -431,4 +518,13 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         this.unsuscribe$.unsubscribe();
     }
 
+
+    /**
+     * @description: Obtener limite de plazos por el valor de credito
+     */
+    public getPlazosCredito(valorCredito: number){
+        
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
+
+    }
 }

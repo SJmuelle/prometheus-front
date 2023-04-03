@@ -2,6 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import { GenericasService } from 'app/core/services/genericas.service';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -24,14 +25,17 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
     public plazosCredito$: Observable<any>;
+    public salarioMinimo$: Observable<any>;
+    public salarioMinimo: number = 0;
     fechaActual: any = moment().locale('co');
-
+    
     constructor(
         private fb: FormBuilder,
         private _formularioCreditoService: FormularioCreditoService,
         private route: ActivatedRoute,
         private router: Router,
         private el: ElementRef,
+        private genericaServices: GenericasService,
     ) { }
 
     ngOnInit(): void {
@@ -57,7 +61,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             departamentoNegocio: ['', [Validators.required]],
             ciudadNegocio: ['', [Validators.required]],
             barrioNegocio: ['', [Validators.required]],
-            valorCredito: ['', [Validators.required, Validators.min(1000000), Validators.max(100000000)]],
+            valorCredito: ['', [Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)]],
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
             antiguedadLocal: [0],
@@ -86,6 +90,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 this.editable = true;
             }
         }, 1000);
+        this.getSalarioMinimo();
     }
 
     private cargueActividadEconomica() {
@@ -100,6 +105,14 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         } else {
             this.listadoActividadEconomica = [];
         }
+    }
+
+    private getSalarioMinimo(){
+         this.genericaServices.getSalarioBasico().subscribe(({data}) => {
+            this.salarioMinimo = data.salarioMinimo;
+            
+            this.form.get('valorCredito').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
+        })
     }
 
     private validatedDate(control: AbstractControl) {
@@ -229,9 +242,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
      * @description: Obtener limite de plazos por el valor de credito
      */
     public getPlazosCredito(valorCredito: number){
-        console.log("Obteniendo");
         
         this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
+
     }
 
 
