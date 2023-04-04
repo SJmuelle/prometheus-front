@@ -74,6 +74,7 @@ import { FormCodeudorComponent } from './form-codeudor/form-codeudor.component';
 import { FormDeudorSolitarioComponent } from './form-deudor-solitario/form-deudor-solitario.component';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.component';
+import { GridCarteraMicroComponent } from './grid-cartera-micro/grid-cartera-micro.component';
 
 
 
@@ -115,7 +116,8 @@ import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.
         FormGestionFabricaFabricaMicroComponent,
         FormCodeudorComponent,
         FormDeudorSolitarioComponent,
-        GridOfertaMicroComponent
+        GridOfertaMicroComponent,
+        GridCarteraMicroComponent
     ],
     imports: [
         CommonModule,
