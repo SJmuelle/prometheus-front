@@ -14,7 +14,7 @@
                 <ng-container *ngIf="politicas$ | async as items">
                     <ng-container *ngFor="let item of items.data">
                         <tr>
-                            <td class="px-2 text-sm border">{{item.tipo}}</td>
+                            <td class="px-2 text-sm border font-semibold">{{item.tipo}}</td>
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
                             <td class="px-2 text-sm border w-0" [ngClass]="
