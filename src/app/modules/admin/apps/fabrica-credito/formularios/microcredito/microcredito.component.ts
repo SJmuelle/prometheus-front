@@ -151,7 +151,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             if (e !== '6') {
-                this.form.get('antiguedadLocal')?.setValidators([Validators.required])
+                this.form.get('antiguedadLocal')?.setValidators([Validators.required,Validators.min(0)])
                 this.form.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {

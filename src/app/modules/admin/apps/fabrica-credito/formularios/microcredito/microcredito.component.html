@@ -180,6 +180,9 @@
                 <mat-error *ngIf="form.controls.antiguedadLocal.errors?.required">
                     Este campo es requerido.
                 </mat-error>
+                <mat-error *ngIf="form.controls.antiguedadLocal.errors?.min">
+                    No se permiten números negativos
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
