@@ -17,14 +17,14 @@
                             <td class="px-2 text-sm border">{{item.tipo}}</td>
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0">
+                            <td class="px-2 text-sm border w-0" [ngClass]="
+                            item.estadoAccion !== 'CUMPLE'
+                            ? 'bg-red-300  text-red-900'
+                            : 'bg-green-300 text-green-900'
+                            ">
 
 
-                                <div class="py-0.5 text-xs px-2  font-semibold " [ngClass]="
-                                    item.estadoAccion !== 'CUMPLE'
-                                    ? 'bg-red-300  text-red-900'
-                                    : 'bg-green-300 text-green-900'
-                                    ">
+                                <div class="py-0.5 text-xs px-2  text-center font-bold " >
                                     {{item.estadoAccion | titlecase}}
                                 </div>
 
