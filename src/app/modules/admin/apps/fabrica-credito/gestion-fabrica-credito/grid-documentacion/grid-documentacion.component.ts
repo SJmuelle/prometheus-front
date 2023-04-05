@@ -93,7 +93,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
      * @description: Seleccion de check
      */
     public onSeleccionDocumento(event: MatCheckbox, item: any): void {
-        console.log("documentos", this.documentos);
         
         if (event.checked) {
             this.documentos.map((x) => {
@@ -358,7 +357,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         };
         this.documentosServices.getDocumentoHistorico(datosHistorico).subscribe((res) => {
             this.datosDocumentosHistorico = res.data;
-            console.log('aqui' + res.data);
             Swal.close();
         });
     }

@@ -142,7 +142,6 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
         ...data
       }
       // ;
-      console.log(datosFormularios);
 
       Swal.fire({
         title: 'Guardar información',

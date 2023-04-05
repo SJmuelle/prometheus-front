@@ -72,7 +72,6 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res);
         this.getAgendaComercial();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();

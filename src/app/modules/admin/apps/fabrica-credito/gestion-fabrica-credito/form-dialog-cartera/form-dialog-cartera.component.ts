@@ -152,7 +152,6 @@ export class FormDialogCarteraComponent implements OnInit, OnDestroy {
       // const data: any = this.form.getRawValue();
      
       // ;
-      console.log(datosFormularios);
       
       Swal.fire({
         title: 'Guardar información',

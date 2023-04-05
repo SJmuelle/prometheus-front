@@ -131,7 +131,6 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((res) => {
           if (res) {
-              console.log(res);
               this.agendaReferenciaService.refrescarListado$.next({estado: true});
               this.onCerrar();
           }{
@@ -215,7 +214,6 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
       dialoRef.afterClosed().subscribe((res) => {
           const dataModal: any = res;
-          console.log(dataModal);
           if (dataModal.departamento != undefined) {
               this.form.controls.codigoDepartamentoNegocio.setValue(dataModal.departamento);
               this.form.controls.departamentoNegocio.setValue(dataModal.departamentoNombre);

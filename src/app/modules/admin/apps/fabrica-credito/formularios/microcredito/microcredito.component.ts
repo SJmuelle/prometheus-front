@@ -137,7 +137,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const fechaMayor =  moment().locale('co')
         fechaMayor.subtract(18, 'years');
         // Set the validation error on the matching control
-        console.log("years", fechaMayor, "fecha actual",this.fechaActual);
         
         if (fechaMayor.isBefore(date)) {
 
@@ -199,7 +198,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 if (resp) {
                     this.form.patchValue(resp.data);
                     this.dataGeneralIncial = resp.data
-                    console.log("Datos", resp.data);
                     this.getPlazosCredito(resp.data?.valorCredito | 0);
                     this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
                     this.form.controls.autorizacionCentrales.setValue(resp.data.autorizacionCentrales === 'S');
@@ -313,7 +311,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }).then((result) => {
             if (result.isConfirmed) {
             } else {
-                console.log("Type", type, "Variable", variable);
 
                 if (type === "INTEGER") {
 
@@ -338,7 +335,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
             }
         }
-        console.log("firstInvalidControl", firstInvalidControl);
 
         firstInvalidControl?.focus(); //without smooth behavior
     }

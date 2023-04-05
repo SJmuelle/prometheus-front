@@ -48,7 +48,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         this.getDecision();
         this.escuchaObservable();
         this.getCausal();
-        console.log(this.data)
         this.getTipoComentario(this.data.idAgenda)
         this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
         //debugger
@@ -304,7 +303,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     private validacionCampos(data: any, data_cambioEstado): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
         this.decisionService.postValidacionDatos(data).subscribe((res) => {
-            console.log(res)
             Swal.close();
             if (res.data.estado == 1) {
                 this.modalDetalle(res.data.detalle)
@@ -327,7 +325,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                 disableClose: false
             });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
         });
     }
 

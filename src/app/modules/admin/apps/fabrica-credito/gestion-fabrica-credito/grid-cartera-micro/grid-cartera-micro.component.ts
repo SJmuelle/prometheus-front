@@ -92,8 +92,7 @@ export class GridCarteraMicroComponent implements OnInit {
       this.editarCartera(item, 'N');
       return;
     }
-    console.log(event)
-    console.log(item)
+
     let data = {
       id: item.id,
       numeroSolicitud: Number(this.numeroSolicitud),
@@ -192,9 +191,8 @@ export class GridCarteraMicroComponent implements OnInit {
 
 
     this._listadoCarteraService.getListadoCarteraDetalleCompra(Number(this.numeroSolicitud), Number(item.idPadre)).subscribe((res) => {
-      console.log(res)
+
       this.informacionCompra=res.data;
-      console.log(this.informacionCompra)
       return res.data;
     });
   }

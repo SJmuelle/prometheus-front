@@ -67,7 +67,6 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
       .subscribe(({ data }) => {
         Swal.close();
      //   ;
-        console.log(data);
         this.fabricaDatos = data
         this.form.controls['referenciaValidada_bool'].setValue(this.fabricaDatos.referenciaValidada == 'S' ? true : false)
         this.form.controls['comentario'].setValue(this.fabricaDatos.comentario)
@@ -83,7 +82,6 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
   }
 
   logChange($event) {
-    console.log(this.editor);
     this.mensajeQuill = $event.text;
   }
 
