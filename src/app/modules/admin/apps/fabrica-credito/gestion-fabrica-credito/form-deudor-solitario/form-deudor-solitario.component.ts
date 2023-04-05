@@ -363,10 +363,6 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public validationPost(): void {
         if (this.formDeudorSolidario.invalid) {
             this.formDeudorSolidario.markAllAsTouched();
-            Object.keys(this.formDeudorSolidario.controls).forEach((key) => {
-                // Get errors of every form control
-                console.log(this.formDeudorSolidario.get(key).errors, key);
-            });
             setTimeout(() => {
                 
                 this.scrollToFirstInvalidControl();

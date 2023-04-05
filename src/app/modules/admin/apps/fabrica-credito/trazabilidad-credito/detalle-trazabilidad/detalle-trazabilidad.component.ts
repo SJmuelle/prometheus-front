@@ -68,7 +68,6 @@ export class DetalleTrazabilidadComponent implements OnInit {
     this._fabricaCreditoService.getrazabilidad(data).pipe(
     ).subscribe((res) => {
       if (res.status === 200) {
-        console.log(res.data)
         this.datos = res.data;
         Swal.close();
       } else {

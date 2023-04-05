@@ -71,7 +71,6 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
             if (res.status === 200) {
                 this.datos = res.data;
                 this.mostrar = false;
-                console.log("Agencias ", this.datos);
 
             } else {
             }

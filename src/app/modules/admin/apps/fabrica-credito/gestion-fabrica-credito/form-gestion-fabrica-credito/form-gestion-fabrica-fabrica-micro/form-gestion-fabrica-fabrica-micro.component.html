@@ -36,7 +36,7 @@
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Tipo de crédito</mat-label>
-                        <input matInput type="text" disabled [formControlName]="'descripcionTipoCredito'"
+                        <input matInput type="text" disabled [formControlName]="'tipoCredito'"
                             [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
@@ -2491,6 +2491,13 @@
                                 </mat-select>
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls
+                                            .declaraRenta
+                                            .errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
                             </mat-form-field>
                         </div>
 
@@ -2584,11 +2591,11 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <!-- <mat-tab *ngIf="fabricaDatos == 'CM' || permisoEditar">
+               <mat-tab >
                     <ng-template matTabLabel>Listado de carteras</ng-template>
-                    <app-grid-cartera></app-grid-cartera>
+                    <app-grid-cartera-micro></app-grid-cartera-micro>
                 </mat-tab>
-                <mat-tab *ngIf="(fabricaDatos != 'CM') && (!permisoEditar)">
+                 <!-- <mat-tab *ngIf="(fabricaDatos != 'CM') && (!permisoEditar)">
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>

@@ -31,7 +31,6 @@ export class FormDialogoChecklistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
   }
   decision() {
     this.matDialogRef.close(true);
@@ -48,7 +47,6 @@ export class FormDialogoChecklistComponent implements OnInit {
     this.fabricaCreditoService.getCheckList(data)
       .subscribe(({ data }) => {
         if (data) {
-          console.log(data)
           this.listado = data;
           let selecionado = [];
           for (let index = 0; index < this.listado.length; index++) {

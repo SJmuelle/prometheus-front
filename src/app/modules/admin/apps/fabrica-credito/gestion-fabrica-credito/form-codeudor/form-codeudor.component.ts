@@ -101,7 +101,6 @@ export class FormCodeudorComponent implements OnInit {
 
                 this.addValidation();
                 this.form.patchValue(data);
-                console.log("data del form",data);
                 
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -181,7 +180,6 @@ export class FormCodeudorComponent implements OnInit {
             .subscribe((resp: any) => {
                 if (resp) {
                     this.dataInicial = resp.data;
-                    console.log("data inicial", this.dataInicial);
 
                 }
             });
@@ -544,7 +542,6 @@ export class FormCodeudorComponent implements OnInit {
     }
 
     public cargarActividadEconomica(e: MatSelectChange) {
-        console.log(e.value, "cargarActividadEconomica");
 
         if (e.value === 'INDEFO' || e.value === 'PROIN' || e.value === 'INDNFO') {
 
@@ -1361,7 +1358,6 @@ export class FormCodeudorComponent implements OnInit {
             this.form.markAllAsTouched();
             Object.keys(this.form.controls).forEach((key) => {
                 // Get errors of every form control
-                console.log(this.form.get(key).errors, key);
             });
             setTimeout(() => {
                 this.scrollToFirstInvalidControl();
@@ -1394,7 +1390,6 @@ export class FormCodeudorComponent implements OnInit {
                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
             }
         }
-        console.log("firstInvalidControl", firstInvalidControl);
 
         firstInvalidControl?.focus(); //without smooth behavior
     }

@@ -169,7 +169,6 @@ export class ListSolicitudesComponent implements OnInit {
       Swal.close();
       if (res) {
         this.solicitudes = res.data.listadoSolicitud
-        console.log(this.solicitudes.sort((a, b)=> b.fecha_ingreso_agenda - a.fecha_ingreso_agenda))
         this.asignados = res.data.solicitudAsignada;
       }else{
         this.solicitudes = [];

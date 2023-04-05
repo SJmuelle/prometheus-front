@@ -31,7 +31,6 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.crearFormulario();
     this.agendaFabrica = this.data.agenda;
-    console.log(this.data)
     this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
     this.form.controls.agenda.setValue(this.data.agenda);
     // console.log('sdsdsdsds->'+this.data.agenda)

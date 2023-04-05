@@ -117,7 +117,6 @@ export class GridAgendaReferenciacionComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((res) => {
             if (res) {
-                console.log(res);
                 // this.getAgendaReferenciacion();
                 // this.agendaReferenciaService.refrescarListado$.next({ estado: true });
                 //  this.onCerrar();

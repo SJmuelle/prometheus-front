@@ -12,11 +12,12 @@ import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-
 import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
-  selector: 'app-grid-cartera',
-  templateUrl: './grid-cartera.component.html',
-  styleUrls: ['./grid-cartera.component.scss']
+  selector: 'app-grid-cartera-micro',
+  templateUrl: './grid-cartera-micro.component.html',
+  styleUrls: ['./grid-cartera-micro.component.scss']
 })
-export class GridCarteraComponent implements OnInit {
+
+export class GridCarteraMicroComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public permisoEditar:boolean=false;
@@ -91,6 +92,7 @@ export class GridCarteraComponent implements OnInit {
       this.editarCartera(item, 'N');
       return;
     }
+
     let data = {
       id: item.id,
       numeroSolicitud: Number(this.numeroSolicitud),
@@ -189,6 +191,7 @@ export class GridCarteraComponent implements OnInit {
 
 
     this._listadoCarteraService.getListadoCarteraDetalleCompra(Number(this.numeroSolicitud), Number(item.idPadre)).subscribe((res) => {
+
       this.informacionCompra=res.data;
       return res.data;
     });

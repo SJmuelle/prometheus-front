@@ -242,7 +242,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             tipoTercero: tipoTercero,
             antiguedad: Number(antiguedad),
         };
-        console.log(formPersonal);
         const formComercial = {
             numeroSolicitud: Number(numeroSolicitud),
             identificacion: identificacion,
@@ -263,7 +262,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             tipoTercero: tipoTercero,
             antiguedad: Number(antiguedad),
         };
-        console.log(formComercial);
         let data;
         if (tipo === 'P') {
             data=formPersonal

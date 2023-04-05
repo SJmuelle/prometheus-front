@@ -57,7 +57,6 @@ export class ModuloComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((icons) => {
         this.listado=icons.list
-        console.log(this.listado)
       });
       this._menuService.empresas
       .pipe(takeUntil(this._unsubscribeAll))
@@ -81,7 +80,6 @@ export class ModuloComponent implements OnInit, OnDestroy {
       }).then((result) => { });
       let url = "/agregar-modulo-sistema"
       this._menuService.posbasic(url, this.form.value).subscribe((response: any) => {
-        console.log(response)
         setTimeout(() => {
           Swal.close();
         }, 500);

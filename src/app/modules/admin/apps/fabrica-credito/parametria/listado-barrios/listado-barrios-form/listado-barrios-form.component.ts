@@ -25,7 +25,6 @@ export class ListadoBarriosFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.consultaDepartamento();
 
     if (this.data.codigoDepartamento) {

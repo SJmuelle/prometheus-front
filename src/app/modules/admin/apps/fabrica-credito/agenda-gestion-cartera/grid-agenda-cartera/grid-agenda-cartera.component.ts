@@ -72,7 +72,6 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res);
         this.getAgenda();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();

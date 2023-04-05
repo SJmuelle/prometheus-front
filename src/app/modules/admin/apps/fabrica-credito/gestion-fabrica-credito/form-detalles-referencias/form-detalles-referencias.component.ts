@@ -250,7 +250,6 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         if (show) {
             this.referenciasService.getDetalleReferencia(datos).subscribe(({ data }) => {
                 Swal.close();
-                console.log(data);
                 this.form.patchValue(data);
             });
         }

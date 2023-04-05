@@ -60,7 +60,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
       identificacion: identificacion
     };
-    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+    if(this.numeroSolicitud && this.identificacion){
+      this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         this.fabricaDatos = data;
         if (data.unidadNegocio === 32) {
@@ -129,6 +130,9 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
             break;
         }
       });
+    }
+    
+    
   }
 
   //funciones privadas

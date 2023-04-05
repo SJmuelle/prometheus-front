@@ -50,7 +50,6 @@ export class ResumenComponent implements OnInit {
 
         ).subscribe((res) => {
             if (res.status === 200) {
-                console.log(res.data)
                 this.getDatos(res.data);
                 Swal.close();
             } else {
@@ -61,7 +60,6 @@ export class ResumenComponent implements OnInit {
     }
 
     private getDatos(data): void {
-        console.log('data a imprimir', data);
 
         //general
         let DatosCredito = [], DatosCredito2 = [];

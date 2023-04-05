@@ -70,8 +70,6 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
 
   public cambioEstado(event, item) {
-    console.log(event)
-    console.log(item)
     
     if (event == 'COM') {
       this.editarCartera(item, 'N');

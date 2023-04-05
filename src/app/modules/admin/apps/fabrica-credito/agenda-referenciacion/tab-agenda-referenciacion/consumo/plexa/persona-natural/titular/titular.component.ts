@@ -125,7 +125,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
  * @description :cantidad de caracteres del mensajes
  */
   logChange($event) {
-    console.log(this.editor);
     this.mensajeQuill = $event.text;
   }
 
@@ -242,7 +241,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data);
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = { ...data }
         this.form.patchValue(data);
@@ -474,8 +472,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.postFormularioFabrica(datosFormularios);
-        console.log(this.form.getRawValue());
-        console.log(datosFormularios);
       }
     });
 

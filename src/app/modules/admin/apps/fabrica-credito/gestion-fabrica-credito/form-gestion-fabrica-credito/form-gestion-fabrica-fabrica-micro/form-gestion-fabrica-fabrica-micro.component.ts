@@ -88,7 +88,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log("Select", resp.data);
 
             }
         })
@@ -98,10 +97,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public validationPost(): void {
         if (this.form.invalid) {
             this.form.markAllAsTouched();
-            Object.keys(this.form.controls).forEach(key => {
-                // Get errors of every form control
-                console.log(this.form.get(key).errors, key);
-            });
             setTimeout(() => {
                 this.scrollToFirstInvalidControl();
             }, 200);
@@ -225,7 +220,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
 
-                console.log(data, "Fabrica credito data inicial");
 
             });
     }
@@ -416,7 +410,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
             }
         }
-        console.log("firstInvalidControl", firstInvalidControl);
 
         firstInvalidControl?.focus(); //without smooth behavior
     }
@@ -431,6 +424,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
+            tipoCredito: [''],
             emision: [''],
             tipoDocumento: [''],
             identificacion: [''],
