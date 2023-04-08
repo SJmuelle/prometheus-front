@@ -27,8 +27,6 @@ export class PreviewComponent implements OnInit {
     const archivo = this.data.base64.split(',')[1];
     const extension = this.data.extension
 
-    console.log(extension);
-    console.log(archivo);
     const link = document.createElement('a');
     document.body.appendChild(link);
     link.href = `data:application/${extension};base64,${archivo}`;

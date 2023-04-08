@@ -98,7 +98,9 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
             antiguedad: [''],
             tipo: [''],
             numeroSolicitud: [''],
-            parentesco: ['']
+            parentesco: [''],
+            otroParentesco: [''],
+            tiempoConocido: ['']
         });
     }
 
@@ -151,6 +153,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 Swal.close();
                 this.form.patchValue(data);
+                
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
                 }
@@ -178,6 +181,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
                 parentesco:datos.parentesco,
+
             };
         } if (datos.tipo === 'F') {
             formulario = {
@@ -216,6 +220,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 parentesco:datos.parentesco, 
             };
         };
+
+        formulario.tiempoConocido = datos.tiempoConocido;
+        formulario.otroParentesco = datos.otroParentesco;
+        
         this.subscription$ = this.referenciasService.putDetalleReferencia(formulario).subscribe(() => {
             Swal.fire(
                 'Completado',
@@ -242,7 +250,6 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         if (show) {
             this.referenciasService.getDetalleReferencia(datos).subscribe(({ data }) => {
                 Swal.close();
-                console.log(data);
                 this.form.patchValue(data);
             });
         }

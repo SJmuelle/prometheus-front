@@ -69,6 +69,12 @@ import { NgxMaskModule } from 'ngx-mask';
 // import { IConfig, NgxMaskModule } from 'ngx-mask';
 // import { IConfig, NgxMaskModule } from 'ngx-mask';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { FormGestionFabricaFabricaMicroComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-fabrica-micro/form-gestion-fabrica-fabrica-micro.component';
+import { FormCodeudorComponent } from './form-codeudor/form-codeudor.component';
+import { FormDeudorSolitarioComponent } from './form-deudor-solitario/form-deudor-solitario.component';
+import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
+import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.component';
+import { GridCarteraMicroComponent } from './grid-cartera-micro/grid-cartera-micro.component';
 
 
 
@@ -106,12 +112,17 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         RecalcularOfertaLibranzaComponent,
         RecalcularOfertaConsumoPlexaComponent,
         ModalRecalcularComponent,
-        FormDialogAnalisisFinancieroComponent
+        FormDialogAnalisisFinancieroComponent,
+        FormGestionFabricaFabricaMicroComponent,
+        FormCodeudorComponent,
+        FormDeudorSolitarioComponent,
+        GridOfertaMicroComponent,
+        GridCarteraMicroComponent
     ],
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
-
+       
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,
@@ -138,7 +149,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         MatRadioModule,
         FormsModule,
         MatAutocompleteModule,
-        QuillModule,
+        // QuillModule,
         MatMenuModule,
         MatSliderModule,
         // FabricaOpcionesModule,
@@ -146,7 +157,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
         // NgxMaskModule.forRoot(maskConfig),
         // NgxMaskModule.forRoot(maskConfigFunction),
         NgxMaskModule.forRoot(),
-        MatProgressBarModule
+        MatProgressBarModule,
+        QuillModule.forRoot(),
+
+        // AgendaReferenciacionModule,
     ],
 
     exports: [

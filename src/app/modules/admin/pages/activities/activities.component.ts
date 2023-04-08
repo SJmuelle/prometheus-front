@@ -50,7 +50,6 @@ export class ActivitiesComponent implements OnInit
 
     consultarArchivos(){
         this.activityService.getFiles().subscribe((response: any) => {
-            console.log(response.data)
             if (response.data) {
 
                 this.listFile = response.data;
@@ -103,14 +102,10 @@ export class ActivitiesComponent implements OnInit
 
     downloadFile(id: any, type:any){
 
-        console.log(id)
-        console.log(type)
-
         this.datosDescarga={
             idArchivo: id
         }
 
-        console.log(this.datosDescarga)
 
         this.activityService.downFiles(this.datosDescarga).subscribe((response:any)=>{
 

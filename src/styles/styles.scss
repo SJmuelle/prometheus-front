@@ -90,3 +90,19 @@ table {
     color: #4abbec !important;
 }
 
+
+input{
+    text-transform: uppercase;
+}
+
+span.mat-option-text {
+    text-transform: uppercase;
+}
+
+.not-uppercase{
+    text-transform: none;
+}
+
+.mat-form-field.mat-form-field-appearance-fill .mat-form-field-wrapper .mat-form-field-flex .mat-form-field-infix .mat-select .mat-select-trigger .mat-select-value {
+    text-transform: uppercase !important;
+}

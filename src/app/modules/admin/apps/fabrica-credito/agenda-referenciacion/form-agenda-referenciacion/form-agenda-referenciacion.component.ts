@@ -220,7 +220,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data)
 
         this.steps = data
         this.totalsteps = this.steps.length;

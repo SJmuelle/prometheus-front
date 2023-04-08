@@ -86,6 +86,7 @@
                     <mat-label>Usuario</mat-label>
                     <input
                         id="userName"
+                        class="not-uppercase"
                         matInput
                         [formControlName]="'userName'">
                     <mat-error *ngIf="signInForm.get('userName').hasError('required')">
@@ -102,6 +103,7 @@
                     <input
                         id="password"
                         matInput
+                        class="not-uppercase"
                         type="password"
                         [formControlName]="'password'"
                         #passwordField>

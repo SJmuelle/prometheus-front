@@ -125,7 +125,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
  * @description :cantidad de caracteres del mensajes
  */
   logChange($event) {
-    console.log(this.editor);
     this.mensajeQuill = $event.text;
   }
 
@@ -242,7 +241,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data);
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = { ...data }
         this.form.patchValue(data);
@@ -474,8 +472,6 @@ export class TitularConsumoPlexaComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.postFormularioFabrica(datosFormularios);
-        console.log(this.form.getRawValue());
-        console.log(datosFormularios);
       }
     });
 
@@ -534,7 +530,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
       .SelectOfertaConsumo(data)
       .subscribe((res) => {
         Swal.close();
-        // debugger
+        // 
         if (res.msg == 'OK') {
           this.listadoOferta = res.data;
           this.getCapacidadPago(Number(this.numeroSolicitud));
@@ -560,7 +556,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        // debugger
+        // 
         this.datosCompletoSolicitud = data;
         this.getActividadEconomica(data.ocupacion);
         this.llenarDatosFormOferta(data)
@@ -568,7 +564,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
         if(this.datosCompletoSolicitud.tipoCredito){
           this.genericaServices.getParametriaTipoCredito(this.datosCompletoSolicitud.tipoCredito)
           .subscribe(({ data }) => {
-            // debugger;
+            // ;
             this.plazoMaximo=data.plazoMaximo;
             this.plazoMinimo=data.plazoMinimo;
             this.formOferta.controls['plazo'].setValidators([Validators.required,Validators.max(this.plazoMaximo), Validators.min(this.plazoMinimo) ])
@@ -580,7 +576,7 @@ export class TitularConsumoPlexaComponent implements OnInit {
   }
 
   public validacionPlazo(data:string){
-    // debugger;
+    // ;
     let plazo= Number(this.utility.enviarNumero(data));
     let cambiar=false;
     if((plazo>this.plazoMaximo) || (plazo<this.plazoMinimo)){
