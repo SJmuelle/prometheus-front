@@ -39,7 +39,6 @@ export class CertificacionesComponent implements OnInit {
     let url = `obtener-no-vinculo-comercial/${this.form.value.typeDocumento}/${this.form.value.documento}`;
     this._pqrService.getListados(url).subscribe((resp) => {
       Swal.close();
-      console.log(resp)
       this.listado = resp;
     });
   }

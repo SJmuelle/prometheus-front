@@ -64,7 +64,6 @@ export class GridConductoresConsumoComponent implements OnInit, OnDestroy, After
 
   public onGetConductores(datos: any): void {
      let data={...datos, tipo:"V"}
-     console.log(data)
       this.esVer = true;
       const dialogRef = this._dialog.open(FormDetallesConductoresComponent, {
           minWidth: '480px',

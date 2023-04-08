@@ -57,7 +57,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
 */
   private getFabricaCreditoAgenda(): void {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-    debugger
+    
     const datosSolicitud: any = {
       "numeroSolicitud": this.numeroSolicitud,
       "tipo": "L",
@@ -66,8 +66,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-     //   debugger;
-        console.log(data);
+     //   ;
         this.fabricaDatos = data
         this.form.controls['referenciaValidada_bool'].setValue(this.fabricaDatos.referenciaValidada == 'S' ? true : false)
         this.form.controls['comentario'].setValue(this.fabricaDatos.comentario)
@@ -83,7 +82,6 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
   }
 
   logChange($event) {
-    console.log(this.editor);
     this.mensajeQuill = $event.text;
   }
 
@@ -94,7 +92,7 @@ export class LibranzaLaboralComponent implements OnInit, OnDestroy {
 
   public onPostDatos(): void {
     const datos: any = this.form.getRawValue();
-    debugger
+    
     let data = {
       numeroSolicitud: this.numeroSolicitud,
       unidadNegocio: this.fabricaDatos.unidadNegocio,

@@ -79,7 +79,6 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         setTimeout(() => {
             this.consulta();
         }, 1000);
-        console.log(this.consulta())
     }
 
     consulta() {
@@ -91,7 +90,6 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((notifications: any) => {
 
                 this.notifications = notifications.data;
-                console.log(this.notifications);
                 this._calculateUnreadCount();
                 this._changeDetectorRef.markForCheck();
             });

@@ -9,7 +9,7 @@ export class PermisosService {
 
   permisoPorModuleTrazxabilidad(ruta: any){
     let valor=  ruta.includes('trazabilidad')|| this.permisoPorModuleTrazabilidad();
-    debugger
+    
     return valor
   }
 
