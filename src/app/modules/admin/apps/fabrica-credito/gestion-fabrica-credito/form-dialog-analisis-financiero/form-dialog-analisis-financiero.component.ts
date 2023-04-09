@@ -106,7 +106,6 @@ export class FormDialogAnalisisFinancieroComponent implements OnInit {
   public sendForm(): void {
     let valueFormuario = this.analisisForm.value;
     valueFormuario.numeroSolicitud = Number(this.data.numeroSolicitud);
-    console.log(valueFormuario);
 
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.AnalisisFinancieroService.postAnalisisFinanciero(valueFormuario)

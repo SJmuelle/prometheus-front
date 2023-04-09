@@ -61,7 +61,6 @@ export class GridCentralesComponent implements OnInit {
         };
         this.centralesService.getComentarios(data).subscribe((res) => {
             this.datosDocumentosCentrales = res.data;
-            console.log('aqui' + res.data);
             Swal.close();
         });
     }

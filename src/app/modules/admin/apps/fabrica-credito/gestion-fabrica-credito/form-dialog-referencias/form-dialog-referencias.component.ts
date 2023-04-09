@@ -20,6 +20,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     public ciudades$: Observable<any>;
     public barrios$: Observable<any>;
     public tiposReferencia$: Observable<any>;
+    public tiposTercero$: Observable<any>;
+    // public Referencia$: Observable<any>;
     public parentescos$: Observable<any>;
     public form: FormGroup;
     public subscription$: Subscription;
@@ -34,7 +36,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         private matDialog: MatDialog
     ) {
         this.crearFormulario();
-        debugger
+
         const numeroSolicitud: string = data.numeroSolicitud;
         this.form.controls.numeroSolicitud.setValue(numeroSolicitud);
     }
@@ -42,6 +44,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.getDepartamentos();
         this.getTiposReferencia();
+        this.getTiposTercero();
         this.getParentesco();
         this.estadoFormulario();
     }
@@ -133,10 +136,16 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtiene el listado de departamento
      */
+    private getTiposTercero(): void {
+        this.tiposTercero$ = this.genericaServices.getTiposTercero(this.data.numeroSolicitud);
+    }
+    /**
+     * @description: Obtiene el listado de departamento
+     */
     private getDepartamentos(): void {
         this.departamentos$ = this.departamentosCiudadService.getDepartamentos();
     }
-    
+
     /**
      * @description: Departamento de nacimiento
      */
@@ -167,6 +176,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private crearFormulario(): void {
         this.form = this.fb.group({
             numeroSolicitud: [''],
+            tipoTercero: ['', Validators.required],
             primerNombre: ['', [Validators.required]],
             segundoNombre: [''],
             primerApellido: ['', [Validators.required]],
@@ -175,7 +185,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             tipo: ['seleccione',],
             parentesco: [''],
             telefono: ['', [Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
-            celular: ['', [Validators.required, Validators.pattern(/^[0-9]*$/), Validators.minLength(7), Validators.maxLength(11)]],
+            celular: ['', [Validators.required, Validators.pattern('^3[0-9]*$'), Validators.minLength(9), Validators.maxLength(11)]],
             codigoPais: [''],
             codigoDepartamento: [''],
             departamentoNombre: [''],
@@ -208,7 +218,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad,
             codigoBarrio,
             direccion,
-            antiguedad
+            antiguedad,
+            tipoTercero,
 
         } = datos;
         const formPersonal = {
@@ -228,9 +239,9 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad: codigoCiudad,
             codigoBarrio: Number(0),
             direccion: direccion,
+            tipoTercero: tipoTercero,
             antiguedad: Number(antiguedad),
         };
-        console.log(formPersonal);
         const formComercial = {
             numeroSolicitud: Number(numeroSolicitud),
             identificacion: identificacion,
@@ -238,7 +249,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             segundoNombre: segundoNombre,
             primerApellido: primerApellido,
             segundoApellido: segundoApellido,
-            nombreCompleto: nombreCompleto,
+            nombreCompleto: `${primerNombre + ' '}${segundoNombre ? segundoNombre + ' ' : ''}${primerApellido && segundoApellido ? primerApellido + ' ' : primerApellido}${segundoApellido ? segundoApellido : ''}`,
             tipo: tipo,
             parentesco: parentesco,
             telefono: telefono,
@@ -248,44 +259,38 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             codigoCiudad: codigoCiudad,
             codigoBarrio: 0,
             direccion: direccion,
+            tipoTercero: tipoTercero,
             antiguedad: Number(antiguedad),
         };
-        console.log(formComercial);
+        let data;
         if (tipo === 'P') {
-            this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
-                this.onCerrar();
-                this.referenciasService.eventos$.emit(true);
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                );
-            });
+            data=formPersonal
         } else if (tipo === 'F') {
-            this.subscription$ = this.referenciasService.postReferencia(formPersonal).subscribe(() => {
-                this.onCerrar();
-                this.referenciasService.eventos$.emit(true);
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                );
-            });
+            data=formPersonal 
         } else {
-            this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
-                this.onCerrar();
-                this.referenciasService.eventos$.emit(true);
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                );
-            });
+            formComercial.nombreCompleto = nombreCompleto === '' ? formComercial.nombreCompleto : nombreCompleto;
+            data=formComercial
         }
+
+        
+        this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
+            this.onCerrar();
+            this.referenciasService.eventos$.emit(true);
+            Swal.fire(
+                'Completado',
+                'Información guardada con éxito',
+                'success'
+            );
+        });
     }
 
     private estadoFormulario(): void {
         this.form.controls['tipo'].setValue('P');
+        this.subscription$ = this.form.controls['parentesco'].valueChanges.subscribe(parentesco => {
+            if(parentesco === 'OT'){
+               // this.form.controls['primerNombre'].setValidators(Validators.required);
+            }
+        })
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
             switch (tipo) {
                 case 'P':
@@ -298,11 +303,10 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['celular'].setValue('');
                     this.form.controls['primerNombre'].setValidators(Validators.required);
                     this.form.controls['primerApellido'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
-                    this.form.controls['antiguedad'].clearValidators();
+                    this.form.controls['antiguedad'].setValidators([Validators.required, Validators.pattern('^[1-9][0-9]*$')]);
                     break;
                 case 'F':
                     this.form.controls['nombreCompleto'].setValue('');
@@ -314,7 +318,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['celular'].setValue('');
                     this.form.controls['primerNombre'].setValidators(Validators.required);
                     this.form.controls['primerApellido'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
@@ -330,7 +333,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['primerApellido'].clearValidators();
                     this.form.controls['nombreCompleto'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoCiudad'].setValidators(Validators.required);
                     this.form.controls['antiguedad'].setValidators(Validators.required);
                     break;
@@ -345,7 +347,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['celular'].setValue('');
                     this.form.controls['primerNombre'].setValidators(Validators.required);
                     this.form.controls['primerApellido'].setValidators(Validators.required);
-                    this.form.controls['celular'].setValidators(Validators.required);
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();

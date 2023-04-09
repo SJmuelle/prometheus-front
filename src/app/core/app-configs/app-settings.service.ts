@@ -33,6 +33,17 @@ export class AppSettingsService {
             baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/documentos-negocio')
         }
     };
+
+    /**
+     * @description: End-point de pago masivo
+     */
+     public pago = {
+        url: {
+            base: EndPoints.uri('/generic/aplicacion-pago-finl'),
+            baseConvenios: EndPoints.uri('/generic/qry/convenios-unidad-negocio-finl'),
+            baseUpdateConvenios: EndPoints.uri('/generic/update-convenio-finl')
+        }
+    };
     /**
      * @description: End-point asignacion de creditos
      */
@@ -64,12 +75,36 @@ export class AppSettingsService {
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/GC'),
         }
     };
+
+    /**
+* @description: End-point agenda de venta
+*/
+    public agendaVenta = {
+        url: {
+            base: EndPoints.uri('/generic/qry/tk/agenda-ventas-digitales'),
+        }
+    };
+
+    public formulario = {
+        url: {
+            // https://prometheus.fintra.co:8443/api-fintra/api/credito/tk/property/parametros-cargue-inicial
+            microcredito: EndPoints.uri('/credito/microcredito/guardado-solicitud-microcredito'),
+            cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
+            cargueActividadEconomica: EndPoints.uri('/generic/qry/obtener-actividades-form-micro'),
+            cargueSolicitudesFormularioSimulaciones: EndPoints.uri('/generic/qry/solicitudes-formulario-simulaciones'),
+            listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
+            listarBarriosMicro: EndPoints.uri('/generic/qry/listar-barrios-micro'),
+            nombreAsesorMicro: EndPoints.uri('/generic/qry/nombre-asesor-micro'),
+            validationPlazoMicro: EndPoints.uri('/generic/validacion-plazos-microcredito') 
+        }
+    }
     /**
      * @description: End-point fabrica de datos
      */
     public fabricaDatos = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-fabrica'),
+            informacionTercero: EndPoints.uri('/generic/qry/informacion-tipo-tercero'),
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
@@ -224,10 +259,11 @@ export class AppSettingsService {
      */
     public decision = {
         url: {
-            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),    
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
+            baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
@@ -289,6 +325,7 @@ export class AppSettingsService {
             baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
             baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud'),
             tipoReferencia: EndPoints.uri('/generic/qry/obtener-tipos-referencia-unidad-negocio'),
+            tipoTercero: EndPoints.uri('/generic/qry/obtener-tipos-referencia-tercero'),
 
         }
     };
@@ -308,7 +345,11 @@ export class AppSettingsService {
     public agendaComercial = {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
-            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM')
+            baseComite: EndPoints.uri('/generic/qry/agendas-credito/CC'),
+            baseVisitas: EndPoints.uri('/generic/qry/agendas-credito/VI'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM'),
+            totaleComite: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CC'),
+            totaleVisitas: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/VI')
         }
     };
 

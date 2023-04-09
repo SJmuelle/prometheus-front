@@ -1,0 +1,166 @@
+<mat-tab-group class="fuse-mat-no-header h-140" [animationDuration]="'200'">
+    <ng-container *ngIf="dataNecesaria">
+        <ng-container [ngSwitch]="currentStep">
+            <ng-container *ngFor="let item of dataNecesaria.session">
+                <mat-tab *ngIf="currentStep==item.id">
+                    <div class="">
+                        <!-- titulo -->
+                        <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+                            {{ item.titulo}}
+                        </h2>
+                        <!-- fin titulo -->
+
+                        <!-- telefono y datos basicos -->
+                        <ng-container *ngIf="item.id==0">
+                            <div class="grid sm:grid-cols-3 grid-cols-2 mb-2">
+                                <fuse-card
+                                    class="flex items-center max-w-80 w-full p-6 filter-info border-2 rounded-2 ">
+                                    <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:smartphone_2'"></mat-icon>
+                                    <div class="flex flex-col">
+                                        <div class="text-2xl font-semibold leading-tight">
+                                            {{dataNecesaria.datosUsuario.celular}}</div>
+                                        <div class="text-md text-secondary">Celular</div>
+                                    </div>
+                                </fuse-card>
+                                <fuse-card
+                                    class="flex items-center w-full p-6 filter-info border-2 rounded-2 md:ml-4 col-span-2">
+                                    <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:file_clipboardfiletext'">
+                                    </mat-icon>
+                                    <div class="flex flex-col">
+                                        <div class="text-2xl font-semibold leading-tight capitalize">
+                                            {{dataNecesaria.datosUsuario.nombreCompleto}}
+                                        </div>
+                                        <div class="text-md text-secondary">{{dataNecesaria.datosUsuario.email}}</div>
+                                    </div>
+                                </fuse-card>
+                            </div>
+                            <hr>
+                        </ng-container>
+                        <!--fin telefono y datos basicos -->
+
+
+                        <ng-container *ngFor="let pregunta of dataNecesaria.preguntas">
+                            <ng-container *ngIf="pregunta.idSeccion==(item.id+1)">
+                                <ng-container *ngIf="pregunta.hide">
+                                    <div [ngSwitch]="pregunta.tipoObjHtml">
+
+                                        <!-- preguntas tipo si / no  sin hijos -->
+
+                                        <div *ngSwitchCase="'switch'">
+                                            <ng-container *ngIf="pregunta.objHtml.switch.value!='NEUTRO'">
+                                                <div class="flex justify-between items-center">
+                                                    <p [innerHTML]="pregunta.pregunta"></p>
+                                                    <div class="toggle-button-cover">
+                                                        <div class="button-cover">
+                                                            <div class="button r" id="button-1">
+                                                                <input type="checkbox" class="checkbox"
+                                                                    [(ngModel)]="pregunta.objHtml.switch.valueBoleean"
+                                                                    (change)="pregunta.objHtml.switch.value=pregunta.objHtml.switch.valueBoleean==false?'N':'S';recorrerPregunta();">
+                                                                <div class="knobs"></div>
+                                                                <div class="layer"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="pregunta.objHtml.switch.value=='NEUTRO'">
+                                                <div class="flex justify-between items-center">
+                                                    <p [innerHTML]="pregunta.pregunta"></p>
+                                                    <div class="toggle-button-cover"
+                                                        (click)="pregunta.objHtml.switch.value='S';pregunta.objHtml.switch.valueBoleean=true;recorrerPregunta();">
+                                                        <div class="button-cover">
+                                                            <div class="button r" id="button-2">
+                                                                <input type="checkbox" class="checkbox">
+                                                                <div class="knobs"></div>
+                                                                <div class="layer layer2"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+
+                                        </div>
+                                        <!-- fin preguntas tipo si / no  sin hijos -->
+
+                                        <!-- preguntas tipo select sin hijos   -->
+                                        <div *ngSwitchCase="'select'">
+                                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                                                <mat-label>{{pregunta.pregunta}}</mat-label>
+                                                <mat-select [value]="''" [(ngModel)]="pregunta.objHtml.select.value">
+                                                    <mat-option disabled [value]="''">Seleccione
+                                                    </mat-option>
+                                                    <mat-option
+                                                        *ngFor="let item of pregunta.objHtml.select.selectValues"
+                                                        [value]="item.codigo">
+                                                        {{item.nombre}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                                </mat-icon>
+                                            </mat-form-field>
+                                        </div>
+                                        <!-- fin de preguntas tipo select sin hijos -->
+
+
+
+                                        <!-- preguntas tipo textArea sin hijos   -->
+                                        <div *ngSwitchCase="'textarea'">
+                                            <div class="mt-1">
+                                                <p>{{pregunta.pregunta}}</p>
+                                                <quill-editor class="mb-2" placeholder="Observación..."
+                                                    [modules]="quillModules"
+                                                    [(ngModel)]="pregunta.objHtml.textarea.value">
+                                                </quill-editor>
+                                            </div>
+                                        </div>
+                                        <!-- preguntas tipo textArea sin hijos   -->
+
+
+                                        <div *ngSwitchDefault>
+                                            <!-- preguntas tipo text sin hijos   -->
+                                            <!-- {{pregunta.objHtml | json}} -->
+                                            <div class="grid grid-cols-2 gap-2">
+                                                <mat-form-field class="w-full fuse-mat-dense">
+                                                    <mat-label> {{pregunta.pregunta}} </mat-label>
+                                                    <input matInput type="text" autocomplete="off"
+                                                        [(ngModel)]="pregunta.objHtml.input.value">
+                                                    <mat-icon class="icon-size-5" matSuffix
+                                                        [svgIcon]="'mat_outline:edit'">
+                                                    </mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                            <!-- fin preguntas tipo text sin hijos   -->
+                                        </div>
+
+
+
+                                    </div>
+
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+
+
+                        <!-- guardado -->
+
+                        <div class="-mx-3 md:flex mt-8 mb-2 mr-1 flex gap-1 justify-end">
+                            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+                                Guardar
+                            </button>
+                            <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button"
+                                [mat-dialog-close]="false">
+                                Cerrar
+                            </button>
+                        </div>
+
+
+                        <!-- fin guardado -->
+
+                    </div>
+                </mat-tab>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
+
+</mat-tab-group>

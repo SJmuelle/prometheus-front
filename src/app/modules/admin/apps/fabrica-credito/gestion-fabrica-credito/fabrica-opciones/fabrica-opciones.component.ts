@@ -30,9 +30,11 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public minimizarDevoluciones: boolean = false;
   public verCentrales: boolean = false;
   public minimizarCentrales: boolean = false;
+  public habilitaDevolucion: boolean = true;
+  public habilitaSiguiente: boolean = true;
   dialogMostrar: string;
-  toolText: string= 'Siguiente';
-  iconoSvg: string= '';
+  toolText: string = 'Siguiente';
+  iconoSvg: string = '';
 
   constructor(
     private fabricaCreditoService: FabricaCreditoService,
@@ -41,13 +43,13 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     private _dialog: MatDialog,
     public _permisosService: PermisosService
   ) {
-    // router.events.subscribe((url: any) => console.log(url));
     this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
   }
 
 
   ngOnInit(): void {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+
   }
 
   /**
@@ -58,33 +60,79 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
       identificacion: identificacion
     };
-    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+    if(this.numeroSolicitud && this.identificacion){
+      this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         this.fabricaDatos = data;
-        // dialogMostrar=='SIGUIENTE'?'Siguiente':'Check list']
-        // dialogMostrar=='SIGUIENTE'?'next_plan':'check_circle'
-        if(data.unidadNegocio === 32){
-          if(data.validacionAnalisisFinanciero == 'S'){
-            if((data.cantidadCheckList != data.totalCheckList)){
+        if (data.unidadNegocio === 32) {
+          if (data.validacionAnalisisFinanciero == 'S') {
+            if ((data.cantidadCheckList != data.totalCheckList)) {
               this.toolText = 'Check list';
               this.iconoSvg = 'check_circle';
-            }else{
+            } else {
               this.toolText = 'Siguiente';
               this.iconoSvg = 'next_plan';
             }
-          }else{
+          } else {
             this.toolText = 'Análisis Financiero';
             this.iconoSvg = 'heroicons_outline:calculator';
           }
-        }else{
-          if((data.cantidadCheckList != data.totalCheckList)){
+        } else {
+          if ((data.cantidadCheckList != data.totalCheckList)) {
             this.toolText = 'Check list';
             this.iconoSvg = 'check_circle';
-          }else{
+          } else {
             this.toolText = 'Siguiente';
             this.iconoSvg = 'next_plan';
-          }}
+          }
+        }
+
+        switch (this.fabricaDatos.agenda) {
+          case 'VD':
+            this.habilitaDevolucion = false;
+            this.habilitaSiguiente = true;
+            break;
+          case 'CO':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'CC':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'CM':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'RE':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'DE':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'GC':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'FO':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          case 'VI':
+            this.habilitaDevolucion = true;
+            this.habilitaSiguiente = true;
+            break;
+          default:
+            this.habilitaDevolucion = false;
+            this.habilitaSiguiente = false;
+            break;
+        }
       });
+    }
+    
+    
   }
 
   //funciones privadas
@@ -101,13 +149,19 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
  * @description: Valida que el campo solo sea numeros
  */
   public irAtras() {
-    if(this.permisoEditar){
+    if (this.permisoEditar) {
       this.redireccionar('trazabilidad');
       return
     }
     switch (this.fabricaDatos.agenda) {
+      case 'VD':
+        this.redireccionar('agenda-venta-digital');
+        break;
       case 'CO':
         this.redireccionar('agenda-completion');
+        break;
+      case 'CC':
+        this.redireccionar('agenda-comite-comercial');
         break;
       case 'CM':
         this.redireccionar('agenda-comercial');
@@ -124,10 +178,14 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       case 'FO':
         this.redireccionar('agenda-formalizacion');
         break;
+      case 'VI':
+        this.redireccionar('agenda-visitas');
+        break;
       default:
         this.redireccionar('trazabilidad');
         break;
     }
+
 
   }
 
@@ -150,7 +208,6 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().toPromise().then(() => {
-      this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
     });
 
   }
@@ -173,15 +230,15 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
-      if(this.fabricaDatos.unidadNegocio != 32){
-      if (res == true) {
-        this.abrirModal('recalcular')
+      if (this.fabricaDatos.unidadNegocio != 32) {
+        if (res == true) {
+          this.abrirModal('recalcular')
+        }
+      } else {
+        if (res == true) {
+          this.abrirDecisionDesistir();
+        }
       }
-    }else{
-      if (res == true) {
-        this.abrirDecisionDesistir();
-      }
-    }
     });
   }
 
@@ -286,41 +343,40 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         height: '620px',
         data: {
           numeroSolicitud: this.numeroSolicitud,
-          permiso:false
+          permiso: false
         },
         disableClose: false,
       });
       dialogRef.afterClosed().toPromise().then((res) => {
         if (res == true) {
-         this.onDialogoDecision();
-         this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+          this.onDialogoDecision();
         }
       });
-    }else{
+    } else {
       this.onDialogoDecision();
     }
   }
 
-    /**
- * @description: Modal de decision
- */
-    public onDialogoAnalisisConsulta(): void {
-      let dialogRef;
-      if (this.fabricaDatos.unidadNegocio == 32 && this.fabricaDatos.validacionAnalisisFinanciero == 'S') {
-        dialogRef = this._dialog.open(FormDialogAnalisisFinancieroComponent, {
-          minWidth: '80%',
-          height: '620px',
-          data: {
-            numeroSolicitud: this.numeroSolicitud,
-            permiso:true
-          },
-          disableClose: false,
-        });
-        dialogRef.afterClosed().toPromise().then((res) => {
+  /**
+* @description: Modal de decision
+*/
+  public onDialogoAnalisisConsulta(): void {
+    let dialogRef;
+    if (this.fabricaDatos.unidadNegocio == 32 && this.fabricaDatos.validacionAnalisisFinanciero == 'S') {
+      dialogRef = this._dialog.open(FormDialogAnalisisFinancieroComponent, {
+        minWidth: '80%',
+        height: '620px',
+        data: {
+          numeroSolicitud: this.numeroSolicitud,
+          permiso: true
+        },
+        disableClose: false,
+      });
+      dialogRef.afterClosed().toPromise().then((res) => {
 
-        });
-      }else{
-        Swal.fire('Informacion', 'Aun no se ha configurado el analisi financiero', 'warning');  
-      }
+      });
+    } else {
+      Swal.fire('Informacion', 'Aun no se ha configurado el analisis financiero', 'warning');
     }
+  }
 }

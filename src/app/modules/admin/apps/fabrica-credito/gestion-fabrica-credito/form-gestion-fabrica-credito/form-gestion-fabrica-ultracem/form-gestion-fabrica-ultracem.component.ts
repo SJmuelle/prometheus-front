@@ -113,7 +113,7 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
     }
 
     cambiaDireccionNegocio() {
-        debugger
+        
         if (this.form.value.viveEnNegocio == 'S') {
             this.form.controls.codigoDepartamentoNegocio.setValue(this.form.value.codigoDepartamento);
             this.form.controls.descripcionDepartamentoNegocio.setValue(this.form.value.descripcionDepartamento);
@@ -171,7 +171,6 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
             data: { numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento }
         });
         dialogRef.afterClosed().subscribe((result) => {
-            console.log('The dialog was closed');
         });
     }
     /**
@@ -198,8 +197,8 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
                 break;
             case 'SIGUIENTE':
                 dialogRef = this._dialog.open(FormDialogDecisionComponent, {
-                    minWidth: '30%',
-                    minHeight: '30%',
+                    minWidth: '50%',
+                    minHeight: '50%',
                     data: {
                         numeroSolicitud: this.numeroSolicitud,
                         etapa: 1,
@@ -693,7 +692,6 @@ export class FormGestionFabricaUltracemComponent implements OnInit, OnDestroy {
 
         // Se valida el nit
         if (isNaN(data)) {
-            console.log('El nit/cédula \'' + data + '\' no es válido(a).');
             return '';
         };
 

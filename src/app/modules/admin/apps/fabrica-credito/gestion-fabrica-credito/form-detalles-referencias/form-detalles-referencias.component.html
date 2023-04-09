@@ -55,6 +55,14 @@
                                 </mat-error>
                             </mat-form-field>
                         </div>
+
+                        <div *ngIf="form.controls['tipo'].value === 'P'" class="md:flex">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Tiempo conocido (meses)</mat-label>
+                                <input matInput type="number" min="0" [formControlName]="'tiempoConocido'" >
+                            </mat-form-field>
+                        </div>
+
                         <div class="md:flex">
                             <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                                 <ng-container *ngIf="departamentos$ | async as departamentos">
@@ -124,6 +132,16 @@
                                 <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                     <mat-label>Tipo de parentesco</mat-label>
                                     <mat-select [formControlName]="'parentesco'">
+                                        <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                            {{item.descripcionOpcion}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </ng-container>
+                            <ng-container *ngIf="form.controls['parentesco'].value === 'F'">
+                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                    <mat-label>Otro, indique cual </mat-label>
+                                    <mat-select [formControlName]="'otroParentesco'">
                                         <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
                                             {{item.descripcionOpcion}}
                                         </mat-option>

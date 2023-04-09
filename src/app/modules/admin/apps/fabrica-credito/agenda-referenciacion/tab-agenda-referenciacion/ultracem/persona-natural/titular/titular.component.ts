@@ -49,7 +49,6 @@ export class UltracemTitularComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFabricaCreditoAgenda();
-    console.log(this.tipoDocumento)
 
   }
 
@@ -179,10 +178,8 @@ export class UltracemTitularComponent implements OnInit {
 
     for (let index = 0; index < this.dataNecesaria.preguntas.length; index++) {
       let data = this.mostrarPregunta(this.dataNecesaria.preguntas[index].idPregunta);
-      console.log(data)
       this.dataNecesaria.preguntas[index].hide = data
     }
-    console.log(this.dataNecesaria)
   }
 
 

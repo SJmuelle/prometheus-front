@@ -72,7 +72,6 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res);
         this.getAgendaComercial();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();
@@ -93,7 +92,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
    * @description: Guarda el comentario para devolvee
    */
   public onComentario(data): void {
-    //  debugger
+    //  
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -115,7 +114,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
  * @description: Guarda el comentario para devolvee
  */
   public onComentarioRechazar(data): void {
-    //  debugger
+    //  
     const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
       width: '30%',
       data: {
@@ -169,8 +168,11 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
    */
   cambiarHora(date) {
     if(date){
-      moment.locale('es');
-      return moment(date).format('H:MM a')
+      
+      moment.locale('co');
+
+      
+      return moment(date).format('hh:mm A')
     }
     return 'No registra';
   }
@@ -185,7 +187,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this.unsubscribe$.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 }

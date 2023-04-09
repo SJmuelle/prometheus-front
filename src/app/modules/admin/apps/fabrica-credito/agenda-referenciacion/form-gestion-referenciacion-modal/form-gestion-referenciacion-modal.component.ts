@@ -131,7 +131,6 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((res) => {
           if (res) {
-              console.log(res);
               this.agendaReferenciaService.refrescarListado$.next({estado: true});
               this.onCerrar();
           }{
@@ -215,7 +214,6 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
       dialoRef.afterClosed().subscribe((res) => {
           const dataModal: any = res;
-          console.log(dataModal);
           if (dataModal.departamento != undefined) {
               this.form.controls.codigoDepartamentoNegocio.setValue(dataModal.departamento);
               this.form.controls.departamentoNegocio.setValue(dataModal.departamentoNombre);
@@ -314,8 +312,8 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
 
   cambioEstado(){
     const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
-        minWidth: '30%',
-        minHeight: '30%',
+        minWidth: '50%',
+        minHeight: '50%',
         data: { 
             numeroSolicitud: this.data.numeroSolicitud, 
             etapa: 2, 
@@ -329,8 +327,8 @@ export class FormGestionReferenciacionModalComponent implements OnInit {
   }
   decision(){
     const dialogRef = this._matDialog.open(FormDialogDecisionComponent, {
-        minWidth: '30%',
-        minHeight: '30%',
+        minWidth: '50%',
+        minHeight: '50%',
         // data: {numeroSolicitud:this.data.numeroSolicitud, etapa:6},
         data: { 
             numeroSolicitud: this.data.numeroSolicitud, 

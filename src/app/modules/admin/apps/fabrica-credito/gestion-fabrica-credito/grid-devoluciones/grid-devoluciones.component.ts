@@ -30,7 +30,7 @@ export class GridDevolucionesComponent implements OnInit {
     public _permisosService:PermisosService,
     private _dialog: MatDialog,) { 
 
-      router.events.subscribe((url: any) => console.log(url));
+      router.events.subscribe((url: any) => {});
       this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
     }
 
@@ -39,7 +39,6 @@ export class GridDevolucionesComponent implements OnInit {
   }
 
   public onDevolucion(): void {
-    console.log('agenda->:' + this.agenda);
     const dialogRef = this._dialog.open(FormDialogDevolucionesComponent, {
       minWidth: '30%',
       minHeight: '30%',

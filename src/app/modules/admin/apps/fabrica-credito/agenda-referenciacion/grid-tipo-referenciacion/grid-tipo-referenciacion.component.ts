@@ -134,7 +134,6 @@ export class GridTipoReferenciacionComponent implements OnInit, OnDestroy {
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaReferenciaService.getTipoReferenciacion(datos).pipe().subscribe((res) => {
       if (res.status === 200) {
-        console.log(res.data)
         this.listado = res.data;
         Swal.close();
       } else {

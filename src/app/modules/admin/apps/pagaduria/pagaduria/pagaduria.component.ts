@@ -61,7 +61,6 @@ export class PagaduriaComponent implements OnInit {
   descargarArchivo(id:any){
     this.pagaduria.descargarArchivos(id).subscribe((response:any)=>{
       if(response) {
-        console.log(response)
         if (response.status==202) {
           Swal.fire(
             '¡Error!',

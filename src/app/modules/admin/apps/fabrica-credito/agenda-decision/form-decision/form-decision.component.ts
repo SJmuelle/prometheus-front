@@ -59,7 +59,6 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
       agenda='DECISION';
     }
     this._decisionesService.getOpciones(agenda).subscribe((response: any) => {
-      console.log(response);
       if (response) {
         this.listadoDeciones = response.data;
         // if (this.fabricaDatos.agenda != 'DE') {
@@ -78,7 +77,6 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
   private consultaCausalesRechazo() {
     this._decisionesService.getCausalesRechazo(this.fabricaDatos.numeroSolicitud).subscribe((response: any) => {
-      console.log(response);
       if (response) {
         this.listadoCausales = response.data;
       }
@@ -86,7 +84,6 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   }
   private consultaCauDesestimiento() {
     this._decisionesService.getCauDesestimiento(this.fabricaDatos.numeroSolicitud).subscribe((response: any) => {
-      console.log(response);
       if (response) {
         this.listadoCausales = response.data;
       }
@@ -94,7 +91,6 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   }
   private consultaCausalesAprobacion() {
     this._decisionesService.getCausalesAprobacion(this.fabricaDatos.numeroSolicitud, this.form.value.decision).subscribe((response: any) => {
-      console.log(response);
       if (response) {
         this.listadoCausales = response.data;
       }
@@ -123,7 +119,6 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
 
 
   public guardar() {
-    debugger
     if(!this.form.valid){
       return
     }
@@ -171,12 +166,12 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
           'success'
         ).then((result) => {
           if (result) {
-            this.dialog.close();
+            this.dialog.close(true);
           }
         })
         setTimeout(() => {
-          this.dialog.close();
-          this.router.navigate(['/credit-factory/agenda-decision']);
+          this.dialog.close(true);
+          // this.router.navigate(['/credit-factory/agenda-decision']);
         }, 10000);
       }
     })

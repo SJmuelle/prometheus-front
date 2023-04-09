@@ -31,13 +31,12 @@ export class GridComentariosComponent implements OnInit {
         public _permisosService: PermisosService
 
     ) {
-        router.events.subscribe((url: any) => console.log(url));
+        router.events.subscribe((url: any) => {});
         this.permisoEditar = this._permisosService.permisoPorModuleTrazxabilidad(router.url)
     }
 
     ngOnInit(): void {
         this.getData();
-        console.log('sds-' + this.comentarios$)
     }
 
     public onComentario(): void {
