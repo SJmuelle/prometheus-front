@@ -96,8 +96,7 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento"
-                   >
+                <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento">
                 <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
                     Este campo es requerido.
                 </mat-error>

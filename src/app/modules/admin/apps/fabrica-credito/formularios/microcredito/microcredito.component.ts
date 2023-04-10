@@ -273,7 +273,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.postDatos(data).subscribe(() => {
                 Swal.fire(
                     'Completado',
-                    'Información guardada con éxito',
+                    data.mensaje,
                     'success'
                 ).then((result) => {
                     if (result) {
