@@ -176,7 +176,7 @@ export class FormCodeudorComponent implements OnInit {
             unidadNegocio: 1,
         };
         this._formularioCreditoService
-            .cargueInicial(data)
+            .cargueInicial(data).pipe(takeUntil(this.unSubscribe$))
             .subscribe((resp: any) => {
                 if (resp) {
                     this.dataInicial = resp.data;
@@ -188,7 +188,7 @@ export class FormCodeudorComponent implements OnInit {
         const datos = this.form.getRawValue();
         const { departamentoNegocio } = datos;
         this._formularioCreditoService
-            .listarCiudadesMicro(departamentoNegocio)
+            .listarCiudadesMicro(departamentoNegocio).pipe(takeUntil(this.unSubscribe$))
             .subscribe((resp: any) => {
                 if (resp) {
                     this.listadoCiudades = resp.data;
@@ -1330,7 +1330,7 @@ export class FormCodeudorComponent implements OnInit {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos)
+            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
             .subscribe(
                 () => {
                     Swal.fire(

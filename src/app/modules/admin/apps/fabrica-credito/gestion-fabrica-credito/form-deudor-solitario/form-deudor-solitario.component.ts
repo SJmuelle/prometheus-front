@@ -433,7 +433,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos)
+            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
             .subscribe(
                 () => {
                     Swal.fire(

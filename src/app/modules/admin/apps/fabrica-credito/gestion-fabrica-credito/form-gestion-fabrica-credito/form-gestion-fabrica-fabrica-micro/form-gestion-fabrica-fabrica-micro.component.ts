@@ -85,7 +85,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             entidad: "CONFIG-MICRO",
             unidadNegocio: 1
         };
-        this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
+        this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
 
@@ -333,7 +333,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const camaraComercio = this.form.controls.camaraComercio.value;
 
         if (tipoActividad && nivelEstudio && camaraComercio) {
-            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).subscribe(res => {
+            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).pipe(takeUntil(this.unSubscribe$)).subscribe(res => {
                 this.actividadEconomica = res.data
             });
         }
@@ -352,7 +352,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     private postFormularioFabrica(datos: FormularioCreditoMicro): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-        this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos)
+        this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
             .subscribe(() => {
                 Swal.fire(
                     'Completado',

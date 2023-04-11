@@ -5,6 +5,7 @@ import { FormularioCreditoService } from 'app/core/services/formulario-credito.s
 import { GenericasService } from 'app/core/services/genericas.service';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 @Component({
     selector: 'app-microcredito',
@@ -27,7 +28,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public plazosCredito$: Observable<any>;
     public salarioMinimo$: Observable<any>;
     public salarioMinimo: number = 0;
+    public habilitarInput: boolean = false;
+    public numeroSolicitudTemporal: number;
+    public otpValidado: boolean = false;
+    public validandoOTPLoading: boolean = false;
     fechaActual: any = moment().locale('co');
+    public contador: number = 180;
     
     constructor(
         private fb: FormBuilder,
@@ -65,9 +71,16 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
             antiguedadLocal: [0],
-            autorizacionCentrales: ['', Validators.requiredTrue],
-            clausulaVeracidad: ['', Validators.requiredTrue],
-            terminosCondiciones: ['', Validators.requiredTrue]
+            autorizacionCentrales: [true],
+            clausulaVeracidad: [true],
+            terminosCondiciones: [true],
+            numeroOTP: [''],
+            numOTP1: [''],
+            numOTP2: [''],
+            numOTP3: [''],
+            numOTP4: [''],
+            numOTP5: [''],
+            numOTP6: [''],
         });
 
         this.agregarValidaciones();
@@ -106,6 +119,26 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this.listadoActividadEconomica = [];
         }
     }
+
+    public preSolicitud(){     
+        const data = {
+            celular: this.form.get('celular').value,
+            identificacion: this.form.get('identificacion').value,
+            tipoDocumento: this.form.get('tipoDocumento').value,
+        }
+        this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
+        })
+        
+    }
+
+    startTimer() {
+        setInterval(() => {
+          if(this.contador > 0) {
+            this.contador--;
+          } 
+        },1000)
+      }
 
     private getSalarioMinimo(){
          this.genericaServices.getSalarioBasico().subscribe(({data}) => {
@@ -197,21 +230,26 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 1).subscribe((resp: any) => {
                 if (resp) {
                     this.form.patchValue(resp.data);
+                   
                     this.dataGeneralIncial = resp.data
                     this.getPlazosCredito(resp.data?.valorCredito | 0);
                     this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
-                    this.form.controls.autorizacionCentrales.setValue(resp.data.autorizacionCentrales === 'S');
-                    this.form.controls.clausulaVeracidad.setValue(resp.data.clausulaVeracidad === 'S');
+                    this.form.controls.autorizacionCentrales.setValue(resp.data?.autorizacionCentrales === 'S');
+                    this.form.controls.clausulaVeracidad?.setValue(resp.data?.clausulaVeracidad === 'S');
                     this.form.controls.terminosCondiciones.setValue(resp.data.terminosCondiciones === 'S');
                     this.form.controls.fechaNacimiento.setValue(resp.data.fechaNacimiento === '0099-01-01' ? '' : resp.data.fechaNacimiento)
 
+                    if( resp.data.celular){
+                        this.preSolicitud()
+                    }
                     if (resp.data.departamentoNegocio) {
                         this.listarCiudades();
                     }
                     if (resp.data.ciudadNegocio) {
                         this.listarBarrios();
                     }
-                    this.cargueActividadEconomica()
+                    this.cargueActividadEconomica();
+
                     setTimeout(() => {
                         this.form.controls['ciudadNegocio'].setValue(resp.data.ciudadNegocio);
                         this.form.controls['barrioNegocio'].setValue(resp.data.barrioNegocio.toString());
@@ -245,6 +283,42 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     }
 
+    solicitarCodigo(): void {
+        
+        if(this.form.valid){
+            const data = {
+                numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
+                tipo: 'T'
+            }
+            this.validandoOTPLoading = true;
+            this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
+               if(rep.status === 200){
+               }
+
+               this.validandoOTPLoading = false;
+                
+            })
+        }else{
+            this.scrollToFirstInvalidControl();
+        }
+
+        
+    }
+
+    validarCodigo(): void {
+        const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
+        + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
+        
+        const data = {
+            numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
+            tipoTercero: 'T',
+            numeroOTP: numero
+        }
+
+        this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            this.otpValidado = rep.data.resultado === 'OK'
+        })
+    }
 
     save(): void {
         if (this.form.invalid) {
