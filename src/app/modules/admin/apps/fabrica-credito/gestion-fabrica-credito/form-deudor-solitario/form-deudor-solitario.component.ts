@@ -241,7 +241,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
             parentesco: ['', Validators.required],
-            declaraRenta: [''],
+            declaraRenta: ['', Validators.required],
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
