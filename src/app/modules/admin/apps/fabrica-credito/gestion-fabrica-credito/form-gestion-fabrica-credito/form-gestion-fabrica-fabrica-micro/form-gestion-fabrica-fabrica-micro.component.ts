@@ -1058,7 +1058,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     }
 
     ngOnDestroy(): void {
-        this.unSubscribe$.next();
+        this.unSubscribe$.next(null);
         this.unSubscribe$.complete();
     }
 

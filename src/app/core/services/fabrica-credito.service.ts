@@ -103,6 +103,19 @@ export class FabricaCreditoService {
     /**
      * @description: Post Guardar datos fabrica credito
      */
+    public postDatosFabricaCreditoCodeudor(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCreditoCodeudor, data);
+    }
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
+    public postDatosFabricaCreditoSolitario(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCreditoSolitario, data);
+    }
+
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
     public postDatosFabricaCreditoReferenciacion(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.PostagendaReferenciacion, data);
     }

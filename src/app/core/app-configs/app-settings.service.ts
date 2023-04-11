@@ -106,6 +106,8 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/consulta-fabrica'),
             informacionTercero: EndPoints.uri('/generic/qry/informacion-tipo-tercero'),
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
+            baseCreditoCodeudor: EndPoints.uri('/credito/microcredito/guardado-solidario-microcredito'),
+            baseCreditoSolitario: EndPoints.uri('/credito/microcredito/guardado-codeudor-microcredito'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito'),
