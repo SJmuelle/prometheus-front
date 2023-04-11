@@ -7,6 +7,7 @@ import { FormDialogReferenciasComponent } from "../form-dialog-referencias/form-
 import { FormDetallesReferenciasComponent } from "../form-detalles-referencias/form-detalles-referencias.component";
 import { PermisosService } from 'app/core/services/permisos.service';
 import { FormGenericoComponent } from '../../agenda-referenciacion/tab-agenda-referenciacion/form-generico-modal/form-generico.component';
+import { GenericasService } from 'app/core/services/genericas.service';
 
 
 @Component({
@@ -20,12 +21,15 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
     public subscription$: Subscription;
     @Input() datos: any;
     public permisoEditar: boolean = false;
+    public codeduor: boolean = false;
+    public tiposTercero$: Observable<any>;
 
     constructor(
         private route: ActivatedRoute,
         private referenciasService: ReferenciasService,
         private _dialog: MatDialog,
-        public _permisosService: PermisosService
+        public _permisosService: PermisosService,
+        private genericaServices: GenericasService,
 
     ) {
 
@@ -36,7 +40,7 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
         this.cargarReferencias();
         this.escuchaObservable();
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
-
+        this.tieneCoudeudor();
     }
     /**
      * @description: Abre el dialogo de nueva referencia
@@ -73,16 +77,16 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
         // }
         const numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
         const dialogRef = this._dialog.open(FormGenericoComponent, {
-            data: { 
+            data: {
                 currentStep: 0,
-                tipoDocumento : item.tipoDocumento,
+                tipoDocumento: item.tipoDocumento,
                 numeroSolicitud: item.numeroSolicitud,
-                identificacion:item.idReferencias,
-                referencia:item.idReferencias,
+                identificacion: item.idReferencias,
+                referencia: item.idReferencias,
                 tipoReferenciacion: item.tipoReferenciacion,
-                tipoPersona:item.tipo,
-                CodUnidadNegocio:item.unidadNegocio,
-                tipoDocPersona:item.tipoDocumento,
+                tipoPersona: item.tipo,
+                CodUnidadNegocio: item.unidadNegocio,
+                tipoDocPersona: item.tipoDocumento,
             },
             minWidth: '680px',
             minHeight: '420px',
@@ -132,6 +136,15 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
             if (res) {
                 this.cargarReferencias();
             }
+        });
+    }
+
+    public tieneCoudeudor(): void {
+        const codigo: string = this.route.snapshot.paramMap.get('num');
+
+        this.genericaServices.getTiposTercero(codigo).subscribe(({ data }) => {
+            // transforma el array a boolean,  si se pueden crear codeudores aparecerá la lista
+            this.codeduor = !!data?.filter(element => element?.codigoOpcion === 'C').length;
         });
     }
 
