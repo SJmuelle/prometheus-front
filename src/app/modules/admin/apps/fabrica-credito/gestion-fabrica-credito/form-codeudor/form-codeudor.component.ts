@@ -1330,7 +1330,7 @@ export class FormCodeudorComponent implements OnInit {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos)
+            .postDatosFabricaCreditoCodeudor(datos)
             .subscribe(
                 () => {
                     Swal.fire(
