@@ -1332,10 +1332,10 @@ export class FormCodeudorComponent implements OnInit {
         this.subscription$ = this.fabricaCreditoService
             .postDatosFabricaCreditoCodeudor(datos)
             .subscribe(
-                () => {
+                (res) => {
                     Swal.fire(
                         'Completado',
-                        'Información guardada con éxito',
+                        res.data.mensaje,
                         'success'
                     );
                     setTimeout(() => {

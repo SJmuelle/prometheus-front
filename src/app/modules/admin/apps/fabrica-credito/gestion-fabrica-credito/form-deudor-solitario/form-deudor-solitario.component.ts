@@ -435,14 +435,14 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.subscription$ = this.fabricaCreditoService
             .postDatosFabricaCreditoSolitario(datos)
             .subscribe(
-                () => {
+                (res) => {
                     Swal.fire(
                         'Completado',
-                        'Información guardada con éxito',
+                        res.data.mensaje,
                         'success'
                     );
                     setTimeout(() => {
-                        location.reload();
+                        // location.reload();
                     }, 1000);
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
