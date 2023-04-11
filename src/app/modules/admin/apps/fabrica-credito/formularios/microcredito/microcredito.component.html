@@ -97,7 +97,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Fecha de nacimiento</mat-label>
                 <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento"
-                    (change)="validacionCampos('Fecha de nacimiento','Este campo modifica el motor de decisión y políticas SARC', 'fechaNacimiento', 'STRING')">
+                   >
                 <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -154,7 +154,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿ Tu negocio está registrado en cámara de comercio?</mat-label>
                 <mat-select formControlName="camaraComercio"
-                    (selectionChange)="validacionCampos('Tu negocio está registrado en cámara de comercio','Este campo modifica el motor de decisión y políticas SARC', 'camaraComercio', 'STRING')">
+                   >
                     <mat-option *ngFor="let camaraComercio of dataInicial?.camaraComercio"
                         [value]="camaraComercio.codigo">{{camaraComercio.valor}}
                     </mat-option>
@@ -187,8 +187,7 @@
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Actividad económica </mat-label>
-                <mat-select formControlName="actividadEconomica"
-                    (selectionChange)="validacionCampos('Actividad económica','Este campo modifica el motor de decisión y políticas SARC', 'actividadEconomica', 'STRING')">
+                <mat-select formControlName="actividadEconomica" >
                     <mat-option *ngFor="let ActividadEconomica of listadoActividadEconomica"
                         [value]="ActividadEconomica.codigo">{{ActividadEconomica.valor}}
                     </mat-option>
@@ -217,7 +216,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto tiempo en (meses) tiene tu negocio?</mat-label>
                 <input matInput type="number" autocomplete="off" formControlName="antiguedadNegocio"
-                    (change)="validacionCampos('Cuánto tiempo en (meses) tiene tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'antiguedadNegocio', 'INTEGER')">
+                    >
                 <mat-error *ngIf="form.controls.antiguedadNegocio.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -229,7 +228,6 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué departamento de colombia queda tu negocio?</mat-label>
                 <mat-select formControlName="departamentoNegocio"
-                    (selectionChange)="validacionCampos('En qué departamento de colombia queda tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'departamentoNegocio', 'STRING')"
                     (selectionChange)="listarCiudades()">
                     <mat-option *ngFor="let departamentosMicro of dataInicial?.departamentosMicro"
                         [value]="departamentosMicro.codigo">{{departamentosMicro.valor}}
@@ -242,7 +240,6 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿En qué municipio o ciudad está tu negocio? </mat-label>
                 <mat-select formControlName="ciudadNegocio"
-                    (selectionChange)="validacionCampos('En qué municipio o ciudad está tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'ciudadNegocio', 'STRING')"
                     (selectionChange)="listarBarrios()">
                     <mat-option *ngFor="let ciudades of listadoCiudades" [value]="ciudades.codigo">{{ciudades.valor}}
                     </mat-option>
@@ -271,8 +268,7 @@
             </div>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
-                <input matInput type="text" autocomplete="off" formControlName="valorCredito" (change)="validacionCampos('Cuánto dinero necesitas para tu negocio','Este campo modifica el motor de decisión y políticas SARC', 'valorCredito', 'STRING');
-                    getPlazosCredito(this.form.controls.valorCredito.value)
+                <input matInput type="text" autocomplete="off" formControlName="valorCredito" (change)="getPlazosCredito(this.form.controls.valorCredito.value)
                     " mask="separator.0" thousandSeparator=".">
                 <mat-error *ngIf="form.controls.valorCredito.errors?.required">
                     Este campo es requerido.
@@ -288,7 +284,7 @@
                 <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
                 <input matInput type="number" autocomplete="off" [min]="plazos.data[0].plazoMinimo"
                     [max]="plazos.data[0].plazoMaximo" formControlName="plazoCredito"
-                    (change)="validacionCampos('En cuántos meses vas a pagar tu crédito','Este campo modifica el motor de decisión y políticas SARC', 'plazoCredito', 'INTEGER')">
+                    >
                 <mat-error *ngIf="form.controls.plazoCredito.errors?.required">
                     Este campo es requerido.
                 </mat-error>
