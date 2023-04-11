@@ -53,10 +53,16 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
   consultaDecisiones() {
     this.fabricaDatos.agenda
     let agenda;
-    if(this.fabricaDatos.agenda != 'DE'){
-      agenda='COMPLETACION';
-    }else{
-      agenda='DECISION';
+    switch (this.fabricaDatos.agenda) {
+      case 'DE':
+        agenda = 'DECISION';
+        break;
+      case 'VD':
+        agenda = 'VENTA-DIGITAL';
+        break;
+      default:
+        agenda = 'COMPLETACION';
+      break;
     }
     this._decisionesService.getOpciones(agenda).subscribe((response: any) => {
       if (response) {
