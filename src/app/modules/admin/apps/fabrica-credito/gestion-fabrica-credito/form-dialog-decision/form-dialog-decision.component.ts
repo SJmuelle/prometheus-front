@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { toInteger } from 'lodash';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-dialog-decision',
@@ -32,6 +33,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
 
     constructor(
         private fb: FormBuilder,
+        public _permisosService: PermisosService,
+
         private decisionService: DecisionService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private _dialog: MatDialogRef<FormDialogDecisionComponent>,
@@ -86,14 +89,14 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     }
 
 
-    private getSalarioMinimo(){
-        this.genericaServices.getSalarioBasico().subscribe(({data}) => {
-          
-           this.salarioMinimo = data.salarioMinimo;
-           
-           this.form.get('cupo').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
-       })
-   }
+    private getSalarioMinimo() {
+        this.genericaServices.getSalarioBasico().subscribe(({ data }) => {
+
+            this.salarioMinimo = data.salarioMinimo;
+
+            this.form.get('cupo').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
+        })
+    }
 
 
     /**
@@ -168,7 +171,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             })
                             break;
                         default:
-                            
+
                             this.postDecision(data);
 
                             break;
@@ -307,9 +310,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
             if (res.data.estado == 1) {
                 this.modalDetalle(res.data.detalle)
             } else {
-                if(data_cambioEstado.agenda === 'CC'){
+                if (data_cambioEstado.agenda === 'CC') {
                     this.postCambioEstadoMicro(data_cambioEstado)
-                }else{
+                } else {
                     this.postCambioEstado(data_cambioEstado)
                 }
             }
@@ -332,6 +335,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      * @description: redireciona a la grilla de completacion
      */
     private redireccionar() {
+        if (this._permisosService.estabaFormulario(this.router.url)) {
+            this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+        }
         let agenda = '';
         switch (this.data.idAgenda) {
             case 'VD':
@@ -373,10 +379,10 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      */
     private postCambioEstadoMicro(data: any): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-        
+
         data.cupo = toInteger(this.utility.enviarNumero(this.form.getRawValue().cupo))
-        
-        this.decisionService.postAprobado({...this.form.getRawValue(),...data}).pipe(takeUntil(this.unsuscribe$))
+
+        this.decisionService.postAprobado({ ...this.form.getRawValue(), ...data }).pipe(takeUntil(this.unsuscribe$))
             .subscribe((res) => {
                 let respuesta: any = {};
                 switch (res.status) {
@@ -430,8 +436,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      */
     private postCambioEstado(data: any): void {
         Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-        
-       
+
+
 
         this.decisionService.postCambioEstado(data).pipe(takeUntil(this.unsuscribe$))
             .subscribe((res) => {
@@ -519,9 +525,9 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtener limite de plazos por el valor de credito
      */
-    public getPlazosCredito(valorCredito: number){
-        
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
+    public getPlazosCredito(valorCredito: number) {
+
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
 
     }
 }
