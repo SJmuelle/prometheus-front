@@ -129,7 +129,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
-            if (rep.msg !== 'OK') {
+            if (rep.data.msg !== 'OK') {
                 Swal.fire({
                     icon: 'info',
                     text: rep.data.msg,
