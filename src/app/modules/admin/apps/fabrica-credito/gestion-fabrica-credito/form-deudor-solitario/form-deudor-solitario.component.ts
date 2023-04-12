@@ -364,7 +364,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         if (this.formDeudorSolidario.invalid) {
             this.formDeudorSolidario.markAllAsTouched();
             setTimeout(() => {
-                
+
                 this.scrollToFirstInvalidControl();
             }, 200);
         } else {
@@ -434,15 +434,16 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
             .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+
             .subscribe(
-                () => {
+                (res) => {
                     Swal.fire(
                         'Completado',
-                        'Información guardada con éxito',
+                        res.data.mensaje,
                         'success'
                     );
                     setTimeout(() => {
-                        location.reload();
+                        // location.reload();
                     }, 1000);
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },

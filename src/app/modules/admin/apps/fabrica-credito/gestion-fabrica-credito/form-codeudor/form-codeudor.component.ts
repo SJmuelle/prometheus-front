@@ -101,7 +101,7 @@ export class FormCodeudorComponent implements OnInit {
 
                 this.addValidation();
                 this.form.patchValue(data);
-                
+
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 // formatear data para los select
@@ -1331,11 +1331,12 @@ export class FormCodeudorComponent implements OnInit {
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
             .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+
             .subscribe(
-                () => {
+                (res) => {
                     Swal.fire(
                         'Completado',
-                        'Información guardada con éxito',
+                        res.data.mensaje,
                         'success'
                     );
                     setTimeout(() => {
