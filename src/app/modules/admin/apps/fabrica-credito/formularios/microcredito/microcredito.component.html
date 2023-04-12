@@ -320,13 +320,14 @@
                 <mat-icon svgIcon="feather:send" [ngClass]="{'text-blue-400': this.form.valid}" class="cursor-pointer" matTooltip="Enviar código OTP" (click)="solicitarCodigo()"></mat-icon>
             </mat-form-field> -->
             <div class="w-full px-3 fuse-mat-dense flex justify-center items-center pt-4">
-                <button mat-raised-button color="primary" type="button" class="w-6/12 rounded-md cursor-pointer"
-                    [disabled]="this.form.invalid" (click)="solicitarCodigo()">
+                <button mat-raised-button color="primary" type="button" style="width: 50% !important"
+                    class="rounded-md cursor-pointer" [disabled]="this.form.invalid" (click)="solicitarCodigo()">
                     Enviar código OTP
                 </button>
             </div>
 
-            <div class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-50">
+            <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
+                style="min-height: 200px !important;">
                 <mat-form-field class="w-1/12  px-3 fuse-mat-dense">
                     <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP1" id="num1"
                         (keyup)="changeFocus()" class="text-center  font-bold text-xl">
