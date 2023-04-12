@@ -28,8 +28,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public archivoDerecha: any = {};
     public longitudArchivos: number = 0;
     public documentos: any[] = [];
-    public documentosCodeudor : any[] = [];
-    public documentosDeudor : any[] = [];
+    public documentosCodeudor: any[] = [];
+    public documentosDeudor: any[] = [];
     public documentoComparado: FormControl = new FormControl('seleccione');
     public numeroSolicitud: string;
     public habilitarComparar: boolean = false;
@@ -37,7 +37,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public identificacion: string;
     public documentoSelected: any;
     public permisoEditar: boolean = false;
-    public panelOpenState: boolean=false;
+    public panelOpenState: boolean = false;
 
     @Input() tipoDeudor: String;
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
@@ -93,26 +93,26 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
      * @description: Seleccion de check
      */
     public onSeleccionDocumento(event: MatCheckbox, item: any): void {
-        
+
         if (event.checked) {
             this.documentos.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
-                    this.documentoSelected = x;               
+                    this.documentoSelected = x;
                 }
                 return x;
             });
             this.documentosDeudor.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
-                    this.documentoSelected = x;                 
+                    this.documentoSelected = x;
                 }
                 return x;
             });
             this.documentosCodeudor.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
-                    this.documentoSelected = x;                   
+                    this.documentoSelected = x;
                 }
                 return x;
             });
@@ -120,7 +120,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 numeroSolicitud: this.numeroSolicitud,
                 idAdjunto: item.idArchivoCargado
             };
-            
+
             this.seleccionDocumentoIzquierdo(datos);
         } else {
             this.longitudArchivos = 0;
@@ -175,7 +175,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             reader.readAsDataURL(fileToRead);
             reader.onloadend = () => {
                 const file: string | ArrayBuffer | null = reader.result;
-                
+
                 const extension: string = fileToRead.type.split('/')[1];
                 const fechaHoy = Date.now();
                 formulario = {
@@ -227,7 +227,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 return x;
             });
         });
-        
+
     }
 
     private guardarAdjunto(datos: any): void {
@@ -246,7 +246,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         }, error => {
             Swal.fire(
                 '¡Información!',
-                    error.error.msg,
+                error.error.msg,
                 'error',
             );
         });
