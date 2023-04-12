@@ -13,6 +13,11 @@ export class PermisosService {
     return valor
   }
 
+  estabaFormulario(ruta: any){
+    let valor=  ruta.includes('formularios');
+    return valor
+  }
+
   permisoPorModuleTrazabilidad(){
     let trazabilidad = localStorage.getItem("trazabilidad");
 
