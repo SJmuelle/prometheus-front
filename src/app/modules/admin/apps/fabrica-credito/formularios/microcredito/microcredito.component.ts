@@ -51,9 +51,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             identificacion: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
             primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
-            celular: ['', [Validators.required,Validators.pattern('^[3][0-9]{9}$')]],
+            celular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
             email: ['', [Validators.required, Validators.email]],
-            fechaNacimiento: ['', [Validators.required,this.validatedDate.bind(this),this.validateMayorEdad.bind(this)]],
+            fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
             genero: [''],
@@ -120,7 +120,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
     }
 
-    public preSolicitud(){
+    public preSolicitud() {
         const data = {
             celular: this.form.get('celular').value,
             identificacion: this.form.get('identificacion').value,
@@ -129,7 +129,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
-            if(rep.data?.msg){
+            if (rep.msg !== 'OK') {
                 Swal.fire({
                     icon: 'info',
                     text: rep.data.msg,
@@ -142,17 +142,17 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     startTimer() {
         setInterval(() => {
-          if(this.contador > 0) {
-            this.contador--;
-          }
-        },1000)
-      }
+            if (this.contador > 0) {
+                this.contador--;
+            }
+        }, 1000)
+    }
 
-    private getSalarioMinimo(){
-         this.genericaServices.getSalarioBasico().subscribe(({data}) => {
+    private getSalarioMinimo() {
+        this.genericaServices.getSalarioBasico().subscribe(({ data }) => {
             this.salarioMinimo = data.salarioMinimo;
 
-            this.form.get('valorCredito').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
+            this.form.get('valorCredito').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
         })
     }
 
@@ -175,7 +175,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const date = moment(valueControl).format('YYYY-MM-DD')
         const errors = { dateMayor: true };
 
-        const fechaMayor =  moment().locale('co')
+        const fechaMayor = moment().locale('co')
         fechaMayor.subtract(18, 'years');
         // Set the validation error on the matching control
 
@@ -187,11 +187,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
     }
 
-    private agregarValidaciones(){
+    private agregarValidaciones() {
 
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             if (e !== '6') {
-                this.form.get('antiguedadLocal')?.setValidators([Validators.required,Validators.min(0)])
+                this.form.get('antiguedadLocal')?.setValidators([Validators.required, Validators.min(0)])
                 this.form.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -247,7 +247,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.controls.terminosCondiciones.setValue(resp.data.terminosCondiciones === 'S');
                     this.form.controls.fechaNacimiento.setValue(resp.data.fechaNacimiento === '0099-01-01' ? '' : resp.data.fechaNacimiento)
 
-                    if( resp.data.celular){
+                    if (resp.data.celular) {
                         this.preSolicitud()
                     }
                     if (resp.data.departamentoNegocio) {
@@ -285,28 +285,28 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtener limite de plazos por el valor de credito
      */
-    public getPlazosCredito(valorCredito: number){
+    public getPlazosCredito(valorCredito: number) {
 
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
+        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
 
     }
 
     solicitarCodigo(): void {
 
-        if(this.form.valid){
+        if (this.form.valid) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
                 tipo: 'T'
             }
             this.validandoOTPLoading = true;
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
-               if(rep.status === 200){
-               }
+                if (rep.status === 200) {
+                }
 
-               this.validandoOTPLoading = false;
+                this.validandoOTPLoading = false;
 
             })
-        }else{
+        } else {
             this.scrollToFirstInvalidControl();
         }
 
@@ -315,7 +315,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     validarCodigo(): void {
         const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
-        + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
+            + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
 
         const data = {
             numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
@@ -352,28 +352,28 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
 
-            this._formularioCreditoService.postDatos(data).subscribe((datos) => {
-                Swal.fire(
-                    'Completado',
-                    datos.data.mensaje,
-                    'success'
-                ).then((result) => {
-                    if (result) {
-                        this.form.reset();
-                        this.router.navigate([`/credit-factory/agenda-venta-digital`]);
-                    }
-                })
-                setTimeout(() => {
+        this._formularioCreditoService.postDatos(data).subscribe((datos) => {
+            Swal.fire(
+                'Completado',
+                datos.data.mensaje,
+                'success'
+            ).then((result) => {
+                if (result) {
                     this.form.reset();
                     this.router.navigate([`/credit-factory/agenda-venta-digital`]);
-                }, 2000);
-            }, (error) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ha ocurrido un error',
-                    text: error.error.msg,
-                });
+                }
+            })
+            setTimeout(() => {
+                this.form.reset();
+                this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+            }, 2000);
+        }, (error) => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Ha ocurrido un error',
+                text: error.error.msg,
             });
+        });
 
 
     }
@@ -421,36 +421,35 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         firstInvalidControl?.focus(); //without smooth behavior
     }
 
-    changeFocus(){
-      let firstInvalidControl1: HTMLElement =  this.el.nativeElement.querySelector('#num1');
-      let firstInvalidControl2: HTMLElement =  this.el.nativeElement.querySelector('#num2');
-      let firstInvalidControl3: HTMLElement =  this.el.nativeElement.querySelector('#num3');
-      let firstInvalidControl4: HTMLElement =  this.el.nativeElement.querySelector('#num4');
-      let firstInvalidControl5: HTMLElement =  this.el.nativeElement.querySelector('#num5');
-      let firstInvalidControl6: HTMLElement =  this.el.nativeElement.querySelector('#num6');
+    changeFocus() {
+        let firstInvalidControl1: HTMLElement = this.el.nativeElement.querySelector('#num1');
+        let firstInvalidControl2: HTMLElement = this.el.nativeElement.querySelector('#num2');
+        let firstInvalidControl3: HTMLElement = this.el.nativeElement.querySelector('#num3');
+        let firstInvalidControl4: HTMLElement = this.el.nativeElement.querySelector('#num4');
+        let firstInvalidControl5: HTMLElement = this.el.nativeElement.querySelector('#num5');
+        let firstInvalidControl6: HTMLElement = this.el.nativeElement.querySelector('#num6');
 
-       if(this.form.get('numOTP1').value !== '')
-       {
-        if(this.form.get('numOTP2').value === ''){
-            firstInvalidControl2.focus();
-        }else{
-            if(this.form.get('numOTP3').value === ''){
-            firstInvalidControl3.focus();
-            }else{
-                if(this.form.get('numOTP4').value === ''){
-            firstInvalidControl4.focus();
-            }else{
-                if(this.form.get('numOTP5').value === ''){
-            firstInvalidControl5.focus();
-            }else{
-                if(this.form.get('numOTP6').value === ''){
-            firstInvalidControl6.focus();
-            }
-            }
-            }
+        if (this.form.get('numOTP1').value !== '') {
+            if (this.form.get('numOTP2').value === '') {
+                firstInvalidControl2.focus();
+            } else {
+                if (this.form.get('numOTP3').value === '') {
+                    firstInvalidControl3.focus();
+                } else {
+                    if (this.form.get('numOTP4').value === '') {
+                        firstInvalidControl4.focus();
+                    } else {
+                        if (this.form.get('numOTP5').value === '') {
+                            firstInvalidControl5.focus();
+                        } else {
+                            if (this.form.get('numOTP6').value === '') {
+                                firstInvalidControl6.focus();
+                            }
+                        }
+                    }
+                }
             }
         }
-       }
     }
 
     ngOnDestroy(): void {
