@@ -241,7 +241,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
             parentesco: ['', Validators.required],
-            declaraRenta: [''],
+            declaraRenta: ['', Validators.required],
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
@@ -364,7 +364,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         if (this.formDeudorSolidario.invalid) {
             this.formDeudorSolidario.markAllAsTouched();
             setTimeout(() => {
-                
+
                 this.scrollToFirstInvalidControl();
             }, 200);
         } else {
@@ -433,7 +433,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCreditoSolitario(datos)
+            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+
             .subscribe(
                 (res) => {
                     Swal.fire(

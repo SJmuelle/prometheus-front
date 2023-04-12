@@ -95,7 +95,10 @@ export class AppSettingsService {
             listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
             listarBarriosMicro: EndPoints.uri('/generic/qry/listar-barrios-micro'),
             nombreAsesorMicro: EndPoints.uri('/generic/qry/nombre-asesor-micro'),
-            validationPlazoMicro: EndPoints.uri('/generic/validacion-plazos-microcredito') 
+            validationPlazoMicro: EndPoints.uri('/generic/validacion-plazos-microcredito'),
+            validarOTP: EndPoints.uri('/firma/solicitud-validar-otp'),
+            gurdadoPreSolicitud: EndPoints.uri('/generic/guardado-pre-solicitud-microcredito'),
+            solicitarGenerarOTP: EndPoints.uri('/firma/solicitud-generar-otp')
         }
     }
     /**

@@ -13,8 +13,32 @@ export class FormularioCreditoService {
         private _appSettings: AppSettingsService
     ) { }
 
+
+
+
+    validatarOTP(data){
+        return this._utilityService.postQuery(this._appSettings.formulario.url.validarOTP, data)
+            .pipe(map((res: any) => {
+                return res;
+            }));
+    }
+
+    solicitarOTP(data){
+        return this._utilityService.postQuery(this._appSettings.formulario.url.solicitarGenerarOTP, data)
+            .pipe(map((res: any) => {
+                return res;
+            }));
+    }
+
     postDatos(data) {
         return this._utilityService.postQuery(this._appSettings.formulario.url.microcredito, data)
+            .pipe(map((res: any) => {
+                return res;
+            }));
+    }
+
+    postPreSolicitud(data){
+        return this._utilityService.postQuery(this._appSettings.formulario.url.gurdadoPreSolicitud, data)
             .pipe(map((res: any) => {
                 return res;
             }));
