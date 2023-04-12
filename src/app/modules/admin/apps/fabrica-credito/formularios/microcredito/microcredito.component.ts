@@ -8,6 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { PermisosService } from 'app/core/services/permisos.service';
 @Component({
     selector: 'app-microcredito',
     templateUrl: './microcredito.component.html',
@@ -45,6 +46,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         private router: Router,
         private el: ElementRef,
         private genericaServices: GenericasService,
+        public _permisosService: PermisosService
     ) { }
 
     ngOnInit(): void {
@@ -387,12 +389,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             ).then((result) => {
                 if (result) {
                     this.form.reset();
-                    this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+                    this.irAtras()
                 }
             })
             setTimeout(() => {
                 this.form.reset();
-                this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+                this.irAtras()
             }, 2000);
         }, (error) => {
             Swal.fire({
@@ -479,6 +481,14 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         else {
             let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
             elemeOne.focus();
+        }
+    }
+
+    irAtras() {
+        if (this._permisosService.estabaAgendaComercial) {
+            this.router.navigate([`/credit-factory/agenda-comercial`]);
+        }else{
+            this.router.navigate([`/credit-factory/agenda-venta-digital`]);
         }
     }
 

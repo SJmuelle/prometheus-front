@@ -14,8 +14,14 @@ export class PermisosService {
   }
 
   estabaFormulario(ruta: any){
-    let valor=  ruta.includes('formularios');
-    return valor
+
+    let valor= ruta.includes('formularios');
+    return valor;
+  }
+
+  estabaAgendaComercial(ruta: any){
+    let rutaAnterior=ruta.includes('agenda-comercial');
+    return rutaAnterior;
   }
 
   permisoPorModuleTrazabilidad(){
