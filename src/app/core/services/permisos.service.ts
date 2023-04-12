@@ -19,7 +19,8 @@ export class PermisosService {
     return valor;
   }
 
-  estabaAgendaComercial(ruta: any){
+  estabaAgendaComercial(){
+    let ruta = localStorage.getItem("rutaAnterior");
     let rutaAnterior=ruta.includes('agenda-comercial');
     return rutaAnterior;
   }

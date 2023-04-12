@@ -485,7 +485,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     irAtras() {
-        if (this._permisosService.estabaAgendaComercial) {
+        if (this._permisosService.estabaAgendaComercial()) {
             this.router.navigate([`/credit-factory/agenda-comercial`]);
         }else{
             this.router.navigate([`/credit-factory/agenda-venta-digital`]);
