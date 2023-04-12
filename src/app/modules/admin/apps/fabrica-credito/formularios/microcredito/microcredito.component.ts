@@ -329,17 +329,20 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
             + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
 
-        const data = {
-            numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
-            tipoTercero: 'T',
-            numeroOTP: numero
+        if (numero.length > 5) {
+            const data = {
+                numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
+                tipoTercero: 'T',
+                numeroOTP: numero
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+            }, err => {
+                this.cleanOTPNumbers()
+            })
         }
 
-        this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-            this.otpValidado = rep.data.resultado === 'OK'
-        }, err => {
-            this.cleanOTPNumbers()
-        })
     }
 
     cleanOTPNumbers() {
@@ -349,11 +352,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this.form.get('numOTP4').setValue('')
         this.form.get('numOTP5').setValue('')
         this.form.get('numOTP6').setValue('')
+
         let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
-
-        console.log("Limpiando");
-
-        elemeOne.focus();
+        setTimeout(() => {
+            elemeOne.focus();
+        }, 1000);
     }
 
 
@@ -477,6 +480,10 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+        }
+        else {
+            let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
+            elemeOne.focus();
         }
     }
 
