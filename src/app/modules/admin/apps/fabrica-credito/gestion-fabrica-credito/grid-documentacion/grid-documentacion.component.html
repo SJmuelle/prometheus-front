@@ -157,7 +157,8 @@
                                     [(ngModel)]="item.selected"></mat-checkbox>
                             </td>
                             <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                            <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{ item.descripcion}}
+                            </td>
                             <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                             <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
                             <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}
@@ -235,7 +236,8 @@
                                         [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                                <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                    item.descripcion}}</td>
                                 <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                                 <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}
                                 </td>
