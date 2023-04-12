@@ -34,7 +34,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public validandoOTPLoading: boolean = false;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
-    
+
     constructor(
         private fb: FormBuilder,
         private _formularioCreditoService: FormularioCreditoService,
@@ -120,7 +120,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
     }
 
-    public preSolicitud(){     
+    public preSolicitud(){
         const data = {
             celular: this.form.get('celular').value,
             identificacion: this.form.get('identificacion').value,
@@ -129,21 +129,21 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
         })
-        
+
     }
 
     startTimer() {
         setInterval(() => {
           if(this.contador > 0) {
             this.contador--;
-          } 
+          }
         },1000)
       }
 
     private getSalarioMinimo(){
          this.genericaServices.getSalarioBasico().subscribe(({data}) => {
             this.salarioMinimo = data.salarioMinimo;
-            
+
             this.form.get('valorCredito').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
         })
     }
@@ -170,7 +170,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const fechaMayor =  moment().locale('co')
         fechaMayor.subtract(18, 'years');
         // Set the validation error on the matching control
-        
+
         if (fechaMayor.isBefore(date)) {
 
             return errors
@@ -180,7 +180,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     private agregarValidaciones(){
-        
+
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             if (e !== '6') {
                 this.form.get('antiguedadLocal')?.setValidators([Validators.required,Validators.min(0)])
@@ -230,7 +230,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 1).subscribe((resp: any) => {
                 if (resp) {
                     this.form.patchValue(resp.data);
-                   
+
                     this.dataGeneralIncial = resp.data
                     this.getPlazosCredito(resp.data?.valorCredito | 0);
                     this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
@@ -278,13 +278,13 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
      * @description: Obtener limite de plazos por el valor de credito
      */
     public getPlazosCredito(valorCredito: number){
-        
+
         this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({valorCredito})
 
     }
 
     solicitarCodigo(): void {
-        
+
         if(this.form.valid){
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
@@ -296,19 +296,19 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                }
 
                this.validandoOTPLoading = false;
-                
+
             })
         }else{
             this.scrollToFirstInvalidControl();
         }
 
-        
+
     }
 
     validarCodigo(): void {
         const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
         + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
-        
+
         const data = {
             numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
             tipoTercero: 'T',
@@ -343,16 +343,16 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.autorizacionCentrales = 'S',
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
-            
-            this._formularioCreditoService.postDatos(data).subscribe(() => {
+
+            this._formularioCreditoService.postDatos(data).subscribe((datos) => {
                 Swal.fire(
                     'Completado',
-                    'Información guardada con éxito',
+                    datos.data.mensaje,
                     'success'
                 ).then((result) => {
                     if (result) {
-                        this.form.reset();
-                        this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+                     //   this.form.reset();
+                      //  this.router.navigate([`/credit-factory/agenda-venta-digital`]);
                     }
                 })
                 setTimeout(() => {
