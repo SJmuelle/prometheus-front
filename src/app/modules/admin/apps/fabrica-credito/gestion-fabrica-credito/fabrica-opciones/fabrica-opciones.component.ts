@@ -153,6 +153,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       this.redireccionar('trazabilidad');
       return
     }
+    if(this._permisosService.estabaFormulario(this.router.url)){
+      debugger
+      this.redireccionar('agenda-venta-digital');
+    }
     switch (this.fabricaDatos.agenda) {
       case 'VD':
         this.redireccionar('agenda-venta-digital');

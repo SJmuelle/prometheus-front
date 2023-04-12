@@ -87,11 +87,13 @@ const routes: Routes = [
             },
             {
                 path: 'agenda-comite-comercial',
-                loadChildren: () => AgendaComiteComercialModule
+                loadChildren: () => AgendaComiteComercialModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'agenda-visitas',
-                loadChildren: () => AgendaVisitasModule
+                loadChildren: () => AgendaVisitasModule,
+                resolve  : {EdicionTrazabilidadResolver}
             }
         ]
     }
