@@ -35,7 +35,7 @@ const routes: Routes = [
             {
                 path: 'agenda-comercial',
                 loadChildren: () => AgendaComercialModule,
-                resolve  : {EdicionTrazabilidadResolver,EdicionFormularioResolver}
+                resolve  : {EdicionTrazabilidadResolver}
 
             },
             {
@@ -60,7 +60,7 @@ const routes: Routes = [
             {
                 path: 'agenda-venta-digital',
                 loadChildren: () => AgendaVentaModule,
-                resolve  : {EdicionTrazabilidadResolver,EdicionFormularioResolver}
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'agenda-cartera',
