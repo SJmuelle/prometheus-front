@@ -1,7 +1,7 @@
 <div class="h-full h-screen overflow-auto w-full pb-40">
     <div class="flex flex-col flex-auto">
 
-        <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+        <div class="flex relative flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
 
             <!-- Title and action buttons -->
             <div class="flex items-center justify-between w-full">
@@ -41,7 +41,25 @@
                     </div>
                 </div>
             </div>
-
+            <div class="flex z-99 absolute bottom-0 right-0 align-bottom justify-end ">
+                <div class="mr-10  mat-mdc-menu-trigger mat-ripple relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl border border-b-0 bg-default"
+                    [matMenuTriggerFor]="menu">
+                    <div class="flex items-center">
+                        <div class="overflow-hidden">
+                            <div class="font-medium leading-6 truncate">Crear nueva solicitud</div>
+                        </div>
+                        <div class="flex items-center justify-center pl-2">
+                            <mat-icon svgIcon="heroicons_outline:chevron-down"></mat-icon>
+                        </div>
+                    </div>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="onGetAgendaDigital(null)">
+                            <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/logo-microcredito.png">
+                            <span>Microcrédito</span>
+                        </button>
+                    </mat-menu>
+                </div>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
 
             </div>
