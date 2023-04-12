@@ -329,7 +329,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
             + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
 
-        if (numero.length > 5) {
+        if (numero.length > 5 && !this.otpValidado) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
                 tipoTercero: 'T',
@@ -352,11 +352,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this.form.get('numOTP4').setValue('')
         this.form.get('numOTP5').setValue('')
         this.form.get('numOTP6').setValue('')
-
-        let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
-        setTimeout(() => {
-            elemeOne.focus();
-        }, 1000);
     }
 
 
