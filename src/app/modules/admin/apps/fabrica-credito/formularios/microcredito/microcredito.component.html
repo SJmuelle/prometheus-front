@@ -54,7 +54,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Celular</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="celular" prefix="+57 "
-                    mask="(000) 000 00 00" (change)="preSolicitud()">
+                    mask="(000) 000 00 00">
                 <mat-error *ngIf="form.controls.celular.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -87,7 +87,7 @@
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Correo electrónico</mat-label>
-                <input matInput type="email" autocomplete="off" formControlName="email">
+                <input matInput type="email" (change)="preSolicitud()" autocomplete="off" formControlName="email">
                 <mat-error *ngIf="form.controls.email.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -328,34 +328,36 @@
 
             <div class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-50">
                 <mat-form-field class="w-1/12  px-3 fuse-mat-dense">
-                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP1"
-                        class="text-center  font-bold text-xl">
+                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP1" id="num1"
+                        (keyup)="changeFocus()" class="text-center  font-bold text-xl">
                 </mat-form-field>
                 <mat-form-field class="w-1/12 px-3 fuse-mat-dense">
-                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP2"
-                        class="text-center h-6 font-bold text-xl">
+                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP2" id="num2"
+                        (keyup)="changeFocus()" class="text-center h-6 font-bold text-xl">
                 </mat-form-field>
                 <mat-form-field class="w-1/12 px-3 fuse-mat-dense">
-                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP3"
-                        class="text-center h-6 font-bold text-xl">
+                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP3" id="num3"
+                        (keyup)="changeFocus()" class="text-center h-6 font-bold text-xl">
                 </mat-form-field>
                 <mat-form-field class="w-1/12 px-3 fuse-mat-dense">
-                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP4"
-                        class="text-center h-6 font-bold text-xl">
+                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP4" id="num4"
+                        (keyup)="changeFocus()" class="text-center h-6 font-bold text-xl">
                 </mat-form-field>
                 <mat-form-field class="w-1/12 px-3 fuse-mat-dense">
-                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP5"
-                        class="text-center h-6 font-bold text-xl">
+                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP5" id="num5"
+                        (keyup)="changeFocus()" class="text-center h-6 font-bold text-xl">
                 </mat-form-field>
                 <mat-form-field class="w-1/12 px-3 fuse-mat-dense">
-                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP6"
-                        (change)="validarCodigo()" class="text-center h-6 font-bold text-xl">
+                    <input matInput type="text" maxlength="1" autocomplete="off" formControlName="numOTP6" id="num6"
+                        (keyup)="validarCodigo()" class="text-center h-6 font-bold text-xl">
                 </mat-form-field>
             </div>
 
             <div class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-10">
-                <mat-icon *ngIf="validandoOTPLoading" svgIcon="settings" class="animate-spin-slow icon-size-12"></mat-icon>
-                <mat-icon *ngIf="otpValidado" class="text-green-500 icon-size-12"  svgIcon="mat_solid:check_circle"></mat-icon>
+                <mat-icon *ngIf="validandoOTPLoading" svgIcon="settings"
+                    class="animate-spin-slow icon-size-12"></mat-icon>
+                <mat-icon *ngIf="otpValidado" class="text-green-500 icon-size-12"
+                    svgIcon="mat_solid:check_circle"></mat-icon>
             </div>
         </div>
         <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 sm:flex sm:justify-end gap-4">

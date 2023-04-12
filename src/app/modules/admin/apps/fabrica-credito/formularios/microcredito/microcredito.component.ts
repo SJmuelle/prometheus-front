@@ -125,9 +125,17 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             celular: this.form.get('celular').value,
             identificacion: this.form.get('identificacion').value,
             tipoDocumento: this.form.get('tipoDocumento').value,
+            email: this.form.get('email').value
         }
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
+            if(rep.data?.msg){
+                Swal.fire({
+                    icon: 'info',
+                    text: rep.data.msg,
+                });
+            }
+
         })
 
     }
@@ -351,8 +359,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     'success'
                 ).then((result) => {
                     if (result) {
-                     //   this.form.reset();
-                      //  this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+                        this.form.reset();
+                        this.router.navigate([`/credit-factory/agenda-venta-digital`]);
                     }
                 })
                 setTimeout(() => {
@@ -413,6 +421,37 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         firstInvalidControl?.focus(); //without smooth behavior
     }
 
+    changeFocus(){
+      let firstInvalidControl1: HTMLElement =  this.el.nativeElement.querySelector('#num1');
+      let firstInvalidControl2: HTMLElement =  this.el.nativeElement.querySelector('#num2');
+      let firstInvalidControl3: HTMLElement =  this.el.nativeElement.querySelector('#num3');
+      let firstInvalidControl4: HTMLElement =  this.el.nativeElement.querySelector('#num4');
+      let firstInvalidControl5: HTMLElement =  this.el.nativeElement.querySelector('#num5');
+      let firstInvalidControl6: HTMLElement =  this.el.nativeElement.querySelector('#num6');
+
+       if(this.form.get('numOTP1').value !== '')
+       {
+        if(this.form.get('numOTP2').value === ''){
+            firstInvalidControl2.focus();
+        }else{
+            if(this.form.get('numOTP3').value === ''){
+            firstInvalidControl3.focus();
+            }else{
+                if(this.form.get('numOTP4').value === ''){
+            firstInvalidControl4.focus();
+            }else{
+                if(this.form.get('numOTP5').value === ''){
+            firstInvalidControl5.focus();
+            }else{
+                if(this.form.get('numOTP6').value === ''){
+            firstInvalidControl6.focus();
+            }
+            }
+            }
+            }
+        }
+       }
+    }
 
     ngOnDestroy(): void {
         this.unSubscribe$.next(null);
