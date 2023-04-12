@@ -351,8 +351,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     'success'
                 ).then((result) => {
                     if (result) {
-                     //   this.form.reset();
-                      //  this.router.navigate([`/credit-factory/agenda-venta-digital`]);
+                        this.form.reset();
+                        this.router.navigate([`/credit-factory/agenda-venta-digital`]);
                     }
                 })
                 setTimeout(() => {
