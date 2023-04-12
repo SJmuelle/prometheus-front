@@ -6,6 +6,7 @@ import { GenericasService } from 'app/core/services/genericas.service';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 @Component({
     selector: 'app-microcredito',
@@ -20,6 +21,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     listadoCiudades: any[];
     listadoBarrios: any[];
     editable = true;
+    timerInterval: any;
     public unidadNegocio: 1;
     public tipoIdentificacion: string = this.route.snapshot.paramMap.get('tipoIdentificacion');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
@@ -32,6 +34,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public numeroSolicitudTemporal: number;
     public otpValidado: boolean = false;
     public validandoOTPLoading: boolean = false;
+    public changeTextOTP: boolean = false;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
 
@@ -101,6 +104,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 this.form.controls.identificacion.setValue(this.identificacion);
                 this.solicitudesFormularioSimulaciones()
                 this.editable = true;
+
             }
         }, 1000);
         this.getSalarioMinimo();
@@ -141,10 +145,16 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     }
 
+
     startTimer() {
-        setInterval(() => {
-            if (this.contador > 0) {
-                this.contador--;
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
             }
         }, 1000)
     }
@@ -294,6 +304,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     solicitarCodigo(): void {
 
+
         if (this.form.valid) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
@@ -303,7 +314,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
                 if (rep.status === 200) {
                 }
-
+                this.startTimer();
                 this.validandoOTPLoading = false;
 
             })
@@ -326,8 +337,25 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
         this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.otpValidado = rep.data.resultado === 'OK'
+        }, err => {
+            this.cleanOTPNumbers()
         })
     }
+
+    cleanOTPNumbers() {
+        this.form.get('numOTP1').setValue('')
+        this.form.get('numOTP2').setValue('')
+        this.form.get('numOTP3').setValue('')
+        this.form.get('numOTP4').setValue('')
+        this.form.get('numOTP5').setValue('')
+        this.form.get('numOTP6').setValue('')
+        let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
+
+        console.log("Limpiando");
+
+        elemeOne.focus();
+    }
+
 
     save(): void {
         if (this.form.invalid) {
@@ -423,7 +451,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     changeFocus() {
-        let firstInvalidControl1: HTMLElement = this.el.nativeElement.querySelector('#num1');
         let firstInvalidControl2: HTMLElement = this.el.nativeElement.querySelector('#num2');
         let firstInvalidControl3: HTMLElement = this.el.nativeElement.querySelector('#num3');
         let firstInvalidControl4: HTMLElement = this.el.nativeElement.querySelector('#num4');
