@@ -358,10 +358,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'Completado',
                     'Información guardada con éxito',
                     'success'
-                );
-                setTimeout(() => {
+                ).then(rep =>{
                     location.reload()
-                }, 1000);
+                });
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
                 Swal.fire({
