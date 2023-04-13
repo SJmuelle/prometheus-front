@@ -74,7 +74,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     public salarioBasico: number;
     public fabricaDatos;
     unidadNegocio: any;
-    public permisoEditar:boolean=false;
+    public permisoEditar: boolean = false;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -121,9 +121,9 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.getPagaduria()
         this.getSalarioBasico()
         // this.form.get('fechaNacimiento')?.valueChanges.subscribe(id =>  this.validacion('FEN') )}
-        
+
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
-        if(this.permisoEditar){
+        if (this.permisoEditar) {
             this.form.disable();
         }
     }
@@ -369,7 +369,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             &&
             this.validarCampos(this.form.value.genero, this.fabricaDatos.genero)
             &&
-            this.validarCampos(this.form.value.fechaNacimiento,  this.fabricaDatos.fechaNacimiento)
+            this.validarCampos(this.form.value.fechaNacimiento, this.fabricaDatos.fechaNacimiento)
         ) {
             this.form.controls['modificadoPolitica'].setValue('N')
         } else {
@@ -964,14 +964,14 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             fechaVinculacion: [''],
             fechaFinalizacionContrato: [''],
             codigoDepartamentoExpedicion: [''],
-            modificadoPolitica:[''],
-            aplicaDetalleOferta:[''],
-            aplicaCodeudor:[''],
-            creditoTitularLineas:[''],
-            creditoCodeudorLineas:[''],
-            sanamientoFinanciero:[''],
-            aplicaEmbargo:[''],
-            valorSolicitadoWeb:['']
+            modificadoPolitica: [''],
+            aplicaDetalleOferta: [''],
+            aplicaCodeudor: [''],
+            creditoTitularLineas: [''],
+            creditoCodeudorLineas: [''],
+            sanamientoFinanciero: [''],
+            aplicaEmbargo: [''],
+            valorSolicitadoWeb: ['']
         });
     }
 
@@ -1178,6 +1178,23 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.router.navigate(['/credit-factory/' + data]);
     }
 
+    private ValidacionMonto(){
+        const { pagaduria, salarioBasico } = this.form.value;
+
+        if (
+          (pagaduria == null) || (pagaduria == undefined) || (pagaduria == '') ||
+          (salarioBasico == null) || (salarioBasico == undefined) || (salarioBasico == '')
+        ) {
+          return
+        }
+        let data = {
+          pagaduria: pagaduria,
+          salario:  Number(this.utility.enviarNumero(salarioBasico))
+        }
+        this.fabricaCreditoService.validacionMonto(data).subscribe(resp => {
+          debugger
+        })
+    }
 
     public validacion(tipo: string) {
         if (this.form.controls['aplicaIngresos'].value == 'N') {
@@ -1226,12 +1243,13 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             default:
                 break;
         }
-        
-        if ((tipo == 'PA') || (tipo == 'TC')|| (tipo == 'FV')|| (tipo == 'GEN')|| (tipo == 'FEN')) {
+
+        if ((tipo == 'PA') || (tipo == 'TC') || (tipo == 'FV') || (tipo == 'GEN') || (tipo == 'FEN')) {
             mensaje += "?, Este campo modifica el motor de decisión y políticas SARC.";
-        }else{
+        } else {
             mensaje += "?, Este campo actualiza la capacidad de pago del cliente.";
         }
+
         if (tipo != 'AI' && tipo != 'IA') {
             Swal.fire({
                 title: 'Guardar información',
@@ -1244,8 +1262,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let salarioBasicoForm=Number(this.utility.enviarNumero(this.form.value.salarioBasico));
-                    if(this.salarioBasico>salarioBasicoForm){
+
+                    if (tipo == 'PA') {
+                        this.ValidacionMonto()
+                    }
+                    let salarioBasicoForm = Number(this.utility.enviarNumero(this.form.value.salarioBasico));
+                    if (this.salarioBasico > salarioBasicoForm) {
                         Swal.fire({
                             icon: 'warning',
                             title: 'Validación de campo',

@@ -169,4 +169,8 @@ export class FabricaCreditoService {
     public postDatosDeudorSolidario(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
+
+    validacionMonto(data: any) {
+        return this._http.post(this._appSettings.fabricaDatos.url.validacionMonto, data);
+      }
 }
