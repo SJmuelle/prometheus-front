@@ -1330,7 +1330,7 @@ export class FormCodeudorComponent implements OnInit {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+            .postDatosFabricaCreditoCodeudor(datos).pipe(takeUntil(this.unSubscribe$))
 
             .subscribe(
                 (res) => {
