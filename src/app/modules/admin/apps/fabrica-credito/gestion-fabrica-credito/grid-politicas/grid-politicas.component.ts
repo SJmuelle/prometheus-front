@@ -25,8 +25,6 @@ export class GridPoliticasComponent implements OnInit {
 
     private getPoliticas(numeroSolicitud: string): void {
         this.politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
-            console.log("data", data);
-
             data.data.forEach(element => {
                 if (element.tipoTercero === 'T') {
                     this.titular.push(element)
