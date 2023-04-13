@@ -5,30 +5,30 @@
                 <mat-form-field class="w-2/5 mr-2 fuse-mat-dense">
                     <mat-select [formControl]="documentoComparado" (selectionChange)="onSeleccionadoComparar($event)">
                         <mat-option value="seleccione" disabled>Seleccione archivo a comparar</mat-option>
-                    <ng-container *ngIf="documentoSelected?.tipoTercero === 'T'">
-                        <ng-container *ngFor="let data of documentos">
-                            <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
-                                [value]="data.idArchivoCargado">
-                                {{data.descripcion}}
-                            </mat-option>
+                        <ng-container *ngIf="documentoSelected?.tipoTercero === 'T'">
+                            <ng-container *ngFor="let data of documentos">
+                                <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                    [value]="data.idArchivoCargado">
+                                    {{data.descripcion}}
+                                </mat-option>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="documentoSelected?.tipoTercero === 'S'">
-                        <ng-container *ngFor="let data of documentosDeudor">
-                            <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
-                                [value]="data.idArchivoCargado">
-                                {{data.descripcion}}
-                            </mat-option>
+                        <ng-container *ngIf="documentoSelected?.tipoTercero === 'S'">
+                            <ng-container *ngFor="let data of documentosDeudor">
+                                <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                    [value]="data.idArchivoCargado">
+                                    {{data.descripcion}}
+                                </mat-option>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="documentoSelected?.tipoTercero === 'C'">
-                        <ng-container *ngFor="let data of documentosCodeudor">
-                            <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
-                                [value]="data.idArchivoCargado">
-                                {{data.descripcion}}
-                            </mat-option>
+                        <ng-container *ngIf="documentoSelected?.tipoTercero === 'C'">
+                            <ng-container *ngFor="let data of documentosCodeudor">
+                                <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                    [value]="data.idArchivoCargado">
+                                    {{data.descripcion}}
+                                </mat-option>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
 
                     </mat-select>
                 </mat-form-field>
@@ -74,10 +74,12 @@
                             <td class="px-2 text-sm border text-center">
                                 <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
                                     [disabled]="!item.selected && longitudArchivos > 0" #checkbox
-                                    (change)="onSeleccionDocumento(checkbox, item)" [(ngModel)]="item.selected"></mat-checkbox>
+                                    (change)="onSeleccionDocumento(checkbox, item)"
+                                    [(ngModel)]="item.selected"></mat-checkbox>
                             </td>
                             <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                            <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{ item.descripcion}}
+                            </td>
                             <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                             <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
                             <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}
@@ -151,10 +153,12 @@
                             <td class="px-2 text-sm border text-center">
                                 <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
                                     [disabled]="!item.selected && longitudArchivos > 0" #checkbox
-                                    (change)="onSeleccionDocumento(checkbox, item)" [(ngModel)]="item.selected"></mat-checkbox>
+                                    (change)="onSeleccionDocumento(checkbox, item)"
+                                    [(ngModel)]="item.selected"></mat-checkbox>
                             </td>
                             <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                            <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{ item.descripcion}}
+                            </td>
                             <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                             <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
                             <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}
@@ -228,10 +232,12 @@
                                 <td class="px-2 text-sm border text-center">
                                     <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
                                         [disabled]="!item.selected && longitudArchivos > 0" #checkbox
-                                        (change)="onSeleccionDocumento(checkbox, item)" [(ngModel)]="item.selected"></mat-checkbox>
+                                        (change)="onSeleccionDocumento(checkbox, item)"
+                                        [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                                <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                    item.descripcion}}</td>
                                 <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                                 <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}
                                 </td>
