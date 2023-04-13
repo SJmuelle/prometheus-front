@@ -28,7 +28,7 @@
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let tipoDocumento of dataInicial.tiposDocumentos"
-                        [value]="tipoDocumento.codigo">{{tipoDocumento.valor}}
+                        [value]="tipoDocumento.codigo" [disabled]="tipoDocumento.codigo === 'CE'">{{tipoDocumento.valor}}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
