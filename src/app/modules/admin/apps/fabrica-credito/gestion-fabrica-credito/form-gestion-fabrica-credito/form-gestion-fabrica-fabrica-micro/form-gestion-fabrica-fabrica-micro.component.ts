@@ -384,7 +384,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-
+                this.form.get('modificadaSolicitud').setValue('S')
             } else {
                 if (type === "INTEGER") {
 

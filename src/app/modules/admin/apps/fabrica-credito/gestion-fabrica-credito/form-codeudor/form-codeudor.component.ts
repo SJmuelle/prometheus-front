@@ -1196,6 +1196,7 @@ export class FormCodeudorComponent implements OnInit {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
+                this.form.get('modificadaSolicitud').setValue('S');
             } else {
                 if (type === 'INTEGER') {
                     this.form.controls[variable].setValue(
