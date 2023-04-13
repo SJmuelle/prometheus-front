@@ -133,14 +133,16 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             tipoDocumento: this.form.get('tipoDocumento').value,
             email: this.form.get('email').value
         }
+
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
             if (rep.data.msg !== 'OK') {
                 Swal.fire({
                     icon: 'info',
                     text: rep.data.msg,
+                }).then(rep => {
+                    this.form.reset();
                 });
-                this.form.reset();
             }
 
         })
@@ -258,23 +260,23 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.controls.autorizacionCentrales.setValue(resp.data?.autorizacionCentrales === 'S');
                     this.form.controls.clausulaVeracidad?.setValue(resp.data?.clausulaVeracidad === 'S');
                     this.form.controls.terminosCondiciones.setValue(resp.data?.terminosCondiciones === 'S');
-                    this.form.controls.fechaNacimiento.setValue(resp.data.fechaNacimiento === '0099-01-01' ? '' : resp.data.fechaNacimiento)
+                    this.form.controls.fechaNacimiento.setValue(resp.data?.fechaNacimiento === '0099-01-01' ? '' : resp.data?.fechaNacimiento)
 
-                    if (resp.data.celular) {
+                    if (resp.data?.celular) {
                         this.preSolicitud()
                     }
-                    if (resp.data.departamentoNegocio) {
+                    if (resp.data?.departamentoNegocio) {
                         this.listarCiudades();
                     }
-                    if (resp.data.ciudadNegocio) {
+                    if (resp.data?.ciudadNegocio) {
                         this.listarBarrios();
                     }
                     this.cargueActividadEconomica();
 
                     setTimeout(() => {
-                        this.form.controls['ciudadNegocio'].setValue(resp.data.ciudadNegocio);
-                        this.form.controls['barrioNegocio'].setValue(resp.data.barrioNegocio.toString());
-                        this.form.controls['actividadEconomica'].setValue(resp.data.actividadEconomica);
+                        this.form.controls['ciudadNegocio'].setValue(resp.data?.ciudadNegocio);
+                        this.form.controls['barrioNegocio'].setValue(resp.data?.barrioNegocio.toString());
+                        this.form.controls['actividadEconomica'].setValue(resp.data?.actividadEconomica);
                     }, 2500);
 
                 }
