@@ -11,7 +11,7 @@
                     (selectionChange)="cambiarNacionalidad($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
-                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{ item.valor }}
+                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [disabled]="item.codigo === 'CE'" [value]="item.codigo">{{ item.valor }}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">

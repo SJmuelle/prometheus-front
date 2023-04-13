@@ -1330,7 +1330,7 @@ export class FormCodeudorComponent implements OnInit {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+            .postDatosFabricaCreditoCodeudor(datos).pipe(takeUntil(this.unSubscribe$))
 
             .subscribe(
                 (res) => {
@@ -1338,10 +1338,9 @@ export class FormCodeudorComponent implements OnInit {
                         'Completado',
                         res.data.mensaje,
                         'success'
-                    );
-                    setTimeout(() => {
+                    ).then(rep => {
                         location.reload()
-                    }, 1000);
+                    });
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
                 (error) => {
