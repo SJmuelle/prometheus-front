@@ -972,7 +972,7 @@
                                 </mat-label>
                                 <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
                                     [formControlName]="'tipoActividad'" [matTooltip]="
-                                        '¿Se encuentra registrado en camára de comercio?'
+                                        '¿Comercializas productos o servicios?'
                                     ">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
@@ -1026,7 +1026,8 @@
                                     ejerciendo esta actividad?
                                 </mat-label>
                                 <input autocomplete="off" matInput type="number"
-                                    [formControlName]="'antiguedadActividad'" min="0" />
+                                    [formControlName]="'antiguedadActividad'" min="0" matTooltip="¿Cuánto tiempo en (meses) llevas
+                                    ejerciendo esta actividad?" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.antiguedadActividad.errors
@@ -1056,7 +1057,7 @@
                                 </mat-label>
                                 <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
                                     [formControlName]="'camaraComercio'" [matTooltip]="
-                                        '¿Se encuentra registrado en camára de comercio?'
+                                        '¿El negocio está registrado en cámara de comercio?'
                                     " (selectionChange)="
                                         validacionCampos(
                                             '¿El negocio está registrado en cámara de comercio?',
