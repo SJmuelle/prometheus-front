@@ -36,8 +36,7 @@
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Tipo de crédito</mat-label>
-                        <input matInput type="text" disabled [formControlName]="'tipoCredito'"
-                            [readonly]="true" />
+                        <input matInput type="text" disabled [formControlName]="'tipoCredito'" [readonly]="true" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
@@ -84,15 +83,15 @@
                                 );
                                 getPlazosCredito(this.form.controls.valorSolicitado.value)
                             " />
-                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
-                                Este campo es requerido.
-                            </mat-error>
-                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.min">
-                                Monto mínimo de {{salarioMinimo}}
-                            </mat-error>
-                            <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
-                                Monto máximo de 100.000.000
-                            </mat-error>
+                        <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                        <mat-error *ngIf="form.controls.valorSolicitado.errors?.min">
+                            Monto mínimo de {{salarioMinimo}}
+                        </mat-error>
+                        <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
+                            Monto máximo de 100.000.000
+                        </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field *ngIf="this.plazosCredito$ | async as plazos">
@@ -541,7 +540,7 @@
                             <mat-form-field>
                                 <mat-label>Fecha de expedición </mat-label>
                                 <input matInput [matDatepicker]="fechaExpedicionDocumento"
-                                    [formControlName]="'fechaExpedicion'" [readonly]="true" />
+                                    [formControlName]="'fechaExpedicion'" />
                                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
@@ -2190,7 +2189,7 @@
                                 <mat-label>Fecha de desvinculación</mat-label>
                                 <input matInput [matDatepicker]="fechaDesvinculacionPublico" [formControlName]="
                                         'fechaDesvinculacionPublico'
-                                    " [readonly]="true" />
+                                    " />
                                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaDesvinculacionPublico readonly></mat-datepicker>
@@ -2553,10 +2552,12 @@
 
                         <div class="grid grid-cols-1">
                             <mat-checkbox class="ml-3" formControlName="autoricacionDatosPersonalClaracionAuto"> <a
-                                    href="./assets/documentos/documentosMicroForms/datos_personales.pdf" target="_blank">Autorización de
+                                    href="./assets/documentos/documentosMicroForms/datos_personales.pdf"
+                                    target="_blank">Autorización de
                                     tratamiento de datos personales</a> </mat-checkbox>
                             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
-                                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" target="_blank"> Cláusula de
+                                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf"
+                                    target="_blank"> Cláusula de
                                     Anticorrupción y Antilavado </a></mat-checkbox>
                         </div>
                         <div class="flex justify-end" *ngIf="!permisoEditar">
@@ -2592,11 +2593,11 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-               <mat-tab >
+                <mat-tab>
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera-micro></app-grid-cartera-micro>
                 </mat-tab>
-                 <!-- <mat-tab *ngIf="(fabricaDatos != 'CM') && (!permisoEditar)">
+                <!-- <mat-tab *ngIf="(fabricaDatos != 'CM') && (!permisoEditar)">
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
                 </mat-tab>

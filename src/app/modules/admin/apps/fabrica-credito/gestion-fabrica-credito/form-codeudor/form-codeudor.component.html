@@ -11,7 +11,8 @@
                     (selectionChange)="cambiarNacionalidad($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
-                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [disabled]="item.codigo === 'CE'" [value]="item.codigo">{{ item.valor }}
+                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [disabled]="item.codigo === 'CE'"
+                        [value]="item.codigo">{{ item.valor }}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
@@ -207,8 +208,7 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de nacimiento </mat-label>
-                <input matInput [readonly]="true" [matDatepicker]="fechaNacimiento"
-                    [formControlName]="'fechaNacimiento'" (dateChange)="
+                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'" (dateChange)="
                         validacionCampos(
                             'Fecha de nacimiento',
                             'Este campo modifica el motor de decisión y políticas SARC',
@@ -271,8 +271,7 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de expedición </mat-label>
-                <input matInput [matDatepicker]="fechaExpedicionDocumento" [formControlName]="'fechaExpedicion'"
-                    [readonly]="true" />
+                <input matInput [matDatepicker]="fechaExpedicionDocumento" [formControlName]="'fechaExpedicion'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
@@ -518,7 +517,8 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Meses de residencia</mat-label>
-                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0" max="11"/>
+                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0"
+                    max="11" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
@@ -593,8 +593,8 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Teléfono de la empresa</mat-label>
-                <input autocomplete="off" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16" matInput type="text"
-                    [formControlName]="'telefonoEmpresa'" />
+                <input autocomplete="off" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
+                    matInput type="text" [formControlName]="'telefonoEmpresa'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.telefonoEmpresa.errors?.required">
@@ -604,14 +604,14 @@
                 form.controls.telefonoEmpresa.errors
                     ?.minlength
             ">
-            Debe tener mínimo 7 dígitos
-        </mat-error>
-        <mat-error *ngIf="
+                    Debe tener mínimo 7 dígitos
+                </mat-error>
+                <mat-error *ngIf="
                 form.controls.telefonoEmpresa.errors
                     ?.maxlength
             ">
-            Debe tener máximo 10 dígitos
-        </mat-error>
+                    Debe tener máximo 10 dígitos
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Dirección de la empresa</mat-label>
@@ -973,19 +973,20 @@
             " class="grid gap-2 sm:grid-cols-4 grid-cols-1">
             <mat-form-field>
                 <mat-label>Teléfono / celular del negocio</mat-label>
-                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16" [formControlName]="'telefonoNegocio'" />
+                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
+                    [formControlName]="'telefonoNegocio'" />
                 <mat-error *ngIf="
                 form.controls.telefonoNegocio.errors
                     ?.minlength
             ">
-            Debe tener mínimo 7 dígitos
-        </mat-error>
-        <mat-error *ngIf="
+                    Debe tener mínimo 7 dígitos
+                </mat-error>
+                <mat-error *ngIf="
                 form.controls.telefonoNegocio.errors
                     ?.maxlength
             ">
-            Debe tener máximo 10 dígitos
-        </mat-error>
+                    Debe tener máximo 10 dígitos
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Ubicación del negocio </mat-label>
@@ -1191,7 +1192,7 @@ titular" />
             <mat-form-field *ngIf="form.controls.vinculadoActualPublico.value === 'N'">
                 <mat-label>Fecha de desvinculación</mat-label>
                 <input matInput [matDatepicker]="fechaDesvinculacionPublico"
-                    [formControlName]="'fechaDesvinculacionPublico'" [readonly]="true" />
+                    [formControlName]="'fechaDesvinculacionPublico'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaDesvinculacionPublico readonly></mat-datepicker>
@@ -1463,7 +1464,8 @@ titular" />
                     target="_blank">Autorización de
                     tratamiento de datos personales</a> </mat-checkbox>
             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
-                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline" target="_blank"> Cláusula de
+                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline"
+                    target="_blank"> Cláusula de
                     Anticorrupción y Antilavado </a></mat-checkbox>
         </div>
         <div class="flex justify-end" *ngIf="!permisoEditar">
