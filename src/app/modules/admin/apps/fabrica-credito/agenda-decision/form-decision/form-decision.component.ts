@@ -108,15 +108,26 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
         })
     }
 
+    private consultarCausalesAnulacion(){
+        this._decisionesService.getCausalesAnulacion(this.fabricaDatos.numeroSolicitud, this.form.value.decision).subscribe((response: any) => {
+            if (response) {
+                this.listadoCausales = response.data;
+            }
+        })
+    }
+
     public getlistadoCausales() {
         switch (this.form.value.decision) {
             case 'R':
                 this.consultaCausalesRechazo();
                 this.form.get('causal').setValidators([Validators.required])
-
                 break;
             case 'D':
                 this.consultaCauDesestimiento();
+                this.form.get('causal').setValidators([Validators.required])
+                break;
+            case 'AN':
+                this.consultarCausalesAnulacion();
                 this.form.get('causal').setValidators([Validators.required])
                 break;
             default:

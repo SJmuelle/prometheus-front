@@ -273,6 +273,7 @@ export class AppSettingsService {
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
+            baseCausalAnulacion: EndPoints.uri('/generic/cau-anulacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
             getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda')
