@@ -129,7 +129,7 @@
         </mat-expansion-panel>
 
 
-        <mat-expansion-panel *ngIf="tipoDeudor === '1' || tipoDeudor === '3'" class="overflow-scroll scrollbar-hide">
+        <mat-expansion-panel *ngIf="tipoDeudor === '1' || tipoDeudor === '3'" >
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <strong class="text-xl">Documentación del codeudor</strong>
@@ -214,7 +214,7 @@
         </mat-expansion-panel>
 
         <ng-container *ngIf="documentosDeudor.length>0  && tipoDeudor === '2' || tipoDeudor === '3'">
-            <mat-expansion-panel class="overflow-scroll scrollbar-hide">
+            <mat-expansion-panel >
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <strong class="text-xl">Documentación del deudor solidario</strong>
