@@ -539,8 +539,8 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Fecha de expedición </mat-label>
-                                <input matInput [matDatepicker]="fechaExpedicionDocumento"
-                                    [formControlName]="'fechaExpedicion'" />
+                                <input  matNativeControl [matDatepicker]="fechaExpedicionDocumento"
+                                    [formControlName]="'fechaExpedicion'" placeholder="DD/MM/YYYY" />
                                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
@@ -1103,8 +1103,8 @@
                                 </mat-label>
                                 <input autocomplete="off"
                                     matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
-                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="9"
-                                    maxLength="10" />
+                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="11" mask="separator.0" thousandSeparator="."
+                                    maxLength="13" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.nitNegocio.errors
