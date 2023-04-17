@@ -442,7 +442,7 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Fecha de nacimiento </mat-label>
-                                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
+                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
                                     (dateChange)="
                                         validacionCampos(
                                             'Fecha de nacimiento',
@@ -2187,8 +2187,8 @@
                                         .value === 'N'
                                 ">
                                 <mat-label>Fecha de desvinculación</mat-label>
-                                <input matInput [matDatepicker]="fechaDesvinculacionPublico" [formControlName]="
-                                        'fechaDesvinculacionPublico'
+                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaDesvinculacionPublico" [formControlName]="
+                                        'fechaDesvinculacionPublico' 
                                     " />
                                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                                 </mat-datepicker-toggle>
@@ -2334,7 +2334,7 @@
                                         .value === 'N'
                                 ">
                                 <mat-label>Fecha de desvinculación</mat-label>
-                                <input matInput [matDatepicker]="
+                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="
                                         fechaDesvinculacionExpuesta
                                     " [formControlName]="
                                         'fechaDesvinculacionExpuesta'

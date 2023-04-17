@@ -208,7 +208,7 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de nacimiento </mat-label>
-                <input matInput [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'" (dateChange)="
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'" (dateChange)="
                         validacionCampos(
                             'Fecha de nacimiento',
                             'Este campo modifica el motor de decisión y políticas SARC',
@@ -271,7 +271,7 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de expedición </mat-label>
-                <input matInput [matDatepicker]="fechaExpedicionDocumento" [formControlName]="'fechaExpedicion'" />
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaExpedicionDocumento" [formControlName]="'fechaExpedicion'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
@@ -659,7 +659,7 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Fecha de ingreso</mat-label>
-                <input matInput [matDatepicker]="fechaIngresoFabrica" [formControlName]="'fechaIngresoFabrica'" />
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaIngresoFabrica" [formControlName]="'fechaIngresoFabrica'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaIngresoFabrica">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaIngresoFabrica></mat-datepicker>
@@ -1194,7 +1194,7 @@ titular" />
             </mat-form-field>
             <mat-form-field *ngIf="form.controls.vinculadoActualPublico.value === 'N'">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacionPublico"
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaDesvinculacionPublico"
                     [formControlName]="'fechaDesvinculacionPublico'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                 </mat-datepicker-toggle>
@@ -1291,7 +1291,7 @@ titular" />
 
             <mat-form-field *ngIf="form.controls.vinculadoActualExpuesta.value === 'N'">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacionExpuesta"
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaDesvinculacionExpuesta"
                     [formControlName]="'fechaDesvinculacionExpuesta'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionExpuesta" [disabled]="false">
                 </mat-datepicker-toggle>
