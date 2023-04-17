@@ -747,6 +747,9 @@
                 <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
                     Mínimo 9 digitos
                 </mat-error>
+                <mat-error *ngIf="form.controls.nitNegocio.errors?.maxlength">
+                    Maximo 10 digitos
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Experiencia en la actividad </mat-label>

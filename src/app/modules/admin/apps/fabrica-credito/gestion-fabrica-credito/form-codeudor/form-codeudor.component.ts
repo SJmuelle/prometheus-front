@@ -562,8 +562,8 @@ export class FormCodeudorComponent implements OnInit {
                     ?.setValidators([
                         Validators.required,
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                        Validators.minLength(11),
-                        Validators.maxLength(13),
+                        Validators.minLength(9),
+                        Validators.maxLength(10),
                     ]);
                 this.form
                     .get('nitNegocio')
