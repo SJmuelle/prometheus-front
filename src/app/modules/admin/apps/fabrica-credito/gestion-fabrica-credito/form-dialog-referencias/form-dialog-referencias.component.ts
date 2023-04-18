@@ -217,7 +217,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             direccion: [''],
             antiguedad: [''],
             tipoReferencia: [''],
-            otroParentezco: ['']
+            otroParentesco: ['']
         });
     }
     /**
@@ -243,7 +243,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             direccion,
             antiguedad,
             tipoTercero,
-
+            tipoReferencia,
+            otroParentesco
         } = datos;
         const formPersonal = {
             numeroSolicitud: Number(numeroSolicitud),
@@ -295,8 +296,10 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             data = formComercial
         }
 
+        data.otroParentesco = otroParentesco;
+        data.tipoReferencia = tipoReferencia;
 
-        this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
+        this.subscription$ = this.referenciasService.postReferenciaMicro(data).subscribe(() => {
             this.onCerrar();
             this.referenciasService.eventos$.emit(true);
             Swal.fire(

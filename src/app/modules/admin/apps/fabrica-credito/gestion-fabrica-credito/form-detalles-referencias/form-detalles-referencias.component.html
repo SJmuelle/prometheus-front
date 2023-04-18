@@ -147,14 +147,10 @@
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
-                        <ng-container *ngIf="form.controls['parentesco'].value === 'F'">
+                        <ng-container *ngIf="form.controls['parentesco'].value === 'OT'">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Otro, indique cual </mat-label>
-                                <mat-select [formControlName]="'otroParentesco'">
-                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
-                                        {{item.descripcionOpcion}}
-                                    </mat-option>
-                                </mat-select>
+                                <input matInput type="text" [formControlName]="'otroParentesco'">
                             </mat-form-field>
                         </ng-container>
                     </div>

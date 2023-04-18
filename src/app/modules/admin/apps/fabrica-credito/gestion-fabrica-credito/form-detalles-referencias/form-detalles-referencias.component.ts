@@ -193,7 +193,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
                 parentesco: datos.parentesco,
-
+                tipoReferencia: datos.tipoReferencia
             };
         } if (datos.tipo === 'F') {
             formulario = {
@@ -212,6 +212,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
                 parentesco: datos.parentesco,
+                tipoReferencia: datos.tipoReferencia
             }
         } else {
             formulario = {
