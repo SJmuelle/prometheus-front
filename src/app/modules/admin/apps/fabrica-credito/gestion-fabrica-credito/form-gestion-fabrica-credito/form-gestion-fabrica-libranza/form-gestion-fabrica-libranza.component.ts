@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { AgendaCompletacionService } from 'app/core/services/agenda-completacion.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 
@@ -75,6 +75,10 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
     public fabricaDatos;
     unidadNegocio: any;
     public permisoEditar: boolean = false;
+    montoMinimo: number = 0;
+    montoMaximo: number = 0;
+    plazoMinimo: any;
+    plazoMaximo: any;
     constructor(
         private agendaCompletacionService: AgendaCompletacionService,
         private fabricaCreditoService: FabricaCreditoService,
@@ -85,7 +89,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         private genericaServices: GenericasService,
         private _dialog: MatDialog,
         public utility: UtilityService,
-        public _permisosService: PermisosService
+        public _permisosService: PermisosService,
+        private el: ElementRef,
 
     ) {
 
@@ -392,7 +397,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         const cupoDisponbileFormato = Number(this.utility.enviarNumero(this.form.value.cupoDisponible));
         const nivelEndeudamientoFormato = Number(this.form.value.nivelEndeudamiento);
         const activos = Number(this.utility.enviarNumero(this.form.value.activos));
-        const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
+        // const valorSolicitadoFormato = Number(this.utility.enviarNumero(this.form.value.valorSolicitado));
         const comisionesHorasExtrasFormato = Number(this.utility.enviarNumero(this.form.value.comisionesHorasExtras));
         const descuentoNominaFormato = Number(this.utility.enviarNumero(this.form.value.descuentoNomina));
         const otrosIngresosFormato = Number(this.utility.enviarNumero(this.form.value.otrosIngresos));
@@ -416,7 +421,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             comisionesHorasExtras: comisionesHorasExtrasFormato,
             fechaFinalizacionContrato: fechaFinalizacionContratoFormato,
             fechaVinculacion: fechaVinculacionFormato,
-            valorSolicitado: valorSolicitadoFormato,
+            // valorSolicitado: valorSolicitadoFormato,
             salarioBasico: salarioBasicoformato,
             fechaNacimiento: fechaNacimientoFormato,
             fechaExpedicionDocumento: fechaExpedicionDocumentoFormato,
@@ -467,6 +472,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 Swal.close();
                 // console.log(data);
                 this.form.patchValue(data);
+
                 this.agenda_fabrica = data.agenda;
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
@@ -525,12 +531,12 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 if (data.descuentoNomina) {
                     this.form.controls['descuentoNomina'].setValue(this.utility.formatearNumero(String(this.form.value.descuentoNomina)));
                 }
-                if (data.valorSolicitado) {
-                    this.form.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitado)));
-                }
-                if (data.valorSolicitado) {
-                    this.form.controls['valorSolicitadoWeb'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitadoWeb)));
-                }
+                // if (data.valorSolicitado) {
+                //     this.form.controls['valorSolicitado'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitado)));
+                // }
+                // if (data.valorSolicitado) {
+                //     this.form.controls['valorSolicitadoWeb'].setValue(this.utility.formatearNumero(String(this.form.value.valorSolicitadoWeb)));
+                // }
                 // this.form.controls['aplicaEmbargo'].setValue(this.form.value.aplicaEmbargo=='N'?'No aplica':'Si aplica')
                 // form.value.valorSolicitado
                 if (data.comisionesHorasExtras) {
@@ -568,6 +574,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                 };
                 this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
                 this.estado = data.descripcionEstado;
+                this.ValidacionMonto();
+                this.ValidacionPlazo();
             });
     }
 
@@ -1134,6 +1142,22 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         });
     }
 
+    /**
+    * @description hace scroll al primerer input invalido, puede ser un input o select
+    */
+    private scrollToFirstInvalidControl() {
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+
+        if (!firstInvalidControl) {
+            firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+            if (!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+            }
+        }
+
+        firstInvalidControl?.focus(); //without smooth behavior
+    }
+
 
     /**
 * @description: Obtiene los tipos de estados civiles
@@ -1178,22 +1202,85 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         this.router.navigate(['/credit-factory/' + data]);
     }
 
-    private ValidacionMonto(){
+    private ValidacionMonto() {
         const { pagaduria, salarioBasico } = this.form.value;
 
         if (
-          (pagaduria == null) || (pagaduria == undefined) || (pagaduria == '') ||
-          (salarioBasico == null) || (salarioBasico == undefined) || (salarioBasico == '')
+            (pagaduria == null) || (pagaduria == undefined) || (pagaduria == '') ||
+            (salarioBasico == null) || (salarioBasico == undefined) || (salarioBasico == '')
         ) {
-          return
+            return
         }
         let data = {
-          pagaduria: pagaduria,
-          salario:  Number(this.utility.enviarNumero(salarioBasico))
+            pagaduria: pagaduria,
+            salario: Number(this.utility.enviarNumero(salarioBasico))
         }
-        this.fabricaCreditoService.validacionMonto(data).subscribe(resp => {
-          debugger
-        })
+        this.fabricaCreditoService.validacionMonto(data).pipe(takeUntil(this.unSubscribe$))
+            .subscribe(({ data }) => {
+                this.montoMinimo = data[0].montominimo
+                this.montoMaximo = data[0].montomaximo
+                this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(this.montoMinimo - 1), Validators.max(this.montoMaximo + 1)])
+                this.form.updateValueAndValidity()
+                this.form.controls.valorSolicitado.markAsTouched();
+                this.form.controls.valorSolicitado.markAsDirty()
+
+                this.form.controls['valorSolicitado'].setValue(this.fabricaDatos.valorSolicitado);
+                this.form.markAllAsTouched();
+                setTimeout(() => {
+                    this.scrollToFirstInvalidControl();
+                }, 1000);
+
+
+
+            });
+    }
+
+    private ValidacionPlazo() {
+        const { pagaduria, tipoContrato, fechaVinculacion, fechaFinalizacionContrato } = this.form.value;
+
+        // if (
+        //     (pagaduria == null) || (pagaduria == undefined) || (pagaduria == '') ||
+        //     (salarioBasico == null) || (salarioBasico == undefined) || (salarioBasico == '')
+        // ) {
+        //     return
+        // }
+        if (
+            (pagaduria == null) || (pagaduria == undefined) || (pagaduria == '') ||
+            (tipoContrato == null) || (tipoContrato == undefined) || (tipoContrato == '') ||
+            (fechaVinculacion == null) || (fechaVinculacion == undefined) || (fechaVinculacion == '')
+        ) {
+            return
+        }
+        debugger
+        let data = {
+            pagaduria: pagaduria,
+            tipoContrato: tipoContrato,
+            fechaInicio: fechaVinculacion!='0099-01-01' ? moment(fechaVinculacion).format("MM-DD-YYYY") : '',
+            fechaFin: fechaFinalizacionContrato!='0099-01-01' ? moment(fechaFinalizacionContrato).format("MM-DD-YYYY") : ''
+        }
+        this.fabricaCreditoService.validacionPlazo(data).pipe(takeUntil(this.unSubscribe$))
+            .subscribe(({ data }) => {
+                if (data[0].aplicaplazo == true) {
+                    this.plazoMinimo = data[0].plazominimo
+                    this.plazoMaximo = data[0].plazomaximo
+                }else{
+                    this.plazoMinimo = 1
+                    this.plazoMaximo = 1000
+                }
+                this.form.get('plazo').setValidators([Validators.required, Validators.min(this.plazoMinimo - 1), Validators.max(this.plazoMaximo + 1)])
+                this.form.updateValueAndValidity()
+                this.form.controls.valorSolicitado.markAsTouched();
+                this.form.controls.valorSolicitado.markAsDirty()
+
+                this.form.controls['plazo'].setValue(this.fabricaDatos.plazo);
+                this.form.markAllAsTouched();
+                setTimeout(() => {
+                    this.scrollToFirstInvalidControl();
+                }, 1000);
+
+
+
+            });
     }
 
     public validacion(tipo: string) {
@@ -1265,17 +1352,27 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
                     if (tipo == 'PA') {
                         this.ValidacionMonto()
+                        this.ValidacionPlazo()
                     }
-                    let salarioBasicoForm = Number(this.utility.enviarNumero(this.form.value.salarioBasico));
-                    if (this.salarioBasico > salarioBasicoForm) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Validación de campo',
-                            text: "El salario ingresado no puede ser menor al SLMV.",
-                        });
-                        this.form.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
-                        return
+                    if ((tipo == 'TC') || (tipo == 'FV')) {
+                        this.ValidacionPlazo();
                     }
+                    if (tipo == 'S') {
+                        let salarioBasicoForm = Number(this.utility.enviarNumero(this.form.value.salarioBasico));
+                        if (this.salarioBasico > salarioBasicoForm) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Validación de campo',
+                                text: "El salario ingresado no puede ser menor al SLMV.",
+                            });
+                            this.form.controls['salarioBasico'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.salarioBasico)));
+                            return
+
+                        } else {
+                            this.ValidacionMonto();
+                        }
+                    }
+
                     let sum =
                         Number(this.utility.enviarNumero(this.form.value.salarioBasico))
                         +
@@ -1308,7 +1405,7 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
                             this.form.controls['plazo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.plazo)));
                             break;
                         case 'MO':
-                            this.form.controls['monto'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
+                            this.form.controls['valorSolicitado'].setValue(this.fabricaDatos.valorSolicitado);
                             break;
                         case 'PA':
                             this.form.controls['pagaduria'].setValue(String(this.fabricaDatos.pagaduria));

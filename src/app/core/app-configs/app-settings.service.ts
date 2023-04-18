@@ -126,6 +126,7 @@ export class AppSettingsService {
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
             validacionMonto:EndPoints.uri('/generic/cre-lib-monto'),
+            validacionPlazo:EndPoints.uri('/generic/cre-lib-plazo'),
         }
     };
     /**

@@ -170,7 +170,11 @@ export class FabricaCreditoService {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
 
-    validacionMonto(data: any) {
+    public validacionMonto(data: any) : Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.validacionMonto, data);
+      }
+
+      public validacionPlazo(data: any) : Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.validacionPlazo, data);
       }
 }
