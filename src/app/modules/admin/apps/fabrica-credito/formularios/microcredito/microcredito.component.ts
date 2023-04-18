@@ -79,7 +79,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
-            numeroOTP: ['', Validators.required],
+            numeroOTP: [''],
             numOTP1: [''],
             numOTP2: [''],
             numOTP3: [''],
