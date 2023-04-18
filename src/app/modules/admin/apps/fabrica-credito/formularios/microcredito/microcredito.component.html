@@ -267,7 +267,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>¿Cuánto dinero necesitas para tu negocio?</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="valorCredito" (change)="getPlazosCredito(this.form.controls.valorCredito.value)
-                    " mask="separator.0" thousandSeparator=".">
+                    " mask="separator.0" thousandSeparator="." matTooltip="¿Cuánto dinero necesitas para tu negocio?">
                 <mat-error *ngIf="form.controls.valorCredito.errors?.required">
                     Este campo es requerido.
                 </mat-error>
