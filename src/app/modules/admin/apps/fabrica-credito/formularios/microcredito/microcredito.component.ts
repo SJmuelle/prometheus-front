@@ -79,7 +79,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
-            numeroOTP: [''],
+            numeroOTP: ['', Validators.required],
             numOTP1: [''],
             numOTP2: [''],
             numOTP3: [''],
@@ -330,10 +330,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     validarCodigo(): void {
-        const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
-            + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
+        const numero = this.form.get('numeroOTP').value;
 
-        if (numero.length > 5 && !this.otpValidado) {
+        if (numero.length === 6 && !this.otpValidado) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
                 tipoTercero: 'T',
@@ -343,20 +342,13 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
                 this.otpValidado = rep.data.resultado === 'OK'
             }, err => {
-                this.cleanOTPNumbers()
+                this.form.get('numeroOTP').setValue('');
             })
         }
 
     }
 
-    cleanOTPNumbers() {
-        this.form.get('numOTP1').setValue('')
-        this.form.get('numOTP2').setValue('')
-        this.form.get('numOTP3').setValue('')
-        this.form.get('numOTP4').setValue('')
-        this.form.get('numOTP5').setValue('')
-        this.form.get('numOTP6').setValue('')
-    }
+
 
 
     save(): void {

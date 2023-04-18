@@ -321,7 +321,7 @@
                 <mat-icon svgIcon="feather:send" [ngClass]="{'text-blue-400': this.form.valid}" class="cursor-pointer" matTooltip="Enviar código OTP" (click)="solicitarCodigo()"></mat-icon>
             </mat-form-field> -->
             <div class="w-full px-3 fuse-mat-dense flex justify-center items-center pt-4 flex-col">
-                <button mat-raised-button color="primary" type="button" style="width: 50% !important"
+                <button mat-raised-button color="primary" type="button" style="width: 80% !important"
                     class="rounded-md cursor-pointer"
                     [disabled]="this.form.invalid || contador !== 180 || validandoOTPLoading"
                     (click)="solicitarCodigo()">
@@ -330,8 +330,19 @@
 
             </div>
 
-            <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
+            <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;" >
+                <input matInput type="text" placeholder="Código" [disabled]="otpValidado" (keyup)="validarCodigo()" autocomplete="off" formControlName="numeroOTP" mask="separator.0" thousandSeparator="-" min="6" max="6">
+                <mat-error *ngIf="form.controls.numeroOTP.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.numeroOTP.errors?.min">
+                    Mínimo 6 dígitos
+                </mat-error>
+            </mat-form-field>
+
+            <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
                 style="min-height: 200px !important;">
+
                 <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
                     <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
                         formControlName="numOTP1" id="num1"  (keyup)="changeFocus()"
@@ -362,7 +373,9 @@
                         formControlName="numOTP6" id="num6" (keyup)="validarCodigo()"
                         class="text-center h-6 font-bold sm:text-xl text-sm">
                 </mat-form-field>
-            </div>
+            </div> -->
+
+
             <div *ngIf="contador !== 180 && !otpValidado"
                 class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2">
                 <mat-progress-bar class="w-6/12" style="width: 50%;" mode="determinate" [value]="(contador / 180) * 100"></mat-progress-bar>
