@@ -562,7 +562,7 @@ export class FormCodeudorComponent implements OnInit {
                     ?.setValidators([
                         Validators.required,
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                        Validators.minLength(10),
+                        Validators.minLength(9),
                         Validators.maxLength(10),
                     ]);
                 this.form
@@ -1196,6 +1196,7 @@ export class FormCodeudorComponent implements OnInit {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
+                this.form.get('modificadaSolicitud').setValue('S');
             } else {
                 if (type === 'INTEGER') {
                     this.form.controls[variable].setValue(
@@ -1330,7 +1331,7 @@ export class FormCodeudorComponent implements OnInit {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+            .postDatosFabricaCreditoCodeudor(datos).pipe(takeUntil(this.unSubscribe$))
 
             .subscribe(
                 (res) => {
@@ -1338,10 +1339,9 @@ export class FormCodeudorComponent implements OnInit {
                         'Completado',
                         res.data.mensaje,
                         'success'
-                    );
-                    setTimeout(() => {
+                    ).then(rep => {
                         location.reload()
-                    }, 1000);
+                    });
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
                 (error) => {

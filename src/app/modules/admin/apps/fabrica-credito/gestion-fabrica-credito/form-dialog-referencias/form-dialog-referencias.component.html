@@ -84,11 +84,13 @@
                             </mat-form-field>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="form.controls['tipo'].value === 'C'">
+
+                    <ng-container *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio !== 1">
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Antigüedad de ser cliente (meses)</mat-label>
-                                <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'" [required]="true">
+                                <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'"
+                                    [required]="true">
                                 <mat-error *ngIf="form.controls['antiguedad'].errors?.required">
                                     Este campo es requerido
                                 </mat-error>
@@ -99,50 +101,46 @@
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Tiempo conocido (meses)</mat-label>
-                                <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'" [required]="true">
+                                <input matInput type="number" [min]="'0'" [formControlName]="'antiguedad'"
+                                    [required]="true">
                                 <mat-error *ngIf="form.controls['antiguedad'].errors?.required">
                                     Este campo es requerido
                                 </mat-error>
                             </mat-form-field>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="form.controls['tipo'].value === 'C' ">
-                      
+                    <ng-container *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio !== 1">
+
                         <ng-container *ngIf="departamentos$ | async as departamentos">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Departamento</mat-label>
-                                <mat-select
-                                    (selectionChange)="seleccionDepartamentoNacimiento($event)"
-                                    [value]="'seleccione'"
-                                    [formControlName]="'codigoDepartamento'"
-                                    >
+                                <mat-select (selectionChange)="seleccionDepartamentoNacimiento($event)"
+                                    [value]="'seleccione'" [formControlName]="'codigoDepartamento'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="let departamento of departamentos.data"
                                         [value]="departamento.codigo">{{departamento.nombre}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix 
-                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
                         </ng-container>
                         <ng-container *ngIf="ciudades$ | async as ciudades">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Ciudad / Municipio</mat-label>
-                                <mat-select [value]="'seleccione'"
-                                    [formControlName]="'codigoCiudad'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="let ciudad of ciudades.data"
                                         [value]="ciudad.codigo">{{ciudad.nombre}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-icon class="icon-size-5" matSuffix
-                                    [svgIcon]="'mat_outline:edit'"></mat-icon>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                             </mat-form-field>
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngIf="form.controls['tipo'].value !== 'C' && form.controls['tipo'].value !== 'P' && form.controls['tipo'].value !== 'F'">
+                    <ng-container
+                        *ngIf="form.controls['tipo'].value !== 'C' && form.controls['tipo'].value !== 'P' && form.controls['tipo'].value !== 'F'">
                         <div class="md:flex">
                             <mat-form-field class="w-full fuse-mat-dense">
                                 <mat-label>Departamento</mat-label>
@@ -175,21 +173,28 @@
                     <div class="md:flex">
                         <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
                             <mat-label>Celular</mat-label>
-                            <input matInput type="text" mask="(000) 000 0000" [validation]="false" [formControlName]="'celular'" [required]="true" >
+                            <input matInput type="text" mask="(000) 000 0000" [validation]="false"
+                                [formControlName]="'celular'" [required]="true">
                             <mat-error *ngIf="(form.controls.celular.dirty || form.controls.celular.touched)">
-                                <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es requerido.</mat-error>
+                                <mat-error *ngIf="form.controls.celular.errors?.required ">Este campo es
+                                    requerido.</mat-error>
                                 <mat-error *ngIf="form.controls.celular.errors?.pattern">Debe iniciar por 3.</mat-error>
-                                <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 9 dígitos.</mat-error>
-                                <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+                                <mat-error *ngIf="form.controls.celular.errors?.minlength">Longitud mínima son 9
+                                    dígitos.</mat-error>
+                                <mat-error *ngIf="form.controls.celular.errors?.maxlength">Longitud máxima son 11
+                                    dígitos.</mat-error>
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="w-1/2 fuse-mat-dense">
                             <mat-label>Teléfono (opcional)</mat-label>
                             <input matInput type="text" [formControlName]="'telefono'">
                             <mat-error *ngIf="(form.controls.telefono.dirty || form.controls.telefono.touched)">
-                                <mat-error *ngIf="form.controls.telefono.errors?.pattern">Solo se aceptan números.</mat-error>
-                                <mat-error *ngIf="form.controls.telefono.errors?.minlength">Longitud mínima son 7 dígitos.</mat-error>
-                                <mat-error *ngIf="form.controls.telefono.errors?.maxlength">Longitud máxima son 11 dígitos.</mat-error>
+                                <mat-error *ngIf="form.controls.telefono.errors?.pattern">Solo se aceptan
+                                    números.</mat-error>
+                                <mat-error *ngIf="form.controls.telefono.errors?.minlength">Longitud mínima son 7
+                                    dígitos.</mat-error>
+                                <mat-error *ngIf="form.controls.telefono.errors?.maxlength">Longitud máxima son 11
+                                    dígitos.</mat-error>
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -207,7 +212,7 @@
                         </ng-container>
                     </div>
                     <!-- <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'  && form.controls['parentesco'].value === 'OT'">
-   
+
                         <ng-container *ngIf="parentescos$ | async as items">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Otro, indique cual.</mat-label>

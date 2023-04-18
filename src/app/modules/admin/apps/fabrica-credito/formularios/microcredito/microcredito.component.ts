@@ -6,7 +6,9 @@ import { GenericasService } from 'app/core/services/genericas.service';
 import moment from 'moment';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { PermisosService } from 'app/core/services/permisos.service';
 @Component({
     selector: 'app-microcredito',
     templateUrl: './microcredito.component.html',
@@ -20,6 +22,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     listadoCiudades: any[];
     listadoBarrios: any[];
     editable = true;
+    timerInterval: any;
     public unidadNegocio: 1;
     public tipoIdentificacion: string = this.route.snapshot.paramMap.get('tipoIdentificacion');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
@@ -32,6 +35,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public numeroSolicitudTemporal: number;
     public otpValidado: boolean = false;
     public validandoOTPLoading: boolean = false;
+    public changeTextOTP: boolean = false;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
 
@@ -42,6 +46,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         private router: Router,
         private el: ElementRef,
         private genericaServices: GenericasService,
+        public _permisosService: PermisosService
     ) { }
 
     ngOnInit(): void {
@@ -101,6 +106,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 this.form.controls.identificacion.setValue(this.identificacion);
                 this.solicitudesFormularioSimulaciones()
                 this.editable = true;
+
             }
         }, 1000);
         this.getSalarioMinimo();
@@ -127,23 +133,32 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             tipoDocumento: this.form.get('tipoDocumento').value,
             email: this.form.get('email').value
         }
+
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
-            if (rep.data.msg !== 'OK') {
+            if (rep.data.resultado !== 'OK') {
                 Swal.fire({
                     icon: 'info',
                     text: rep.data.msg,
+                }).then(rep => {
+                    this.form.reset();
                 });
             }
 
-        })
+        })  
 
     }
 
+
     startTimer() {
-        setInterval(() => {
-            if (this.contador > 0) {
-                this.contador--;
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
             }
         }, 1000)
     }
@@ -244,24 +259,24 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
                     this.form.controls.autorizacionCentrales.setValue(resp.data?.autorizacionCentrales === 'S');
                     this.form.controls.clausulaVeracidad?.setValue(resp.data?.clausulaVeracidad === 'S');
-                    this.form.controls.terminosCondiciones.setValue(resp.data.terminosCondiciones === 'S');
-                    this.form.controls.fechaNacimiento.setValue(resp.data.fechaNacimiento === '0099-01-01' ? '' : resp.data.fechaNacimiento)
+                    this.form.controls.terminosCondiciones.setValue(resp.data?.terminosCondiciones === 'S');
+                    this.form.controls.fechaNacimiento.setValue(resp.data?.fechaNacimiento === '0099-01-01' ? '' : resp.data?.fechaNacimiento)
 
-                    if (resp.data.celular) {
+                    if (resp.data?.celular) {
                         this.preSolicitud()
                     }
-                    if (resp.data.departamentoNegocio) {
+                    if (resp.data?.departamentoNegocio) {
                         this.listarCiudades();
                     }
-                    if (resp.data.ciudadNegocio) {
+                    if (resp.data?.ciudadNegocio) {
                         this.listarBarrios();
                     }
                     this.cargueActividadEconomica();
 
                     setTimeout(() => {
-                        this.form.controls['ciudadNegocio'].setValue(resp.data.ciudadNegocio);
-                        this.form.controls['barrioNegocio'].setValue(resp.data.barrioNegocio.toString());
-                        this.form.controls['actividadEconomica'].setValue(resp.data.actividadEconomica);
+                        this.form.controls['ciudadNegocio'].setValue(resp.data?.ciudadNegocio);
+                        this.form.controls['barrioNegocio'].setValue(resp.data?.barrioNegocio.toString());
+                        this.form.controls['actividadEconomica'].setValue(resp.data?.actividadEconomica);
                     }, 2500);
 
                 }
@@ -293,6 +308,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     solicitarCodigo(): void {
 
+
         if (this.form.valid) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
@@ -302,7 +318,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
                 if (rep.status === 200) {
                 }
-
+                this.startTimer();
                 this.validandoOTPLoading = false;
 
             })
@@ -317,16 +333,31 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const numero = this.form.get('numOTP1').value + this.form.get('numOTP2').value + this.form.get('numOTP3').value
             + this.form.get('numOTP4').value + this.form.get('numOTP5').value + this.form.get('numOTP6').value
 
-        const data = {
-            numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
-            tipoTercero: 'T',
-            numeroOTP: numero
+        if (numero.length > 5 && !this.otpValidado) {
+            const data = {
+                numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
+                tipoTercero: 'T',
+                numeroOTP: numero
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+            }, err => {
+                this.cleanOTPNumbers()
+            })
         }
 
-        this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-            this.otpValidado = rep.data.resultado === 'OK'
-        })
     }
+
+    cleanOTPNumbers() {
+        this.form.get('numOTP1').setValue('')
+        this.form.get('numOTP2').setValue('')
+        this.form.get('numOTP3').setValue('')
+        this.form.get('numOTP4').setValue('')
+        this.form.get('numOTP5').setValue('')
+        this.form.get('numOTP6').setValue('')
+    }
+
 
     save(): void {
         if (this.form.invalid) {
@@ -353,20 +384,27 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.terminosCondiciones = 'S'
 
         this._formularioCreditoService.postDatos(data).subscribe((datos) => {
-            Swal.fire(
-                'Completado',
-                datos.data.mensaje,
-                'success'
-            ).then((result) => {
-                if (result) {
+            if(datos.data.resultado === 'OK'){
+                Swal.fire(
+                    'Completado',
+                    datos.data.mensaje,
+                ).then((result) => {
+                    if (result) {
+                        this.form.reset();
+                        this.irAtras()
+                    }
+                })
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al guardar',
+                    text: datos.data.msg,
+                }).then(rep => {
                     this.form.reset();
-                    this.router.navigate([`/credit-factory/agenda-venta-digital`]);
-                }
-            })
-            setTimeout(() => {
-                this.form.reset();
-                this.router.navigate([`/credit-factory/agenda-venta-digital`]);
-            }, 2000);
+                });
+            }
+            
+
         }, (error) => {
             Swal.fire({
                 icon: 'error',
@@ -422,7 +460,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     changeFocus() {
-        let firstInvalidControl1: HTMLElement = this.el.nativeElement.querySelector('#num1');
         let firstInvalidControl2: HTMLElement = this.el.nativeElement.querySelector('#num2');
         let firstInvalidControl3: HTMLElement = this.el.nativeElement.querySelector('#num3');
         let firstInvalidControl4: HTMLElement = this.el.nativeElement.querySelector('#num4');
@@ -449,6 +486,18 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+        }
+        else {
+            let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
+            elemeOne.focus();
+        }
+    }
+
+    irAtras() {
+        if (this._permisosService.estabaAgendaComercial()) {
+            this.router.navigate([`/credit-factory/agenda-comercial`]);
+        }else{
+            this.router.navigate([`/credit-factory/agenda-venta-digital`]);
         }
     }
 

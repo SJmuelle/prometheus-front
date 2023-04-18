@@ -5,30 +5,30 @@
                 <mat-form-field class="w-2/5 mr-2 fuse-mat-dense">
                     <mat-select [formControl]="documentoComparado" (selectionChange)="onSeleccionadoComparar($event)">
                         <mat-option value="seleccione" disabled>Seleccione archivo a comparar</mat-option>
-                    <ng-container *ngIf="documentoSelected?.tipoTercero === 'T'">
-                        <ng-container *ngFor="let data of documentos">
-                            <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
-                                [value]="data.idArchivoCargado">
-                                {{data.descripcion}}
-                            </mat-option>
+                        <ng-container *ngIf="documentoSelected?.tipoTercero === 'T'">
+                            <ng-container *ngFor="let data of documentos">
+                                <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                    [value]="data.idArchivoCargado">
+                                    {{data.descripcion}}
+                                </mat-option>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="documentoSelected?.tipoTercero === 'S'">
-                        <ng-container *ngFor="let data of documentosDeudor">
-                            <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
-                                [value]="data.idArchivoCargado">
-                                {{data.descripcion}}
-                            </mat-option>
+                        <ng-container *ngIf="documentoSelected?.tipoTercero === 'S'">
+                            <ng-container *ngFor="let data of documentosDeudor">
+                                <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                    [value]="data.idArchivoCargado">
+                                    {{data.descripcion}}
+                                </mat-option>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
-                    <ng-container *ngIf="documentoSelected?.tipoTercero === 'C'">
-                        <ng-container *ngFor="let data of documentosCodeudor">
-                            <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
-                                [value]="data.idArchivoCargado">
-                                {{data.descripcion}}
-                            </mat-option>
+                        <ng-container *ngIf="documentoSelected?.tipoTercero === 'C'">
+                            <ng-container *ngFor="let data of documentosCodeudor">
+                                <mat-option *ngIf="data.archivoCargado !== 'N' && data.selected !== true"
+                                    [value]="data.idArchivoCargado">
+                                    {{data.descripcion}}
+                                </mat-option>
+                            </ng-container>
                         </ng-container>
-                    </ng-container>
 
                     </mat-select>
                 </mat-form-field>
@@ -44,166 +44,13 @@
 <div class="row">
 
     <mat-accordion>
-        <mat-expansion-panel class="overflow-scroll scrollbar-hide">
+        <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <strong class="text-xl">Documentación del titular</strong>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <table class="p-0">
-                <thead class="bg-accent-50">
-                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                        <th class="px-4 py-3"></th>
-                        <th class="px-4 py-3">No. Doc</th>
-                        <th class="px-4 py-3">Nombre del documento</th>
-                        <th class="px-4 py-3">Usuario</th>
-                        <th class="px-4 py-3">Requerido</th>
-                        <th class="px-4 py-3">Cargado</th>
-                        <th class="px-4 py-3" *ngIf="!permisoEditar">Acción</th>
-                        <th class="px-4 py-4 text-center">Fecha de cargue</th>
-                        <th class="px-4 py-3">Descargar</th>
-                        <th class="px-4 py-3">Histórico</th>
-                        <!--<ng-container *ngIf="longitudArchivos">
-                        <th class="px-4 py-3">Comparar</th>
-                    </ng-container>-->
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    <ng-container *ngFor="let item of documentos; let  i = index">
-                        <tr>
-                            <td class="px-2 text-sm border text-center">
-                                <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
-                                    [disabled]="!item.selected && longitudArchivos > 0" #checkbox
-                                    (change)="onSeleccionDocumento(checkbox, item)" [(ngModel)]="item.selected"></mat-checkbox>
-                            </td>
-                            <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcion}}</td>
-                            <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
-                            <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
-                            <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}
-                            </td>
-                            <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
-                                <ng-container *ngIf="item.archivoCargado === 'N'">
-                                    <input type="file" #fileInput (change)="subirArchivo($event, item)" class="d-none"
-                                        [accept]="'image/jpeg,image/png,application/pdf'">
-                                    <button mat-icon-button matTooltip="Cargar documento" (click)="fileInput.click()">
-                                        <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                                <ng-container *ngIf="item.archivoCargado !== 'N'">
-                                    <button mat-icon-button matTooltip="Eliminar documento"
-                                        (click)="onEliminarDocumento(item)">
-                                        <mat-icon [svgIcon]="'mat_outline:delete'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>
-                            <td class="px-2 text-sm border text-center">{{item.fechaCargue}}</td>
-                            <td class="px-2 text-sm border text-center">
-                                <ng-container *ngIf="item.archivoCargado !== 'N'">
-                                    <button mat-icon-button matTooltip="Descargar documento"
-                                        (click)="onDescargar(item)">
-                                        <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>
-                            <td class="px-2 text-sm border text-center">
-                                <ng-container *ngIf="item.historico !== 'N'">
-                                    <button mat-icon-button matTooltip="Ver Versiones anteriores"
-                                        (click)="onHistorico(item);settingsDrawer.toggle()">
-                                        <mat-icon svgIcon="format_list_numbered"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
-        </mat-expansion-panel>
-
-
-        <mat-expansion-panel *ngIf="tipoDeudor === '1' || tipoDeudor === '3'" class="overflow-scroll scrollbar-hide">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <strong class="text-xl">Documentación del codeudor</strong>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <table class="p-0">
-                <thead class="bg-accent-50">
-                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                        <th class="px-4 py-3"></th>
-                        <th class="px-4 py-3">No. Doc</th>
-                        <th class="px-4 py-3">Nombre del documento</th>
-                        <th class="px-4 py-3">Usuario</th>
-                        <th class="px-4 py-3">Requerido</th>
-                        <th class="px-4 py-3">Cargado</th>
-                        <th class="px-4 py-3" *ngIf="!permisoEditar">Acción</th>
-                        <th class="px-4 py-4 text-center">Fecha de cargue</th>
-                        <th class="px-4 py-3">Descargar</th>
-                        <th class="px-4 py-3">Histórico</th>
-                        <!--<ng-container *ngIf="longitudArchivos">
-                        <th class="px-4 py-3">Comparar</th>
-                    </ng-container>-->
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    <ng-container *ngFor="let item of documentosCodeudor; let  i = index">
-                        <tr>
-                            <td class="px-2 text-sm border text-center">
-                                <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
-                                    [disabled]="!item.selected && longitudArchivos > 0" #checkbox
-                                    (change)="onSeleccionDocumento(checkbox, item)" [(ngModel)]="item.selected"></mat-checkbox>
-                            </td>
-                            <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcion}}</td>
-                            <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
-                            <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}</td>
-                            <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' : 'No'}}
-                            </td>
-                            <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
-                                <ng-container *ngIf="item.archivoCargado === 'N'">
-                                    <input type="file" #fileInput (change)="subirArchivo($event, item)" class="d-none"
-                                        [accept]="'image/jpeg,image/png,application/pdf'">
-                                    <button mat-icon-button matTooltip="Cargar documento" (click)="fileInput.click()">
-                                        <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                                <ng-container *ngIf="item.archivoCargado !== 'N'">
-                                    <button mat-icon-button matTooltip="Eliminar documento"
-                                        (click)="onEliminarDocumento(item)">
-                                        <mat-icon [svgIcon]="'mat_outline:delete'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>
-                            <td class="px-2 text-sm border text-center">{{item.fechaCargue}}</td>
-                            <td class="px-2 text-sm border text-center">
-                                <ng-container *ngIf="item.archivoCargado !== 'N'">
-                                    <button mat-icon-button matTooltip="Descargar documento"
-                                        (click)="onDescargar(item)">
-                                        <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>
-                            <td class="px-2 text-sm border text-center">
-                                <ng-container *ngIf="item.historico !== 'N'">
-                                    <button mat-icon-button matTooltip="Ver Versiones anteriores"
-                                        (click)="onHistorico(item);settingsDrawer.toggle()">
-                                        <mat-icon svgIcon="format_list_numbered"></mat-icon>
-                                    </button>
-                                </ng-container>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </tbody>
-            </table>
-        </mat-expansion-panel>
-
-        <ng-container *ngIf="documentosDeudor.length>0  && tipoDeudor === '2' || tipoDeudor === '3'">
-            <mat-expansion-panel class="overflow-scroll scrollbar-hide">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <strong class="text-xl">Documentación del deudor solidario</strong>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
+            <mat-panel-description class="overflow-scroll scrollbar-hide">
                 <table class="p-0">
                     <thead class="bg-accent-50">
                         <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
@@ -218,20 +65,23 @@
                             <th class="px-4 py-3">Descargar</th>
                             <th class="px-4 py-3">Histórico</th>
                             <!--<ng-container *ngIf="longitudArchivos">
-                            <th class="px-4 py-3">Comparar</th>
-                        </ng-container>-->
+                        <th class="px-4 py-3">Comparar</th>
+                    </ng-container>-->
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <ng-container *ngFor="let item of documentosDeudor; let  i = index">
+                        <ng-container *ngFor="let item of documentos; let  i = index">
                             <tr>
                                 <td class="px-2 text-sm border text-center">
                                     <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
                                         [disabled]="!item.selected && longitudArchivos > 0" #checkbox
-                                        (change)="onSeleccionDocumento(checkbox, item)" [(ngModel)]="item.selected"></mat-checkbox>
+                                        (change)="onSeleccionDocumento(checkbox, item)"
+                                        [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                <td class="px-2 text-sm border">{{ item.descripcion}}</td>
+                                <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                    item.descripcion}}
+                                </td>
                                 <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                                 <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}
                                 </td>
@@ -275,6 +125,176 @@
                         </ng-container>
                     </tbody>
                 </table>
+            </mat-panel-description>
+        </mat-expansion-panel>
+
+
+        <mat-expansion-panel *ngIf="tipoDeudor === '1' || tipoDeudor === '3'" >
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <strong class="text-xl">Documentación del codeudor</strong>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-panel-description class="overflow-scroll scrollbar-hide">
+                <table class="p-0">
+                    <thead class="bg-accent-50">
+                        <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                            <th class="px-4 py-3"></th>
+                            <th class="px-4 py-3">No. Doc</th>
+                            <th class="px-4 py-3">Nombre del documento</th>
+                            <th class="px-4 py-3">Usuario</th>
+                            <th class="px-4 py-3">Requerido</th>
+                            <th class="px-4 py-3">Cargado</th>
+                            <th class="px-4 py-3" *ngIf="!permisoEditar">Acción</th>
+                            <th class="px-4 py-4 text-center">Fecha de cargue</th>
+                            <th class="px-4 py-3">Descargar</th>
+                            <th class="px-4 py-3">Histórico</th>
+                            <!--<ng-container *ngIf="longitudArchivos">
+                        <th class="px-4 py-3">Comparar</th>
+                    </ng-container>-->
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <ng-container *ngFor="let item of documentosCodeudor; let  i = index">
+                            <tr>
+                                <td class="px-2 text-sm border text-center">
+                                    <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
+                                        [disabled]="!item.selected && longitudArchivos > 0" #checkbox
+                                        (change)="onSeleccionDocumento(checkbox, item)"
+                                        [(ngModel)]="item.selected"></mat-checkbox>
+                                </td>
+                                <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
+                                <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                    item.descripcion}}
+                                </td>
+                                <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
+                                <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}
+                                </td>
+                                <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' :
+                                    'No'}}
+                                </td>
+                                <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
+                                    <ng-container *ngIf="item.archivoCargado === 'N'">
+                                        <input type="file" #fileInput (change)="subirArchivo($event, item)"
+                                            class="d-none" [accept]="'image/jpeg,image/png,application/pdf'">
+                                        <button mat-icon-button matTooltip="Cargar documento"
+                                            (click)="fileInput.click()">
+                                            <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
+                                        </button>
+                                    </ng-container>
+                                    <ng-container *ngIf="item.archivoCargado !== 'N'">
+                                        <button mat-icon-button matTooltip="Eliminar documento"
+                                            (click)="onEliminarDocumento(item)">
+                                            <mat-icon [svgIcon]="'mat_outline:delete'"></mat-icon>
+                                        </button>
+                                    </ng-container>
+                                </td>
+                                <td class="px-2 text-sm border text-center">{{item.fechaCargue}}</td>
+                                <td class="px-2 text-sm border text-center">
+                                    <ng-container *ngIf="item.archivoCargado !== 'N'">
+                                        <button mat-icon-button matTooltip="Descargar documento"
+                                            (click)="onDescargar(item)">
+                                            <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
+                                        </button>
+                                    </ng-container>
+                                </td>
+                                <td class="px-2 text-sm border text-center">
+                                    <ng-container *ngIf="item.historico !== 'N'">
+                                        <button mat-icon-button matTooltip="Ver Versiones anteriores"
+                                            (click)="onHistorico(item);settingsDrawer.toggle()">
+                                            <mat-icon svgIcon="format_list_numbered"></mat-icon>
+                                        </button>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </mat-panel-description>
+        </mat-expansion-panel>
+
+        <ng-container *ngIf="documentosDeudor.length>0  && tipoDeudor === '2' || tipoDeudor === '3'">
+            <mat-expansion-panel >
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <strong class="text-xl">Documentación del deudor solidario</strong>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <mat-panel-description class="overflow-scroll scrollbar-hide">
+                    <table class="p-0">
+                        <thead class="bg-accent-50">
+                            <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                                <th class="px-4 py-3"></th>
+                                <th class="px-4 py-3">No. Doc</th>
+                                <th class="px-4 py-3">Nombre del documento</th>
+                                <th class="px-4 py-3">Usuario</th>
+                                <th class="px-4 py-3">Requerido</th>
+                                <th class="px-4 py-3">Cargado</th>
+                                <th class="px-4 py-3" *ngIf="!permisoEditar">Acción</th>
+                                <th class="px-4 py-4 text-center">Fecha de cargue</th>
+                                <th class="px-4 py-3">Descargar</th>
+                                <th class="px-4 py-3">Histórico</th>
+                                <!--<ng-container *ngIf="longitudArchivos">
+                            <th class="px-4 py-3">Comparar</th>
+                        </ng-container>-->
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <ng-container *ngFor="let item of documentosDeudor; let  i = index">
+                                <tr>
+                                    <td class="px-2 text-sm border text-center">
+                                        <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
+                                            [disabled]="!item.selected && longitudArchivos > 0" #checkbox
+                                            (change)="onSeleccionDocumento(checkbox, item)"
+                                            [(ngModel)]="item.selected"></mat-checkbox>
+                                    </td>
+                                    <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
+                                    <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                        item.descripcion}}</td>
+                                    <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
+                                    <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}
+                                    </td>
+                                    <td class="px-2 text-sm border text-center">{{ item.archivoCargado !== 'N'? 'Si' :
+                                        'No'}}
+                                    </td>
+                                    <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
+                                        <ng-container *ngIf="item.archivoCargado === 'N'">
+                                            <input type="file" #fileInput (change)="subirArchivo($event, item)"
+                                                class="d-none" [accept]="'image/jpeg,image/png,application/pdf'">
+                                            <button mat-icon-button matTooltip="Cargar documento"
+                                                (click)="fileInput.click()">
+                                                <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
+                                            </button>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.archivoCargado !== 'N'">
+                                            <button mat-icon-button matTooltip="Eliminar documento"
+                                                (click)="onEliminarDocumento(item)">
+                                                <mat-icon [svgIcon]="'mat_outline:delete'"></mat-icon>
+                                            </button>
+                                        </ng-container>
+                                    </td>
+                                    <td class="px-2 text-sm border text-center">{{item.fechaCargue}}</td>
+                                    <td class="px-2 text-sm border text-center">
+                                        <ng-container *ngIf="item.archivoCargado !== 'N'">
+                                            <button mat-icon-button matTooltip="Descargar documento"
+                                                (click)="onDescargar(item)">
+                                                <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
+                                            </button>
+                                        </ng-container>
+                                    </td>
+                                    <td class="px-2 text-sm border text-center">
+                                        <ng-container *ngIf="item.historico !== 'N'">
+                                            <button mat-icon-button matTooltip="Ver Versiones anteriores"
+                                                (click)="onHistorico(item);settingsDrawer.toggle()">
+                                                <mat-icon svgIcon="format_list_numbered"></mat-icon>
+                                            </button>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </mat-panel-description>
             </mat-expansion-panel>
 
         </ng-container>

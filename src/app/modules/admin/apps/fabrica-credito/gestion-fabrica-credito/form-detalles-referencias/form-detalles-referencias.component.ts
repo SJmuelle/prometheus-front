@@ -24,7 +24,8 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
     public ciudades$: Observable<any>;
     public subscription$: Subscription;
     public parentescos$: Observable<any>;
-    public permisoEditar:boolean=false;
+    public permisoEditar: boolean = false;
+    public unidadNegocio: number;
 
     @Output() cerrarFormulario: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(
@@ -48,7 +49,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         this.getDepartamentos();
         this.escuchaObservable();
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
-        if(this.permisoEditar){
+        if (this.permisoEditar) {
             this.form.disable();
         }
     }
@@ -153,7 +154,11 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 Swal.close();
                 this.form.patchValue(data);
-                
+                this.genericaService.getUnidadNegocio(data.numeroSolicitud).subscribe(rep => {
+                    this.unidadNegocio = rep.data[0].unidadNegocio;
+                    console.log("data", this.unidadNegocio);
+                })
+
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
                 }
@@ -180,7 +185,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.parentesco,
+                parentesco: datos.parentesco,
 
             };
         } if (datos.tipo === 'F') {
@@ -199,9 +204,9 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.parentesco,
-            } 
-        }else {
+                parentesco: datos.parentesco,
+            }
+        } else {
             formulario = {
                 antiguedad: datos.antiguedad,
                 celular: datos.celular,
@@ -217,13 +222,13 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.parentesco, 
+                parentesco: datos.parentesco,
             };
         };
 
         formulario.tiempoConocido = datos.tiempoConocido;
         formulario.otroParentesco = datos.otroParentesco;
-        
+
         this.subscription$ = this.referenciasService.putDetalleReferencia(formulario).subscribe(() => {
             Swal.fire(
                 'Completado',

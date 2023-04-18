@@ -11,7 +11,7 @@ import { AgendaGestionCarteraModule } from './agenda-gestion-cartera/agenda-gest
 import {AgendaFormalizacionModule} from "./agenda-formalizacion/agenda-formalizacion.module";
 import { ReferidosModule } from './referidos/referidos.module';
 import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitudes.module';
-import { EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
+import { EdicionFormularioResolver, EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
 import { FormulariosModule } from './formularios/formularios.module';
 import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
 import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
@@ -87,11 +87,13 @@ const routes: Routes = [
             },
             {
                 path: 'agenda-comite-comercial',
-                loadChildren: () => AgendaComiteComercialModule
+                loadChildren: () => AgendaComiteComercialModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'agenda-visitas',
-                loadChildren: () => AgendaVisitasModule
+                loadChildren: () => AgendaVisitasModule,
+                resolve  : {EdicionTrazabilidadResolver}
             }
         ]
     }

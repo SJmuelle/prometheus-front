@@ -433,7 +433,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+            .postDatosFabricaCreditoSolitario(datos).pipe(takeUntil(this.unSubscribe$))
 
             .subscribe(
                 (res) => {
@@ -441,10 +441,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                         'Completado',
                         res.data.mensaje,
                         'success'
-                    );
-                    setTimeout(() => {
-                        // location.reload();
-                    }, 1000);
+                    ).then(rep =>{
+                        location.reload();
+                    })
+
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
                 (error) => {

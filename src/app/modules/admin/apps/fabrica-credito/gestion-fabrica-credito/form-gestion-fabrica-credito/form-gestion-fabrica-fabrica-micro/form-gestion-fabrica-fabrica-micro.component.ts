@@ -358,10 +358,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'Completado',
                     'Información guardada con éxito',
                     'success'
-                );
-                setTimeout(() => {
+                ).then(rep =>{
                     location.reload()
-                }, 1000);
+                });
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
                 Swal.fire({
@@ -385,7 +384,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-
+                this.form.get('modificadaSolicitud').setValue('S')
             } else {
                 if (type === "INTEGER") {
 
