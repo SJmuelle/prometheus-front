@@ -24,6 +24,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     // public Referencia$: Observable<any>;
     public parentescos$: Observable<any>;
     public form: FormGroup;
+    public unidadNegocio: number;
     public subscription$: Subscription;
     constructor(
         private departamentosCiudadService: DepartamentosCiudadesService,
@@ -47,6 +48,15 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         this.getTiposTercero();
         this.getParentesco();
         this.estadoFormulario();
+        this.getUnidadNegocio();
+    }
+
+    private getUnidadNegocio() {
+        this.genericaServices.getUnidadNegocio(this.data.numeroSolicitud).subscribe(data => {
+            this.unidadNegocio = data.data[0].unidadNegocio;
+            console.log('data.data', data.data);
+
+        })
     }
 
     public onCerrar(): void {
@@ -115,6 +125,11 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
 
         } else {
             this.form.markAllAsTouched();
+            this.form.errors
+            Object.keys(this.form.controls).forEach(key => {
+                // Get errors of every form control
+                console.log(key, this.form.get(key).errors);
+            });
         }
     }
 
@@ -264,15 +279,15 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         };
         let data;
         if (tipo === 'P') {
-            data=formPersonal
+            data = formPersonal
         } else if (tipo === 'F') {
-            data=formPersonal 
+            data = formPersonal
         } else {
             formComercial.nombreCompleto = nombreCompleto === '' ? formComercial.nombreCompleto : nombreCompleto;
-            data=formComercial
+            data = formComercial
         }
 
-        
+
         this.subscription$ = this.referenciasService.postReferencia(formComercial).subscribe(() => {
             this.onCerrar();
             this.referenciasService.eventos$.emit(true);
@@ -287,8 +302,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     private estadoFormulario(): void {
         this.form.controls['tipo'].setValue('P');
         this.subscription$ = this.form.controls['parentesco'].valueChanges.subscribe(parentesco => {
-            if(parentesco === 'OT'){
-               // this.form.controls['primerNombre'].setValidators(Validators.required);
+            if (parentesco === 'OT') {
+                // this.form.controls['primerNombre'].setValidators(Validators.required);
             }
         })
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
@@ -332,9 +347,16 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['primerNombre'].clearValidators();
                     this.form.controls['primerApellido'].clearValidators();
                     this.form.controls['nombreCompleto'].setValidators(Validators.required);
-                    this.form.controls['codigoDepartamento'].setValidators(Validators.required);
-                    this.form.controls['codigoCiudad'].setValidators(Validators.required);
-                    this.form.controls['antiguedad'].setValidators(Validators.required);
+                    if (this.unidadNegocio !== 1) {
+                        this.form.controls['codigoDepartamento'].setValidators(Validators.required);
+                        this.form.controls['codigoCiudad'].setValidators(Validators.required);
+                        this.form.controls['antiguedad'].setValidators(Validators.required);
+                    } else {
+                        this.form.controls['codigoCiudad'].clearValidators();
+                        this.form.controls['codigoBarrio'].clearValidators();
+                        this.form.controls['antiguedad'].clearValidators();
+                    }
+
                     break;
 
                 default:

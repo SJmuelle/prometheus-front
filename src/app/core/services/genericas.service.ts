@@ -296,4 +296,12 @@ export class GenericasService {
         const params: string = 'subestados-creditos';
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}/${data}`);
     }
+
+    /**
+     * @description: Obtiene numero de negocio
+     */
+    public getUnidadNegocio(numSolicitud: string): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.unidadNegocio}/${numSolicitud}`);
+    }
+
 }

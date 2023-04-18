@@ -37,7 +37,7 @@ export class AppSettingsService {
     /**
      * @description: End-point de pago masivo
      */
-     public pago = {
+    public pago = {
         url: {
             base: EndPoints.uri('/generic/aplicacion-pago-finl'),
             baseConvenios: EndPoints.uri('/generic/qry/convenios-unidad-negocio-finl'),
@@ -158,7 +158,8 @@ export class AppSettingsService {
     public genericas = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
-            basetk: EndPoints.uri('/generic/qry/tk')
+            basetk: EndPoints.uri('/generic/qry/tk'),
+            unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio')
         }
     };
     /**
