@@ -37,6 +37,14 @@ export class GridCarteraMicroComponent implements OnInit {
     verificacion: string;
   };
   informacionCompra: { idMostrar: number;  };
+
+  externaTitularCartera: any[] = [];
+  externaCodeudorCartera: any[] = [];
+  externaSolidarioCartera: any[] = [];
+
+  internoTitularCartera: any[] = [];
+  internoCodeudorCartera: any[] = [];
+  internoSolidarioCartera: any[] = [];
   // informacionCompra: any;
 
   constructor(private route: ActivatedRoute,
@@ -59,7 +67,38 @@ export class GridCarteraMicroComponent implements OnInit {
 
 
   private getListadoCartera(numeroSolicitud: number): void {
-    this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
+    this._listadoCarteraService.getListadoCartera(numeroSolicitud).subscribe(data => {
+      data.data.forEach(item => {
+        switch(item.carteraInterna){
+          case 'N':
+            switch(item.tipoTercero){
+              case 'T':
+              this.externaTitularCartera.push(item);
+              break;
+              case 'C':
+              this.externaCodeudorCartera.push(item)
+              break;
+              case 'S':
+              this.externaSolidarioCartera.push(item);
+              break;
+            }
+            break;
+          case 'S':
+            switch(item.tipoTercero){
+              case 'T':
+              this.internoTitularCartera.push(item);
+              break;
+              case 'C':
+              this.internoCodeudorCartera.push(item)
+              break;
+              case 'S':
+              this.internoSolidarioCartera.push(item);
+              break;
+            }
+        }
+      })
+    })
+
     this.validadorTotalLibranza();
   }
 
@@ -198,5 +237,14 @@ export class GridCarteraMicroComponent implements OnInit {
   }
 
 
-
+  public transformTipoTercero(tipo: string){
+    switch(tipo){
+      case 'T':
+      return 'Titular'
+      case 'C':
+      return 'Codeudor'
+      case 'S':
+      return 'Dedudor solidario'
+    }
+  }
 }

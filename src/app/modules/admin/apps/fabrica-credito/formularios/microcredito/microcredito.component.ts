@@ -136,7 +136,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
         this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
-            if (rep.data.msg !== 'OK') {
+            if (rep.data.resultado !== 'OK') {
                 Swal.fire({
                     icon: 'info',
                     text: rep.data.msg,
@@ -145,7 +145,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 });
             }
 
-        })
+        })  
 
     }
 
@@ -384,20 +384,27 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.terminosCondiciones = 'S'
 
         this._formularioCreditoService.postDatos(data).subscribe((datos) => {
-            Swal.fire(
-                'Completado',
-                datos.data.mensaje,
-                'success'
-            ).then((result) => {
-                if (result) {
+            if(datos.data.resultado === 'OK'){
+                Swal.fire(
+                    'Completado',
+                    datos.data.mensaje,
+                ).then((result) => {
+                    if (result) {
+                        this.form.reset();
+                        this.irAtras()
+                    }
+                })
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error al guardar',
+                    text: datos.data.msg,
+                }).then(rep => {
                     this.form.reset();
-                    this.irAtras()
-                }
-            })
-            setTimeout(() => {
-                this.form.reset();
-                this.irAtras()
-            }, 2000);
+                });
+            }
+            
+
         }, (error) => {
             Swal.fire({
                 icon: 'error',

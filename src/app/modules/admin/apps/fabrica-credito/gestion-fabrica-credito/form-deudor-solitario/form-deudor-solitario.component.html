@@ -27,8 +27,8 @@
                 <mat-select [value]="'seleccione'" [formControlName]="'tipoDocumento'" [required]="">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
-                    <mat-option *ngFor="let tipoDocumento of dataInicial.tiposDocumentos"
-                        [value]="tipoDocumento.codigo" [disabled]="tipoDocumento.codigo === 'CE'">{{tipoDocumento.valor}}
+                    <mat-option *ngFor="let tipoDocumento of dataInicial.tiposDocumentos" [value]="tipoDocumento.codigo"
+                        [disabled]="tipoDocumento.codigo === 'CE'">{{tipoDocumento.valor}}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -133,7 +133,7 @@
 
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
             <ng-container *ngIf="departamentos$ | async as departamentos">
-                <mat-form-field >
+                <mat-form-field>
                     <mat-label>Departamento de residencia</mat-label>
                     <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
                         [formControlName]="'codigoDepartamento'" [required]="">
@@ -151,7 +151,7 @@
                 </mat-form-field>
             </ng-container>
             <ng-container *ngIf="ciudades$ | async as ciudades">
-                <mat-form-field >
+                <mat-form-field>
                     <mat-label>Ciudad de residencia</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
                         (selectionChange)="seleccionCiudad($event)" [required]="">
@@ -169,7 +169,7 @@
                 </mat-form-field>
             </ng-container>
             <ng-container *ngIf="barrios$ | async as barrios">
-                <mat-form-field >
+                <mat-form-field>
                     <mat-label>Barrio de residencia</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'" [required]="">
                         <mat-option disabled [value]="'seleccione'">Seleccione
@@ -370,8 +370,8 @@
             <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualPublico.value === 'N'"
                 class="w-full px-2 md:w-1/2">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacionPublico"
-                    [formControlName]="'fechaDesvinculacionPublico'" [readonly]="true">
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaDesvinculacionPublico"
+                    [formControlName]="'fechaDesvinculacionPublico'">
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaDesvinculacionPublico readonly></mat-datepicker>
@@ -470,7 +470,7 @@
             <mat-form-field *ngIf="formDeudorSolidario.controls.vinculadoActualExpuesta.value === 'N'"
                 class="w-full px-2 md:w-1/2">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacionExpuesta"
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaDesvinculacionExpuesta"
                     [formControlName]="'fechaDesvinculacionExpuesta'">
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionExpuesta" [disabled]="false">
                 </mat-datepicker-toggle>
@@ -627,7 +627,8 @@
                     target="_blank">Autorización de
                     tratamiento de datos personales</a> </mat-checkbox>
             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
-                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline" target="_blank"> Cláusula de
+                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline"
+                    target="_blank"> Cláusula de
                     Anticorrupción y Antilavado </a></mat-checkbox>
         </div>
         <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">

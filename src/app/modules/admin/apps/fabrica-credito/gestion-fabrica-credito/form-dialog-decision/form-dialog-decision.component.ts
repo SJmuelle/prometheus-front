@@ -53,7 +53,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
         this.getCausal();
         this.getTipoComentario(this.data.idAgenda)
         this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
-        //debugger
         switch (this.data.etapa) {
             case 1:
                 this.mostrarAccion = false;
@@ -127,7 +126,6 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
      * @description: Guarda una decision
      */
     public onGuardar(): void {
-        //debugger
         if (this.form.valid) {
             const data: any = { ...this.form.getRawValue() };
             data.numeroSolicitud = Number(this.form.controls.numeroSolicitud.value);
@@ -402,7 +400,7 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
                             respuesta = {
                                 icon: 'warning',
                                 title: 'Mensaje',
-                                text: res.data.resultado
+                                text: res.data.respuesta
                             };
                             this.mostrarAlerta(respuesta);
                         }

@@ -562,7 +562,7 @@ export class FormCodeudorComponent implements OnInit {
                     ?.setValidators([
                         Validators.required,
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                        Validators.minLength(10),
+                        Validators.minLength(9),
                         Validators.maxLength(10),
                     ]);
                 this.form
@@ -1196,6 +1196,7 @@ export class FormCodeudorComponent implements OnInit {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
+                this.form.get('modificadaSolicitud').setValue('S');
             } else {
                 if (type === 'INTEGER') {
                     this.form.controls[variable].setValue(
