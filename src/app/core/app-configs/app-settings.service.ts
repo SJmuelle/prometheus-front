@@ -159,7 +159,8 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
             basetk: EndPoints.uri('/generic/qry/tk'),
-            unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio')
+            unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio'),
+            referenciaComercial: EndPoints.uri('/generic/qry/consulta-lista-generica/RELACION-COMERCIAL')
         }
     };
     /**
@@ -193,6 +194,7 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
+            actualizarReferencia: EndPoints.uri('/generic/cre-agregar-referencia-prueba')
         }
     };
     /**

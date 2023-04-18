@@ -26,6 +26,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public unidadNegocio: number;
     public subscription$: Subscription;
+    public tipoReferencia: any;
     constructor(
         private departamentosCiudadService: DepartamentosCiudadesService,
         private genericaServices: GenericasService,
@@ -49,13 +50,18 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         this.getParentesco();
         this.estadoFormulario();
         this.getUnidadNegocio();
+        this.relacionComercial();
+    }
+
+    private relacionComercial(){
+        this.genericaServices.getRelacionComercial().subscribe(data => {
+            this.tipoReferencia = data.data
+        })
     }
 
     private getUnidadNegocio() {
         this.genericaServices.getUnidadNegocio(this.data.numeroSolicitud).subscribe(data => {
             this.unidadNegocio = data.data[0].unidadNegocio;
-            console.log('data.data', data.data);
-
         })
     }
 
@@ -210,6 +216,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             nombreBarrio: [],
             direccion: [''],
             antiguedad: [''],
+            tipoReferencia: [''],
+            otroParentezco: ['']
         });
     }
     /**
@@ -303,7 +311,9 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         this.form.controls['tipo'].setValue('P');
         this.subscription$ = this.form.controls['parentesco'].valueChanges.subscribe(parentesco => {
             if (parentesco === 'OT') {
-                // this.form.controls['primerNombre'].setValidators(Validators.required);
+                 this.form.controls['otroParentezco'].setValidators(Validators.required);
+            }else{
+                this.form.controls['otroParentezco'].clearValidators();
             }
         })
         this.subscription$ = this.form.controls['tipo'].valueChanges.subscribe((tipo) => {
@@ -321,6 +331,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['codigoDepartamento'].clearValidators();
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
+                    this.form.controls['tipoReferencia'].clearValidators();
                     this.form.controls['antiguedad'].setValidators([Validators.required, Validators.pattern('^[1-9][0-9]*$')]);
                     break;
                 case 'F':
@@ -337,6 +348,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
                     this.form.controls['antiguedad'].clearValidators();
+                    this.form.controls['tipoReferencia'].clearValidators();
                     break;
                 case 'C':
                     this.form.controls['primerNombre'].setValue('');
@@ -351,10 +363,12 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                         this.form.controls['codigoDepartamento'].setValidators(Validators.required);
                         this.form.controls['codigoCiudad'].setValidators(Validators.required);
                         this.form.controls['antiguedad'].setValidators(Validators.required);
+                        this.form.controls['tipoReferencia'].clearValidators();
                     } else {
                         this.form.controls['codigoCiudad'].clearValidators();
                         this.form.controls['codigoBarrio'].clearValidators();
                         this.form.controls['antiguedad'].clearValidators();
+                        this.form.controls['tipoReferencia'].setValidators(Validators.required);
                     }
 
                     break;
@@ -373,6 +387,7 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
                     this.form.controls['codigoCiudad'].clearValidators();
                     this.form.controls['codigoBarrio'].clearValidators();
                     this.form.controls['antiguedad'].clearValidators();
+                    this.form.controls['tipoReferencia'].clearValidators();
                     break;
             }
             this.form.controls['primerNombre'].updateValueAndValidity();
@@ -383,6 +398,8 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
             this.form.controls['nombreCompleto'].updateValueAndValidity();
             this.form.controls['antiguedad'].updateValueAndValidity();
             this.form.controls['celular'].updateValueAndValidity();
+            this.form.controls['tipoReferencia'].updateValueAndValidity();
+            
         });
     }
     /**

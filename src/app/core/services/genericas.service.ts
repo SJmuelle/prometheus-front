@@ -20,6 +20,13 @@ export class GenericasService {
         const params: string = 'ESTADO-REFERENCIA';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
+
+    /**
+     * @description: Relacion comercial
+     */
+    public getRelacionComercial(): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.referenciaComercial}`);
+    }
     /**
      * @description: Obtiene listado
      */

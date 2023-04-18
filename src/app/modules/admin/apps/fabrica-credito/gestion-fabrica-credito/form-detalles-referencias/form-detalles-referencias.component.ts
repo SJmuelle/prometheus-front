@@ -26,6 +26,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
     public parentescos$: Observable<any>;
     public permisoEditar: boolean = false;
     public unidadNegocio: number;
+    public tipoReferencia$: any;
 
     @Output() cerrarFormulario: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(
@@ -48,6 +49,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         this.getEstadosReferencias();
         this.getDepartamentos();
         this.escuchaObservable();
+        this.getTipoReferencia();
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
         if (this.permisoEditar) {
             this.form.disable();
@@ -96,6 +98,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
             descripcionTipoReferencia: [''],
             estado: [''],
             descripcionEstado: [''],
+            tipoReferencia: [''],
             antiguedad: [''],
             tipo: [''],
             numeroSolicitud: [''],
@@ -112,6 +115,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
 
     private getEstadosReferencias(): void {
         this.estadoReferencia$ = this.genericaService.getEstadoReferencias();
+    }
+
+    private getTipoReferencia(): void {
+        this.tipoReferencia$ = this.genericaService.getRelacionComercial();
     }
     /**
      * @description:
@@ -223,6 +230,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
                 parentesco: datos.parentesco,
+                tipoReferencia: datos.tipoReferencia
             };
         };
 

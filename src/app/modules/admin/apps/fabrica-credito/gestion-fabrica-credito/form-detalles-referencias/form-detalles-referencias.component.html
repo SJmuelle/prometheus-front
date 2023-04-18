@@ -24,6 +24,19 @@
                         </ng-container>
                     </div>
                     <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio === 1">
+                            <mat-form-field *ngIf="tipoReferencia$ | async as tiporeferencias" class="w-full fuse-mat-dense">
+                                <mat-label>Tipo de referencia</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoReferencia'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                    <mat-option *ngFor="let item of tiporeferencias.data"
+                                        [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
                         <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
                                 <mat-label>Primer nombre</mat-label>

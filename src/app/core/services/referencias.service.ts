@@ -37,9 +37,9 @@ export class ReferenciasService {
    * @description: Actualiza la referencia
    */
   public putDetalleReferencia(datos: any): Observable<any> {
-      return this._http.post(this._appSettings.referencias.url.baseReferencia, datos);
+      return this._http.post(this._appSettings.referencias.url.actualizarReferencia, datos);
   }
 
-
+  public 
 
 }

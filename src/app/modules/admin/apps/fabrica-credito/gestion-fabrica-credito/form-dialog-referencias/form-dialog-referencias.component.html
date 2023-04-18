@@ -211,19 +211,28 @@
                             </mat-form-field>
                         </ng-container>
                     </div>
-                    <!-- <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'  && form.controls['parentesco'].value === 'OT'">
-
-                        <ng-container *ngIf="parentescos$ | async as items">
+                    <div class="md:flex" *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio === 1">
+                        <!--{{form.controls.tipo.value}}-->
+                        <ng-container *ngIf="tipoReferencia">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                <mat-label>Otro, indique cual.</mat-label>
-                                <mat-select [formControlName]="'parentesco'">
-                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                <mat-label>Tipo de referencia</mat-label>
+                                <mat-select [formControlName]="'tipoReferencia'">
+                                    <mat-option *ngFor="let item of tipoReferencia" [value]="item.codigoOpcion">
                                         {{item.descripcionOpcion}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
-                    </div> -->
+                    </div>
+                    <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'  && form.controls['parentesco'].value === 'OT'">
+
+                        <ng-container *ngIf="parentescos$ | async as items">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Otro, indique cual.</mat-label>
+                                <input matInput type="text" [formControlName]="'otroParentezco'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
                 </div>
             </form>
         </div>
