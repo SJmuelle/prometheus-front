@@ -40,8 +40,9 @@
                                         matTooltip="Ver información">
                                         <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
                                     </button>
-                                    <button *ngIf="item.tipoReferenciacion !=='C'" mat-icon-button
-                                        (click)="onDialogReferenciacionFormGenerico(item)"
+                                    <button
+                                        *ngIf="item.tipoReferenciacion !=='C' && item.descripcionEstado !== 'INACTIVO'"
+                                        mat-icon-button (click)="onDialogReferenciacionFormGenerico(item)"
                                         matTooltip="Ver referenciación">
                                         <mat-icon svgIcon="heroicons_outline:phone"></mat-icon>
                                     </button>
