@@ -8,3 +8,10 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+
+@media screen AND (max-width: 600px) { 
+    .mat-expansion-panel-header{
+        padding: 0 !important;
+    }
+}

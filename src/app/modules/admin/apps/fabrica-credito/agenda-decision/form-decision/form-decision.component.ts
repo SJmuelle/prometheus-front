@@ -53,7 +53,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     consultaDecisiones() {
         this.fabricaDatos.agenda
         let agenda;
-
+        
         switch (this.fabricaDatos.agenda) {
             case 'DE':
                 agenda = 'DECISION';
@@ -63,6 +63,9 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
                 break;
             case 'CM':
                 agenda = 'COMERCIAL';
+                break;
+            case 'CC':
+                agenda = 'COMITE-COMERCIAL'
                 break;
             default:
                 agenda = 'COMPLETACION';
@@ -117,6 +120,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     }
 
     public getlistadoCausales() {
+        
         switch (this.form.value.decision) {
             case 'R':
                 this.consultaCausalesRechazo();
