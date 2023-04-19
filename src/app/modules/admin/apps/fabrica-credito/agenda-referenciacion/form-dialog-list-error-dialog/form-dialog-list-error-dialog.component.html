@@ -5,13 +5,13 @@
             <div mat-subheader>Campos del formulario requeridos</div>
             <ng-container *ngFor="let item of data">
                 <ng-container *ngIf="item.tipo=='T'">
-                    <mat-list-item>
+                    <mat-list-item class="py-4 my-4">
                         <mat-icon mat-list-icon>format_list_numbered</mat-icon>
                         <div mat-line>
                             <span class="px-2 bg-red-200 text-red-700">
                                 {{item.seccion}}
                             </span>
-                            <span class="ml-2">
+                            <span class="ml-2 w-auto">
                                 {{item.descripcion}}
                             </span>
                         </div>
@@ -24,7 +24,7 @@
             <div mat-subheader>Documentos requeridos</div>
             <ng-container *ngFor="let item of data">
                 <ng-container *ngIf="item.tipo=='D'">
-                    <mat-list-item>
+                    <mat-list-item class="py-4 my-4">
                         <mat-icon mat-list-icon>attach_file</mat-icon>
                         <div mat-line> {{item.descripcion}}</div>
                     </mat-list-item>
