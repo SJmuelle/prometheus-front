@@ -44,15 +44,11 @@
 
     <div class="text-xl font-semibold leading-tight text-center mb-4 mt-3 py-1 bg-gray-200">Obligaciones con entidades
         externa</div>
-    <div class="flex justify-end mb-4">
-        <button mat-raised-button color="accent" type="button" (click)="createCartera('D')" [disabled]="permisoEditar">
-            Nueva
-        </button>
-    </div>
 
     <ng-container
         *ngIf="!externaTitularCartera.length && !externaCodeudorCartera.length && !externaSolidarioCartera.length ">
-        <div class="text-xl font-semibold leading-tight text-center h-30 mb-4 mt-3">
+        <div style="line-height:  120px !important;"
+            class="text-xl font-semibold leading-tight text-center leading-[120px] h-30 mb-4 mt-3">
             No registra obligaciones </div>
     </ng-container>
 
@@ -396,15 +392,11 @@
     </ng-container>
     <div class="text-xl font-semibold leading-tight text-center py-1 bg-gray-200  mb-4 mt-3">
         Obligaciones con terceros </div>
-    <div class="flex justify-end mb-4">
-        <button mat-raised-button color="accent" type="button" (click)="createCartera('N')" [disabled]="permisoEditar">
-            Nueva
-        </button>
-    </div>
     <ng-container
         *ngIf="!internoTitularCartera.length && !internoCodeudorCartera.length && !internoSolidarioCartera.length ">
 
-        <div class="text-xl font-semibold leading-tight text-center h-30 mb-4 mt-3">
+        <div style="line-height:  120px !important; "
+            class="text-xl font-semibold leading-tight text-center leading-[120px]  h-30 mb-4 mt-3">
             No registra obligaciones </div>
     </ng-container>
     <ng-container *ngIf="internoTitularCartera.length">
