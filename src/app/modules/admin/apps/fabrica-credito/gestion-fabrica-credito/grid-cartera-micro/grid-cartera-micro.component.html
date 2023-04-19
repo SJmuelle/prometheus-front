@@ -72,10 +72,10 @@
                 <ng-container *ngIf="externaTitularCartera as items">
                     <ng-container *ngFor="let item of items">
                         <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput"
+                            <td class="text-sm border text-left m-0 p-0 w-auto">
+                                <mat-form-field class="p-0 w-full h-full mt-0 deleteMB mb-0"
                                     *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                    <mat-select class="m-0 sinB h-full w-full" [(ngModel)]="item.gestionCartera"
                                         [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                         <mat-option value="">Sin gestión</mat-option>
                                         <mat-option value="COM">Comprar</mat-option>
@@ -186,7 +186,7 @@
                     <ng-container *ngFor="let item of items">
                         <tr *ngIf=" item.alDia === 't'">
                             <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                     *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                     <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                         [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
@@ -298,7 +298,7 @@
                     <ng-container *ngFor="let item of items">
                         <tr *ngIf=" item.alDia === 't'">
                             <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                     *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                     <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                         [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
@@ -418,7 +418,7 @@
                     <ng-container *ngFor="let item of items">
                         <tr *ngIf=" item.alDia === 't'">
                             <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                     *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                     <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                         [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
@@ -531,7 +531,7 @@
                     <ng-container *ngFor="let item of items">
                         <tr *ngIf=" item.alDia === 't'">
                             <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                     *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                     <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                         [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
@@ -643,7 +643,7 @@
                     <ng-container *ngFor="let item of items">
                         <tr *ngIf=" item.alDia === 't'">
                             <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 marginInput"
+                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                     *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                     <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                         [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
