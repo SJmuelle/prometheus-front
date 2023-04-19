@@ -10,8 +10,8 @@
     <code><pre>primerApellido: {{form.controls['primerApellido'].valid | json}}</pre></code>
     <code><pre>Antiguedad: {{form.controls['antiguedad'].valid | json}}</pre></code>
     <code><pre>Celular: {{form.controls['celular'].valid | json}}</pre></code>-->
-    <div class="row">
-        <div class="col-md-12 col-md-12 col-lg-12">
+    <div class="row overflow-scroll" style="height: 100vh; width: 100vw;">
+        <div class="col-md-6 col-md-6 col-lg-6">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                     <div class="md:flex">
@@ -224,7 +224,8 @@
                             </mat-form-field>
                         </ng-container>
                     </div>
-                    <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'  && form.controls['parentesco'].value === 'OT'">
+                    <div class="md:flex"
+                        *ngIf="form.controls['tipo'].value === 'F'  && form.controls['parentesco'].value === 'OT'">
 
                         <ng-container *ngIf="parentescos$ | async as items">
                             <mat-form-field class="w-full mr-2 fuse-mat-dense">
