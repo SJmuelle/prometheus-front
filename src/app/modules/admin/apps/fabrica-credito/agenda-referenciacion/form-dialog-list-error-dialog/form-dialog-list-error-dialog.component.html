@@ -1,33 +1,39 @@
 <h2 mat-dialog-title class="ml-3">No es posible cambiar de estado por las siguientes validaciones:</h2>
 <div mat-dialog-content>
     <mat-list>
-        <ng-container *ngIf="tipoT>0">
-            <div mat-subheader>Campos del formulario requeridos</div>
-            <ng-container *ngFor="let item of data">
-                <ng-container *ngIf="item.tipo=='T'">
-                    <mat-list-item class="md:py-0 md:my-0 py-4 my-4">
-                        <mat-icon mat-list-icon>format_list_numbered</mat-icon>
-                        <div mat-line>
-                            <span class="px-2 bg-red-200 text-red-700">
-                                {{item.seccion}}
-                            </span>
-                            <span class="ml-2 w-auto">
-                                {{item.descripcion}}
-                            </span>
-                        </div>
-                    </mat-list-item>
+        <ng-container *ngFor="let tipo of transformData | keyvalue">
+
+            <ng-container *ngIf="existeErrorCampos(tipo.value)">
+                <div mat-subheader>Campos del formulario requeridos</div>
+                <div mat-subheader class="block text-center text-2xl bg-gray-200 h-auto mb-2">
+                    {{tituloDependiendoKey(tipo.key)}}</div>
+                <ng-container *ngFor="let item of tipo.value">
+                    <ng-container *ngIf="item.tipo=='T'">
+                        <mat-list-item class="md:py-0 md:my-0 py-2 my-2 h-auto">
+                            <mat-icon mat-list-icon>format_list_numbered</mat-icon>
+                            <div mat-line>
+                                <span class="px-2 bg-red-200 text-red-700 text-center">
+                                    {{item.seccion}}
+                                </span>
+                                <span class="ml-2 w-auto">
+                                    {{item.descripcion}}
+                                </span>
+                            </div>
+                        </mat-list-item>
+                    </ng-container>
                 </ng-container>
             </ng-container>
-        </ng-container>
-        <mat-divider></mat-divider>
-        <ng-container *ngIf="tipoD>0">
-            <div mat-subheader>Documentos requeridos</div>
-            <ng-container *ngFor="let item of data">
-                <ng-container *ngIf="item.tipo=='D'">
-                    <mat-list-item class="md:py-0 md:my-0 py-4 my-4">
-                        <mat-icon mat-list-icon>attach_file</mat-icon>
-                        <div mat-line> {{item.descripcion}}</div>
-                    </mat-list-item>
+            <ng-container *ngIf="existenErroresArchivos(tipo.value)">
+                <div mat-subheader>Documentos requeridos</div>
+                <div mat-subheader class="block text-center text-2xl bg-gray-200 h-auto mb-2">
+                    {{tituloDependiendoKey(tipo.key)}}</div>
+                <ng-container *ngFor="let item of tipo.value">
+                    <ng-container *ngIf="item.tipo=='D'">
+                        <mat-list-item class="md:py-0 md:my-0 py-2 my-2 h-auto">
+                            <mat-icon mat-list-icon>attach_file</mat-icon>
+                            <div mat-line> {{item.descripcion}}</div>
+                        </mat-list-item>
+                    </ng-container>
                 </ng-container>
             </ng-container>
         </ng-container>
