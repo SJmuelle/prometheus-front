@@ -27,13 +27,13 @@
             Total seleccionado: {{total}} / {{listado.length}}
         </p>
     </mat-dialog-content>
-    <mat-dialog-actions class="text-end" *ngIf="data.tipo!='D'">
+    <mat-dialog-actions class="text-end py-2" *ngIf="data.tipo!='D'">
         <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="SiguienteEtapa()">
             Siguiente etapa
         </button>
         <button mat-button mat-dialog-close>Cerrar</button>
     </mat-dialog-actions>
-    <mat-dialog-actions class="text-end" *ngIf="data.tipo=='D'">
+    <mat-dialog-actions class="text-end py-2" *ngIf="data.tipo=='D'">
         <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="decision()">
             Confirmar datos de la solicitud
         </button>
