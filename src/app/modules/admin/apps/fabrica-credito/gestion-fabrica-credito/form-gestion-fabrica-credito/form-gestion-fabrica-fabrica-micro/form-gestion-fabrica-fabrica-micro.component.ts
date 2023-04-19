@@ -174,7 +174,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.formatearDataInicial();
                 this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
-
+                this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico:'N')
+                this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta:'N')
+                this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico:'N')
+                this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera:'N')
+                this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda:'N')
+                this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd:'N')
+                this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta:'N')
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')

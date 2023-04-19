@@ -343,7 +343,7 @@ export class FormCodeudorComponent implements OnInit {
             vinculadoActualExpuesta: [''],
             fechaDesvinculacionExpuesta: [''],
             legalDesarrollaActividadApnfd: ['N', Validators.required],
-            legalCargoPartidoPolitico: ['', Validators.required],
+            legalCargoPartidoPolitico: ['N', Validators.required],
             legalOperacionCriptomoneda: ['N', Validators.required],
             tipoOperacionCripto: [''],
             tipoOperacionCriptomoneda: [''],
