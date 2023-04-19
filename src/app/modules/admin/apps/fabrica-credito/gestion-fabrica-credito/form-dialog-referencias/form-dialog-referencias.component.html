@@ -10,8 +10,8 @@
     <code><pre>primerApellido: {{form.controls['primerApellido'].valid | json}}</pre></code>
     <code><pre>Antiguedad: {{form.controls['antiguedad'].valid | json}}</pre></code>
     <code><pre>Celular: {{form.controls['celular'].valid | json}}</pre></code>-->
-    <div class="row overflow-scroll" style="height: 100vh; width: 100vw;">
-        <div class="col-md-6 col-md-6 col-lg-6">
+    <div class="row py-4">
+        <div class="col-md-6 col-md-6 col-lg-12">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                     <div class="md:flex">
@@ -56,14 +56,14 @@
                     </ng-container>
                     <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
                         <div class="md:flex">
-                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                            <mat-form-field class="md:w-1/2 w-full mr-2 fuse-mat-dense">
                                 <mat-label>Primer nombre</mat-label>
                                 <input matInput type="text" [formControlName]="'primerNombre'" [required]="true">
                                 <mat-error *ngIf="campoRequerido('primerNombre')">
                                     Este campo es requerido
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                            <mat-form-field class="md:w-1/2 w-full fuse-mat-dense">
                                 <mat-label>Segundo nombre (opcional)</mat-label>
                                 <input matInput type="text" [formControlName]="'segundoNombre'">
                             </mat-form-field>
@@ -71,14 +71,14 @@
                     </ng-container>
                     <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
                         <div class="md:flex">
-                            <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                            <mat-form-field class="md:w-1/2 w-full mr-2 fuse-mat-dense">
                                 <mat-label>Primer apellido</mat-label>
                                 <input matInput type="text" [formControlName]="'primerApellido'" [required]="true">
                                 <mat-error *ngIf="campoRequerido('primerApellido')">
                                     Este campo es requerido
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="w-1/2 fuse-mat-dense">
+                            <mat-form-field class="md:w-1/2 w-full fuse-mat-dense">
                                 <mat-label>Segundo apellido (opcional)</mat-label>
                                 <input matInput type="text" [formControlName]="'segundoApellido'">
                             </mat-form-field>
@@ -171,7 +171,7 @@
                         </div>
                     </ng-container>
                     <div class="md:flex">
-                        <mat-form-field class="w-1/2 mr-2 fuse-mat-dense">
+                        <mat-form-field class="md:w-1/2 w-full mr-2 fuse-mat-dense">
                             <mat-label>Celular</mat-label>
                             <input matInput type="text" mask="(000) 000 0000" [validation]="false"
                                 [formControlName]="'celular'" [required]="true">
@@ -185,7 +185,7 @@
                                     dígitos.</mat-error>
                             </mat-error>
                         </mat-form-field>
-                        <mat-form-field class="w-1/2 fuse-mat-dense">
+                        <mat-form-field class="md:w-1/2 w-full fuse-mat-dense">
                             <mat-label>Teléfono (opcional)</mat-label>
                             <input matInput type="text" [formControlName]="'telefono'">
                             <mat-error *ngIf="(form.controls.telefono.dirty || form.controls.telefono.touched)">
