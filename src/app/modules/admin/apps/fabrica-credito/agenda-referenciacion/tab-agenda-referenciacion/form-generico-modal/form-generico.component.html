@@ -12,9 +12,9 @@
 
                         <!-- telefono y datos basicos -->
                         <ng-container *ngIf="item.id==0">
-                            <div class="grid sm:grid-cols-3 grid-cols-2 mb-2">
+                            <div class="grid sm:grid-cols-3 grid-cols-2 mb-2 gap-4">
                                 <fuse-card
-                                    class="flex items-center col-span-2 md:max-w-80 w-full p-6 filter-info border-2 rounded-2 ">
+                                    class="flex items-center col-span-2 w-full p-6 filter-info border-2 rounded-2 ">
                                     <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:smartphone_2'"></mat-icon>
                                     <div class="flex flex-col">
                                         <div class="text-2xl font-semibold leading-tight">
@@ -23,7 +23,7 @@
                                     </div>
                                 </fuse-card>
                                 <fuse-card
-                                    class="flex items-center w-full p-6 filter-info border-2 rounded-2 md:ml-4 col-span-2">
+                                    class="flex items-center w-full p-6 filter-info border-2 rounded-2 col-span-2">
                                     <mat-icon class="icon-size-12 mr-6" [svgIcon]="'iconsmind:file_clipboardfiletext'">
                                     </mat-icon>
                                     <div class="flex flex-col">
