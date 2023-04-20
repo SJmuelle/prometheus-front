@@ -1,0 +1,84 @@
+<div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+    <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
+        <div class="col-span-12 grid grid-cols-12">
+            <div class="col-span-6 justify-self-end">
+
+
+
+            </div>
+        </div>
+    </div>
+    <div
+        class="h-screen w-full  md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr class="text-md font-semibold
+                    tracking-wide text-left text-gray-400
+                    capitalize border-b border-gray-600 ">
+                    <th class="px-4 py-3 text-center w-0">Editar</th>
+                    <th class="px-4 py-3 text-center">Tipo de contrato</th>
+                    <th class="px-4 py-3 text-center">Antiguedad maxima</th>
+                    <th class="px-4 py-3 text-center">Antiguedad minima</th>
+                    <th class="px-4 py-3 text-center">Plazo maximo</th>
+                    <th class="px-4 py-3 text-center">Plazo minimo </th>
+                    <th class="px-4 py-3 text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700" *ngFor="
+                    let item of listado
+                        | filter: filtrarTabla
+                        | paginate
+                            : {
+                                    itemsPerPage: tamanoTabl,
+                                    currentPage: page
+                                }
+                ">
+                    <td class="px-2 text-sm border text-center" (click)="abrirModal(item, 'A')">
+                        <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.tipocontrato }}
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item. antiguedadmaxima}}
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.antiguedadminima }}
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.plazomaximo}}
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.plazominimo}}
+                    </td>
+                    <td class="px-2 text-sm border text-center w-0">
+                        <div [ngClass]="
+                            item.descripcionEstado == 'INACTIVO'
+                                ? 'bg-pink-300'
+                                : 'bg-green-300'
+                        ">
+                            <span class="
+                                px-2
+                                py-1
+                                font-semibold
+                                leading-tight
+                                text-gray-700
+                                rounded-sm
+                                w-0
+                            ">
+                                {{ item.descripcionEstado }}
+
+                            </span>
+
+                        </div>
+                    </td>
+                </tr>
+                <div class="mt-4 right-18">
+                    <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+                        Crear nuevo
+                    </button>
+                </div>
+            </tbody>
+        </table>
+    </div>

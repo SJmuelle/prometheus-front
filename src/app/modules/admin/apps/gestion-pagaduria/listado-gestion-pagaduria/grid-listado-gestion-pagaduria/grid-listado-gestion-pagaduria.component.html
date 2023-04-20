@@ -1,0 +1,24 @@
+<div class="grid grid-cols-1 w-full h-full px-5 pt-3">
+    <div class="flex flex-col p-6 bg-card rounded-2xl shadow w-full">
+        <div class="flex items-center justify-between">
+
+            <div class="text-secondary font-medium"> <input
+                    class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
+                    name="filtrarTablaHG" placeholder="Filtrar..."></div>
+        </div>
+
+        <div class="w-full h-full mt-2">
+            <div class="flex flex-col gap-3 overflow-y-auto h-screen" style="height: calc(100% - 50px);">
+
+                <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center"
+                    *ngFor="let item of this.contact">
+                    <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">NP</div>
+                    <div>
+                        <p class="text-lg font-semibold">{{item.nombre}}</p>
+                        <p class="text-lg font-medium">Nit: {{item.codigo}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

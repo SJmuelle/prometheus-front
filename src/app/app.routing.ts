@@ -13,6 +13,7 @@ import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module
 import { PagoMasivoModule } from './modules/admin/apps/pago-masivo/pago-masivo.module';
 import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
 import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
+import { GestionPagaduriaModule } from './modules/admin/apps/gestion-pagaduria/gestion-pagaduria.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -123,8 +124,12 @@ export const appRoutes: Route[] = [
                 loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule),
             },
             {
-                path: 'pagaduria',
+                path: 'pagaduria/par',
                 loadChildren: () => PagaduriaModule
+            },
+            {
+                path: 'pagaduria/parametria',
+                loadChildren: () => GestionPagaduriaModule
             },
             {
                 path: 'pago-masivo',
