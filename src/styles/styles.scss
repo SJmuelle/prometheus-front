@@ -138,8 +138,12 @@ span.mat-option-text {
     mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper > .mat-form-field-flex {
         margin-top: 0 !important;
     }
+    .mat-expansion-panel-header.mat-expansion-panel-header{
+        height: auto !important;
+    }
 }
 
 mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper {
     margin-bottom: 0 !important;
 }
+
