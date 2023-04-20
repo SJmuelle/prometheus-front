@@ -34,7 +34,7 @@
                     <mat-icon class="icon-size-5 text-hint" [svgIcon]="'heroicons_outline:calendar'">
                     </mat-icon>
                     <div class="py-0.5 px-1  text-sm font-semibold ml-1.5 ">
-                        Fecha de la solicitud {{fabrica_datos.emision}}-{{fabrica_datos.tipoDocumento}}
+                        Fecha de la solicitud {{fabrica_datos.emision}}
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@
                 <div class="flex items-center leading-5 text-md text-secondary">
                     <mat-icon svgIcon="heroicons_outline:currency-dollar" class="|text-hint"></mat-icon>
                     <div class="py-0.5 px-1  text-sm font-semibold ml-1.5 ">
-                        Valor solicitado: {{fabrica_datos.valorSolicitado | number}}
+                        Valor solicitado: $ {{fabrica_datos.valorSolicitado | number}}
                     </div>
                 </div>
 
