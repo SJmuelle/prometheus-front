@@ -135,6 +135,9 @@ span.mat-option-text {
     .cdk-overlay-pane {
         width: 90% !important;
     }
+    mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper > .mat-form-field-flex {
+        margin-top: 0 !important;
+    }
 }
 
 mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper {

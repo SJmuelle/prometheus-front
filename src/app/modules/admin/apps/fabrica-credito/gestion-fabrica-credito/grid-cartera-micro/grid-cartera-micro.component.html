@@ -57,112 +57,114 @@
             <strong class="col-span-12 p-1.5 rounded-1 mb-3">Titular:
                 {{externaTitularCartera[0].nombreCompletoTitularCartera}}</strong>
         </div>
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-2 py-3 text-center w-1/12">Gestión</th>
-                    <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
-                    <th class="px-2 py-3 text-center w-1/12">Nit</th>
-                    <th class="px-2 py-3 text-center w-2/12">Entidad</th>
-                    <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                    <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
-                    <th class="px-4 py-3 text-center w-1/12">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="externaTitularCartera as items">
-                    <ng-container *ngFor="let item of items">
-                        <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0 w-auto">
-                                <mat-form-field class="p-0 w-full h-full mt-0 deleteMB mb-0"
-                                    *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB h-full w-full" [(ngModel)]="item.gestionCartera"
-                                        [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">
-                                {{transformTipoTercero(item.tipoTercero)}}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
-                            <td class="text-sm border text-center" [ngClass]="
+        <div class="max-w-screen overflow-scroll scrollbar-hide">
+            <table class="shadow p-0 mb-5">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-2 py-3 text-center w-1/12">Gestión</th>
+                        <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
+                        <th class="px-2 py-3 text-center w-1/12">Nit</th>
+                        <th class="px-2 py-3 text-center w-2/12">Entidad</th>
+                        <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
+                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
+                        <th class="px-4 py-3 text-center w-1/12">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container *ngIf="externaTitularCartera as items">
+                        <ng-container *ngFor="let item of items">
+                            <tr *ngIf=" item.alDia === 't'">
+                                <td class="text-sm border text-left m-0 p-0 w-auto">
+                                    <mat-form-field class="p-0 w-full h-full mt-0 deleteMB mb-0"
+                                        *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                        <mat-select class="m-0 sinB h-full w-full" [(ngModel)]="item.gestionCartera"
+                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            <mat-option value="">Sin gestión</mat-option>
+                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option value="NEG">Negociar</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">
+                                    {{transformTipoTercero(item.tipoTercero)}}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                                <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                                <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
                             : 'bg-green-300 text-green-900'
                             ">
-                                <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
-                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
-                                </span>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
-                                    (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <ng-container *ngIf="item.mostrarEstado=='v'">
-                            <tr>
-                                <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociación a comprar
-                                        </div>
-
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                        <div class="flex items-center col-span-3">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario: </strong>
-                                                <br>
-                                                <p>
-                                                    Esta obligación proviene de la entidad
-                                                    <strong>{{item.Detalle.entidad}}</strong>
-                                                    {{item.Detalle.nit==''?'':'con el nit'}}
-                                                    <strong>{{item.Detalle.nit}}</strong> con el Saldo de
-                                                    <strong>{{item.Detalle.saldoActual | number}}</strong> por el
-                                                    usuario <strong class="uppercase">{{item.usuarioCreacion}}</strong>
-                                                    el día <strong>{{item.fechaCreacion}}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
+                                        {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                    </span>
+                                </td>
+                                <td class="text-sm border w-0">
+                                    <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
+                                        (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                        <mat-icon
+                                            [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                        </mat-icon>
+                                    </button>
                                 </td>
                             </tr>
+                            <ng-container *ngIf="item.mostrarEstado=='v'">
+                                <tr>
+                                    <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-secondary">Detalles de la negociación a comprar
+                                            </div>
+
+                                            <div class="flex-auto ml-2 border-b-2"></div>
+                                        </div>
+                                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                            <div class="flex items-center col-span-3">
+                                                <mat-icon class="icon-size-5 text-primary"
+                                                    [svgIcon]="'heroicons_solid:check-circle'">
+                                                </mat-icon>
+                                                <div class="ml-2 text-1xl">
+                                                    <strong>Comentario: </strong>
+                                                    <br>
+                                                    <p>
+                                                        Esta obligación proviene de la entidad
+                                                        <strong>{{item.Detalle.entidad}}</strong>
+                                                        {{item.Detalle.nit==''?'':'con el nit'}}
+                                                        <strong>{{item.Detalle.nit}}</strong> con el Saldo de
+                                                        <strong>{{item.Detalle.saldoActual | number}}</strong> por el
+                                                        usuario <strong
+                                                            class="uppercase">{{item.usuarioCreacion}}</strong>
+                                                        el día <strong>{{item.fechaCreacion}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #nodataCartera2>
-                    <tr>
-                        <th colspan="9">
-                            <div class="flex justify-center">
-                                <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="9" class="text-center">
-                            <span>No hay obligaciones en mora</span>
-                        </th>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
-
+                    <ng-template #nodataCartera2>
+                        <tr>
+                            <th colspan="9">
+                                <div class="flex justify-center">
+                                    <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="9" class="text-center">
+                                <span>No hay obligaciones en mora</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
         <hr class="shadow">
     </ng-container>
     <ng-container *ngIf="externaCodeudorCartera.length">
@@ -170,111 +172,114 @@
             <strong class="col-span-12 p-1.5 rounded-1 mb-3">Codeudor:
                 {{externaCodeudorCartera[0].nombreCompletoTitularCartera}}</strong>
         </div>
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-2 py-3 text-center w-1/12">Gestión</th>
-                    <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
-                    <th class="px-2 py-3 text-center w-1/12">Nit</th>
-                    <th class="px-2 py-3 text-center w-2/12">Entidad</th>
-                    <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                    <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
-                    <th class="px-4 py-3 text-center w-1/12">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="externaCodeudorCartera as items">
-                    <ng-container *ngFor="let item of items">
-                        <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
-                                    *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                        [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">
-                                {{transformTipoTercero(item.tipoTercero)}}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
-                            <td class="text-sm border text-center" [ngClass]="
+        <div class="max-w-screen overflow-scroll scrollbar-hide">
+            <table class="shadow p-0 mb-5">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-2 py-3 text-center w-1/12">Gestión</th>
+                        <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
+                        <th class="px-2 py-3 text-center w-1/12">Nit</th>
+                        <th class="px-2 py-3 text-center w-2/12">Entidad</th>
+                        <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
+                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
+                        <th class="px-4 py-3 text-center w-1/12">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container *ngIf="externaCodeudorCartera as items">
+                        <ng-container *ngFor="let item of items">
+                            <tr *ngIf=" item.alDia === 't'">
+                                <td class="text-sm border text-left m-0 p-0">
+                                    <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
+                                        *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                        <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            <mat-option value="">Sin gestión</mat-option>
+                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option value="NEG">Negociar</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">
+                                    {{transformTipoTercero(item.tipoTercero)}}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                                <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                                <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
                             : 'bg-green-300 text-green-900'
                             ">
-                                <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
-                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
-                                </span>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
-                                    (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <ng-container *ngIf="item.mostrarEstado=='v'">
-                            <tr>
-                                <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociación a comprar
-                                        </div>
-
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                        <div class="flex items-center col-span-3">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario: </strong>
-                                                <br>
-                                                <p>
-                                                    Esta obligación proviene de la entidad
-                                                    <strong>{{item.Detalle.entidad}}</strong>
-                                                    {{item.Detalle.nit==''?'':'con el nit'}}
-                                                    <strong>{{item.Detalle.nit}}</strong> con el Saldo de
-                                                    <strong>{{item.Detalle.saldoActual | number}}</strong> por el
-                                                    usuario <strong class="uppercase">{{item.usuarioCreacion}}</strong>
-                                                    el día <strong>{{item.fechaCreacion}}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
+                                        {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                    </span>
+                                </td>
+                                <td class="text-sm border w-0">
+                                    <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
+                                        (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                        <mat-icon
+                                            [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                        </mat-icon>
+                                    </button>
                                 </td>
                             </tr>
+                            <ng-container *ngIf="item.mostrarEstado=='v'">
+                                <tr>
+                                    <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-secondary">Detalles de la negociación a comprar
+                                            </div>
+
+                                            <div class="flex-auto ml-2 border-b-2"></div>
+                                        </div>
+                                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                            <div class="flex items-center col-span-3">
+                                                <mat-icon class="icon-size-5 text-primary"
+                                                    [svgIcon]="'heroicons_solid:check-circle'">
+                                                </mat-icon>
+                                                <div class="ml-2 text-1xl">
+                                                    <strong>Comentario: </strong>
+                                                    <br>
+                                                    <p>
+                                                        Esta obligación proviene de la entidad
+                                                        <strong>{{item.Detalle.entidad}}</strong>
+                                                        {{item.Detalle.nit==''?'':'con el nit'}}
+                                                        <strong>{{item.Detalle.nit}}</strong> con el Saldo de
+                                                        <strong>{{item.Detalle.saldoActual | number}}</strong> por el
+                                                        usuario <strong
+                                                            class="uppercase">{{item.usuarioCreacion}}</strong>
+                                                        el día <strong>{{item.fechaCreacion}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #nodataCartera2>
-                    <tr>
-                        <th colspan="9">
-                            <div class="flex justify-center">
-                                <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="9" class="text-center">
-                            <span>No hay obligaciones en mora</span>
-                        </th>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
+                    <ng-template #nodataCartera2>
+                        <tr>
+                            <th colspan="9">
+                                <div class="flex justify-center">
+                                    <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="9" class="text-center">
+                                <span>No hay obligaciones en mora</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
         <hr class="shadow">
     </ng-container>
     <ng-container *ngIf="externaSolidarioCartera.length">
@@ -282,112 +287,115 @@
             <strong class="col-span-12 p-1.5 rounded-1 mb-3">Solidario:
                 {{externaSolidarioCartera[0].nombreCompletoTitularCartera}}</strong>
         </div>
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-2 py-3 text-center w-1/12">Gestión</th>
-                    <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
-                    <th class="px-2 py-3 text-center w-1/12">Nit</th>
-                    <th class="px-2 py-3 text-center w-2/12">Entidad</th>
-                    <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                    <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
-                    <th class="px-4 py-3 text-center w-1/12">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="externaSolidarioCartera as items">
-                    <ng-container *ngFor="let item of items">
-                        <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
-                                    *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                        [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">
-                                {{transformTipoTercero(item.tipoTercero)}}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
-                            <td class="text-sm border text-center" [ngClass]="
+        <div class="max-w-screen overflow-scroll scrollbar-hide">
+            <table class="shadow p-0 mb-5">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-2 py-3 text-center w-1/12">Gestión</th>
+                        <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
+                        <th class="px-2 py-3 text-center w-1/12">Nit</th>
+                        <th class="px-2 py-3 text-center w-2/12">Entidad</th>
+                        <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
+                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
+                        <th class="px-4 py-3 text-center w-1/12">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container *ngIf="externaSolidarioCartera as items">
+                        <ng-container *ngFor="let item of items">
+                            <tr *ngIf=" item.alDia === 't'">
+                                <td class="text-sm border text-left m-0 p-0">
+                                    <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
+                                        *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                        <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            <mat-option value="">Sin gestión</mat-option>
+                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option value="NEG">Negociar</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">
+                                    {{transformTipoTercero(item.tipoTercero)}}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                                <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                                <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
                             : 'bg-green-300 text-green-900'
                             ">
-                                <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
-                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
-                                </span>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
-                                    (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <ng-container *ngIf="item.mostrarEstado=='v'">
-                            <tr>
-                                <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociación a comprar
-                                        </div>
-
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                        <div class="flex items-center col-span-3">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario: </strong>
-                                                <br>
-                                                <p>
-                                                    Esta obligación proviene de la entidad
-                                                    <strong>{{item.Detalle.entidad}}</strong>
-                                                    {{item.Detalle.nit==''?'':'con el nit'}}
-                                                    <strong>{{item.Detalle.nit}}</strong> con el Saldo de
-                                                    <strong>{{item.Detalle.saldoActual | number}}</strong> por el
-                                                    usuario
-                                                    <strong class="uppercase">{{item.usuarioCreacion}}</strong> el día
-                                                    <strong>{{item.fechaCreacion}}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
+                                        {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                    </span>
+                                </td>
+                                <td class="text-sm border w-0">
+                                    <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
+                                        (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                        <mat-icon
+                                            [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                        </mat-icon>
+                                    </button>
                                 </td>
                             </tr>
+                            <ng-container *ngIf="item.mostrarEstado=='v'">
+                                <tr>
+                                    <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-secondary">Detalles de la negociación a comprar
+                                            </div>
+
+                                            <div class="flex-auto ml-2 border-b-2"></div>
+                                        </div>
+                                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                            <div class="flex items-center col-span-3">
+                                                <mat-icon class="icon-size-5 text-primary"
+                                                    [svgIcon]="'heroicons_solid:check-circle'">
+                                                </mat-icon>
+                                                <div class="ml-2 text-1xl">
+                                                    <strong>Comentario: </strong>
+                                                    <br>
+                                                    <p>
+                                                        Esta obligación proviene de la entidad
+                                                        <strong>{{item.Detalle.entidad}}</strong>
+                                                        {{item.Detalle.nit==''?'':'con el nit'}}
+                                                        <strong>{{item.Detalle.nit}}</strong> con el Saldo de
+                                                        <strong>{{item.Detalle.saldoActual | number}}</strong> por el
+                                                        usuario
+                                                        <strong class="uppercase">{{item.usuarioCreacion}}</strong> el
+                                                        día
+                                                        <strong>{{item.fechaCreacion}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #nodataCartera2>
-                    <tr>
-                        <th colspan="9">
-                            <div class="flex justify-center">
-                                <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="9" class="text-center">
-                            <span>No hay obligaciones en mora</span>
-                        </th>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
+                    <ng-template #nodataCartera2>
+                        <tr>
+                            <th colspan="9">
+                                <div class="flex justify-center">
+                                    <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="9" class="text-center">
+                                <span>No hay obligaciones en mora</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
         <hr class="shadow">
     </ng-container>
     <div class="text-xl font-semibold leading-tight text-center py-1 bg-gray-200  mb-4 mt-3">
@@ -404,112 +412,114 @@
             <strong class="col-span-12 p-1.5 rounded-1 mb-3">Titular:
                 {{internoTitularCartera[0].nombreCompletoTitularCartera}}</strong>
         </div>
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-2 py-3 text-center w-1/12">Gestión</th>
-                    <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
-                    <th class="px-2 py-3 text-center w-1/12">Nit</th>
-                    <th class="px-2 py-3 text-center w-2/12">Entidad</th>
-                    <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                    <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
-                    <th class="px-4 py-3 text-center w-1/12">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="internoTitularCartera as items">
-                    <ng-container *ngFor="let item of items">
-                        <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
-                                    *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                        [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">
-                                {{transformTipoTercero(item.tipoTercero)}}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
-                            <td class="text-sm border text-center" [ngClass]="
+        <div class="max-w-screen overflow-scroll scrollbar-hide">
+            <table class="shadow p-0 mb-5">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-2 py-3 text-center w-1/12">Gestión</th>
+                        <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
+                        <th class="px-2 py-3 text-center w-1/12">Nit</th>
+                        <th class="px-2 py-3 text-center w-2/12">Entidad</th>
+                        <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
+                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
+                        <th class="px-4 py-3 text-center w-1/12">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container *ngIf="internoTitularCartera as items">
+                        <ng-container *ngFor="let item of items">
+                            <tr *ngIf=" item.alDia === 't'">
+                                <td class="text-sm border text-left m-0 p-0">
+                                    <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
+                                        *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                        <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            <mat-option value="">Sin gestión</mat-option>
+                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option value="NEG">Negociar</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">
+                                    {{transformTipoTercero(item.tipoTercero)}}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                                <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                                <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
                             : 'bg-green-300 text-green-900'
                             ">
-                                <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
-                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
-                                </span>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
-                                    (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <ng-container *ngIf="item.mostrarEstado=='v'">
-                            <tr>
-                                <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociación a comprar
-                                        </div>
-
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                        <div class="flex items-center col-span-3">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario: </strong>
-                                                <br>
-                                                <p>
-                                                    Esta obligación proviene de la entidad
-                                                    <strong>{{item.Detalle.entidad}}</strong>
-                                                    {{item.Detalle.nit==''?'':'con el nit'}}
-                                                    <strong>{{item.Detalle.nit}}</strong> con el Saldo de
-                                                    <strong>{{item.Detalle.saldoActual | number}}</strong> por el
-                                                    usuario <strong class="uppercase">{{item.usuarioCreacion}}</strong>
-                                                    el día <strong>{{item.fechaCreacion}}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
+                                        {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                    </span>
+                                </td>
+                                <td class="text-sm border w-0">
+                                    <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
+                                        (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                        <mat-icon
+                                            [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                        </mat-icon>
+                                    </button>
                                 </td>
                             </tr>
+                            <ng-container *ngIf="item.mostrarEstado=='v'">
+                                <tr>
+                                    <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-secondary">Detalles de la negociación a comprar
+                                            </div>
+
+                                            <div class="flex-auto ml-2 border-b-2"></div>
+                                        </div>
+                                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                            <div class="flex items-center col-span-3">
+                                                <mat-icon class="icon-size-5 text-primary"
+                                                    [svgIcon]="'heroicons_solid:check-circle'">
+                                                </mat-icon>
+                                                <div class="ml-2 text-1xl">
+                                                    <strong>Comentario: </strong>
+                                                    <br>
+                                                    <p>
+                                                        Esta obligación proviene de la entidad
+                                                        <strong>{{item.Detalle.entidad}}</strong>
+                                                        {{item.Detalle.nit==''?'':'con el nit'}}
+                                                        <strong>{{item.Detalle.nit}}</strong> con el Saldo de
+                                                        <strong>{{item.Detalle.saldoActual | number}}</strong> por el
+                                                        usuario <strong
+                                                            class="uppercase">{{item.usuarioCreacion}}</strong>
+                                                        el día <strong>{{item.fechaCreacion}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #nodataCartera2>
-                    <tr>
-                        <th colspan="9">
-                            <div class="flex justify-center">
-                                <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="9" class="text-center">
-                            <span>No hay obligaciones en mora</span>
-                        </th>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
-
+                    <ng-template #nodataCartera2>
+                        <tr>
+                            <th colspan="9">
+                                <div class="flex justify-center">
+                                    <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="9" class="text-center">
+                                <span>No hay obligaciones en mora</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
         <hr class="shadow">
     </ng-container>
     <ng-container *ngIf="internoCodeudorCartera.length">
@@ -517,111 +527,114 @@
             <strong class="col-span-12 p-1.5 rounded-1 mb-3">Codeudor:
                 {{internoCodeudorCartera[0].nombreCompletoTitularCartera}}</strong>
         </div>
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-2 py-3 text-center w-1/12">Gestión</th>
-                    <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
-                    <th class="px-2 py-3 text-center w-1/12">Nit</th>
-                    <th class="px-2 py-3 text-center w-2/12">Entidad</th>
-                    <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                    <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
-                    <th class="px-4 py-3 text-center w-1/12">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="internoCodeudorCartera as items">
-                    <ng-container *ngFor="let item of items">
-                        <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
-                                    *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                        [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">
-                                {{transformTipoTercero(item.tipoTercero)}}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
-                            <td class="text-sm border text-center" [ngClass]="
+        <div class="max-w-screen overflow-scroll scrollbar-hide">
+            <table class="shadow p-0 mb-5">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-2 py-3 text-center w-1/12">Gestión</th>
+                        <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
+                        <th class="px-2 py-3 text-center w-1/12">Nit</th>
+                        <th class="px-2 py-3 text-center w-2/12">Entidad</th>
+                        <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
+                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
+                        <th class="px-4 py-3 text-center w-1/12">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container *ngIf="internoCodeudorCartera as items">
+                        <ng-container *ngFor="let item of items">
+                            <tr *ngIf=" item.alDia === 't'">
+                                <td class="text-sm border text-left m-0 p-0">
+                                    <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
+                                        *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                        <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            <mat-option value="">Sin gestión</mat-option>
+                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option value="NEG">Negociar</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">
+                                    {{transformTipoTercero(item.tipoTercero)}}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                                <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                                <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
                             : 'bg-green-300 text-green-900'
                             ">
-                                <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
-                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
-                                </span>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
-                                    (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <ng-container *ngIf="item.mostrarEstado=='v'">
-                            <tr>
-                                <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociación a comprar
-                                        </div>
-
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                        <div class="flex items-center col-span-3">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario: </strong>
-                                                <br>
-                                                <p>
-                                                    Esta obligación proviene de la entidad
-                                                    <strong>{{item.Detalle.entidad}}</strong>
-                                                    {{item.Detalle.nit==''?'':'con el nit'}}
-                                                    <strong>{{item.Detalle.nit}}</strong> con el Saldo de
-                                                    <strong>{{item.Detalle.saldoActual | number}}</strong> por el
-                                                    usuario <strong class="uppercase">{{item.usuarioCreacion}}</strong>
-                                                    el día <strong>{{item.fechaCreacion}}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
+                                        {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                    </span>
+                                </td>
+                                <td class="text-sm border w-0">
+                                    <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
+                                        (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                        <mat-icon
+                                            [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                        </mat-icon>
+                                    </button>
                                 </td>
                             </tr>
+                            <ng-container *ngIf="item.mostrarEstado=='v'">
+                                <tr>
+                                    <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-secondary">Detalles de la negociación a comprar
+                                            </div>
+
+                                            <div class="flex-auto ml-2 border-b-2"></div>
+                                        </div>
+                                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                            <div class="flex items-center col-span-3">
+                                                <mat-icon class="icon-size-5 text-primary"
+                                                    [svgIcon]="'heroicons_solid:check-circle'">
+                                                </mat-icon>
+                                                <div class="ml-2 text-1xl">
+                                                    <strong>Comentario: </strong>
+                                                    <br>
+                                                    <p>
+                                                        Esta obligación proviene de la entidad
+                                                        <strong>{{item.Detalle.entidad}}</strong>
+                                                        {{item.Detalle.nit==''?'':'con el nit'}}
+                                                        <strong>{{item.Detalle.nit}}</strong> con el Saldo de
+                                                        <strong>{{item.Detalle.saldoActual | number}}</strong> por el
+                                                        usuario <strong
+                                                            class="uppercase">{{item.usuarioCreacion}}</strong>
+                                                        el día <strong>{{item.fechaCreacion}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #nodataCartera2>
-                    <tr>
-                        <th colspan="9">
-                            <div class="flex justify-center">
-                                <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="9" class="text-center">
-                            <span>No hay obligaciones en mora</span>
-                        </th>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
+                    <ng-template #nodataCartera2>
+                        <tr>
+                            <th colspan="9">
+                                <div class="flex justify-center">
+                                    <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="9" class="text-center">
+                                <span>No hay obligaciones en mora</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
         <hr class="shadow">
     </ng-container>
     <ng-container *ngIf="internoSolidarioCartera.length">
@@ -629,112 +642,115 @@
             <strong class="col-span-12 p-1.5 rounded-1 mb-3">Solidario:
                 {{internoSolidarioCartera[0].nombreCompletoTitularCartera}}</strong>
         </div>
-        <table class="shadow p-0 mb-5">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-2 py-3 text-center w-1/12">Gestión</th>
-                    <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
-                    <th class="px-2 py-3 text-center w-1/12">Nit</th>
-                    <th class="px-2 py-3 text-center w-2/12">Entidad</th>
-                    <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
-                    <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                    <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
-                    <th class="px-4 py-3 text-center w-1/12">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="internoSolidarioCartera as items">
-                    <ng-container *ngFor="let item of items">
-                        <tr *ngIf=" item.alDia === 't'">
-                            <td class="text-sm border text-left m-0 p-0">
-                                <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
-                                    *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
-                                    <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                        [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                        <mat-option value="">Sin gestión</mat-option>
-                                        <mat-option value="COM">Comprar</mat-option>
-                                        <mat-option value="NEG">Negociar</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">
-                                {{transformTipoTercero(item.tipoTercero)}}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
-                            <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
-                            <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
-                            <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                            <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
-                            <td class="text-sm border text-center" [ngClass]="
+        <div class="max-w-screen overflow-scroll scrollbar-hide">
+            <table class="shadow p-0 mb-5">
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-2 py-3 text-center w-1/12">Gestión</th>
+                        <th class="px-2 py-3 text-center w-2/12">En calidad de</th>
+                        <th class="px-2 py-3 text-center w-1/12">Nit</th>
+                        <th class="px-2 py-3 text-center w-2/12">Entidad</th>
+                        <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
+                        <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
+                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
+                        <th class="px-4 py-3 text-center w-1/12">Estado</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white">
+                    <ng-container *ngIf="internoSolidarioCartera as items">
+                        <ng-container *ngFor="let item of items">
+                            <tr *ngIf=" item.alDia === 't'">
+                                <td class="text-sm border text-left m-0 p-0">
+                                    <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
+                                        *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
+                                        <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
+                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            <mat-option value="">Sin gestión</mat-option>
+                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option value="NEG">Negociar</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">
+                                    {{transformTipoTercero(item.tipoTercero)}}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
+                                <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
+                                <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
+                                <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
+                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
+                                <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
                             : 'bg-green-300 text-green-900'
                             ">
-                                <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
-                                    {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
-                                </span>
-                            </td>
-                            <td class="text-sm border w-0">
-                                <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
-                                    (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
-                                    <mat-icon
-                                        [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
-                                    </mat-icon>
-                                </button>
-                            </td>
-                        </tr>
-                        <ng-container *ngIf="item.mostrarEstado=='v'">
-                            <tr>
-                                <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
-                                    <div class="flex items-center">
-                                        <div class="font-medium text-secondary">Detalles de la negociación a comprar
-                                        </div>
-
-                                        <div class="flex-auto ml-2 border-b-2"></div>
-                                    </div>
-                                    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
-                                        <div class="flex items-center col-span-3">
-                                            <mat-icon class="icon-size-5 text-primary"
-                                                [svgIcon]="'heroicons_solid:check-circle'">
-                                            </mat-icon>
-                                            <div class="ml-2 text-1xl">
-                                                <strong>Comentario: </strong>
-                                                <br>
-                                                <p>
-                                                    Esta obligación proviene de la entidad
-                                                    <strong>{{item.Detalle.entidad}}</strong>
-                                                    {{item.Detalle.nit==''?'':'con el nit'}}
-                                                    <strong>{{item.Detalle.nit}}</strong> con el Saldo de
-                                                    <strong>{{item.Detalle.saldoActual | number}}</strong> por el
-                                                    usuario
-                                                    <strong class="uppercase">{{item.usuarioCreacion}}</strong> el día
-                                                    <strong>{{item.fechaCreacion}}</strong>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span class="py-0.5 px-3 text-center  text-sm font-semibold  ">
+                                        {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
+                                    </span>
+                                </td>
+                                <td class="text-sm border w-0">
+                                    <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
+                                        (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
+                                        <mat-icon
+                                            [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                        </mat-icon>
+                                    </button>
                                 </td>
                             </tr>
+                            <ng-container *ngIf="item.mostrarEstado=='v'">
+                                <tr>
+                                    <td colspan="9" class="text-sm border text-left px-4 py-2 m-0">
+                                        <div class="flex items-center">
+                                            <div class="font-medium text-secondary">Detalles de la negociación a comprar
+                                            </div>
+
+                                            <div class="flex-auto ml-2 border-b-2"></div>
+                                        </div>
+                                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-4 mt-2 ">
+                                            <div class="flex items-center col-span-3">
+                                                <mat-icon class="icon-size-5 text-primary"
+                                                    [svgIcon]="'heroicons_solid:check-circle'">
+                                                </mat-icon>
+                                                <div class="ml-2 text-1xl">
+                                                    <strong>Comentario: </strong>
+                                                    <br>
+                                                    <p>
+                                                        Esta obligación proviene de la entidad
+                                                        <strong>{{item.Detalle.entidad}}</strong>
+                                                        {{item.Detalle.nit==''?'':'con el nit'}}
+                                                        <strong>{{item.Detalle.nit}}</strong> con el Saldo de
+                                                        <strong>{{item.Detalle.saldoActual | number}}</strong> por el
+                                                        usuario
+                                                        <strong class="uppercase">{{item.usuarioCreacion}}</strong> el
+                                                        día
+                                                        <strong>{{item.fechaCreacion}}</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <ng-template #nodataCartera2>
-                    <tr>
-                        <th colspan="9">
-                            <div class="flex justify-center">
-                                <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                            </div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="9" class="text-center">
-                            <span>No hay obligaciones en mora</span>
-                        </th>
-                    </tr>
-                </ng-template>
-            </tbody>
-        </table>
+                    <ng-template #nodataCartera2>
+                        <tr>
+                            <th colspan="9">
+                                <div class="flex justify-center">
+                                    <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="9" class="text-center">
+                                <span>No hay obligaciones en mora</span>
+                            </th>
+                        </tr>
+                    </ng-template>
+                </tbody>
+            </table>
+        </div>
         <hr class="shadow">
     </ng-container>
 </div>
