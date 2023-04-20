@@ -18,7 +18,6 @@ export class FormDialogListErrorDialogComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log("elementos", this.data);
         this.agruparData(this.data);
     }
 
@@ -30,7 +29,6 @@ export class FormDialogListErrorDialogComponent implements OnInit {
                 this.transformData[item.tipoTercero].push(item)
             }
         })
-        console.log("data transformada", this.transformData);
     }
 
     existeErrorCampos(data: any[]) {
