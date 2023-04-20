@@ -73,26 +73,50 @@ export class GridCarteraMicroComponent implements OnInit {
           case 'N':
             switch(item.tipoTercero){
               case 'T':
-              this.externaTitularCartera.push(item);
+                if(item.alDia === 'f'){
+                  this.externaTitularCartera.push(item);
+                }else{
+                  this.externaTitularCartera.unshift(item)
+                }
               break;
               case 'C':
-              this.externaCodeudorCartera.push(item)
+                if(item.alDia === 'f'){
+                  this.externaCodeudorCartera.push(item)
+                }else{
+                  this.externaCodeudorCartera.unshift(item)
+                }
               break;
               case 'S':
-              this.externaSolidarioCartera.push(item);
+                if(item.alDia === 'f'){
+                  this.externaSolidarioCartera.push(item);
+                }else{
+                  this.externaSolidarioCartera.unshift(item);
+                }
               break;
             }
             break;
           case 'S':
             switch(item.tipoTercero){
               case 'T':
-              this.internoTitularCartera.push(item);
+                if(item.alDia === 'f'){
+                  this.internoTitularCartera.push(item);
+                }else{
+                  this.internoTitularCartera.unshift(item);
+                }
               break;
               case 'C':
-              this.internoCodeudorCartera.push(item)
+                if(item.alDia === 'f'){
+                  this.internoCodeudorCartera.push(item)
+                }else{
+                  this.internoCodeudorCartera.unshift(item)
+                }
               break;
               case 'S':
-              this.internoSolidarioCartera.push(item);
+                if(item.alDia === 'f'){
+                  this.internoSolidarioCartera.push(item);
+                }else{
+                  this.internoSolidarioCartera.unshift(item);
+                }
               break;
             }
         }
