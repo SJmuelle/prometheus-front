@@ -42,14 +42,15 @@
 
 
 
-    <div class="text-xl font-semibold leading-tight text-center mb-4 mt-3 py-1 bg-gray-200">Obligaciones con entidades
+    <div class="text-xl font-semibold leading-tight text-center mb-4 mt-3 py-1 bg-gray-200 rounded-lg">Obligaciones con entidades
         externa</div>
 
     <ng-container
         *ngIf="!externaTitularCartera.length && !externaCodeudorCartera.length && !externaSolidarioCartera.length ">
-        <div style="line-height:  120px !important;"
-            class="text-xl font-semibold leading-tight text-center leading-[120px] h-30 mb-4 mt-3">
-            No registra obligaciones </div>
+        <div  class="flex justify-center flex-col items-center mt-4 h-60 mb-4">
+            <img class="w-30" src="assets/images/animaciones/nodata.gif">
+            <span>No registra obligaciones</span>
+        </div>
     </ng-container>
 
     <ng-container *ngIf="externaTitularCartera.length">
@@ -73,9 +74,9 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    <ng-container *ngIf="externaTitularCartera as items">
-                        <ng-container *ngFor="let item of items">
-                            <tr *ngIf=" item.alDia === 't'">
+                    <ng-container *ngIf="externaTitularCartera as externaTitularCarteras">
+                        <ng-container *ngFor="let item of externaTitularCarteras">
+                            <tr >
                                 <td class="text-sm border text-left m-0 p-0 w-auto">
                                     <mat-form-field class="p-0 w-full h-full mt-0 deleteMB mb-0"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
@@ -189,7 +190,7 @@
                 <tbody class="bg-white">
                     <ng-container *ngIf="externaCodeudorCartera as items">
                         <ng-container *ngFor="let item of items">
-                            <tr *ngIf=" item.alDia === 't'">
+                            <tr >
                                 <td class="text-sm border text-left m-0 p-0">
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
@@ -303,7 +304,7 @@
                 <tbody class="bg-white">
                     <ng-container *ngIf="externaSolidarioCartera as items">
                         <ng-container *ngFor="let item of items">
-                            <tr *ngIf=" item.alDia === 't'">
+                            <tr >
                                 <td class="text-sm border text-left m-0 p-0">
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
@@ -395,14 +396,18 @@
         </div>
         <hr class="shadow">
     </ng-container>
-    <div class="text-xl font-semibold leading-tight text-center py-1 bg-gray-200  mb-4 mt-3">
+    <div class="text-xl font-semibold leading-tight text-center py-1 bg-gray-200  mb-4 mt-3 rounded-lg">
         Obligaciones con terceros </div>
     <ng-container
         *ngIf="!internoTitularCartera.length && !internoCodeudorCartera.length && !internoSolidarioCartera.length ">
-
+<!-- 
         <div style="line-height:  120px !important; "
             class="text-xl font-semibold leading-tight text-center leading-[120px]  h-30 mb-4 mt-3">
-            No registra obligaciones </div>
+             </div> -->
+            <div  class="flex justify-center flex-col items-center mt-4 h-60 mb-4">
+                <img class="w-30" src="assets/images/animaciones/nodata.gif">
+                <span>No registra obligaciones</span>
+            </div>
     </ng-container>
     <ng-container *ngIf="internoTitularCartera.length">
         <div class="my-2">
@@ -427,7 +432,7 @@
                 <tbody class="bg-white">
                     <ng-container *ngIf="internoTitularCartera as items">
                         <ng-container *ngFor="let item of items">
-                            <tr *ngIf=" item.alDia === 't'">
+                            <tr >
                                 <td class="text-sm border text-left m-0 p-0">
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
@@ -541,7 +546,7 @@
                 <tbody class="bg-white">
                     <ng-container *ngIf="internoCodeudorCartera as items">
                         <ng-container *ngFor="let item of items">
-                            <tr *ngIf=" item.alDia === 't'">
+                            <tr >
                                 <td class="text-sm border text-left m-0 p-0">
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
@@ -655,7 +660,7 @@
                 <tbody class="bg-white">
                     <ng-container *ngIf="internoSolidarioCartera as items">
                         <ng-container *ngFor="let item of items">
-                            <tr *ngIf=" item.alDia === 't'">
+                            <tr >
                                 <td class="text-sm border text-left m-0 p-0">
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
