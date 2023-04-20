@@ -1,6 +1,6 @@
 <div class="min-h-60" *ngIf="agenda_fabrica">
-    <div class="grid grid-cols-6">
-        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
+    <div class="grid grid-cols-6 sm:gap-2 gap-4">
+        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-6 sm:col-span-5">
             <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
             <div class="flex flex-col">
                 <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
@@ -11,7 +11,7 @@
                 <div class="text-1xl  text-green-600 text-center">{{agenda_fabrica.descripcionTipoCredito}}</div>
             </div>
         </fuse-card>
-        <div class="pl-2" *ngIf="totales">
+        <fuse-card class="pl-2 sm:col-span-1 col-span-6 border-1" *ngIf="totales">
             <div class="flex flex-col flex-auto p-3 bg-card border-1 rounded-2xl overflow-hidden">
                 <div class="flex items-start justify-between">
                     <div class="text-lg font-medium tracking-tight leading-6 truncate">
@@ -36,7 +36,7 @@
                 <div class="flex items-center justify-center w-full text-secondary mt-1">
                 </div>
             </div>
-        </div>
+        </fuse-card>
 
     </div>
 
@@ -83,7 +83,6 @@
                                             [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                             <mat-option value="">Sin gestión</mat-option>
                                             <mat-option value="COM">Comprar</mat-option>
-                                            <mat-option value="NEG">Negociar</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -198,7 +197,6 @@
                                             [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                             <mat-option value="">Sin gestión</mat-option>
                                             <mat-option value="COM">Comprar</mat-option>
-                                            <mat-option value="NEG">Negociar</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -313,7 +311,6 @@
                                             [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                             <mat-option value="">Sin gestión</mat-option>
                                             <mat-option value="COM">Comprar</mat-option>
-                                            <mat-option value="NEG">Negociar</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -438,7 +435,6 @@
                                             [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                             <mat-option value="">Sin gestión</mat-option>
                                             <mat-option value="COM">Comprar</mat-option>
-                                            <mat-option value="NEG">Negociar</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -553,7 +549,6 @@
                                             [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                             <mat-option value="">Sin gestión</mat-option>
                                             <mat-option value="COM">Comprar</mat-option>
-                                            <mat-option value="NEG">Negociar</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -668,7 +663,6 @@
                                             [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
                                             <mat-option value="">Sin gestión</mat-option>
                                             <mat-option value="COM">Comprar</mat-option>
-                                            <mat-option value="NEG">Negociar</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
