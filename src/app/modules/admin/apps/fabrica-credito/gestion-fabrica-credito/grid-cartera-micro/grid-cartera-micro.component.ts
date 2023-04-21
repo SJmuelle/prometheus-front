@@ -67,6 +67,14 @@ export class GridCarteraMicroComponent implements OnInit {
 
 
   private getListadoCartera(numeroSolicitud: number): void {
+    this.externaTitularCartera = [];
+    this.externaCodeudorCartera = [];
+    this.externaSolidarioCartera = [];
+  
+    this.internoTitularCartera = [];
+    this.internoCodeudorCartera = [];
+    this.internoSolidarioCartera = [];
+    
     this._listadoCarteraService.getListadoCartera(numeroSolicitud).subscribe(data => {
       data.data.forEach(item => {
         switch(item.carteraInterna){
