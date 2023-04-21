@@ -40,7 +40,7 @@ export class AppSettingsService {
     /**
      * @description: End-point de pago masivo
      */
-     public pago = {
+    public pago = {
         url: {
             base: EndPoints.uri('/generic/aplicacion-pago-finl'),
             baseConvenios: EndPoints.uri('/generic/qry/convenios-unidad-negocio-finl'),
@@ -78,13 +78,42 @@ export class AppSettingsService {
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/GC'),
         }
     };
+
+    /**
+* @description: End-point agenda de venta
+*/
+    public agendaVenta = {
+        url: {
+            base: EndPoints.uri('/generic/qry/tk/agenda-ventas-digitales'),
+        }
+    };
+
+    public formulario = {
+        url: {
+            // https://prometheus.fintra.co:8443/api-fintra/api/credito/tk/property/parametros-cargue-inicial
+            microcredito: EndPoints.uri('/credito/microcredito/guardado-solicitud-microcredito'),
+            cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
+            cargueActividadEconomica: EndPoints.uri('/generic/qry/obtener-actividades-form-micro'),
+            cargueSolicitudesFormularioSimulaciones: EndPoints.uri('/generic/qry/solicitudes-formulario-simulaciones'),
+            listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
+            listarBarriosMicro: EndPoints.uri('/generic/qry/listar-barrios-micro'),
+            nombreAsesorMicro: EndPoints.uri('/generic/qry/nombre-asesor-micro'),
+            validationPlazoMicro: EndPoints.uri('/generic/validacion-plazos-microcredito'),
+            validarOTP: EndPoints.uri('/firma/solicitud-validar-otp'),
+            gurdadoPreSolicitud: EndPoints.uri('/generic/guardado-pre-solicitud-microcredito'),
+            solicitarGenerarOTP: EndPoints.uri('/firma/solicitud-generar-otp')
+        }
+    }
     /**
      * @description: End-point fabrica de datos
      */
     public fabricaDatos = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-fabrica'),
+            informacionTercero: EndPoints.uri('/generic/qry/informacion-tipo-tercero'),
             baseCredito: EndPoints.uri('/credito/tk/recursos/fabrica-tab-titular'),
+            baseCreditoCodeudor: EndPoints.uri('/credito/microcredito/guardado-codeudor-microcredito'),
+            baseCreditoSolitario: EndPoints.uri('/credito/microcredito/guardado-solidario-microcredito'),
             baseRepresentante: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             baseCheck: EndPoints.uri('/generic/qry/informacion-representante-legal'),
             checklist: EndPoints.uri('/generic/obtener-items-chequeo-credito'),
@@ -132,7 +161,9 @@ export class AppSettingsService {
     public genericas = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
-            basetk: EndPoints.uri('/generic/qry/tk')
+            basetk: EndPoints.uri('/generic/qry/tk'),
+            unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio'),
+            referenciaComercial: EndPoints.uri('/generic/qry/consulta-lista-generica/RELACION-COMERCIAL')
         }
     };
     /**
@@ -166,6 +197,8 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
+            agregarReferencia: EndPoints.uri('/generic/cre-agregar-referencia-prueba'),
+            actualizarReferencia: EndPoints.uri('/generic/cre-actualizar-referencia-prueba')
         }
     };
     /**
@@ -238,14 +271,16 @@ export class AppSettingsService {
      */
     public decision = {
         url: {
-            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),    
+            base: EndPoints.uri('/generic/qry/consulta-lista-generica/'),
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
+            baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
+            baseCausalAnulacion: EndPoints.uri('/generic/cau-anulacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
             getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda')
@@ -303,6 +338,7 @@ export class AppSettingsService {
             baseReferecia: EndPoints.uri('/generic/cre-referenciar'),
             baseReprogramar: EndPoints.uri('/generic/cre-reprogramar-solicitud'),
             tipoReferencia: EndPoints.uri('/generic/qry/obtener-tipos-referencia-unidad-negocio'),
+            tipoTercero: EndPoints.uri('/generic/qry/obtener-tipos-referencia-tercero'),
 
         }
     };
@@ -322,7 +358,11 @@ export class AppSettingsService {
     public agendaComercial = {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/CM'),
-            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM')
+            baseComite: EndPoints.uri('/generic/qry/agendas-credito/CC'),
+            baseVisitas: EndPoints.uri('/generic/qry/agendas-credito/VI'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CM'),
+            totaleComite: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/CC'),
+            totaleVisitas: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/VI')
         }
     };
 

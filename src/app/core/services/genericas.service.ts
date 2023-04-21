@@ -20,6 +20,13 @@ export class GenericasService {
         const params: string = 'ESTADO-REFERENCIA';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
+
+    /**
+     * @description: Relacion comercial
+     */
+    public getRelacionComercial(): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.referenciaComercial}`);
+    }
     /**
      * @description: Obtiene listado
      */
@@ -215,6 +222,16 @@ export class GenericasService {
     }
 
     /**
+     * @description: Obtiene listado de tipos de referencia
+     */
+    public getTiposTercero(numeroSolicitud): Observable<any> {
+        // const params: string = 'TIPO-REFERENCIA';
+        return this._http.get(`${this._appSettings.referenciaCliente.url.tipoTercero}/${numeroSolicitud}`);
+
+        // return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
    * @description: Obtiene listado de tipos de referencia
    */
     public getTiposCompra(): Observable<any> {
@@ -265,10 +282,10 @@ export class GenericasService {
         return this._http.post(this._appSettings.busquedaEntidadFinanciera.url.base, data);
     }
 
-       /**
-     * @description: Obtiene unidades de negocio
-     */
-       public getUnidadesNegocio(): Observable<any> {
+    /**
+  * @description: Obtiene unidades de negocio
+  */
+    public getUnidadesNegocio(): Observable<any> {
         const params: string = 'UNIDAD-NEGOCIO';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
@@ -286,4 +303,12 @@ export class GenericasService {
         const params: string = 'subestados-creditos';
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}/${data}`);
     }
+
+    /**
+     * @description: Obtiene numero de negocio
+     */
+    public getUnidadNegocio(numSolicitud: string): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.unidadNegocio}/${numSolicitud}`);
+    }
+
 }

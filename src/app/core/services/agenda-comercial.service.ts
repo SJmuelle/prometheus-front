@@ -22,6 +22,21 @@ export class AgendaComercialService {
     return this._http.get(this._appSettings.agendaComercial.url.base);
   }
 
+    /**
+   * @description: Listado de agendas visitas
+   */
+    public getAgendaVisitas(): Observable<any> {
+      return this._http.get(this._appSettings.agendaComercial.url.baseVisitas);
+    }
+
+
+  /**
+   * @description: Listado de agendas comercial
+   */
+  public getAgendaComiteComercial(): Observable<any> {
+    return this._http.get(this._appSettings.agendaComercial.url.baseComite);
+  }
+
   /**
  * @description: Listado de agendas comercial
  */
@@ -41,6 +56,20 @@ export class AgendaComercialService {
    */
   public getTotalesAgendaComercial(): Observable<any> {
     return this._http.get(this._appSettings.agendaComercial.url.totales);
+  }
+
+    /**
+   * @description: totales de agendas de completacion
+   */
+    public getTotalesAgendaVisita(): Observable<any> {
+      return this._http.get(this._appSettings.agendaComercial.url.totaleVisitas);
+    }
+
+  /**
+ * @description: totales de agendas de completacion
+ */
+  public getTotalesAgendaComiteComercial(): Observable<any> {
+    return this._http.get(this._appSettings.agendaComercial.url.totaleComite);
   }
 
   /**

@@ -106,7 +106,7 @@ export class ListadoBarriosComponent implements OnInit {
         titulo: "N"
       }
     } else {
-      debugger;
+      ;
       
       envio = {
         id:datos.id,

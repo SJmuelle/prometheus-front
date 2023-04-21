@@ -11,7 +11,11 @@ import { AgendaGestionCarteraModule } from './agenda-gestion-cartera/agenda-gest
 import {AgendaFormalizacionModule} from "./agenda-formalizacion/agenda-formalizacion.module";
 import { ReferidosModule } from './referidos/referidos.module';
 import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitudes.module';
-import { EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
+import { EdicionFormularioResolver, EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
+import { FormulariosModule } from './formularios/formularios.module';
+import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
+import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
+import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
 
 
 const routes: Routes = [
@@ -54,6 +58,11 @@ const routes: Routes = [
                 resolve  : {EdicionTrazabilidadResolver}
             },
             {
+                path: 'agenda-venta-digital',
+                loadChildren: () => AgendaVentaModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
                 path: 'agenda-cartera',
                 loadChildren: () => AgendaGestionCarteraModule,
                 resolve  : {EdicionTrazabilidadResolver}
@@ -72,7 +81,20 @@ const routes: Routes = [
                 loadChildren: () => AsignarSolicitudesModule,
                 resolve  : {EdicionTrazabilidadResolver}
             },
-
+            {
+                path: 'formularios',
+                loadChildren: () => FormulariosModule
+            },
+            {
+                path: 'agenda-comite-comercial',
+                loadChildren: () => AgendaComiteComercialModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
+                path: 'agenda-visitas',
+                loadChildren: () => AgendaVisitasModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            }
         ]
     }
 ];

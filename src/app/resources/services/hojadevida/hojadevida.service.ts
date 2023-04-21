@@ -17,7 +17,7 @@ export class HojadevidaService {
     ) {}
 
     getNegocios(cc: number) {
-        // debugger
+        // 
         let url: string = `informacion-negocios-por-cliente/${cc}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {

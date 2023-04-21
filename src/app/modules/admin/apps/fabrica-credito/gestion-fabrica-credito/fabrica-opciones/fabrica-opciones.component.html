@@ -23,34 +23,35 @@
             <mat-icon svgIcon="mat_outline:sms_failed"></mat-icon>
         </button>
 
-        <ng-container *ngIf="!permisoEditar">
-            <ng-container *ngIf="fabricaDatos.agenda!='DE'">
-                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoAnalisis()"
-                    [ngClass]="animacionVer==true?'show':'hidden'"
-                    [matTooltip]="toolText">
-                    <mat-icon [svgIcon]="iconoSvg">
-                    </mat-icon>
-                </button>
+
+        <ng-container *ngIf="habilitaSiguiente">
+            <ng-container *ngIf="!permisoEditar">
+                <ng-container *ngIf="fabricaDatos.agenda!='DE'">
+                    <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" (click)="onDialogoAnalisis()"
+                        [ngClass]="animacionVer==true?'show':'hidden'" [matTooltip]="toolText">
+                        <mat-icon [svgIcon]="iconoSvg">
+                        </mat-icon>
+                    </button>
+                </ng-container>
+            </ng-container>
+            <ng-container *ngIf="fabricaDatos.unidadNegocio==32">
+                <ng-container *ngIf="fabricaDatos.agenda!='RE'">
+                    <button mat-fab class="mx-1 bg-gray-500 roll-in-blurred-right" (click)="onDialogoAnalisisConsulta()"
+                        [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Análisis financiero">
+                        <mat-icon [svgIcon]="'heroicons_outline:calculator'">
+                        </mat-icon>
+                    </button>
+                </ng-container>
             </ng-container>
         </ng-container>
 
-        <ng-container *ngIf="fabricaDatos.unidadNegocio==32">
-            <ng-container *ngIf="fabricaDatos.agenda!='RE'">
-                <button mat-fab class="mx-1 bg-gray-500 roll-in-blurred-right" (click)="onDialogoAnalisisConsulta()"
-                    [ngClass]="animacionVer==true?'show':'hidden'"
-                    matTooltip="Análisis financiero">
-                    <mat-icon [svgIcon]="'heroicons_outline:calculator'">
-                    </mat-icon>
-                </button>
-            </ng-container>
+        <ng-container *ngIf="habilitaDevolucion">
+            <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
+                (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
+                [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]">
+                <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
+            </button>
         </ng-container>
-
-        <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Devoluciones"
-            (click)="verDevoluciones = true;drawerDevoluciones.toggle()"
-            [ngClass]="[animacionVer==true?'show':'hidden',(verDevoluciones==true?'bounce-top':'')]">
-            <mat-icon svgIcon="mat_solid:settings_backup_restore"></mat-icon>
-        </button>
-
 
         <ng-container *ngIf="!permisoEditar">
             <ng-container *ngIf="fabricaDatos.agenda=='DE'">
@@ -70,7 +71,7 @@
             </ng-container>
         </ng-container>
 
-        <button mat-fab class="mx-3 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
+        <button mat-fab class="mx-1 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
             <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
         </button>
 

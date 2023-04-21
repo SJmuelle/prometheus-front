@@ -1,7 +1,6 @@
-
 <div class="mb-30 relative">
     <ng-container *ngFor="let item of datosGeneral;  index as i;">
-        <div class="bg-card overflow-hidden p-6 pb-3 relative rounded-2xl shadow">
+        <div class="bg-card overflow-hidden p-6 pb-3 relative rounded-2xl shadow mb-3">
             <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                 <mat-icon class="icon-size-24 opacity-25 text-blue-600" [svgIcon]="'attach_money'">
                 </mat-icon>
@@ -20,7 +19,8 @@
             <div class="-mx-6 grid grid-cols-4">
                 <div class="flex flex-col mx-3 my-2">
                     <div class="flex items-center">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-r-3xl shadow-inner bg-blue-100 text-blue-800">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-r-3xl shadow-inner bg-blue-100 text-blue-800">
                             <mat-icon class="text-current" svgIcon="attach_money"></mat-icon>
                         </div>
                         <div class="flex-auto ml-4 leading-none">
@@ -29,9 +29,10 @@
                         </div>
                     </div>
                 </div>
-                 <div class="flex flex-col mx-3 my-2">
+                <div class="flex flex-col mx-3 my-2">
                     <div class="flex items-center">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-3xl shadow-inner bg-blue-100 text-blue-800">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-3xl shadow-inner bg-blue-100 text-blue-800">
                             <mat-icon class="text-current" [svgIcon]="'calculate'"></mat-icon>
                         </div>
                         <div class="flex-auto ml-4 leading-none">
@@ -39,10 +40,11 @@
                             <div class="text-md font-medium capitalize my-1"> {{item.tasa}}%</div>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="flex flex-col mx-3 my-2">
                     <div class="flex items-center">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-3xl shadow-inner bg-blue-100 text-blue-800">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-3xl shadow-inner bg-blue-100 text-blue-800">
                             <mat-icon class="text-current" [svgIcon]="'event_available'"></mat-icon>
                         </div>
                         <div class="flex-auto ml-4 leading-none">
@@ -50,10 +52,11 @@
                             <div class="text-md font-medium capitalize my-1"> {{item.fechaAprobacion}}</div>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="flex flex-col mx-3 my-2">
                     <div class="flex items-center">
-                        <div class="flex items-center justify-center w-14 h-14 rounded-3xl shadow-inner bg-blue-100 text-blue-800">
+                        <div
+                            class="flex items-center justify-center w-14 h-14 rounded-3xl shadow-inner bg-blue-100 text-blue-800">
                             <mat-icon class="text-current" [svgIcon]="'info'"></mat-icon>
                         </div>
                         <div class="flex-auto ml-4 leading-none">
@@ -61,13 +64,14 @@
                             <div class="text-md font-medium capitalize my-1"> {{item.estadoNegocio}}</div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
-            
+
         </div>
     </ng-container>
 
-    <div *ngIf="datosGeneral" class="flex justify-center">
+    <div *ngIf="!datosGeneral.length" class="flex justify-center flex-col items-center mt-4">
         <img class="w-30" src="assets/images/animaciones/nodata.gif">
+        <span>No hay registros</span>
     </div>
 </div>

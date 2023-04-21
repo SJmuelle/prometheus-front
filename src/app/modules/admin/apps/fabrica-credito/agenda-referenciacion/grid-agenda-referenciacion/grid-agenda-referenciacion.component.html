@@ -118,7 +118,7 @@
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
 
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td rowspan="2" class="py-3 text-sm my-3">
+                                    <td rowspan="2" class="py-3 text-sm my-3 min-w-18">
                                         <div class="text-gray-700 grid-cols-2 grid">
                                             <div class="py-0 text-sm">
                                                 <button mat-icon-button matTooltip="Ver información en fabrica"
@@ -181,15 +181,32 @@
                                     <td class="px-2  pb-1 pt-1">
                                         <div class="flex flex-column ">
 
-                                            <span class="text-md text-black font-medium" matTooltip="Agencia">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Agencia">
                                                 <mat-icon class="icon-size-3"
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
 
-                                            <span class="text-md text-black font-medium" matTooltip="Asesor">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor Comercial">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesor==''?'Usuario web':item.asesor}} 
+                                                {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                            </span>
+
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor fábrica">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
+                                            </span>
+
+                                            <span *ngIf="item.unidadNegocioFabrica === 1"
+                                                class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor micro">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
                                             </span>
                                         </div>
                                     </td>
