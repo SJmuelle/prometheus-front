@@ -79,6 +79,8 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                     this.actualizarDetalleReferencia(data);
                 }
             });
+        }else{
+            this.form.markAllAsTouched();
         }
     }
 
