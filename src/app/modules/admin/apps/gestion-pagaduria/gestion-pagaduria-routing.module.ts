@@ -27,10 +27,7 @@ const routes: Routes = [
         path: 'nueva-pagaduria',
         component: GridFormularioGestionPagaduriaComponent
       },
-      // {
-      //   path: 'formulario-plazos',
-      //   component: FormularioGestionPlazosComponent
-      // }
+     
     ]
   }
 ];

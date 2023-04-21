@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormularioGestionPagaduriaComponent } from '../formulario-gestion-pagaduria.component';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-grid-formulario-gestion-pagaduria',
@@ -11,45 +13,53 @@ import { FormularioGestionPagaduriaComponent } from '../formulario-gestion-pagad
 })
 export class GridFormularioGestionPagaduriaComponent implements OnInit {
 
-  listado: any = [];
-  page: number = 1;
-  tamanoTabl: number = 10;
-  filtrarTabla: string = '';
-  mostrar_form: boolean = true;
-  datos: any = {};
+  myControl = new FormControl('');
   listadoDepartamento: any[];
   listadoCiudades: any[];
-
-  constructor(
-    public dialog: MatDialog,
-    private _Service: UtilityService,
-    private _utility: UtilityService) { }
+  datos: any = {};
+  barrios: any[];
+  filtrarTabla="";
+  filteredOptions: Observable<string[]>;
+  constructor(@Inject(MAT_DIALOG_DATA) public data,
+    public matDialogRef: MatDialogRef<GridFormularioGestionPagaduriaComponent>,
+    private _Service: UtilityService,) {
+  }
 
   ngOnInit(): void {
+    console.log(this.data)
     this.consultaDepartamento();
 
+    if (this.data.codigoDepartamento) {
+      this.datos.codigoDepartamento = this.data.codigoDepartamento
+      this.consultaMunicipio(this.data.codigoDepartamento);
+      if (this.data.codigoCiudad) {
+        this.datos.codigoCiudad = this.data.codigoCiudad
+        this.listarBarrios(this.datos.codigoCiudad)
+      }
+      if (this.data.nombreBarrio) {
+        this.datos.nombreBarrio = this.data.nombreBarrio
+      }
+    }
+    this.datos.estado = this.data.estado
+    if(this.data.titulo=="N"){
+      this.datos.id = 0
+      this.listarBarrios(this.datos.codigoCiudad)
+      // this.filteredOptions = this.myControl.valueChanges.pipe(
+      //   startWith(''),
+      //   map(value => this._filter(value || '')),
+      // );
+    }else{
+      this.datos.id = this.data.id
+    }
+  
+
   }
 
-  consultaDepartamento() {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._Service
-      .getQuery(`tk/listar-departamentos`, true)
-      .subscribe((response: any) => {
-        Swal.close();
-        if (response) {
-          this.listadoDepartamento = response.data;
-        } else {
-          this.listadoDepartamento = [];
-        }
-      });
+  alv(data){
+    this.data.titulo='A';
+    this.datos.id = data.id
   }
+
 
   consultaMunicipio(data) {
     Swal.fire({
@@ -72,6 +82,29 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
       });
   }
 
+
+  consultaDepartamento() {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Buscando información...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._Service
+      .getQuery(`tk/listar-departamentos`, true)
+      .subscribe((response: any) => {
+        Swal.close();
+        if (response) {
+          this.listadoDepartamento = response.data;
+
+        } else {
+          this.listadoDepartamento = [];
+        }
+      });
+  }
+
   listarBarrios(data) {
     Swal.fire({
       title: 'Cargando',
@@ -86,52 +119,64 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
       .subscribe((response: any) => {
         Swal.close();
         if (response) {
-          this.listado = response.data;
+          this.barrios = response.data;
         } else {
-          this.listado = [];
+          this.barrios = [];
         }
       });
   }
+  guardar() {
 
-  abrirModal(datos, titulo) {
-    let envio
-    if (titulo == 'N') {
-     envio = {
-        id:null,
-        codigoDepartamento:this.datos.departamento,
-        codigoCiudad:this.datos.municipio,
-        nombreBarrio: "",
-        estado: "",
-        titulo: "N"
+    let url = '/agregar-barrio';
+    let data = {...this.datos};
+    delete  data.codigoDepartamento
+
+
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._Service.postQuery(url, data).subscribe((response: any) => {
+      Swal.close();
+      if (response) {
+        if (response.status == 200) {
+          if (!response.data.sp_agregar_barrio.includes('OK')) {
+            Swal.fire(
+              'Información',
+              response.data.respuesta,
+              'error'
+            );
+            return;
+          }
+          Swal.fire(
+            '¡Información!',
+            `Se guardó el registro con éxito`,
+            'success'
+          ).then((resultado) => {
+            if (resultado) {
+              this.matDialogRef.close();
+            }
+          });
+        } else {
+          Swal.fire(
+            '¡Información!',
+            `Hubo un error en los datos enviados, favor evaluar`,
+            'success'
+          );
+        }
+      } else {
+        Swal.fire(
+          '¡Advertencia!',
+          'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+          'error'
+        );
       }
-    } else {
-      debugger;
-      
-      envio = {
-        id:datos.id,
-        codigoDepartamento:this.datos.departamento,
-        codigoCiudad:this.datos.municipio,
-        nombreBarrio: datos.barrio,
-        estado: datos.estado=='Activo'?'':'A',
-        titulo: "A"
-      }
-    }
-
-    const dialogRef = this.dialog.open(FormularioGestionPagaduriaComponent, {
-      // width: '1080px',
-      // maxHeight: '550px',
-      data: envio,
     });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
-
-      this.listarBarrios(this.datos.municipio)
-
-    });
-
   }
 
-}
 
+}

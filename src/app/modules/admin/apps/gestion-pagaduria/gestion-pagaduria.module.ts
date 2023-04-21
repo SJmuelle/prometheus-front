@@ -26,8 +26,6 @@ import { ListadoGestionPlazosComponent } from './listado-gestion-plazos/listado-
 import { GridListadoGestionPlazosComponent } from './listado-gestion-plazos/grid-listado-gestion-plazos/grid-listado-gestion-plazos.component';
 import { FormularioGestionPagaduriaComponent } from './formulario-gestion-pagaduria/formulario-gestion-pagaduria.component';
 import { GridFormularioGestionPagaduriaComponent } from './formulario-gestion-pagaduria/grid-formulario-gestion-pagaduria/grid-formulario-gestion-pagaduria.component';
-// import { FormularioGestionPlazosComponent } from './formulario-gestion-plazos/formulario-gestion-plazos.component';
-// import { GridFormularioGestionPlazosComponent } from './formulario-gestion-plazos/grid-formulario-gestion-plazos/grid-formulario-gestion-plazos.component';
 
 
 
@@ -40,7 +38,7 @@ import { GridFormularioGestionPagaduriaComponent } from './formulario-gestion-pa
     GridListadoGestionPlazosComponent,
     FormularioGestionPagaduriaComponent,
     GridFormularioGestionPagaduriaComponent,
-    // GridFormularioGestionPlazosComponent,
+   
    
   ],
   imports: [

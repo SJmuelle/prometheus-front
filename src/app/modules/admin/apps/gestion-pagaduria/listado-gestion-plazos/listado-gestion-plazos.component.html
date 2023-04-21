@@ -1,54 +1,50 @@
-<h2 mat-dialog-title>{{data.tipoid=='N'?'Nueva':'Actualizar'}} Editar pagaduria {{ data.id ? '('+data.id+')' : '' }}</h2>
-<div class="bg-white col-lg-12 col-sm-12  5 ">
-    <div class="row">
-        <div class="bg-white col l12">
-            <div class="row justify-start ">
-                <div class="col-sm-12 col-lg-12">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="data.descripcion"
-                            [required]="data.titulo=='N'" [disabled]="data.titulo!='N'">
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
-                    </mat-form-field> 
-                </div>
-                <div class="col-sm-12 col-lg-12" *ngIf="data.titulo=='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Tipo de PQRS </mat-label>
-                        <mat-select [(ngModel)]="datos.idTipo" name="legal" [required]="datos.titulo=='N'">
-                            <mat-option value="{{l.id}}" *ngFor="let l of listadoTipo">{{l.tipoPqrs}}</mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">
-                        </mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-12 col-lg-12" *ngIf="data.titulo!='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Tipo de PQRS </mat-label>
-                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.idTipo"
-                            disabled>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">
-                        </mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-12 col-lg-12" *ngIf="data.titulo!='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Estado</mat-label>
-                        <mat-select [(ngModel)]="datos.estado" name="legal">
-                            <mat-option value="A">Activo</mat-option>
-                            <mat-option value="I">Inactivo</mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
-                        </mat-icon>
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
+<form class="w-full max-w-lg">
+    <div class="relative flex flex-wrap -mx-3 mb-6">
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
+         Tipo de contrato
+        </label>
+         <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state"  type="text" placeholder="Tipo De contrato">
+            <option>Contrato Indefinido</option>
+            <option>Contrato Obra Labor</option>
+            <option>Contrato Fijo</option>
+          </select>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
+          Atiguedad Maxima
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Antiguedad maxima">
+      </div>
     </div>
-</div>
-<!-- <mat-dialog-actions align="end"> -->
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full px-3">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          Antiguedad Meses
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Meses de antiguedad">
+        
+      </div>
+    </div>
+    <div class="flex flex-wrap -mx-3 mb-6">
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
+          Plazo Maximo
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="plazo maximo">
+      </div>
+      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
+          plazo Minimo
+        </label>
+        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="plazo minimo">
+      </div>
+    </div>
+  </form>
+<mat-dialog-actions align="end">
     <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
     <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
-<!-- </mat-dialog-actions> -->
+</mat-dialog-actions>
 
 
 
