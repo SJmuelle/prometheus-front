@@ -12,8 +12,8 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
   public contactosOriginales: any[] = [];
   public total: number;
   private unsubscribe$: Subject<any> = new Subject();
-  public editMode: boolean[] = [];
   public firstInitial: string;
+  public infoPagaduria: any[] = [];
   // Agrega una variable para almacenar el estado de la barra lateral
   public showSidebar = false;
 
@@ -48,6 +48,8 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
     }
   }
 
+
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -57,10 +59,19 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
   toggleSidebar(): void {
     this.showSidebar = !this.showSidebar;
   }
-  crearInformacion() {
-    const nitPagaduria = '123456789'; 
-    this._gestionPagaduriaService.crearInformacionPagadurias(nitPagaduria).subscribe(response => {
-      // Manejar la respuesta aquí si es necesario
-    });
+
+  crearInformacion(nitPagaduria: string) {
+    let data = {
+      nitPagaduria: nitPagaduria
+    }
+    console.log(nitPagaduria)
+    this._gestionPagaduriaService.getInformacionPagadurias(data).subscribe((response : any) => {
+      this.infoPagaduria = response.data;      
+      console.log(response.data); 
+    },
+    error => {
+      console.log(error); // Imprimir el error en la consola
+    }
+  );      
 }
 }

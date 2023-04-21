@@ -22,15 +22,11 @@ export class GestionPagaduriaService {
     return this._http.get(`${this._appSettings.gestionPagaduria.url.configuracion}/${usuario}`);
   
 }
-public crearInformacionPagadurias(nitPagaduria: string): Observable<any> {
-  const url = `${this._appSettings.gestionPagaduria.url.informacion}/cre-lib-info-pagadurias`;
-  const body = { nitPagaduria };
-  return this._http.post(url, body).pipe(
-    map(response => {
-      // Manejar la respuesta aquí si es necesario
-      return response;
-    })
-  );
+public getInformacionPagadurias(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.informacion, data)
+  .pipe(map((res: any) => {
+    return res;
+  }));
 }
 
 }
