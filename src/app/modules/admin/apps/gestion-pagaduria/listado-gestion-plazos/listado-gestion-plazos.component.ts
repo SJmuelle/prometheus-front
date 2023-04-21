@@ -30,7 +30,7 @@ export class ListadoGestionPlazosComponent implements OnInit {
           html: 'Buscando información de las pagadurias',
           timer: 500000,
           didOpen: () => {
-               Swal.showLoading();
+            //    Swal.showLoading();
           },
       }).then((result) => {});
       this._gestionPagaduriaService
@@ -47,7 +47,7 @@ export class ListadoGestionPlazosComponent implements OnInit {
   guardar() {
       let data, url;
       if (this.data.tipoContrato == 'N') {
-          //post
+          
           url = '/generic/cre-lib-guardar-plazo';
           data = {
               idTipo: parseInt(this.data.tipoContrato),

@@ -1,10 +1,22 @@
-<div class="card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+<div class="h-screen card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
     <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
+        <h2 class="text-gray-900 col-span-12 mb-4">Listado de chequeo</h2>
         <div class="col-span-12 grid grid-cols-12">
+            <div class="col-span-6">
+                <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+                    Crear nuevo
+                </button>
+            </div>
             <div class="col-span-6 justify-self-end">
-
-
-
+                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em" type="text"
+                    autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
+                    (ngModelChange)="page = 1" />
+                <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
+                    [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select>
             </div>
         </div>
     </div>
@@ -70,15 +82,16 @@
                                 {{ item.descripcionEstado }}
 
                             </span>
-
                         </div>
                     </td>
                 </tr>
-                <div class="mt-4 right-18">
-                    <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
-                        Crear nuevo
-                    </button>
-                </div>
             </tbody>
         </table>
+        <div class="grid ">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
     </div>
+
+
+</div>
