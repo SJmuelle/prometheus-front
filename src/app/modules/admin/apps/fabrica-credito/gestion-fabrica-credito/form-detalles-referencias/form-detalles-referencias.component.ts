@@ -163,7 +163,6 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 this.form.patchValue(data);
                 this.genericaService.getUnidadNegocio(data.numeroSolicitud).subscribe(rep => {
                     this.unidadNegocio = rep.data[0].unidadNegocio;
-                    console.log("data", this.unidadNegocio);
                 })
 
                 if (data.codigoDepartamento) {

@@ -331,7 +331,7 @@
             </div>
 
             <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;" >
-                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()" autocomplete="off" formControlName="numeroOTP" mask="separator.0" thousandSeparator="-" min="6" max="6">
+                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()" autocomplete="off" formControlName="numeroOTP"  min="6" max="6">
                 <mat-error *ngIf="form.controls.numeroOTP.errors?.required">
                     Este campo es requerido.
                 </mat-error>

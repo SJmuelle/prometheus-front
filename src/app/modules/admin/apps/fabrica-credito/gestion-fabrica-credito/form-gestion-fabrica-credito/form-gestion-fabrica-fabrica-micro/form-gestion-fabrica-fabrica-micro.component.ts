@@ -968,27 +968,27 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             // Local comercial propio
             if (e === '1') {
-                this.form.controls.tipoLocalCalulado.setValue('Propio.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
+                this.form.controls.tipoLocalCalulado.setValue('Propio')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte')
             }
             else if (e === '2') {
-                this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
+                this.form.controls.tipoLocalCalulado.setValue('Arrendado')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte')
             } else if (e === '3') {
-                this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('Arrendado')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
             else if (e === '4') {
-                this.form.controls.tipoLocalCalulado.setValue('Familiar.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('Familiar')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
             else if (e === '5') {
-                this.form.controls.tipoLocalCalulado.setValue('Propio.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('Propio')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
             else if (e === '6') {
-                this.form.controls.tipoLocalCalulado.setValue('No tiene.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('No tiene')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
         })
 

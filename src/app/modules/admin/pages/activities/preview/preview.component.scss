@@ -5,3 +5,14 @@
 .mirar{
     width: 90%;
 }
+
+.imgScale{
+    width: 100%; 
+    height: 62vh
+}
+
+@media screen AND (max-width: 600px) {
+    .imgScale{
+        height: auto;
+    }
+}

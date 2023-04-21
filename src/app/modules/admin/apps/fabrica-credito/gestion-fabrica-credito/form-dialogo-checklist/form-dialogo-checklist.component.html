@@ -3,7 +3,7 @@
 <ng-container *ngIf="listado.length">
 
     <h2 mat-dialog-title *ngIf="listado.length">Seleccione las actividades ya realizadas</h2>
-    <mat-dialog-content class="mat-typography">
+    <mat-dialog-content class="mat-typography heightResponse">
         <div class="divide-y" *ngFor="let data of listado;let indice=index">
             <div class="w-full select-none hover:bg-gray-100  md:h-16" (click)="guardar(data)">
                 <div class="relative border-b flex items-center h-full ml-3 border-t">
@@ -27,13 +27,13 @@
             Total seleccionado: {{total}} / {{listado.length}}
         </p>
     </mat-dialog-content>
-    <mat-dialog-actions class="text-end" *ngIf="data.tipo!='D'">
+    <mat-dialog-actions class="text-end py-2" *ngIf="data.tipo!='D'">
         <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="SiguienteEtapa()">
             Siguiente etapa
         </button>
         <button mat-button mat-dialog-close>Cerrar</button>
     </mat-dialog-actions>
-    <mat-dialog-actions class="text-end" *ngIf="data.tipo=='D'">
+    <mat-dialog-actions class="text-end py-2" *ngIf="data.tipo=='D'">
         <button mat-button class="color_fintra text-white" *ngIf="total==listado.length" (click)="decision()">
             Confirmar datos de la solicitud
         </button>

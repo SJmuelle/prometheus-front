@@ -4,26 +4,29 @@
 <ng-container *ngIf="!data.idComentario">
     <h2 mat-dialog-title>Nuevo comentario</h2>
 </ng-container>
-<mat-dialog-content *ngIf="datoFabrica">
+<mat-dialog-content *ngIf="datoFabrica" class="py-2">
     <div class="grid-cols-12 ">
         <div class="col-span-12">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
                     <div class="flex">
-                        <mat-form-field class="w-full" appearance="fill" *ngIf="datoFabrica.agenda!='CM'&&datoFabrica.agenda!='GC'">
+                        <mat-form-field class="w-full" appearance="fill"
+                            *ngIf="datoFabrica.agenda!='CM'&&datoFabrica.agenda!='GC'">
                             <mat-label>Tipo de comentario </mat-label>
                             <!-- lo mando el jefe lucho Tipo de visibilidad a tipo de comentario -->
-                            <mat-select formControlName="tipoComentario" >
-                                <mat-option *ngFor="let tipo of listadoTipo" value="{{tipo.codigoOpcion}}">{{tipo.descripcionOpcion}}
+                            <mat-select formControlName="tipoComentario">
+                                <mat-option *ngFor="let tipo of listadoTipo"
+                                    value="{{tipo.codigoOpcion}}">{{tipo.descripcionOpcion}}
                                 </mat-option>
                             </mat-select>
                             <mat-icon class="icon-size-5" matPrefix [svgIcon]="'business_center'"></mat-icon>
                         </mat-form-field>
-                    </div> 
+                    </div>
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense">
                             <mat-label>Texto</mat-label>
-                            <textarea class="h-60" matInput [formControlName]="'comentario'" [readonly]="data.idComentario">
+                            <textarea class="h-60" matInput [formControlName]="'comentario'"
+                                [readonly]="data.idComentario">
                             </textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                             <mat-error *ngIf="minimoComentario">Se requiere mínimo 10 caracteres.</mat-error>
