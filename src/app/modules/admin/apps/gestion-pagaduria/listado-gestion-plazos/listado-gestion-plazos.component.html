@@ -1,52 +1,66 @@
-<form class="w-full max-w-lg">
-    <div class="relative flex flex-wrap -mx-3 mb-6">
-      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
-         Tipo de contrato
-        </label>
-         <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state"  type="text" placeholder="Tipo De contrato">
-            <option>Contrato Indefinido</option>
-            <option>Contrato Obra Labor</option>
-            <option>Contrato Fijo</option>
-          </select>
-      </div>
-      <div class="w-full md:w-1/2 px-3">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-          Atiguedad Maxima
-        </label>
-        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Antiguedad maxima">
-      </div>
+<h2 mat-dialog-title>Configuracion de plazos</h2>
+<form class="w-full max-w-lg " [formGroup]="form">
+  <div class="relative flex flex-wrap -mx-3 mb-6 w-full">
+    <div class="w-full px-3 mb-6 md:mb-0">
+      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+      </label>
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-label>Tipo de contrato</mat-label>
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+        </mat-icon>
+        <mat-select formControlName="tipoContrato">
+          <mat-option *ngFor="let tipo of tiposContrato" [value]="tipo.value">
+            {{ tipo.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="flex flex-wrap -mx-3 mb-6">
-      <div class="w-full px-3">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-          Antiguedad Meses
-        </label>
-        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Meses de antiguedad">
-        
-      </div>
+    <div class="w-full px-3">
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:trending-up'">
+        </mat-icon>
+        <mat-label> Antiguedad Maxima</mat-label>
+        <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+      </mat-form-field>
+
     </div>
-    <div class="flex flex-wrap -mx-3 mb-6">
-      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-city">
-          Plazo Maximo
-        </label>
-        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-city" type="text" placeholder="plazo maximo">
-      </div>
-      <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-zip">
-          plazo Minimo
-        </label>
-        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-zip" type="text" placeholder="plazo minimo">
-      </div>
+
+    <div class="w-full px-3">
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:trending-down'">
+        </mat-icon>
+        <mat-label> Antiguedad Minima</mat-label>
+        <input matInput type="number" autocomplete="off" formControlName="antiguedadMinima">
+      </mat-form-field>
+
     </div>
-  </form>
+
+    <div class="w-full px-3">
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:clock'">
+        </mat-icon>
+        <mat-label> Plazo maximo</mat-label>
+        <input matInput type="number" autocomplete="off" formControlName="plazoMaximo">
+      </mat-form-field>
+
+    </div>
+
+    <div class="w-full px-3">
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:chart-pie'">
+        </mat-icon>
+        <mat-label> plazo minimo</mat-label>
+        <input matInput type="number" autocomplete="off" formControlName="plazoMinimo">
+      </mat-form-field>
+
+    </div>
+
+   
+      </div>
+   
+
+</form>
 <mat-dialog-actions align="end">
-    <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
-    <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
+  <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
+  <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
 </mat-dialog-actions>
-
-
-
-
-

@@ -2,6 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 import { GridListadoGestionPlazosComponent } from './grid-listado-gestion-plazos/grid-listado-gestion-plazos.component';
+import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-listado-gestion-plazos',
@@ -12,10 +14,14 @@ export class ListadoGestionPlazosComponent implements OnInit {
 
   listadoTipo: any;
   data: any = {};
-  private _gestionPagaduriaService: any;
+  tiposContrato = [  {value: 'I', viewValue: 'Contrato Indefinido'},  {value: 'F', viewValue: 'Contrato Fijo'},  {value: 'O', viewValue: 'Contrato Obra labor'}];
+
     dialog: any;
+    form: FormGroup;
   constructor(
+    private fb: FormBuilder,
       public matDialogRef: MatDialogRef<ListadoGestionPlazosComponent  >,
+      private _gestionPagaduriaService: GestionPagaduriaService,
       @Inject(MAT_DIALOG_DATA) public dato,
       
   ) {}
@@ -23,6 +29,18 @@ export class ListadoGestionPlazosComponent implements OnInit {
   ngOnInit(): void {
       this.data = this.data;
       this.consultaListadoTipo();
+      this.form=this.fb.group({
+        tipoContrato: [''],
+        antiguedadMaxima: [''],
+        antiguedadMinima: [''],
+        plazoMaximo: [''],
+        plazoMinimo: [''],
+        usuarioCreacion: [''],
+
+
+      })
+  
+ 
   }
   consultaListadoTipo() {
       Swal.fire({
@@ -33,29 +51,14 @@ export class ListadoGestionPlazosComponent implements OnInit {
             //    Swal.showLoading();
           },
       }).then((result) => {});
-      this._gestionPagaduriaService
-          .getListados(`/generic/qry/cre-lib-pagadurias`)
-          .subscribe((response: any) => {
-              Swal.close();
-              if (response) {
-                  this.listadoTipo = response;
-              } else {
-                  this.listadoTipo = [];
-              }
-          });
+    //   this._gestionPagaduriaService.
+          
   }
   guardar() {
+    console.log("mostrar", this.form.getRawValue());
+
       let data, url;
-      if (this.data.tipoContrato == 'N') {
-          
-          url = '/generic/cre-lib-guardar-plazo';
-          data = {
-              idTipo: parseInt(this.data.tipoContrato),
-              estado: '',
-              
-          };
-     
-      }
+
       Swal.fire({
           title: 'Cargando',
           html: 'Guardando configuracion de pagadurias',
@@ -64,42 +67,44 @@ export class ListadoGestionPlazosComponent implements OnInit {
               // Swal.showLoading();
           },
       }).then((result) => {});
-      this._gestionPagaduriaService.getContactos(url, data).subscribe((response: any) => {
-          Swal.close();
-          if (response) {
-              if (response.status == 200) {
-                  if (!response.data.respuesta.includes('OK')) {
-                      Swal.fire(
-                          'Información',
-                          response.data.respuesta,
-                          'error'
-                      );
-                      return;
-                  }
-                  Swal.fire(
-                      '¡Información!',
-                      `Se guardó el registro con éxito`,
-                      'success'
-                  ).then((resultado) => {
-                      if (resultado) {
-                          this.matDialogRef.close();
-                      }
-                  });
-              } else {
-                  Swal.fire(
-                      '¡Información!',
-                      `Hubo un error en los datos enviados, favor evaluar`,
-                      'success'
-                  );
-              }
-          } else {
-              Swal.fire(
-                  '¡Advertencia!',
-                  'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
-                  'error'
-              );
-          }
-      });
+       this._gestionPagaduriaService.postGuardar(this.form.getRawValue()).subscribe(rep =>{
+        console.log(rep)
+       })
+    //       Swal.close();
+    //       if (response) {
+    //           if (response.status == 200) {
+    //               if (!response.data.respuesta.includes('OK')) {
+    //                   Swal.fire(
+    //                       'Información',
+    //                       response.data.respuesta,
+    //                       'error'
+    //                   );
+    //                   return;
+    //               }
+    //               Swal.fire(
+    //                   '¡Información!',
+    //                   `Se guardó el registro con éxito`,
+    //                   'success'
+    //               ).then((resultado) => {
+    //                   if (resultado) {
+    //                       this.matDialogRef.close();
+    //                   }
+    //               });
+    //           } else {
+    //               Swal.fire(
+    //                   '¡Información!',
+    //                   `Hubo un error en los datos enviados, favor evaluar`,
+    //                   'success'
+    //               );
+    //           }
+    //       } else {
+    //           Swal.fire(
+    //               '¡Advertencia!',
+    //               'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
+    //               'error'
+    //           );
+    //       }
+    //   });
   }
 }
 

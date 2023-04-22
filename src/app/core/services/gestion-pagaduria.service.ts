@@ -29,4 +29,11 @@ public getInformacionPagadurias(data): Observable<any> {
   }));
 }
 
+public postGuardar(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.guardar, data)
+  .pipe(map((res: any) => {
+    return res;
+  }));
+
+}
 }

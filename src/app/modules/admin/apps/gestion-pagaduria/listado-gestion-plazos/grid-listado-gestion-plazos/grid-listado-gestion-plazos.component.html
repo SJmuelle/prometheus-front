@@ -1,6 +1,6 @@
-<div class="h-screen card py-2 px-3 w-100 shadow bg-white m-4 rounded-lg">
+<div class="h-full card py-3 px-4 w-100 shadow bg-white m-4 rounded-lg ">
     <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Listado de chequeo</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Configuración pagadurias</h2>
         <div class="col-span-12 grid grid-cols-12">
             <div class="col-span-6">
                 <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div
-        class="h-screen w-full  md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-100 xl:h-160 xl:overflow-x-hidden">
+        class="h-auto w-full sm:h-100 xl:h-160 ">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr class="text-md font-semibold
@@ -53,7 +53,7 @@
                         {{ item.tipocontrato }}
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item. antiguedadmaxima}}
+                        {{ item.antiguedadmaxima}}
                     </td>
                     <td class="px-2 text-sm border text-center">
                         {{ item.antiguedadminima }}
@@ -87,7 +87,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="grid ">
+        <div class="grid mb-10 mt-2">
             <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
                 nextLabel="Siguiente"></pagination-controls>
         </div>

@@ -46,10 +46,8 @@ export class GridListadoGestionPlazosComponent implements OnInit {
 
   }
   abrirModal(datos, titulo) {
-    console.log("modal");
-    
 
-    const dialogRef = this.dialog.open(ListadoGestionPlazosComponent, {
+        const dialogRef = this.dialog.open(ListadoGestionPlazosComponent, {
       data: datos,
     });
 
