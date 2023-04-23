@@ -1,68 +1,89 @@
-<h2 mat-dialog-title>{{data.titulo=='N'?'Nuevo':'Actualizar'}} barrio {{ datos.id ? '('+datos.id+')' : ''
-}}</h2>
-<div class="bg-white col-lg-12 col-sm-12  5 ">
-<div class="row">
-    <div class="bg-white col l12">
-        <div class="row justify-start ">
-            <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                    <mat-label>Departamento</mat-label>
-                    <mat-select disabled [(ngModel)]="datos.codigoDepartamento" name="direccion"
-                        (ngModelChange)="consultaMunicipio(datos.departamento);">
-                        <mat-option value="" disabled>Seleccionar</mat-option>
-                        <mat-option value="{{item.codigo}}" *ngFor="let item of listadoDepartamento">
-                            {{item.nombre}} </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100">
-                    <mat-label>Municipio / Ciudad</mat-label>
-                    <mat-select disabled [(ngModel)]="datos.codigoCiudad" name="municipio">
-                        <mat-option value="" disabled>Seleccionar</mat-option>
-                        <mat-option value="{{item.codigo}}" *ngFor="let item of listadoCiudades">
-                            {{item.nombre}} </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="col-sm-12 col-lg-12">
-                <mat-form-field class="flex-auto w-100" *ngIf="data.titulo!='N'">
-                    <mat-label>Nombre del barrio</mat-label>
-                    <input matInput type="text" autocomplete="off" name="nombre" [(ngModel)]="datos.nombreBarrio"
-                        [required]="true">
+<div class="h-full card py-3 px-4 w-100 shadow bg-white m-4 rounded-lg ">
+  <form class="w-full max-w-lg " [formGroup]="form">
+    <h2 class="text-gray-900 col-span-12 mb-4">Crear nueva pagaduria</h2>
+    <div class="grid grid-cols-3 grid-rows-3 w-100 mb-2">
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user-circle'">
+          </mat-icon>
+          <mat-label> Razón social </mat-label>
+          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:identification'">
+          </mat-icon>
+          <mat-label> Numero de documento </mat-label>
+          <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:check'">
+          </mat-icon>
+          <mat-label> Dv</mat-label>
+          <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          </mat-icon>
+          <mat-label> Departamento</mat-label>
+          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          </mat-icon>
+          <mat-label> Ciudad</mat-label>
+          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          </mat-icon>
+          <mat-label> Dirección</mat-label>
+          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:mail'">
+          </mat-icon>
+          <mat-label> Correo</mat-label>
+          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:phone'">
+          </mat-icon>
+          <mat-label> Telefono</mat-label>
+          <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Tipo de empresa</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="tipoContrato">
+            <!-- <mat-option *ngFor="let tipo of tiposContrato" [value]="tipo.value">
+        {{ tipo.viewValue }}
+      </mat-option> -->
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'text_snippet'">
-                    </mat-icon>
-                </mat-form-field>
-                <mat-form-field class="flex-auto w-100" appearance="fill" *ngIf="data.titulo=='N'">
-                    <mat-label>Nombre barrio</mat-label>
-                    <input type="text" aria-label="Number" matInput [(ngModel)]="datos.nombreBarrio"
-                        [matAutocomplete]="auto">
-                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of barrios  | filter: datos.nombreBarrio" [value]="option.barrio"
-                        (click)="alv(option)">
-                            {{option.barrio}}
-                        </mat-option>
-                    </mat-autocomplete>
-                </mat-form-field>
 
-            </div>
-            <div class="col-sm-12 col-lg-12" *ngIf="data.titulo!='N'">
-                <mat-form-field class="flex-auto w-100">
-                    <mat-label>Estado</mat-label>
-                    <mat-select [(ngModel)]="datos.estado" name="legal">
-                        <mat-option [value]="''">ACTIVO</mat-option>
-                        <mat-option [value]="'A'">INACTIVO</mat-option>
-                    </mat-select>
-                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
-                    </mat-icon>
-                </mat-form-field>
-            </div>
-        </div>
+      <mat-dialog-actions align="end">
+        <button mat-button class=" left-auto right-auto color_fintra text-white" (click)="guardar()">Guardar </button>
+        <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
+      </mat-dialog-actions>
     </div>
+  </form>
 </div>
-</div>
-<mat-dialog-actions class="align-end">
-<button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
-<button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
-</mat-dialog-actions>

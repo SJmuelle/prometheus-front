@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog,} from '@angular/material/dialog';
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormularioGestionPagaduriaComponent } from '../formulario-gestion-pagaduria.component';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.service';
 
 @Component({
   selector: 'app-grid-formulario-gestion-pagaduria',
@@ -13,170 +14,71 @@ import { Observable } from 'rxjs';
 })
 export class GridFormularioGestionPagaduriaComponent implements OnInit {
 
-  myControl = new FormControl('');
-  listadoDepartamento: any[];
-  listadoCiudades: any[];
+  listado: any = [];
+  page: number = 1;
+  tamanoTabl: number = 8;
+  filtrarTabla: string = '';
+  mostrar_form: boolean = true;
   datos: any = {};
-  barrios: any[];
-  filtrarTabla="";
-  filteredOptions: Observable<string[]>;
-  constructor(@Inject(MAT_DIALOG_DATA) public data,
-    public matDialogRef: MatDialogRef<GridFormularioGestionPagaduriaComponent>,
-    private _Service: UtilityService,) {
-  }
+  router: any;
+  form: FormGroup;
+  private _gestionPagaduriaService: any;
+
+
+  constructor(
+    private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public dato,
+    public dialog: MatDialog,
+    private _GestionPagaduriaService: GestionPagaduriaService,
+  ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
-    this.consultaDepartamento();
-
-    if (this.data.codigoDepartamento) {
-      this.datos.codigoDepartamento = this.data.codigoDepartamento
-      this.consultaMunicipio(this.data.codigoDepartamento);
-      if (this.data.codigoCiudad) {
-        this.datos.codigoCiudad = this.data.codigoCiudad
-        this.listarBarrios(this.datos.codigoCiudad)
-      }
-      if (this.data.nombreBarrio) {
-        this.datos.nombreBarrio = this.data.nombreBarrio
-      }
-    }
-    this.datos.estado = this.data.estado
-    if(this.data.titulo=="N"){
-      this.datos.id = 0
-      this.listarBarrios(this.datos.codigoCiudad)
-      // this.filteredOptions = this.myControl.valueChanges.pipe(
-      //   startWith(''),
-      //   map(value => this._filter(value || '')),
-      // );
-    }else{
-      this.datos.id = this.data.id
-    }
-  
-
+    this.consulta();
   }
-
-  alv(data){
-    this.data.titulo='A';
-    this.datos.id = data.id
-  }
-
-
-  consultaMunicipio(data) {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._Service
-      .getQuery(`listar-ciudades/${data}`, true)
-      .subscribe((response: any) => {
+  consulta() {
+    // Swal.fire({ title: 'Cargando', html: 'Buscando información de las pagadurias', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    var usuario= JSON.parse(localStorage.getItem ("usuario")); 
+    console.log(usuario);
+    this._GestionPagaduriaService.getPlazos(usuario.user).subscribe((response: any) => {
         Swal.close();
+        // debugger
+        console.log(response)
         if (response) {
-          this.listadoCiudades = response.data;
+          this.listado = response.data;
         } else {
-          this.listadoCiudades = [];
+          this.listado = [];
         }
       });
+
+
   }
+  abrirModal(dato, titulo) {
+ 
+        const dialogRef = this.dialog.open(FormularioGestionPagaduriaComponent, {
+      data:dato,
+    });
 
-
-  consultaDepartamento() {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._Service
-      .getQuery(`tk/listar-departamentos`, true)
-      .subscribe((response: any) => {
-        Swal.close();
-        if (response) {
-          this.listadoDepartamento = response.data;
-
-        } else {
-          this.listadoDepartamento = [];
-        }
-      });
-  }
-
-  listarBarrios(data) {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._Service
-      .getQuery(`listar-barrios/${data}`, true)
-      .subscribe((response: any) => {
-        Swal.close();
-        if (response) {
-          this.barrios = response.data;
-        } else {
-          this.barrios = [];
-        }
-      });
-  }
-  guardar() {
-
-    let url = '/agregar-barrio';
-    let data = {...this.datos};
-    delete  data.codigoDepartamento
-
-
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Guardando...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._Service.postQuery(url, data).subscribe((response: any) => {
-      Swal.close();
-      if (response) {
-        if (response.status == 200) {
-          if (!response.data.sp_agregar_barrio.includes('OK')) {
-            Swal.fire(
-              'Información',
-              response.data.respuesta,
-              'error'
-            );
-            return;
-          }
-          Swal.fire(
-            '¡Información!',
-            `Se guardó el registro con éxito`,
-            'success'
-          ).then((resultado) => {
-            if (resultado) {
-              this.matDialogRef.close();
-            }
-          });
-        } else {
-          Swal.fire(
-            '¡Información!',
-            `Hubo un error en los datos enviados, favor evaluar`,
-            'success'
-          );
-        }
-      } else {
-        Swal.fire(
-          '¡Advertencia!',
-          'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
-          'error'
-        );
-      }
+    dialogRef.afterClosed().subscribe((result) => {
+        this.consulta();
     });
   }
 
+  guardar() {
+    console.log("mostrar", this.form.getRawValue());
 
+      let data, url;
+
+      Swal.fire({
+          title: 'Cargando',
+          html: 'Guardando configuracion de pagadurias',
+          timer: 500000,
+          didOpen: () => {
+              // Swal.showLoading();
+          },
+      }).then((result) => {});
+       this._gestionPagaduriaService.postGuardar(this.form.getRawValue()).subscribe(rep =>{
+        console.log(rep)
+       })
 }
+}
+

@@ -1,6 +1,6 @@
 <div class="h-full card py-3 px-4 w-100 shadow bg-white m-4 rounded-lg ">
     <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Configuración pagadurias</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Configuración de plazos</h2>
         <div class="col-span-12 grid grid-cols-12">
             <div class="col-span-6">
                 <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
@@ -46,7 +46,7 @@
                                     currentPage: page
                                 }
                 ">
-                    <td class="px-2 text-sm border text-center" (click)="abrirModal(item, 'A')">
+                    <td class="px-20 text-sm border text-center" (click)="abrirModal(item, 'A')">
                         <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                     </td>
                     <td class="px-2 text-sm border text-center">
@@ -92,6 +92,5 @@
                 nextLabel="Siguiente"></pagination-controls>
         </div>
     </div>
-
-
 </div>
+

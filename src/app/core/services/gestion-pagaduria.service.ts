@@ -22,7 +22,7 @@ export class GestionPagaduriaService {
     return this._http.get(`${this._appSettings.gestionPagaduria.url.configuracion}/${usuario}`);
   
 }
-public getInformacionPagadurias(data): Observable<any> {
+public postInformacionPagadurias(data): Observable<any> {
   return this._http.post(this._appSettings.gestionPagaduria.url.informacion, data)
   .pipe(map((res: any) => {
     return res;

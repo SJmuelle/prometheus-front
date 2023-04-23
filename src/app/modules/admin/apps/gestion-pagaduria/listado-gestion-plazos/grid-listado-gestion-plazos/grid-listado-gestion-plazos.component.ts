@@ -45,10 +45,10 @@ export class GridListadoGestionPlazosComponent implements OnInit {
 
 
   }
-  abrirModal(datos, titulo) {
-
+  abrirModal(dato, titulo) {
+ 
         const dialogRef = this.dialog.open(ListadoGestionPlazosComponent, {
-      data: datos,
+      data:dato,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

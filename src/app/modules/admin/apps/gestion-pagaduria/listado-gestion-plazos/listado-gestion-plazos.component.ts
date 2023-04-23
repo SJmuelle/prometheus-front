@@ -27,28 +27,38 @@ export class ListadoGestionPlazosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-      this.data = this.data;
-      this.consultaListadoTipo();
-      this.form=this.fb.group({
+    debugger;
+    this.data=this.dato
+    if (this.data == null) {
+      this.form = this.fb.group({
         tipoContrato: [''],
         antiguedadMaxima: [''],
         antiguedadMinima: [''],
         plazoMaximo: [''],
         plazoMinimo: [''],
-        usuarioCreacion: [''],
-
-
-      })
-  
- 
+        usuarioCreacion: ['']
+      });
+    } else {
+      this.form = this.fb.group({
+        tipoContrato: [this.dato.tipoContrato],
+        antiguedadMaxima: [this.dato.antiguedadMaxima],
+        antiguedadMinima: [this.dato.antiguedadMinima],
+        plazoMaximo: [this.dato.plazoMaximo],
+        plazoMinimo: [this.dato.plazoMinimo],
+        usuarioCreacion: [this.dato.usuarioCreacion]
+      });
+    }
+    
+    this.consultaListadoTipo();
   }
+  
   consultaListadoTipo() {
       Swal.fire({
           title: 'Cargando',
           html: 'Buscando información de las pagadurias',
           timer: 500000,
           didOpen: () => {
-            //    Swal.showLoading();
+             Swal.showLoading();
           },
       }).then((result) => {});
     //   this._gestionPagaduriaService.
