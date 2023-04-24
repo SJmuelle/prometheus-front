@@ -365,13 +365,13 @@
 
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='1'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center"
+                                    <!-- <a class="flex items-center"
                                         [routerLink]="codeudor.identificacion+'/'+codeudor.tipoId+'/'+codeudor.tipoTercero+'/'+codeudor.tipoDocumento">
                                         <mat-icon class="mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
                                         <span class="font-medium">Llamar</span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </ng-container>
                         </div>
@@ -426,26 +426,26 @@
                             </ng-container>
                             <ng-container *ngIf="fabricaDatos.unidadNegocio=='1'">
                                 <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
-                                    <a class="flex items-center"
+                                    <!-- <a class="flex items-center" 
                                         [routerLink]="familiar.identificacion+'/'+familiar.tipoId+'/'+familiar.tipoTercero+'/'+familiar.tipoDocumento">
                                         <mat-icon class="mr-2 icon-size-8 text-white"
                                             [svgIcon]="'heroicons_solid:phone'">
                                         </mat-icon>
                                         <span class="font-medium">Llamar</span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </ng-container>
                         </div>
                     </ng-container>
 
                 </div>
-                <div *ngIf="listado.referenciaCodeudor?.length || listado?.referenciaFamiliarCodeudor.length || listado?.referenciaPersonalCodeudor.length || listado?.referenciaComercialCodeudor.length" class="text-xl font-semibold text-center py-1 bg-gray-200 w-full min-h-10 leading-4 mb-4 mt-3 rounded-lg" style="line-height: 40px !important;">
+                <div *ngIf="listado?.referenciaCodeudor?.length || listado?.referenciaFamiliarCodeudor?.length || listado?.referenciaPersonalCodeudor?.length || listado?.referenciaComercialCodeudor?.length" class="text-xl font-semibold text-center py-1 bg-gray-200 w-full min-h-10 leading-4 mb-4 mt-3 rounded-lg" style="line-height: 40px !important;">
                     Codeudor </div>
                 <div
                     class=" grid sm:grid-cols-4 grid-cols-1 gap-y-8 justify-center max-w-sm mb-2 md:gap-x-12 md:grid-cols-4 md:max-w-6xl w-full mt-10">
                     
                 <ng-container
-                    *ngFor="let codeudor of listado.referenciaCodeudor | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                    *ngFor="let codeudor of listado?.referenciaCodeudor | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
                     <div
                         class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
                         
@@ -494,7 +494,7 @@
                 </ng-container>
             
 
-                <ng-container *ngFor="let codeudorFamiliar of listado.referenciaFamiliarCodeudor
+                <ng-container *ngFor="let codeudorFamiliar of listado?.referenciaFamiliarCodeudor
                 | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
                     <div
                         class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
@@ -541,7 +541,7 @@
                         </ng-container>
                     </div>
                 </ng-container>
-                <ng-container *ngFor="let codeudorPersonal of listado.referenciaPersonalCodeudor
+                <ng-container *ngFor="let codeudorPersonal of listado?.referenciaPersonalCodeudor
                     | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
                     <div
                         class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
@@ -589,7 +589,7 @@
                     </div>
                 </ng-container>
 
-                <ng-container *ngFor="let comercialCodeudor of listado.referenciaComercialCodeudor
+                <ng-container *ngFor="let comercialCodeudor of listado?.referenciaComercialCodeudor
                     | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
                     <div
                         class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
