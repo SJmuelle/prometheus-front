@@ -242,7 +242,8 @@ export class UltracemTitularComponent implements OnInit {
           "idPregunta": element.idPregunta,
           "idDBColumna": element.idDBColumna,
           "switchValor": switchValor,
-          "valorRespuesta": valorRespuesta
+          "valorRespuesta": valorRespuesta,
+          "tipoTercero": 'T'
         }
       )
     });
