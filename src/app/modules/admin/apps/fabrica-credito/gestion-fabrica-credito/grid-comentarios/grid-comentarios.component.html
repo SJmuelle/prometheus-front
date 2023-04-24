@@ -32,7 +32,7 @@
 
             <ng-container class="py-2.5" *ngIf="(comentarios$ | async) as comentar; else loading">
                 <ng-container *ngIf="comentar.data.length; else noActivity">
-                    <div class="mt-8">
+                    <div cdkScrollable class="mt-8 overflow-auto" style="max-height: 65vh;">
                         <ol>
                             <!-- Activities -->
                             <ng-container
