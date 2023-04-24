@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { GestionPagaduriaService } from '../../../../../../core/services/gestion-pagaduria.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-grid-listado-gestion-pagaduria',
@@ -14,9 +15,10 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<any> = new Subject();
   public firstInitial: string;
   public infoPagaduria: any[] = [];
+  selectedContact;
   // Agrega una variable para almacenar el estado de la barra lateral
   public showSidebar = false;
-
+  public filtrarTabla = new FormControl('');
   constructor(
     private _gestionPagaduriaService: GestionPagaduriaService,
   ) { }
@@ -38,15 +40,7 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
     })
   }
 
-  filtrarTabla(nombre: string) {
-    if (nombre) {
-      this.contactos = this.contactosOriginales.filter(item => {
-        return item.nombre.toLowerCase().includes(nombre.toLowerCase());
-      });
-    } else {
-      this.contactos = [...this.contactosOriginales];
-    }
-  }
+
 
 
 
