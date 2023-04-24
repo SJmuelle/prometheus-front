@@ -247,7 +247,7 @@ export class FormGenericoTabComponent implements OnInit {
           "idDBColumna": element.idDBColumna,
           "switchValor": switchValor,
           "valorRespuesta": valorRespuesta,
-          "tipoTercero": this.tipoReferenciacion
+          "tipoTercero": this.tipoPersona
         }
       )
     });
