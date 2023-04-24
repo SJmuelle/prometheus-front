@@ -165,7 +165,7 @@
     55%,
     75%,
     87% {
-        
+
             -webkit-transform: translateY(0px);
             transform: translateY(0px);
             -webkit-animation-timing-function: ease-out;
@@ -192,3 +192,9 @@
         scrollbar-width: none;  /* Firefox */
     }
     
+
+@media screen AND (max-width: 600px) {
+        button{
+                touch-action: auto !important;
+        }
+}
