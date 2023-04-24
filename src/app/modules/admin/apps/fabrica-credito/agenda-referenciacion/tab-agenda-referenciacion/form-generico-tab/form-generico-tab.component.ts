@@ -75,10 +75,13 @@ export class FormGenericoTabComponent implements OnInit {
     this.fabricaCreditoService.obtenerPreguntaAgendaReferenciacion(datosSolicitud)
       .subscribe(({ data }) => {
         let info = data.sort((a, b) => Number(a.orden) - Number(b.orden));
+        console.log("data get", info);
 
         this.fabricaCreditoService.obtenerDatoAgendaReferenciacion(datosSolicitudUsuario)
           .subscribe(({ data }) => {
             Swal.close();
+            
+            
             this.dataNecesaria =
             {
               session: [
@@ -185,6 +188,7 @@ export class FormGenericoTabComponent implements OnInit {
 
   public onPostDatos() {
     let data = this.dataNecesaria.preguntas;
+    
     let dataEnviada = {
       "details": []
     }
@@ -242,7 +246,8 @@ export class FormGenericoTabComponent implements OnInit {
           "idPregunta": element.idPregunta,
           "idDBColumna": element.idDBColumna,
           "switchValor": switchValor,
-          "valorRespuesta": valorRespuesta
+          "valorRespuesta": valorRespuesta,
+          "tipoTercero": this.tipoReferenciacion
         }
       )
     });
