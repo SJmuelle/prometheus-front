@@ -1,8 +1,8 @@
 <!-- Menu -->
 <div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
-    <div class="menu flex flex-row overflow-scroll scrollbar-hide h-auto" *ngIf="fabricaDatos">
+    <div class="menu flex flex-row overflow-auto scrollbar-hide h-auto py-4 scroll-smooth" *ngIf="fabricaDatos">
 
-        <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right" (click)="irAtras()"
+        <button mat-fab class="mx-1  bg-orange-500 roll-in-blurred-right" (click)="irAtras()"
             [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atrás">
             <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
         </button>
