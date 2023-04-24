@@ -88,7 +88,7 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
     }
     console.log(nitPagaduria)
     this._gestionPagaduriaService.postInformacionPagadurias(data).subscribe((response : any) => {
-      this.infoPagaduria = response.data[1]; // Se supone que response.data es un array, así que usamos el primer elemento
+      this.infoPagaduria = response.data; // Se supone que response.data es un array, así que usamos el primer elemento
       console.log(response.data); 
       this.abrirModal(this.infoPagaduria);
     },

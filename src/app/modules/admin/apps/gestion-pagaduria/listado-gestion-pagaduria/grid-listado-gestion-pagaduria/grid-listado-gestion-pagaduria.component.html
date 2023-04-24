@@ -16,7 +16,7 @@
     <div class="w-full h-full mt-2">
       <div class="flex flex-col gap-3 overflow-y-auto h-screen" style="height: calc(100% - 50px);">
         <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center" *ngFor="let item of contactos"
-          (click)="abrirModal(item)">
+          (click)="crearInformacion(item.codigo)">
           <div>
             <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
               {{ item.nombre.slice(0, 2).toUpperCase() }}
@@ -35,7 +35,7 @@
       <p class="text-xl font-bold p-4 border-b">{{ infoPagaduria.conveniopagaduria }}</p>
       <button class="absolute top-0 right-0 p-2" (click)="toggleModal()">X</button>
     </div>
-    <div class="p-4">
+    <div class="p-4" *ngIf="infoPagaduria">
       <p>Nit: {{ infoPagaduria.documento }}</p>
       <p>Ciudad: {{ infoPagaduria.ciudad }}</p>
       <p>Convenio: {{ infoPagaduria.convenio }}</p>
