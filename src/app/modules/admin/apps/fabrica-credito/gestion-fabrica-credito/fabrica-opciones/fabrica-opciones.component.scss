@@ -165,6 +165,7 @@
     55%,
     75%,
     87% {
+        
             -webkit-transform: translateY(0px);
             transform: translateY(0px);
             -webkit-animation-timing-function: ease-out;
@@ -179,3 +180,15 @@
             opacity: 1;
     }
 }
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* For IE, Edge and Firefox */
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    
