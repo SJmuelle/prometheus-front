@@ -75,7 +75,6 @@ export class FormGenericoTabComponent implements OnInit {
     this.fabricaCreditoService.obtenerPreguntaAgendaReferenciacion(datosSolicitud)
       .subscribe(({ data }) => {
         let info = data.sort((a, b) => Number(a.orden) - Number(b.orden));
-        console.log("data get", info);
 
         this.fabricaCreditoService.obtenerDatoAgendaReferenciacion(datosSolicitudUsuario)
           .subscribe(({ data }) => {
