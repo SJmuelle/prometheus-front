@@ -127,7 +127,7 @@
                             <span
                                 class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
                                 [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
-                                    class="leading-relaxed whitespace-nowrap">{{item.estadoAccion}}</span></span>
+                                    class="leading-relaxed whitespace-nowrap"  matTooltipClass="text-sm" [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
                         </div>
                     </ng-container>
                 </div>

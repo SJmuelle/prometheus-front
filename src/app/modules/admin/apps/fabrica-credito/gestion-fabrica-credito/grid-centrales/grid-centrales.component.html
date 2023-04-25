@@ -81,8 +81,8 @@
                     <!---->
                 </div>
             </div>
-        </mat-tab>
-        <mat-tab label="Codeudor" matTabLabel *ngIf="codeudorDocumentosCentrales.length">
+        </mat-tab>        
+        <mat-tab *ngIf="codeudorDocumentosCentrales.length" label="Codeudor"   >
             <div class="flex flex-col w-full overflow-auto bg-card">
                 <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
                     <div *ngFor="let item of codeudorDocumentosCentrales; let i = index">
