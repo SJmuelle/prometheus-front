@@ -194,8 +194,8 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
-            agregarReferencia: EndPoints.uri('/generic/cre-agregar-referencia-prueba'),
-            actualizarReferencia: EndPoints.uri('/generic/cre-actualizar-referencia-prueba')
+            agregarReferencia: EndPoints.uri('/generic/cre-agregar-referencia'),
+            actualizarReferencia: EndPoints.uri('/generic/cre-actualizar-referencia')
         }
     };
     /**

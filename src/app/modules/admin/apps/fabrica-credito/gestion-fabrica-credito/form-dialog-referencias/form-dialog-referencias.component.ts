@@ -299,14 +299,23 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         data.otroParentesco = otroParentesco;
         data.tipoReferencia = tipoReferencia;
 
-        this.subscription$ = this.referenciasService.postReferenciaMicro(data).subscribe(() => {
+        this.subscription$ = this.referenciasService.postReferenciaMicro(data).subscribe((rep) => {
             this.onCerrar();
             this.referenciasService.eventos$.emit(true);
-            Swal.fire(
-                'Completado',
-                'Información guardada con éxito',
-                'success'
-            );
+            
+            if(rep.data.respuesta !== 'OK'){
+                Swal.fire(
+                    'Error',
+                    rep.data.respuesta,
+                    'error'
+                );
+            }else{
+                Swal.fire(
+                    'Completado',
+                    'Información guardada con éxito',
+                    'success'
+                );
+            }
         });
     }
 
