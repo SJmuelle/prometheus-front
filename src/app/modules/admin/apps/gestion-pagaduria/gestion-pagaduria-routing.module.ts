@@ -7,8 +7,6 @@ import { GridFormularioGestionPagaduriaComponent } from './formulario-gestion-pa
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
-
-
   {
     path: '',
     component: ListadoGestionPagaduriaComponent,
@@ -24,15 +22,12 @@ const routes: Routes = [
       },
 
       {
-
         path: 'nueva-pagaduria',
         component: GridFormularioGestionPagaduriaComponent
       },
-     
     ]
   }
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]

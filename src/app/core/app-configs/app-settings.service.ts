@@ -459,6 +459,7 @@ export class AppSettingsService {
             eliminar:EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
             actualizar:EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
             informacion:EndPoints.uri('/generic/cre-lib-info-pagadurias'),
-    }
+            crear:EndPoints.uri('/generic/cre-lib-guardar-pagaduria')
+    } 
 };
 }

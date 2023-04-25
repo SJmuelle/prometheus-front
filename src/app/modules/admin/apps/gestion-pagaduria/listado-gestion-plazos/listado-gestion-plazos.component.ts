@@ -14,29 +14,27 @@ export class ListadoGestionPlazosComponent implements OnInit {
 
   listadoTipo: any;
   data: any = {};
-  tiposContrato = [  {value: 'I', viewValue: 'Contrato Indefinido'},  {value: 'F', viewValue: 'Contrato Fijo'},  {value: 'O', viewValue: 'Contrato Obra labor'}];
-
-    dialog: any;
-    form: FormGroup;
+  tiposContrato = [{ value: 'I', viewValue: 'Contrato Indefinido' }, { value: 'F', viewValue: 'Contrato Fijo' }, { value: 'O', viewValue: 'Contrato Obra labor' }];
+  dialog: any;
+  form: FormGroup;
   constructor(
     private fb: FormBuilder,
-      public matDialogRef: MatDialogRef<ListadoGestionPlazosComponent  >,
-      private _gestionPagaduriaService: GestionPagaduriaService,
-      @Inject(MAT_DIALOG_DATA) public dato,
-      
-  ) {}
+    public matDialogRef: MatDialogRef<ListadoGestionPlazosComponent>,
+    private _gestionPagaduriaService: GestionPagaduriaService,
+    @Inject(MAT_DIALOG_DATA) public dato,
+
+  ) { }
 
   ngOnInit(): void {
-    debugger;
-    this.data=this.dato
+    // debugger;
+    this.data = this.dato
     if (this.data == null) {
       this.form = this.fb.group({
         tipoContrato: [''],
         antiguedadMaxima: [''],
         antiguedadMinima: [''],
         plazoMaximo: [''],
-        plazoMinimo: [''],
-        usuarioCreacion: ['']
+        plazoMinimo: ['']
       });
     } else {
       this.form = this.fb.group({
@@ -44,79 +42,81 @@ export class ListadoGestionPlazosComponent implements OnInit {
         antiguedadMaxima: [this.dato.antiguedadMaxima],
         antiguedadMinima: [this.dato.antiguedadMinima],
         plazoMaximo: [this.dato.plazoMaximo],
-        plazoMinimo: [this.dato.plazoMinimo],
-        usuarioCreacion: [this.dato.usuarioCreacion]
+        plazoMinimo: [this.dato.plazoMinimo]
       });
     }
-    
-    this.consultaListadoTipo();
+
+    // this.consultaListadoTipo();
   }
-  
-  consultaListadoTipo() {
-      Swal.fire({
-          title: 'Cargando',
-          html: 'Buscando información de las pagadurias',
-          timer: 500000,
-          didOpen: () => {
-             Swal.showLoading();
-          },
-      }).then((result) => {});
-    //   this._gestionPagaduriaService.
-          
-  }
+
+  // consultaListadoTipo() {
+  //     Swal.fire({
+  //         title: 'Cargando',
+  //         html: 'Buscando información de las pagadurias',
+  //         timer: 500000,
+  //         didOpen: () => {
+  //            Swal.showLoading();
+  //         },
+  //     }).then((result) => {});
+  //   //   this._gestionPagaduriaService.
+
+  // }
   guardar() {
     console.log("mostrar", this.form.getRawValue());
+    var usuarioCreacion = JSON.parse(localStorage.getItem("usuario"));
 
-      let data, url;
 
-      Swal.fire({
-          title: 'Cargando',
-          html: 'Guardando configuracion de pagadurias',
-          timer: 500000,
-          didOpen: () => {
-              // Swal.showLoading();
-          },
-      }).then((result) => {});
-       this._gestionPagaduriaService.postGuardar(this.form.getRawValue()).subscribe(rep =>{
-        console.log(rep)
-       })
-    //       Swal.close();
-    //       if (response) {
-    //           if (response.status == 200) {
-    //               if (!response.data.respuesta.includes('OK')) {
-    //                   Swal.fire(
-    //                       'Información',
-    //                       response.data.respuesta,
-    //                       'error'
-    //                   );
-    //                   return;
-    //               }
-    //               Swal.fire(
-    //                   '¡Información!',
-    //                   `Se guardó el registro con éxito`,
-    //                   'success'
-    //               ).then((resultado) => {
-    //                   if (resultado) {
-    //                       this.matDialogRef.close();
-    //                   }
-    //               });
-    //           } else {
-    //               Swal.fire(
-    //                   '¡Información!',
-    //                   `Hubo un error en los datos enviados, favor evaluar`,
-    //                   'success'
-    //               );
-    //           }
-    //       } else {
-    //           Swal.fire(
-    //               '¡Advertencia!',
-    //               'Para este tipo de búsqueda, mínimo es necesario la cédula del cliente',
-    //               'error'
-    //           );
-    //       }
-    //   });
+
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando configuracion de pagadurias',
+      timer: 500000,
+      didOpen: () => {
+        // Swal.showLoading();
+      },
+    }).then((result) => {
+      if (this.data == null) {
+        let data = {
+          tipoContrato: this.form.getRawValue().tipoContrato,
+          antiguedadMinima: this.form.getRawValue().antiguedadMinima,
+          antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
+          plazoMinimo: this.form.getRawValue().plazoMinimo,
+          plazoMaximo: this.form.getRawValue().plazoMaximo,
+          usuarioCreacion: usuarioCreacion.user
+
+        }
+
+        this._gestionPagaduriaService.postGuardar(data).subscribe(rep => {
+          console.log(rep)
+        })
+
+      } else {
+
+        let data = {
+          tipoContrato: this.form.getRawValue().tipoContrato,
+          antiguedadMinima: this.form.getRawValue().antiguedadMinima,
+          antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
+          plazoMinimo: this.form.getRawValue().plazoMinimo,
+          plazoMaximo: this.form.getRawValue().plazoMaximo,
+          usuarioActualizacion: usuarioCreacion.user,
+          idPlazo: this.form.getRawValue().idPlazo
+
+        }
+
+        console.log(data);
+        this._gestionPagaduriaService.postActualizar(data).subscribe(rep => {
+          console.log(rep)
+        })
+
+
+      }
+
+    });
+
   }
+
+
 }
 
 
-  
+

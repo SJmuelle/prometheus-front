@@ -1,5 +1,5 @@
 <div class="h-full card py-3 px-4 w-100 shadow bg-white m-4 rounded-lg ">
-  <form class="w-full max-w-lg " [formGroup]="form">
+  <div [formGroup]="form">
     <h2 class="text-gray-900 col-span-12 mb-4">Crear nueva pagaduria</h2>
     <div class="grid grid-cols-3 grid-rows-3 w-100 mb-2">
       <div class="col-span-1">
@@ -7,7 +7,7 @@
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user-circle'">
           </mat-icon>
           <mat-label> Razón social </mat-label>
-          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+          <input matInput type="text" autocomplete="off" formControlName="razonSocial">
         </mat-form-field>
       </div>
       <div class="col-span-1">
@@ -15,7 +15,7 @@
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:identification'">
           </mat-icon>
           <mat-label> Numero de documento </mat-label>
-          <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+          <input matInput type="number" autocomplete="off" formControlName="documento">
         </mat-form-field>
       </div>
       <div class="col-span-1">
@@ -23,31 +23,40 @@
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:check'">
           </mat-icon>
           <mat-label> Dv</mat-label>
-          <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+          <input matInput type="number" autocomplete="off" formControlName="dv">
         </mat-form-field>
       </div>
       <div class="col-span-1">
         <mat-form-field class="w-full px-3 fuse-mat-dense">
-          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          <mat-label>Departamento</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
           </mat-icon>
-          <mat-label> Departamento</mat-label>
-          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+          <mat-select formControlName="nombre">
+            <mat-option value="{{item.codigo}}" *ngFor="let item of listadoDepartamento">
+              {{item.nombre}} 
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
       <div class="col-span-1">
         <mat-form-field class="w-full px-3 fuse-mat-dense">
-          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          <mat-label>Ciudad</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
           </mat-icon>
-          <mat-label> Ciudad</mat-label>
-          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+          <mat-select formControlName="municipio">
+            <mat-option value="{{item.codigo}}" *ngFor="let item of listadoCiudades">
+              {{item.municipio}} 
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
+
       <div class="col-span-1">
         <mat-form-field class="w-full px-3 fuse-mat-dense">
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
           </mat-icon>
           <mat-label> Dirección</mat-label>
-          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+          <input matInput type="tex" autocomplete="off" formControlName="dirrecion">
         </mat-form-field>
       </div>
       <div class="col-span-1">
@@ -55,7 +64,7 @@
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:mail'">
           </mat-icon>
           <mat-label> Correo</mat-label>
-          <input matInput type="string" autocomplete="off" formControlName="antiguedadMaxima">
+          <input matInput type="text" autocomplete="off" formControlName="correo">
         </mat-form-field>
       </div>
       <div class="col-span-1">
@@ -63,7 +72,7 @@
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:phone'">
           </mat-icon>
           <mat-label> Telefono</mat-label>
-          <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
+          <input matInput type="number" autocomplete="off" formControlName="telefono">
         </mat-form-field>
       </div>
       <div class="col-span-1">
@@ -71,19 +80,92 @@
           <mat-label>Tipo de empresa</mat-label>
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
           </mat-icon>
-          <mat-select formControlName="tipoContrato">
-            <!-- <mat-option *ngFor="let tipo of tiposContrato" [value]="tipo.value">
-        {{ tipo.viewValue }}
-      </mat-option> -->
+          <mat-select formControlName="tipoEmpresa">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Empresas Aliadas</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="empresaAliada">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Convenio especial temporal</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="convenioEspecialTemporal">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Contrato Fijo</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="contratoFijo">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Porcentaje Ingresos Brutos</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="porcentajeIngresosBrutos">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Carta laboral</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="requiereCartaLaboral">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Liquidacion Sin Pagaduria</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="liqSinPagaduria">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
 
-
       <mat-dialog-actions align="end">
-        <button mat-button class=" left-auto right-auto color_fintra text-white" (click)="guardar()">Guardar </button>
+        <button mat-button class=" left-auto right-auto color_fintra text-white" (click)="crearPagaduria()">Guardar
+        </button>
         <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
       </mat-dialog-actions>
     </div>
-  </form>
+  </div>
+
 </div>

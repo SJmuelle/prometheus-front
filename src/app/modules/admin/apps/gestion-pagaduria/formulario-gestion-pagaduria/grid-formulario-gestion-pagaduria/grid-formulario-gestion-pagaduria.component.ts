@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialog,} from '@angular/material/dialog';
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormularioGestionPagaduriaComponent } from '../formulario-gestion-pagaduria.component';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.service';
 
@@ -19,64 +19,116 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
   tamanoTabl: number = 8;
   filtrarTabla: string = '';
   mostrar_form: boolean = true;
-  datos: any = {};
+  dato: any = {};
   router: any;
   form: FormGroup;
-  private _gestionPagaduriaService: any;
-
+  
+  seleccion = [  {value: 'true', viewValue: 'SI'},  {value: 'false', viewValue: 'NO'}];
+  data: any;
+  datos: any = {};
+  listadoDepartamento: any;
+  listadoCiudades: any[];
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public dato,
     public dialog: MatDialog,
     private _GestionPagaduriaService: GestionPagaduriaService,
+    private _Service: UtilityService
+    
   ) { }
 
-  ngOnInit(): void {
-    this.consulta();
+  ngOnInit(): void {  
+    this.consultarDepartamento(); 
+     
+      this.form = this.fb.group({
+        razonSocial: ['', [Validators.required]],
+        documento: ['', [Validators.required]],
+        dv: ['', [Validators.required]],
+        municipio: ['', [Validators.required]],
+        departamento: ['', [Validators.required]],
+        dirrecion: ['', [Validators.required]],
+        correo: ['', [Validators.required]],
+        telefono: ['', [Validators.required]],
+        tipoEmpresa: ['', [Validators.required]],
+        empresaAliada: ['', [Validators.required]],
+        convenioEspecialTemporal: ['', [Validators.required]],
+        contratoFijo: ['', [Validators.required]],
+        porcentajeIngresosBrutos: ['', [Validators.required]],
+        requiereCartaLaboral: ['', [Validators.required]],
+        liqSinPagaduria: ['', [Validators.required]]
+      });
   }
-  consulta() {
-    // Swal.fire({ title: 'Cargando', html: 'Buscando información de las pagadurias', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-    var usuario= JSON.parse(localStorage.getItem ("usuario")); 
-    console.log(usuario);
-    this._GestionPagaduriaService.getPlazos(usuario.user).subscribe((response: any) => {
+
+  consultarDepartamento(){
+
+    this._Service
+        .getQuery(`tk/listar-departamentos`, true)
+        .subscribe((response: any) => {
+          Swal.close();
+          if (response) {
+            this.listadoDepartamento = response.data;
+            console.log(this.listadoDepartamento)
+          } else {
+            this.listadoDepartamento = [];
+          }
+        });
+  }
+  consultaMunicipio(data) {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Buscando información...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._Service
+      .getQuery(`listar-ciudades/${data}`, true)
+      .subscribe((response: any) => {
         Swal.close();
-        // debugger
-        console.log(response)
+        if (response) {
+          this.listadoCiudades = response.data;
+        } else {
+          this.listadoCiudades = [];
+        }
+      });
+  }
+
+  listarBarrios(data) {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Buscando información...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._Service
+      .getQuery(`listar-barrios/${data}`, true)
+      .subscribe((response: any) => {
+        Swal.close();
         if (response) {
           this.listado = response.data;
         } else {
           this.listado = [];
         }
       });
-
-
   }
-  abrirModal(dato, titulo) {
- 
-        const dialogRef = this.dialog.open(FormularioGestionPagaduriaComponent, {
-      data:dato,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-        this.consulta();
-    });
-  }
-
-  guardar() {
+  
+  crearPagaduria() {
     console.log("mostrar", this.form.getRawValue());
 
       let data, url;
 
       Swal.fire({
           title: 'Cargando',
-          html: 'Guardando configuracion de pagadurias',
+          html: 'Guardando nueva pagadurias',
           timer: 500000,
           didOpen: () => {
               // Swal.showLoading();
           },
       }).then((result) => {});
-       this._gestionPagaduriaService.postGuardar(this.form.getRawValue()).subscribe(rep =>{
+       this._GestionPagaduriaService.postCrear(this.form.getRawValue()).subscribe(rep =>{
         console.log(rep)
        })
 }

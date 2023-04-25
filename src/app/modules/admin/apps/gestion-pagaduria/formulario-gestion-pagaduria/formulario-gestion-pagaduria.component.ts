@@ -20,38 +20,17 @@ export class FormularioGestionPagaduriaComponent implements OnInit {
 
     dialog: any;
     form: FormGroup;
-  constructor(
+    dato: any;
+ constructor(
     private fb: FormBuilder,
       public matDialogRef: MatDialogRef<FormularioGestionPagaduriaComponent >,
       private _gestionPagaduriaService: GestionPagaduriaService,
-      @Inject(MAT_DIALOG_DATA) public dato,
+    
       
   ) {}
 
   ngOnInit(): void {
-    debugger;
-    this.data=this.dato
-    if (this.data == null) {
-      this.form = this.fb.group({
-        tipoContrato: [''],
-        antiguedadMaxima: [''],
-        antiguedadMinima: [''],
-        plazoMaximo: [''],
-        plazoMinimo: [''],
-        usuarioCreacion: ['']
-      });
-    } else {
-      this.form = this.fb.group({
-        tipoContrato: [this.dato.tipoContrato],
-        antiguedadMaxima: [this.dato.antiguedadMaxima],
-        antiguedadMinima: [this.dato.antiguedadMinima],
-        plazoMaximo: [this.dato.plazoMaximo],
-        plazoMinimo: [this.dato.plazoMinimo],
-        usuarioCreacion: [this.dato.usuarioCreacion]
-      });
-    }
-    
-    this.consultaListadoTipo();
+ 
   }
   
   consultaListadoTipo() {
@@ -79,6 +58,8 @@ export class FormularioGestionPagaduriaComponent implements OnInit {
               // Swal.showLoading();
           },
       }).then((result) => {});
+      var usuarioCreacion= JSON.parse(localStorage.getItem ("usuarioCreacion")); 
+      console.log(usuarioCreacion);
        this._gestionPagaduriaService.postGuardar(this.form.getRawValue()).subscribe(rep =>{
         console.log(rep)
        })

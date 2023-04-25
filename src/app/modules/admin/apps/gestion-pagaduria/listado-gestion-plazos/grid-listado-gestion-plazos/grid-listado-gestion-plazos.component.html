@@ -28,6 +28,7 @@
                     tracking-wide text-left text-gray-400
                     capitalize border-b border-gray-600 ">
                     <th class="px-4 py-3 text-center w-0">Editar</th>
+                    <th class="px-4 py-3 text-center w-0">Id plazos</th>
                     <th class="px-4 py-3 text-center">Tipo de contrato</th>
                     <th class="px-4 py-3 text-center">Antiguedad maxima</th>
                     <th class="px-4 py-3 text-center">Antiguedad minima</th>
@@ -50,19 +51,22 @@
                         <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item.tipocontrato }}
+                        {{ item.tipoContrato }}
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item.antiguedadmaxima}}
+                        {{ item.idPlazo }}
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item.antiguedadminima }}
+                        {{ item.antiguedadMaxima}}
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item.plazomaximo}}
+                        {{ item.antiguedadMinima }}
                     </td>
                     <td class="px-2 text-sm border text-center">
-                        {{ item.plazominimo}}
+                        {{ item.plazoMaximo}}
+                    </td>
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.plazoMinimo}}
                     </td>
                     <td class="px-2 text-sm border text-center w-0">
                         <div [ngClass]="

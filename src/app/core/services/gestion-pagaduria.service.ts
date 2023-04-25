@@ -36,4 +36,18 @@ public postGuardar(data): Observable<any> {
   }));
 
 }
+public postActualizar(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.actualizar, data)
+  .pipe(map((res: any) => {
+    return res;
+  }));
+
+}
+
+public postCrear(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.crear, data)
+  .pipe(map((res: any) => {
+    return res;
+  }));
+}
 }
