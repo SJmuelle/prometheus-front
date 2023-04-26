@@ -87,6 +87,7 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
                 tipoPersona: item.tipo,
                 CodUnidadNegocio: item.unidadNegocio,
                 tipoDocPersona: item.tipoDocumento,
+                tipoTercero: item.tipoTercero
             },
             minHeight: '420px',
             disableClose: true,

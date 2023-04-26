@@ -24,7 +24,7 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
   form: FormGroup;
 
   seleccion = [{ value: true, viewValue: 'SI' }, { value: false, viewValue: 'NO' }];
-  tipoEmpresa = [{ value: 'Grupo', viewValue: 'Grupo' }, { value: 'Temporal', viewValue: 'Temporal' }, { value: 'Otras Empresas', viewValue: 'Otras Empresas' }];
+  tipoEmpresa = [{ value: 'GRUPO', viewValue: 'Grupo' }, { value: 'TEMPORAL', viewValue: 'Temporal' }, { value: 'OTRAS EMPRESAS', viewValue: 'Otras Empresas' }];
   data: any;
   datos: any = {};
   listadoDepartamento: any;
@@ -55,7 +55,7 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
       empresaAliada: [''],
       convenioEspecialTemporal: [''],
       contratoFijo: [''],
-      PorcentajeIngresosBrutos: [0, Validators.required],
+      porcentajeIngresosBrutos: [0, Validators.required],
       requiereCartaLaboral: [''],
       liqSinPagaduria: ['']
     });
@@ -131,7 +131,23 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
         // Swal.showLoading();
       },
     }).then((result) => { });
-    this._GestionPagaduriaService.postCrear(this.form.getRawValue()).subscribe(rep => {
+    data={
+      razonSocial: this.form.getRawValue().razonSocial,
+      documento: this.form.getRawValue().documento,
+      dv: this.form.getRawValue().dv,
+      municipio: this.form.getRawValue().municipio,
+      direccion: this.form.getRawValue().direccion,
+      correo: this.form.getRawValue().correo,
+      telefono: this.form.getRawValue().telefono,
+      tipoEmpresa: this.form.getRawValue().tipoEmpresa,
+      empresaAliada: this.form.getRawValue().empresaAliada,
+      convenioEspecialTemporal: this.form.getRawValue().convenioEspecialTemporal,
+      contratoFijo: this.form.getRawValue().contratoFijo,
+      porcentajeIngresosBrutos: this.form.getRawValue().porcentajeIngresosBrutos,
+      requiereCartaLaboral:this.form.getRawValue().requiereCartaLaboral,
+      liqSinPagaduria: this.form.getRawValue().liqSinPagaduria,
+    }
+    this._GestionPagaduriaService.postCrear(data).subscribe(rep => {
       console.log(rep)
     })
   }
