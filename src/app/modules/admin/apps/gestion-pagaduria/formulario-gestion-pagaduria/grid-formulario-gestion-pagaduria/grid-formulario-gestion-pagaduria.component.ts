@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog,} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, } from '@angular/material/dialog';
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { FormularioGestionPagaduriaComponent } from '../formulario-gestion-pagaduria.component';
@@ -22,8 +22,9 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
   dato: any = {};
   router: any;
   form: FormGroup;
-  
-  seleccion = [  {value: 'true', viewValue: 'SI'},  {value: 'false', viewValue: 'NO'}];
+
+  seleccion = [{ value: true, viewValue: 'SI' }, { value: false, viewValue: 'NO' }];
+  tipoEmpresa = [{ value: 'Grupo', viewValue: 'Grupo' }, { value: 'Temporal', viewValue: 'Temporal' }, { value: 'Otras Empresas', viewValue: 'Otras Empresas' }];
   data: any;
   datos: any = {};
   listadoDepartamento: any;
@@ -34,56 +35,58 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
     public dialog: MatDialog,
     private _GestionPagaduriaService: GestionPagaduriaService,
     private _Service: UtilityService
-    
+
   ) { }
 
-  ngOnInit(): void {  
-    this.consultarDepartamento(); 
-     
-      this.form = this.fb.group({
-        razonSocial: ['', [Validators.required]],
-        documento: ['', [Validators.required]],
-        dv: ['', [Validators.required]],
-        municipio: ['', [Validators.required]],
-        departamento: ['', [Validators.required]],
-        dirrecion: ['', [Validators.required]],
-        correo: ['', [Validators.required]],
-        telefono: ['', [Validators.required]],
-        tipoEmpresa: ['', [Validators.required]],
-        empresaAliada: ['', [Validators.required]],
-        convenioEspecialTemporal: ['', [Validators.required]],
-        contratoFijo: ['', [Validators.required]],
-        porcentajeIngresosBrutos: ['', [Validators.required]],
-        requiereCartaLaboral: ['', [Validators.required]],
-        liqSinPagaduria: ['', [Validators.required]]
+
+  ngOnInit(): void {
+    this.consultarDepartamento();
+
+    this.form = this.fb.group({
+      razonSocial: [''],
+      documento: [''],
+      dv: [''],
+      municipio: [''],
+      departamento: ['', Validators.required], // Agregar validación de campo requerido
+      direccion: ['', Validators.required],
+      correo: [''],
+      telefono: [''],
+      tipoEmpresa: [''],
+      empresaAliada: [''],
+      convenioEspecialTemporal: [''],
+      contratoFijo: [''],
+      PorcentajeIngresosBrutos: [0, Validators.required],
+      requiereCartaLaboral: [''],
+      liqSinPagaduria: ['']
+    });
+
+    this.consultaMunicipio();
+  }
+
+
+  consultarDepartamento() {
+
+    this._Service
+      .getQuery(`tk/listar-departamentos`, true)
+      .subscribe((response: any) => {
+        Swal.close();
+        if (response) {
+          this.listadoDepartamento = response.data;
+          console.log(this.listadoDepartamento)
+        } else {
+          this.listadoDepartamento = [];
+        }
       });
   }
+  consultaMunicipio() {
+    console.log(this.form.controls.departamento.value);
 
-  consultarDepartamento(){
+    if (!this.form.controls.departamento.value) {
+      return;
+    }
 
     this._Service
-        .getQuery(`tk/listar-departamentos`, true)
-        .subscribe((response: any) => {
-          Swal.close();
-          if (response) {
-            this.listadoDepartamento = response.data;
-            console.log(this.listadoDepartamento)
-          } else {
-            this.listadoDepartamento = [];
-          }
-        });
-  }
-  consultaMunicipio(data) {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._Service
-      .getQuery(`listar-ciudades/${data}`, true)
+      .getQuery(`listar-ciudades/${this.form.controls.departamento.value}`, true)
       .subscribe((response: any) => {
         Swal.close();
         if (response) {
@@ -114,23 +117,24 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
         }
       });
   }
-  
+
   crearPagaduria() {
     console.log("mostrar", this.form.getRawValue());
 
-      let data, url;
+    let data, url;
 
-      Swal.fire({
-          title: 'Cargando',
-          html: 'Guardando nueva pagadurias',
-          timer: 500000,
-          didOpen: () => {
-              // Swal.showLoading();
-          },
-      }).then((result) => {});
-       this._GestionPagaduriaService.postCrear(this.form.getRawValue()).subscribe(rep =>{
-        console.log(rep)
-       })
-}
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Guardando nueva pagadurias',
+      timer: 500000,
+      didOpen: () => {
+        // Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._GestionPagaduriaService.postCrear(this.form.getRawValue()).subscribe(rep => {
+      console.log(rep)
+    })
+  }
+
 }
 

@@ -19,11 +19,14 @@ export class ListadoGestionPlazosComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
+
     public matDialogRef: MatDialogRef<ListadoGestionPlazosComponent>,
     private _gestionPagaduriaService: GestionPagaduriaService,
     @Inject(MAT_DIALOG_DATA) public dato,
 
-  ) { }
+  ) {
+    this.data = { idPlazo: null, ...this.dato };
+  }
 
   ngOnInit(): void {
     // debugger;
@@ -46,27 +49,12 @@ export class ListadoGestionPlazosComponent implements OnInit {
       });
     }
 
-    // this.consultaListadoTipo();
+
   }
 
-  // consultaListadoTipo() {
-  //     Swal.fire({
-  //         title: 'Cargando',
-  //         html: 'Buscando información de las pagadurias',
-  //         timer: 500000,
-  //         didOpen: () => {
-  //            Swal.showLoading();
-  //         },
-  //     }).then((result) => {});
-  //   //   this._gestionPagaduriaService.
-
-  // }
   guardar() {
     console.log("mostrar", this.form.getRawValue());
-    var usuarioCreacion = JSON.parse(localStorage.getItem("usuario"));
-
-
-
+    // var id = JSON.parse(localStorage.getItem("id"));
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando configuracion de pagadurias',
@@ -82,9 +70,10 @@ export class ListadoGestionPlazosComponent implements OnInit {
           antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
           plazoMinimo: this.form.getRawValue().plazoMinimo,
           plazoMaximo: this.form.getRawValue().plazoMaximo,
-          usuarioCreacion: usuarioCreacion.user
+          // idPlazo: this.data.idPlazo
 
         }
+        console.log(this.data)
 
         this._gestionPagaduriaService.postGuardar(data).subscribe(rep => {
           console.log(rep)
@@ -98,13 +87,12 @@ export class ListadoGestionPlazosComponent implements OnInit {
           antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
           plazoMinimo: this.form.getRawValue().plazoMinimo,
           plazoMaximo: this.form.getRawValue().plazoMaximo,
-          usuarioActualizacion: usuarioCreacion.user,
-          idPlazo: this.form.getRawValue().idPlazo
+          idPlazo: this.data.idPlazo
 
         }
 
-        console.log(data);
-        this._gestionPagaduriaService.postActualizar(data).subscribe(rep => {
+        console.log(this.data);
+        this._gestionPagaduriaService.postEditar(data).subscribe(rep => {
           console.log(rep)
         })
 

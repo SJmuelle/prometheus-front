@@ -14,7 +14,7 @@ export class GridListadoGestionPlazosComponent implements OnInit {
 
   listado: any = [];
   page: number = 1;
-  tamanoTabl: number = 8;
+  tamanoTabl: number = 9;
   filtrarTabla: string = '';
   mostrar_form: boolean = true;
   datos: any = {};

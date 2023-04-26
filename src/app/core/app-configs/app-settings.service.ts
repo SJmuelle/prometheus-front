@@ -457,7 +457,7 @@ export class AppSettingsService {
             configuracion:EndPoints.uri('/generic/qry/cre-lib-configuracion-plazos'),
             guardar:EndPoints.uri('/generic/cre-lib-guardar-plazo'),
             eliminar:EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
-            actualizar:EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
+            editar:EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
             informacion:EndPoints.uri('/generic/cre-lib-info-pagadurias'),
             crear:EndPoints.uri('/generic/cre-lib-guardar-pagaduria')
     } 
