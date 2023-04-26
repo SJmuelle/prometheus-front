@@ -1,75 +1,93 @@
-<div class="grid grid-cols-1 w-full h-10 px-5 pt-3 relative">
-  <div class="flex flex-col p-6 bg-card rounded-2xl shadow w-full">
-    <div class="flex items-center justify-between">
-      <div class="text-secondary font-medium flex flex-col sm:flex-row sm:items-center">
-        <input class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
-          name="filtrarTabla" [formControl]="filtrarTabla" placeholder="Filtrar tabla...">
-      </div>
-      <div class="mt-2 pt-3 sm:pt-2 sm:ml-auto sm:text-right">
-        Total de registros encontrados: {{ total }}
-      </div>
-    </div>
-    <!-- <div class="w-full h-full mt-2">
-      <div class="flex flex-col gap-3 overflow-y-auto h-screen" style="height: calc(100% - 50px);">
-        <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center" *ngFor="let item of contactos"
-          (click)="crearInformacion(item.codigo)">
-          <div>
-            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
-              {{ item.nombre.slice(0, 2).toUpperCase() }}
-            </div>
-            <div>
-              <p class="text-lg font-semibold">{{item.nombre}}</p>
-              <p class="text-lg font-medium">Nit: {{item.codigo}}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <ng-container *ngIf="contactos.length; else noContacts">
-      <ng-container *ngFor="let contact of contactos | filter:filtrarTabla.value; let i = index; trackBy: trackByFn" >
-        <!-- Group -->
-        <ng-container *ngIf="i === 0 || contact.nombre.charAt(0) !== contactos[i - 1].nombre.charAt(0)">
-          <div
-            class="z-99 top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
-            {{contact.nombre.charAt(0)}}
-          </div>
-        </ng-container>
-        <!-- Contact -->
-        <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
-        (click)="crearInformacion(item.codigo)" >
-          <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
 
-            <ng-container>
-              <div 
-                class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                {{contact.nombre.charAt(0)+contact.nombre.charAt(1)}}
+  <mat-drawer-container
+      class="flex-auto h-full bg-card dark:bg-transparent"
+      (backdropClick)="drawerOpened=false"
+      >
+
+      <!-- Drawer -->
+      <mat-drawer
+          class="w-full md:w-160 dark:bg-gray-900"
+          [mode]="'side'"
+          [opened]="drawerOpened"
+          [position]="'end'"
+          [disableClose]="true"
+          #matDrawer>
+          <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center">
+            <p class="text-xl font-bold p-4 border-b">{{ infoPagaduria?.conveniopagaduria }}</p>
+            <button class="absolute top-0 right-0 p-2" (click)="drawerOpened=false">X</button>
+          </div>
+          <div class="p-4" *ngIf="infoPagaduria">
+            <p>Nit: {{ infoPagaduria.documento }}</p>
+            <p>Ciudad: {{ infoPagaduria.ciudad }}</p>
+            <p>Convenio: {{ infoPagaduria.convenio }}</p>
+            <p>Direccion: {{ infoPagaduria.direccion }}</p>
+            <p>Correo: {{ infoPagaduria.correo }}</p>
+            <p>Telefono: {{ infoPagaduria.telefono }}</p>
+            <p>Dv: {{ infoPagaduria.dv }}</p>
+            <p>Tipo de empresa: {{ infoPagaduria.tipo_empresa }}</p>
+          </div>
+      </mat-drawer>
+
+      <mat-drawer-content class="flex flex-col">
+
+          <!-- Main -->
+          <div class="flex-auto">
+
+              <!-- Header -->
+              <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+                <div class="flex items-center justify-between">
+                  <div class="text-secondary font-medium flex flex-col sm:flex-row sm:items-center">
+                    <input class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
+                      name="filtrarTabla" [formControl]="filtrarTabla" placeholder="Filtrar tabla...">
+                  </div>
+                  <div class="mt-2 pt-3 sm:pt-2 sm:ml-auto sm:text-right">
+                    Total de registros encontrados: {{ total }}
+                  </div>
+                </div>
               </div>
-            </ng-container>
+
+              <!-- Contacts list -->
+              <div class="relative">
+                <ng-container *ngIf="contactos.length; else noContacts">
+                  <ng-container *ngFor="let contact of contactos | filter:filtrarTabla.value; let i = index; trackBy: trackByFn"   >
+                    <!-- Group -->
+                    <ng-container *ngIf="i === 0 || contact.nombre.charAt(0) !== contactos[i - 1].nombre.charAt(0)">
+                      <div
+                        class="z-99 top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                        {{contact.nombre.charAt(0)}}
+                      </div>
+                    </ng-container>
+                    <!-- Contact -->
+                    <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
+                    (click)="abrirDrawen(contact)" >
+                      <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+            
+                        <ng-container>
+                          <div 
+                            class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                            {{contact.nombre.charAt(0)+contact.nombre.charAt(1)}}
+                          </div>
+                        </ng-container>
+                      </div>
+                      <div class="min-w-0 ml-4">
+                        <div class="font-medium leading-5 truncate">{{contact.nombre}}</div>
+                        <div class="leading-5 truncate text-secondary">{{contact.codigo}}</div>
+                      </div>
+                    </a>
+                  </ng-container>
+                </ng-container>
+                <ng-template #noContacts>
+                  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No se encontraron registros</div>
+                </ng-template>
+
+              </div>
+
           </div>
-          <div class="min-w-0 ml-4">
-            <div class="font-medium leading-5 truncate">{{contact.nombre}}</div>
-            <div class="leading-5 truncate text-secondary">{{contact.codigo}}</div>
-          </div>
-        </a>
-      </ng-container>
-    </ng-container>
-    <ng-template #noContacts>
-      <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No se encontraron registros</div>
-    </ng-template>
-  </div>
-  <div class="fixed right-0 top-0 bottom-0 w-1/3 bg-gray-100 z-50" *ngIf="showModal">
-    <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center">
-      <p class="text-xl font-bold p-4 border-b">{{ infoPagaduria.conveniopagaduria }}</p>
-      <button class="absolute top-0 right-0 p-2" (click)="toggleModal()">X</button>
-    </div>
-    <div class="p-4" *ngIf="infoPagaduria">
-      <p>Nit: {{ infoPagaduria.documento }}</p>
-      <p>Ciudad: {{ infoPagaduria.ciudad }}</p>
-      <p>Convenio: {{ infoPagaduria.convenio }}</p>
-      <p>Direccion: {{ infoPagaduria.direccion }}</p>
-      <p>Correo: {{ infoPagaduria.correo }}</p>
-      <p>Telefono: {{ infoPagaduria.telefono }}</p>
-      <p>Dv: {{ infoPagaduria.dv }}</p>
-      <p>Tipo de empresa: {{ infoPagaduria.tipo_empresa }}</p>
-    </div>
-  </div>
+
+      </mat-drawer-content>
+
+  </mat-drawer-container>
+
+</div>
