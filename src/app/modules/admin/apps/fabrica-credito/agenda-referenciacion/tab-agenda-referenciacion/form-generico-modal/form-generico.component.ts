@@ -16,6 +16,7 @@ export class FormGenericoComponent implements OnInit {
 
     @Input() currentStep: number;
     @Input() tipoDocumento: string = "CC"
+    private tipoTercero: string;
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public referencia: string = this.route.snapshot.paramMap.get('referencia');
@@ -56,6 +57,7 @@ export class FormGenericoComponent implements OnInit {
             this.tipoPersona = data.tipoPersona
             this.CodUnidadNegocio = data.CodUnidadNegocio
             this.tipoDocPersona = data.tipoDocPersona
+            this.tipoTercero = data?.tipoTercero;
         }
 
     }
@@ -255,7 +257,8 @@ export class FormGenericoComponent implements OnInit {
                     "idPregunta": element.idPregunta,
                     "idDBColumna": element.idDBColumna,
                     "switchValor": switchValor,
-                    "valorRespuesta": valorRespuesta
+                    "valorRespuesta": valorRespuesta,
+                    "tipoTercero": this.tipoTercero ? this.tipoTercero : this.tipoPersona
                 }
             )
         });

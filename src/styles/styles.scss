@@ -141,6 +141,10 @@ span.mat-option-text {
     .mat-expansion-panel-header.mat-expansion-panel-header{
         height: auto !important;
     }
+    
+    mat-tab-group.scrollMatTabGroup > mat-tab-header{
+    max-width: 100%;
+    }   
 }
 
 mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper {

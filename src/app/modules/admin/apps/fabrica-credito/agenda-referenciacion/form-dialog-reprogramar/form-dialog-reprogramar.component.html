@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Reprogramar</h2>
 <mat-dialog-content>
         <mat-form-field class="w-full fuse-mat-dense">
-            <mat-label>Seleccione fecha y hora</mat-label>
+            <mat-label style="display: block; min-height: 30px !important; line-height: 30px !important;" class="min-h-0; leading-1">Seleccione fecha y hora</mat-label>
             <input matInput [ngxMatDatetimePicker]="picker"
                    placeholder="Fecha y hora"
                    autocomplete="off"

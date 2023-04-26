@@ -79,6 +79,8 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                     this.actualizarDetalleReferencia(data);
                 }
             });
+        } else {
+            this.form.markAllAsTouched();
         }
     }
 
@@ -175,6 +177,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
      */
     private actualizarDetalleReferencia(datos: any): void {
         let formulario: any = {};;
+
         if (datos.tipo === 'P') {
             formulario = {
                 antiguedad: datos.antiguedad,
@@ -213,7 +216,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 parentesco: datos.parentesco,
                 tipoReferencia: datos.tipoReferencia
             }
-        } else {
+        } if (datos.tipo === 'C') {
             formulario = {
                 antiguedad: datos.antiguedad,
                 celular: datos.celular,
