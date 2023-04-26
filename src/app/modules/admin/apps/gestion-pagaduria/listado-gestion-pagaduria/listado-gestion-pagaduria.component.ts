@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { ComentariosService } from 'app/core/services/comentarios.service';
 import { DecisionService } from 'app/core/services/decision.service';
 import { Subject } from 'rxjs';

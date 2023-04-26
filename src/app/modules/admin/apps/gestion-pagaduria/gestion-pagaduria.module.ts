@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, InjectionToken } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ListadoGestionPagaduriaComponent } from './listado-gestion-pagaduria/listado-gestion-pagaduria.component';
 import { GridListadoGestionPagaduriaComponent } from './listado-gestion-pagaduria/grid-listado-gestion-pagaduria/grid-listado-gestion-pagaduria.component';
@@ -10,7 +10,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {MatDialogModule} from "@angular/material/dialog";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {NgxMatDatetimePickerModule} from "@angular-material-components/datetime-picker";
 import {MatTooltipModule} from "@angular/material/tooltip";
@@ -26,6 +25,8 @@ import { ListadoGestionPlazosComponent } from './listado-gestion-plazos/listado-
 import { GridListadoGestionPlazosComponent } from './listado-gestion-plazos/grid-listado-gestion-plazos/grid-listado-gestion-plazos.component';
 import { FormularioGestionPagaduriaComponent } from './formulario-gestion-pagaduria/formulario-gestion-pagaduria.component';
 import { GridFormularioGestionPagaduriaComponent } from './formulario-gestion-pagaduria/grid-formulario-gestion-pagaduria/grid-formulario-gestion-pagaduria.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { provideRoutes } from '@angular/router';
 
 
 
@@ -38,6 +39,7 @@ import { GridFormularioGestionPagaduriaComponent } from './formulario-gestion-pa
     GridListadoGestionPlazosComponent,
     FormularioGestionPagaduriaComponent,
     GridFormularioGestionPagaduriaComponent,
+  
    
    
   ],
@@ -63,6 +65,7 @@ import { GridFormularioGestionPagaduriaComponent } from './formulario-gestion-pa
     MatSlideToggleModule,
     MatSelectModule,     
     MatExpansionModule,  
+   
   
   ],
 })

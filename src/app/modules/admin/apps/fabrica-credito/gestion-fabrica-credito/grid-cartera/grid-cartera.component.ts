@@ -66,7 +66,7 @@ export class GridCarteraComponent implements OnInit {
     let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',
@@ -79,7 +79,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
-        debugger
+        
         this.totales = res.data
 
       });
@@ -91,14 +91,12 @@ export class GridCarteraComponent implements OnInit {
       this.editarCartera(item, 'N');
       return;
     }
-    console.log(event)
-    console.log(item)
     let data = {
       id: item.id,
       numeroSolicitud: Number(this.numeroSolicitud),
       gestionCartera: event
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',
@@ -191,9 +189,7 @@ export class GridCarteraComponent implements OnInit {
 
 
     this._listadoCarteraService.getListadoCarteraDetalleCompra(Number(this.numeroSolicitud), Number(item.idPadre)).subscribe((res) => {
-      console.log(res)
       this.informacionCompra=res.data;
-      console.log(this.informacionCompra)
       return res.data;
     });
   }

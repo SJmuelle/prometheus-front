@@ -362,7 +362,7 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy
         });
     }
     transformCapitalize(value:string): string {
-        // debugger;
+        // ;
         if(value==undefined){
             return '';
         }

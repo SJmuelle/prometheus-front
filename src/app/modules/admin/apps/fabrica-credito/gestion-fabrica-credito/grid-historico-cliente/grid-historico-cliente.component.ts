@@ -38,7 +38,6 @@ export class GridHistoricoClienteComponent implements OnInit {
     ).subscribe((res) => {
       Swal.close();
       if (res.status === 200) {
-        console.log(res.data)
         this.datosGeneral=res.data;
       } else {
         this.datosGeneral = []

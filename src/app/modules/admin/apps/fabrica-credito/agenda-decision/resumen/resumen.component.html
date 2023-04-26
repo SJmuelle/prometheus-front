@@ -47,6 +47,8 @@
                                     <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor2"></div>
                                     <div class="text-sm font-medium capitalize " [innerHtml]="campo.valor"></div>
                                     <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor3"></div>
+                                    <div *ngIf="campo.valor4" class="text-sm font-medium capitalize my-1"
+                                        [innerHtml]="campo.valor4"></div>
                                 </div>
                             </div>
                         </div>
@@ -85,9 +87,10 @@
                                     {{campo.valor}}
                                 </div>
                                 <div class="mt-1 text-sm font-medium text-center ">{{campo.label }}</div>
-                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora" *ngIf="campo.label=='Contador embargos'"
+                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora"
+                                    *ngIf="campo.label=='Contador embargos'"
                                     aria-label="Example icon-button with a menu">
-                                    <mat-icon  svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                    <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                                 </button>
                             </div>
                         </div>

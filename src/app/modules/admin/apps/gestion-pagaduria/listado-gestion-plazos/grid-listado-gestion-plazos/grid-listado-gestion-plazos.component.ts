@@ -14,7 +14,7 @@ export class GridListadoGestionPlazosComponent implements OnInit {
 
   listado: any = [];
   page: number = 1;
-  tamanoTabl: number = 8;
+  tamanoTabl: number = 9;
   filtrarTabla: string = '';
   mostrar_form: boolean = true;
   datos: any = {};
@@ -45,12 +45,10 @@ export class GridListadoGestionPlazosComponent implements OnInit {
 
 
   }
-  abrirModal(datos, titulo) {
-    console.log("modal");
-    
-
-    const dialogRef = this.dialog.open(ListadoGestionPlazosComponent, {
-      data: datos,
+  abrirModal(dato, titulo) {
+ 
+        const dialogRef = this.dialog.open(ListadoGestionPlazosComponent, {
+      data:dato,
     });
 
     dialogRef.afterClosed().subscribe((result) => {

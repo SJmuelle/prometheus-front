@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { GestionPagaduriaService } from '../../../../../../core/services/gestion-pagaduria.service';
+import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -15,10 +16,15 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
   private unsubscribe$: Subject<any> = new Subject();
   public firstInitial: string;
   public infoPagaduria: any[] = [];
-  selectedContact;
-  // Agrega una variable para almacenar el estado de la barra lateral
-  public showSidebar = false;
   public filtrarTabla = new FormControl('');
+  
+  // Agrega una variable para almacenar el estado de la barra lateral
+  dialog: any;
+  listado: any = [];
+  showModal = false;
+ 
+  
+
   constructor(
     private _gestionPagaduriaService: GestionPagaduriaService,
   ) { }
@@ -38,9 +44,25 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
         console.log('err', err);
       }
     })
+
+    this.consulta();
   }
+  consulta() {
+    // Swal.fire({ title: 'Cargando', html: 'Buscando información de las pagadurias', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    var usuario= JSON.parse(localStorage.getItem ("usuario")); 
+    console.log(usuario);
+    this._gestionPagaduriaService.getPlazos(usuario.user).subscribe((response: any) => {
+        Swal.close();
+        // debugger
+        console.log(response)
+        if (response) {
+          this.listado = response.data;
+        } else {
+          this.listado = [];
+        }
+      });
 
-
+  }
 
 
 
@@ -49,23 +71,28 @@ export class GridListadoGestionPagaduriaComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  // Método para mostrar u ocultar la barra lateral
-  toggleSidebar(): void {
-    this.showSidebar = !this.showSidebar;
+  toggleModal(): void {
+    this.showModal = !this.showModal;
   }
-
+  
   crearInformacion(nitPagaduria: string) {
     let data = {
       nitPagaduria: nitPagaduria
     }
     console.log(nitPagaduria)
-    this._gestionPagaduriaService.getInformacionPagadurias(data).subscribe((response : any) => {
-      this.infoPagaduria = response.data;      
+    this._gestionPagaduriaService.postInformacionPagadurias(data).subscribe((response : any) => {
+      this.infoPagaduria = response.data; // Se supone que response.data es un array, así que usamos el primer elemento
       console.log(response.data); 
+      this.abrirModal(this.infoPagaduria);
     },
     error => {
       console.log(error); // Imprimir el error en la consola
     }
-  );      
-}
+    );      
+  }
+  
+  abrirModal(infoPagaduria: any): void {
+    this.infoPagaduria = infoPagaduria;
+    this.showModal = true;
+  }
 }

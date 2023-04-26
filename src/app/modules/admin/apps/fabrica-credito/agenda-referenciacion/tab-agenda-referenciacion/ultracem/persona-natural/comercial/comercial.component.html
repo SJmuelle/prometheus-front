@@ -64,9 +64,9 @@
                                 </mat-icon>
                             </mat-form-field>
                         </div>
-                        
+
                         <ng-container *ngIf="tipoCompra$ | async as tipoCompra">
-                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense"  *ngIf="form.value.esClienteValida_bool">
+                            <mat-form-field class="w-1/2 px-3 fuse-mat-dense" *ngIf="form.value.esClienteValida_bool">
                                 <mat-label>¿El tipo de local es?</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoLocal'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -79,8 +79,8 @@
                             </mat-form-field>
                         </ng-container>
                         <mat-form-field class="w-1/2 px-3 fuse-mat-dense" *ngIf="form.value.tipoLocal=='OT'">
-                            <mat-label>¿Otro, indique cada cuánto  </mat-label>
-                            <input matInput type="text" placeholder="" [formControlName]="'cadaCuantoOtro'" >
+                            <mat-label>¿Otro, indique cada cuánto </mat-label>
+                            <input matInput type="text" placeholder="" [formControlName]="'cadaCuantoOtro'">
                             <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                             </mat-icon>
                         </mat-form-field>

@@ -292,7 +292,7 @@ export class UtilityService {
 
     //Funcion para el Manejo de errores
     handleError = (err: any): Observable<HttpEvent<any>> => {
-        // debugger;
+        // ;
         let errorMessage = 'No hay respuesta, favor intente nuevamente';
         let icon: string = 'question';
         // console.log("Algo se daño");
@@ -373,7 +373,7 @@ export class UtilityService {
 
     //Funcion para el Manejo de errores
     handleError2 = (err: any): Observable<HttpEvent<any>> => {
-        // debugger;
+        // ;
         let errorMessage =
             'No se envio el correo, favor notificar por otro medio';
         let icon: string = 'question';
