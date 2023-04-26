@@ -26,7 +26,7 @@
       </div>
     </div> -->
     <ng-container *ngIf="contactos.length; else noContacts">
-      <ng-container *ngFor="let contact of contactos; let i = index; trackBy: trackByFn">
+      <ng-container *ngFor="let contact of contactos | filter:filtrarTabla.value; let i = index; trackBy: trackByFn" >
         <!-- Group -->
         <ng-container *ngIf="i === 0 || contact.nombre.charAt(0) !== contactos[i - 1].nombre.charAt(0)">
           <div
@@ -36,13 +36,13 @@
         </ng-container>
         <!-- Contact -->
         <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
-          [routerLink]="['./', contact.codigo]">
+        (click)="crearInformacion(item.codigo)" >
           <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
 
             <ng-container>
-              <div
+              <div 
                 class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                {{contact.nombre.charAt(0)}}
+                {{contact.nombre.charAt(0)+contact.nombre.charAt(1)}}
               </div>
             </ng-container>
           </div>
@@ -54,7 +54,7 @@
       </ng-container>
     </ng-container>
     <ng-template #noContacts>
-      <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">There are no contacts!</div>
+      <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No se encontraron registros</div>
     </ng-template>
   </div>
   <div class="fixed right-0 top-0 bottom-0 w-1/3 bg-gray-100 z-50" *ngIf="showModal">

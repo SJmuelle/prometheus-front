@@ -5,39 +5,34 @@
 
             <!-- Title and action buttons -->
             <div class="flex flex-wrap w-full mx-auto p-2 md:p-2 bg-white z-10 h-full ">
-                <div class="flex items-center ml-6">
-                    <div class="flex-0 w-16 h-16  overflow-hidden">
-                        <img src="assets/images/agendas/Visitas.png" class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-1 mx-3">
-                        <div
-                            class="text-3xl font-semibold tracking-tight leading-8 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-                            Parametria de pagaduria
+                <div class="flex justify-between w-full">
+                    <div class="flex items-center ml-6">
+                        <div class="flex-0 w-16 h-16  overflow-hidden">
+                            <img src="assets/images/agendas/Visitas.png" class="w-full h-full object-cover">
                         </div>
-                        <div class="flex items-center">
-                            <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
-                            <div class="font-medium tracking-tight text-secondary">
-                                Realiza la configuración de las pagadurias
+                        <div class="flex-1 mx-3">
+                            <div
+                                class="text-3xl font-semibold tracking-tight leading-8 max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                                Parametria de pagaduria
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                                <div class="font-medium tracking-tight text-secondary">
+                                    Realiza la configuración de las pagadurias
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
-                    <div class="fixed top-20 right-10">
-                        <div class="posicion-derecha">
-                            <div class="pt-10 ml-94">
-                                <button mat-button class="color_fintra text-white w-30"
-                                    routerLink="./gestion-plazos">Configuracion</button>
-
-                            </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="pt-10 ml-94">
+                            <button mat-button class="color_fintra text-white w-30"
+                                routerLink="./gestion-plazos">Configuracion</button>
                         </div>
-
-                    </div>
-
-                    <div class="fixed top-20 right-50">
-                        <div class="posicion-derecha">
-                            <div class="pt-10 ml-94">
-                                <button mat-button class="color_fintra text-white w-30"
-                                    routerLink="./nueva-pagaduria">Crear Nuevo</button>
-                            </div>
+                   
+                        <div class="pt-10 ml-94">
+                            <button mat-button class="color_fintra text-white w-30" routerLink="./nueva-pagaduria">Crear
+                                Nuevo</button>
                         </div>
                     </div>
                 </div>
