@@ -404,4 +404,12 @@ export class AppSettingsService {
             guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
         }
     };
+        /**
+     * @description: End-Point
+     */
+        public cajaVirtual = {
+            url: {
+                infoNegocio: EndPoints.uri('/generic/qry/informacion-negocios-asignados'),
+            }
+        };
 }
