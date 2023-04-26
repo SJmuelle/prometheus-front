@@ -58,8 +58,8 @@ export class FormularioGestionPagaduriaComponent implements OnInit {
               // Swal.showLoading();
           },
       }).then((result) => {});
-      var usuarioCreacion= JSON.parse(localStorage.getItem ("usuarioCreacion")); 
-      console.log(usuarioCreacion);
+      // var usuarioCreacion= JSON.parse(localStorage.getItem ("usuarioCreacion")); 
+      // console.log(usuarioCreacion);
        this._gestionPagaduriaService.postGuardar(this.form.getRawValue()).subscribe(rep =>{
         console.log(rep)
        })
