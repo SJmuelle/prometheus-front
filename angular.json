@@ -24,11 +24,13 @@
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "allowedCommonJsDependencies": [
+                            "lodash",
                             "apexcharts",
                             "highlight.js",
                             "crypto-js/enc-utf8",
                             "crypto-js/hmac-sha256",
-                            "crypto-js/enc-base64"
+                            "crypto-js/enc-base64",
+                            "pdfjs-dist/legacy/web/pdf_viewe"
                         ],
                         "assets": [
                             "src/favicon-16x16.png",
@@ -70,7 +72,7 @@
                             "budgets": [{
                                     "type": "initial",
                                     "maximumWarning": "5mb",
-                                    "maximumError": "8mb"
+                                    "maximumError": "100mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",

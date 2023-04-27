@@ -12,6 +12,7 @@ import { FormControl } from "@angular/forms";
 import { MatSelectChange } from "@angular/material/select";
 import moment from "moment";
 import 'moment/locale/es';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-grid-documentacion',
@@ -27,18 +28,26 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public archivoDerecha: any = {};
     public longitudArchivos: number = 0;
     public documentos: any[] = [];
+    public documentosCodeudor: any[] = [];
+    public documentosDeudor: any[] = [];
     public documentoComparado: FormControl = new FormControl('seleccione');
     public numeroSolicitud: string;
     public habilitarComparar: boolean = false;
     public datosDocumentosHistorico: any[] = [];
     public identificacion: string;
+    public documentoSelected: any;
+    public permisoEditar: boolean = false;
+    public panelOpenState: boolean = false;
 
+    @Input() tipoDeudor: String;
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
     constructor(
         private route: ActivatedRoute,
         private documentosServices: DocumentosAdjuntosService,
         private fabricaCreditoService: FabricaCreditoService,
-        private _dialog: MatDialog
+        private _dialog: MatDialog,
+        public _permisosService: PermisosService
+
     ) {
         this.identificacion = this.route.snapshot.paramMap.get('id');
         this.numeroSolicitud = this.route.snapshot.paramMap.get('num');
@@ -46,6 +55,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
     }
     ngOnInit(): void {
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+
     }
     /**
     * @description: Escucha el observable
@@ -82,24 +93,41 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
      * @description: Seleccion de check
      */
     public onSeleccionDocumento(event: MatCheckbox, item: any): void {
+
         if (event.checked) {
             this.documentos.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
+                    this.documentoSelected = x;
                 }
                 return x;
             });
-            console.log('hola' + this.documentos);
+            this.documentosDeudor.map((x) => {
+                if (x.idArchivoCargado === item.idArchivoCargado) {
+                    x.selected = event.checked;
+                    this.documentoSelected = x;
+                }
+                return x;
+            });
+            this.documentosCodeudor.map((x) => {
+                if (x.idArchivoCargado === item.idArchivoCargado) {
+                    x.selected = event.checked;
+                    this.documentoSelected = x;
+                }
+                return x;
+            });
             const datos: any = {
                 numeroSolicitud: this.numeroSolicitud,
                 idAdjunto: item.idArchivoCargado
             };
+
             this.seleccionDocumentoIzquierdo(datos);
         } else {
             this.longitudArchivos = 0;
             this.documentos.map((x) => {
                 if (x.idArchivoCargado === item.idArchivoCargado) {
                     x.selected = event.checked;
+                    this.documentoSelected = x;
                 }
                 return x;
             });
@@ -133,32 +161,26 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
 
     public subirArchivo(input: any, item: any): void {
-        //debugger;
+        //;
         let formulario: {};
         const files = input.target.files;
         if (files && files.length) {
             const fileToRead = files[0];
             let ext = fileToRead.name.split(".")
-            ext = ext[(ext.length-1)].toUpperCase();
-            if (ext != 'PDF') {
-                Swal.fire(
-                    '¡Información!',
-                    'Solo se permite PDF',
-                    'error',
-                );
-                return;
-            }
+            ext = ext[(ext.length - 1)].toUpperCase();
+
             Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
 
             const reader = new FileReader();
             reader.readAsDataURL(fileToRead);
             reader.onloadend = () => {
                 const file: string | ArrayBuffer | null = reader.result;
+
                 const extension: string = fileToRead.type.split('/')[1];
                 const fechaHoy = Date.now();
                 formulario = {
                     nombreArchivo: item.nombreArchivo + '' + fechaHoy,
-                    extension: extension,
+                    extension: ext.toLowerCase(),
                     fuente: 'archivo-multi',
                     identificador: '',
                     numeroSolicitud: this.datosDocumentos.numeroSolicitud,
@@ -175,13 +197,37 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
 
     private getDocumentos(datos: any): void {
+        this.documentosCodeudor = [];
+        this.documentosDeudor = [];
+        this.documentos = [];
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
-            this.documentos = res.data;
+            for (const item of res.data) {
+                switch (item.tipoTercero) {
+                    case 'C':
+                        this.documentosCodeudor.push(item)
+                        break;
+                    case 'S':
+                        this.documentosDeudor.push(item)
+                        break;
+                    default:
+                        this.documentos.push(item)
+                        break;
+                }
+            }
             this.documentos.map((x) => {
                 x['selected'] = false;
                 return x;
             });
+            this.documentosCodeudor.map((x) => {
+                x['selected'] = false;
+                return x;
+            });
+            this.documentosDeudor.map((x) => {
+                x['selected'] = false;
+                return x;
+            });
         });
+
     }
 
     private guardarAdjunto(datos: any): void {
@@ -200,7 +246,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         }, error => {
             Swal.fire(
                 '¡Información!',
-                'Ha ocurrido un error',
+                error.error.msg,
                 'error',
             );
         });
@@ -223,7 +269,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     }
 
     private getDocumento(datos: any): void {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         const datosDescargar = {
             numeroSolicitud: this.numeroSolicitud,
             idAdjunto: datos.idArchivoCargado,
@@ -238,7 +283,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             link.target = '_self';
             link.download = res.data.nombreArchivo;
             link.click();
-            Swal.close();
         });
     }
 
@@ -313,7 +357,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         };
         this.documentosServices.getDocumentoHistorico(datosHistorico).subscribe((res) => {
             this.datosDocumentosHistorico = res.data;
-            console.log('aqui' + res.data);
             Swal.close();
         });
     }

@@ -11,6 +11,11 @@ import { AgendaGestionCarteraModule } from './agenda-gestion-cartera/agenda-gest
 import {AgendaFormalizacionModule} from "./agenda-formalizacion/agenda-formalizacion.module";
 import { ReferidosModule } from './referidos/referidos.module';
 import { AsignarSolicitudesModule } from './asignar-solicitudes/asignar-solicitudes.module';
+import { EdicionFormularioResolver, EdicionTrazabilidadResolver } from './fabrica-credito-resolver';
+import { FormulariosModule } from './formularios/formularios.module';
+import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
+import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
+import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
 
 
 const routes: Routes = [
@@ -19,35 +24,48 @@ const routes: Routes = [
         children: [
             {
                 path: 'parametria',
-                loadChildren: () => ParametriaModule
+                loadChildren: () => ParametriaModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'referidos',
-                loadChildren: () => ReferidosModule
+                loadChildren: () => ReferidosModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'agenda-comercial',
-                loadChildren: () => AgendaComercialModule
+                loadChildren: () => AgendaComercialModule,
+                resolve  : {EdicionTrazabilidadResolver}
+
             },
             {
                 path: 'agenda-completion',
-                loadChildren: () => AgendaCompletacionModule
+                loadChildren: () => AgendaCompletacionModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'credit-management',
-                loadChildren: () => GestionFabricaCreditoModule
+                loadChildren: () => GestionFabricaCreditoModule,
             },
             {
                 path: 'agenda-referencing',
-                loadChildren: () => AgendaReferenciacionModule
+                loadChildren: () => AgendaReferenciacionModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'agenda-decision',
-                loadChildren: () => AgendaDecisionModule
+                loadChildren: () => AgendaDecisionModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
+                path: 'agenda-venta-digital',
+                loadChildren: () => AgendaVentaModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'agenda-cartera',
-                loadChildren: () => AgendaGestionCarteraModule
+                loadChildren: () => AgendaGestionCarteraModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'trazabilidad',
@@ -55,13 +73,28 @@ const routes: Routes = [
             },
             {
                 path: 'agenda-formalizacion',
-                loadChildren: () => AgendaFormalizacionModule
+                loadChildren: () => AgendaFormalizacionModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
             {
                 path: 'asignar-solicitudes',
-                loadChildren: () => AsignarSolicitudesModule
+                loadChildren: () => AsignarSolicitudesModule,
+                resolve  : {EdicionTrazabilidadResolver}
             },
-
+            {
+                path: 'formularios',
+                loadChildren: () => FormulariosModule
+            },
+            {
+                path: 'agenda-comite-comercial',
+                loadChildren: () => AgendaComiteComercialModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
+                path: 'agenda-visitas',
+                loadChildren: () => AgendaVisitasModule,
+                resolve  : {EdicionTrazabilidadResolver}
+            }
         ]
     }
 ];

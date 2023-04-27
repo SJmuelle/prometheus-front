@@ -93,7 +93,7 @@
                         <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none"
                             [ngStyle]="{'color': item.color}">
                             {{item.cantidad_solicitud<10?'0'+item.cantidad_solicitud:item.cantidad_solicitud}} </div>
-                                <div class="text-md font-medium truncate"  [ngStyle]="{'color': item.color}">
+                                <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
                                     ${{item.total_solicitud | number:0}}
                                 </div>
                                 <div class="text-md font-medium truncate">Devolución</div>
@@ -139,8 +139,8 @@
                             <ng-container
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td  class="py-3 text-sm my-3">
-                                        <div class="text-gray-700">                                     
+                                    <td class="py-3 text-sm my-3">
+                                        <div class="text-gray-700">
                                             <div class="py-0 text-sm ">
                                                 <button mat-icon-button matTooltip="Resumen" (click)="goResumen(item)">
                                                     <mat-icon svgIcon="manage_search"></mat-icon>
@@ -181,15 +181,32 @@
                                     <td class="px-2 py-3">
                                         <div class="flex flex-column ">
 
-                                            <span class="text-md text-black font-medium" matTooltip="Agencia">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Agencia">
                                                 <mat-icon class="icon-size-3"
                                                     svgIcon="heroicons_outline:location-marker"></mat-icon>
                                                 {{ item.agencia}}
                                             </span>
 
-                                            <span class="text-md text-black font-medium" matTooltip="Asesor">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor Comercial">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{ item.asesor}}
+                                                {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                            </span>
+
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor fábrica">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
+                                            </span>
+
+                                            <span *ngIf="item.unidadNegocioFabrica === 1"
+                                                class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor micro">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
                                             </span>
                                         </div>
                                     </td>
@@ -212,7 +229,8 @@
                                                     {{ cambiarHora(item.fechaEmision) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasTotalesCredito}} horas
                                                 </span>
@@ -236,7 +254,8 @@
                                                     {{ cambiarHora(item.fechaIngresoFabrica) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"  class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasEnFabrica}} horas
                                                 </span>
@@ -260,7 +279,8 @@
                                                     {{ cambiarHora(item.fechaIngresoAgendaActual) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}" class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
+                                                        class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
                                                     {{item.diasEnAgendaActual}} horas
                                                 </span>
@@ -327,7 +347,8 @@
 
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        <span class="mr-2 font-semibold truncate">Observación: </span>   {{item.observacionDevolucion}}
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
+                                                        {{item.observacionDevolucion}}
                                                     </div>
 
                                                 </div>
@@ -365,7 +386,8 @@
                                                     </div>
                                                     <!-- observacion -->
                                                     <div class="mt-2 leading-normal line-clamp-2 text-secondary">
-                                                        <span class="mr-2 font-semibold truncate">Observación: </span>   {{item.observacionReintegroDevolucion}}
+                                                        <span class="mr-2 font-semibold truncate">Observación: </span>
+                                                        {{item.observacionReintegroDevolucion}}
                                                     </div>
                                                 </div>
                                             </div>

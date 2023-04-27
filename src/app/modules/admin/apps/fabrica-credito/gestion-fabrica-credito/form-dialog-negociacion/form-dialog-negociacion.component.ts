@@ -36,7 +36,6 @@ export class FormDialogNegociacionComponent implements OnInit {
   ngOnInit(): void {
     this.manana = moment().add(1, 'days');
     this.manana = moment(this.manana).format("yyyy-MM-DD");
-    console.log(this.data)
     this.crearFormulario();
     this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
     this.form.controls.identificacion.setValue(this.data.identificacion);
@@ -93,7 +92,6 @@ export class FormDialogNegociacionComponent implements OnInit {
       const valorConsultores = Number(this.utility.enviarNumero((this.form.value.valorConsultores)));
       const valorRealCartera = Number(this.utility.enviarNumero((this.form.value.valorRealCartera)));
 
-      console.log(data);
       if (this.data.evento != 'NO EXITOSA') {
         if (valorAComprar == 0) {
           Swal.fire('Información', 'El  valor a comprar debe ser mayor a 0, para guardar la negociación.', 'warning').then((resultado) => {
@@ -116,7 +114,6 @@ export class FormDialogNegociacionComponent implements OnInit {
         valorRealCartera: valorRealCartera,
         ...data
       }
-      console.log(datosFormularios);
       let mensaje = '¿Está seguro de guardar el resultado de la negociación?';
       Swal.fire({
         title: 'Guardar información',

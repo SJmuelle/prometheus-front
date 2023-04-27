@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { FormDialogCarteraComprarComponent } from '../form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
   selector: 'app-grid-cartera',
@@ -18,6 +19,7 @@ import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-
 export class GridCarteraComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public permisoEditar:boolean=false;
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
@@ -40,6 +42,8 @@ export class GridCarteraComponent implements OnInit {
     private _dialog: MatDialog,
     private fabricaCreditoService: FabricaCreditoService,
     private _listadoCarteraService: ListadoCarteraService,
+    public _permisosService: PermisosService
+
 
   ) {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion)
@@ -48,6 +52,8 @@ export class GridCarteraComponent implements OnInit {
 
   ngOnInit() {
     this.getListadoCartera(Number(this.numeroSolicitud));
+    this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+
   }
 
 
@@ -60,7 +66,7 @@ export class GridCarteraComponent implements OnInit {
     let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',
@@ -73,6 +79,7 @@ export class GridCarteraComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
+        
         this.totales = res.data
 
       });
@@ -84,14 +91,12 @@ export class GridCarteraComponent implements OnInit {
       this.editarCartera(item, 'N');
       return;
     }
-    console.log(event)
-    console.log(item)
     let data = {
       id: item.id,
       numeroSolicitud: Number(this.numeroSolicitud),
       gestionCartera: event
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',
@@ -184,9 +189,7 @@ export class GridCarteraComponent implements OnInit {
 
 
     this._listadoCarteraService.getListadoCarteraDetalleCompra(Number(this.numeroSolicitud), Number(item.idPadre)).subscribe((res) => {
-      console.log(res)
       this.informacionCompra=res.data;
-      console.log(this.informacionCompra)
       return res.data;
     });
   }

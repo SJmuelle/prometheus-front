@@ -1,4 +1,4 @@
-<div class="min-h-60" *ngIf="datoFabrica && totales">
+<div class="min-h-60" *ngIf="datoFabrica">
     <div class="grid grid-cols-6">
         <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-5">
             <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
@@ -73,8 +73,8 @@
                 <th class="px-4 py-3 text-center w-3/12"></th>
             </tr>
         </thead>
-        <tbody class="bg-white" *ngIf="totales.contadorMora!==0">
-            <ng-container *ngIf="listadoCartera$ | async as items">
+        <tbody class="bg-white">
+            <ng-container *ngIf="listadoCartera$ | async as items; else nodataCartera2">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia === 'f'">
                         <td class="text-sm border text-left m-0 p-0  w-1/12">
@@ -304,20 +304,20 @@
                     </ng-container>
                 </ng-container>
             </ng-container>
-        </tbody>
-        <tbody *ngIf="totales.contadorMora===0">
-            <tr>
-                <th colspan="10">
-                    <div class="flex justify-center">
-                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                    </div>
-                </th>
-            </tr>
-            <tr>
-                <th colspan="10" class="text-center">
-                    <span>No hay obligaciones en mora</span>
-                </th>
-            </tr>
+            <ng-template #nodataCartera2 >
+                <tr>
+                    <th colspan="10">
+                        <div class="flex justify-center">
+                            <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="10" class="text-center">
+                        <span>No hay obligaciones en mora</span>
+                    </th>
+                </tr>
+            </ng-template>
         </tbody>
     </table>
     <hr class="shadow">
@@ -339,8 +339,8 @@
                 <th class="px-4 py-3 text-center"></th>
             </tr>
         </thead>
-        <tbody class="bg-white" *ngIf="totales.contadorAlDia!==0">
-            <ng-container *ngIf="listadoCartera$ | async as items">
+        <tbody class="bg-white">
+            <ng-container *ngIf="listadoCartera$ | async as items; else nodataCartera">
                 <ng-container *ngFor="let item of items.data">
                     <tr *ngIf=" item.alDia !== 'f'">
                         <td class="text-sm border text-left m-0 p-0">
@@ -407,20 +407,20 @@
                     </ng-container>
                 </ng-container>
             </ng-container>
-        </tbody>
-        <tbody *ngIf="totales.contadorAlDia===0">
-            <tr>
-                <th colspan="7">
-                    <div class="flex justify-center">
-                        <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
-                    </div>
-                </th>
-            </tr>
-            <tr>
-                <th colspan="7" class="text-center">
-                    <span>No hay obligaciones al día</span>
-                </th>
-            </tr>
+            <ng-template #nodataCartera>
+                <tr>
+                    <th colspan="7">
+                        <div class="flex justify-center">
+                            <img src="assets/images/animaciones/nodata.gif" class="w-1/12">
+                        </div>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="7" class="text-center">
+                        <span>No hay obligaciones al día</span>
+                    </th>
+                </tr>
+            </ng-template>
         </tbody>
     </table>
 

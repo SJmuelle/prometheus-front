@@ -22,6 +22,8 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public referencia: string = this.route.snapshot.paramMap.get('referencia');
   public tipoReferenciacion: string = this.route.snapshot.paramMap.get('tipoReferenciacion');
+  public tipoPersona: string = this.route.snapshot.paramMap.get('tipoPersona');
+  public CodUnidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public unidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public fabrica_datos: any = {};
   public tipoDocumento: string = '';
@@ -43,7 +45,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // alert(this.unidadNegocio)
     switch (this.tipoReferenciacion) {
       case 'P':
         this.titulo = "personal"
@@ -61,6 +62,9 @@ export class FormAgendaReferenciacionComponent implements OnInit {
         break;
       case 'L':
         this.titulo = "Laboral"
+        break;
+      case 'F':
+        this.titulo = "Familiar"
         break;
       default:
         break;
@@ -188,14 +192,16 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
+        if (data) {
+          this.tipoDocumento = data.tipoDocumento;
+          const datosDocumentos: any = {
+            numeroSolicitud: datosSolicitud.numeroSolicitud,
+            tipoDocumento: this.tipoDocumento
+          };
+          this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
+          this.fabrica_datos = data;
+        }this.tipoDocumento = data.tipoDocumento;
 
-        this.tipoDocumento = data.tipoDocumento;
-        const datosDocumentos: any = {
-          numeroSolicitud: datosSolicitud.numeroSolicitud,
-          tipoDocumento: this.tipoDocumento
-        };
-        this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-        this.fabrica_datos = data;
       });
   }
 
@@ -214,7 +220,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data)
 
         this.steps = data
         this.totalsteps = this.steps.length;

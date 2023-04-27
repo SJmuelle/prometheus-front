@@ -12,12 +12,12 @@ import { FormComponent } from './form/form.component';
   styleUrls: ['./tipopqr.component.scss']
 })
 export class TipopqrComponent implements OnInit {
-  listado: any=[];
-  page:number=1;
-  tamanoTabl:number=5;
-  filtrarTabla:string='';
-  mostrar_form:boolean=true;
-  datos: { id:number; tipo: any; tiempo: any; legal: string; estado: string; titulo: any; };
+  listado: any = [];
+  page: number = 1;
+  tamanoTabl: number = 5;
+  filtrarTabla: string = '';
+  mostrar_form: boolean = true;
+  datos: { id: number; tipo: any; tiempo: any; legal: string; estado: string; titulo: any; };
 
 
   constructor(
@@ -27,38 +27,38 @@ export class TipopqrComponent implements OnInit {
   ngOnInit(): void {
     this.consulta();
   }
-  consulta(){
+  consulta() {
     Swal.fire({ title: 'Cargando', html: 'Buscando información de Tipos de PQRS', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        this._pqrService
-          .setTipo()
-          .subscribe((response: any) => {
-            Swal.close();
-            if (response) {
-              this.listado = response;
-            } else {
-              this.listado = [];
-            }
-          });
+    this._pqrService
+      .setTipo()
+      .subscribe((response: any) => {
+        Swal.close();
+        if (response) {
+          this.listado = response;
+        } else {
+          this.listado = [];
+        }
+      });
   }
-  abrirModal(datos,titulo){
-    if(titulo=='N'){
-      this.datos={
-        id:null,
-        tipo:'',
-        tiempo:'',
-        legal:'',
-        estado:'A',
-        titulo:titulo
+  abrirModal(datos, titulo) {
+    if (titulo == 'N') {
+      this.datos = {
+        id: null,
+        tipo: '',
+        tiempo: '',
+        legal: '',
+        estado: 'A',
+        titulo: titulo
       }
-    }else{
+    } else {
 
-      this.datos={
-        id:datos.id,
-        tipo:datos.tipoPqrs,
-        tiempo:datos.diasSolucion,
-        legal:datos.legal=='Si'?'S':"N",
-        estado:datos.estado=='Activo'?'A':"I",
-        titulo:titulo
+      this.datos = {
+        id: datos.id,
+        tipo: datos.tipoPqrs,
+        tiempo: datos.diasSolucion,
+        legal: datos.legal == 'Si' ? 'S' : "N",
+        estado: datos.estado == 'Activo' ? 'A' : "I",
+        titulo: titulo
       }
     }
 
@@ -67,7 +67,7 @@ export class TipopqrComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-        this.consulta();
+      this.consulta();
     });
   }
 }

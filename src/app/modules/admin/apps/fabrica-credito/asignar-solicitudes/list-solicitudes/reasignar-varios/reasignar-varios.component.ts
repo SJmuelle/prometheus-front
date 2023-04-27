@@ -27,7 +27,6 @@ export class ReasignarVariosComponent implements OnInit {
   ngOnInit(): void {
     this.consultarAsesores();
     this.asesorActual = this.data.asesoresActuales
-    console.log(this.asesorActual)
   }
 
   guardarAnalista(){

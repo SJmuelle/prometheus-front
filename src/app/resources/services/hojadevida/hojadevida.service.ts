@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { map } from 'rxjs/internal/operators/map';
+import { map } from 'rxjs/operators';
 import { UtilityService } from '../utility.service';
 
 @Injectable({
@@ -17,8 +17,8 @@ export class HojadevidaService {
     ) {}
 
     getNegocios(cc: number) {
-        // debugger
-        let url: string = `/informacion-negocios-por-cliente/${cc}`;
+        // 
+        let url: string = `informacion-negocios-por-cliente/${cc}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;

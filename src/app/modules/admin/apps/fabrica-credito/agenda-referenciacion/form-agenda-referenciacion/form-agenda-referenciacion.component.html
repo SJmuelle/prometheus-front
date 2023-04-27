@@ -3,18 +3,21 @@
     <mat-drawer-container class="flex-auto h-full">
 
         <!-- Drawer -->
-        <mat-drawer class="w-90 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened"
+        <mat-drawer class="w-screen sm:w-90 dark:bg-gray-900" [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened"
             #matDrawer>
-            <div class="flex flex-col items-start p-8 border-b">
+            <div class="flex flex-col items-start p-8 border-b relative">
 
                 <!-- Back to courses -->
-                <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="'../../'">
+                <a class="inline-flex items-center leading-6 text-primary hover:underline" [routerLink]="'../../../..'">
                     <span class="inline-flex items-center">
                         <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_solid:arrow-sm-left'">
                         </mat-icon>
                         <span class="ml-1.5 font-medium leading-5">Volver al listado de referencias</span>
                     </span>
                 </a>
+                <button class="absolute right-1 top-5 overflow-auto sm:hidden" mat-icon-button (click)="matDrawer.toggle()">
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-narrow-left'"></mat-icon>
+                </button>
 
                 <!-- Course title & description -->
                 <div class="mt-3 text-2xl font-semibold">
@@ -24,7 +27,7 @@
                 <!-- cateogoria -->
                 <div
                     class="mt-3 py-0.5 px-3 rounded-full text-sm font-semibold text-blue-800 bg-blue-100 dark:text-blue-50 dark:bg-blue-500">
-                   Identificación: {{fabrica_datos.identificacion }}
+                    Identificación: {{fabrica_datos.identificacion }}
                 </div>
 
                 <!-- Course title & description -->
@@ -38,11 +41,11 @@
                     </div>
                 </div>
 
-                
+
                 <div class="flex items-center leading-5 text-md text-secondary">
                     <mat-icon svgIcon="heroicons_outline:currency-dollar" class="|text-hint"></mat-icon>
                     <div class="py-0.5 px-1  text-sm font-semibold ml-1.5 ">
-                        Valor solicitado: {{fabrica_datos.valorSolicitado  | number}}
+                        Valor solicitado: $ {{fabrica_datos.valorSolicitado | number}}
                     </div>
                 </div>
 
@@ -97,30 +100,30 @@
             <div
                 class="lg:hidden flex flex-0 items-center py-2 pl-4 pr-6 sm:py-4 md:pl-6 md:pr-8 border-b lg:border-b-0 bg-card dark:bg-transparent">
                 <!-- Title & Actions -->
-                <button mat-icon-button [routerLink]="['..']">
-                    <mat-icon [svgIcon]="'heroicons_outline:arrow-sm-left'"></mat-icon>
+                <button mat-icon-button (click)="matDrawer.toggle()">
+                    <mat-icon [svgIcon]="'heroicons_outline:arrow-sm-right'"></mat-icon>
                 </button>
-                <h2 class="ml-2.5 text-md sm:text-xl font-medium tracking-tight truncate">
-                    2
-                </h2>
             </div>
             <mat-progress-bar class="hidden lg:block flex-0 h-0.5 w-full"
-                [value]="100 * (currentStep + 1) / totalsteps">
+                [value]="100 * (currentStep + 1) / totalsteps"> 
             </mat-progress-bar>
             <!-- Main -->
             <div class="flex-auto overflow-y-auto" cdkScrollable>
                 <ng-container [ngSwitch]="unidadNegocio">
-                    <ng-container  *ngSwitchCase="'ULTRACEM'">
+                    <ng-container *ngSwitchCase="'32'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
-                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
+                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'"
+                                [tipoDocumento]="tipoDocumento">
                             </ULTRACEM-NATURAL-TITULAR>
-                            <ULTRACEM-NATURAL-COMERCIAL [currentStep]="currentStep" *ngSwitchCase="'C'">
-                            </ULTRACEM-NATURAL-COMERCIAL>
-                            <ULTRACEM-NATURAL-PERSONAL [currentStep]="currentStep" *ngSwitchCase="'P'">
-                            </ULTRACEM-NATURAL-PERSONAL>
+                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'C'"
+                                [tipoDocumento]="tipoDocumento">
+                            </ULTRACEM-NATURAL-TITULAR>
+                            <ULTRACEM-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'P'"
+                                [tipoDocumento]="tipoDocumento">
+                            </ULTRACEM-NATURAL-TITULAR>
                         </ng-container>
                     </ng-container>
-                    <ng-container *ngSwitchCase="'LIBRANZA'">
+                    <ng-container *ngSwitchCase="'22'">
                         <ng-container [ngSwitch]="tipoReferenciacion">
                             <LIBRANZA-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
                             </LIBRANZA-NATURAL-TITULAR>
@@ -129,6 +132,19 @@
                             <LIBRANZA-NATURAL-LABORAL [currentStep]="currentStep" *ngSwitchCase="'L'">
                             </LIBRANZA-NATURAL-LABORAL>
                         </ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'30'">
+                        <ng-container [ngSwitch]="tipoReferenciacion">
+                            <CONSUMO-NATURAL-TITULAR [currentStep]="currentStep" *ngSwitchCase="'T'">
+                            </CONSUMO-NATURAL-TITULAR>
+                            <CONSUMO-NATURAL-PERSONAL [currentStep]="currentStep" *ngSwitchCase="'P'">
+                            </CONSUMO-NATURAL-PERSONAL>
+                            <CONSUMO-NATURAL-FAMILIAR [currentStep]="currentStep" *ngSwitchCase="'F'">
+                            </CONSUMO-NATURAL-FAMILIAR>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'1'">
+                        <form-generico-tab [currentStep]="currentStep" ></form-generico-tab>
                     </ng-container>
                 </ng-container>
 

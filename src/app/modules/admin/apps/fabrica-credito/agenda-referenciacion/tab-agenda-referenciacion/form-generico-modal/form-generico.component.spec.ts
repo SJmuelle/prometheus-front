@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ComercialComponent } from './comercial.component';
+import { FormGenericoComponent } from './form-generico.component';
 
-describe('ComercialComponent', () => {
-  let component: ComercialComponent;
-  let fixture: ComponentFixture<ComercialComponent>;
+describe('FormGenericoComponent', () => {
+  let component: FormGenericoComponent;
+  let fixture: ComponentFixture<FormGenericoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComercialComponent ]
+      declarations: [ FormGenericoComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ComercialComponent);
+    fixture = TestBed.createComponent(FormGenericoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

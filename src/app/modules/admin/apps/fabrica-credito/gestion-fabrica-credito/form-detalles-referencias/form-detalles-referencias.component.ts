@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-detalles-referencias',
@@ -23,6 +24,9 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
     public ciudades$: Observable<any>;
     public subscription$: Subscription;
     public parentescos$: Observable<any>;
+    public permisoEditar: boolean = false;
+    public unidadNegocio: number;
+    public tipoReferencia$: any;
 
     @Output() cerrarFormulario: EventEmitter<boolean> = new EventEmitter<boolean>();
     constructor(
@@ -32,7 +36,9 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         private departamentosCiudadService: DepartamentosCiudadesService,
         private _dialogo: MatDialog,
         private route: ActivatedRoute,
-        private _matDialog: MatDialogRef<FormDetallesReferenciasComponent>
+        private _matDialog: MatDialogRef<FormDetallesReferenciasComponent>,
+        public _permisosService: PermisosService
+
     ) { }
 
     ngOnInit(): void {
@@ -43,6 +49,11 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         this.getEstadosReferencias();
         this.getDepartamentos();
         this.escuchaObservable();
+        this.getTipoReferencia();
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if (this.permisoEditar) {
+            this.form.disable();
+        }
     }
     public onDialogo(): void {
         this._matDialog.close();
@@ -68,6 +79,8 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                     this.actualizarDetalleReferencia(data);
                 }
             });
+        } else {
+            this.form.markAllAsTouched();
         }
     }
 
@@ -87,10 +100,13 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
             descripcionTipoReferencia: [''],
             estado: [''],
             descripcionEstado: [''],
+            tipoReferencia: [''],
             antiguedad: [''],
             tipo: [''],
             numeroSolicitud: [''],
-            parentesco: ['']
+            parentesco: [''],
+            otroParentesco: [''],
+            tiempoConocido: ['']
         });
     }
 
@@ -101,6 +117,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
 
     private getEstadosReferencias(): void {
         this.estadoReferencia$ = this.genericaService.getEstadoReferencias();
+    }
+
+    private getTipoReferencia(): void {
+        this.tipoReferencia$ = this.genericaService.getRelacionComercial();
     }
     /**
      * @description:
@@ -143,6 +163,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 Swal.close();
                 this.form.patchValue(data);
+                this.genericaService.getUnidadNegocio(data.numeroSolicitud).subscribe(rep => {
+                    this.unidadNegocio = rep.data[0].unidadNegocio;
+                })
+
                 if (data.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
                 }
@@ -153,6 +177,7 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
      */
     private actualizarDetalleReferencia(datos: any): void {
         let formulario: any = {};;
+
         if (datos.tipo === 'P') {
             formulario = {
                 antiguedad: datos.antiguedad,
@@ -169,7 +194,8 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.parentesco,
+                parentesco: datos.parentesco,
+                tipoReferencia: datos.tipoReferencia
             };
         } if (datos.tipo === 'F') {
             formulario = {
@@ -187,9 +213,10 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.parentesco,
-            } 
-        }else {
+                parentesco: datos.parentesco,
+                tipoReferencia: datos.tipoReferencia
+            }
+        } if (datos.tipo === 'C') {
             formulario = {
                 antiguedad: datos.antiguedad,
                 celular: datos.celular,
@@ -205,9 +232,14 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
                 segundoApellido: datos.segundoApellido,
                 segundoNombre: datos.segundoNombre,
                 telefono: datos.telefono,
-                parentesco:datos.parentesco, 
+                parentesco: datos.parentesco,
+                tipoReferencia: datos.tipoReferencia
             };
         };
+
+        formulario.tiempoConocido = datos.tiempoConocido;
+        formulario.otroParentesco = datos.otroParentesco;
+
         this.subscription$ = this.referenciasService.putDetalleReferencia(formulario).subscribe(() => {
             Swal.fire(
                 'Completado',
@@ -234,7 +266,6 @@ export class FormDetallesReferenciasComponent implements OnInit, OnDestroy {
         if (show) {
             this.referenciasService.getDetalleReferencia(datos).subscribe(({ data }) => {
                 Swal.close();
-                console.log(data);
                 this.form.patchValue(data);
             });
         }

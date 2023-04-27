@@ -6,11 +6,7 @@
                     <h3 class="mb-2 text-gray-900">Resumen del crédito</h3>
                     <span class="font-semibold text-gray-500">Número solicitud: {{numeroSolicitud}}</span>
                 </div>
-                <!-- <button class="mt-2" mat-stroked-button (click)="openModalNegocio()">
-                    Decisión
-                </button> -->
                 <app-fabrica-opciones></app-fabrica-opciones>
-
             </div>
         </div>
     </div>
@@ -37,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-row flex-wrap mt-4 -mx-6">
+                    <div class="grid grid-cols-1 mt-4 -mx-6">
                         <div class="flex flex-col mx-3 my-2" *ngFor="let campo of item.campos;">
                             <div class="flex items-center">
                                 <div class="flex items-center justify-center w-14 h-14 rounded-r-3xl shadow-inner"
@@ -51,6 +47,8 @@
                                     <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor2"></div>
                                     <div class="text-sm font-medium capitalize " [innerHtml]="campo.valor"></div>
                                     <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor3"></div>
+                                    <div *ngIf="campo.valor4" class="text-sm font-medium capitalize my-1"
+                                        [innerHtml]="campo.valor4"></div>
                                 </div>
                             </div>
                         </div>
@@ -89,13 +87,12 @@
                                     {{campo.valor}}
                                 </div>
                                 <div class="mt-1 text-sm font-medium text-center ">{{campo.label }}</div>
-                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora" *ngIf="campo.label=='Contador embargos'"
+                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora"
+                                    *ngIf="campo.label=='Contador embargos'"
                                     aria-label="Example icon-button with a menu">
-                                    <mat-icon  svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                    <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                                 </button>
                             </div>
-                            <!-- <div class="text-sm font-medium leading-none text-secondary">{{campo.label}}:</div>
-                            <div class="mt-1 font-medium leading-none capitalize">{{campo.valor}}</div> -->
                         </div>
                     </div>
                 </div>
@@ -130,7 +127,7 @@
                             <span
                                 class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
                                 [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
-                                    class="leading-relaxed whitespace-nowrap">{{item.estadoAccion}}</span></span>
+                                    class="leading-relaxed whitespace-nowrap"  matTooltipClass="text-sm" [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
                         </div>
                     </ng-container>
                 </div>
@@ -211,6 +208,10 @@
             <div mat-line> <span>Entidad: {{item.entidad}}</span></div>
             <div mat-line> <span class="text-xs text-secondary"> No Cuenta {{item.numeroCuenta}} </span></div>
             <div mat-line> <span class="text-xs">Saldo ${{item.saldoActual | number}} </span></div>
+        </mat-list-item>
+        <mat-list-item *ngIf="resumenCuentasMora">
+            <mat-icon mat-list-icon>note</mat-icon>
+            <div mat-line> <span>No tiene embargos</span></div>
         </mat-list-item>
     </mat-list>
 </mat-menu>

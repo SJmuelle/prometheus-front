@@ -22,6 +22,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatExpansionModule} from "@angular/material/expansion";
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import { FormDialogDevolverFabricaComponent } from './form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { FormDialogDevolverFabricaComponent } from './form-dialog-devolver-fabri
     MatSlideToggleModule,
     MatSelectModule,     
     MatExpansionModule,  
-    AgendaReferenciacionModule 
+    AgendaReferenciacionModule,
+    MatMenuModule
   ],
 })
 export class AgendaComercialModule { }

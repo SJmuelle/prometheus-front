@@ -20,7 +20,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Notification } from 'app/layout/common/notifications/notifications.types';
 import { NotificationsService } from 'app/layout/common/notifications/notifications.service';
 import { UtilityService } from 'app/resources/services/utility.service';
-// import moment from "moment";
+import moment from "moment";
 import 'moment/locale/es';
 
 @Component({
@@ -79,7 +79,6 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         setTimeout(() => {
             this.consulta();
         }, 1000);
-        console.log(this.consulta())
     }
 
     consulta() {
@@ -91,7 +90,6 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((notifications: any) => {
 
                 this.notifications = notifications.data;
-                console.log(this.notifications);
                 this._calculateUnreadCount();
                 this._changeDetectorRef.markForCheck();
             });
