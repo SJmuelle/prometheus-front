@@ -212,8 +212,8 @@
                                                     svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
                                             </span>
-
-                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                            {{item.idUnidadNegocio}}
+                                            <span *ngIf="item.unidadNegocioFabrica === 1" class="text-xs text-black font-medium" matTooltipPosition="right"
                                                 matTooltip="Asesor micro">
                                                 <mat-icon class="icon-size-3 text-green-500"
                                                     svgIcon="heroicons_solid:user"></mat-icon>
