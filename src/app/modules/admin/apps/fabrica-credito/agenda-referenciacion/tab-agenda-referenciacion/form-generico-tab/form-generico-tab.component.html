@@ -123,7 +123,7 @@
                                                 <div class="grid grid-cols-2 gap-2 mt-4">
                                                     <mat-form-field class="w-full fuse-mat-dense">
                                                         <mat-label> {{pregunta.pregunta}} </mat-label>
-                                                        <input [matTooltip]="pregunta.descripcionTooltip" matInput type="text"
+                                                        <input [matTooltip]="pregunta.descripcionTooltip" matInput [type]="pregunta.tipoDato === 'numeric' ? 'number' : 'text'"
                                                         autocomplete="off"
                                                             [(ngModel)]="pregunta.objHtml.input.value">
                                                         <mat-icon class="icon-size-5" matSuffix
