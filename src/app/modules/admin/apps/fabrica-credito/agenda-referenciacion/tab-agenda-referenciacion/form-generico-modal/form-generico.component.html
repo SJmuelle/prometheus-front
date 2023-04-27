@@ -53,7 +53,7 @@
                                                     <div class="toggle-button-cover">
                                                         <div class="button-cover">
                                                             <div class="button r" id="button-1">
-                                                                <input [matTooltip]="pregunta.descripcionTooltip" type="checkbox" class="checkbox"
+                                                                <input  [matTooltip]="pregunta.descripcionTooltip" type="checkbox" class="checkbox"
                                                                     [(ngModel)]="pregunta.objHtml.switch.valueBoleean"
                                                                     (change)="pregunta.objHtml.switch.value=pregunta.objHtml.switch.valueBoleean==false?'N':'S';recorrerPregunta();">
                                                                 <div class="knobs"></div>

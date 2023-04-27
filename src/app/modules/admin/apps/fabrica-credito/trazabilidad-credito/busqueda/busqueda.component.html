@@ -215,24 +215,24 @@
                                             </span>
                                         </div>
                                     </td>
-                                    <td class="px-2">
-                                        <div class="flex flex-column">
-                                            <small class="text-accent-600 text-xs">
-                                                Asesor comercial
-                                            </small>
-                                            <span class="text-base text-black font-medium uppercase">
+                                    <td class="px-2 min-w-30">
+                                        <div class="flex flex-column w-auto w-min-20 justify-start items-start">
+                                            <span class="text-sm text-black font-medium uppercase flex justify-center items-center gap-1" matTooltip="Asesor Comercial">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{item.asesor}}
                                             </span>
-                                        </div>
-                                    </td>
-                                    <td class="px-2">
-                                        <div class="flex flex-column">
-                                            <small class="text-accent-600 text-xs">
-                                                Asesor de crédito
-                                            </small>
-                                            <span class="text-base text-black font-medium uppercase">
-                                                {{item.asesorCredito}}
-                                            </span>
+                                            <ng-container>
+                                                <span class="text-sm text-black font-medium uppercase flex justify-center items-center gap-1" matTooltip="Asesor fábrica">
+                                                    <mat-icon class="icon-size-3 text-blue-500" svgIcon="heroicons_solid:user"></mat-icon>
+                                                    {{item.asesor_credito ? item.asesor_credito : 'No registra'}}
+                                                </span>
+                                            </ng-container>
+                                            <ng-container *ngIf="item.idUnidadNegocio === 1">
+                                                <span class="text-sm text-black font-medium uppercase flex justify-center items-center gap-1" matTooltip="Asesor micro">
+                                                    <mat-icon class="icon-size-3 text-green-500" svgIcon="heroicons_solid:user"></mat-icon>
+                                                    {{item.asesorMicro ? item.asesorMicro : 'No registra'}}
+                                                </span>
+                                            </ng-container>
                                         </div>
                                     </td>
                                     <td class="px-2">
