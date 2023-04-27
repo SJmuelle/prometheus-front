@@ -463,7 +463,7 @@ export class AppSettingsService {
      */
         public cajaVirtual = {
             url: {
-                infoNegocio: EndPoints.uri('/generic/qry/informacion-negocios-asignados'),
+                infoNegocio: EndPoints.uri('/generic/qry/tk/informacion-negocios-asignados'),
             }
         };
 }

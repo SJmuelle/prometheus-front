@@ -19,7 +19,7 @@ export class CajaVirtualService {
 
         let data = `{"v_user": "smuelle"}`;
 // let data={}
-return this._http.get(`${this._appSettings.cajaVirtual.url.infoNegocio}/smuelle`)
+return this._http.get(`${this._appSettings.cajaVirtual.url.infoNegocio}`)
 
     // return this._http.post(this._appSettings.cajaVirtual.url.infoNegocio,data);
   }
