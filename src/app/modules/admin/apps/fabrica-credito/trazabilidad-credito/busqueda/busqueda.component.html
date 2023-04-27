@@ -219,7 +219,7 @@
                                         <div class="flex flex-column w-auto w-min-20 justify-start items-start">
                                             <span class="text-sm text-black font-medium uppercase flex justify-center items-center gap-1" matTooltip="Asesor Comercial">
                                                 <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
-                                                {{item.asesor}}
+                                                {{item.asesor ? item.asesor : 'No registra'}}
                                             </span>
                                             <ng-container>
                                                 <span class="text-sm text-black font-medium uppercase flex justify-center items-center gap-1" matTooltip="Asesor fábrica">
