@@ -339,7 +339,7 @@ export class DetalleComponent implements OnInit {
     Swal.fire({
       title: '¿Seguro de rechazar las planillas?',
       icon: 'question',
-      html: '<p class="text-justify">Si presiona <b>No</b> debera seleccionar nuevamente las planillas para el proceso.</p>'+
+      html: '<p class="text-justify">Si presiona <b>No</b> deberá seleccionar nuevamente las planillas para el proceso.</p>'+
             '<p class="text-justify m-0">Tenga en cuenta que si una planilla tiene 0% en el <b>Factoring</b>, se le aplicará el valor maximo de '
             +this.data.maximo+'% para llevar a cabo el proceso.</p>',
       showDenyButton: true,

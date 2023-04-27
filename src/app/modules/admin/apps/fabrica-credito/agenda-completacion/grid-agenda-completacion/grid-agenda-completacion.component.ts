@@ -87,7 +87,7 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
     
     cambiarHora(date){
         moment.locale('es');
-        return moment(date).format('h:mm a')
+        return moment(date).format('hh:mm A')
     }
 
     

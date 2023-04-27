@@ -52,6 +52,8 @@ import { VerComentarioComponent } from './gestion-pqrs/ver-comentario/ver-coment
 import { HistorialPqrComponent } from './historial-pqr/historial-pqr.component';
 import { DetalleHistorialComponent } from './historial-pqr/detalle-historial/detalle-historial.component';
 import { RangoComponent } from './list/rango/rango.component';
+import { MotivosPqrComponent } from './motivos-pqr/motivos-pqr.component';
+import { FormMotivosComponent } from './motivos-pqr/form/form.component';
 // import { CreacionComponent } from './creacion/creacion.component';
 // import { CausalesPQRSComponent } from '.causales-pqrs/causales-pqrs.component';
 
@@ -83,7 +85,9 @@ import { RangoComponent } from './list/rango/rango.component';
         VerComentarioComponent,
         HistorialPqrComponent,
         DetalleHistorialComponent,
-        RangoComponent
+        RangoComponent,
+        MotivosPqrComponent,
+        FormMotivosComponent
         // CreacionComponent
     ],
     imports: [

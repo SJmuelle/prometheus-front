@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Tasa convenios</h2>
+<mat-dialog-content>
+    <div *ngIf="listConvenios.length>0">
+        <table>
+            <thead>
+                <tr class="bg-gray-100 text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                    <th class="px-3 py-3 text-center">Convenio</th>
+                    <th class="px-3 py-3 text-center">Tasa usura</th>
+                    <th class="px-3 py-3 text-center">Actualizar tasa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="text-gray-700" *ngFor="let item of listConvenios">
+                    <td class="px-2 py-3 text-sm border text-center">{{item.nombreConvenio}}</td>
+                    <td class="px-2 text-sm border text-center">{{item.tasaUsura}} %</td>
+                    <td class="text-sm border text-center">
+                        <div class="py-0 text-sm">
+                            <button mat-icon-button class="border" (click)="abrirActualizar(item)">
+                                <mat-icon svgIcon="heroicons_outline:refresh"></mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="flex flex-row w-full justify-center" *ngIf="listConvenios.length<1">
+        <div class="flex flex-col">
+            <img class="lg:56 xl:h-96 lg:w-56 xl:w-96" src="assets/images/animaciones/nodata.gif">
+            <div class="text-gray-600 text-center mt-2 font-medium">No hay convenios disponibles.</div>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="color_fintra text-white">Cancelar</button>
+</mat-dialog-actions>

@@ -21,10 +21,11 @@ export class DecisionesService {
   /**
    *@description: Obtiene el listado de opciones
    */
-  public getOpciones(): Observable<any> {
-    return this._http.get(this._appSettings.decision.url.base);
+  public getOpciones(agenda): Observable<any> {
+    return this._http.get(this._appSettings.decision.url.base+agenda);
   }
 
+  
   /**
    * @description: Obtiene el listado de causales aprobacion
    */
@@ -34,6 +35,17 @@ export class DecisionesService {
       concepto: descision
     }
     return this._http.post(`${this._appSettings.decision.url.baseCausalAprobacion}`, data);
+  }
+
+  /**
+   * @description: Obtiene el listado de causales anulacion
+   */
+  public getCausalesAnulacion(numeroSolicitud, descision): Observable<any> {
+    let data = {
+      numeroSolicitud: numeroSolicitud,
+      concepto: descision
+    }
+    return this._http.post(`${this._appSettings.decision.url.baseCausalAnulacion}`, data);
   }
 
 
@@ -118,7 +130,7 @@ export class DecisionesService {
 
   //Funcion para el Manejo de errores
   handleError = (err: any): Observable<HttpEvent<any>> => {
-    // debugger;
+    // ;
     let errorMessage = 'No hay respuesta, favor intente nuevamente';
     let icon: string = 'question';
     // console.log("Algo se daño");

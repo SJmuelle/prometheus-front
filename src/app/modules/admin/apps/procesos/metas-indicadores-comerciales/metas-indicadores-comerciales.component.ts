@@ -1,9 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
 import { ProcesosService } from 'app/core/services/procesos.service';
 import { UtilityService } from 'app/resources/services/utility.service';
+import { result } from 'lodash';
+import moment from 'moment';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -27,6 +29,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
   data: any;
   dataAgencia: any;
   agencia: string = "ATL";
+  fechaActual: any = moment().locale("co");
 
   agencias = [
     {
@@ -114,8 +117,6 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
     this._changeDetectorRef.markForCheck();
     this.metasListaIndicadoresTotal()
 
-
-
   }
 
   agregarAsesor(asesor) {
@@ -137,18 +138,20 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
           Swal.showLoading();
         },
       }).then((result) => { });
+
       this._procesosService
         .metasClonarPeriodo(envio)
         .subscribe((res) => {
           Swal.close();
           Swal.close();
+
           if (res.data.resultado == 'OK') {
             Swal.fire('Completado', res.data.msg, 'success').then((result) => {
               if (result) {
                 this.clonarPeriodo = true;
-               
+
                 this.goToStep(1)
-                
+
               }
             })
             setTimeout(() => {
@@ -161,7 +164,6 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
             this.clonarPeriodo = false;
             Swal.fire('Advertencia', res.data.msg, 'warning');
           }
-
 
         });
     }
@@ -208,11 +210,19 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
       let envio = {
         periodoActual: data.periodoActual.replace('-', ''),
       }
-   
+
       this._procesosService
         .metasListaIndicadores(envio)
         .subscribe((res) => {
-          this.dataTotal = res.data;
+          if (res.data.length > 1) {
+            this.dataTotal = res.data;
+          } else {
+            this.currentStep = 0;
+            Swal.fire('Advertencia', "Fecha invalida", 'warning');
+            this.clonarPeriodo = false;
+          }
+
+
         });
     }
   }
@@ -291,7 +301,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
     }
   }
 
-  metasAnularAsesor(asesor: string, agencia:string) {
+  metasAnularAsesor(asesor: string, agencia: string) {
     Swal.fire({
       title: 'Confirmar anulación',
       html: `¿Está seguro de anular el asesor <strong>${asesor}</strong>?`,
@@ -342,7 +352,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
 
   }
 
-  metasUpdateMetaColocacion(item: any, agencia:string) {
+  metasUpdateMetaColocacion(item: any, agencia: string) {
     Swal.fire({
       title: 'Confirmar anulación',
       html: `¿Está seguro de actulizar la meta de colocación a <strong>${item.formatoMetaColocacion}</strong> al asesor <strong>${item.asesor}</strong>?`,
@@ -394,7 +404,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
 
   }
 
-  metasAgregarAsesor( agencia: string) {
+  metasAgregarAsesor(agencia: string) {
     if (this.formNuevo.valid) {
       const data: any = this.formNuevo.getRawValue();
       Swal.fire({
@@ -518,8 +528,8 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
   // -----------------------------------------------------------------------------------------------------
   private crearFormularios(): void {
     this.form = this.fb.group({
-      periodoAnterior: ['', [Validators.required]],
-      periodoActual: ['', [Validators.required]],
+      periodoAnterior: ['', [Validators.required, this.validatedDate.bind(this)]],
+      periodoActual: ['', [Validators.required, this.validatedDate.bind(this)]],
     });
     this.formNuevo = this.fb.group({
       asesor: [{ value: '', disabled: true }, [Validators.required]],
@@ -527,6 +537,7 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
       metaColocacion: ['', [Validators.required]],
     });
   }
+
 
   // private _filter(value: string): string[] {
   //   const filterValue = value.toLowerCase();
@@ -548,6 +559,17 @@ export class MetasIndicadoresComercialesComponent implements OnInit {
         this.usuarios = res.data;
       });
     }
+  }
+
+  private validatedDate(date: AbstractControl) {
+    const data: string | null = date.value;
+    const year = this.fechaActual.year();
+    const month = this.fechaActual.month() + 1;
+    const dateForm = data?.split("-")
+    if (!data || dateForm[0] > year || (dateForm[0] == year && dateForm[1] > month)) {
+      return { periodoActual: true }
+    }
+    return null
   }
 
   /**

@@ -33,13 +33,25 @@ export class ReferenciasService {
   public postReferencia(datos: any): Observable<any> {
       return this._http.post(this._appSettings.referencias.url.baseReferenciaCrear, datos);
   }
+
+   /**
+   * @description: Guarda una referencia
+   */
+   public postReferenciaMicro(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.referencias.url.agregarReferencia, datos);
+}
   /**
    * @description: Actualiza la referencia
    */
   public putDetalleReferencia(datos: any): Observable<any> {
-      return this._http.post(this._appSettings.referencias.url.baseReferencia, datos);
+      return this._http.post(this._appSettings.referencias.url.actualizarReferencia, datos);
   }
 
-
+   /**
+   * @description: Actualiza la referencia
+   */
+   public putDetalleReferenciaEndpoint(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.referencias.url.actualizarReferencia, datos);
+}
 
 }

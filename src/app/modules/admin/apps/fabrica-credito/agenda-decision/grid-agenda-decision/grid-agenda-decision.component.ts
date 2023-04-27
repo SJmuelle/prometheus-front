@@ -73,7 +73,6 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        console.log(res);
         this.getAgendaComercial();
         this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();
@@ -124,7 +123,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
    * @description: Guarda el comentario para devolvee
    */
     public onComentarioRechazar(data): void {
-      //  debugger
+      //  
       const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
         width: '30%',
         data: {
@@ -176,7 +175,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
    */
   cambiarHora(date) {
     moment.locale('es');
-    return moment(date).format('H:MM a')
+    return moment(date).format('hh:mm A')
   }
 
   /**

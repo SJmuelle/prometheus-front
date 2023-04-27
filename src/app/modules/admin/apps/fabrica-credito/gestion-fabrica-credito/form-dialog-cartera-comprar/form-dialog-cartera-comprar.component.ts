@@ -141,8 +141,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
         nitNuevo:this.form.value.nuevaEntidad?this.form.value.nit:nitNuevo,
         ...data
       }
-      // debugger;
-      console.log(datosFormularios);
+      // ;
 
       Swal.fire({
         title: 'Guardar información',

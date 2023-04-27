@@ -12,7 +12,7 @@
                     <ng-container *ngIf="!data.idDevolucion">
                     <div class="md:flex">
                         <mat-form-field class="w-full fuse-mat-dense" appearance="fill">
-                            <mat-label>Motivo / causal</mat-label>
+                            <mat-label style="display: block; min-height: 30px !important; line-height: 30px !important;" class="min-h-0; leading-1">Motivo / causal</mat-label>
                             <mat-select [formControlName]="'idCausal'">
                                 <ng-container *ngIf="listCausales$ | async as items;">
                                     <mat-option matInput 

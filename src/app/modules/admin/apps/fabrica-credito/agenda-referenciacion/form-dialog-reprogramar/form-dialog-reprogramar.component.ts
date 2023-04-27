@@ -84,9 +84,7 @@ export class FormDialogReprogramarComponent implements OnInit, OnDestroy {
                     'warning'
                 );
             }
-            console.log('intentos->'+res.data.numeroIntentos);
             if((res.data.numeroIntentos>=3)&&(res.data.agenda!='CM')){
-                console.log('intentos->'+res.data.numeroIntentos);
                
                 setTimeout(() => {
                     this.onCerrar();

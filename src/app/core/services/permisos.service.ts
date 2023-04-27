@@ -9,8 +9,20 @@ export class PermisosService {
 
   permisoPorModuleTrazxabilidad(ruta: any){
     let valor=  ruta.includes('trazabilidad')|| this.permisoPorModuleTrazabilidad();
-    debugger
+    
     return valor
+  }
+
+  estabaFormulario(ruta: any){
+
+    let valor= ruta.includes('formularios');
+    return valor;
+  }
+
+  estabaAgendaComercial(){
+    let ruta = localStorage.getItem("rutaAnterior");
+    let rutaAnterior=ruta.includes('agenda-comercial');
+    return rutaAnterior;
   }
 
   permisoPorModuleTrazabilidad(){

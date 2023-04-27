@@ -10,6 +10,7 @@ import { MenuModule } from './modules/admin/apps/menu/menu.module';
 import { DashboardModule } from './modules/admin/apps/dashboard/dashboard.module';
 import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
+import { PagoMasivoModule } from './modules/admin/apps/pago-masivo/pago-masivo.module';
 import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
 import { ProntoPagoModule } from './modules/admin/apps/pronto-pago/pronto-pago.module';
 import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
