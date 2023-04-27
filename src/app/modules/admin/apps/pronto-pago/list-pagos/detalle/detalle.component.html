@@ -1,0 +1,109 @@
+<h1 mat-dialog-title>Detalle de planilla negociación</h1>
+<div mat-dialog-content class="flex flex-row w-full gap-4 mx-0">
+    <div class="flex flex-col lg:w-3/5 xl:w-1/2">
+        <div class="flex flex-row gap-4">
+            <div class="flex flex-row gap-2">
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Identificación:</p>
+                <p class="lg:text-base xl:text-lg">{{data.identificacion}}</p>
+            </div>
+            <div class="flex flex-row gap-2">
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Propietario:</p>
+                <p class="lg:text-base xl:text-lg">{{data.nombrePropietario}}</p>
+            </div>
+        </div>
+        <div class="flex flex-row gap-4">
+            <div class="flex flex-row gap-2">
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Celular:</p>
+                <p class="lg:text-base xl:text-lg">{{data.contacto}}</p>
+            </div>
+            <div class="xl:ml-8 flex flex-row gap-2">
+                <p class="lg:text-base xl:text-lg text-gray-400 font-medium">Correo:</p>
+                <p class="lg:text-base xl:text-lg">{{data.email}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="flex flex-row lg:w-2/5 xl:w-3/5 justify-end gap-4">
+        <div class="flex flex-col bg-card border rounded-2xl p-2 lg:h-12 xl:h-15 lg:max-w-26 xl:max-w-40">
+            <div class="flex flex-row justify-center gap-1">
+                <div class="lg:mt-1 xl:mt-2">
+                    <mat-icon class="lg:icon-size-5 xl:icon-size-6" svgIcon="heroicons_outline:clipboard-check"></mat-icon>
+                </div>
+                <div class="flex flex-row gap-1">
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        {{countPlanilla}}
+                    </div>
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        /
+                    </div>
+                    <div class="text-base xl:text-xl font-semibold text-secondary tracking-tight leading-none lg:mt-2 xl:mt-3.5">
+                        {{data.totalPlanilla}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col bg-card border rounded-2xl p-2 lg:h-12 xl:h-15 lg:max-w-80 xl:max-w-90">
+            <div class="flex flex-row justify-center gap-1">
+                <div class="lg:mt-1 xl:mt-2">
+                    <mat-icon class="lg:icon-size-5 xl:icon-size-6" svgIcon="mat_outline:monetization_on"></mat-icon>
+                </div>
+                <div class="flex flex-row gap-1">
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        {{total | number}}
+                    </div>
+                    <div class="text-3xl xl:text-3xl font-bold tracking-tight leading-none xl:mt-1.5">
+                        /
+                    </div>
+                    <div class="text-base xl:text-xl font-semibold text-secondary tracking-tight leading-none lg:mt-2 xl:mt-3.5">
+                        {{data.saldoTotalPlanilla | number}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-content>
+    <div class="w-full overflow-y-auto max-h-80" *ngIf="listado.length>0">
+        <table class="p-0">
+            <thead class="bg-gray-100">
+                <tr class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
+                    <th class="py-3 text-center">
+                        <div class="ml-2.5">
+                            <mat-checkbox [checked]="allComplete" (change)="setAll($event.checked)"></mat-checkbox>
+                        </div>
+                    </th>
+                    <th class="py-3 text-center">Planilla</th>
+                    <th class="py-3 text-center">Valor pronto pago</th>
+                    <th class="py-3 text-center">Fecha de planilla</th>
+                    <th class="py-3 text-center">% Factoring</th>
+                    <th class="py-3 text-center">Descuento factoring</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700" *ngFor="let item of listado">
+                    <td class="text-sm border py-3 text-center">
+                        <div class="ml-2.5">
+                            <mat-checkbox [checked]="item.check" (ngModelChange)="updateAllComplete()" (change)="agregarPlanilla(item, $event)"></mat-checkbox>
+                        </div>
+                    </td>
+                    <td class="text-sm border text-center">{{ item.planilla}}</td>
+                    <td class="text-sm border text-center">$ {{ item.valorPlanilla | number }}</td>
+                    <td class="text-sm border text-center">{{cambiarFecha(item.fechaPlanilla)}}</td>
+                    <td class="text-sm border text-center">{{item.porcentajeNegociacion | number}} %</td>
+                    <td class="text-sm border text-center">$ {{item.valorDescuentoNegociacion | number}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="flex flex-row w-full justify-center" *ngIf="listado.length<1">
+        <div class="flex flex-col">
+            <img class="lg:h-56 xl:h-80 lg:w-56 xl:w-90" src="assets/images/animaciones/nodata.gif">
+            <div class="text-gray-600 text-center mt-2 font-medium">No hay información para mostrar.</div>
+        </div>
+    </div>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button class="text-white permitirActualizar bloquear" [disabled]="factoring.length == 0" (click)="cambiarPorcentaje()">Actualizar factoring</button>
+    <button mat-button class="text-white permitirAceptar bloquear" [disabled]="details.length == 0" (click)="confirmarAcepto()">Aceptar</button>
+    <button mat-button class="text-white permitirRechazar bloquear" [disabled]="details.length == 0" (click)="confirmarRechazo()">Rechazar</button>
+    <button mat-button [mat-dialog-close]="false" class="text-white bg-gray-400">Cancelar</button>
+</mat-dialog-actions>
