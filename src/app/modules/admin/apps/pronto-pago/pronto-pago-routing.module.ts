@@ -9,8 +9,10 @@ const routes: Routes = [
       {
         path: 'list-pago',
         component: ListPagosComponent
-      }
+      },
+      {path: '**', redirectTo: 'list-pago'}
     ]
+    
   }
 
 ];
