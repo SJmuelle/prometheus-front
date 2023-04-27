@@ -19,6 +19,7 @@ export class GridListadoGestionPlazosComponent implements OnInit {
   mostrar_form: boolean = true;
   datos: any = {};
   router: any;
+  dialogRef: any;
 
   constructor(
     public dialog: MatDialog,
@@ -54,6 +55,12 @@ export class GridListadoGestionPlazosComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
         this.consulta();
     });
+
+    
+  }
+ 
+  closeModal(): void {
+    this.dialogRef.close();
   }
 
 }

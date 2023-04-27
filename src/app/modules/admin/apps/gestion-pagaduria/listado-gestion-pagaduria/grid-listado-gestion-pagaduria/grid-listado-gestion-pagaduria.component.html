@@ -1,92 +1,163 @@
 <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
 
-  <mat-drawer-container
-      class="flex-auto h-full bg-card dark:bg-transparent"
-      (backdropClick)="drawerOpened=false"
-      >
+  <mat-drawer-container class="flex-auto h-full bg-card dark:bg-transparent" (backdropClick)="drawerOpened=false">
 
-      <!-- Drawer -->
-      <mat-drawer
-          class="w-full md:w-160 dark:bg-gray-900"
-          [mode]="'side'"
-          [opened]="drawerOpened"
-          [position]="'end'"
-          [disableClose]="true"
-          #matDrawer>
-          <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center">
-            <p class="text-xl font-bold p-4 border-b">{{ infoPagaduria?.conveniopagaduria }}</p>
-            <button class="absolute top-0 right-0 p-2" (click)="drawerOpened=false">X</button>
-          </div>
-          <div class="p-4" *ngIf="infoPagaduria">
+    <!-- Drawer -->
+    <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="'side'" [opened]="drawerOpened" [position]="'end'"
+      [disableClose]="true" #matDrawer>
+      <div class="h-20 w-full bg-gray-100 rounded px-8 py-4 flex gap-4 items-center">
+        <div class="w-15 h-15 rounded-full flex bg-gray-200 ml-2 justify-center items-center">
+          <div class="flex">{{infoPagaduria?.conveniopagaduria.slice(0, 2).toUpperCase()}}</div>
+        </div>
+        <p class="text-xl font-bold p-4 border-b">{{ infoPagaduria?.conveniopagaduria }}</p>
+        <button class="absolute top-0 right-0 p-2" (click)="drawerOpened=false">X</button>
+      </div>
+      <div>
+        <div class="p-4 gap-6 flex flex-col" *ngIf="infoPagaduria">
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:identification"></mat-icon>
             <p>Nit: {{ infoPagaduria.documento }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:location-marker"></mat-icon>
             <p>Ciudad: {{ infoPagaduria.ciudad }}</p>
-            <p>Convenio: {{ infoPagaduria.convenio }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:location-marker"></mat-icon>
             <p>Direccion: {{ infoPagaduria.direccion }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_solid:clipboard-list"></mat-icon>
+            <p>Convenio: {{ infoPagaduria.convenio }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:mail"></mat-icon>
             <p>Correo: {{ infoPagaduria.correo }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:phone"></mat-icon>
             <p>Telefono: {{ infoPagaduria.telefono }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:check"></mat-icon>
             <p>Dv: {{ infoPagaduria.dv }}</p>
+          </div>
+          <div class="flex flex-row">
+            <mat-icon svgIcon="heroicons_outline:office-building"></mat-icon>
             <p>Tipo de empresa: {{ infoPagaduria.tipo_empresa }}</p>
           </div>
-      </mat-drawer>
-
-      <mat-drawer-content class="flex flex-col">
-
-          <!-- Main -->
-          <div class="flex-auto">
-
-              <!-- Header -->
-              <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
-
-                <div class="flex items-center justify-between">
-                  <div class="text-secondary font-medium flex flex-col sm:flex-row sm:items-center">
-                    <input class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
-                      name="filtrarTabla" [formControl]="filtrarTabla" placeholder="Filtrar tabla...">
+          <div class="border-2 gap-6 p-2">
+            <p class=" text-xl font-bold p-4 border-b">POLITICAS DE MONTO</p>
+            <div class=" mt-4 mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+              <div class="flex flex-row">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:annotation'"></mat-icon>
+                <p>MONTO MINIMO: Clientes Fintra S.A.S, sus aliados empresariales y clientes con
+                  salario devengado igual o mayor a 1 SMMLV el monto permitido sera:$300.000 + AVAL.</p>
+              </div>
+            </div>
+            <div class=" mt-4 mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+              <div class=" mt-4 flex flex-row">
+                <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:annotation'"></mat-icon>
+                <p>MONTO MAXIMO: Clientes Fintra S.A.S, sus aliados empresariales, los clientes con
+                  salario devengado igual a (1) SMMLV el monto permitido sera: hasta 5 veces su SMMLV + AVAL
+                  y clientes que devenguen más de un (1) SMMLV el monto permitido a solicitar será: $99.000.000. </p>
+              </div>
+            </div>
+          </div>
+          <div class="border-2 gap-12 p-2 ">
+            <p class="text-xl font-bold p-4 border-b 	text-align: center">POLITICAS DE PLAZO</p>
+            <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+              <div class=" mt-4 mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+                <div class="flex flex-row">
+                  <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:annotation'"></mat-icon>
+                  <p>CONTRATO INDEFINIDO: 
+                    Contrato con antigüedad mayor a 3 meses y menor a un (1) año, el plazo será entre 6 y
+                    36 meses, contrato con antigüedad mayor o igual a un (1) año y menor a 2 años, el plazo será entre
+                    6 y 48 meses y contrato con antigüedad mayor o igual a 2 años, el plazo será entre 6 y 60 meses. </p>
+                </div>
+                <div class=" mt-4 mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+                  <div class=" mt-4 flex flex-row">
+                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:annotation'"></mat-icon>
+                    <p>CONTRATO FIJO: Contrato con antigüedad mayor a 2 meses y menor a un (1) año, el plazo será entre 6 meses
+                      hasta la finalización de contrato </p>
                   </div>
-                  <div class="mt-2 pt-3 sm:pt-2 sm:ml-auto sm:text-right">
-                    Total de registros encontrados: {{ total }}
+                </div>
+                <div class=" mt-4 mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
+                  <div class=" mt-4 flex flex-row">
+                    <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:annotation'"></mat-icon>
+                    <p>CONTRATO OBRA LABOR: Contrato con antigüedad mayor o igual a 3 meses (incluido los créditos de excepción) con
+                      deudor solidario, el plazo será entre 6 y 18 meses y contrato con antigüedad mayor o igual a 3 meses (incluido los créditos de excepción) sin
+                      deudor solidario, el plazo será entre 6 meses y 12 meses. </p>
                   </div>
                 </div>
               </div>
-
-              <!-- Contacts list -->
-              <div class="relative">
-                <ng-container *ngIf="contactos.length; else noContacts">
-                  <ng-container *ngFor="let contact of contactos | filter:filtrarTabla.value; let i = index; trackBy: trackByFn"   >
-                    <!-- Group -->
-                    <ng-container *ngIf="i === 0 || contact.nombre.charAt(0) !== contactos[i - 1].nombre.charAt(0)">
-                      <div
-                        class="z-99 top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
-                        {{contact.nombre.charAt(0)}}
-                      </div>
-                    </ng-container>
-                    <!-- Contact -->
-                    <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
-                    (click)="abrirDrawen(contact)" >
-                      <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
-            
-                        <ng-container>
-                          <div 
-                            class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                            {{contact.nombre.charAt(0)+contact.nombre.charAt(1)}}
-                          </div>
-                        </ng-container>
-                      </div>
-                      <div class="min-w-0 ml-4">
-                        <div class="font-medium leading-5 truncate">{{contact.nombre}}</div>
-                        <div class="leading-5 truncate text-secondary">{{contact.codigo}}</div>
-                      </div>
-                    </a>
-                  </ng-container>
-                </ng-container>
-                <ng-template #noContacts>
-                  <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No se encontraron registros</div>
-                </ng-template>
-
-              </div>
-
+            </div>
           </div>
+        </div>
+      </div>
 
-      </mat-drawer-content>
+    </mat-drawer>
+
+    <mat-drawer-content class="flex flex-col">
+
+      <!-- Main -->
+      <div class="flex-auto">
+
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+          <div class="flex items-center justify-between">
+            <div class="text-secondary font-medium flex flex-col sm:flex-row sm:items-center">
+              <input class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
+                name="filtrarTabla" [formControl]="filtrarTabla" placeholder="Filtrar tabla...">
+            </div>
+            <div class="mt-2 pt-3 sm:pt-2 sm:ml-auto sm:text-right">
+              Total de registros encontrados: {{ total }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Contacts list -->
+        <div class="relative">
+          <ng-container *ngIf="contactos.length; else noContacts">
+            <ng-container
+              *ngFor="let contact of contactos | filter:filtrarTabla.value; let i = index; trackBy: trackByFn">
+              <!-- Group -->
+              <ng-container *ngIf="i === 0 || contact.nombre.charAt(0) !== contactos[i - 1].nombre.charAt(0)">
+                <div
+                  class="z-99 top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                  {{contact.nombre.charAt(0)}}
+                </div>
+              </ng-container>
+              <!-- Contact -->
+              <a class="z-20 flex items-center px-6 py-4 md:px-8 cursor-pointer border-b"
+                (click)="abrirDrawen(contact)">
+                <div class="flex flex-0 items-center justify-center w-10 h-10 rounded-full overflow-hidden">
+
+                  <ng-container>
+                    <div
+                      class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                      {{contact.nombre.charAt(0)+contact.nombre.charAt(1)}}
+                    </div>
+                  </ng-container>
+                </div>
+                <div class="min-w-0 ml-4">
+                  <div class="font-medium leading-5 truncate">{{contact.nombre}}</div>
+                  <div class="leading-5 truncate text-secondary">{{contact.codigo}}</div>
+                </div>
+              </a>
+            </ng-container>
+          </ng-container>
+          <ng-template #noContacts>
+            <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">No se encontraron
+              registros</div>
+          </ng-template>
+
+        </div>
+
+      </div>
+
+    </mat-drawer-content>
 
   </mat-drawer-container>
 

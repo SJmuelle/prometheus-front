@@ -17,16 +17,6 @@
     </div>
     <div class="w-full px-3">
       <mat-form-field class="w-full px-3 fuse-mat-dense">
-        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:trending-up'">
-        </mat-icon>
-        <mat-label> Antiguedad Maxima</mat-label>
-        <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
-      </mat-form-field>
-
-    </div>
-
-    <div class="w-full px-3">
-      <mat-form-field class="w-full px-3 fuse-mat-dense">
         <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:trending-down'">
         </mat-icon>
         <mat-label> Antiguedad Minima</mat-label>
@@ -35,10 +25,10 @@
     </div>
     <div class="w-full px-3">
       <mat-form-field class="w-full px-3 fuse-mat-dense">
-        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:clock'">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:trending-up'">
         </mat-icon>
-        <mat-label> Plazo maximo</mat-label>
-        <input matInput type="number" autocomplete="off" formControlName="plazoMaximo">
+        <mat-label> Antiguedad Maxima</mat-label>
+        <input matInput type="number" autocomplete="off" formControlName="antiguedadMaxima">
       </mat-form-field>
     </div>
     <div class="w-full px-3">
@@ -48,10 +38,18 @@
         <mat-label> plazo minimo</mat-label>
         <input matInput type="number" autocomplete="off" formControlName="plazoMinimo">
       </mat-form-field>
-    </div>   
+    </div>  
+    <div class="w-full px-3">
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:clock'">
+        </mat-icon>
+        <mat-label> Plazo maximo</mat-label>
+        <input matInput type="number" autocomplete="off" formControlName="plazoMaximo">
+      </mat-form-field>
+    </div> 
       </div>  
       <mat-dialog-actions align="end">
-        <button mat-button class="color_fintra  text-white" (click)="guardar()">Guardar </button>
+        <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar</button>
         <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
       </mat-dialog-actions>
 </form>

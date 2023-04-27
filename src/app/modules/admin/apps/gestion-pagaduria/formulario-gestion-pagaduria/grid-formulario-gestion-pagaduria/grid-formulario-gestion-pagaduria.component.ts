@@ -24,7 +24,7 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
   form: FormGroup;
 
   seleccion = [{ value: true, viewValue: 'SI' }, { value: false, viewValue: 'NO' }];
-  tipoEmpresa = [{ value: 'GRUPO', viewValue: 'Grupo' }, { value: 'TEMPORAL', viewValue: 'Temporal' }, { value: 'OTRAS EMPRESAS', viewValue: 'Otras Empresas' }];
+  tipoEmpresa = [{ value: 'GRUPO', viewValue: 'Grupo' }, { value: 'TEMPORAL', viewValue: 'Temporal' }, { value: 'OTRAS', viewValue: 'Otras Empresas' }];
   data: any;
   datos: any = {};
   listadoDepartamento: any;
@@ -43,19 +43,19 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
     this.consultarDepartamento();
 
     this.form = this.fb.group({
-      razonSocial: [''],
-      documento: [''],
+      razonSocial: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
+      documento: ['', [Validators.required, Validators.pattern('^[0-9]{5,20}$')]],
       dv: [''],
       municipio: [''],
       departamento: ['', Validators.required], // Agregar validación de campo requerido
       direccion: ['', Validators.required],
-      correo: [''],
-      telefono: [''],
+      correo: ['', [Validators.required, Validators.email]],
+      telefono: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
       tipoEmpresa: [''],
       empresaAliada: [''],
       convenioEspecialTemporal: [''],
       contratoFijo: [''],
-      porcentajeIngresosBrutos: [0, Validators.required],
+      porcentajeIngresosBrutos: ['', Validators.required],
       requiereCartaLaboral: [''],
       liqSinPagaduria: ['']
     });
@@ -63,6 +63,10 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
     this.consultaMunicipio();
   }
 
+  public onDocumentoChange(event: any) {
+    const documento = event.target.value;
+    this.form.controls.documento.setValue(documento);
+  }
 
   consultarDepartamento() {
 
@@ -119,18 +123,38 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
   }
 
   crearPagaduria() {
+    if (
+      !this.form.getRawValue().razonSocial||
+      !this.form.getRawValue().documento ||
+      !this.form.getRawValue().dv ||
+      !this.form.getRawValue().municipio ||
+      !this.form.getRawValue().direccion ||
+      !this.form.getRawValue().correo||
+      !this.form.getRawValue().telefono 
+      
+
+    ) {
+
+      // Mostrar mensaje de error utilizando la librería sweetalert2
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, llene todos los campos antes de guardar.',
+      });
+      return;
+    }
     console.log("mostrar", this.form.getRawValue());
 
     let data, url;
 
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Guardando nueva pagadurias',
-      timer: 500000,
-      didOpen: () => {
-        // Swal.showLoading();
-      },
-    }).then((result) => { });
+    // Swal.fire({
+    //   title: 'Guardando',
+    //   html: 'Desea Guardar la nueva pagaduria',
+    //   timer: 500000,
+    //   didOpen: () => {
+    //     // Swal.showLoading();
+    //   },
+    // }).then((result) => { });
     data={
       razonSocial: this.form.getRawValue().razonSocial,
       documento: this.form.getRawValue().documento,
@@ -149,8 +173,20 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
     }
     this._GestionPagaduriaService.postCrear(data).subscribe(rep => {
       console.log(rep)
+      if(rep.status === 200 && rep.data.resultado === 'OK'){
+        Swal.fire({
+          icon: 'success',
+          title: 'Exito',
+          text: 'Pagaduria creada con exito',
+        });
+      }else if(rep.status === 500 && rep.data.resultado === 'OK'){
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error al crear la pagaduria',
+        });
+      }
     })
   }
-
 }
 

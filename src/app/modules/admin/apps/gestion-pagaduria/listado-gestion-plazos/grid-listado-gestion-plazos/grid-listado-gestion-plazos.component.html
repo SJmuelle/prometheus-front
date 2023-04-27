@@ -20,20 +20,19 @@
             </div>
         </div>
     </div>
-    <div
-        class="h-auto w-full sm:h-100 xl:h-160 ">
+    <div class="h-auto w-full sm:h-100 xl:h-160 ">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr class="text-md font-semibold
                     tracking-wide text-left text-gray-400
                     capitalize border-b border-gray-600 ">
                     <th class="px-4 py-3 text-center w-0">Editar</th>
-                    <th class="px-4 py-3 text-center w-0">Id plazos</th>
+                    <!-- <th class="px-4 py-3 text-center w-0">Id plazos</th> -->
                     <th class="px-4 py-3 text-center">Tipo de contrato</th>
-                    <th class="px-4 py-3 text-center">Antiguedad maxima</th>
                     <th class="px-4 py-3 text-center">Antiguedad minima</th>
-                    <th class="px-4 py-3 text-center">Plazo maximo</th>
+                    <th class="px-4 py-3 text-center">Antiguedad maxima</th>
                     <th class="px-4 py-3 text-center">Plazo minimo </th>
+                    <th class="px-4 py-3 text-center">Plazo maximo</th>
                     <th class="px-4 py-3 text-center">Estado</th>
                 </tr>
             </thead>
@@ -50,24 +49,28 @@
                     <td class="px-20 text-sm border text-center" (click)="abrirModal(item, 'A')">
                         <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                     </td>
-                    <td class="px-2 text-sm border text-center">
+                    <!-- <td class="px-2 text-sm border text-center">
                         {{ item.idPlazo }}
-                    </td>
+                    </td> -->
+
                     <td class="px-2 text-sm border text-center">
                         {{ item.tipoContrato }}
                     </td>
-                    
+
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.antiguedadMinima }} MESES
+                    </td>
+
                     <td class="px-2 text-sm border text-center">
                         {{ item.antiguedadMaxima}}
                     </td>
+
                     <td class="px-2 text-sm border text-center">
-                        {{ item.antiguedadMinima }}
+                        {{ item.plazoMinimo}} MESES
                     </td>
+
                     <td class="px-2 text-sm border text-center">
-                        {{ item.plazoMaximo}}
-                    </td>
-                    <td class="px-2 text-sm border text-center">
-                        {{ item.plazoMinimo}}
+                        {{ item.plazoMaximo}} MESES
                     </td>
                     <td class="px-2 text-sm border text-center w-0">
                         <div [ngClass]="
@@ -98,4 +101,3 @@
         </div>
     </div>
 </div>
-

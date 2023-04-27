@@ -19,7 +19,6 @@ export class ListadoGestionPlazosComponent implements OnInit {
   form: FormGroup;
   constructor(
     private fb: FormBuilder,
-
     public matDialogRef: MatDialogRef<ListadoGestionPlazosComponent>,
     private _gestionPagaduriaService: GestionPagaduriaService,
     @Inject(MAT_DIALOG_DATA) public dato,
@@ -53,14 +52,31 @@ export class ListadoGestionPlazosComponent implements OnInit {
   }
 
   guardar() {
+
+    // Verificar si los campos del formulario están llenos
+  if (
+    !this.form.getRawValue().tipoContrato ||
+    !this.form.getRawValue().antiguedadMinima ||
+    !this.form.getRawValue().antiguedadMaxima ||
+    !this.form.getRawValue().plazoMinimo ||
+    !this.form.getRawValue().plazoMaximo
+  ) {
+    // Mostrar mensaje de error utilizando la librería sweetalert2
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Por favor, llene todos los campos antes de guardar.',
+    });
+    return;
+  }
     console.log("mostrar", this.form.getRawValue());
     // var id = JSON.parse(localStorage.getItem("id"));
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando configuracion de pagadurias',
-      timer: 500000,
+      timer: 5000,
       didOpen: () => {
-        // Swal.showLoading();
+        Swal.showLoading();
       },
     }).then((result) => {
       if (this.data == null) {
@@ -77,6 +93,8 @@ export class ListadoGestionPlazosComponent implements OnInit {
 
         this._gestionPagaduriaService.postGuardar(data).subscribe(rep => {
           console.log(rep)
+
+          this.matDialogRef.close()
         })
 
       } else {
@@ -94,6 +112,9 @@ export class ListadoGestionPlazosComponent implements OnInit {
         console.log(this.data);
         this._gestionPagaduriaService.postEditar(data).subscribe(rep => {
           console.log(rep)
+
+          this.matDialogRef.close()
+
         })
 
 
