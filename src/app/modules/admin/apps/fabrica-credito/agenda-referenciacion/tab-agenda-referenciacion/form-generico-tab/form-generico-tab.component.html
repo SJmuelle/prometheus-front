@@ -54,7 +54,7 @@
                                                     <div class="toggle-button-cover">
                                                         <div class="button-cover">
                                                             <div class="button r" id="button-1">
-                                                                <input type="checkbox" class="checkbox"
+                                                                <input [matTooltip]="pregunta.descripcionTooltip" type="checkbox" class="checkbox"
                                                                     [(ngModel)]="pregunta.objHtml.switch.valueBoleean"
                                                                     (change)="pregunta.objHtml.switch.value=pregunta.objHtml.switch.valueBoleean==false?'N':'S';recorrerPregunta();">
                                                                 <div class="knobs"></div>
@@ -71,7 +71,7 @@
                                                         (click)="pregunta.objHtml.switch.value='S';pregunta.objHtml.switch.valueBoleean=true;recorrerPregunta();">
                                                         <div class="button-cover">
                                                             <div class="button r" id="button-1">
-                                                                <input type="checkbox" class="checkbox" >
+                                                                <input [matTooltip]="pregunta.descripcionTooltip" type="checkbox" class="checkbox" >
                                                                 <div class="knobs"></div>
                                                                 <div class="layer layer2"></div>
                                                             </div>
@@ -87,7 +87,7 @@
                                         <div *ngSwitchCase="'select'">
                                             <mat-form-field class="w-1/2 fuse-mat-dense mt-4">
                                                 <mat-label>{{pregunta.pregunta}}</mat-label>
-                                                <mat-select [value]="''" [(ngModel)]="pregunta.objHtml.select.value">
+                                                <mat-select [matTooltip]="pregunta.descripcionTooltip" [value]="''" [(ngModel)]="pregunta.objHtml.select.value">
                                                     <mat-option disabled [value]="''">Seleccione
                                                     </mat-option>
                                                     <mat-option
@@ -108,7 +108,7 @@
                                         <div *ngSwitchCase="'textarea'">
                                             <div class="mt-1">
                                                 <p>{{pregunta.pregunta}}</p>
-                                                <quill-editor class="mb-2" placeholder="Observación..."
+                                                <quill-editor [matTooltip]="pregunta.descripcionTooltip" class="mb-2" placeholder="Observación..."
                                                     [modules]="quillModules"
                                                     [(ngModel)]="pregunta.objHtml.textarea.value">
                                                 </quill-editor>
@@ -120,10 +120,10 @@
                                         <div *ngSwitchDefault>
                                             <!-- preguntas tipo text sin hijos   -->
                                                 <!-- {{pregunta.objHtml | json}} -->
-                                                <div class="grid grid-cols-2 gap-2">
+                                                <div class="grid grid-cols-2 gap-2 mt-4">
                                                     <mat-form-field class="w-full fuse-mat-dense">
                                                         <mat-label> {{pregunta.pregunta}} </mat-label>
-                                                        <input matInput type="text"
+                                                        <input [matTooltip]="pregunta.descripcionTooltip" matInput type="text"
                                                         autocomplete="off"
                                                             [(ngModel)]="pregunta.objHtml.input.value">
                                                         <mat-icon class="icon-size-5" matSuffix
