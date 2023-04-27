@@ -113,7 +113,7 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
     public onGetReferencia(datos: any): void {
         this.esVer = true;
         const dialogRef = this._dialog.open(FormDetallesReferenciasComponent, {
-            minWidth: '240px',
+            minWidth: window.innerWidth < 600 ? '240px' : '500px',
             minHeight: '440px',
             disableClose: true,
             // data: datos

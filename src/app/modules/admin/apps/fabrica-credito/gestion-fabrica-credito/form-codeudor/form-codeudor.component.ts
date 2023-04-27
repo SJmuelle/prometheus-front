@@ -542,7 +542,7 @@ export class FormCodeudorComponent implements OnInit {
     }
 
     public cambiarNacionalidad(e: MatSelectChange) {
-        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO(A)')
+        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO')
     }
 
     public cargarActividadEconomica(e: MatSelectChange) {
