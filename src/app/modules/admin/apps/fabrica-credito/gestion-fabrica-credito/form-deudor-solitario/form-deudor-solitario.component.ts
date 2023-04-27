@@ -766,7 +766,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
     public cambiarNacionalidad(e: MatSelectChange) {
         if (e.value === 'CC') {
-            this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO(A)');
+            this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO');
         }
     }
 
