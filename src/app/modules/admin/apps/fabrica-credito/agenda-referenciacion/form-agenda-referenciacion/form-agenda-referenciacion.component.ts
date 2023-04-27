@@ -28,6 +28,7 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   public fabrica_datos: any = {};
   public tipoDocumento: string = '';
   titulo: string;
+  public maxOrdenNumber: number = 0;
 
   constructor(
     @Inject(DOCUMENT) private _document: Document,
@@ -86,6 +87,15 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     });
   }
 
+  getMaxOrdenNumber(data: any){
+    let max: number = 0;
+    data.forEach(step => {
+      if(step.order > max){
+        max = step.order
+      }
+    })
+    return max;
+  }
   // -----------------------------------------------------------------------------------------------------
   // @ Public methods
   // -----------------------------------------------------------------------------------------------------
@@ -109,11 +119,18 @@ export class FormAgendaReferenciacionComponent implements OnInit {
  * Go to next step
  */
   goToNextStep(): void {
+    
     // Return if we already on the last step
-    if (this.currentStep === (this.totalsteps - 1)) {
+    
+    if (this.currentStep === (this.totalsteps - 1) || this.currentStep > this.totalsteps - 1) {
+      
+      if((this.totalsteps - 1) < this.maxOrdenNumber  && this.currentStep < 3){
+        this.goToStep(this.maxOrdenNumber);
+      }
       return;
     }
 
+    
     // // Go to step
     this.goToStep(this.currentStep + 1);
 
@@ -220,10 +237,10 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data)
 
         this.steps = data
         this.totalsteps = this.steps.length;
+        this.maxOrdenNumber = this.getMaxOrdenNumber(this.steps);
       });
   }
 

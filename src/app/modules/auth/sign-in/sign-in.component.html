@@ -52,7 +52,9 @@
             </div> -->
 
             <!-- Title -->
-            <div class="font-medium mt-8 text-4xl  texto_fintra">Prometheus</div>
+            <div class="font-medium mt-8 text-4xl  texto_fintra leading-6">Prometheus
+                <p class="text_fintra text-sm">Versión 1.1.0</p>
+            </div>
             <!-- <div class="flex items-baseline mt-0.5 font-medium">
                 <div>Don't have an account?</div>
                 <a
@@ -83,6 +85,7 @@
                     <mat-label>Usuario</mat-label>
                     <input
                         id="userName"
+                        class="not-uppercase"
                         matInput
                         [formControlName]="'userName'">
                     <mat-error *ngIf="signInForm.get('userName').hasError('required')">
@@ -99,6 +102,7 @@
                     <input
                         id="password"
                         matInput
+                        class="not-uppercase"
                         type="password"
                         [formControlName]="'password'"
                         #passwordField>
@@ -154,7 +158,7 @@
                 <!-- Separator -->
                 <!-- <div class="flex items-center mt-8">
                     <div class="flex-auto mt-px border-t"></div>
-                    <div class="mx-2 text-secondary">Or continue with</div>
+                    <div class="mx-2 text-secondary">Versión 1.1.0</div>
                     <div class="flex-auto mt-px border-t"></div>
                 </div> -->
 

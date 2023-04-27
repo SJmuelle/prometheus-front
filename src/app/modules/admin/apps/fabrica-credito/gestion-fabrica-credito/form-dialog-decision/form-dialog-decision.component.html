@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{tituloModal}}</h2>
-<mat-dialog-content>
-    <div class="row">
+<mat-dialog-content class="py-2">
+    <div class="row mb-4">
         <div class="col-md-12 col-md-12 col-lg-12">
             <form [formGroup]="form">
                 <!--{{form.getRawValue() | json}}-->
@@ -15,7 +15,7 @@
                                     <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
                                         {{item.descripcionOpcion}}
                                     </mat-option>
-                                </mat-select> 
+                                </mat-select>
                             </mat-form-field>
                         </ng-container>
                     </div>
@@ -37,19 +37,55 @@
                         <ng-container *ngIf="form.controls.concepto.value === 'A'">
                             <div class="md:flex">
                                 <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                    <mat-label>Valor cupo</mat-label>
-                                    <input matInput type="text" [formControlName]="'cupo'"
-                                        (keyup)="form.controls['cupo'].setValue(utility.formatearNumero(form.value.cupo));">
-                                    <mat-error *ngIf="requeridoCupo">Este campo es requerido.</mat-error>
+                                    <mat-label>Monto aprobado</mat-label>
+                                    <span matTextPrefix>$&nbsp;</span>
+                                    <input matInput type="text" [formControlName]="'cupo'" mask="separator.0"
+                                        thousandSeparator="."
+                                        (change)="getPlazosCredito(this.form.controls.cupo.value)">
+
+                                    <mat-error *ngIf="form.controls.cupo.errors?.required">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                    <mat-error *ngIf="form.controls.cupo.errors?.min">
+                                        Monto mínimo de {{salarioMinimo}}
+                                    </mat-error>
+                                    <mat-error *ngIf="form.controls.cupo.errors?.max">
+                                        Monto máximo de 100.000.000
+                                    </mat-error>
                                 </mat-form-field>
                             </div>
                         </ng-container>
                     </div>
+                    <ng-container *ngIf="mostrarPlazo">
+                        <div *ngIf="this.plazosCredito$ | async as plazos" class="md:flex">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Plazo</mat-label>
+                                <input matInput type="number" [formControlName]="'plazo'"
+                                    [min]="plazos.data[0].plazoMinimo" [max]="plazos.data[0].plazoMaximo">
+                                <mat-error *ngIf="form.controls.plazo.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                form.controls.plazo.errors
+                                    ?.min
+                            ">
+                                    No puede ser menor a {{plazos.data[0].plazoMinimo}}
+                                </mat-error>
+                                <mat-error *ngIf="
+                                form.controls.plazo.errors
+                                    ?.max
+                            ">
+                                    No puede ser mayor a {{plazos.data[0].plazoMaximo}}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </ng-container>
+
 
                     <div class="md:flex">
-                        <mat-form-field class="w-full mr-2 fuse-mat-dense h-70">
+                        <mat-form-field class="w-full mr-2 fuse-mat-dense">
                             <mat-label>Comentario: </mat-label>
-                            <textarea class="h-60" matInput [formControlName]="'comentario'" class="resize-none" rows="12"></textarea>
+                            <textarea matInput [formControlName]="'comentario'" class="resize-none" rows="4"></textarea>
                             <mat-error *ngIf="requeridoComentario">Este campo es requerido.</mat-error>
                         </mat-form-field>
                     </div>
@@ -60,7 +96,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" (click)="onGuardar()" >
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()">
             Guardar
         </button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">

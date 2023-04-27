@@ -69,7 +69,6 @@ export class ListComponent implements OnInit {
       width: '35%'
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (isObject(result)) {
         this.filtrarPQRS(result) 
       }

@@ -26,7 +26,6 @@ export class AsignarVariosComponent implements OnInit {
   ngOnInit(): void {
     this.consultarAsesores();
     this.solicitudes = this.data.details
-    console.log(this.data)
   }
 
   guardarAnalista(){

@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Cambiar factoring</h1>
+<div mat-dialog-content class="flex flex-row w-full justify-center max-h-30 mb-2 mx-0 px-2 overflow-y-auto overflow-x-hidden">
+    <div class="w-full">
+        <table class="p-0">
+            <ng-container *ngFor="let item of this.data.listado">
+                <tr class="text-gray-700 border-t border-b">
+                    <td class="px-2 py-2">
+                        <div class="flex flex-col">
+                            <small class="text-accent-600 text-xs">Planilla:</small>
+                            <span class="text-md text-black font-medium">
+                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:clipboard-check"></mat-icon>
+                                {{item.planilla}}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+</div>
+<div mat-dialog-content>
+    <div class="flex flex-row w-full justify-between">
+        <label class="font-semibold">{{data.minimo | number}}%</label>
+        <label class="font-semibold">{{valor | number}}%</label>
+    </div>
+    <mat-slider 
+    class="w-full cursor-pointer"
+    [displayWith]="formatLabel"
+    step="0.01"
+    [min]="data.minimo"
+    [max]="data.maximo"
+    [(ngModel)]="valor"
+    aria-label="units"></mat-slider>
+</div>
+<mat-dialog-actions align="end">
+    <button mat-button class="text-white permitirAceptar bloquear" (click)="actualizar()">Aceptar</button>
+    <button mat-button [mat-dialog-close]="false" class="text-white bg-gray-400">Cancelar</button>
+</mat-dialog-actions>

@@ -155,7 +155,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
 
     public cambiarHora(date) {
         moment.locale('es');
-        return moment(date).format('h:mm a')
+        return moment(date).format('hh:mm A')
     }
 
     public armarForm() {
@@ -227,7 +227,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                     break;
 
                 default:
-                    if (element.buscar.length > 1) {
+                    if (element.buscar.length > 0) {
                         return element
                     }
                     break;

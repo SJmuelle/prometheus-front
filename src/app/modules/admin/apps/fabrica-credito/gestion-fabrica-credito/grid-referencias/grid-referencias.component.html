@@ -1,11 +1,7 @@
 <div class="row" [ngSwitch]="esVer">
-    <div class="flex justify-end mb-4"  *ngIf="!permisoEditar">
-        <ng-container *ngIf="!datos" >
-            <button mat-raised-button
-                    color="accent"
-                    type="button"
-                    (click)="onDialogReferencia()"
-            >
+    <div class="flex sm:justify-end justify-items-start mb-4 relative min-h-10" *ngIf="!permisoEditar">
+        <ng-container *ngIf="!datos">
+            <button mat-raised-button color="accent" type="button" (click)="onDialogReferencia()">
                 Nueva referencia
             </button>
         </ng-container>
@@ -19,46 +15,94 @@
             </button>
         </ng-container>-->
     </div>
-    <ng-container >
+    <div class="my-2">
+        <strong class="text-xl">Titular</strong>
+    </div>
+    <ng-container class="my-5">
         <div class="col-md-12 col-lg-12">
             <table class="shadow p-0">
-                <thead class="bg-accent-50" >
-                <tr
-                    class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3"></th>
-                    <th class="px-4 py-3">Nombre / Razon social</th>
-                    <th class="px-4 py-3">Teléfono / celular</th>
-                    <th class="px-4 py-3">Tipo de referencia</th>
-                    <th class="px-4 py-3">Estado</th>
-                    <th class="px-4 py-3">Fecha de referencia</th>
-                </tr>
+                <thead class="bg-accent-50">
+                    <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                        <th class="px-4 py-3"></th>
+                        <th class="px-4 py-3 min-w-50">Nombre / Razon social</th>
+                        <th class="px-4 py-3">Teléfono / celular</th>
+                        <th class="px-4 py-3">Tipo de referencia</th>
+                        <th class="px-4 py-3">Estado</th>
+                        <th class="px-4 py-3">Fecha de referencia</th>
+                    </tr>
                 </thead>
                 <tbody class="bg-white">
-                <ng-container *ngIf="referencias$ | async as items">
-                    <ng-container *ngFor="let item of items.data">
-                        <tr>
-                            <td class="px-1 text-sm border">
-                                <button mat-icon-button
-                                        (click)="onGetReferencia(item)"
-                                        matTooltip="Ver información"
-                                >
-                                    <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
-                                </button>
-                            </td>
-                            <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
-                            <td class="px-2 text-sm border">{{ item.celular}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionTipoReferencia}} {{item.descripcionParentesco}}</td>
-                            <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
-                            <td class="px-2 text-sm border">{{ item.fechaReferencia }}</td>
-                        </tr>
+                    <ng-container *ngIf="referencias$ | async as items">
+                        <ng-container *ngFor="let item of items.data">
+                            <tr *ngIf="item.tipoTercero =='T'">
+                                <td class="px-1 text-sm border">
+                                    <button mat-icon-button (click)="onGetReferencia(item)"
+                                        matTooltip="Ver información">
+                                        <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                    </button>
+                                    <button
+                                        *ngIf="item.tipoReferenciacion !=='C' && item.descripcionEstado !== 'INACTIVO' && item.unidadNegocio === 1"
+                                        mat-icon-button (click)="onDialogReferenciacionFormGenerico(item)"
+                                        matTooltip="Ver referenciación">
+                                        <mat-icon svgIcon="heroicons_outline:phone"></mat-icon>
+                                    </button>
+                                </td>
+                                <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
+                                <td class="px-2 text-sm border">{{ item.celular}}</td>
+                                <td class="px-2 text-sm border">{{ item.descripcionTipoReferencia}}
+                                    {{item.descripcionParentesco}}</td>
+                                <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
+                                <td class="px-2 text-sm border">{{ item.fechaReferencia }}</td>
+                            </tr>
+                        </ng-container>
                     </ng-container>
-                </ng-container>
                 </tbody>
             </table>
         </div>
     </ng-container>
+    <ng-container *ngIf="codeduor">
+        <div class="my-4">
+            <strong class="text-xl">Codeudor</strong>
+        </div>
+        <ng-container *ngIf="referencias$ | async as items">
+            <div class="col-md-12 col-lg-12">
+                <table class="shadow p-0">
+                    <thead class="bg-accent-50">
+                        <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
+                            <th class="px-4 py-3"></th>
+                            <th class="px-4 py-3 min-w-50">Nombre / Razon social</th>
+                            <th class="px-4 py-3">Teléfono / celular</th>
+                            <th class="px-4 py-3">Tipo de referencia</th>
+                            <th class="px-4 py-3">Estado</th>
+                            <th class="px-4 py-3">Fecha de referencia</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <ng-container>
+                            <ng-container *ngFor="let item of items.data">
+                                <tr *ngIf="item.tipoTercero =='C'">
+                                    <td class="px-1 text-sm border">
+                                        <button mat-icon-button (click)="onGetReferencia(item)"
+                                            matTooltip="Ver información">
+                                            <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
+                                        </button>
+                                    </td>
+                                    <td class="px-2 text-sm border">{{ item.nombreCompleto}}</td>
+                                    <td class="px-2 text-sm border">{{ item.celular}}</td>
+                                    <td class="px-2 text-sm border">{{ item.descripcionTipoReferencia}}
+                                        {{item.descripcionParentesco}}</td>
+                                    <td class="px-2 text-sm border">{{ item.descripcionEstado}}</td>
+                                    <td class="px-2 text-sm border">{{ item.fechaReferencia }}</td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+    </ng-container>
     <!--Formulario detalles referencias-->
-    <div class="sm:mt-13">
+    <div class="mt-13 sm:mb-0 mb-10">
         <!--<ng-container *ngSwitchCase="true">
              <app-form-detalles-referencias
                  (cerrarFormulario)=onCerrarFormularioDetalle($event)
@@ -66,4 +110,3 @@
         </ng-container>-->
     </div>
 </div>
-

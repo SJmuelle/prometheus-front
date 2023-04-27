@@ -12,6 +12,7 @@ import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabri
 import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
 import { PagoMasivoModule } from './modules/admin/apps/pago-masivo/pago-masivo.module';
 import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
+import { ProntoPagoModule } from './modules/admin/apps/pronto-pago/pronto-pago.module';
 import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
 import { CobranzaModule } from './modules/admin/apps/cobranza/cobranza.module';
 
@@ -128,8 +129,8 @@ export const appRoutes: Route[] = [
                 loadChildren: () => PagaduriaModule
             },
             {
-                path: 'pago-masivo',
-                loadChildren: () => PagoMasivoModule
+                path: 'pronto-pago',
+                loadChildren: () => ProntoPagoModule
             },
             {
                 path: 'procesos',

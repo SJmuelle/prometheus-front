@@ -70,8 +70,6 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
 
   public cambioEstado(event, item) {
-    console.log(event)
-    console.log(item)
     
     if (event == 'COM') {
       this.editarCartera(item, 'N');
@@ -82,7 +80,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
       numeroSolicitud: Number(this.numeroSolicitud),
       gestionCartera: event
     }
-    // debugger;
+    // ;
     Swal.fire({
       title: 'Cargando',
       html: 'Guardando información',

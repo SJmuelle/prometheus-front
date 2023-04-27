@@ -22,6 +22,13 @@ export class FabricaCreditoService {
     }
 
     /**
+     * @description: Get datos fabrica Agenda
+     */
+    public getInformacionTipoTercero(numeroSolicitud, tipo): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.informacionTercero}/${numeroSolicitud}/${tipo}`);
+    }
+
+    /**
      * @description: Get datos fabrica Agenda referenciacion
      */
     public getDatosFabricaAgendaReferenciacion(datos): Observable<any> {
@@ -96,6 +103,19 @@ export class FabricaCreditoService {
     /**
      * @description: Post Guardar datos fabrica credito
      */
+    public postDatosFabricaCreditoCodeudor(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCreditoCodeudor, data);
+    }
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
+    public postDatosFabricaCreditoSolitario(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCreditoSolitario, data);
+    }
+
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
     public postDatosFabricaCreditoReferenciacion(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.PostagendaReferenciacion, data);
     }
@@ -141,5 +161,12 @@ export class FabricaCreditoService {
  */
     public GuardarPreguntaAgendaReferenciacion(datos): Observable<any> {
         return this._http.post(`${this._appSettings.fabricaDatos.url.agendaReferenciacionGuardarPregunta}`, datos);
+    }
+
+    /**
+     * @description: Post Guardar datos fabrica credito
+     */
+    public postDatosDeudorSolidario(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
 }

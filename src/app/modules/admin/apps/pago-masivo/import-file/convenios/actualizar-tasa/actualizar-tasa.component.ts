@@ -17,7 +17,6 @@ export class ActualizarTasaComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data) { }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.actualizarForm = this.fb.group({
       tasa: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}\.[0-9]{1,2}$')]],
     });

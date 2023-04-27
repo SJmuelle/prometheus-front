@@ -36,17 +36,19 @@
                     <div class="grid grid-cols-1 mt-4 -mx-6">
                         <div class="flex flex-col mx-3 my-2" *ngFor="let campo of item.campos;">
                             <div class="flex items-center">
-                                <div class="flex items-center justify-center w-14 h-14 rounded-r-3xl shadow-inner"
+                                <div class="flex items-center max-w-3/12 justify-center w-14 h-14 rounded-r-3xl shadow-inner"
                                     [ngClass]="campo.color">
                                     <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
                                 </div>
-                                <div class="flex-auto ml-4 leading-none">
+                                <div class="flex-auto ml-4 leading-none max-w-9/12">
                                     <div class="text-sm font-medium text-secondary">{{campo.label}} </div>
-                                    <div class="text-sm font-medium capitalize my-1">{{campo.label2}} </div>
+                                    <div class="text-sm font-medium  my-1">{{campo.label2}} </div>
                                     <div class="text-sm font-medium text-secondary">{{campo.descripcion}}</div>
-                                    <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor2"></div>
-                                    <div class="text-sm font-medium capitalize " [innerHtml]="campo.valor"></div>
-                                    <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor3"></div>
+                                    <div class="text-sm font-medium  my-1" [innerHtml]="campo.valor2"></div>
+                                    <div class="text-sm font-medium  " [innerHtml]="campo.valor"></div>
+                                    <div class="text-sm font-medium  my-1" [innerHtml]="campo.valor3"></div>
+                                    <div *ngIf="campo.valor4" class="text-sm font-medium  my-1"
+                                        [innerHtml]="campo.valor4"></div>
                                 </div>
                             </div>
                         </div>
@@ -85,9 +87,10 @@
                                     {{campo.valor}}
                                 </div>
                                 <div class="mt-1 text-sm font-medium text-center ">{{campo.label }}</div>
-                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora" *ngIf="campo.label=='Contador embargos'"
+                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora"
+                                    *ngIf="campo.label=='Contador embargos'"
                                     aria-label="Example icon-button with a menu">
-                                    <mat-icon  svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                    <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                                 </button>
                             </div>
                         </div>
@@ -106,27 +109,34 @@
                     <mat-icon class="icon-size-24 opacity-25 text-green-600"
                         [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
                 </div>
-                <div class="flex flex-col mt-2 divide-y">
-                    <ng-container *ngFor="let item of dataPolicitasAdmin">
-                        <div class="flex flex-row items-center justify-between py-2 px-0.5">
-                            <div class="flex flex-col">
-                                <div>
-                                    <span class="font-medium">{{item.nombre}}</span>
-                                    <span class="ml-2 text-md text-secondary">{{item.tipo}}</span>
-                                </div>
-                                <div
-                                    class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
-                                    <div class="flex items-center">
-                                        <div class="text-md text-secondary">{{item.descripcion}}</div>
+                <div class="flex flex-col justify-center items-center mt-2 divide-y">
+                    <mat-tab-group class="flex w-full justify-items-center items-center moreWidth">
+                        <mat-tab *ngFor="let grupoPoliticas of dataPolicitasAdmin | keyvalue: keyDescOrder">
+                            <ng-template matTabLabel>{{grupoPoliticas.key}}</ng-template>
+                            <ng-container *ngFor="let item of grupoPoliticas.value">
+                                <div class="flex flex-row items-center justify-between py-2 px-0.5">
+                                    <div class="flex flex-col">
+                                        <div>
+                                            <span class="font-medium">{{item.nombre}}</span>
+                                            <span class="ml-2 text-md text-secondary">{{item.tipo}}</span>
+                                        </div>
+                                        <div
+                                            class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
+                                            <div class="flex items-center">
+                                                <div class="text-md text-secondary">{{item.descripcion}}</div>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <span
+                                        class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
+                                        [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
+                                            class="leading-relaxed whitespace-nowrap" matTooltipClass="text-sm"
+                                            [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
                                 </div>
-                            </div>
-                            <span
-                                class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
-                                [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
-                                    class="leading-relaxed whitespace-nowrap">{{item.estadoAccion}}</span></span>
-                        </div>
-                    </ng-container>
+                            </ng-container>
+                        </mat-tab>
+                    </mat-tab-group>
+
                 </div>
             </div>
 
