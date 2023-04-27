@@ -121,9 +121,10 @@ export class FormAgendaReferenciacionComponent implements OnInit {
   goToNextStep(): void {
     
     // Return if we already on the last step
-    if (this.currentStep === (this.totalsteps - 1) || this.currentStep > this.totalsteps) {
+    
+    if (this.currentStep === (this.totalsteps - 1) || this.currentStep > this.totalsteps - 1) {
       
-      if((this.totalsteps - 1) < this.maxOrdenNumber  && this.currentStep !== 3){
+      if((this.totalsteps - 1) < this.maxOrdenNumber  && this.currentStep < 3){
         this.goToStep(this.maxOrdenNumber);
       }
       return;
