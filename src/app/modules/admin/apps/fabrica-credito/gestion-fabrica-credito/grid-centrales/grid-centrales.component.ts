@@ -80,6 +80,8 @@ export class GridCentralesComponent implements OnInit {
                 case 'S':
                 this.solidarioDocumentosCentrales.push(item);
                 break;
+                default:
+                    this.titularDocumentosCentrales.push(item);
             }
         })
     }
