@@ -54,7 +54,10 @@
                     </td> -->
 
                     <td class="px-2 text-sm border text-center">
-                        {{ item.tipoContrato }}
+                        {{ item.tipoContrato === 'F' ? 'FIJO' : 
+                           item.tipoContrato === 'O' ? 'OBRA LABOR' :
+                           item.tipoContrato === 'I' ? 'INDEFINIDO' :
+                           item.tipoContrato }}
                     </td>
 
                     <td class="px-2 text-sm border text-center">

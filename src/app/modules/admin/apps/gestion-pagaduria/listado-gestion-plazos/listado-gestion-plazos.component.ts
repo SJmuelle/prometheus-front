@@ -30,6 +30,7 @@ export class ListadoGestionPlazosComponent implements OnInit {
   ngOnInit(): void {
     // debugger;
     this.data = this.dato
+    console.log(this.dato)
     if (this.data == null) {
       this.form = this.fb.group({
         tipoContrato: [''],
@@ -54,73 +55,96 @@ export class ListadoGestionPlazosComponent implements OnInit {
   guardar() {
 
     // Verificar si los campos del formulario están llenos
-  if (
-    !this.form.getRawValue().tipoContrato ||
-    !this.form.getRawValue().antiguedadMinima ||
-    !this.form.getRawValue().antiguedadMaxima ||
-    !this.form.getRawValue().plazoMinimo ||
-    !this.form.getRawValue().plazoMaximo
-  ) {
-    // Mostrar mensaje de error utilizando la librería sweetalert2
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: 'Por favor, llene todos los campos antes de guardar.',
-    });
-    return;
-  }
+    if (
+      !this.form.getRawValue().tipoContrato ||
+      !this.form.getRawValue().antiguedadMinima ||
+      !this.form.getRawValue().antiguedadMaxima ||
+      !this.form.getRawValue().plazoMinimo ||
+      !this.form.getRawValue().plazoMaximo
+    ) {
+      // Mostrar mensaje de error utilizando la librería sweetalert2
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, llene todos los campos antes de guardar.',
+      });
+      return;
+    }
     console.log("mostrar", this.form.getRawValue());
-    // var id = JSON.parse(localStorage.getItem("id"));
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Guardando configuracion de pagadurias',
-      timer: 5000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => {
-      if (this.data == null) {
-        let data = {
-          tipoContrato: this.form.getRawValue().tipoContrato,
-          antiguedadMinima: this.form.getRawValue().antiguedadMinima,
-          antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
-          plazoMinimo: this.form.getRawValue().plazoMinimo,
-          plazoMaximo: this.form.getRawValue().plazoMaximo,
-          // idPlazo: this.data.idPlazo
 
-        }
-        console.log(this.data)
-
-        this._gestionPagaduriaService.postGuardar(data).subscribe(rep => {
-          console.log(rep)
-
-          this.matDialogRef.close()
-        })
-
-      } else {
-
-        let data = {
-          tipoContrato: this.form.getRawValue().tipoContrato,
-          antiguedadMinima: this.form.getRawValue().antiguedadMinima,
-          antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
-          plazoMinimo: this.form.getRawValue().plazoMinimo,
-          plazoMaximo: this.form.getRawValue().plazoMaximo,
-          idPlazo: this.data.idPlazo
-
-        }
-
-        console.log(this.data);
-        this._gestionPagaduriaService.postEditar(data).subscribe(rep => {
-          console.log(rep)
-
-          this.matDialogRef.close()
-
-        })
+    if (this.data == null) {
+      let data = {
+        tipoContrato: this.form.getRawValue().tipoContrato,
+        antiguedadMinima: this.form.getRawValue().antiguedadMinima,
+        antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
+        plazoMinimo: this.form.getRawValue().plazoMinimo,
+        plazoMaximo: this.form.getRawValue().plazoMaximo,
 
 
       }
+      console.log(this.data)
 
-    });
+      this._gestionPagaduriaService.postGuardar(data).subscribe(rep => {
+        console.log(rep.data.respuesta)
+
+        if (rep.data.respuesta === 'OK') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Configuracion guardada con exito',
+          }).then(() => {
+            this.matDialogRef.close();
+          });
+        } else if (rep.data.respuesta) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: rep.data.respuesta
+          });
+        }
+      });
+
+
+
+    } else {
+
+      let data = {
+        tipoContrato: this.form.getRawValue().tipoContrato,
+        antiguedadMinima: this.form.getRawValue().antiguedadMinima,
+        antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
+        plazoMinimo: this.form.getRawValue().plazoMinimo,
+        plazoMaximo: this.form.getRawValue().plazoMaximo,
+        idPlazo: this.data.idPlazo
+
+      }
+
+      console.log(this.data);
+      this._gestionPagaduriaService.postEditar(data).subscribe(rep => {
+        console.log(rep.data.respuesta)
+
+        //this.matDialogRef.close()
+
+        if (rep.data.respuesta === 'OK') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Configuracion guardada con exito',
+          }).then(() => {
+            this.matDialogRef.close();
+          });
+        } else if (rep.data.respuesta) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: rep.data.respuesta
+          });
+        }
+      });
+
+
+    }
+
+
 
   }
 
