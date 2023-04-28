@@ -139,6 +139,7 @@ export class AppSettingsService {
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
+            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
         }
     };
     /**
