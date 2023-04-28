@@ -564,8 +564,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
             descripcionVeredaNegocio: [''],
-            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
-            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [''],
+            clausulaAnticurrupcionClaracionAuto: [''],
         },
         );
     }

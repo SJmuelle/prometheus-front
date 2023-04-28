@@ -51,6 +51,13 @@ export class FormCodeudorComponent implements OnInit {
     listadoCiudades: any[];
     listadoBarrios: any[];
     fechaActual: any = moment().locale('co');
+    public contador: number = 180;
+    public validandoOTPLoading: boolean = false;
+    public changeTextOTP: boolean = false;
+    timerInterval: any;
+    public otpValidado: boolean = false;
+    public numeroOTP: number = 0;
+    public mostrarOTP: boolean = false;
 
     constructor(
         private fabricaCreditoService: FabricaCreditoService,
@@ -101,6 +108,8 @@ export class FormCodeudorComponent implements OnInit {
 
                 this.addValidation();
                 this.form.patchValue(data);
+                this.mostrarOTP = !!data?.autorizacionesValidadas 
+                
 
                 if (this.form.controls['ocupacion'].value === 'INDEFO' || this.form.controls['ocupacion'].value === 'PROIN' || this.form.controls['ocupacion'].value === 'INDNFO') {
                     this.actividadEconomica$ = this.genericaServices.postActividadEconomica(this.form.controls['ocupacion'].value)
@@ -422,8 +431,9 @@ export class FormCodeudorComponent implements OnInit {
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
             descripcionVeredaNegocio: [''],
-            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
-            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [''],
+            clausulaAnticurrupcionClaracionAuto: [''],
+            numeroOTP: ['']
         });
     }
 
@@ -551,6 +561,38 @@ export class FormCodeudorComponent implements OnInit {
 
             this.actividadEconomica$ = this.genericaServices.postActividadEconomica(e.value)
         }
+    }
+
+    validarCodigo(): void {
+        const numero = this.form.controls['numeroOTP'].value
+
+        if (numero.length === 6 && !this.otpValidado) {
+            const data = {
+                numeroSolicitud: Number(this.numeroSolicitud),
+                numeroOTP: numero,
+                tipoTercero: 'C'
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+                
+                if(rep.data.resultado === 'OK'){
+                    const dataEnvio = {
+                        numeroSolicitud: Number(this.numeroSolicitud),
+                        tipo: 'C',
+                        identificacion: this.dataGeneralIncial.identificacion
+                    }
+                    this.fabricaCreditoService.postConfirmarOTP(dataEnvio).subscribe(rep =>{
+                        if(rep.status === 200){
+                            Swal.fire('OTP validado','Autorizaciones guardadas con éxito', 'success')
+                        }
+                    })
+                }
+            }, err => {
+                this.form.get('numeroOTP').setValue('');
+            })
+        }
+
     }
 
     // validaciones dinamicas
@@ -1370,6 +1412,34 @@ export class FormCodeudorComponent implements OnInit {
         } else {
             this.onPostDatos();
         }
+    }
+
+    solicitarCodigo(): void {
+            const data = {
+                numeroSolicitud: this.numeroSolicitud,
+                tipo: 'C'
+            }
+            this.validandoOTPLoading = true;
+            this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
+                if (rep.status === 200) {
+                }
+                this.startTimer();
+                this.validandoOTPLoading = false;
+
+            })
+    }
+
+    startTimer() {
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
+            }
+        }, 1000)
     }
 
     public formatearDataInicial(): void {
