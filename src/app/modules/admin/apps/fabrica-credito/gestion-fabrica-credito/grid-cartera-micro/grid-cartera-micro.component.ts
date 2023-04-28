@@ -277,6 +277,8 @@ export class GridCarteraMicroComponent implements OnInit {
       return 'Codeudor'
       case 'S':
       return 'Dedudor solidario'
+      case 'R':
+        return 'Representante'
     }
   }
 }
