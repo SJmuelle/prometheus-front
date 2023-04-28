@@ -66,20 +66,20 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
 
   public onDocumentoChange(event: any) {
     const documento = event.target.value;
-    this.form.controls.documento.setValue(documento);
-    this.calcularDigitoVerificacion(documento);
+    // this.form.controls.documento.setValue(documento);
+    this.form.controls.dv.setValue(this.calcularDigitoVerificacion(documento));
   }
   calcularDigitoVerificacion(nit) {
     // Eliminar guiones y espacios en blanco
     nit = nit.replace(/[- ]/g, '');
     // Verificar que tenga 9 dígitos
     if (nit.length !== 9) {
-      return null;
+      return 0;
     }
     // Verificar que el primer dígito sea 1, 2, 3, 6, 7, 8 o 9
     var primerDigito = parseInt(nit.charAt(0));
     if (![1, 2, 3, 6, 7, 8, 9].includes(primerDigito)) {
-      return null;
+      return 0;
     }
     // Calcular el dígito de verificación
     var suma = 0;
