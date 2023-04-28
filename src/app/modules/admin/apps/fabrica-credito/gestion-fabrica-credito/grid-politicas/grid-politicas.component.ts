@@ -12,6 +12,7 @@ export class GridPoliticasComponent implements OnInit {
     public politicas$: Observable<any>;
     public titular: any[] = [];
     public codeudor: any[] = [];
+    public representante: any[] = [];
     public solidario: any[] = [];
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     constructor(
@@ -33,6 +34,8 @@ export class GridPoliticasComponent implements OnInit {
                     this.codeudor.push(element)
                 } else if (element.tipoTercero === 'S') {
                     this.solidario.push(element)
+                }else if(element.tipoTercero === 'R'){
+                    this.representante.push(element)
                 }
             });
 
