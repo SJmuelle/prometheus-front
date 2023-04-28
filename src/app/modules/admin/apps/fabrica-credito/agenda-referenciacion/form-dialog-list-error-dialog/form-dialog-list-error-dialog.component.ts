@@ -59,8 +59,8 @@ export class FormDialogListErrorDialogComponent implements OnInit {
                 return 'Codeudor'
             case 'S':
                 return 'Dedudor solidario'
-                default:
-                return 'Titular'
+            case 'R':
+                return 'Representante'
         }
     }
 
