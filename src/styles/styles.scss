@@ -145,6 +145,9 @@ span.mat-option-text {
     mat-tab-group.scrollMatTabGroup > mat-tab-header {
         max-width: 100%;
     }
+    .mat-dialog-content{
+        padding: 10px 24px !important;
+    }
 }
 
 mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper {
