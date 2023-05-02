@@ -90,7 +90,7 @@
                                 </td>
                                 <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                     <ng-container *ngIf="item.archivoCargado === 'N'">
-                                        <input type="file" #fileInput (change)="subirArchivo($event, item)"
+                                        <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
                                             class="d-none" [accept]="'image/jpeg,image/png,application/pdf'">
                                         <button mat-icon-button matTooltip="Cargar documento"
                                             (click)="fileInput.click()">
@@ -175,8 +175,8 @@
                                 </td>
                                 <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                     <ng-container *ngIf="item.archivoCargado === 'N'">
-                                        <input type="file" #fileInput (change)="subirArchivo($event, item)"
-                                            class="d-none" [accept]="'image/jpeg,image/png,application/pdf'">
+                                        <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
+                                            class="d-none" [accept]="'image/jpeg,image/png,application/pdf,ogg,agg'">
                                         <button mat-icon-button matTooltip="Cargar documento"
                                             (click)="fileInput.click()">
                                             <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>

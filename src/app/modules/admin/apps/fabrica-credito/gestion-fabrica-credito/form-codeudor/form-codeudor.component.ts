@@ -108,8 +108,7 @@ export class FormCodeudorComponent implements OnInit {
 
                 this.addValidation();
                 this.form.patchValue(data);
-                this.mostrarOTP = !!data?.autorizacionesValidadas 
-                
+                this.mostrarOTP = data?.autorizacionesValidadas === 'N'
 
                 if (this.form.controls['ocupacion'].value === 'INDEFO' || this.form.controls['ocupacion'].value === 'PROIN' || this.form.controls['ocupacion'].value === 'INDNFO') {
                     this.actividadEconomica$ = this.genericaServices.postActividadEconomica(this.form.controls['ocupacion'].value)

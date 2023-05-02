@@ -47,7 +47,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     timerInterval: any;
     public otpValidado: boolean = false;
     public numeroOTP: number = 0;
-    public mostrarOTP: boolean = true;
+    public mostrarOTP: boolean = false;
     public dataGeneralIncial: any;
 
     constructor(
@@ -276,6 +276,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
+                this.mostrarOTP = data?.autorizacionesValidadas === 'N'
+                console.log('mostrar', data);
+                
                 this.dataGeneralIncial = data;
                // this.mostrarOTP = !!data?.autorizacionesValidadas 
                 this.formatearDataInicial();
@@ -292,7 +295,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     solicitarCodigo(): void {
             const data = {
                 numeroSolicitud: this.numeroSolicitud,
-                tipo: 'S'
+                tipo: 'S',
+                tipoOTP : "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
