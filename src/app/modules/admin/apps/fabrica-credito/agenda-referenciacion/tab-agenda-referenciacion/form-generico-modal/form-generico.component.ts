@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
@@ -44,6 +44,7 @@ export class FormGenericoComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         public dialogRef: MatDialogRef<FormGenericoComponent>,
+        private el: ElementRef,
         @Inject(MAT_DIALOG_DATA) public data,
 
     ) {
@@ -64,6 +65,12 @@ export class FormGenericoComponent implements OnInit {
 
     ngOnInit(): void {
         this.getFabricaCreditoAgenda();
+    }
+
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        this.marginTopInputDynamic()
     }
 
     /**
@@ -325,5 +332,30 @@ export class FormGenericoComponent implements OnInit {
     }
 
 
+    marginTopInputDynamic(){
+        if(window.innerWidth < 600){
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+    
+            elementToMargin.forEach((element: HTMLElement) => {
+    
+                let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+                
+                let titleSpanHeigth = titleSpan?.clientHeight
+                element.style.width =  '20px'+ ' !important';
+                element.style['marginTop'] = '20px !important'
+                element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
+                if(titleSpanHeigth > 30){
+                    if(titleSpanHeigth > 50){
+                        titleSpan.style.top = '-60px'   
+                    }else{
+                        titleSpan.style.top = '-42px'                   
+                    }
+                }
+           });
+            }, 1000);
+        }
+    }
 
 }
