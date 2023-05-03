@@ -1416,7 +1416,8 @@ export class FormCodeudorComponent implements OnInit {
     solicitarCodigo(): void {
             const data = {
                 numeroSolicitud: this.numeroSolicitud,
-                tipo: 'C'
+                tipo: 'C',
+                tipoOTP : "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
