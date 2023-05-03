@@ -203,7 +203,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         const valueControl = control?.value ?? '';
         const date = moment(valueControl).format('YYYY-MM-DD')
         const errors = { dateError: true };
-
         // Set the validation error on the matching control
         if (this.fechaActual.isBefore(date)) {
 
