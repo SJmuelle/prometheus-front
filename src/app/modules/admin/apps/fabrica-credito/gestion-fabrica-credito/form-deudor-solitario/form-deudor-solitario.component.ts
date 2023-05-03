@@ -277,7 +277,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
                 this.mostrarOTP = data?.autorizacionesValidadas === 'N'
-                console.log('mostrar', data);
+                
                 
                 this.dataGeneralIncial = data;
                // this.mostrarOTP = !!data?.autorizacionesValidadas 
