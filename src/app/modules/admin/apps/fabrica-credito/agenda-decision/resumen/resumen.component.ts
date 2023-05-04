@@ -78,32 +78,32 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:user-circle",
                                 color: "bg-blue-100 text-blue-800",
-                                valor2:  data.resumenGeneral.nombreCompleto,
+                                valor2: this.capitalizeText(data.resumenGeneral.nombreCompleto),
                                 valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCredito.tipoDocumento + '</span>: ' + data.resumenCredito.identificacion,
-                                valor3: data.resumenCredito.email?.toLocaleLowerCase(),
+                                valor3: "<span class='text-sm font-medium text-secondary'>Email</span>: " + this.capitalize(data.resumenCredito.email),
                                 valor4: "<span class='text-sm font-medium text-secondary'> Edad: </span>" + data.resumenGeneral.edad + ' Años',
                             },
                             {
                                 icono: "heroicons_outline:home",
                                 color: "bg-orange-100 text-orange-800",
-                                valor2: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + data.resumenGeneral.descripcionDepartamento?.toLocaleLowerCase(),
-                                valor: "<span class='text-sm font-medium text-secondary'> Municipio: </span>" + data.resumenGeneral.descripcionCiudad?.toLocaleLowerCase(),
-                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo vivienda: </span>" + data.resumenGeneral.tipoVivienda?.toLocaleLowerCase(),
+                                valor2: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + this.capitalize(data.resumenGeneral.descripcionDepartamento),
+                                valor: "<span class='text-sm font-medium text-secondary'> Municipio: </span>" + this.capitalize(data.resumenGeneral.descripcionCiudad),
+                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo vivienda: </span>" + this.capitalize(data.resumenGeneral.tipoVivienda),
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
                                 color: "bg-yellow-100 text-yellow-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Tipo de cliente: </span>" + data.resumenGeneral.tipoSolicitante?.toLocaleLowerCase(),
-                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + data.resumenGeneral.tipoCreditoMicro?.toLocaleLowerCase(),
+                                valor: "<span class='text-sm font-medium text-secondary'> Tipo de cliente: </span>" + this.capitalize(data.resumenGeneral.tipoSolicitante),
+                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + this.capitalize(data.resumenGeneral.tipoCreditoMicro),
                                 valor2: "<span class='text-sm font-medium text-secondary'> Personas a cargo:</span> " + data.resumenGeneral.numeroPersonasACargo,
 
                             },
                             {
                                 icono: "mat_outline:location_on",
                                 color: "bg-purple-100 text-purple-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Tercero: </span>" + data.resumenGeneral.tipoDeudorMicro?.toLocaleLowerCase(),
-                                valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + data.resumenGeneral.segmento?.toLocaleLowerCase(),
-                                valor2: "<span class='text-sm font-medium text-secondary'> Agenda: </span>" + data.resumenGeneral.agencia?.toLocaleLowerCase()
+                                valor: "<span class='text-sm font-medium text-secondary'> Tercero: </span>" + this.capitalize(data.resumenGeneral.tipoDeudorMicro),
+                                valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + this.capitalize(data.resumenGeneral.segmento),
+                                valor2: "<span class='text-sm font-medium text-secondary'> Agenda: </span>" + this.capitalize(data.resumenGeneral.agencia)
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
@@ -227,15 +227,15 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:briefcase",
                                 color: "bg-blue-100 text-blue-800",
-                                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.descripcionOcupacion?.toLocaleLowerCase(),
-                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.descripcionActividadEconomica?.toLocaleLowerCase(),
-                                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica?.toLocaleLowerCase()
+                                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + this.capitalize(data.resumenCredito.descripcionOcupacion),
+                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + this.capitalize(data.resumenCredito.descripcionActividadEconomica),
+                                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + this.capitalize(data.resumenCredito.actividadEspecifica)
                             },
                             {
                                 icono: "heroicons_outline:library",
                                 color: "bg-green-100 text-green-800",
-                                valor: "<span class='text-sm font-medium text-secondary'>Tipo ubicación: </span>" + data.resumenCredito.tipoUbicacionNegocio?.toLocaleLowerCase(),
-                                valor2: "<span class='text-sm font-medium text-secondary'>Tipo local: </span>" + data.resumenCredito.tipoLocalNegocio?.toLocaleLowerCase(),
+                                valor: "<span class='text-sm font-medium text-secondary'>Tipo ubicación: </span>" + this.capitalize(data.resumenCredito.tipoUbicacionNegocio),
+                                valor2: "<span class='text-sm font-medium text-secondary'>Tipo local: </span>" + this.capitalize(data.resumenCredito.tipoLocalNegocio),
 
                             },
 
@@ -243,7 +243,7 @@ export class ResumenComponent implements OnInit {
                                 icono: "heroicons_outline:presentation-chart-line",
                                 color: "bg-pink-100 text-pink-800",
                                 valor: "<span class='text-sm font-medium text-secondary'>Destino crédito: </span>" + data.resumenGeneral.destinoCredito,
-                                valor2: "<span class='text-sm font-medium text-secondary'>Valor ventas: </span>" + this.formaterMoneda.format(data.resumenCredito.ventasMensuales) ,
+                                valor2: "<span class='text-sm font-medium text-secondary'>Valor ventas: </span>" + this.formaterMoneda.format(data.resumenCredito.ventasMensuales),
                                 valor3: "<span class='text-sm font-medium text-secondary'>Cuota máx a pagar:: </span>" + data.resumenCredito.valorCuotasCredito,
                             },
                             {
@@ -836,6 +836,17 @@ export class ResumenComponent implements OnInit {
 
     capitalize(text: string) {
         return text.charAt(0).toUpperCase() + text.slice(1).toLocaleLowerCase();
+    }
+
+    capitalizeText(text: string) {
+        text = text.toLowerCase()
+        let chars = text.split(' ')
+
+        chars = chars.map(char => {
+            return this.capitalize(char)
+        })
+
+        return chars.join(' ')
     }
 
     separatos(numb) {

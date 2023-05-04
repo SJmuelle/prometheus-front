@@ -42,13 +42,18 @@
                                 </div>
                                 <div class="flex-auto ml-4 leading-none max-w-9/12">
                                     <div class="text-sm font-medium text-secondary">{{campo.label}} </div>
-                                    <div class="text-sm font-medium  my-1">{{campo.label2}} </div>
-                                    <div class="text-sm font-medium text-secondary">{{campo.descripcion}}</div>
-                                    <div class="text-sm font-medium  my-1" [innerHtml]="campo.valor2"></div>
-                                    <div class="text-sm font-medium  " [innerHtml]="campo.valor"></div>
-                                    <div class="text-sm font-medium  my-1" [innerHtml]="campo.valor3"></div>
-                                    <div *ngIf="campo.valor4" class="text-sm font-medium  my-1"
-                                        [innerHtml]="campo.valor4"></div>
+                                    <div class="text-sm font-medium" style="margin-top: 6px; line-height: 15px;">
+                                        {{campo.label2}} </div>
+                                    <div class="text-sm font-medium text-secondary" style="margin-top: 10px;">
+                                        {{campo.descripcion}}</div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor2"></div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor"></div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor3"></div>
+                                    <div *ngIf="campo.valor4" class="text-sm font-medium "
+                                        style="margin-top: 6px; line-height: 15px;" [innerHtml]="campo.valor4"></div>
                                 </div>
                             </div>
                         </div>
