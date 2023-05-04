@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 
 @Component({
-  selector: 'app-mapa-cobertura',
+  selector: 'mapa-cobertura',
   templateUrl: './mapa-cobertura.component.html',
   styleUrls: ['./mapa-cobertura.component.scss']
 })

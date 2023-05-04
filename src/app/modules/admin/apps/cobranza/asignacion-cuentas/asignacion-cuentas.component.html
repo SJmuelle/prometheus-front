@@ -1,0 +1,60 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <mat-drawer-container
+        class="flex-auto h-full h-screen bg-card dark:bg-transparent"
+        (backdropClick)="onBackdropClicked()">
+
+        <!-- Drawer -->
+        <mat-drawer
+            class="w-full md:w-160 dark:bg-gray-900"
+            [mode]="drawerMode"
+            [opened]="open"
+            [position]="'end'"
+            [disableClose]="true"
+            #matDrawer>
+            <!-- <router-outlet></router-outlet> -->
+            holaa
+        </mat-drawer>
+
+        <mat-drawer-content class="flex flex-col">
+
+            <!-- Main -->
+            <div class="flex-auto">
+
+                <!-- Header -->
+                <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+                    <!-- Title -->
+                    <div class="flex items-center ml-6">
+                        <div class="flex-0 w-16 h-16  overflow-hidden">
+                            <img src="assets/images/agendas/Comercial.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 mx-3">
+                            <div class="text-3xl font-semibold tracking-tight leading-8">Asignación de cuentas
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                                <div class="font-medium tracking-tight text-secondary">
+                                    Realización de gestion de cuentas
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                    
+                </div>
+
+                <!-- Contacts list -->
+                <div class="relative h-cal">
+                  <mapa-cobertura></mapa-cobertura>
+
+                </div>
+
+            </div>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
+</div>
