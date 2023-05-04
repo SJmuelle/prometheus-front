@@ -13,14 +13,7 @@ export class CajaVirtualService {
   /**
    * @description: Obtiene listado de informacion-negocios-asignados 
    */
-   public getInformacionNegocios(): Observable<any> {
-    //  const { numeroSolicitud, tipoDocumento } = datos;
-    // valores-negocios-asignados	v_codigoNegocio,v_identificacion
-
-        let data = `{"v_user": "smuelle"}`;
-// let data={}
-return this._http.get(`${this._appSettings.cajaVirtual.url.infoNegocio}`)
-
-    // return this._http.post(this._appSettings.cajaVirtual.url.infoNegocio,data);
+  public getInformacionNegocios(): Observable<any> {
+    return this._http.get(`${this._appSettings.cajaVirtual.url.infoNegocio}`)
   }
 }

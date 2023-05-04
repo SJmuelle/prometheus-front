@@ -7,12 +7,14 @@ export const environment = {
     userName: "APPWEB",
     password: btoa("123456"),
     // apiUrl: "http://localhost:8010/",
-    apiUrl:"http://192.168.140.67:8084/",
+    // apiUrl:"http://192.168.140.67:8084/",
+    // apiUrl:"https://prometheus.fintra.co:8443/",
+
     // http://192.168.140.67:8084/api-fintra/
     // diego
     // apiUrl:"http://192.168.138.221:8010/",
     // apiUrl:"http://192.168.140.197:8084/",
-    // apiUrl:"http://demo.fintra.co:8011/",
+    apiUrl:"http://demo.fintra.co:8084/",
 
     urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
 };
