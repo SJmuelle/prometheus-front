@@ -1548,7 +1548,7 @@
                                 <mat-label> Tipo de local </mat-label>
                                 <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'" />
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field *ngIf="form.controls['tipoLocal'].value != 6">
                                 <mat-label>Antigüedad en el local actual (meses)</mat-label>
                                 <input matInput type="number" min="0" [formControlName]="'antiguedadLocal'" (change)="
                                         validacionCampos(
@@ -1665,10 +1665,10 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Nombre del que atiende el negocio</mat-label>
-                                <input matInput type="text"
-                                    matTooltip="En caso de enfermedad o situación que requiera la no presencia del titular"
-                                    [formControlName]="'nombreAtiendeNegocio'" />
+                                <mat-label>Nombre de quien atiende el negocio en caso de ausencia del
+                                    titular</mat-label>
+                                <input matInput type="text" matTooltip="Nombre de quien atiende el negocio en caso de ausencia del
+                                    titular" [formControlName]="'nombreAtiendeNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
