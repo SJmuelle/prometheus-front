@@ -182,7 +182,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 didOpen: () => {
                     Swal.showLoading();
                 },
-            }).then((result) => {});
+            }).then((result) => { });
 
             const reader = new FileReader();
             reader.readAsDataURL(fileToRead);
@@ -192,9 +192,9 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 const extension: string = fileToRead.type.split('/')[1];
                 const fechaHoy = Date.now();
 
-                if (item.idArchivo === 303) {
-                    this.cedulaCrearPDF(files,item)
-                }else if (files.length > 1) {
+                if (item.idArchivo === 303 || item.idArchivo === 615 || item.idArchivo === 327) {
+                    this.cedulaCrearPDF(files, item)
+                } else if (files.length > 1) {
                     this.createMultipleImgOnPDF(files, item);
                 } else if (ext === 'PNG' || ext === 'JPG' || ext === 'JPEG') {
                     this.createPDF(file + '', ext).then((base64) => {
@@ -236,7 +236,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         const pdfDoc = await PDFDocument.create();
         let error = false;
         files = Array.from(files);
-        
+
         if (files.length === 2) {
             files.map((file, i) => {
                 const fileToRead = file;
@@ -299,7 +299,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                     }
                 };
             });
-        }else{
+        } else {
             Swal.fire(
                 'Error',
                 'Se deben subir dos archivos para este campo',
@@ -402,7 +402,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
             if (guardar) {
                 const pdfBase64 = await pdfDoc.saveAsBase64();
-                
+
                 const formulario = {
                     nombreArchivo: item.nombreCategoria,
                     extension: 'pdf',
@@ -548,7 +548,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this.documentosServices.getDocumento(datos).subscribe((res) => {
             if (res) {
                 const archivo = res.data.base64.split(',')[1];
@@ -579,7 +579,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this.documentosServices.getDocumento(datos).subscribe((res) => {
             if (res) {
                 this.habilitarComparar = true;
@@ -607,7 +607,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this.documentosServices.eliminaDocumento(datos).subscribe(
             (data: any) => {
                 if (data.status === 200) {
@@ -636,7 +636,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         const datosHistorico = {
             numeroSolicitud: this.numeroSolicitud,
             idTipoArchivo: datos.idArchivo.toString(),
