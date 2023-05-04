@@ -76,14 +76,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       const id: any = params['id'];
       // Código...
 
-
-
-
-
-
-
-
-
     });
   }
 

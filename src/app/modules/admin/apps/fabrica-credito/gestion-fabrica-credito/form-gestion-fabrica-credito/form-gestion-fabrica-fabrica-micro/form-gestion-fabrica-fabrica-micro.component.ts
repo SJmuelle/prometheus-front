@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
@@ -78,6 +78,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             this.form.disable();
         }
         this.getSalarioMinimo();
+        this.marginTopInputDynamic();
     }
 
     private cargueInicial() {
@@ -105,6 +106,37 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         }
     }
 
+    marginTopInputDynamic(){
+        if(window.innerWidth < 600){
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+    
+            elementToMargin.forEach((element: HTMLElement) => {
+    
+                let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+                
+                let titleSpanHeigth = titleSpan?.clientHeight
+                element.style.width =  '20px'+ ' !important';
+                element.style['marginTop'] = '20px !important'
+                element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
+                if(titleSpanHeigth > 30){
+                    if(titleSpanHeigth > 50){
+                        titleSpan.style.top = '-60px'   
+                    }else{
+                        titleSpan.style.top = '-42px'                   
+                    }
+                }
+           });
+            }, 1000);
+        }
+    }
+
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        this.marginTopInputDynamic()
+    }
     /**
      * @description:
      */
@@ -564,8 +596,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
             descripcionVeredaNegocio: [''],
-            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
-            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [''],
+            clausulaAnticurrupcionClaracionAuto: [''],
         },
         );
     }

@@ -43,8 +43,8 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>No. de identificación</mat-label>
-                <input matInput type="text" autocomplete="off" formControlName="identificacion"
-                    (change)="solicitudesFormularioSimulaciones()">
+                <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text" autocomplete="off"
+                    formControlName="identificacion" (change)="solicitudesFormularioSimulaciones()">
                 <mat-error *ngIf="form.controls.identificacion.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -96,9 +96,10 @@
                     Email invalido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="w-full px-3 fuse-mat-dense">
+            <mat-form-field class="w-full px-3 fuse-mat-dense ">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input matInput type="date" autocomplete="off" formControlName="fechaNacimiento">
+                <input style="max-height: 18px !important;" matInput type="date" autocomplete="off"
+                    formControlName="fechaNacimiento">
                 <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -330,8 +331,9 @@
 
             </div>
 
-            <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;" >
-                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()" autocomplete="off" formControlName="numeroOTP"  min="6" max="6">
+            <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;">
+                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()"
+                    autocomplete="off" formControlName="numeroOTP" min="6" max="6">
                 <mat-error *ngIf="form.controls.numeroOTP.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -378,7 +380,8 @@
 
             <div *ngIf="contador !== 180 && !otpValidado"
                 class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
-                <mat-progress-bar  style="width: 80%;" mode="determinate" [value]="(contador / 180) * 100"></mat-progress-bar>
+                <mat-progress-bar style="width: 80%;" mode="determinate"
+                    [value]="(contador / 180) * 100"></mat-progress-bar>
             </div>
             <div class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-10">
                 <mat-icon *ngIf="validandoOTPLoading" svgIcon="settings"

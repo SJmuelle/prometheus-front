@@ -41,6 +41,15 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public formDeudorSolidario: FormGroup;
     fechaActual: any = moment().locale('co');
+    public contador: number = 180;
+    public validandoOTPLoading: boolean = false;
+    public changeTextOTP: boolean = false;
+    timerInterval: any;
+    public otpValidado: boolean = false;
+    public numeroOTP: number = 0;
+    public mostrarOTP: boolean = false;
+    public dataGeneralIncial: any;
+
     constructor(
         private fb: FormBuilder,
         private genericaServices: GenericasService,
@@ -245,8 +254,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
-            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
-            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [''],
+            clausulaAnticurrupcionClaracionAuto: [''],
+            numeroOTP: ['']
         });
     }
 
@@ -266,6 +276,11 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
+                this.mostrarOTP = data?.autorizacionesValidadas === 'N'
+                
+                
+                this.dataGeneralIncial = data;
+               // this.mostrarOTP = !!data?.autorizacionesValidadas 
                 this.formatearDataInicial();
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -274,6 +289,66 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                     this.getBarrios(data.codigoCiudad);
                 }
             });
+    }
+
+    
+    solicitarCodigo(): void {
+            const data = {
+                numeroSolicitud: this.numeroSolicitud,
+                tipo: 'S',
+                tipoOTP : "AUTORIZACION"
+            }
+            this.validandoOTPLoading = true;
+            this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
+                this.startTimer();
+                this.validandoOTPLoading = false;
+
+            })
+    }
+
+    startTimer() {
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
+            }
+        }, 1000)
+    }
+
+    validarCodigo(): void {
+        const numero = this.formDeudorSolidario.controls['numeroOTP'].value
+
+        if (numero.length === 6 && !this.otpValidado) {
+            const data = {
+                numeroSolicitud: Number(this.numeroSolicitud),
+                numeroOTP: numero,
+                tipoTercero: 'S'
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+                
+                if(rep.data.resultado === 'OK'){
+                    const dataEnvio = {
+                        numeroSolicitud: Number(this.numeroSolicitud),
+                        tipo: 'S',
+                        identificacion: this.dataGeneralIncial.identificacion
+                    }
+                    this.fabricaCreditoService.postConfirmarOTP(dataEnvio).subscribe(rep =>{
+                        if(rep.status === 200){
+                            Swal.fire('OTP validado','Autorizaciones guardadas con éxito', 'success')
+                        }
+                    })
+                }
+            }, err => {
+                this.formDeudorSolidario.get('numeroOTP').setValue('');
+            })
+        }
+
     }
 
     private cargueInicial() {

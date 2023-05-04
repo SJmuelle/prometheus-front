@@ -60,13 +60,13 @@
                     <mat-icon svgIcon="heroicons_solid:chevron-down"></mat-icon>
                 </div>
 
-                <div class="flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
+                <div class=" items-center justify-center pl-2" *ngIf="!mostrarTotales"
                     (click)="cambiarEstado(true)">
                     <mat-icon svgIcon="heroicons_solid:chevron-right"></mat-icon>
                 </div>
 
                 <ng-container *ngFor="let item of totales">
-                    <div class="mr-3 flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
+                    <div class="sm:flex hidden mr-3  items-center justify-center pl-2" *ngIf="!mostrarTotales"
                         (click)="cambiarEstado(false)">
                         <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
                             [svgIcon]="'radio_button_checked'">

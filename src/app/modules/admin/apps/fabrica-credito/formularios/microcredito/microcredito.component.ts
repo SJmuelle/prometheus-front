@@ -110,6 +110,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             }
         }, 1000);
         this.getSalarioMinimo();
+
+        this.marginTopInputDynamic()
     }
 
     private cargueActividadEconomica() {
@@ -171,11 +173,36 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         })
     }
 
+    marginTopInputDynamic(){
+        if(window.innerWidth < 600){
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+    
+            elementToMargin.forEach((element: HTMLElement) => {
+    
+                let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+                
+                let titleSpanHeigth = titleSpan?.clientHeight
+                element.style.width =  '20px'+ ' !important';
+                element.style['marginTop'] = '20px !important'
+                element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
+                if(titleSpanHeigth > 30){
+                    if(titleSpanHeigth > 50){
+                        titleSpan.style.top = '-60px'   
+                    }else{
+                        titleSpan.style.top = '-42px'                   
+                    }
+                }
+           });
+            }, 1000);
+        }
+    }
+
     private validatedDate(control: AbstractControl) {
         const valueControl = control?.value ?? '';
         const date = moment(valueControl).format('YYYY-MM-DD')
         const errors = { dateError: true };
-
         // Set the validation error on the matching control
         if (this.fechaActual.isBefore(date)) {
 
