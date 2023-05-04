@@ -5,6 +5,7 @@
     right: 0;
     bottom: 0;
     margin: 30px;
+    height: calc(100vh - 255px);
   }
   
   .map-frame {
@@ -16,3 +17,4 @@
     height: 100%;
     z-index: 9 !important;
   }
+

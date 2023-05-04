@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MapaCoberturaComponent } from './mapa-cobertura/mapa-cobertura.component';
 import { AsignacionCuentasComponent } from './asignacion-cuentas.component';
+import { ListadoComponent } from './listado/listado.component';
 
 const routes: Routes = [
   {
@@ -14,8 +15,9 @@ const routes: Routes = [
       },
       {
         path: 'listado',
-        component: MapaCoberturaComponent,
-      }
+        component: ListadoComponent,
+      },
+      {path: '**', redirectTo: 'listado'}
     ]
   }
 ];

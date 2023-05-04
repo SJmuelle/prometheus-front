@@ -20,12 +20,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ListadoComponent } from './listado/listado.component';
 
 
 @NgModule({
   declarations: [
     MapaCoberturaComponent,
-    AsignacionCuentasComponent
+    AsignacionCuentasComponent,
+    ListadoComponent
   ],
   imports: [
     CommonModule,

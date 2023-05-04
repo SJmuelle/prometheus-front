@@ -1,18 +1,11 @@
 <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
 
-    <mat-drawer-container
-        class="flex-auto h-full h-screen bg-card dark:bg-transparent"
+    <mat-drawer-container class="flex-auto h-full h-screen bg-card dark:bg-transparent"
         (backdropClick)="onBackdropClicked()">
 
         <!-- Drawer -->
-        <mat-drawer
-            class="w-full md:w-160 dark:bg-gray-900"
-            [mode]="drawerMode"
-            [opened]="open"
-            [position]="'end'"
-            [disableClose]="true"
-            #matDrawer>
-            <!-- <router-outlet></router-outlet> -->
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="open" [position]="'end'"
+            [disableClose]="true" #matDrawer>
             holaa
         </mat-drawer>
 
@@ -22,7 +15,7 @@
             <div class="flex-auto">
 
                 <!-- Header -->
-                <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
+                <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
 
                     <!-- Title -->
                     <div class="flex items-center ml-6">
@@ -40,15 +33,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="flex items-center">
+                        <button class="ml-4" mat-flat-button [color]="'primary'" [routerLink]="['./listado']">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Listado</span>
+                        </button>
+                        <button class="ml-4" mat-flat-button [color]="'primary'" [routerLink]="['./mapa']">
+                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                            <span class="ml-2 mr-1">Mapa</span>
+                        </button>
+                    </div>
 
-                   
-                    
                 </div>
 
                 <!-- Contacts list -->
                 <div class="relative h-cal">
-                  <mapa-cobertura></mapa-cobertura>
-
+                    <router-outlet></router-outlet>
                 </div>
 
             </div>
