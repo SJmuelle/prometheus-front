@@ -117,7 +117,7 @@ export class VerDocumentosComponent implements OnInit {
         const ext = this.getExtension(nombreArchivoReal).toUpperCase()
 
         if (ext === 'OGG' || ext === 'MP3' || ext === 'ACC') {
-            return "assets/icons/file-audio.svg"
+            return "assets/icons/mp3.svg"
         }if(ext === 'PDF'){
             return "assets/icons/pdf-icon.svg"
         }if(ext === 'XLSX'){

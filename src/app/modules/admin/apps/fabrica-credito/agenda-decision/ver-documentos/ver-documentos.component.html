@@ -31,21 +31,28 @@
                             <ng-template matTabLabel>{{getTituloPorKey(documentosPorTipo.key)}}</ng-template>
                             <ng-container *ngFor="let documento of documentosPorTipo.value">
                                 <div
-                                    class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-4 w-11/12 justify-self-center shadow-md rounded-lg">
+                                    class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-2 w-11/12 justify-self-center max-h-24 shadow-md rounded-lg">
 
-                                    <div class="col-span-2 flex justify-center h-full items-center w-full border-r-2">
-                                        <img class="h-9/12 w-7/12"
+                                    <div class="col-span-2 flex justify-center h-full max-h-20 items-center w-full border-r-2">
+                                        <img class="max-h-8/12 w-5/12"
                                             [src]="getIconByExtension(documento.nombreArchivoReal)" alt="icon">
                                         <!-- <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon> -->
                                     </div>
-                                    <div class="col-span-8  px-4 min-h-18">
-                                        <span class="text-blue-500 font-semibold">{{documento.descripcion}}</span>
-                                        <p class="text-gray-400 font-normal">
-                                            {{documento.nombreArchivo}}</p>
+                                    <div class="col-span-8 max-h-20 px-4 min-h-18">
+                                        <span class="text-blue-500 font-semibold text-sm leading-2">{{documento.descripcion}}</span>
+                                        <p class="text-gray-400 font-normal m-0 text-xs" >
+                                            <strong class="text-gray-700"> Usuario creación: </strong> {{documento.usuarioCreacion}}
+                                        </p>
+                                        <p class="text-gray-400 font-normal m-0 text-xs">
+                                            <strong class="text-gray-700"> Fecha de cargue: </strong> {{documento.fechaCargue}}</p>
                                     </div>
-                                    <div class="col-span-2 border-l-2 h-full w-full flex justify-center items-center">
-                                        <mat-icon class="text-blue-500 cursor-pointer" (click)="onDescargar(documento)"
-                                            [svgIcon]="'heroicons_outline:chevron-double-down'"></mat-icon>
+                                    <div class="col-span-2 max-h-20 border-l-2 h-full w-full flex justify-center items-center">
+                                        <button mat-icon-button matTooltip="Descargar documento"
+                                        (click)="onDescargar(documento)">
+                                            <mat-icon class="text-blue-500 cursor-pointer" 
+                                            [svgIcon]="'download'"></mat-icon>
+                                        </button>
+                                        
                                     </div>
 
                                 </div>
