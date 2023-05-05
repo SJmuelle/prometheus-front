@@ -1,13 +1,13 @@
 <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
     <ng-container *ngIf="dataNecesaria">
         <ng-container [ngSwitch]="currentStep">
-            <ng-container *ngFor="let item of dataNecesaria.session">
+            <ng-container *ngFor="let item of dataNecesaria.session; index as i">
                 <mat-tab *ngIf="currentStep==item.id">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <!-- titulo -->
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            {{ item.titulo}}
+                            {{ steps[i]?.title }}
                         </h2>
                         <!-- fin titulo -->
 

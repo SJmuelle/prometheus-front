@@ -334,12 +334,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     solicitarCodigo(): void {
-
-
         if (this.form.valid) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
-                tipo: 'T'
+                tipo: 'T',
+                tipoOTP : "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {

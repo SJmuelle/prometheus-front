@@ -15,6 +15,7 @@ export class FormGenericoTabComponent implements OnInit {
 
   @Input() currentStep: number;
   @Input() tipoDocumento: string = "CC";
+  @Input() steps: any;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public referencia: string = this.route.snapshot.paramMap.get('referencia');

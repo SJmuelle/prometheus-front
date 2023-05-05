@@ -229,8 +229,10 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
+        if(this.CodUnidadNegocio === '1'){
 
-        this.ordenarDataStepOrden(data)
+          this.ordenarDataStepOrden(data)
+        }
         this.steps = data
         
         this.totalsteps = this.steps.length;
