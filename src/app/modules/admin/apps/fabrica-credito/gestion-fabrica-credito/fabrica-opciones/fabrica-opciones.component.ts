@@ -34,6 +34,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public habilitaDevolucion: boolean = true;
   public habilitaSiguiente: boolean = true;
   public habilitaDocumentos: boolean = false;
+  @Input() apiData: any;
   dialogMostrar: string;
   toolText: string = 'Siguiente';
   iconoSvg: string = '';

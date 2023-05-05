@@ -28,8 +28,8 @@
                 <mat-tab-group class="flex w-full justify-items-center items-center moreWidth">
                     <mat-tab *ngFor="let documentosPorTipo of documentos | keyvalue: keyDescOrder">
                         <ng-template matTabLabel>{{getTituloPorKey(documentosPorTipo.key)}}</ng-template>
-                        <ng-container *ngFor="let documento of documentosPorTipo.value">
-                            <div class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-2 w-11/12 justify-self-center shadow-md rounded-lg">
+                        <ng-container  *ngFor="let documento of documentosPorTipo.value">
+                            <div *ngIf="ocultarTercero(documentosPorTipo.key)" class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-2 w-11/12 justify-self-center shadow-md rounded-lg">
 
                                 <div class="col-span-2 flex justify-center h-full items-center w-full border-r-2" >
                                     <img class="h-9/12 w-7/12" [src]="getIconByExtension(documento.nombreArchivoReal)" alt="icon">

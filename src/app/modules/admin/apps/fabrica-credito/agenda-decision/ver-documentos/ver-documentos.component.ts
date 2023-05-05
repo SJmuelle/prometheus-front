@@ -18,6 +18,7 @@ export class VerDocumentosComponent implements OnInit {
     @Output() cerrarComponente: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() minimizarComponente: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Input() identificacion: string;
+    @Input() apiData: any;
     public unSubscribe$: Subject<any> = new Subject<any>();
 
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -35,6 +36,8 @@ export class VerDocumentosComponent implements OnInit {
 
     ngOnInit(): void {
         this.getDocumentosData()
+        console.log(this.apiData);
+        
     }
 
     public onCerrar(): void {
@@ -148,5 +151,9 @@ export class VerDocumentosComponent implements OnInit {
                 link.download = res.data.nombreArchivo;
                 link.click();
             });
+    }
+
+    private ocultarTercero(key: string){
+       return this.apiData.resumenGeneral.tipoDeudorMicro === 'NO REQUIERE TERCERO' && (key === 'C' || key === 'S')
     }
 }

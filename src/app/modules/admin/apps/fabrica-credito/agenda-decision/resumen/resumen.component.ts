@@ -20,6 +20,7 @@ export class ResumenComponent implements OnInit {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     dataPolicitasAdmin: any = {};
     datos2: any[];
+    apiData: any;
     verComentarios: boolean = false;
     resumenCuentasMora: any[] = [];
     formaterMoneda = Intl.NumberFormat('es-co', { style: 'currency', currency: 'COP' })
@@ -52,6 +53,7 @@ export class ResumenComponent implements OnInit {
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.getDatos(res.data);
+                this.apiData = res.data;
                 Swal.close();
             } else {
                 Swal.close();
@@ -67,6 +69,7 @@ export class ResumenComponent implements OnInit {
         let DatosCredito = [], DatosCredito2 = [];
         switch (data.resumenGeneral.unidadNegocio) {
             case 1:
+                
                 DatosCredito.push(
                     {
                         titulo: "Información del cliente:",
