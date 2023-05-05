@@ -232,7 +232,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
 
         this.ordenarDataStepOrden(data)
         this.steps = data
-        console.log('data',data);
         
         this.totalsteps = this.steps.length;
         this.maxOrdenNumber = this.getMaxOrdenNumber(this.steps);

@@ -74,7 +74,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             numeroSolicitud: this.numeroSolicitud,
             identificacion: this.identificacion,
         };
-        console.log('datoSolicitud documentacion', datosSolicitud);
         
         this.fabricaCreditoService
             .getDatosFabricaAgenda(datosSolicitud)
@@ -454,7 +453,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         this.documentosCodeudor = [];
         this.documentosDeudor = [];
         this.documentos = [];
-        console.log('datos',datos);
         
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
             for (const item of res.data) {
@@ -462,9 +460,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                     case 'C':
                         this.documentosCodeudor.push(item);
                         break;
-                    case 'S':
-                        console.log('deudor solidario entrar');
-                        
+                    case 'S':                  
                         this.documentosDeudor.push(item);
                         break;
                     default:

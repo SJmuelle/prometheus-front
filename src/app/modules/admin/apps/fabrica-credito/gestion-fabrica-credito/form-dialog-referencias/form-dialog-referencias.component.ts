@@ -132,10 +132,6 @@ export class FormDialogReferenciasComponent implements OnInit, OnDestroy {
         } else {
             this.form.markAllAsTouched();
             this.form.errors
-            Object.keys(this.form.controls).forEach(key => {
-                // Get errors of every form control
-                console.log(key, this.form.get(key).errors);
-            });
         }
     }
 

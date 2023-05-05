@@ -89,7 +89,6 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
             this.iconoSvg = 'next_plan';
           }
         }
-        console.log('fabrica datos', this.fabricaDatos);
 
         switch (this.fabricaDatos.agenda) {
           case 'VD':

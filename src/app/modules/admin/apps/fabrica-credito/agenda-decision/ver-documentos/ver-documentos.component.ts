@@ -35,9 +35,7 @@ export class VerDocumentosComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getDocumentosData()
-        console.log(this.apiData);
-        
+        this.getDocumentosData()       
     }
 
     public onCerrar(): void {
@@ -56,7 +54,6 @@ export class VerDocumentosComponent implements OnInit {
             numeroSolicitud: this.numeroSolicitud,
             identificacion: this.identificacion,
         };
-        console.log('datosSolidario', datosSolicitud);
         
         this.fabricaCreditoService
             .getDatosFabricaAgenda(datosSolicitud)
@@ -68,7 +65,6 @@ export class VerDocumentosComponent implements OnInit {
                     unidadNegocio: data.unidadNegocio,
                 };
                 // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-                console.log('datosDocumentos', datosDocumentos);
                 
                 this.datosDocumentos = datosDocumentos;
                 this.getDocumentos(datosDocumentos);
@@ -86,7 +82,6 @@ export class VerDocumentosComponent implements OnInit {
                     this.documentos[item.tipoTercero].push(item)
                 }  
             }
-            console.log('documentos', this.documentos);
             
         });
 
