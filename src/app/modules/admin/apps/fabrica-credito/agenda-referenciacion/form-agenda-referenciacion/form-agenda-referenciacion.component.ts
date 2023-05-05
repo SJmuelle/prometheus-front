@@ -230,10 +230,28 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       .subscribe(({ data }) => {
         Swal.close();
 
+        this.ordenarDataStepOrden(data)
         this.steps = data
+        console.log('data',data);
+        
         this.totalsteps = this.steps.length;
         this.maxOrdenNumber = this.getMaxOrdenNumber(this.steps);
       });
+  }
+
+  /**
+  * Ordena el array del backend y le asigna el numero en su orden, esto evita que salta orden  1 - 3 - 4
+  *
+  * @param data 
+  */
+  ordenarDataStepOrden(data: any[]){
+    data.sort((first,second) => {
+      return first.order - second.order
+    })
+    data.map((item,i) => {
+      item.order = i
+      return item
+    })
   }
 
 

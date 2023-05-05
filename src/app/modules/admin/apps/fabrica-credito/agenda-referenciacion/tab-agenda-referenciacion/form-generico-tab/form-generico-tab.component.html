@@ -144,7 +144,7 @@
 
 
                         <!-- guardado -->
-                        <ng-container *ngIf="item.id==(dataNecesaria.session.length-1)">
+                        <ng-container *ngIf="getMaxStep(currentStep)">
                             <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
                                 <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                                     Guardar
