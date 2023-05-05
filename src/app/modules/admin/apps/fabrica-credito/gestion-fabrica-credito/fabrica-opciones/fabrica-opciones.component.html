@@ -89,7 +89,7 @@
             </ng-container>
         </ng-container>
 
-        <button style="touch-action: auto !important;" mat-fab class="mx-1 bg-gray-500 roll-in-blurred-right"
+        <button *ngIf="habilitaDocumentos" style="touch-action: auto !important;" mat-fab class="mx-1 bg-gray-500 roll-in-blurred-right"
                 matTooltip="Documentos" (click)="verDocumentos = true;documentosTab.toggle()"
                 [ngClass]="[animacionVer==true?'show':'hidden',(verDocumentos==true?'bounce-top':'')]">
                 <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>

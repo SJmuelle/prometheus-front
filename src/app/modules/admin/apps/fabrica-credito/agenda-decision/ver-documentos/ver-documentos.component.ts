@@ -79,14 +79,16 @@ export class VerDocumentosComponent implements OnInit {
         this.documentos = {};
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
             for (const item of res.data) {
-                if (!this.documentos[item.tipoTercero]) {
-                    this.documentos[item.tipoTercero] = []
-                }
-                this.documentos[item.tipoTercero].push(item)
+                if(item.archivoCargado !== 'N'){
+                    if (!this.documentos[item.tipoTercero]) {
+                        this.documentos[item.tipoTercero] = []
+                    }
+                    this.documentos[item.tipoTercero].push(item)
+                }  
             }
+            console.log('documentos', this.documentos);
+            
         });
-
-        console.log('documentos', this.documentos);
 
     }
 
@@ -104,7 +106,7 @@ export class VerDocumentosComponent implements OnInit {
             default:
                 return 'Titular'
         }
-    }
+    }   
 
     getExtension(nombreArchivoReal: string) {
         const split = nombreArchivoReal.split('.')
@@ -115,14 +117,14 @@ export class VerDocumentosComponent implements OnInit {
         const ext = this.getExtension(nombreArchivoReal).toUpperCase()
 
         if (ext === 'OGG' || ext === 'MP3' || ext === 'ACC') {
-            return ""
+            return "assets/icons/file-audio.svg"
         }if(ext === 'PDF'){
             return "assets/icons/pdf-icon.svg"
         }if(ext === 'XLSX'){
             return "assets/icons/excel-icon.svg"
         }
         else{
-           return ""
+           return "assets/icons/document.svg"
         }
     }
 
@@ -154,6 +156,13 @@ export class VerDocumentosComponent implements OnInit {
     }
 
     private ocultarTercero(key: string){
-       return this.apiData.resumenGeneral.tipoDeudorMicro === 'NO REQUIERE TERCERO' && (key === 'C' || key === 'S')
+        if(key === 'S'){
+            return this.apiData.resumenGeneral.codigoTipoDeudor !== '2' || this.apiData.resumenGeneral.codigoTipoDeudor !== '3'
+        }
+        if(key === 'C'){
+            return this.apiData.resumenGeneral.codigoTipoDeudor !== '1' || this.apiData.resumenGeneral.codigoTipoDeudor !== '3'
+        }else{
+            return false
+        }    
     }
 }
