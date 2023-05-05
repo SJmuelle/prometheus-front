@@ -29,9 +29,11 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public verDevoluciones: boolean = false;
   public minimizarDevoluciones: boolean = false;
   public verCentrales: boolean = false;
+  public verDocumentos: boolean = false;
   public minimizarCentrales: boolean = false;
   public habilitaDevolucion: boolean = true;
   public habilitaSiguiente: boolean = true;
+  public habilitaDocumentos: boolean = false;
   dialogMostrar: string;
   toolText: string = 'Siguiente';
   iconoSvg: string = '';
@@ -86,6 +88,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
             this.iconoSvg = 'next_plan';
           }
         }
+        console.log('fabrica datos', this.fabricaDatos);
 
         switch (this.fabricaDatos.agenda) {
           case 'VD':
@@ -111,6 +114,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
           case 'DE':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
             break;
           case 'GC':
             this.habilitaDevolucion = true;
@@ -131,8 +135,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         }
       });
     }
-    
-    
+
+
   }
 
   //funciones privadas
@@ -197,6 +201,29 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
    * @description: Modal de decision
    */
   public onDialogoDecision(): void {
+    let dialogRef;
+    dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
+      minWidth: '60%',
+      maxHeight: '80%',
+      data: {
+        numeroSolicitud: this.numeroSolicitud,
+        tipoDocumento: this.fabricaDatos.tipoDocumento,
+        agenda: this.fabricaDatos.agenda,
+        unidadNegocio: this.fabricaDatos.unidadNegocio,
+        tipo: ''
+
+      },
+      disableClose: false,
+    });
+    dialogRef.afterClosed().toPromise().then(() => {
+    });
+
+  }
+
+  /**
+   * @description: Modal de documentos
+   */
+  public onDialogoDocumentos(): void {
     let dialogRef;
     dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
       minWidth: '60%',
@@ -302,6 +329,20 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     this.verComentarios = event;
     this.minimizarComentarios = event;
   }
+
+    /**
+   * @description: Minimiza el componente documentos
+   */
+    public onMinimizaDocumentos(event): void {
+        this.verDocumentos = event;
+      }
+
+      /**
+    * @description:
+    */
+      public onCerrarDocumentos(event): void {
+        this.verDocumentos = event;
+      }
 
   /**
 * @description:
