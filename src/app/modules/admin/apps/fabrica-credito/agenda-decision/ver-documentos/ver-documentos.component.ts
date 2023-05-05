@@ -34,7 +34,6 @@ export class VerDocumentosComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        console.log('dentro');
         this.getDocumentosData()
     }
 
@@ -54,6 +53,8 @@ export class VerDocumentosComponent implements OnInit {
             numeroSolicitud: this.numeroSolicitud,
             identificacion: this.identificacion,
         };
+        console.log('datosSolidario', datosSolicitud);
+        
         this.fabricaCreditoService
             .getDatosFabricaAgenda(datosSolicitud)
             .pipe(takeUntil(this.unSubscribe$))
@@ -64,7 +65,8 @@ export class VerDocumentosComponent implements OnInit {
                     unidadNegocio: data.unidadNegocio,
                 };
                 // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-
+                console.log('datosDocumentos', datosDocumentos);
+                
                 this.datosDocumentos = datosDocumentos;
                 this.getDocumentos(datosDocumentos);
             });
@@ -74,7 +76,7 @@ export class VerDocumentosComponent implements OnInit {
         this.documentos = {};
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
             for (const item of res.data) {
-                if(!this.documentos[item.tipoTercero]){
+                if (!this.documentos[item.tipoTercero]) {
                     this.documentos[item.tipoTercero] = []
                 }
                 this.documentos[item.tipoTercero].push(item)
@@ -90,8 +92,8 @@ export class VerDocumentosComponent implements OnInit {
         return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
     }
 
-    public getTituloPorKey(text: string){
-        switch(text){
+    public getTituloPorKey(text: string) {
+        switch (text) {
             case 'C':
                 return 'Codeudor'
             case 'S':
@@ -101,4 +103,50 @@ export class VerDocumentosComponent implements OnInit {
         }
     }
 
+    getExtension(nombreArchivoReal: string) {
+        const split = nombreArchivoReal.split('.')
+        return split[split.length - 1];
+    }
+
+    getIconByExtension(nombreArchivoReal: string) {
+        const ext = this.getExtension(nombreArchivoReal).toUpperCase()
+
+        if (ext === 'OGG' || ext === 'MP3' || ext === 'ACC') {
+            return ""
+        }if(ext === 'PDF'){
+            return "assets/icons/pdf-icon.svg"
+        }if(ext === 'XLSX'){
+            return "assets/icons/excel-icon.svg"
+        }
+        else{
+           return ""
+        }
+    }
+
+    /**
+     * @description: Metodo para descargar documentos
+     */
+    public onDescargar(item: any): void {
+        this.getDocumento(item);
+    }
+
+    private getDocumento(datos: any): void {
+        const datosDescargar = {
+            numeroSolicitud: this.numeroSolicitud,
+            idAdjunto: datos.idArchivoCargado,
+        };
+        this.documentosServices
+            .getDocumento(datosDescargar)
+            .subscribe((res) => {
+                const archivo = res.data.base64.split(',')[1];
+                const extension = res.data.nombreArchivo.split('.')[1];
+                // console.log(extension);
+                const link = document.createElement('a');
+                document.body.appendChild(link);
+                link.href = `data:application/${extension};base64,${archivo}`;
+                link.target = '_self';
+                link.download = res.data.nombreArchivo;
+                link.click();
+            });
+    }
 }
