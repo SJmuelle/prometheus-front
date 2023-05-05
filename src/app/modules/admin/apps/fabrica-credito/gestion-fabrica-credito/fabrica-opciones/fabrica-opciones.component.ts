@@ -117,7 +117,10 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
             this.habilitaDocumentos = true;
-            this.habilitarReferencias = true;
+            if(data.unidadNegocio === 1 ){
+              this.habilitarReferencias = true;
+            }
+
             break;
           case 'GC':
             this.habilitaDevolucion = true;
