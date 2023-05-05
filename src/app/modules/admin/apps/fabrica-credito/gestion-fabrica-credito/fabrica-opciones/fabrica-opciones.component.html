@@ -89,11 +89,19 @@
             </ng-container>
         </ng-container>
 
+        <button *ngIf="habilitarReferencias" style="touch-action: auto !important;" mat-fab class="mx-1 bg-green-500 roll-in-blurred-right"
+                matTooltip="Referenciación" (click)="verReferencias = true;referenciasTab.toggle()"
+                [ngClass]="[animacionVer==true?'show':'hidden',(verReferencias==true?'bounce-top':'')]">
+                <mat-icon svgIcon="heroicons_outline:user"></mat-icon>
+        </button>
+
         <button *ngIf="habilitaDocumentos" style="touch-action: auto !important;" mat-fab class="mx-1 bg-gray-500 roll-in-blurred-right"
                 matTooltip="Documentos" (click)="verDocumentos = true;documentosTab.toggle()"
                 [ngClass]="[animacionVer==true?'show':'hidden',(verDocumentos==true?'bounce-top':'')]">
                 <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
-            </button>
+        </button>
+
+        
 
         <button mat-fab class="mx-1 bg-blue-500" matTooltip="Menú" (click)="animacionVer=animacionVer==true?false:true">
             <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
@@ -164,6 +172,23 @@
         </div>
     </ng-container>
 </fuse-drawer>
+
+<fuse-drawer class="w-full sm:max-w-6/12 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'referenciasTab'"
+    [position]="'right'" #referenciasTab>
+    <ng-container *ngIf="verReferencias">
+        <div class="fixed z-999 w-full">
+            <app-ver-referenciacion (cerrarComponente)="onCerrarReferencias();referenciasTab.close()"
+                (minimizarComponente)="referenciasTab.close();"
+                [agenda]="fabricaDatos.agenda"
+                [identificacion]="fabricaDatos.identificacion"
+                [apiData]="apiData"
+                >
+            </app-ver-referenciacion>
+        </div>
+    </ng-container>
+</fuse-drawer>
+
+
 <ng-container *ngIf="minimizarCentrales">
     <button style="touch-action: auto !important;" mat-icon-button class="fixed z-999 ml-40 top-3 animate-bounce"
         [matTooltip]="'Restaura ventana Centrales'" (click)="verCentrales = true;drawerCentrales.toggle()">

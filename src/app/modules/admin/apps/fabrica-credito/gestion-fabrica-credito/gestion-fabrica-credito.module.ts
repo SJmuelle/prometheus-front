@@ -76,12 +76,14 @@ import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-refe
 import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.component';
 import { GridCarteraMicroComponent } from './grid-cartera-micro/grid-cartera-micro.component';
 import { VerDocumentosComponent } from '../agenda-decision/ver-documentos/ver-documentos.component';
+import { VerReferenciacionComponent } from '../agenda-decision/ver-referenciacion/ver-referenciacion.component';
 
 
 
 @NgModule({
     declarations: [
         FormGestionFabricaCreditoComponent,
+        VerReferenciacionComponent,
         FormRepresentanteLegalComponent,
         GridReferenciasComponent,
         FormDetallesReferenciasComponent,

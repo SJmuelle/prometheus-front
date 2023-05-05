@@ -30,10 +30,12 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public minimizarDevoluciones: boolean = false;
   public verCentrales: boolean = false;
   public verDocumentos: boolean = false;
+  public verReferencias: boolean = false;
   public minimizarCentrales: boolean = false;
   public habilitaDevolucion: boolean = true;
   public habilitaSiguiente: boolean = true;
   public habilitaDocumentos: boolean = false;
+  public habilitarReferencias: boolean = false;
   @Input() apiData: any;
   dialogMostrar: string;
   toolText: string = 'Siguiente';
@@ -115,6 +117,7 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
             this.habilitaDocumentos = true;
+            this.habilitarReferencias = true;
             break;
           case 'GC':
             this.habilitaDevolucion = true;
@@ -344,6 +347,22 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         this.verDocumentos = event;
       }
 
+
+      /**
+   * @description: Minimiza el componente documentos
+   */
+      public onMinimizaReferencias(event): void {
+        this.verReferencias = event;
+      }
+
+      /**
+    * @description:
+    */
+      public onCerrarReferencias(event): void {
+        this.verReferencias = event;
+      }
+
+      
   /**
 * @description:
 */
