@@ -4,7 +4,7 @@
         (backdropClick)="onBackdropClicked()">
 
         <!-- Drawer -->
-        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="open" [position]="'end'"
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="false" [position]="'end'"
             [disableClose]="true" #matDrawer>
             <router-outlet></router-outlet>
         </mat-drawer>
@@ -34,13 +34,9 @@
                         </div>
                     </div>
                     <div class="flex items-center">
-                        <button class="ml-4" mat-flat-button [color]="'primary'" [routerLink]="['./listado']">
+                        <button class="ml-4" mat-flat-button [color]="'primary'"  [routerLink]="['./222755']" (click)="mostrarDetalle()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                             <span class="ml-2 mr-1">Listado</span>
-                        </button>
-                        <button class="ml-4" mat-flat-button [color]="'primary'" [routerLink]="['./mapa']">
-                            <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                            <span class="ml-2 mr-1">Mapa</span>
                         </button>
                     </div>
 

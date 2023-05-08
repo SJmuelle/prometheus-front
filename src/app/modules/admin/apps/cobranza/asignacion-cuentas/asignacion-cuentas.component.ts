@@ -56,12 +56,11 @@ export class AsignacionCuentasComponent implements OnInit,OnDestroy {
        * On backdrop clicked
        */
   onBackdropClicked(): void {
-    debugger
     this.open = false;
     this._changeDetectorRef.markForCheck();
   }
 
-  createContact() {
+  mostrarDetalle() {
     this.open = true;
     this._changeDetectorRef.markForCheck();
 

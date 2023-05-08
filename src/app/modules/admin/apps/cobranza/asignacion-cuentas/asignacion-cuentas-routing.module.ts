@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MapaCoberturaComponent } from './mapa-cobertura/mapa-cobertura.component';
 import { AsignacionCuentasComponent } from './asignacion-cuentas.component';
-import { ListadoComponent } from './listado/listado.component';
+import { DetalleAsignacionComponent } from './detalle-asignacion/detalle-asignacion.component';
+import { CanDeactivateAsignacionDetalles } from './asignacion-cuentas.guards';
 
 const routes: Routes = [
   {
@@ -10,16 +10,14 @@ const routes: Routes = [
     component: AsignacionCuentasComponent,
     children: [
       {
-        path: 'mapa',
-        component: MapaCoberturaComponent,
+        path: ':idNegocio',
+        component: DetalleAsignacionComponent,
+        canDeactivate:[CanDeactivateAsignacionDetalles]
       },
-      {
-        path: 'listado',
-        component: ListadoComponent,
-      },
-      {path: '**', redirectTo: 'listado'}
-    ]
-  }
+    ],
+   
+  },
+  
 ];
 
 @NgModule({
