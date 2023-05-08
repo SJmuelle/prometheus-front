@@ -40,14 +40,7 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
-                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'" (selectionChange)="
-                                validacionCampos(
-                                    'Destino del crédito',
-                                    'Este campo modifica el motor de decisión y políticas SARC',
-                                    'destinoCredito',
-                                    'STRING'
-                                )
-                            ">
+                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'" >
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option *ngFor="
@@ -74,15 +67,7 @@
                     <mat-form-field>
                         <mat-label>Monto crédito</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
-                            [formControlName]="'valorSolicitado'" (change)="validacion('MO')" (change)="
-                                validacionCampos(
-                                    'Monto crédito',
-                                    'Este campo actualiza la capacidad de pago del cliente',
-                                    'valorSolicitado',
-                                    'INTEGER'
-                                );
-                                getPlazosCredito(this.form.controls.valorSolicitado.value)
-                            " />
+                            [formControlName]="'valorSolicitado'"  />
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -94,18 +79,10 @@
                         </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
-                    <mat-form-field *ngIf="this.plazosCredito$ | async as plazos">
+                    <mat-form-field *ngIf="plazosCredito">
                         <mat-label>Plazo</mat-label>
-                        <input matInput type="number" [min]="plazos.data[0].plazoMinimo"
-                            [max]="plazos.data[0].plazoMaximo" [formControlName]="'plazo'" (change)="validacion('PL')"
-                            (change)="
-                                validacionCampos(
-                                    'Plazo',
-                                    'Este campo actualiza la capacidad de pago del cliente',
-                                    'plazo',
-                                    'INTEGER'
-                                )
-                            " />
+                        <input matInput type="number" [min]="plazosCredito?.data[0].plazoMinimo"
+                            [max]="plazosCredito?.data[0].plazoMaximo" [formControlName]="'plazo'" />
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                         <mat-error *ngIf="
                                         form.controls.plazo.errors
@@ -117,13 +94,13 @@
                                 form.controls.plazo.errors
                                     ?.min
                             ">
-                            No puede ser menor a {{plazos.data[0].plazoMinimo}}
+                            No puede ser menor a {{plazosCredito?.data[0].plazoMinimo}}
                         </mat-error>
                         <mat-error *ngIf="
                                 form.controls.plazo.errors
                                     ?.max
                             ">
-                            No puede ser mayor a {{plazos.data[0].plazoMaximo}}
+                            No puede ser mayor a {{plazosCredito?.data[0].plazoMaximo}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
@@ -590,7 +567,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <ng-container *ngIf="ciudadesExpedicion$ | async as ciudades">
+                            <ng-container *ngIf="ciudadesExpedicion">
                                 <mat-form-field>
                                     <mat-label>Ciudad de expedición</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="
@@ -598,7 +575,7 @@
                                         ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
+                                        <mat-option *ngFor="let ciudad of ciudadesExpedicion.data" [value]="ciudad.codigo">
                                             {{ ciudad.nombre }}
                                         </mat-option>
                                     </mat-select>
@@ -638,7 +615,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <ng-container *ngIf="ciudades$ | async as ciudades">
+                            <ng-container *ngIf="ciudades">
                                 <mat-form-field>
                                     <mat-label>Ciudad de residencia</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'"
@@ -662,7 +639,7 @@
                                 </mat-form-field>
                             </ng-container>
 
-                            <ng-container *ngIf="barrios$ | async as barrios">
+                            <ng-container *ngIf="barrios">
                                 <mat-form-field>
                                     <mat-label>Barrio de residencia</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="'barrioResidencia'">
@@ -1181,7 +1158,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
+                            <ng-container *ngIf="ciudadesNegocio">
                                 <mat-form-field>
                                     <mat-label>Municipio / Ciudad del
                                         negocio</mat-label>
@@ -1198,7 +1175,7 @@
                                         ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
+                                        <mat-option *ngFor="let ciudad of ciudadesNegocio.data" [value]="ciudad.codigo">
                                             {{ ciudad.nombre }}
                                         </mat-option>
                                     </mat-select>
@@ -1212,7 +1189,7 @@
                                     </mat-error>
                                 </mat-form-field>
                             </ng-container>
-                            <ng-container *ngIf="barriosNegocio$ | async as barrios">
+                            <ng-container *ngIf="barriosNegocio">
                                 <mat-form-field>
                                     <mat-label>Barrio del negocio</mat-label>
                                     <mat-select [value]="'seleccione'" (selectionChange)="validacionCampos(
@@ -1223,7 +1200,7 @@
                                     )" [formControlName]="'codigoBarrioNegocio'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
+                                        <mat-option *ngFor="let barrio of barriosNegocio.data" [value]="barrio.codigo">
                                             {{ barrio.nombre }}
                                         </mat-option>
                                     </mat-select>
@@ -1453,15 +1430,7 @@
                             <mat-form-field>
                                 <mat-label>¿Cuánto tiempo en (meses) tiene tu
                                     negocio?</mat-label>
-                                <input matInput type="number" min="0" [formControlName]="'antiguedadNegocio'"
-                                    (change)="validacion('FEN')" (change)="
-                                        validacionCampos(
-                                            '¿Cuánto tiempo en (meses)tiene tu negocio?',
-                                            'Este campo modifica el motor de decisión y políticas SARC',
-                                            'antiguedadNegocio',
-                                            'INTEGER'
-                                        )
-                                    " />
+                                <input matInput type="number" min="0" [formControlName]="'antiguedadNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1550,14 +1519,7 @@
                             </mat-form-field>
                             <mat-form-field *ngIf="form.controls['tipoLocal'].value != 6">
                                 <mat-label>Antigüedad en el local actual (meses)</mat-label>
-                                <input matInput type="number" min="0" [formControlName]="'antiguedadLocal'" (change)="
-                                        validacionCampos(
-                                            'Antigüedad en el local actual',
-                                            'Este campo modifica el motor de decisión y políticas SARC',
-                                            'antiguedadLocal',
-                                            'STRING'
-                                        )
-                                    " />
+                                <input matInput type="number" min="0" [formControlName]="'antiguedadLocal'" />
 
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
@@ -2060,7 +2022,12 @@
                                         ? 'bg-red-100 text-red-700 '
                                         : 'bg-blue-100 '
                                 " class="px-3 mx-4 mb-8">
-                                <mat-checkbox matInput [formControlName]="'autorizacionBanco'">
+                                <mat-checkbox matInput [ngClass]="
+                                form.controls.autorizacionBanco.errors
+                                    ?.required
+                                    ? 'error'
+                                    : ''
+                            " [formControlName]="'autorizacionBanco'">
                                 </mat-checkbox>
                                 En caso de no poseer cuenta bancaria autorizo a
                                 FINTRA S.A.S para que el monto aprobado sea
