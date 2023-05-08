@@ -1,1 +1,9 @@
-<p>listado works!</p>
+
+<div class="container">
+    <app-table [dataColumn]="displayedColumns" [dataOptionTable]="optionsTable"
+    [dataRow]="dataRow" (emitSelectRow)="
+        this.selecAlarmTable($event)
+    ">
+</app-table>
+</div>
+

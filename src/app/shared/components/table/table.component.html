@@ -1,0 +1,103 @@
+<div>
+    <div class="flex flex-col flex-auto overflow-y-auto">
+      <table mat-table [dataSource]="this.dataSource" matSort class="w-full">
+        <ng-container [matColumnDef]="dataOption.name" *ngFor="let dataOption of this.dataOptionTable">
+          <th class="pl-4" mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ dataOption.text}}
+          </th>
+  
+          <ng-container [ngSwitch]="dataOption.typeField">
+            <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
+              <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                <span [ngStyle]="{'white-space': !!whitEspace? 'nowrap' : 'normal'}" [ngClass]="dataOption.classTailwind">
+                  {{
+                  (row[dataOption.name]) || (dataOption.defaultValue) | dataTable:
+                  dataOption.pipeName || "text"
+                  }}
+                </span>
+              </td>
+            </ng-container>
+  
+            <ng-container *ngSwitchCase="'switch'">
+              <td mat-cell *matCellDef="let row">
+                <span class="w-full h-full">
+                  <mat-slide-toggle (change)="actionSwitch($event, row)" color="primary" [checked]="row[dataOption.name]"
+                    [value]="row[dataOption.name]">
+                  </mat-slide-toggle>
+                </span>
+              </td>
+            </ng-container>
+  
+            <ng-container *ngSwitchCase="'circleColor'">
+              <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                <p [ngClass]="dataOption.classTailwind + ' ' + dataOption.styleCondition(row) + ' whitespace-nowrap'"
+                  [ngStyle]="{backgroundColor:dataOption.styleCondition(row)}">
+                </p>
+              </td>
+            </ng-container>
+  
+            <ng-container *ngSwitchCase="'statusStyle'">
+              <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                <div class="flex gap-2 items-center">
+                  <p class="w-4 h-4 rounded-full" [ngClass]="dataOption.styleCondition(row)"></p>
+                  <p class="whitespace-nowrap">
+                    {{ row[dataOption.name]  }}
+                  </p>
+                </div>
+              </td>
+            </ng-container>
+  
+            <ng-container *ngSwitchCase="'checked'">
+              <td class="cursor-pointer" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                <mat-checkbox readonly disabled type="checkbox" [checked]="row[dataOption.name]"
+                  class="flex items-center justify-center" [ngClass]="dataOption.classTailwind">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+  
+        <ng-container *ngIf="this.buttonTable" matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <button class="ml-4" mat-icon-button [matTooltip]="this.buttonTable.text"
+              matTooltipPosition="above" (click)="this.buttonTable.action(row)">
+              <mat-icon [svgIcon]="this.buttonTable.icon"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="this.dataColumn"></tr>
+        <tr mat-row *matRowDef="let row; columns: this.dataColumn"></tr>
+  
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell text-center" colspan="12" *ngIf="!this.dataRow.length">
+            <div class="flex items-center content-center justify-center mt-7 gap-3">
+              <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+              <p class="text-5xl font-semibold tracking-tight">
+                Aviso
+              </p>
+            </div>
+            <p class="text-lg mb-8">
+                Lo sentimos, no se encontraron datos
+            </p>
+          </td>
+          <td class="mat-cell text-center" colspan="12" *ngIf="this.dataRow.length">
+            <div class="flex items-center content-center justify-center mt-7 gap-3">
+              <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+              <p class="text-xl font-semibold tracking-tight">
+                No se encontraron datos con el termino 
+              </p>
+            </div>
+            <p class="mb-8 mt-2 text-lg text-red-600 font-medium">
+              "{{ this.dataFilter }}"
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  
+    <mat-paginator class="border-t border-b bg-gray-200" [length]="dataRow.length" [pageSize]="10"
+      [pageSizeOptions]="[10, 20, 30, 50]">
+    </mat-paginator>
+  </div>

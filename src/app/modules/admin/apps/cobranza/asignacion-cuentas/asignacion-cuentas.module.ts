@@ -21,13 +21,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ListadoComponent } from './listado/listado.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
     MapaCoberturaComponent,
     AsignacionCuentasComponent,
-    ListadoComponent
+    ListadoComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,9 @@ import { ListadoComponent } from './listado/listado.component';
     MatSidenavModule,
     MatTableModule,
     MatTooltipModule,
+    MatPaginatorModule,
+    SharedModule
+
   ]
 })
 export class AsignacionCuentasModule { }

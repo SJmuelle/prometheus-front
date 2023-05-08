@@ -23,6 +23,8 @@ import { DirectionsBasicComponent } from './modal/directions-basic/directions-ba
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TableComponent } from './components/table/table.component';
+import { DataTablePipe } from './pipes/data-table.pipe';
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
 @NgModule({
@@ -48,6 +50,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         FuseDrawerModule,
         FuseCardModule,
         MatTooltipModule,
+
         // FabricaCreditoModule
 
     ],
@@ -69,10 +72,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatDialogModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatCardModule
+        MatCardModule,
+        TableComponent,
+        DataTablePipe,
+
     ],
     declarations: [
-    DirectionsBasicComponent
-  ],
+        DirectionsBasicComponent,
+        TableComponent,
+        DataTablePipe,
+
+    ],
 })
-export class SharedModule {}
+export class SharedModule { }
