@@ -151,6 +151,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     }
 
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        this.marginTopInputDynamic()
+    }
+
 
     startTimer() {
         this.contador = 0;
@@ -401,7 +407,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
 
-         Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).subscribe((datos) => {
             if(datos.data.resultado === 'OK'){
                 Swal.fire(
