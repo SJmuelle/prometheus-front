@@ -401,6 +401,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
 
+         Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).subscribe((datos) => {
             if(datos.data.resultado === 'OK'){
                 Swal.fire(
