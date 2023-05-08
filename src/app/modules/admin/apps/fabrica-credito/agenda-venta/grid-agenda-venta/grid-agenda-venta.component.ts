@@ -92,8 +92,8 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
         } else {
             //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
 
-            this.router.navigate([`/credit-factory/formularios/microcredito`]);
             this._permisosService.ruta = 'venta-digital'
+            this.router.navigate([`/credit-factory/formularios/microcredito`]);
         }
     }
 
