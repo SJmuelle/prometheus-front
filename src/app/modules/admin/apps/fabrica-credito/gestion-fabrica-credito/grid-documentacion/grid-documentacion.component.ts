@@ -543,16 +543,13 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             });
     }
 
-    private getDocumentoPreView(datos: any): void {
-        
+    private getDocumentoPreView(datos: any) {
         this.datoPreview = datos
-        console.log('datosDocumento', datos);
         
         const datosDescargar = {
             numeroSolicitud: this.numeroSolicitud,
             idAdjunto: datos.idArchivoCargado,
         };
-        console.log('datos preview', datos);
         
 
         this.documentosServices
@@ -563,6 +560,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 this.datoPreview.base64 = res.data.base64
                 this.datoPreview.extension =  res.data.extension
             });
+            
+        return true
     }
 
     private seleccionDocumentoIzquierdo(datos: any): void {
