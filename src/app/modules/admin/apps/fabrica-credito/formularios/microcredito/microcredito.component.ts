@@ -28,7 +28,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
-    public plazosCredito$: Observable<any>;
+    public plazosCredito: any;
     public salarioMinimo$: Observable<any>;
     public salarioMinimo: number = 0;
     public habilitarInput: boolean = false;
@@ -100,6 +100,10 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this.cargueActividadEconomica()
         });
 
+        this.form.get('valorCredito')?.valueChanges.subscribe((e: string) => {
+            this.getPlazosCredito(this.form.controls.valorCredito.value)
+        })
+
         setTimeout(() => {
             if ((this.tipoIdentificacion) && (this.identificacion)) {
                 this.form.controls.tipoDocumento.setValue(this.tipoIdentificacion);
@@ -112,6 +116,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this.getSalarioMinimo();
 
         this.marginTopInputDynamic()
+
     }
 
     private cargueActividadEconomica() {
@@ -149,6 +154,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
         })  
 
+    }
+
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        this.marginTopInputDynamic()
     }
 
 
@@ -329,7 +340,10 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
      */
     public getPlazosCredito(valorCredito: number) {
 
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
+         this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+            this.plazosCredito = rep
+            
+        })
 
     }
 
@@ -401,6 +415,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
 
+        Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).subscribe((datos) => {
             if(datos.data.resultado === 'OK'){
                 Swal.fire(
@@ -512,7 +527,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     irAtras() {
-        if (this._permisosService.estabaAgendaComercial()) {
+        if(this._permisosService.ruta === 'agenda-comercial'){
             this.router.navigate([`/credit-factory/agenda-comercial`]);
         }else{
             this.router.navigate([`/credit-factory/agenda-venta-digital`]);

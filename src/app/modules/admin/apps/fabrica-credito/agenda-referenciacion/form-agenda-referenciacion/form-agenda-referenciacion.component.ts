@@ -230,7 +230,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       .subscribe(({ data }) => {
         Swal.close();
         if(this.CodUnidadNegocio === '1'){
-
           this.ordenarDataStepOrden(data)
         }
         this.steps = data

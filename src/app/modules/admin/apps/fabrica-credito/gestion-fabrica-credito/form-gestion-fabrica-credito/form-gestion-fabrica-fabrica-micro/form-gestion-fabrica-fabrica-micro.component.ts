@@ -33,16 +33,19 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public unidadNegocio: any;
     public dataGeneralIncial: any;
     public permisoEditar: boolean = false;
-    public dataInicial: any
-    public ciudades$: Observable<any>;
+    public dataInicial: any;
+    public antiBucle: any;
+    public ciudades: any;
     public ciudadesNacimiento$: Observable<any>;
-    public ciudadesNegocio$: Observable<any>;
-    public barrios$: Observable<any>;
-    public barriosNegocio$: Observable<any>;
-    public ciudadesExpedicion$: Observable<any>;
-    public plazosCredito$: Observable<any>;
+    public ciudadesNegocio: any;
+    public barrios: any;
+    public barriosNegocio: any;
+    public ciudadesExpedicion: any;
+    public plazosCredito: any;
     public actividadEconomica: any;
     public salarioMinimo: number = 0;
+    public diccionarioValidarCampo: any = {};
+
 
     fechaActual: any = moment().locale("co");
 
@@ -79,7 +82,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         }
         this.getSalarioMinimo();
         this.marginTopInputDynamic();
+
+
     }
+
 
     private cargueInicial() {
         let data = {
@@ -89,11 +95,81 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-
+                this.antiBucle = resp.data
+                this.subscribeInput();
             }
         })
     }
 
+    private subscribeInput() {
+        this.form.get('destinoCredito')?.valueChanges.subscribe(data => {
+            if (!this.diccionarioValidarCampo.destinoCredito) {
+                if (data !== this.antiBucle['destinoCredito']) {
+                this.validacionCampos(
+                    'Destino del crédito',
+                    'Este campo modifica el motor de decisión y políticas SARC',
+                    'destinoCredito',
+                    'STRING'
+                )
+            }
+            }
+        })
+
+        this.form.get('plazo')?.valueChanges.subscribe(data => {
+            if (!this.diccionarioValidarCampo.plazo) {
+                if (data !== this.antiBucle['plazo']) {
+                this.validacionCampos(
+                    'Plazo',
+                    'Este campo actualiza la capacidad de pago del cliente',
+                    'plazo',
+                    'INTEGER'
+                )
+            }
+            }
+        })
+        
+
+        this.form.get('valorSolicitado')?.valueChanges.subscribe(data => {
+            if (!this.diccionarioValidarCampo.valorSolicitado) {
+                if (data !== this.antiBucle['valorSolicitado']) {
+                    this.validacionCampos(
+                        'Monto crédito',
+                        'Este campo actualiza la capacidad de pago del cliente',
+                        'valorSolicitado',
+                        'INTEGER'
+                    );
+                   
+                }
+            }
+            this.getPlazosCredito(this.form.controls.valorSolicitado.value)
+        })
+
+        this.form.get('antiguedadNegocio')?.valueChanges.subscribe(data => {
+            if (!this.diccionarioValidarCampo.antiguedadNegocio) {
+                if (data !== this.antiBucle['antiguedadNegocio']) {
+                    this.validacionCampos(
+                        '¿Cuánto tiempo en (meses)tiene tu negocio?',
+                        'Este campo modifica el motor de decisión y políticas SARC',
+                        'antiguedadNegocio',
+                        'INTEGER'
+                        )
+                    }
+            }
+        })
+
+        this.form.get('antiguedadLocal')?.valueChanges.subscribe(data => {
+            if (!this.diccionarioValidarCampo.antiguedadLocal) {
+                if (data !== this.antiBucle['antiguedadLocal']) {
+                this.validacionCampos(
+                    'Antigüedad en el local actual',
+                    'Este campo modifica el motor de decisión y políticas SARC',
+                    'antiguedadLocal',
+                    'INTEGER'
+                )
+            }
+            }
+        })
+    }
 
     public validationPost(): void {
         if (this.form.invalid) {
@@ -142,7 +218,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos,antiguedadLocal, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+        const { numeroHijos, antiguedadLocal, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
         const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
@@ -175,7 +251,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             telefonoNegocio: telefonoNegocioFormato,
             autoricacionDatosPersonalClaracionAuto: 'S',
             clausulaAnticurrupcionClaracionAuto: 'S',
-            antiguedadLocal: antiguedadLocal? antiguedadLocal : 0,
+            antiguedadLocal: antiguedadLocal ? antiguedadLocal : 0,
             ...data
         };
         Swal.fire({
@@ -328,7 +404,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtiene el listado de ciudades
      */
     private getCiudades(codigo: string): void {
-        this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudades = rep
+        })
     }
 
     /**
@@ -342,28 +420,36 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtiene listado de ciudades negocio
      */
     private getCiudadesNegocio(codigo: string): void {
-        this.ciudadesNegocio$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudadesNegocio = rep
+        })
     }
 
     /**
     * @description: Obtiene listado de ciudades negocio
     */
     private getCiudadesExpedicion(codigo: string): void {
-        this.ciudadesExpedicion$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudadesExpedicion = rep
+        })
     }
 
     /**
      * @description: Obtiene el listado de barrios
      */
     private getBarrios(codigo: string): void {
-        this.barrios$ = this.departamentosCiudadesService.getBarrios(codigo);
+        this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
+            this.barrios = rep 
+        })
     }
 
     /**
      * @description: Obtener limite de plazos por el valor de credito
      */
     private getPlazosCredito(valorCredito: number) {
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
+        this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+            this.plazosCredito = rep
+        })
     }
 
     private getActividadEconomica(): void {
@@ -383,7 +469,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtiene el listado de barrios del negocio
      */
     private getBarriosNegocio(codigo: string): void {
-        this.barriosNegocio$ = this.departamentosCiudadesService.getBarrios(codigo);
+         this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
+            this.barriosNegocio = rep;
+        })
     }
 
     /**
@@ -422,15 +510,20 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             confirmButtonText: 'Aceptar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
+            let asingnar = this.form.get(variable).value
             if (result.isConfirmed) {
                 this.form.get('modificadaSolicitud').setValue('S')
+                this.diccionarioValidarCampo[variable] = true;
             } else {
                 if (type === "INTEGER") {
-
-                    this.form.controls[variable].setValue(Number(this.dataGeneralIncial[variable]));
+                    asingnar = Number(this.dataGeneralIncial[variable])
+                    this.antiBucle[variable] = asingnar;
+                    this.form.controls[variable].setValue(asingnar);
                 }
                 if (type === "STRING") {
-                    this.form.controls[variable].setValue(this.dataGeneralIncial[variable].toString());
+                    asingnar = this.dataGeneralIncial[variable].toString()
+                    this.antiBucle[variable] = asingnar;
+                    this.form.controls[variable].setValue(asingnar);
                 }
             }
         });
@@ -447,8 +540,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             if (!firstInvalidControl) {
                 firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
             }
+            if (!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.error');
+            }
         }
-
         firstInvalidControl?.focus(); //without smooth behavior
     }
 
@@ -711,7 +806,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                             this.form.controls['plazo'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.plazo)));
                             break;
                         case 'MO':
-                            this.form.controls['monto'].setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
+                            this.form.controls['monto']?.setValue(this.utility.formatearNumero(String(this.fabricaDatos.monto)));
                             break;
                         case 'PA':
                             this.form.controls['pagaduria'].setValue(String(this.fabricaDatos.pagaduria));
