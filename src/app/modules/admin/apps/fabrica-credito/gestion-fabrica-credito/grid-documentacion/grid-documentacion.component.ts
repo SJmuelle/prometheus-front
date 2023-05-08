@@ -394,11 +394,11 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             );
         } else {
             const pngDim = png.scale(0.5);
-
+            
             pag.drawImage(png, {
-                x: pag.getWidth() / 2 - pngDim.width / 2,
+                x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
                 y: pag.getHeight() / 2 - pngDim.height / 2 + 250,
-                width: pngDim.width,
+                width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
                 height: pngDim.height,
             });
 
@@ -429,19 +429,18 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         const pag = pdfDoc.addPage();
         const { width, height } = pag.getSize();
         let pngImage;
-
+        
         if (ext === 'PNG') {
             pngImage = await pdfDoc.embedPng(base64);
         } else {
             pngImage = await pdfDoc.embedJpg(base64);
         }
-
+        
         const pngDim = pngImage.scale(0.5);
-
         pag.drawImage(pngImage, {
-            x: pag.getWidth() / 2 - pngDim.width / 2,
+            x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
             y: pag.getHeight() / 2 - pngDim.height / 2 + 250,
-            width: pngDim.width,
+            width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
             height: pngDim.height,
         });
 
@@ -482,6 +481,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 return x;
             });
         });
+        
     }
 
     private guardarAdjunto(datos: any): void {
@@ -546,6 +546,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     private getDocumentoPreView(datos: any): void {
         
         this.datoPreview = datos
+        console.log('datosDocumento', datos);
         
         const datosDescargar = {
             numeroSolicitud: this.numeroSolicitud,
@@ -558,7 +559,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             .getDocumento(datosDescargar)
             .subscribe((res) => {   
                 // console.log(extension);
-                console.log('datos',res);
                 
                 this.datoPreview.base64 = res.data.base64
                 this.datoPreview.extension =  res.data.extension
@@ -672,7 +672,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             .getDocumentoHistorico(datosHistorico)
             .subscribe((res) => {
                 this.datosDocumentosHistorico = res.data;
-                console.log('documentos', this.datosDocumentosHistorico);
                 
                 Swal.close();
             });
