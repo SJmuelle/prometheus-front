@@ -1,0 +1,68 @@
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full">
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-row flex-0 sm:items-center justify-end">
+                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza();">
+                    <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Cerrar" (click)="onCerrar()">
+                    <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full">
+        <!-- Main -->
+        <div class="flex flex-col flex-auto px-2 py-4 sm:pb-20">
+            <!-- Activity feed -->
+            <!-- Activity feed -->
+            <div class="w-full mb-4">
+                <!-- Title -->
+                <h3 class="mb-2 text-gray-900">Documentos</h3>
+                <span class="font-semibold text-gray-500">Listado de los documentos cargados</span>
+
+
+            </div>
+
+            <div class="flex flex-col justify-center items-center mt-2 divide-y">
+                <mat-tab-group class="flex w-full justify-items-center items-center moreWidth">
+                    <ng-container *ngFor="let documentosPorTipo of documentos | keyvalue: keyDescOrder">
+                        <mat-tab *ngIf="!ocultarTercero(documentosPorTipo.key)">
+                            <ng-template matTabLabel>{{getTituloPorKey(documentosPorTipo.key)}}</ng-template>
+                            <ng-container *ngFor="let documento of documentosPorTipo.value">
+                                <div
+                                    class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-2 w-11/12 justify-self-center max-h-24 shadow-md rounded-lg">
+
+                                    <div style="grid-column: span 2 / span 2;" class=" flex justify-center h-full max-h-20 items-center w-full border-r-2">
+                                        <img style="max-height: 66.666667%; width: 41.666667%;"
+                                            [src]="getIconByExtension(documento.nombreArchivoReal)" alt="icon">
+                                        <!-- <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon> -->
+                                    </div>
+                                    <div style="grid-column: span 8 / span 8; min-height: 4.5rem;" class="max-h-20 px-4">
+                                        <span class="text-blue-500 font-semibold text-sm leading-2 inline-block">{{documento.descripcion}}</span>
+                                        <p class="text-gray-400 font-normal m-0 text-xs" >
+                                            <strong class="text-gray-700"> Usuario creación: </strong> {{documento.usuarioCreacion}}
+                                        </p>
+                                        <p class="text-gray-400 font-normal m-0 text-xs">
+                                            <strong class="text-gray-700"> Fecha de cargue: </strong> {{documento.fechaCargue}}</p>
+                                    </div>
+                                    <div style="grid-column: span 2 / span 2; border-left-width: 2px" class="max-h-20 h-full w-full flex justify-center items-center">
+                                        <button mat-icon-button matTooltip="Descargar documento"
+                                        (click)="onDescargar(documento)">
+                                            <mat-icon class="text-blue-500 cursor-pointer" 
+                                            [svgIcon]="'download'"></mat-icon>
+                                        </button>
+                                        
+                                    </div>
+
+                                </div>
+                            </ng-container>
+                        </mat-tab>
+                    </ng-container>
+                </mat-tab-group>
+
+            </div>
+
+        </div>
+    </div>
+</div>

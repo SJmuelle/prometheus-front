@@ -106,28 +106,28 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         }
     }
 
-    marginTopInputDynamic(){
-        if(window.innerWidth < 600){
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
-    
-            elementToMargin.forEach((element: HTMLElement) => {
-    
-                let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
-                titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
-                
-                let titleSpanHeigth = titleSpan?.clientHeight
-                element.style.width =  '20px'+ ' !important';
-                element.style['marginTop'] = '20px !important'
-                element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
-                if(titleSpanHeigth > 30){
-                    if(titleSpanHeigth > 50){
-                        titleSpan.style.top = '-60px'   
-                    }else{
-                        titleSpan.style.top = '-42px'                   
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
                     }
-                }
-           });
+                });
             }, 1000);
         }
     }
@@ -142,7 +142,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     public onPostDatos(): void {
         const datos: FormularioCreditoMicro = this.form.getRawValue();
-        const { numeroHijos, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
+        const { numeroHijos,antiguedadLocal, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
         const fechaExpedicionFormato = moment(fechaExpedicion.toString()).format('YYYY-MM-DD');
         const fechaDesvinculacionPublicoFormato = fechaDesvinculacionPublico ? moment(fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
@@ -175,6 +175,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             telefonoNegocio: telefonoNegocioFormato,
             autoricacionDatosPersonalClaracionAuto: 'S',
             clausulaAnticurrupcionClaracionAuto: 'S',
+            antiguedadLocal: antiguedadLocal? antiguedadLocal : 0,
             ...data
         };
         Swal.fire({
@@ -206,13 +207,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.formatearDataInicial();
                 this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
-                this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico:'N')
-                this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta:'N')
-                this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico:'N')
-                this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera:'N')
-                this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda:'N')
-                this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd:'N')
-                this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta:'N')
+                this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
+                this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
+                this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico : 'N')
+                this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
+                this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
+                this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
+                this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -396,7 +397,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'Completado',
                     'Información guardada con éxito',
                     'success'
-                ).then(rep =>{
+                ).then(rep => {
                     location.reload()
                 });
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
@@ -519,7 +520,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             direccionNegocioDistanciaVia: ['', Validators.required],
             direccionNegocioCompleto: [''],
             telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)]],
-            tipoLocal: ['', Validators.required],
+            tipoLocal: [''],
             tipoLocalCalulado: [''],
             antiguedadLocal: ['', Validators.required],
             nombreArrendador: [''],
@@ -747,15 +748,15 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     }
 
-    private getSalarioMinimo(){
-        this.genericaServices.getSalarioBasico().subscribe(({data}) => {
-          
-           this.salarioMinimo = data.salarioMinimo;
+    private getSalarioMinimo() {
+        this.genericaServices.getSalarioBasico().subscribe(({ data }) => {
 
-           
-           this.form.get('valorSolicitado').setValidators([Validators.required,Validators.min(data.salarioMinimo),Validators.max(100000000)])
-       })
-   }
+            this.salarioMinimo = data.salarioMinimo;
+
+
+            this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
+        })
+    }
 
     // validaciones dinamicas
     public addValidation() {
@@ -776,6 +777,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
         // Arriendo local form
         this.form.get('tipoLocal').valueChanges.subscribe((e: number) => {
+
             if (Number(e) === 2) {
                 this.form.get('nombreArrendador')?.setValidators([Validators.required, Validators.maxLength(30)])
                 this.form.get('nombreArrendador')?.enable({ emitEvent: true, onlySelf: true })
@@ -787,6 +789,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('nombreArrendador')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularArrendador')?.setValidators(null)
                 this.form.get('celularArrendador')?.disable({ emitEvent: true, onlySelf: true })
+            }
+
+            if (Number(e) !== 6) {
+                this.form.get('antiguedadLocal')?.setValidators([Validators.required, Validators.maxLength(30)])
+                this.form.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
+            } else {
+                this.form.get('antiguedadLocal')?.setValidators(null)
+                this.form.get('antiguedadLocal')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
         // Empleo conyuge empleado form

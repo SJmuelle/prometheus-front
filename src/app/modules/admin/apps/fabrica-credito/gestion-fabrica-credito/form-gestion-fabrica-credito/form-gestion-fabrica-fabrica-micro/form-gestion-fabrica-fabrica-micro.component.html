@@ -1548,7 +1548,7 @@
                                 <mat-label> Tipo de local </mat-label>
                                 <input [readonly]="true" matInput type="text" [formControlName]="'tipoLocalCalulado'" />
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field *ngIf="form.controls['tipoLocal'].value != 6">
                                 <mat-label>Antigüedad en el local actual (meses)</mat-label>
                                 <input matInput type="number" min="0" [formControlName]="'antiguedadLocal'" (change)="
                                         validacionCampos(
@@ -1665,10 +1665,10 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Nombre del que atiende el negocio</mat-label>
-                                <input matInput type="text"
-                                    matTooltip="En caso de enfermedad o situación que requiera la no presencia del titular"
-                                    [formControlName]="'nombreAtiendeNegocio'" />
+                                <mat-label>Nombre de quien atiende el negocio en caso de ausencia del
+                                    titular</mat-label>
+                                <input matInput type="text" matTooltip="Nombre de quien atiende el negocio en caso de ausencia del
+                                    titular" [formControlName]="'nombreAtiendeNegocio'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1893,7 +1893,7 @@
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="
-                                            let item of dataInicial?.ocupaciones
+                                            let item of dataInicial?.ocupacionesConyugue
                                         " [value]="item.codigo">{{ item.nombre }}
                                     </mat-option>
                                 </mat-select>
@@ -2625,13 +2625,13 @@
                         <ng-template matTabLabel>Ofertas</ng-template>
                         <app-grid-oferta-micro></app-grid-oferta-micro>
                     </mat-tab>
-                </ng-container>
+                </ng-container> -->
                 <ng-container>
                     <mat-tab>
                         <ng-template matTabLabel>Cliente</ng-template>
                         <grid-historico-cliente></grid-historico-cliente>
                     </mat-tab>
-                </ng-container> -->
+                </ng-container>
             </mat-tab-group>
         </mat-expansion-panel>
     </mat-accordion>
