@@ -100,6 +100,10 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this.cargueActividadEconomica()
         });
 
+        this.form.get('valorCredito')?.valueChanges.subscribe((e: string) => {
+            this.getPlazosCredito(this.form.controls.valorCredito.value)
+        })
+
         setTimeout(() => {
             if ((this.tipoIdentificacion) && (this.identificacion)) {
                 this.form.controls.tipoDocumento.setValue(this.tipoIdentificacion);
@@ -112,6 +116,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this.getSalarioMinimo();
 
         this.marginTopInputDynamic()
+
     }
 
     private cargueActividadEconomica() {
@@ -523,7 +528,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     irAtras() {
-        if (this._permisosService.estabaAgendaComercial()) {
+        if(this._permisosService.ruta === 'agenda-comercial'){
             this.router.navigate([`/credit-factory/agenda-comercial`]);
         }else{
             this.router.navigate([`/credit-factory/agenda-venta-digital`]);
