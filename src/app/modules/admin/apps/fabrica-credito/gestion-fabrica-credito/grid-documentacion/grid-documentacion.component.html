@@ -33,7 +33,8 @@
                     </mat-select>
                 </mat-form-field>
                 <ng-container *ngIf="habilitarComparar">
-                    <button mat-icon-button matTooltip="Comparar" class="sm:-mt-4 mt-0 sm:mb-0 mb-3" (click)="onDialogComparar()">
+                    <button mat-icon-button matTooltip="Comparar" class="sm:-mt-4 mt-0 sm:mb-0 mb-3"
+                        (click)="onDialogComparar()">
                         <mat-icon [svgIcon]="'mat_outline:compare_arrows'"></mat-icon>
                     </button>
                 </ng-container>
@@ -79,7 +80,7 @@
                                         [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                <td class="px-2 text-sm border cursor-pointer hover:text-gray-900" (click)="getDocumentoPreView(item);verArchivoActual.toggle()" [matTooltip]="item.descripcionTooltip">{{
                                     item.descripcion}}
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
@@ -91,7 +92,8 @@
                                 <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                     <ng-container *ngIf="item.archivoCargado === 'N'">
                                         <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
-                                            class="d-none" [accept]="'image/jpeg,image/png,application/pdf/ogg/agg'">
+                                            class="d-none"
+                                            [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
                                         <button mat-icon-button matTooltip="Cargar documento"
                                             (click)="fileInput.click()">
                                             <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
@@ -108,7 +110,7 @@
                                 <td class="px-2 text-sm border text-center">
                                     <ng-container *ngIf="item.archivoCargado !== 'N'">
                                         <button mat-icon-button matTooltip="Descargar documento"
-                                            (click)="onDescargar(item)">
+                                            (click)="getDocumentoPreView(item);onDescargar(item)">
                                             <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
                                         </button>
                                     </ng-container>
@@ -176,7 +178,8 @@
                                 <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                     <ng-container *ngIf="item.archivoCargado === 'N'">
                                         <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
-                                            class="d-none" [accept]="'image/jpeg,image/png,application/pdf/ogg/agg'">
+                                            class="d-none"
+                                            [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
                                         <button mat-icon-button matTooltip="Cargar documento"
                                             (click)="fileInput.click()">
                                             <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
@@ -249,7 +252,7 @@
                                             [(ngModel)]="item.selected"></mat-checkbox>
                                     </td>
                                     <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                    <td class="px-2 text-sm border" [matTooltip]="item.descripcionTooltip">{{
+                                    <td class="px-2 text-sm border" (click)="verArchivoActual.toggle()" [matTooltip]="item.descripcionTooltip">{{
                                         item.descripcion}}</td>
                                     <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
                                     <td class="px-2 text-sm border text-center">{{ item.requerido !== 'N'? 'Si' : 'No'}}
@@ -260,7 +263,8 @@
                                     <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                         <ng-container *ngIf="item.archivoCargado === 'N'">
                                             <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
-                                                class="d-none" [accept]="'image/jpeg,image/png,application/pdf/ogg/agg'">
+                                                class="d-none"
+                                                [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
                                             <button mat-icon-button matTooltip="Cargar documento"
                                                 (click)="fileInput.click()">
                                                 <mat-icon [svgIcon]="'mat_outline:file_upload'"></mat-icon>
@@ -375,31 +379,39 @@
                             </ng-container>
                             <ng-container
                                 *ngIf="item.extension === 'mp3' || item.extension === 'ogg' || item.extesion === 'acc'">
-                                <mat-icon role="img"
-                                    class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
-                                    aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
-                                    data-mat-icon-namespace="iconsmind"> <svg xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 128 128" id="file">
-                                        <path fill="#00b8df"
-                                            d="M104 126H24c-5.5 0-10-4.5-10-10V12c0-5.5 4.5-10 10-10h40.7c2.7 0 5.2 1 7.1 2.9l39.3 39.3c1.9 1.9 2.9 4.4 2.9 7.1V116c0 5.5-4.5 10-10 10zM24 6c-3.3 0-6 2.7-6 6v104c0 3.3 2.7 6 6 6h80c3.3 0 6-2.7 6-6V51.3c0-1.6-.6-3.1-1.8-4.2L68.9 7.8C67.8 6.6 66.3 6 64.7 6H24z">
-                                        </path>
-                                        <path fill="#00b8df"
-                                            d="M57 89h-4V58.5c0-1.8 1.2-3.4 2.9-3.9l21-5.5c1.2-.3 2.5-.1 3.5.7 1 .8 1.6 1.9 1.6 3.2v30.4h-4V53l-21 5.5V89z">
-                                        </path>
-                                        <ellipse cx="47.5" cy="89" fill="#00b8df" rx="7.5" ry="5"></ellipse>
-                                        <path fill="#00b8df"
-                                            d="M47.5 96c-5.3 0-9.5-3.1-9.5-7s4.2-7 9.5-7 9.5 3.1 9.5 7-4.2 7-9.5 7zm0-10c-3.1 0-5.5 1.6-5.5 3s2.4 3 5.5 3 5.5-1.6 5.5-3-2.4-3-5.5-3z">
-                                        </path>
-                                        <ellipse cx="72.5" cy="83.4" fill="#00b8df" rx="7.5" ry="5.4"></ellipse>
-                                        <path fill="#00b8df"
-                                            d="M72.5 90.7c-5.3 0-9.5-3.2-9.5-7.4 0-4.1 4.2-7.4 9.5-7.4s9.5 3.2 9.5 7.4-4.2 7.4-9.5 7.4zm0-10.7c-2.9 0-5.5 1.6-5.5 3.4 0 1.6 2.3 3.4 5.5 3.4S78 85 78 83.4c0-1.8-2.6-3.4-5.5-3.4z">
-                                        </path>
-                                    </svg>
-                                </mat-icon>
+                                <div class="w-full px-2 h-auto flex flex-col justify-center items-center gap-4">
+                                    <mat-icon role="img"
+                                        class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
+                                        aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
+                                        data-mat-icon-namespace="iconsmind"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 128 128" id="file">
+                                            <path fill="#00b8df"
+                                                d="M104 126H24c-5.5 0-10-4.5-10-10V12c0-5.5 4.5-10 10-10h40.7c2.7 0 5.2 1 7.1 2.9l39.3 39.3c1.9 1.9 2.9 4.4 2.9 7.1V116c0 5.5-4.5 10-10 10zM24 6c-3.3 0-6 2.7-6 6v104c0 3.3 2.7 6 6 6h80c3.3 0 6-2.7 6-6V51.3c0-1.6-.6-3.1-1.8-4.2L68.9 7.8C67.8 6.6 66.3 6 64.7 6H24z">
+                                            </path>
+                                            <path fill="#00b8df"
+                                                d="M57 89h-4V58.5c0-1.8 1.2-3.4 2.9-3.9l21-5.5c1.2-.3 2.5-.1 3.5.7 1 .8 1.6 1.9 1.6 3.2v30.4h-4V53l-21 5.5V89z">
+                                            </path>
+                                            <ellipse cx="47.5" cy="89" fill="#00b8df" rx="7.5" ry="5"></ellipse>
+                                            <path fill="#00b8df"
+                                                d="M47.5 96c-5.3 0-9.5-3.1-9.5-7s4.2-7 9.5-7 9.5 3.1 9.5 7-4.2 7-9.5 7zm0-10c-3.1 0-5.5 1.6-5.5 3s2.4 3 5.5 3 5.5-1.6 5.5-3-2.4-3-5.5-3z">
+                                            </path>
+                                            <ellipse cx="72.5" cy="83.4" fill="#00b8df" rx="7.5" ry="5.4"></ellipse>
+                                            <path fill="#00b8df"
+                                                d="M72.5 90.7c-5.3 0-9.5-3.2-9.5-7.4 0-4.1 4.2-7.4 9.5-7.4s9.5 3.2 9.5 7.4-4.2 7.4-9.5 7.4zm0-10.7c-2.9 0-5.5 1.6-5.5 3.4 0 1.6 2.3 3.4 5.5 3.4S78 85 78 83.4c0-1.8-2.6-3.4-5.5-3.4z">
+                                            </path>
+                                        </svg>
+
+                                    </mat-icon>
+                                    <audio controls="controls" autobuffer="autobuffer" >
+                                        <source [src]="item.base64" [type]="'audio/ogg'">
+
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
                             </ng-container>
                             <ng-container
                                 *ngIf="item.extension !== 'acc' && item.extension !== 'mp3' && item.extension !== 'ogg' && item.extension !== 'xlsx' && item.extension !== 'pdf' && item.extension !== 'jpeg' && item.extension !== 'jpg' && item.extension !== 'png'">
-                                <mat-icon role="img" 
+                                <mat-icon role="img"
                                     class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
                                     aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
                                     data-mat-icon-namespace="iconsmind"><svg width="100%" height="100%"
@@ -460,6 +472,169 @@
                         <button mat-flat-button="" matTooltip="Descargar documento"
                             class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary"
                             (click)="getDownloadHistorico(item)">
+                            <span class="mat-button-wrapper"> Descargar </span>
+                            <span matripple="" class="mat-ripple mat-button-ripple"></span>
+                            <span class="mat-button-focus-overlay"></span>
+                        </button>
+                    </div>
+                    <hr>
+                </div>
+            </ng-container>
+            <!-- </file-manager-details> -->
+            <!---->
+        </div>
+    </div>
+
+</fuse-drawer>
+
+<fuse-drawer class="w-100 min-w-100" fixed transparentOverlay [mode]="'over'" [name]="'verArchivoActual'"
+    [position]="'right'" #verArchivoActual>
+
+    <div class="flex flex-col w-full overflow-auto bg-card pt-20">
+        <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
+            <router-outlet class="ng-tns-c126-23"></router-outlet>
+            <!-- <file-manager-details class="ng-star-inserted" style=""> -->
+            <div class="flex items-center justify-end">
+                <button mat-icon-button="" (click)="verArchivoActual.close()"
+                    class="mat-focus-indicator mat-icon-button mat-button-base" tabindex="0">
+                    <span class="mat-button-wrapper">
+                        <mat-icon role="img" class="mat-icon notranslate mat-icon-no-color" aria-hidden="true"
+                            data-mat-icon-type="svg" data-mat-icon-name="x" data-mat-icon-namespace="heroicons_outline">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" fit="" height="100%" width="100%"
+                                preserveAspectRatio="xMidYMid meet" focusable="false">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </mat-icon>
+                    </span>
+                    <span matripple="" class="mat-ripple mat-button-ripple mat-button-ripple-round"></span>
+                    <span class="mat-button-focus-overlay"></span>
+                </button>
+            </div>
+            <ng-container >
+                <div *ngIf="datoPreview" class="flex flex-col flex-auto p-6 md:p-6">
+
+                    <div class="flex flex-col items-start mt-1">
+                        <div class="text-xl font-medium">{{datoPreview.nombreCategoria}}</div>
+                    </div>
+                    <div class="aspect-w-9 aspect-h-6 mt-1">
+                        <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">
+                            <!---->
+                            <ng-container *ngIf="datoPreview.extension === 'pdf'">
+                                <pdf-viewer [src]="datoPreview.base64" [render-text]="true" [original-size]="false"
+                                    [show-all]="true" style="width: 98%; height: 98%">
+                                </pdf-viewer>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="datoPreview.extension === 'jpeg' || datoPreview.extension === 'jpg' || datoPreview.extension === 'png'">
+                                <img [src]="datoPreview.base64" alt="" style="width: 98%; height: 98%">
+                            </ng-container>
+                            <ng-container *ngIf="datoPreview.extension === 'xlsx' ">
+                                <mat-icon role="img"
+                                    class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
+                                    aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
+                                    data-mat-icon-namespace="iconsmind"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="2500" height="2442" viewBox="0 0 110.037 107.5" id="excel-app">
+                                        <path fill="#207245"
+                                            d="M57.55 0h7.425v10c12.513 0 25.025.025 37.537-.038 2.113.087 4.438-.062 6.275 1.2 1.287 1.85 1.138 4.2 1.225 6.325-.062 21.7-.037 43.388-.024 65.075-.062 3.638.337 7.35-.425 10.938-.5 2.6-3.625 2.662-5.713 2.75-12.95.037-25.912-.025-38.875 0v11.25h-7.763c-19.05-3.463-38.138-6.662-57.212-10V10.013C19.188 6.675 38.375 3.388 57.55 0z">
+                                        </path>
+                                        <path fill="#fff"
+                                            d="M64.975 13.75h41.25V92.5h-41.25V85h10v-8.75h-10v-5h10V62.5h-10v-5h10v-8.75h-10v-5h10V35h-10v-5h10v-8.75h-10v-7.5z">
+                                        </path>
+                                        <path fill="#207245" d="M79.975 21.25h17.5V30h-17.5v-8.75z"></path>
+                                        <path fill="#fff"
+                                            d="M37.025 32.962c2.825-.2 5.663-.375 8.5-.512a2607.344 2607.344 0 0 1-10.087 20.487c3.438 7 6.949 13.95 10.399 20.95a716.28 716.28 0 0 1-9.024-.575c-2.125-5.213-4.713-10.25-6.238-15.7-1.699 5.075-4.125 9.862-6.074 14.838-2.738-.038-5.476-.15-8.213-.263C19.5 65.9 22.6 59.562 25.912 53.312c-2.812-6.438-5.9-12.75-8.8-19.15 2.75-.163 5.5-.325 8.25-.475 1.862 4.888 3.899 9.712 5.438 14.725 1.649-5.312 4.112-10.312 6.225-15.45z">
+                                        </path>
+                                        <path fill="#207245"
+                                            d="M79.975 35h17.5v8.75h-17.5V35zM79.975 48.75h17.5v8.75h-17.5v-8.75zM79.975 62.5h17.5v8.75h-17.5V62.5zM79.975 76.25h17.5V85h-17.5v-8.75z">
+                                        </path>
+                                    </svg>
+                                </mat-icon>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="datoPreview.extension === 'mp3' || datoPreview.extension === 'ogg' || datoPreview.extesion === 'acc'">
+                                <div class="w-full px-2 h-auto flex flex-col justify-center items-center gap-4">
+                                    <mat-icon role="img"
+                                        class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
+                                        aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
+                                        data-mat-icon-namespace="iconsmind"> <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 128 128" id="file">
+                                            <path fill="#00b8df"
+                                                d="M104 126H24c-5.5 0-10-4.5-10-10V12c0-5.5 4.5-10 10-10h40.7c2.7 0 5.2 1 7.1 2.9l39.3 39.3c1.9 1.9 2.9 4.4 2.9 7.1V116c0 5.5-4.5 10-10 10zM24 6c-3.3 0-6 2.7-6 6v104c0 3.3 2.7 6 6 6h80c3.3 0 6-2.7 6-6V51.3c0-1.6-.6-3.1-1.8-4.2L68.9 7.8C67.8 6.6 66.3 6 64.7 6H24z">
+                                            </path>
+                                            <path fill="#00b8df"
+                                                d="M57 89h-4V58.5c0-1.8 1.2-3.4 2.9-3.9l21-5.5c1.2-.3 2.5-.1 3.5.7 1 .8 1.6 1.9 1.6 3.2v30.4h-4V53l-21 5.5V89z">
+                                            </path>
+                                            <ellipse cx="47.5" cy="89" fill="#00b8df" rx="7.5" ry="5"></ellipse>
+                                            <path fill="#00b8df"
+                                                d="M47.5 96c-5.3 0-9.5-3.1-9.5-7s4.2-7 9.5-7 9.5 3.1 9.5 7-4.2 7-9.5 7zm0-10c-3.1 0-5.5 1.6-5.5 3s2.4 3 5.5 3 5.5-1.6 5.5-3-2.4-3-5.5-3z">
+                                            </path>
+                                            <ellipse cx="72.5" cy="83.4" fill="#00b8df" rx="7.5" ry="5.4"></ellipse>
+                                            <path fill="#00b8df"
+                                                d="M72.5 90.7c-5.3 0-9.5-3.2-9.5-7.4 0-4.1 4.2-7.4 9.5-7.4s9.5 3.2 9.5 7.4-4.2 7.4-9.5 7.4zm0-10.7c-2.9 0-5.5 1.6-5.5 3.4 0 1.6 2.3 3.4 5.5 3.4S78 85 78 83.4c0-1.8-2.6-3.4-5.5-3.4z">
+                                            </path>
+                                        </svg>
+
+                                    </mat-icon>
+                                    <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay">
+                                        <source [src]="datoPreview.base64" [type]="'audio/ogg'">
+
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                </div>
+                            </ng-container>
+                            <ng-container
+                                *ngIf="datoPreview.extension !== 'acc' && datoPreview.extension !== 'mp3' && datoPreview.extension !== 'ogg' && datoPreview.extension !== 'xlsx' && datoPreview.extension !== 'pdf' && datoPreview.extension !== 'jpeg' && datoPreview.extension !== 'jpg' && datoPreview.extension !== 'png'">
+                                <mat-icon role="img"
+                                    class="mat-icon notranslate icon-size-14 text-hint mat-icon-no-color ng-star-inserted"
+                                    aria-hidden="true" data-mat-icon-type="svg" data-mat-icon-name="file"
+                                    data-mat-icon-namespace="iconsmind"><svg width="100%" height="100%"
+                                        viewBox="0 0 32 32" x="280" y="1624" fit="" preserveAspectRatio="xMidYMid meet"
+                                        focusable="false">
+                                        <path
+                                            d="M27.733 32h-23.467c-0.294 0-0.533-0.24-0.533-0.533v-23.467c0-0.142 0.057-0.277 0.156-0.378l7.467-7.467c0.1-0.1 0.236-0.156 0.378-0.156h16c0.293 0 0.533 0.239 0.533 0.533v30.933c0 0.293-0.24 0.533-0.533 0.533zM4.8 30.933h22.4v-29.867h-15.246l-7.154 7.154v22.713z">
+                                        </path>
+                                        <path
+                                            d="M11.733 8.533h-6.933c-0.294 0-0.533-0.239-0.533-0.533s0.239-0.533 0.533-0.533h6.4v-6.4c0-0.294 0.239-0.533 0.533-0.533s0.533 0.239 0.533 0.533v6.933c0 0.294-0.239 0.533-0.533 0.533z">
+                                        </path>
+                                    </svg>
+
+                                </mat-icon>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-start mt-2">
+                        <ng-container *ngIf="datoPreview.extension !== 'pdf'">
+                            <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-blue-600">
+                                {{datoPreview.extension | uppercase}}
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="datoPreview.extension === 'pdf'">
+                            <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600"> PDF
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="text-lg font-medium mt-3">Detalle</div>
+                    <div class="flex flex-col mt-3 border-t border-b divide-y font-medium">
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Usuario creador</div>
+                            <div>{{datoPreview.usuarioCreacion}}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Fecha de creación</div>
+                            <div>{{ cambiarFecha(datoPreview.fechaCargue) }}</div>
+                        </div>
+                        <div class="flex items-center justify-between py-1">
+                            <div class="text-secondary">Hora de creación</div>
+                            <div>{{datoPreview.horaCargue }}</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 w-full mt-5">
+                        <button mat-flat-button="" matTooltip="Descargar documento"
+                            class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary"
+                            (click)="getDownloadHistorico(datoPreview)">
                             <span class="mat-button-wrapper"> Descargar </span>
                             <span matripple="" class="mat-ripple mat-button-ripple"></span>
                             <span class="mat-button-focus-overlay"></span>

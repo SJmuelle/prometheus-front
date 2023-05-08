@@ -48,6 +48,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     public documentoSelected: any;
     public permisoEditar: boolean = false;
     public panelOpenState: boolean = false;
+    public datoPreview: any;
 
     @Input() tipoDeudor: String;
     // @ViewChildren('checkboxes') checkbox: QueryList<ElementRef>;
@@ -542,6 +543,28 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             });
     }
 
+    private getDocumentoPreView(datos: any): void {
+        
+        this.datoPreview = datos
+        
+        const datosDescargar = {
+            numeroSolicitud: this.numeroSolicitud,
+            idAdjunto: datos.idArchivoCargado,
+        };
+        console.log('datos preview', datos);
+        
+
+        this.documentosServices
+            .getDocumento(datosDescargar)
+            .subscribe((res) => {   
+                // console.log(extension);
+                console.log('datos',res);
+                
+                this.datoPreview.base64 = res.data.base64
+                this.datoPreview.extension =  res.data.extension
+            });
+    }
+
     private seleccionDocumentoIzquierdo(datos: any): void {
         Swal.fire({
             title: 'Cargando',
@@ -649,6 +672,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             .getDocumentoHistorico(datosHistorico)
             .subscribe((res) => {
                 this.datosDocumentosHistorico = res.data;
+                console.log('documentos', this.datosDocumentosHistorico);
+                
                 Swal.close();
             });
     }

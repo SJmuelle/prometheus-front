@@ -28,7 +28,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
-    public plazosCredito$: Observable<any>;
+    public plazosCredito: any;
     public salarioMinimo$: Observable<any>;
     public salarioMinimo: number = 0;
     public habilitarInput: boolean = false;
@@ -335,7 +335,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
      */
     public getPlazosCredito(valorCredito: number) {
 
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
+         this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+             console.log('rep',rep);
+            this.plazosCredito = rep
+            
+        })
 
     }
 

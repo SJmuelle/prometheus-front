@@ -51,7 +51,6 @@ export class FormGenericoTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFabricaCreditoAgenda();
-
     console.log('inciando');
     
   }
@@ -133,7 +132,6 @@ export class FormGenericoTabComponent implements OnInit {
     data.map(item => {
       item.idSeccion = this.orden[item.idSeccion]+''
     })
-    
   }
 
   getMaxStep(currentStep){   
