@@ -33,6 +33,20 @@ export class AppSettingsService {
             baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/documentos-negocio')
         }
     };
+    /**
+     * @description: End-point de pago masivo
+     */
+    public transportadora = {
+        url: {
+            base: EndPoints.uri('/generic/qry/detalle-pronto-pago'),
+            basePropietario:EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
+            baseAceptar:EndPoints.uri('/generic/aceptacion-pronto-pago'),
+            baseRechazar:EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
+            baseTransportadora:EndPoints.uri('/generic/qry/transportadoras'),
+            baseActualizar:EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
+            baseTrazabilidad:EndPoints.uri('/generic/trazabilidad-pronto-pago')
+        }
+    };
 
     /**
      * @description: End-point de pago masivo
@@ -194,8 +208,8 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
-            agregarReferencia: EndPoints.uri('/generic/cre-agregar-referencia-prueba'),
-            actualizarReferencia: EndPoints.uri('/generic/cre-actualizar-referencia-prueba')
+            agregarReferencia: EndPoints.uri('/generic/cre-agregar-referencia'),
+            actualizarReferencia: EndPoints.uri('/generic/cre-actualizar-referencia')
         }
     };
     /**

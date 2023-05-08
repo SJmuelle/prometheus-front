@@ -321,7 +321,8 @@ export class FormDialogDecisionComponent implements OnInit, OnDestroy {
     private modalDetalle(data) {
         const dialogRef = this.dialog.open(FormDialogListErrorDialogComponent,
             {
-                width: '60%',
+                maxWidth: '90vw',
+                width: window.innerWidth < 600 ? '90%' : '60%',
                 data: data,
                 disableClose: false
             });

@@ -5,6 +5,7 @@ import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDecisionComponent } from '../form-decision/form-decision.component';
+import { KeyValue } from '@angular/common';
 
 @Component({
     selector: 'app-resumen',
@@ -17,7 +18,7 @@ export class ResumenComponent implements OnInit {
     public dataResumenTrazabilidad: any = [];
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
-    dataPolicitasAdmin: any;
+    dataPolicitasAdmin: any = {};
     datos2: any[];
     verComentarios: boolean = false;
     resumenCuentasMora: any[] = [];
@@ -62,6 +63,8 @@ export class ResumenComponent implements OnInit {
     private getDatos(data): void {
 
         //general
+        console.log("data", data);
+
         let DatosCredito = [], DatosCredito2 = [];
         switch (data.resumenGeneral.unidadNegocio) {
             case 1:
@@ -76,36 +79,38 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:user-circle",
                                 color: "bg-blue-100 text-blue-800",
-                                valor2: data.resumenCredito.nombreCompleto.toLowerCase(),
+                                valor2: data.resumenGeneral.nombreCompleto,
                                 valor: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion,
                                 valor3: data.resumenCredito.email,
+                                valor4: "<span class='text-sm font-medium text-secondary'> Edad: </span>" + data.resumenGeneral.edad + ' Años',
                             },
                             {
                                 icono: "heroicons_outline:home",
                                 color: "bg-orange-100 text-orange-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + data.resumenCredito.departamentoVivienda,
-                                valor2: "<span class='text-sm font-medium text-secondary'> Edad: </span>" + data.resumenGeneral.edad + ' años',
+                                valor2: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + data.resumenGeneral.descripcionDepartamento,
+                                valor: "<span class='text-sm font-medium text-secondary'> Municipio: </span>" + data.resumenGeneral.descripcionCiudad,
                                 valor3: "<span class='text-sm font-medium text-secondary'> Tipo vivienda: </span>" + data.resumenGeneral.tipoVivienda,
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
                                 color: "bg-yellow-100 text-yellow-800",
                                 valor: "<span class='text-sm font-medium text-secondary'> Tipo de cliente: </span>" + data.resumenGeneral.tipoSolicitante,
+                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + data.resumenGeneral.tipoCreditoMicro,
                                 valor2: "<span class='text-sm font-medium text-secondary'> Personas a cargo:</span> " + data.resumenGeneral.numeroPersonasACargo,
-                                valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + data.resumenGeneral.segmento,
+
                             },
                             {
                                 icono: "mat_outline:location_on",
                                 color: "bg-purple-100 text-purple-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Aplica deudor solidario: </span>" + data.resumenGeneral.tipoSolicitante,
-                                valor2: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + data.resumenGeneral.tipoCredito,
-                                valor3: "<span class='text-sm font-medium text-secondary'> Oficina: </span>" + data.resumenGeneral.agencia
+                                valor: "<span class='text-sm font-medium text-secondary'> Tercero: </span>" + data.resumenGeneral.tipoDeudorMicro,
+                                valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + data.resumenGeneral.segmento,
+                                valor2: "<span class='text-sm font-medium text-secondary'> Agenda: </span>" + data.resumenGeneral.agencia
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
                                 color: "bg-green-100 text-green-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Monto: </span>" + this.formaterMoneda.format(data.resumenGeneral.valorSolicitado),
-                                valor2: "<span class='text-sm font-medium text-secondary'> Plazo: </span>" + data.resumenGeneral.plazo + " Meses",
+                                valor2: "<span class='text-sm font-medium text-secondary'> Monto: </span>" + this.formaterMoneda.format(data.resumenGeneral.valorSolicitado),
+                                valor: "<span class='text-sm font-medium text-secondary'> Plazo: </span>" + data.resumenGeneral.plazo + " Meses",
                                 valor3: "<span class='text-sm font-medium text-secondary'> Tasa: </span>" + data.resumenGeneral.tasa
                             }
                         ]
@@ -223,9 +228,9 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:briefcase",
                                 color: "bg-blue-100 text-blue-800",
-                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.actividadEconomica.toLowerCase(),
-                                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.ocupacion.toLowerCase(),
-                                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica.toLowerCase()
+                                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.descripcionOcupacion,
+                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.descripcionActividadEconomica,
+                                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica
                             },
                             {
                                 icono: "heroicons_outline:library",
@@ -240,13 +245,13 @@ export class ResumenComponent implements OnInit {
                                 color: "bg-pink-100 text-pink-800",
                                 valor: "<span class='text-sm font-medium text-secondary'>Destino crédito: </span>" + data.resumenGeneral.destinoCredito,
                                 valor2: "<span class='text-sm font-medium text-secondary'>Valor ventas: </span>" + data.resumenCredito.ventasMensuales,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Valor coutas máx a pagar: </span>" + data.resumenCredito.valorCuotasCredito,
+                                valor3: "<span class='text-sm font-medium text-secondary'>Cuota máx a pagar:: </span>" + data.resumenCredito.valorCuotasCredito,
                             },
                             {
                                 icono: "heroicons_outline:library",
                                 color: "bg-green-100 text-green-800",
                                 valor3: "<span class='text-sm font-medium text-secondary'>N° empleados: </span>" + data.resumenCredito.numeroEmpleados,
-                                valor4: "<span class='text-sm font-medium text-secondary'>Antiguedad negocio: </span>" + data.resumenCredito.antiguedadNegocio + " años",
+                                valor4: "<span class='text-sm font-medium text-secondary'>Antiguedad negocio: </span>" + data.resumenCredito.antiguedadNegocio + " Meses",
 
                             },
                         ]
@@ -254,31 +259,34 @@ export class ResumenComponent implements OnInit {
                 )
 
                 // codeudor
-                DatosCredito.push(
-                    {
-                        titulo: "Información del codeudor",
-                        tipo: "campos",
-                        icono: "feather:user",
-                        color: "text-blue-400",
-                        descripcion: "Actividad económica del titular",
-                        campos: [
-                            {
-                                icono: "heroicons_outline:user-circle",
-                                color: "bg-blue-100 text-blue-800",
-                                valor2: this.capitalize(data.resumenCodeudor.nombreCompleto),
-                                valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCodeudor.tipoDocumento + " : </span> " + data.resumenCodeudor.identificacion,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.descripcionOcupacion
-                            },
-                            {
-                                icono: "heroicons_outline:currency-dollar",
-                                color: "bg-yellow-100 text-yellow-800",
-                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCodeudor.actividadEconomica,
-                                valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCodeudor.actividadEspecifica,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCodeudor.salarioBasico),
-                            },
-                        ]
-                    },
-                )
+                if (data.resumenCodeudor) {
+                    DatosCredito.push(
+                        {
+                            titulo: "Información del codeudor",
+                            tipo: "campos",
+                            icono: "feather:user",
+                            color: "text-blue-400",
+                            descripcion: "Actividad económica del titular",
+                            campos: [
+                                {
+                                    icono: "heroicons_outline:user-circle",
+                                    color: "bg-blue-100 text-blue-800",
+                                    valor2: data.resumenCodeudor.nombreCompleto,
+                                    valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCodeudor.tipoDocumento + " </span> " + data.resumenCodeudor.identificacion,
+                                    valor3: "<span class='text-sm font-medium text-secondary'>Ocupación: </span>" + data.resumenCodeudor.descripcionOcupacion
+                                },
+                                {
+                                    icono: "heroicons_outline:currency-dollar",
+                                    color: "bg-yellow-100 text-yellow-800",
+                                    valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCodeudor.descripcionActividadEconomica,
+                                    valor2: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCodeudor.actividadEspecifica,
+                                    valor3: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.formaterMoneda.format(data.resumenCodeudor.salarioBasico),
+                                },
+                            ]
+                        },
+                    )
+                }
+
 
 
                 // // datos indicadores
@@ -495,66 +503,123 @@ export class ResumenComponent implements OnInit {
                 break;
         }
 
-        DatosCredito2.push(
-            {
-                titulo: "Modelo + HDC",
-                tipo: "campos",
-                icono: "heroicons_outline:exclamation",
-                color: "text-blue-400",
-                descripcion: "Información recopilada de la consulta de historia de crédito del cliente",
-                campos: [
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Cupo inicial",
-                        valor: "$" + data.resumenHdc.cupoInicial
-                    },
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Saldo obligaciones",
-                        valor: "$" + data.resumenHdc.saldoObligaciones
-                    },
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Cuotas",
-                        valor: "$" + data.resumenHdc.cuota
-                    },
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Máxima mora actual",
-                        valor: data.resumenHdc.maximaMoraActual
-                    },
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Contador embargos",
-                        valor: data.resumenHdc.contadorEmbargos
-                    },
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Sumatoria embargos",
-                        valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
-                    },
-                    {
-                        icono: "heroicons_outline:academic-cap",
-                        clase: "bg-blue-100",
-                        color: "bg-blue-100 text-blue-800",
-                        label: "Contador gestiones",
-                        valor: data.resumenHdc.contadorGestiones
-                    }
-                ]
-            },
-        )
+        if (data.resumenGeneral.unidadNegocio !== 1) {
+            DatosCredito2.push(
+                {
+                    titulo: "Modelo + HDC",
+                    tipo: "campos",
+                    icono: "heroicons_outline:exclamation",
+                    color: "text-blue-400",
+                    descripcion: "Información recopilada de la consulta de historia de crédito del cliente",
+                    campos: [
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Cupo inicial",
+                            valor: "$" + data.resumenHdc.cupoInicial
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Saldo obligaciones",
+                            valor: "$" + data.resumenHdc.saldoObligaciones
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Cuotas",
+                            valor: "$" + data.resumenHdc.cuota
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Máxima mora actual",
+                            valor: data.resumenHdc.maximaMoraActual
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Contador embargos",
+                            valor: data.resumenHdc.contadorEmbargos
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Sumatoria embargos",
+                            valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Contador gestiones",
+                            valor: data.resumenHdc.contadorGestiones
+                        }
+                    ]
+                },
+            )
+        } else {
+            DatosCredito2.push(
+                {
+                    titulo: "Modelo + HDC",
+                    tipo: "campos",
+                    icono: "heroicons_outline:exclamation",
+                    color: "text-blue-400",
+                    descripcion: "Información recopilada de la consulta de historia de crédito del cliente",
+                    campos: [
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Mora máx actual",
+                            valor: data.resumenHdc.maximaMoraActual
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Mayor calificación",
+                            valor: data.resumenHdc.calificacion
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Saldo de las obligaciones Micro",
+                            valor: "$" + data.resumenHdc.sumatoriaTotalCrm
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Cupo de las obligaciones Micro",
+                            valor: "$" + data.resumenHdc.sumatoriaCupoCrm
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Contador embargos",
+                            valor: data.resumenHdc.contadorEmbargos
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Saldo en mora",
+                            valor: "$" + this.separatos(data.resumenHdc.maximaMoraActual)
+                        },
+                    ]
+                },
+            )
+        }
+
         switch (data.resumenGeneral.unidadNegocio) {
             case 32:
                 DatosCredito2.push(
@@ -735,9 +800,25 @@ export class ResumenComponent implements OnInit {
         this.datos2 = DatosCredito2;
 
         this.dataResumenTrazabilidad = data.resumenTrazabilidad;
-        this.dataPolicitasAdmin = data.policitasAdmin;
+        this.dataPolicitasAdmin = this.formatearPoliticasData(data.policitasAdmin);
         this.resumenCuentasMora = data.resumenCuentasMora ? data.resumenCuentasMora : [];
 
+    }
+
+    /**
+       * @description: Organiza las politicas por tipo
+       */
+    public formatearPoliticasData(politicas: any): any {
+        const data = {}
+        politicas.forEach(politica => {
+            if (!data[politica.tipo]) {
+                data[politica.tipo] = []
+            }
+            data[politica.tipo].push(politica)
+        })
+        console.log("politicas", data);
+
+        return data
     }
 
     /**
@@ -786,5 +867,9 @@ export class ResumenComponent implements OnInit {
 
     }
 
+    // Order by descending property key
+    keyDescOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+        return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+    }
 
 }

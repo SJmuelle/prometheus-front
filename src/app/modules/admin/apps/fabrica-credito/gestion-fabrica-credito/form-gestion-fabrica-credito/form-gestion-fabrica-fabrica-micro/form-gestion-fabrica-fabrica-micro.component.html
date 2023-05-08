@@ -190,7 +190,7 @@
                     {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-tab-group [animationDuration]="'0'">
+            <mat-tab-group [animationDuration]="'0'" class="sm:mt-5 mt-10">
                 <mat-tab>
                     <ng-template matTabLabel>Datos del titular</ng-template>
                     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -442,8 +442,8 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Fecha de nacimiento </mat-label>
-                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaNacimiento" [formControlName]="'fechaNacimiento'"
-                                    (dateChange)="
+                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaNacimiento"
+                                    [formControlName]="'fechaNacimiento'" (dateChange)="
                                         validacionCampos(
                                             'Fecha de nacimiento',
                                             'Este campo modifica el motor de decisión y políticas SARC',
@@ -539,7 +539,7 @@
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Fecha de expedición </mat-label>
-                                <input  matNativeControl [matDatepicker]="fechaExpedicionDocumento"
+                                <input matNativeControl [matDatepicker]="fechaExpedicionDocumento"
                                     [formControlName]="'fechaExpedicion'" placeholder="DD/MM/YYYY" />
                                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                                 </mat-datepicker-toggle>
@@ -991,7 +991,14 @@
 
                             <mat-form-field>
                                 <mat-label>Actividad económica </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'">
+                                <mat-select (selectionChange)="
+                                        validacionCampos(
+                                            'Actividad económica',
+                                            'Este campo modifica el motor de decisión y políticas SARC',
+                                            'actividadEconomica',
+                                            'STRING'
+                                        )
+                                    " [value]="'seleccione'" [formControlName]="'actividadEconomica'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="
@@ -1103,8 +1110,8 @@
                                 </mat-label>
                                 <input autocomplete="off"
                                     matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
-                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="11" mask="separator.0" thousandSeparator="."
-                                    maxLength="13" />
+                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="11"
+                                    mask="separator.0" thousandSeparator="." maxLength="13" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.nitNegocio.errors
@@ -1181,7 +1188,13 @@
                                     <mat-select [value]="'seleccione'" [formControlName]="
                                             'codigoCiudadNegocio'
                                         " (selectionChange)="
-                                            seleccionCiudadNegocio($event)
+                                            seleccionCiudadNegocio($event);
+                                            validacionCampos(
+                                        'Municipio / Ciudad del negocio',
+                                        'Este campo modifica el motor de decisión y políticas SARC',
+                                        'codigoCiudadNegocio',
+                                        'STRING'
+                                    )
                                         ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
@@ -1202,9 +1215,12 @@
                             <ng-container *ngIf="barriosNegocio$ | async as barrios">
                                 <mat-form-field>
                                     <mat-label>Barrio del negocio</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="
-                                            'codigoBarrioNegocio'
-                                        ">
+                                    <mat-select [value]="'seleccione'" (selectionChange)="validacionCampos(
+                                        'Barrio del negocio',
+                                        'Este campo modifica el motor de decisión y políticas SARC',
+                                        'codigoBarrioNegocio',
+                                        'INTEGER'
+                                    )" [formControlName]="'codigoBarrioNegocio'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
@@ -2187,8 +2203,9 @@
                                         .value === 'N'
                                 ">
                                 <mat-label>Fecha de desvinculación</mat-label>
-                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaDesvinculacionPublico" [formControlName]="
-                                        'fechaDesvinculacionPublico' 
+                                <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaDesvinculacionPublico"
+                                    [formControlName]="
+                                        'fechaDesvinculacionPublico'
                                     " />
                                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                                 </mat-datepicker-toggle>
@@ -2593,7 +2610,7 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <mat-tab>
+                <mat-tab *ngIf="form.controls['destinoCredito'].value === 'CC'">
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera-micro></app-grid-cartera-micro>
                 </mat-tab>
@@ -2605,7 +2622,7 @@
 
                 <ng-container>
                     <mat-tab>
-                        <ng-template matTabLabel>Capacidad de pago y ofertas</ng-template>
+                        <ng-template matTabLabel>Ofertas</ng-template>
                         <app-grid-oferta-micro></app-grid-oferta-micro>
                     </mat-tab>
                 </ng-container>

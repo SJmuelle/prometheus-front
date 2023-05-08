@@ -141,9 +141,9 @@
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
 
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td rowspan="2" class="py-3 text-sm my-3">
+                                    <td rowspan="2" class="py-3 text-sm my-3 min-w-18">
                                         <div class="text-gray-700 grid-cols-2 grid">
-                                            <div class="py-0 text-sm">
+                                            <div class="py-0 text-sm w-2">
                                                 <button mat-icon-button matTooltip="Gestionar"
                                                     (click)="onGetAgenda(item)">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>

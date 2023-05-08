@@ -102,6 +102,10 @@ export class FormCodeudorComponent implements OnInit {
                 this.addValidation();
                 this.form.patchValue(data);
 
+                if (this.form.controls['ocupacion'].value === 'INDEFO' || this.form.controls['ocupacion'].value === 'PROIN' || this.form.controls['ocupacion'].value === 'INDNFO') {
+                    this.actividadEconomica$ = this.genericaServices.postActividadEconomica(this.form.controls['ocupacion'].value)
+                }
+
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 // formatear data para los select
@@ -538,7 +542,7 @@ export class FormCodeudorComponent implements OnInit {
     }
 
     public cambiarNacionalidad(e: MatSelectChange) {
-        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO(A)')
+        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO')
     }
 
     public cargarActividadEconomica(e: MatSelectChange) {

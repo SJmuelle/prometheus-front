@@ -49,7 +49,7 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
         const numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
         const dialogRef = this._dialog.open(FormDialogReferenciasComponent, {
             data: { numeroSolicitud: numeroSolicitud },
-            minWidth: '680px',
+            minWidth: '440px',
             minHeight: '420px',
             disableClose: true,
         });
@@ -87,8 +87,8 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
                 tipoPersona: item.tipo,
                 CodUnidadNegocio: item.unidadNegocio,
                 tipoDocPersona: item.tipoDocumento,
+                tipoTercero: item.tipoTercero
             },
-            minWidth: '680px',
             minHeight: '420px',
             disableClose: true,
         });
@@ -113,7 +113,7 @@ export class GridReferenciasComponent implements OnInit, OnDestroy, AfterViewIni
     public onGetReferencia(datos: any): void {
         this.esVer = true;
         const dialogRef = this._dialog.open(FormDetallesReferenciasComponent, {
-            minWidth: '480px',
+            minWidth: window.innerWidth < 600 ? '240px' : '500px',
             minHeight: '440px',
             disableClose: true,
             // data: datos

@@ -54,6 +54,4 @@ export class ReferenciasService {
     return this._http.post(this._appSettings.referencias.url.actualizarReferencia, datos);
 }
 
-  public 
-
 }

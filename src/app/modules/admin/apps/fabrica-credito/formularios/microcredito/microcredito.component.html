@@ -2,7 +2,7 @@
     <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
 
         <!-- Title and action buttons -->
-        <div class="flex items-center justify-between w-full">
+        <div class="flex items-center justify-between w-full sm:flex-row flex-col">
             <div class="flex items-center ">
                 <div class="flex-0 w-16 h-16  overflow-hidden">
                     <img src="assets/images/agendas/formulario-de-llenado.png" class="w-full h-full object-cover">
@@ -331,7 +331,7 @@
             </div>
 
             <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;" >
-                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()" autocomplete="off" formControlName="numeroOTP" mask="separator.0" thousandSeparator="-" min="6" max="6">
+                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()" autocomplete="off" formControlName="numeroOTP"  min="6" max="6">
                 <mat-error *ngIf="form.controls.numeroOTP.errors?.required">
                     Este campo es requerido.
                 </mat-error>

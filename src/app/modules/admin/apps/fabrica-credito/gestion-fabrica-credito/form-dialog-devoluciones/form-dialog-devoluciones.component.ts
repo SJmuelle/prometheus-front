@@ -119,6 +119,7 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
    */
   private redireccionar() {
     let agenda = '';
+    
     switch (this.data.agenda) {
       case 'CO':
         agenda = 'agenda-completion';
@@ -134,6 +135,9 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
         break;
       case 'GC':
         agenda = 'agenda-cartera';
+        break;
+      case 'CC':
+        agenda = 'agenda-comite-comercial'
         break;
       default:
         agenda = 'trazabilidad';
