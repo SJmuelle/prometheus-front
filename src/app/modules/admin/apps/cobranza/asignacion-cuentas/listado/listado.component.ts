@@ -1,40 +1,88 @@
 import { Component, OnInit } from '@angular/core';
 import { IOptionTable } from 'app/core/interfaces';
+import { CajaVirtualService } from 'app/core/services/caja-virtual.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-listado',
+  selector: 'listado-asignaciones',
   templateUrl: './listado.component.html',
   styleUrls: ['./listado.component.scss']
 })
 export class ListadoComponent implements OnInit {
-  dataRow=[];
+  dataRow = [];
   public optionsTable: IOptionTable[] = [
     {
-      name: 'name',
-      text: 'holaa',
+      name: 'numeroDocumentos',
+      text: 'N°',
       typeField: 'text',
     },
+    {
+      name: 'numeroSolicitud',
+      text: 'Número de negocio',
+      typeField: 'text',
+    },
+    {
+      name: 'cliente',
+      text: 'Nombre del cliente',
+      typeField: 'text',
+    },
+    {
+      name: 'identificacion',
+      text: 'CC del cliente',
+      typeField: 'text',
+    },
+    {
+      name: 'saldoCartera',
+      text: 'Debito a cobrar',
+      typeField: 'text',
+    },
+    {
+      name: 'diasMora1',
+      text: 'Tramo de mora actual',
+      typeField: 'text',
+    },
+    {
+      name: 'diasMora2',
+      text: 'Cuotas vencidad',
+      typeField: 'text',
+    },
+    {
+      name: 'diasMora3',
+      text: 'Cuotas pendientes',
+      typeField: 'text',
+    },
+    {
+      name: 'diasMora4',
+      text: 'Cuotas pagadas',
+      typeField: 'text',
+    }
   ];
   public displayedColumns: string[] = [
     ...this.optionsTable.map(({ name }) => name),
   ];
-  constructor() { }
+  constructor(private _cajaVirtualService:
+    CajaVirtualService) { }
 
   ngOnInit(): void {
-    this.dataRow.push(
-      {
-        name:"hola",
-        id:1,
-
-      },
-      {
-        name:"hola",
-        id:1,
-
-      }
-    )
+    this.getInformacionNegocios();
   }
   selecAlarmTable(e) {
     console.log(e)
+  }
+
+  getInformacionNegocios() {
+    Swal.fire({
+      title: 'Cargando',
+      html: 'Buscando información...',
+      timer: 500000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    }).then((result) => { });
+    this._cajaVirtualService.getInformacionNegocios().subscribe((res) => {
+      Swal.close();
+      this.dataRow = res.data;
+   
+    });
   }
 }

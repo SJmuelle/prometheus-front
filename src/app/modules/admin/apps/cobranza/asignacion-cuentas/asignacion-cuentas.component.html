@@ -6,7 +6,7 @@
         <!-- Drawer -->
         <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="open" [position]="'end'"
             [disableClose]="true" #matDrawer>
-            holaa
+            <router-outlet></router-outlet>
         </mat-drawer>
 
         <mat-drawer-content class="flex flex-col">
@@ -48,7 +48,8 @@
 
                 <!-- Contacts list -->
                 <div class="relative h-cal">
-                    <router-outlet></router-outlet>
+                    <mapa-cobertura></mapa-cobertura>
+                    <listado-asignaciones></listado-asignaciones>
                 </div>
 
             </div>
