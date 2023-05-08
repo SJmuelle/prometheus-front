@@ -341,7 +341,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public getPlazosCredito(valorCredito: number) {
 
          this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
-             console.log('rep',rep);
             this.plazosCredito = rep
             
         })

@@ -51,7 +51,6 @@ export class FormGenericoTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFabricaCreditoAgenda();
-    console.log('inciando');
     
   }
 
@@ -78,7 +77,6 @@ export class FormGenericoTabComponent implements OnInit {
     this.fabricaCreditoService.obtenerPreguntaAgendaReferenciacion(datosSolicitud)
       .subscribe(({ data }) => {
         this.arreglarPreguntaOrden(data)
-        console.log('datos',data);
         
         let info = data.sort((a, b) => Number(a.orden) - Number(b.orden));
 
