@@ -164,7 +164,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'Antigüedad en el local actual',
                     'Este campo modifica el motor de decisión y políticas SARC',
                     'antiguedadLocal',
-                    'STRING'
+                    'INTEGER'
                 )
             }
             }
