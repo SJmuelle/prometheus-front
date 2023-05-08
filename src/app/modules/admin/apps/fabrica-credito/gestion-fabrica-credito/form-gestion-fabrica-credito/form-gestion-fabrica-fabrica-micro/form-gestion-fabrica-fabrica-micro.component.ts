@@ -104,6 +104,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     private subscribeInput() {
         this.form.get('destinoCredito')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.destinoCredito) {
+                if (data !== this.antiBucle['destinoCredito']) {
                 this.validacionCampos(
                     'Destino del crédito',
                     'Este campo modifica el motor de decisión y políticas SARC',
@@ -111,7 +112,22 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'STRING'
                 )
             }
+            }
         })
+
+        this.form.get('plazo')?.valueChanges.subscribe(data => {
+            if (!this.diccionarioValidarCampo.plazo) {
+                if (data !== this.antiBucle['plazo']) {
+                this.validacionCampos(
+                    'Plazo',
+                    'Este campo actualiza la capacidad de pago del cliente',
+                    'plazo',
+                    'INTEGER'
+                )
+            }
+            }
+        })
+        
 
         this.form.get('valorSolicitado')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.valorSolicitado) {
@@ -122,30 +138,35 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                         'valorSolicitado',
                         'INTEGER'
                     );
-                    this.getPlazosCredito(this.form.controls.valorSolicitado.value)
+                   
                 }
             }
+            this.getPlazosCredito(this.form.controls.valorSolicitado.value)
         })
 
         this.form.get('antiguedadNegocio')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.antiguedadNegocio) {
+                if (data !== this.antiBucle['antiguedadNegocio']) {
                     this.validacionCampos(
                         '¿Cuánto tiempo en (meses)tiene tu negocio?',
                         'Este campo modifica el motor de decisión y políticas SARC',
                         'antiguedadNegocio',
                         'INTEGER'
                         )
+                    }
             }
         })
 
         this.form.get('antiguedadLocal')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.antiguedadLocal) {
+                if (data !== this.antiBucle['antiguedadLocal']) {
                 this.validacionCampos(
                     'Antigüedad en el local actual',
                     'Este campo modifica el motor de decisión y políticas SARC',
                     'antiguedadLocal',
                     'STRING'
                 )
+            }
             }
         })
     }
@@ -496,10 +517,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             } else {
                 if (type === "INTEGER") {
                     asingnar = Number(this.dataGeneralIncial[variable])
+                    this.antiBucle[variable] = asingnar;
                     this.form.controls[variable].setValue(asingnar);
                 }
                 if (type === "STRING") {
                     asingnar = this.dataGeneralIncial[variable].toString()
+                    this.antiBucle[variable] = asingnar;
                     this.form.controls[variable].setValue(asingnar);
                 }
             }
