@@ -33,12 +33,12 @@
                                 <div
                                     class="grid grid-cols-12 gap-2 items-center p-2 mx-2 my-2 w-11/12 justify-self-center max-h-24 shadow-md rounded-lg">
 
-                                    <div class="col-span-2 flex justify-center h-full max-h-20 items-center w-full border-r-2">
-                                        <img class="max-h-8/12 w-5/12"
+                                    <div style="grid-column: span 2 / span 2;" class=" flex justify-center h-full max-h-20 items-center w-full border-r-2">
+                                        <img style="max-height: 66.666667%; width: 41.666667%;"
                                             [src]="getIconByExtension(documento.nombreArchivoReal)" alt="icon">
                                         <!-- <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon> -->
                                     </div>
-                                    <div class="col-span-8 max-h-20 px-4 min-h-18">
+                                    <div style="grid-column: span 8 / span 8; min-height: 4.5rem;" class="max-h-20 px-4">
                                         <span class="text-blue-500 font-semibold text-sm leading-2 inline-block">{{documento.descripcion}}</span>
                                         <p class="text-gray-400 font-normal m-0 text-xs" >
                                             <strong class="text-gray-700"> Usuario creación: </strong> {{documento.usuarioCreacion}}
@@ -46,7 +46,7 @@
                                         <p class="text-gray-400 font-normal m-0 text-xs">
                                             <strong class="text-gray-700"> Fecha de cargue: </strong> {{documento.fechaCargue}}</p>
                                     </div>
-                                    <div class="col-span-2 max-h-20 border-l-2 h-full w-full flex justify-center items-center">
+                                    <div style="grid-column: span 2 / span 2; border-left-width: 2px" class="col-span-2 max-h-20 h-full w-full flex justify-center items-center">
                                         <button mat-icon-button matTooltip="Descargar documento"
                                         (click)="onDescargar(documento)">
                                             <mat-icon class="text-blue-500 cursor-pointer" 
