@@ -42,19 +42,27 @@ export class MapaCoberturaComponent implements OnInit {
           color: 'green',
           fillColor: 'green',
           fillOpacity: 0.5,
-          radius: 1
+          radius: 6,
+          id:item.numeroSolicitud
         }).addTo(this.map);
+        circle.on('click', function (e) {
+          // alert(e.sourceTarget.options.id)
+          this.router.navigate([`/cobranza/asignacion-cuentas/${e.id}`]);
+        });
 
-        let nombre = item.cliente + '<br />' + item.direccion + ',  ' + item.barrio + '<br />' + '$' + item.saldoCartera.toLocaleString()
-        
+        let nombre = '<strong>' + item.cliente + '</strong>' + '<br />' + item.direccion + ',  ' + item.barrio + '<br />' + '$' + item.saldoCartera.toLocaleString()
+
         let tooltip = L.tooltip(loc, {
           content: nombre,
+          className: "bg-accent-800 text-white border-none",
           permanent: true,
         })
-         .addTo(this.map);
+          .addTo(this.map);
       }
 
-
+      // this.map.on('click', function (ev) {
+      //   console.log(ev); // ev is an event object (MouseEvent in this case)
+      // });
     }
 
 
@@ -68,14 +76,9 @@ export class MapaCoberturaComponent implements OnInit {
 
 
   getInformacionNegocios() {
-   
+
 
     this._cajaVirtualService.cuentasAsignadas$.subscribe((res) => {
-      // Swal.close();
-      // this.dataRow = res;
-    // });
-    // this._cajaVirtualService.getInformacionNegocios().subscribe((res) => {
-     
       this.data = res;
       if (!navigator.geolocation) {
         Swal.fire({
