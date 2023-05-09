@@ -77,7 +77,8 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/RE'),
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE'),
-            tipoReferenciacion: EndPoints.uri('/credito/tk/property/cards-informacion-refenciacion')
+            tipoReferenciacion: EndPoints.uri('/credito/tk/property/cards-informacion-refenciacion'),
+            reCalcularSolicitudMicro: EndPoints.uri('/generic/recalcular-solicitud-micro')
         }
     };
     /**

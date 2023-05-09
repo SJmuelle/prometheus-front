@@ -156,6 +156,9 @@
 
                     </div>
                 </mat-tab>
+                <mat-tab *ngIf="currentStep===4">
+                    <app-calculo-credito-micro [data]="steps[4]" [numeroSolicitud]="numeroSolicitud"></app-calculo-credito-micro>
+                </mat-tab>
             </ng-container>
         </ng-container>
     </ng-container>
