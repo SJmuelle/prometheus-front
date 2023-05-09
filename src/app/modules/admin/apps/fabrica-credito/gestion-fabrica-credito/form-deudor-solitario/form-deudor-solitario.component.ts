@@ -550,7 +550,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             }
         }
 
-        firstInvalidControl?.focus(); //without smooth behavior
+        firstInvalidControl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
     }
 
     public formatearDataInicial(): void {

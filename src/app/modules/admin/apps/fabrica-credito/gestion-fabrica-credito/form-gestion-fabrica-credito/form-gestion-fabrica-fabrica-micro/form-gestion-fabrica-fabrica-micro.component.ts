@@ -46,7 +46,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public salarioMinimo: number = 0;
     public diccionarioValidarCampo: any = {};
 
-
     fechaActual: any = moment().locale("co");
 
     constructor(
@@ -544,7 +543,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 firstInvalidControl = this.el.nativeElement.querySelector('.error');
             }
         }
-        firstInvalidControl?.focus(); //without smooth behavior
+
+        firstInvalidControl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
+
     }
 
     /**
