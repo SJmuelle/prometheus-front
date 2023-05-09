@@ -32,7 +32,7 @@ export class MapaCoberturaComponent implements OnInit {
   private initMap(): void {
     this.map = L.map('map', {
       center: [Number(this.data[5].lat), Number(this.data[5].lng)],
-      zoom: 20
+      zoom: 40
     });
     for (const item of this.data) {
 
@@ -56,12 +56,19 @@ export class MapaCoberturaComponent implements OnInit {
           content: nombre,
           className: "bg-accent-800 text-white border-none",
           permanent: true,
-        })
-          .addTo(this.map);
+          id: item.numeroSolicitud
+        }).addTo(this.map);
+        tooltip.on('click', function (e) {
+          let numeroSolicitud = e.sourceTarget.options.id
+          window.location.href = `#/cobranza/asignacion-cuentas/${numeroSolicitud}`;
+        });
       }
     }
 
-    
+    const OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 3,
+    });
     const GoogleMaps = L.tileLayer(
       'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
       {
@@ -73,15 +80,15 @@ export class MapaCoberturaComponent implements OnInit {
     const GoogleHybrid = L.tileLayer(
       'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
       {
-        maxZoom: 20,
+        maxZoom: 18,
         minZoom: 3,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
       }
     );
     const OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
       {
-        maxZoom: 20,
         minZoom: 3,
+
       }
     );
     const GoogleSatelital = L.tileLayer('https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga',
@@ -96,6 +103,7 @@ export class MapaCoberturaComponent implements OnInit {
       'Google Hybrid': GoogleHybrid,
       'Google Satelital': GoogleSatelital,
       'Open Street Map': OpenStreetMap,
+      'OpenStreetMap_HOT': OpenStreetMap_HOT
     };
 
     // this.map = L.map('map', {
@@ -106,8 +114,8 @@ export class MapaCoberturaComponent implements OnInit {
     //   ...optionsMap,
     // });
 
-  
-    const tiles =GoogleMaps
+
+    const tiles = OpenStreetMap_HOT
     tiles.addTo(this.map);
   }
 
