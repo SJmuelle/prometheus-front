@@ -152,12 +152,11 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
      */
     toggleRead(notification: Notification): void {
         // Toggle the read status
-        notification.read = notification.read=='f'?'t':'f';
 
-        let url = `update-notificacion-leida`;
+        let url = `/update-notificacion-leida`;
         let data={
             id:Number(notification.id),
-            valorLeido:notification.read=='f'?false:true
+            valorLeido:!notification.read
         }
         this._utility
             .postQuery(url, data)
@@ -239,7 +238,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         let count = 0;
                 if (this.notifications && this.notifications.length) {
             count = this.notifications.filter(
-                (notification) => (notification.read =='f')
+                (notification) => (!notification.read)
             ).length;
         }
 
