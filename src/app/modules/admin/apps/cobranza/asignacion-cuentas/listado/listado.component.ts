@@ -61,7 +61,8 @@ export class ListadoComponent implements OnInit {
     ...this.optionsTable.map(({ name }) => name),
   ];
   constructor(private _cajaVirtualService:
-    CajaVirtualService) { }
+    CajaVirtualService) { 
+    }
 
   ngOnInit(): void {
     this.getInformacionNegocios();
@@ -71,18 +72,10 @@ export class ListadoComponent implements OnInit {
   }
 
   getInformacionNegocios() {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._cajaVirtualService.getInformacionNegocios().subscribe((res) => {
-      Swal.close();
-      this.dataRow = res.data;
-   
+    
+    this._cajaVirtualService.cuentasAsignadas$.subscribe((res) => {
+     
+      this.dataRow = res;
     });
   }
 }

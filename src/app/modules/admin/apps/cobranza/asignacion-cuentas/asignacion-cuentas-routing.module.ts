@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AsignacionCuentasComponent } from './asignacion-cuentas.component';
 import { DetalleAsignacionComponent } from './detalle-asignacion/detalle-asignacion.component';
 import { CanDeactivateAsignacionDetalles } from './asignacion-cuentas.guards';
+import { AsignacionCuentaResolver } from './asignacion-cuenta.resolver';
 
 const routes: Routes = [
   {
@@ -12,12 +13,15 @@ const routes: Routes = [
       {
         path: ':idNegocio',
         component: DetalleAsignacionComponent,
-        canDeactivate:[CanDeactivateAsignacionDetalles]
+        canDeactivate: [CanDeactivateAsignacionDetalles]
       },
     ],
-   
+    resolve: {
+      contacts: AsignacionCuentaResolver,
+    },
+
   },
-  
+
 ];
 
 @NgModule({

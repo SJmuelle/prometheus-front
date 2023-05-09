@@ -68,17 +68,15 @@ export class MapaCoberturaComponent implements OnInit {
 
 
   getInformacionNegocios() {
-    Swal.fire({
-      title: 'Cargando',
-      html: 'Buscando información...',
-      timer: 500000,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    }).then((result) => { });
-    this._cajaVirtualService.getInformacionNegocios().subscribe((res) => {
-      Swal.close();
-      this.data = res.data;
+   
+
+    this._cajaVirtualService.cuentasAsignadas$.subscribe((res) => {
+      // Swal.close();
+      // this.dataRow = res;
+    // });
+    // this._cajaVirtualService.getInformacionNegocios().subscribe((res) => {
+     
+      this.data = res;
       if (!navigator.geolocation) {
         Swal.fire({
           icon: 'warning',

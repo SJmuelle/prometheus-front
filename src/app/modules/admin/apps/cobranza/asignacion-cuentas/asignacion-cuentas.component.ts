@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
+import { CajaVirtualService } from 'app/core/services/caja-virtual.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -17,15 +18,15 @@ export class AsignacionCuentasComponent implements OnInit,OnDestroy {
 
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    private _fuseMediaWatcherService: FuseMediaWatcherService
-
-  ) { }
+    private _fuseMediaWatcherService: FuseMediaWatcherService,
+  ) { 
+     
+  }
 
 
   ngOnInit(): void {
     // Subscribe to MatDrawer opened change
     this.matDrawer.openedChange.subscribe((opened) => {
-      debugger
       if (!opened) {
         // Remove the selected contact when drawer closed
         // this.selectedContact = null;
