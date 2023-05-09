@@ -82,8 +82,10 @@ export class VerDocumentosComponent implements OnInit {
                     this.documentos[item.tipoTercero].push(item)
                 }  
             }
-            
         });
+
+        
+        
 
     }
 
@@ -149,6 +151,32 @@ export class VerDocumentosComponent implements OnInit {
                 link.click();
             });
     }
+
+    private preViewDocumento(datos: any): void {
+        const datosDescargar = {
+            numeroSolicitud: this.numeroSolicitud,
+            idAdjunto: datos.idArchivoCargado,
+        };
+        this.documentosServices
+            .getDocumento(datosDescargar)
+            .subscribe((res) => {    
+                datos.base64 =  res.data.base64
+                datos.display = !datos.display
+            });
+
+    }
+
+    carguePreview(documento: any){
+        if(this.extesionValidAudioYPDF(documento)){
+            this.preViewDocumento(documento)
+        }
+    }
+
+    extesionValidAudioYPDF(documento: any){
+        const ext = this.getExtension(documento.nombreArchivoReal).toLowerCase();
+        return ext === 'pdf' || ext === 'mp3' || ext === 'ogg' || ext === 'agg'
+    }
+
 
     private ocultarTercero(key: string){
         if(key === 'S'){

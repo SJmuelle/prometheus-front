@@ -77,6 +77,7 @@
                                     <mat-checkbox *ngIf="item.archivoCargado !== 'N'"
                                         [disabled]="!item.selected && longitudArchivos > 0" #checkbox
                                         (change)="onSeleccionDocumento(checkbox, item)"
+                                        (blur)="onSeleccionDocumento(checkbox, item)"
                                         [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
@@ -92,6 +93,7 @@
                                 <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                     <ng-container *ngIf="item.archivoCargado === 'N'">
                                         <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
+
                                             class="d-none"
                                             [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
                                         <button mat-icon-button matTooltip="Cargar documento"
@@ -110,7 +112,8 @@
                                 <td class="px-2 text-sm border text-center">
                                     <ng-container *ngIf="item.archivoCargado !== 'N'">
                                         <button mat-icon-button matTooltip="Descargar documento"
-                                            (click)="getDocumentoPreView(item);onDescargar(item)">
+                                            (click)="getDocumentoPreView(item);onDescargar(item)"
+                                            >
                                             <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
                                         </button>
                                     </ng-container>
