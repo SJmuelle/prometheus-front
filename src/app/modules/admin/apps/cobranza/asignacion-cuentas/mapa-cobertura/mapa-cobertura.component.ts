@@ -43,11 +43,11 @@ export class MapaCoberturaComponent implements OnInit {
           fillColor: 'green',
           fillOpacity: 0.5,
           radius: 6,
-          id:item.numeroSolicitud
+          id: item.numeroSolicitud
         }).addTo(this.map);
         circle.on('click', function (e) {
-          // alert(e.sourceTarget.options.id)
-          this.router.navigate([`/cobranza/asignacion-cuentas/${e.id}`]);
+          let numeroSolicitud = e.sourceTarget.options.id
+          window.location.href = `#/cobranza/asignacion-cuentas/${numeroSolicitud}`;
         });
 
         let nombre = '<strong>' + item.cliente + '</strong>' + '<br />' + item.direccion + ',  ' + item.barrio + '<br />' + '$' + item.saldoCartera.toLocaleString()
@@ -59,17 +59,55 @@ export class MapaCoberturaComponent implements OnInit {
         })
           .addTo(this.map);
       }
-
-      // this.map.on('click', function (ev) {
-      //   console.log(ev); // ev is an event object (MouseEvent in this case)
-      // });
     }
 
+    
+    const GoogleMaps = L.tileLayer(
+      'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
+      {
+        maxZoom: 18,
+        minZoom: 3,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    );
+    const GoogleHybrid = L.tileLayer(
+      'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
+      {
+        maxZoom: 20,
+        minZoom: 3,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      }
+    );
+    const OpenStreetMap = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+      {
+        maxZoom: 20,
+        minZoom: 3,
+      }
+    );
+    const GoogleSatelital = L.tileLayer('https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga',
+      {
+        maxZoom: 20,
+        minZoom: 3,
+      }
+    );
 
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 3,
-    });
+    const baseLayers: L.Control.LayersObject = {
+      'Google Maps': GoogleMaps,
+      'Google Hybrid': GoogleHybrid,
+      'Google Satelital': GoogleSatelital,
+      'Open Street Map': OpenStreetMap,
+    };
+
+    // this.map = L.map('map', {
+    //   zoomAnimation: true,
+    //   layers: [GoogleMaps],
+    //   inertia: true,
+    //   worldCopyJump: true,
+    //   ...optionsMap,
+    // });
+
+  
+    const tiles =GoogleMaps
     tiles.addTo(this.map);
   }
 
