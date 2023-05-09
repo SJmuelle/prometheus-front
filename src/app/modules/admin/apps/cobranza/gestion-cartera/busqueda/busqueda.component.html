@@ -1,0 +1,55 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+    <!-- Header -->
+    <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b bg-white">
+
+        <!-- Title -->
+        <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 overflow-hidden">
+                <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Gestión carteras
+                </div>
+                <!-- <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                    <div class="font-medium tracking-tight text-secondary">
+                        Visualiza las cuentas que han sido asignadas para la respectiva gestión
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Contacts list -->
+    <div class="relative h-cal bg-gray-100">
+        <div
+            class="relative pt-8 pb-28 px-4 sm:pt-20 sm:pb-48 sm:px-16 overflow-hidden bg-gray-800 dark:bg-gray-900 dark">
+            <!-- Background - @formatter:off -->
+            <!-- Rings -->
+            <svg class="absolute inset-0 pointer-events-none" viewBox="0 0 960 540" width="100%" height="100%"
+                preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+                <g class="text-gray-700 opacity-25" fill="none" stroke="currentColor" stroke-width="100">
+                    <circle r="234" cx="196" cy="23"></circle>
+                    <circle r="234" cx="790" cy="491"></circle>
+                </g>
+            </svg>
+            <!-- @formatter:on -->
+            <div class="z-10 relative flex flex-col items-center">
+                <!-- <h2 class="text-xl font-semibold">HELP CENTER</h2> -->
+                <div class="mt-1 text-3xl sm:text-7xl font-extrabold tracking-tight leading-tight text-center">
+                    Gestiona los créditos que han sido asignados
+                </div>
+                <mat-form-field
+                    class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-bold w-full max-w-80 sm:max-w-120 mt-10 sm:mt-20">
+                    <input matInput [placeholder]="'Busca número de identificación del cliente'">
+                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                </mat-form-field>
+
+                <button class="mt-10 sm:mt-20" mat-flat-button [color]="'primary'"  [routerLink]="['./222755']" >
+                    <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                    <span class="ml-2 mr-1">Buscar</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

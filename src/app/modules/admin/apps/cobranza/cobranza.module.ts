@@ -8,7 +8,7 @@ import { CobranzaRoutingModule } from './cobranza-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    CobranzaRoutingModule
+    CobranzaRoutingModule,
   ]
 })
 export class CobranzaModule { }

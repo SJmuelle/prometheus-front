@@ -65,6 +65,10 @@ export class MapaCoberturaComponent implements OnInit {
       }
     }
 
+    const OpenStreetMap_CH = L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+    });
     const OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       maxZoom: 18,
       minZoom: 3,
@@ -103,7 +107,8 @@ export class MapaCoberturaComponent implements OnInit {
       'Google Hybrid': GoogleHybrid,
       'Google Satelital': GoogleSatelital,
       'Open Street Map': OpenStreetMap,
-      'OpenStreetMap_HOT': OpenStreetMap_HOT
+      'OpenStreetMap_HOT': OpenStreetMap_HOT,
+      'OpenStreetMap_CH': OpenStreetMap_CH
     };
 
     // this.map = L.map('map', {
@@ -115,7 +120,7 @@ export class MapaCoberturaComponent implements OnInit {
     // });
 
 
-    const tiles = OpenStreetMap_HOT
+    const tiles = OpenStreetMap_CH
     tiles.addTo(this.map);
   }
 
