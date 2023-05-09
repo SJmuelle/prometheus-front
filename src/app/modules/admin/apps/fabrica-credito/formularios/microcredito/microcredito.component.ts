@@ -100,8 +100,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this.cargueActividadEconomica()
         });
 
-        this.form.get('valorCredito')?.valueChanges.subscribe((e: string) => {
-            this.getPlazosCredito(this.form.controls.valorCredito.value ? '0' :this.form.controls.valorCredito.value )
+        this.form.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
+            
+            this.getPlazosCredito(!!valor ? valor : '0' )
         })
 
         setTimeout(() => {
@@ -338,7 +339,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtener limite de plazos por el valor de credito
      */
-    public getPlazosCredito(valorCredito: number) {
+    public getPlazosCredito(valorCredito: any) {
 
          this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
             this.plazosCredito = rep
