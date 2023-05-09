@@ -120,7 +120,7 @@
                                         <div *ngSwitchDefault>
                                             <!-- preguntas tipo text sin hijos   -->
                                                 <!-- {{pregunta.objHtml | json}} -->
-                                                <div class="grid grid-cols-2 gap-2 mt-4">
+                                                <div class="grid grid-cols-1 gap-2 mt-4">
                                                     <mat-form-field class="w-full fuse-mat-dense">
                                                         <mat-label> {{pregunta.pregunta}} </mat-label>
                                                         <span *ngIf="pregunta.objHtml.input.mascaraInput === 'moneda'" matPrefix>$</span>
@@ -158,7 +158,7 @@
                     </div>
                 </mat-tab>
                 <mat-tab *ngIf="currentStep===4">
-                    <app-calculo-credito-micro [data]="steps[4]" [numeroSolicitud]="numeroSolicitud"></app-calculo-credito-micro>
+                    <app-calculo-credito-micro [data]="steps[4]" [numeroSolicitud]="numeroSolicitud" [idNumber]="identificacion"></app-calculo-credito-micro>
                 </mat-tab>
             </ng-container>
         </ng-container>

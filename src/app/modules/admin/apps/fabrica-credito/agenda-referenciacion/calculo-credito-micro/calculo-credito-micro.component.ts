@@ -5,6 +5,7 @@ import { GenericasService } from 'app/core/services/genericas.service';
 import Swal from 'sweetalert2';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 
 @Component({
   selector: 'app-calculo-credito-micro',
@@ -15,16 +16,19 @@ export class CalculoCreditoMicroComponent implements OnInit {
 
   @Input() data;
   @Input() numeroSolicitud;
+  @Input() idNumber;
   form: FormGroup;
   public unsubscribe$: Subject<any> = new Subject<any>();
   public salarioMinimo: number;
   public plazosCredito: any;
+  public datosCompletoSolicitud: any;
   
 
   constructor(
     private fb: FormBuilder,
     private genericaServices: GenericasService,
     private _formularioCreditoService: FormularioCreditoService,
+    private fabricaCreditoService: FabricaCreditoService,
   ) {
     this.form = this.fb.group({
       monto: ['', Validators.required],
@@ -34,6 +38,7 @@ export class CalculoCreditoMicroComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSalarioMinimo()
+    this.getTodosFabricaCreditoAgenda(this.numeroSolicitud,this.idNumber)
   }
 
   private getSalarioMinimo() {
@@ -70,17 +75,39 @@ export class CalculoCreditoMicroComponent implements OnInit {
         Swal.fire({
           text: msg,
           icon: 'info'
+        }).then(rep => {
+          location.reload()
         })
        }else{
         Swal.fire({
           title: 'Recalculado',
           text: 'Se ha guardado con éxito',
           icon: 'success'
-        }).then(rep =>{
-          location.reload()
         })
        }
     })
+  }
+
+   /**
+ * Track by function for ngFor loops
+ *
+ * @param index
+ * @param item
+ */
+   private getTodosFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    const datosSolicitud: any = {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    };
+    this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud)
+      .subscribe(({ data }) => {
+        Swal.close();
+        this.datosCompletoSolicitud = data;
+        
+        this.form.controls['monto'].setValue(data.valorSolicitado)
+        this.form.controls['plazo'].setValue(data.plazo)
+      });
   }
 
   ngOnDestroy(): void {
