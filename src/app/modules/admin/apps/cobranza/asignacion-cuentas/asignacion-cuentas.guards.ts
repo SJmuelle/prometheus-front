@@ -25,14 +25,14 @@ export class CanDeactivateAsignacionDetalles implements CanDeactivate<DetalleAsi
         // If the next state doesn't contain '/Asignacion'
         // it means we are navigating away from the
         // Asignacion app
-        if ( !nextState.url.includes('/asignacion') )
+        if ( !nextState.url.includes('/Asignacion') )
         {
             // Let it navigate
             return true;
         }
 
         // If we are navigating to another asignacion...
-        if ( nextRoute.paramMap.get('id') )
+        if ( nextRoute.paramMap.get('numeroSolicitud') )
         {
             // Just navigate
             return true;

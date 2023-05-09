@@ -11,7 +11,7 @@ const routes: Routes = [
     component: AsignacionCuentasComponent,
     children: [
       {
-        path: ':idNegocio',
+        path: ':numeroSolicitud',
         component: DetalleAsignacionComponent,
         canDeactivate: [CanDeactivateAsignacionDetalles]
       },

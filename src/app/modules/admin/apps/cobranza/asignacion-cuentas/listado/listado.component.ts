@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IOptionTable } from 'app/core/interfaces';
 import { CajaVirtualService } from 'app/core/services/caja-virtual.service';
 import Swal from 'sweetalert2';
@@ -60,21 +61,23 @@ export class ListadoComponent implements OnInit {
   public displayedColumns: string[] = [
     ...this.optionsTable.map(({ name }) => name),
   ];
-  constructor(private _cajaVirtualService:
-    CajaVirtualService) { 
-    }
+  constructor(private _cajaVirtualService: CajaVirtualService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.getInformacionNegocios();
   }
   selecAlarmTable(e) {
     console.log(e)
+    this.router.navigate([`/cobranza/asignacion-cuentas/${e.numeroSolicitud}`]);
   }
 
   getInformacionNegocios() {
-    
+
     this._cajaVirtualService.cuentasAsignadas$.subscribe((res) => {
-     
+
       this.dataRow = res;
     });
   }

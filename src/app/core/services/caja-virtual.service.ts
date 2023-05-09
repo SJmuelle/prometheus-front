@@ -39,7 +39,6 @@ export class CajaVirtualService {
 
     return this._http.get<any>(`${this._appSettings.cajaVirtual.url.infoNegocio}`).pipe(
       tap((respuesta) => {
-        debugger
         this._cuentasAsignadas.next(respuesta.data);
       })
     );
