@@ -101,7 +101,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         });
 
         this.form.get('valorCredito')?.valueChanges.subscribe((e: string) => {
-            this.getPlazosCredito(this.form.controls.valorCredito.value)
+            this.getPlazosCredito(this.form.controls.valorCredito.value ? '0' :this.form.controls.valorCredito.value )
         })
 
         setTimeout(() => {
