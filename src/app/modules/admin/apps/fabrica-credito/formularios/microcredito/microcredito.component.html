@@ -143,7 +143,7 @@
                 del negocio
             </div>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿ Comercializas productos o servicios?</mat-label>
+                <mat-label>¿Comercializas productos o servicios?</mat-label>
                 <mat-select formControlName="tipoActividad">
                     <mat-option *ngFor="let actividadesMicro of dataInicial?.actividadesMicro"
                         [value]="actividadesMicro.codigo">{{actividadesMicro.valor}}
@@ -165,7 +165,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>¿ En qué tipo de local queda tu negocio?</mat-label>
+                <mat-label>¿En qué tipo de local queda tu negocio?</mat-label>
                 <mat-select formControlName="tipoLocal">
                     <mat-option *ngFor="let tiposLocales of dataInicial?.tiposLocales"
                         [value]="tiposLocales.codigo">{{tiposLocales.valor}}

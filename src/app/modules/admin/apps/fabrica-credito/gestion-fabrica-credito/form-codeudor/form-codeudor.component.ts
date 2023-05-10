@@ -83,6 +83,32 @@ export class FormCodeudorComponent implements OnInit {
         }
     }
 
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
+                    }
+                });
+            }, 1000);
+        }
+    }
+
     /**
      * @description: Obtiene la data para cargar al formulario
      */
@@ -574,7 +600,7 @@ export class FormCodeudorComponent implements OnInit {
 
             this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
                 this.otpValidado = rep.data.resultado === 'OK'
-                
+
                 if(rep.data.resultado === 'OK'){
                     const dataEnvio = {
                         numeroSolicitud: Number(this.numeroSolicitud),
@@ -600,6 +626,7 @@ export class FormCodeudorComponent implements OnInit {
         // camara de comercio
         this.form.get('camaraComercio').valueChanges.subscribe((e: string) => {
             const ocup = this.form.controls.ocupacion.value;
+            this.marginTopInputDynamic()
             if ((ocup !== 'EPLDO' &&
                 (ocup === 'INDEFO' || ocup === 'PROIN' || ocup === 'INDNFO')) && this.form.controls.camaraComercio.value === 'S') {
                 this.form
@@ -622,6 +649,7 @@ export class FormCodeudorComponent implements OnInit {
         })
         // ocupacion Empleado
         this.form.get('ocupacion').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (
                 e !== 'EPLDO' &&
                 !(e === 'INDEFO' || e === 'PROIN' || e === 'INDNFO')
@@ -958,6 +986,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('legalOperacionExtranjera')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'S') {
                     this.form
                         .get('tipoOperacionExtranjera')
@@ -1000,6 +1029,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('legalPersonalExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'S') {
                     this.form
                         .get('vinculacionExpuesta')
@@ -1111,6 +1141,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('vinculadoActualExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'N') {
                     this.form
                         .get('fechaDesvinculacionExpuesta')
@@ -1135,7 +1166,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('declaroIngresoDeclaracionAuto')
             .valueChanges.subscribe((e: string) => {
-
+                this.marginTopInputDynamic()
                 if (e === 'OT') {
                     this.form
                         .get('otroIngresoDeclaracionAuto')
@@ -1157,6 +1188,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('legalCargoPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'S') {
                     this.form
                         .get('cargoPublico')
@@ -1202,6 +1234,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('vinculadoActualPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'N') {
                     this.form
                         .get('fechaDesvinculacionPublico')

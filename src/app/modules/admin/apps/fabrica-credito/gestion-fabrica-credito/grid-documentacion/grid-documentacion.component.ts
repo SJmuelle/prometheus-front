@@ -75,7 +75,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             numeroSolicitud: this.numeroSolicitud,
             identificacion: this.identificacion,
         };
-        
+
         this.fabricaCreditoService
             .getDatosFabricaAgenda(datosSolicitud)
             .pipe(takeUntil(this.unSubscribe$))
@@ -394,10 +394,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             );
         } else {
             const pngDim = png.scale(0.5);
-            
+
             pag.drawImage(png, {
                 x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
-                y: pag.getHeight() / 2 - pngDim.height / 2 + 250,
+                y:  pag.getHeight() / 2 - pngDim.height / 2,
                 width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
                 height: pngDim.height,
             });
@@ -429,17 +429,18 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         const pag = pdfDoc.addPage();
         const { width, height } = pag.getSize();
         let pngImage;
-        
+
         if (ext === 'PNG') {
             pngImage = await pdfDoc.embedPng(base64);
         } else {
             pngImage = await pdfDoc.embedJpg(base64);
         }
-        
+
         const pngDim = pngImage.scale(0.5);
+
         pag.drawImage(pngImage, {
             x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
-            y: pag.getHeight() / 2 - pngDim.height / 2 + 250,
+            y: pag.getHeight() / 2 - pngDim.height / 2,
             width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
             height: pngDim.height,
         });
@@ -453,14 +454,14 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         this.documentosCodeudor = [];
         this.documentosDeudor = [];
         this.documentos = [];
-        
+
         this.documentosServices.getDocumentos(datos).subscribe((res) => {
             for (const item of res.data) {
                 switch (item.tipoTercero) {
                     case 'C':
                         this.documentosCodeudor.push(item);
                         break;
-                    case 'S':                  
+                    case 'S':
                         this.documentosDeudor.push(item);
                         break;
                     default:
@@ -481,7 +482,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 return x;
             });
         });
-        
+
     }
 
     private guardarAdjunto(datos: any): void {
@@ -545,22 +546,22 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
     private getDocumentoPreView(datos: any) {
         this.datoPreview = datos
-        
+
         const datosDescargar = {
             numeroSolicitud: this.numeroSolicitud,
             idAdjunto: datos.idArchivoCargado,
         };
-        
+
 
         this.documentosServices
             .getDocumento(datosDescargar)
-            .subscribe((res) => {   
+            .subscribe((res) => {
                 // console.log(extension);
-                
+
                 this.datoPreview.base64 = res.data.base64
                 this.datoPreview.extension =  res.data.extension
             });
-            
+
         return true
     }
 
@@ -671,7 +672,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             .getDocumentoHistorico(datosHistorico)
             .subscribe((res) => {
                 this.datosDocumentosHistorico = res.data;
-                
+
                 Swal.close();
             });
     }

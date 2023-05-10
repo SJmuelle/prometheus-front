@@ -82,7 +82,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.getSalarioMinimo();
         this.marginTopInputDynamic();
 
-
     }
 
 
@@ -126,7 +125,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
             }
         })
-        
+
 
         this.form.get('valorSolicitado')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.valorSolicitado) {
@@ -137,7 +136,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                         'valorSolicitado',
                         'INTEGER'
                     );
-                   
+
                 }
             }
             this.getPlazosCredito(this.form.controls.valorSolicitado.value)
@@ -183,6 +182,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     marginTopInputDynamic() {
         if (window.innerWidth < 600) {
+            console.log('ejecutando');
+
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
 
@@ -207,11 +208,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         }
     }
 
-    ngAfterViewChecked(): void {
-        //Called after every check of the component's view. Applies to components only.
-        //Add 'implements AfterViewChecked' to the class.
-        this.marginTopInputDynamic()
-    }
     /**
      * @description:
      */
@@ -438,7 +434,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     private getBarrios(codigo: string): void {
         this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
-            this.barrios = rep 
+            this.barrios = rep
         })
     }
 
@@ -477,24 +473,28 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Guardado de datos fabrica
      */
     private postFormularioFabrica(datos: FormularioCreditoMicro): void {
-        Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-        this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
-            .subscribe(() => {
-                Swal.fire(
-                    'Completado',
-                    'Información guardada con éxito',
-                    'success'
-                ).then(rep => {
-                    location.reload()
-                });
-                //   this.router.navigate(['/credit-factory/agenda-completion']);
-            }, (error) => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ha ocurrido un error',
-                    text: error.error.msg,
-                });
-            });
+
+        Swal.fire('Cargando','Guardando información'); Swal.showLoading();
+setTimeout(() => {
+    this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+    .subscribe(() => {
+        Swal.fire(
+            'Completado',
+            'Información guardada con éxito',
+            'success',
+        ).then(rep => {
+            location.reload()
+        });
+        //   this.router.navigate(['/credit-factory/agenda-completion']);
+    }, (error) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Ha ocurrido un error',
+            text: error.error.msg,
+        });
+    });
+}, 1);
+
     }
 
     public validacionCampos(campo: string, modificado: string, variable: string, type: String): void {
@@ -861,6 +861,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public addValidation() {
         // Camara de comercio form
         this.form.get('camaraComercio').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'S') {
                 this.form.get('tieneRut')?.setValidators([Validators.required])
                 this.form.get('tieneRut')?.enable({ emitEvent: true, onlySelf: true })
@@ -876,7 +877,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
         // Arriendo local form
         this.form.get('tipoLocal').valueChanges.subscribe((e: number) => {
-
+            this.marginTopInputDynamic()
             if (Number(e) === 2) {
                 this.form.get('nombreArrendador')?.setValidators([Validators.required, Validators.maxLength(30)])
                 this.form.get('nombreArrendador')?.enable({ emitEvent: true, onlySelf: true })
@@ -900,6 +901,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         })
         // Empleo conyuge empleado form
         this.form.get('tipoEmpleoConyuge').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'EPLDO') {
                 this.form.get('nombreEmpresaConyuge')?.setValidators([Validators.required])
                 this.form.get('nombreEmpresaConyuge')?.enable({ emitEvent: true, onlySelf: true })
@@ -924,6 +926,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // posee cuenta bancaria
         this.form.get('poseeCuentaBancaria').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'S') {
                 this.form.get('entidadBancaria')?.setValidators([Validators.required])
                 this.form.get('entidadBancaria')?.enable({ emitEvent: true, onlySelf: true })
@@ -952,6 +955,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // operacion Extranjera moneda Form
         this.form.get('legalOperacionExtranjera').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'S') {
                 this.form.get('tipoOperacionExtranjera')?.setValidators([Validators.required])
                 this.form.get('tipoOperacionExtranjera')?.enable({ emitEvent: true, onlySelf: true })
@@ -964,6 +968,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // operacion cripto moneda Form
         this.form.get('legalOperacionCriptomoneda').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'S') {
                 this.form.get('tipoOperacionCriptomoneda')?.setValidators([Validators.required])
                 this.form.get('tipoOperacionCriptomoneda')?.enable({ emitEvent: true, onlySelf: true })
@@ -976,6 +981,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // cargo publico
         this.form.get('legalCargoPublico').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'S') {
                 this.form.get('cargoPublico')?.setValidators([Validators.required, Validators.maxLength(80)])
                 this.form.get('cargoPublico')?.enable({ emitEvent: true, onlySelf: true })
@@ -994,6 +1000,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
         this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'N') {
                 this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionPublico')?.enable({ emitEvent: true, onlySelf: true })
@@ -1006,6 +1013,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // Datos cargo publico familiar
         this.form.get('legalPersonalExpuesta').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === 'S') {
                 this.form.get('vinculacionExpuesta')?.setValidators([Validators.required, Validators.max(50)])
                 this.form.get('vinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
@@ -1044,7 +1052,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
         this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
-
+            this.marginTopInputDynamic()
             if (e === 'N') {
                 this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
@@ -1057,7 +1065,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // declaro ingresos Otros declaroIngresoDeclaracionAuto
         this.form.get('declaroIngresoDeclaracionAuto').valueChanges.subscribe((e: string) => {
-
+            this.marginTopInputDynamic()
             if (e === 'OT') {
                 this.form.get('otroIngresoDeclaracionAuto')?.setValidators([Validators.required])
                 this.form.get('otroIngresoDeclaracionAuto')?.enable({ emitEvent: true, onlySelf: true })
@@ -1070,7 +1078,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // conyuge form si aplica Casado o union libre
         this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
-
+            this.marginTopInputDynamic()
             if (e === 'CA' || e === 'UL') {
                 this.form.get('primerNombreConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
                 this.form.get('primerNombreConyuge')?.enable({ emitEvent: true, onlySelf: true })
@@ -1108,6 +1116,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             // Local comercial propio
+            this.marginTopInputDynamic()
             if (e === '1') {
                 this.form.controls.tipoLocalCalulado.setValue('Propio')
                 this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte')
@@ -1135,6 +1144,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         // veredas
         this.form.get('tipoVereda').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === '1') {
                 this.form.get('descripcionVereda')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('descripcionVereda')?.setValidators([Validators.required])
@@ -1144,6 +1154,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
         this.form.get('tipoVeredaNegocio').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (e === '1') {
                 this.form.get('descripcionVeredaNegocio')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('descripcionVeredaNegocio')?.setValidators([Validators.required])

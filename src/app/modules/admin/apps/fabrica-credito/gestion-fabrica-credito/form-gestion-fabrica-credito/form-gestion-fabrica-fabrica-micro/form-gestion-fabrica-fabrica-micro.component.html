@@ -167,7 +167,7 @@
                     {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-tab-group [animationDuration]="'0'" class="sm:mt-5 mt-10">
+            <mat-tab-group (selectedTabChange)="marginTopInputDynamic()" [animationDuration]="'0'" class="sm:mt-5 mt-10">
                 <mat-tab>
                     <ng-template matTabLabel>Datos del titular</ng-template>
                     <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
@@ -2551,17 +2551,17 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab *ngIf="form.controls['tipoDeudor'].value === '1' || form.controls['tipoDeudor'].value === '3'">
-                    <ng-template matTabLabel>
+                <mat-tab  *ngIf="form.controls['tipoDeudor'].value === '1' || form.controls['tipoDeudor'].value === '3'">
+                    <ng-template matTabLabel >
                         Codeudor
                     </ng-template>
-                    <form-codeudor></form-codeudor>
+                    <form-codeudor ></form-codeudor>
                 </mat-tab>
                 <mat-tab *ngIf="form.controls['tipoDeudor'].value === '2' || form.controls['tipoDeudor'].value === '3'">
-                    <ng-template matTabLabel>
+                    <ng-template matTabLabel >
                         Deudor solidario
                     </ng-template>
-                    <form-deudor-solitario></form-deudor-solitario>
+                    <form-deudor-solitario ></form-deudor-solitario>
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Documentación</ng-template>

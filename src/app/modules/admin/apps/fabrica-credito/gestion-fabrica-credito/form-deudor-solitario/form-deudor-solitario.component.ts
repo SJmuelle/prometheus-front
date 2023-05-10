@@ -81,6 +81,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.cargueInicial();
 
         this.addValidation();
+        this.marginTopInputDynamic()
     }
 
     ngOnDestroy(): void {
@@ -277,10 +278,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
                 this.mostrarOTP = data?.autorizacionesValidadas === 'N'
-                
-                
+
+
                 this.dataGeneralIncial = data;
-               // this.mostrarOTP = !!data?.autorizacionesValidadas 
+               // this.mostrarOTP = !!data?.autorizacionesValidadas
                 this.formatearDataInicial();
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -291,7 +292,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             });
     }
 
-    
+
     solicitarCodigo(): void {
             const data = {
                 numeroSolicitud: this.numeroSolicitud,
@@ -331,7 +332,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
             this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
                 this.otpValidado = rep.data.resultado === 'OK'
-                
+
                 if(rep.data.resultado === 'OK'){
                     const dataEnvio = {
                         numeroSolicitud: Number(this.numeroSolicitud),
@@ -495,6 +496,32 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         });
     }
 
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
+                    }
+                });
+            }, 1000);
+        }
+    }
+
     /**
      * @description: Guardado de datos fabrica
      */
@@ -586,6 +613,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('legalOperacionExtranjera')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'S') {
                     this.formDeudorSolidario
                         .get('tipoOperacionExtranjera')
@@ -628,6 +656,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('legalPersonalExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'S') {
                     this.formDeudorSolidario
                         .get('vinculacionExpuesta')
@@ -748,6 +777,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('vinculadoActualExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'N') {
                     this.formDeudorSolidario
                         .get('fechaDesvinculacionExpuesta')
@@ -772,6 +802,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('legalCargoPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'S') {
                     this.formDeudorSolidario
                         .get('cargoPublico')
@@ -821,6 +852,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('vinculadoActualPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'N') {
                     this.formDeudorSolidario
                         .get('fechaDesvinculacionPublico')
