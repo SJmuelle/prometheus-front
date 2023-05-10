@@ -1466,7 +1466,10 @@ export class FormCodeudorComponent implements OnInit {
             }
         }
 
-        firstInvalidControl?.focus(); //without smooth behavior
+        firstInvalidControl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
     }
 
     private validateExpedicion(control: AbstractControl) {

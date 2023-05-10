@@ -283,6 +283,14 @@ export class GenericasService {
     }
 
     /**
+    * @description:
+    */
+    public postReCalcularSolicitudMicro(data: any): Observable<any> {
+
+        return this._http.post(this._appSettings.agendaReferenciacion.url.reCalcularSolicitudMicro, data);
+    }
+    
+    /**
   * @description: Obtiene unidades de negocio
   */
     public getUnidadesNegocio(): Observable<any> {
