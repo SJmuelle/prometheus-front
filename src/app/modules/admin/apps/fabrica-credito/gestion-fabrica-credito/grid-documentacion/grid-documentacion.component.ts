@@ -394,10 +394,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             );
         } else {
             const pngDim = png.scale(0.5);
-            
+
             pag.drawImage(png, {
                 x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
-                y: pag.getHeight() / 2 - pngDim.height / 2 + 250,
+                y:  pag.getHeight() / 2 - pngDim.height / 2,
                 width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
                 height: pngDim.height,
             });
@@ -437,9 +437,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         }
 
         const pngDim = pngImage.scale(0.5);
+
         pag.drawImage(pngImage, {
             x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
-            y: pag.getHeight() / 2 - pngDim.height / 2 + 250,
+            y: pag.getHeight() / 2 - pngDim.height / 2,
             width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
             height: pngDim.height,
         });
