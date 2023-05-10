@@ -76,7 +76,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this.audio.autoplay = true;
+
         this.consulta(true);
         setTimeout(() => {
             this.consulta(true);
@@ -92,10 +92,11 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
             .subscribe((notifications: any) => {
 
                 if(sonar && this.notificacionesActivas(notifications.data) > 0){
+                    this.audio.autoplay = true;
                     this.audio.play()
                 }
                 this.notifications = notifications.data;
-                           
+
                 this._calculateUnreadCount();
                 this._changeDetectorRef.markForCheck();
             });
@@ -114,7 +115,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         }
     }
 
-    notificacionesActivas(notificaciones: Notification[]){       
+    notificacionesActivas(notificaciones: Notification[]){
         return notificaciones.filter(noti =>!noti.read).length
     }
 
