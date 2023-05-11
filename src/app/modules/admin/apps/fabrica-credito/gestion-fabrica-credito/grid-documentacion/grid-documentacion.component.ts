@@ -397,9 +397,9 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
             pag.drawImage(png, {
                 x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
-                y:  pag.getHeight() / 2 - pngDim.height / 2,
+                y: pngDim.height > pag.getHeight() ? pag.getHeight() / 2 - pag.getHeight() / 2 : pag.getHeight() / 2 - pngDim.height / 2,
                 width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
-                height: pngDim.height,
+                height: pngDim.height > pag.getHeight() ? pag.getHeight(): pngDim.height,
             });
 
             if (guardar) {
@@ -440,9 +440,9 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
         pag.drawImage(pngImage, {
             x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
-            y: pag.getHeight() / 2 - pngDim.height / 2,
+            y: pngDim.height > pag.getHeight() ? pag.getHeight() / 2 - pag.getHeight() / 2 : pag.getHeight() / 2 - pngDim.height / 2,
             width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
-            height: pngDim.height,
+            height: pngDim.height > pag.getHeight() ? pag.getHeight(): pngDim.height,
         });
 
         const pdfBase64 = await pdfDoc.saveAsBase64();
