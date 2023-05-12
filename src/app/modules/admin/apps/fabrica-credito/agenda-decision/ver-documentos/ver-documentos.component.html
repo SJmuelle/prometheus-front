@@ -25,7 +25,7 @@
             </div>
 
             <div class="flex flex-col justify-center items-center mt-2 divide-y">
-                <mat-tab-group class="flex w-full justify-items-center items-center moreWidth">
+                <mat-tab-group class="flex w-full justify-items-center items-center moreWidth changeTabStyle">
                     <ng-container *ngFor="let documentosPorTipo of documentos | keyvalue: keyDescOrder">
                         <mat-tab *ngIf="!ocultarTercero(documentosPorTipo.key)">
                             <ng-template matTabLabel>{{getTituloPorKey(documentosPorTipo.key)}}</ng-template>
