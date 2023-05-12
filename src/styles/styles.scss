@@ -177,3 +177,7 @@ pagination-controls > pagination-template > ul > li {
     font-weight: 500;
     font-family: Helvetica, Arial, sans-serif;
   } 
+
+  mat-tab-group >  .mat-tab-body-wrapper{
+    width: 100% !important;
+  }
