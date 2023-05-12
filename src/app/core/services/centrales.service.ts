@@ -33,10 +33,8 @@ export class CentralesService {
      public postRenovarConsultaCredit(datos: any): Observable<any> {
         const body = new URLSearchParams();
         body.set('data', JSON.stringify(datos));
-
-        console.log('body', body.toString());
         
-        return this._http.put(this._appSettings.centrales.url.renovarConsultaCredit, body.toString(),{
+        return this._http.put('https://prometheus.fintra.co:8443/fintracredit/webresources/hdc/credit_history_fintra', body.toString(),{
             headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         });
     }

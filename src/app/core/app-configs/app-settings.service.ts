@@ -258,7 +258,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
             historialCredit: EndPoints.uri('/credito/generic/info-historial-credit'),
-            renovarConsultaCredit: EndPoints.uriPrometheusViejo('fintracredit/webresources/hdc/credit_history_fintra')
+            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra')
         }
     };
     /**

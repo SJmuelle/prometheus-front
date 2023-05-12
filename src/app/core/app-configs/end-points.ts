@@ -13,12 +13,7 @@ export class EndPoints {
     static uri(url: string): string {
         return environment.apiUrl+'api-fintra/api' + url;
     }
- /**
-     * @description: Url Prometheus viejo
-     */
- static uriPrometheusViejo(url: string): string {
-    return environment.apiPrometheusViejo + url;
-}
+
 
     /**
      * @description: URL pagaduria
