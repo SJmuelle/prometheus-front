@@ -257,6 +257,8 @@ export class AppSettingsService {
     public centrales = {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
+            historialCredit: EndPoints.uri('/credito/generic/info-historial-credit'),
+            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra')
         }
     };
     /**
