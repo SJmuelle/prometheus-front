@@ -1,0 +1,66 @@
+<form [formGroup]="form">
+    <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
+        Recalcular
+    </h2>
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 mt-4">
+        <mat-form-field class="w-100 px-3 fuse-mat-dense">
+            <mat-label>Monto solicitado</mat-label>
+            <input matInput [mask]="'separator.0'" [thousandSeparator]="'.'" type="text" placeholder=""
+                (change)="getPlazosCredito(form.controls['monto'].value)" [formControlName]="'monto'">
+            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+            </mat-icon>
+            <mat-error *ngIf="form.controls.monto.errors?.required">
+                Este campo es requerido.
+            </mat-error>
+            <mat-error *ngIf="
+        form.controls.monto.errors
+            ?.min
+    ">
+                No puede ser menor a {{salarioMinimo | currency: 'COP' }}
+            </mat-error>
+            <mat-error *ngIf="
+        form.controls.monto.errors
+            ?.max
+    ">
+                No puede ser mayor a $100.000.000
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="w-100 px-3 fuse-mat-dense">
+            <mat-label>Plazo</mat-label>
+            <input matInput type="number" [min]="plazosCredito?.data[0].plazoMinimo"
+                [max]="plazosCredito?.data[0].plazoMaximo" placeholder="" [formControlName]="'plazo'">
+            <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+            </mat-icon>
+            <mat-error *ngIf="form.controls.plazo.errors?.required">
+                Este campo es requerido.
+            </mat-error>
+            <mat-error *ngIf="
+        form.controls.plazo.errors
+            ?.min
+    ">
+                No puede ser menor a {{plazosCredito?.data[0].plazoMinimo}}
+            </mat-error>
+            <mat-error *ngIf="
+        form.controls.plazo.errors
+            ?.max
+    ">
+                No puede ser mayor a {{plazosCredito?.data[0].plazoMaximo}}
+            </mat-error>
+        </mat-form-field>
+
+    </div>
+
+    <!-- guardado -->
+    <ng-container>
+        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-center">
+            <button mat-raised-button color="primary" type="button" (click)="reCalcularSolicitud()"
+                [disabled]="form.invalid">
+                <mat-icon svgIcon="heroicons_solid:refresh"></mat-icon>
+            </button>
+        </div>
+    </ng-container>
+    <!-- fin guardado -->
+
+</form>
