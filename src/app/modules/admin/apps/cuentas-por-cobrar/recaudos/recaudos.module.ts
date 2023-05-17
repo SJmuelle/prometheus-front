@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { RecaudoRoutingModule } from './recaudo-routing.module';
+import { RecaudosRoutingModule } from './recaudos-routing.module';
 
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    RecaudoRoutingModule
+    RecaudosRoutingModule
   ]
 })
-export class RecaudoModule { }
+export class RecaudosModule { }
