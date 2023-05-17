@@ -1522,4 +1522,12 @@ export class FormCodeudorComponent implements OnInit {
             return null
         }
     }
+
+    public getNombreCompleto(): string {
+        return [
+        this.form.controls['primerNombre'].value,
+        this.form.controls['segundoNombre'].value,
+        this.form.controls['primerApellido'].value,
+        this.form.controls['segundoApellido'].value].filter(text => text !== '').join(' ')
+    }
 }
