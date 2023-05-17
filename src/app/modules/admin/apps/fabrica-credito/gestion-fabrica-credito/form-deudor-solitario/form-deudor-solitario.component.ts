@@ -278,12 +278,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
                 this.mostrarOTP = data?.autorizacionesValidadas === 'N'
-                this.formDeudorSolidario.controls['nombreCompleto'].setValue(
-                this.formDeudorSolidario.controls['primerNombre'].value + ' ' +
-                this.formDeudorSolidario.controls['segundoNombre'].value + ' ' +
-                this.formDeudorSolidario.controls['primerApellido'].value + ' ' +
-                this.formDeudorSolidario.controls['segundoApellido'].value
-                )
+                this.formDeudorSolidario.controls['nombreCompleto'].setValue(this.getNombreCompleto())
 
 
                 this.dataGeneralIncial = data;
@@ -484,6 +479,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             clausulaAnticurrupcionClaracionAuto: 'S',
             autoricacionDatosPersonalClaracionAuto: 'S',
         };
+        console.log('datos a enviar', data);
 
         Swal.fire({
             title: 'Guardar información',
@@ -896,5 +892,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         } else {
             return null;
         }
+    }
+
+    public getNombreCompleto(): string {
+        return [
+        this.formDeudorSolidario.controls['primerNombre'].value,
+        this.formDeudorSolidario.controls['segundoNombre'].value,
+        this.formDeudorSolidario.controls['primerApellido'].value,
+        this.formDeudorSolidario.controls['segundoApellido'].value].filter(text => text !== '').join(' ')
     }
 }

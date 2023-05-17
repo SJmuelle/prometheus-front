@@ -63,16 +63,8 @@
                 <mat-form-field class="w-full px-2">
                     <mat-label>Primer nombre</mat-label>
                     <input matInput type="text" [formControlName]="'primerNombre'" (keyup)="
-                    formDeudorSolidario.controls.nombreCompleto.setValue(
-                        formDeudorSolidario.controls.primerNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.primerApellido.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoApellido.value
-                    )
-                " [required]="">
+                    formDeudorSolidario.controls.nombreCompleto.setValue(getNombreCompleto()
+                    )"  [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.primerNombre.errors?.required">
                         Este campo es requerido.
@@ -83,16 +75,8 @@
                 <mat-form-field class="w-full px-2">
                     <mat-label>Segundo nombre(opcional)</mat-label>
                     <input matInput type="text" (keyup)="
-                    formDeudorSolidario.controls.nombreCompleto.setValue(
-                        formDeudorSolidario.controls.primerNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.primerApellido.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoApellido.value
-                    )
-                " [formControlName]="'segundoNombre'">
+                    formDeudorSolidario.controls.nombreCompleto.setValue(getNombreCompleto()
+                    )"  [formControlName]="'segundoNombre'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
             </ng-container>
@@ -100,16 +84,9 @@
                 <mat-form-field class="w-full px-2">
                     <mat-label>Primer apellido</mat-label>
                     <input matInput type="text" (keyup)="
-                    formDeudorSolidario.controls.nombreCompleto.setValue(
-                        formDeudorSolidario.controls.primerNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.primerApellido.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoApellido.value
-                    )
-                " [formControlName]="'primerApellido'" [required]="">
+                    formDeudorSolidario.controls.nombreCompleto.setValue(getNombreCompleto()
+                    )"
+                    [formControlName]="'primerApellido'" [required]="">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     <mat-error *ngIf="formDeudorSolidario.controls.primerApellido.errors?.required">
                         Este campo es requerido.
@@ -120,16 +97,8 @@
                 <mat-form-field class="w-full px-2">
                     <mat-label>Segundo apellido(opcional)</mat-label>
                     <input matInput type="text" (keyup)="
-                    formDeudorSolidario.controls.nombreCompleto.setValue(
-                        formDeudorSolidario.controls.primerNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoNombre.value +
-                            ' ' +
-                            formDeudorSolidario.controls.primerApellido.value +
-                            ' ' +
-                            formDeudorSolidario.controls.segundoApellido.value
-                    )
-                " [formControlName]="'segundoApellido'">
+                    formDeudorSolidario.controls.nombreCompleto.setValue(getNombreCompleto()
+                    )"  [formControlName]="'segundoApellido'">
                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                 </mat-form-field>
             </ng-container>
