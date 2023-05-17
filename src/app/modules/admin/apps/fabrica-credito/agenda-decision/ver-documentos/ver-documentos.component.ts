@@ -35,7 +35,7 @@ export class VerDocumentosComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.getDocumentosData()       
+        this.getDocumentosData()
     }
 
     public onCerrar(): void {
@@ -54,7 +54,7 @@ export class VerDocumentosComponent implements OnInit {
             numeroSolicitud: this.numeroSolicitud,
             identificacion: this.identificacion,
         };
-        
+
         this.fabricaCreditoService
             .getDatosFabricaAgenda(datosSolicitud)
             .pipe(takeUntil(this.unSubscribe$))
@@ -65,7 +65,7 @@ export class VerDocumentosComponent implements OnInit {
                     unidadNegocio: data.unidadNegocio,
                 };
                 // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-                
+
                 this.datosDocumentos = datosDocumentos;
                 this.getDocumentos(datosDocumentos);
             });
@@ -80,12 +80,30 @@ export class VerDocumentosComponent implements OnInit {
                         this.documentos[item.tipoTercero] = []
                     }
                     this.documentos[item.tipoTercero].push(item)
-                }  
+                }
             }
+
+            // ordenar alfabeticamente
+            for(const documento in this.documentos){
+                   this.documentos[documento] = this.documentos[documento].sort((a,b) => {
+                    const nameA = a.descripcion.toLowerCase()
+                    const nameB = b.descripcion.toLowerCase()
+                    if (nameA < nameB) {
+                        return -1;
+                      }
+                      if (nameA > nameB) {
+                        return 1;
+                      }
+                      return 0;
+                })
+            }
+
+            console.log('documentos', this.documentos);
+
         });
 
-        
-        
+
+
 
     }
 
@@ -103,7 +121,7 @@ export class VerDocumentosComponent implements OnInit {
             default:
                 return 'Titular'
         }
-    }   
+    }
 
     getExtension(nombreArchivoReal: string) {
         const split = nombreArchivoReal.split('.')
@@ -159,7 +177,7 @@ export class VerDocumentosComponent implements OnInit {
         };
         this.documentosServices
             .getDocumento(datosDescargar)
-            .subscribe((res) => {    
+            .subscribe((res) => {
                 datos.base64 =  res.data.base64
                 datos.display = !datos.display
             });
@@ -186,6 +204,6 @@ export class VerDocumentosComponent implements OnInit {
             return this.apiData.resumenGeneral.codigoTipoDeudor !== '1' || this.apiData.resumenGeneral.codigoTipoDeudor !== '3'
         }else{
             return false
-        }    
+        }
     }
 }
