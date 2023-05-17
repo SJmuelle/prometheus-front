@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PagoMasivoModule } from './pagos-transportadoras/pago-masivo.module';
 
 const routes: Routes = [{
-  path: 'transportadora', loadChildren: ()=> PagoMasivoModule
+  path: 'transportadoras', loadChildren: ()=> PagoMasivoModule
 }];
 
 @NgModule({
