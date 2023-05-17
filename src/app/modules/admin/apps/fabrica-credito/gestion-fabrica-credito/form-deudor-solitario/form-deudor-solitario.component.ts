@@ -278,6 +278,12 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
                 this.mostrarOTP = data?.autorizacionesValidadas === 'N'
+                this.formDeudorSolidario.controls['nombreCompleto'].setValue(
+                this.formDeudorSolidario.controls['primerNombre'].value + ' ' +
+                this.formDeudorSolidario.controls['segundoNombre'].value + ' ' +
+                this.formDeudorSolidario.controls['primerApellido'].value + ' ' +
+                this.formDeudorSolidario.controls['segundoApellido'].value
+                )
 
 
                 this.dataGeneralIncial = data;
@@ -478,7 +484,6 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             clausulaAnticurrupcionClaracionAuto: 'S',
             autoricacionDatosPersonalClaracionAuto: 'S',
         };
-
 
         Swal.fire({
             title: 'Guardar información',
