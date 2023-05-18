@@ -1,7 +1,7 @@
 <div class=" px-3 w-100  m-4 pb-40 overflow-auto h-screen scrollbar-hide">
 
     <ng-container class="pb-60">
-    
+
     <div class="bg-white  py-3 px-3 rounded-lg my-4">
         <h2>Listado de barrios</h2>
     </div>
@@ -34,13 +34,13 @@
 
 
 
-            <div class="col-span-12 grid grid-cols-6 mt-4">
-                <div class="col-span-6" *ngIf="datos.municipio">
+            <div class="col-span-12 flex flex-col grid-cols-6 mt-4">
+                <div class="w-full flex items-end justify-end" *ngIf="datos.municipio">
                     <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
                         Crear nuevo
                     </button>
                 </div>
-                <div class="col-span-6 justify-self-center my-2" *ngIf="listado.length>0">
+                <div class="w-full flex justify-center items-center my-2" *ngIf="listado.length>0">
                     <input class="border rounded p-2 bg-gray-100  w-90 filtrado" type="text" autocomplete="off"
                         name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
                         (ngModelChange)="page = 1" />
@@ -56,7 +56,7 @@
 
         <div class=" md:overflow-x-hidden flex justify-center items-center flex-col xl:overflow-x-hidden p-2 gap-2"
             *ngIf="listado.length>0">
-            <table class="w-10/12 sombra p-2 border-separate rounded-2xl" style="border-spacing: 0 15px;">
+            <table class="w-10/12 sombra border-separate rounded-2xl" style="border-spacing: 0 5px;">
                 <thead class="rounded-2xl" style="background-color: #F9FAFB;">
                     <tr class="text-md font-semibold
                         tracking-wide text-left text-gray-400
