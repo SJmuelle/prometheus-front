@@ -77,16 +77,16 @@
                                         currentPage: page
                                     }
                     ">
-                        <td class="border-t-8  border-transparent px-2 text-sm  text-center cursor-pointer rounded-2xl" (click)="abrirModal(item, 'A')">
+                        <td class="border-t-84 border-transparent px-2 text-sm  text-center cursor-pointer rounded-2xl" (click)="abrirModal(item, 'A')">
                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                         </td>
-                        <td class="border-t-8  border-transparent px-2 text-sm font-bold text-center">
+                        <td class="border-t-4  border-transparent px-2 text-sm font-bold text-center">
                             {{ item.id }}
                         </td>
-                        <td class="border-t-8 border-transparent px-2 text-sm font-semibold text-center">
+                        <td class="border-t-4 border-transparent px-2 text-sm font-semibold text-center">
                             {{ item.barrio }}
                         </td>
-                        <td class="border-t-8 border-transparent px-2 text-sm  text-center w-0 rounded-2xl">
+                        <td class="border-t-4 border-transparent px-2 text-sm  text-center w-0 rounded-2xl">
                             <div class="py-1 rounded-md " [ngClass]="
                                 item.estado == 'Inactivo'
                                     ? 'bg-red-300'
