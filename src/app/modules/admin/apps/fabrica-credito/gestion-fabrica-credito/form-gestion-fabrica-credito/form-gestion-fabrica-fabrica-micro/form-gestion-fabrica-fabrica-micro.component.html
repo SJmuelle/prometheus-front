@@ -1669,20 +1669,7 @@
                             " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Primer nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'primerNombreConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'primerNombreConyuge'"  />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1694,39 +1681,13 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoNombreConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'segundoNombreConyuge'"  />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Primer apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'primerApellidoConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'primerApellidoConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1738,20 +1699,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoApellidoConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'segundoApellidoConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
