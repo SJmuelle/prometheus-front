@@ -35,12 +35,18 @@ export class CajaVirtualService {
    * Get contacts
    */
   getCuentasAsignadas(): Observable<any[]> {
-    // return this._httpClient.get<Contact[]>('api/apps/contacts/all').pipe(
-
     return this._http.get<any>(`${this._appSettings.cajaVirtual.url.infoNegocio}`).pipe(
       tap((respuesta) => {
         this._cuentasAsignadas.next(respuesta.data);
       })
     );
   }
+
+  /*
+   * @description: 
+   */
+  public congelaCalculoTotal(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.cajaVirtual.url.congelaCalculoTotal, datos);
+  }
+  
 }

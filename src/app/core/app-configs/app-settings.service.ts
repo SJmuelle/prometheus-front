@@ -464,6 +464,9 @@ export class AppSettingsService {
         public cajaVirtual = {
             url: {
                 infoNegocio: EndPoints.uri('/generic/qry/tk/informacion-negocios-asignados'),
+                congelaCalculoTotal: EndPoints.uri('/generic/tk/congela-calculo-total'),
+                congelaSimulador: EndPoints.uri('/generic/tk/congela-simulacion'),
+                congelaGuardar: EndPoints.uri('/generic/tk/congela-guardar'),
             }
         };
 }
