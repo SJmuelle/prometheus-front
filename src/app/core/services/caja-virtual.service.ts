@@ -48,5 +48,68 @@ export class CajaVirtualService {
   public congelaCalculoTotal(datos: any): Observable<any> {
     return this._http.post(this._appSettings.cajaVirtual.url.congelaCalculoTotal, datos);
   }
-  
+  /*
+ * @description: 
+ */
+  public congelaCalculoDescuento(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.cajaVirtual.url.congelaCalculoDescuento, datos);
+  }
+
+  /*
+  * @description: 
+  */
+  public congelaCongelaSimulador(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.cajaVirtual.url.congelaSimulador, datos);
+  }
+
+  /*
+  * @description: 
+  */
+  public congelaCongelaGuardar(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.cajaVirtual.url.congelaGuardar, datos);
+  }
+
+  /*
+  * @description: 
+  */
+  public refinanciacionTipoEstrategia(): Observable<any> {
+    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionTipoEstrategia);
+  }
+
+  /*
+  * @description: 
+  */
+  public refinanciacionBuscarCliente(): Observable<any> {
+    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionBuscarCliente);
+  }
+
+  /*
+  * @description: 
+  */
+  public refinanciacionCargarDetalleCartera(): Observable<any> {
+    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionCargarDetalleCartera);
+  }
+
+  /*
+  * @description: 
+  */
+  public refinanciacionBuscarFechaPago(): Observable<any> {
+    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionBuscarFechaPago);
+  }
+
+
+  /*
+  * @description: 
+  */
+  public refinanciacionCalcularCtaInicial(datos: any): Observable<any> {
+    return this._http.post(this._appSettings.cajaVirtual.url.refinanciacionCalcularCtaInicial, datos);
+  }
+
+  /*
+  * @description: 
+  */
+  public refinanciacionCargarDtoCongela(): Observable<any> {
+    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionCargarDtoCongela);
+  }
+
 }
