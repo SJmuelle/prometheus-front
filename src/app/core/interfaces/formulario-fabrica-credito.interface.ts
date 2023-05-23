@@ -238,7 +238,7 @@ export interface FormularioCreditoMicro {
     direccionNegocioCompleto: String;
     telefonoNegocio: String;
     tipoLocal: String;
-    antiguedadLocal: String;
+    antiguedadLocal: number;
     nombreArrendador: String;
     celularArrendador: String;
     tipoUbicacionNegocio: String;

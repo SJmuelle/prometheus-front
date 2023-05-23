@@ -51,6 +51,13 @@ export class FormCodeudorComponent implements OnInit {
     listadoCiudades: any[];
     listadoBarrios: any[];
     fechaActual: any = moment().locale('co');
+    public contador: number = 180;
+    public validandoOTPLoading: boolean = false;
+    public changeTextOTP: boolean = false;
+    timerInterval: any;
+    public otpValidado: boolean = false;
+    public numeroOTP: number = 0;
+    public mostrarOTP: boolean = false;
 
     constructor(
         private fabricaCreditoService: FabricaCreditoService,
@@ -73,6 +80,32 @@ export class FormCodeudorComponent implements OnInit {
             this._permisosService.permisoPorModuleTrazabilidad();
         if (this.permisoEditar) {
             this.form.disable();
+        }
+    }
+
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
+                    }
+                });
+            }, 1000);
         }
     }
 
@@ -101,6 +134,7 @@ export class FormCodeudorComponent implements OnInit {
 
                 this.addValidation();
                 this.form.patchValue(data);
+                this.mostrarOTP = data?.autorizacionesValidadas === 'N'
 
                 if (this.form.controls['ocupacion'].value === 'INDEFO' || this.form.controls['ocupacion'].value === 'PROIN' || this.form.controls['ocupacion'].value === 'INDNFO') {
                     this.actividadEconomica$ = this.genericaServices.postActividadEconomica(this.form.controls['ocupacion'].value)
@@ -422,8 +456,9 @@ export class FormCodeudorComponent implements OnInit {
             descripcionVereda: [''],
             tipoVeredaNegocio: [''],
             descripcionVeredaNegocio: [''],
-            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
-            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [''],
+            clausulaAnticurrupcionClaracionAuto: [''],
+            numeroOTP: ['']
         });
     }
 
@@ -553,12 +588,45 @@ export class FormCodeudorComponent implements OnInit {
         }
     }
 
+    validarCodigo(): void {
+        const numero = this.form.controls['numeroOTP'].value
+
+        if (numero.length === 6 && !this.otpValidado) {
+            const data = {
+                numeroSolicitud: Number(this.numeroSolicitud),
+                numeroOTP: numero,
+                tipoTercero: 'C'
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+
+                if(rep.data.resultado === 'OK'){
+                    const dataEnvio = {
+                        numeroSolicitud: Number(this.numeroSolicitud),
+                        tipo: 'C',
+                        identificacion: this.dataGeneralIncial.identificacion
+                    }
+                    this.fabricaCreditoService.postConfirmarOTP(dataEnvio).subscribe(rep =>{
+                        if(rep.status === 200){
+                            Swal.fire('OTP validado','Autorizaciones guardadas con éxito', 'success')
+                        }
+                    })
+                }
+            }, err => {
+                this.form.get('numeroOTP').setValue('');
+            })
+        }
+
+    }
+
     // validaciones dinamicas
     public addValidation() {
 
         // camara de comercio
         this.form.get('camaraComercio').valueChanges.subscribe((e: string) => {
             const ocup = this.form.controls.ocupacion.value;
+            this.marginTopInputDynamic()
             if ((ocup !== 'EPLDO' &&
                 (ocup === 'INDEFO' || ocup === 'PROIN' || ocup === 'INDNFO')) && this.form.controls.camaraComercio.value === 'S') {
                 this.form
@@ -581,6 +649,7 @@ export class FormCodeudorComponent implements OnInit {
         })
         // ocupacion Empleado
         this.form.get('ocupacion').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
             if (
                 e !== 'EPLDO' &&
                 !(e === 'INDEFO' || e === 'PROIN' || e === 'INDNFO')
@@ -917,6 +986,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('legalOperacionExtranjera')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'S') {
                     this.form
                         .get('tipoOperacionExtranjera')
@@ -959,6 +1029,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('legalPersonalExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'S') {
                     this.form
                         .get('vinculacionExpuesta')
@@ -1070,6 +1141,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('vinculadoActualExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'N') {
                     this.form
                         .get('fechaDesvinculacionExpuesta')
@@ -1094,7 +1166,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('declaroIngresoDeclaracionAuto')
             .valueChanges.subscribe((e: string) => {
-
+                this.marginTopInputDynamic()
                 if (e === 'OT') {
                     this.form
                         .get('otroIngresoDeclaracionAuto')
@@ -1116,6 +1188,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('legalCargoPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'S') {
                     this.form
                         .get('cargoPublico')
@@ -1161,6 +1234,7 @@ export class FormCodeudorComponent implements OnInit {
         this.form
             .get('vinculadoActualPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic()
                 if (e === 'N') {
                     this.form
                         .get('fechaDesvinculacionPublico')
@@ -1372,6 +1446,35 @@ export class FormCodeudorComponent implements OnInit {
         }
     }
 
+    solicitarCodigo(): void {
+            const data = {
+                numeroSolicitud: this.numeroSolicitud,
+                tipo: 'C',
+                tipoOTP : "AUTORIZACION"
+            }
+            this.validandoOTPLoading = true;
+            this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
+                if (rep.status === 200) {
+                }
+                this.startTimer();
+                this.validandoOTPLoading = false;
+
+            })
+    }
+
+    startTimer() {
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
+            }
+        }, 1000)
+    }
+
     public formatearDataInicial(): void {
 
         //fechas
@@ -1396,7 +1499,10 @@ export class FormCodeudorComponent implements OnInit {
             }
         }
 
-        firstInvalidControl?.focus(); //without smooth behavior
+        firstInvalidControl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
     }
 
     private validateExpedicion(control: AbstractControl) {

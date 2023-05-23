@@ -77,7 +77,8 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/agendas-credito/RE'),
             totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/RE'),
-            tipoReferenciacion: EndPoints.uri('/credito/tk/property/cards-informacion-refenciacion')
+            tipoReferenciacion: EndPoints.uri('/credito/tk/property/cards-informacion-refenciacion'),
+            reCalcularSolicitudMicro: EndPoints.uri('/generic/recalcular-solicitud-micro')
         }
     };
     /**
@@ -139,6 +140,7 @@ export class AppSettingsService {
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
+            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
         }
     };
     /**
@@ -255,6 +257,8 @@ export class AppSettingsService {
     public centrales = {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
+            historialCredit: EndPoints.uri('/credito/generic/info-historial-credit'),
+            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra')
         }
     };
     /**

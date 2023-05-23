@@ -60,13 +60,13 @@
                     <mat-icon svgIcon="heroicons_solid:chevron-down"></mat-icon>
                 </div>
 
-                <div class="flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
+                <div class=" items-center justify-center pl-2" *ngIf="!mostrarTotales"
                     (click)="cambiarEstado(true)">
                     <mat-icon svgIcon="heroicons_solid:chevron-right"></mat-icon>
                 </div>
 
                 <ng-container *ngFor="let item of totales">
-                    <div class="mr-3 flex items-center justify-center pl-2" *ngIf="!mostrarTotales"
+                    <div class="sm:flex hidden mr-3  items-center justify-center pl-2" *ngIf="!mostrarTotales"
                         (click)="cambiarEstado(false)">
                         <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}"
                             [svgIcon]="'radio_button_checked'">
@@ -414,7 +414,7 @@
                                                     </div>
 
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
                                                         <span class="mr-2 font-semibold truncate">Observación: </span>
                                                         {{item.observacionDevolucion}}
                                                     </div>
@@ -454,7 +454,7 @@
                                                         </span>
                                                     </div>
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
                                                         <span class="mr-2 font-semibold truncate">Observación: </span>
                                                         {{item.observacionReintegroDevolucion}}
                                                     </div>

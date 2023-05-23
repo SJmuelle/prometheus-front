@@ -28,7 +28,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('numeroSolicitud');
     public unSubscribe$: Subject<any> = new Subject<any>();
-    public plazosCredito$: Observable<any>;
+    public plazosCredito: any;
     public salarioMinimo$: Observable<any>;
     public salarioMinimo: number = 0;
     public habilitarInput: boolean = false;
@@ -100,6 +100,11 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             this.cargueActividadEconomica()
         });
 
+        this.form.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
+            
+            this.getPlazosCredito(!!valor ? valor : '0' )
+        })
+
         setTimeout(() => {
             if ((this.tipoIdentificacion) && (this.identificacion)) {
                 this.form.controls.tipoDocumento.setValue(this.tipoIdentificacion);
@@ -110,6 +115,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             }
         }, 1000);
         this.getSalarioMinimo();
+
+        this.marginTopInputDynamic()
+
     }
 
     private cargueActividadEconomica() {
@@ -149,6 +157,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     }
 
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        this.marginTopInputDynamic()
+    }
+
 
     startTimer() {
         this.contador = 0;
@@ -171,11 +185,36 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         })
     }
 
+    marginTopInputDynamic(){
+        if(window.innerWidth < 600){
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+    
+            elementToMargin.forEach((element: HTMLElement) => {
+    
+                let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+                
+                let titleSpanHeigth = titleSpan?.clientHeight
+                element.style.width =  '20px'+ ' !important';
+                element.style['marginTop'] = '20px !important'
+                element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
+                if(titleSpanHeigth > 30){
+                    if(titleSpanHeigth > 50){
+                        titleSpan.style.top = '-60px'   
+                    }else{
+                        titleSpan.style.top = '-42px'                   
+                    }
+                }
+           });
+            }, 1000);
+        }
+    }
+
     private validatedDate(control: AbstractControl) {
         const valueControl = control?.value ?? '';
         const date = moment(valueControl).format('YYYY-MM-DD')
         const errors = { dateError: true };
-
         // Set the validation error on the matching control
         if (this.fechaActual.isBefore(date)) {
 
@@ -300,19 +339,21 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     /**
      * @description: Obtener limite de plazos por el valor de credito
      */
-    public getPlazosCredito(valorCredito: number) {
+    public getPlazosCredito(valorCredito: any) {
 
-        this.plazosCredito$ = this._formularioCreditoService.validationPlazoMicro({ valorCredito })
+         this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+            this.plazosCredito = rep
+            
+        })
 
     }
 
     solicitarCodigo(): void {
-
-
         if (this.form.valid) {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
-                tipo: 'T'
+                tipo: 'T',
+                tipoOTP : "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
@@ -375,6 +416,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.clausulaVeracidad = 'S',
             data.terminosCondiciones = 'S'
 
+        Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).subscribe((datos) => {
             if(datos.data.resultado === 'OK'){
                 Swal.fire(
@@ -486,7 +528,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     irAtras() {
-        if (this._permisosService.estabaAgendaComercial()) {
+        if(this._permisosService.ruta === 'agenda-comercial'){
             this.router.navigate([`/credit-factory/agenda-comercial`]);
         }else{
             this.router.navigate([`/credit-factory/agenda-venta-digital`]);

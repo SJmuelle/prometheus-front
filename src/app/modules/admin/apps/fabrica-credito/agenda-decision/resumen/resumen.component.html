@@ -6,7 +6,7 @@
                     <h3 class="mb-2 text-gray-900">Resumen del crédito</h3>
                     <span class="font-semibold text-gray-500">Número solicitud: {{numeroSolicitud}}</span>
                 </div>
-                <app-fabrica-opciones></app-fabrica-opciones>
+                <app-fabrica-opciones [apiData]="apiData"></app-fabrica-opciones>
             </div>
         </div>
     </div>
@@ -36,19 +36,24 @@
                     <div class="grid grid-cols-1 mt-4 -mx-6">
                         <div class="flex flex-col mx-3 my-2" *ngFor="let campo of item.campos;">
                             <div class="flex items-center">
-                                <div class="flex items-center max-w-3/12 justify-center w-14 h-14 rounded-r-3xl shadow-inner"
-                                    [ngClass]="campo.color">
+                                <div class="flex items-center max-w-3/12 justify-center w-auto px-4 h-full   rounded-r-3xl shadow-inner" style="min-height: 60px;"
+                                    [ngClass]="campo.color" >
                                     <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
                                 </div>
                                 <div class="flex-auto ml-4 leading-none max-w-9/12">
                                     <div class="text-sm font-medium text-secondary">{{campo.label}} </div>
-                                    <div class="text-sm font-medium  my-1">{{campo.label2}} </div>
-                                    <div class="text-sm font-medium text-secondary">{{campo.descripcion}}</div>
-                                    <div class="text-sm font-medium  my-1" [innerHtml]="campo.valor2"></div>
-                                    <div class="text-sm font-medium  " [innerHtml]="campo.valor"></div>
-                                    <div class="text-sm font-medium  my-1" [innerHtml]="campo.valor3"></div>
-                                    <div *ngIf="campo.valor4" class="text-sm font-medium  my-1"
-                                        [innerHtml]="campo.valor4"></div>
+                                    <div class="text-sm font-medium" style="margin-top: 6px; line-height: 15px;">
+                                        {{campo.label2}} </div>
+                                    <div class="text-sm font-medium text-secondary" style="margin-top: 10px;">
+                                        {{campo.descripcion}}</div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor2"></div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor"></div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor3"></div>
+                                    <div *ngIf="campo.valor4" class="text-sm font-medium "
+                                        style="margin-top: 6px; line-height: 15px;" [innerHtml]="campo.valor4"></div>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +115,7 @@
                         [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
                 </div>
                 <div class="flex flex-col justify-center items-center mt-2 divide-y">
-                    <mat-tab-group class="flex w-full justify-items-center items-center moreWidth">
+                    <mat-tab-group class="flex w-full justify-items-center items-center moreWidth changeTabStyle">
                         <mat-tab *ngFor="let grupoPoliticas of dataPolicitasAdmin | keyvalue: keyDescOrder">
                             <ng-template matTabLabel>{{grupoPoliticas.key}}</ng-template>
                             <ng-container *ngFor="let item of grupoPoliticas.value">

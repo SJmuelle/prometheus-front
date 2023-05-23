@@ -1,4 +1,4 @@
-<div class="bg-white h-full h-screen pb-11 overflow-auto px-3 py-2 rounded-lg shadow w-full y-100" id="scrollFabricaCredito" cdkScrollable>
+<div class="bg-white h-full h-screen pb-11 overflow-auto px-3 py-2 rounded-lg shadow w-full y-100 scrollFabricaCredito scroll-smooth" id="scrollFabricaCredito" cdkScrollable>
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent mb-3">
         <div class="flex flex-col ">
             <div class=" grid grid-cols-1 md:flex  md:justify-between py-6 px-6 border-b ">
@@ -23,7 +23,7 @@
                     <app-form-gestion-fabrica-ultracem></app-form-gestion-fabrica-ultracem>
                 </div>
                 <div *ngSwitchCase="1">
-                    <form-gestion-fabrica-fabrica-micro></form-gestion-fabrica-fabrica-micro>
+                    <form-gestion-fabrica-fabrica-micro ></form-gestion-fabrica-fabrica-micro>
                 </div>
                 <div *ngSwitchDefault>
                 </div>

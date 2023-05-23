@@ -6,4 +6,5 @@ export const environment = {
     apiUrl:"http://demo.fintra.co:8084/",
 
     urlprometheus:'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
+    apiPrometheusViejo: "http://prometheus.fintra.co:8084/",
 };

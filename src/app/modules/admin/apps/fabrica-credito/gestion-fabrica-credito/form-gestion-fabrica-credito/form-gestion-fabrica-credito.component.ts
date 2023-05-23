@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FabricaCreditoService } from '../../../../../../core/services/fabrica-credito.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { AgendaCompletacionService } from '../../../../../../core/services/agenda-completacion.service';
@@ -23,6 +23,7 @@ import { DirectionsComponent } from "../../../../../../shared/modal/directions/d
     templateUrl: './form-gestion-fabrica-credito.component.html',
     styleUrls: ['./form-gestion-fabrica-credito.component.scss'],
 })
+
 export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     public unSubscribe$: Subject<any> = new Subject<any>();
     public departamentos$: Observable<any>;
@@ -68,6 +69,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         private genericaServices: GenericasService,
         private _dialog: MatDialog,
         public utility: UtilityService,
+        private el: ElementRef
     ) {
 
         if (!this.numeroSolicitud) {
@@ -90,6 +92,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.getDeclarante();
         this.getCamaraComercio();
         this.listenFormulario();
+        
     }
     /**
      * @description:
@@ -144,6 +147,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result) => {
         });
     }
+
+   
 
     public openModalDirection(): void {
         const dialogRef = this._dialog.open(DirectionsComponent, {
@@ -844,6 +849,5 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
         this.unSubscribe$.unsubscribe();
         // this.agendaCompletacionService.resetSeleccionAgenda();
     }
-
 
 }

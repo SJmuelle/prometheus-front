@@ -149,7 +149,6 @@ export class DetalleComponent implements OnInit {
       cancelButtonText: 'Cancelar',
       allowOutsideClick: false,
     }).then((result)=>{
-      console.log(result)
       if (result.isConfirmed) {
         if (result.value.length<1) {
           Swal.fire(

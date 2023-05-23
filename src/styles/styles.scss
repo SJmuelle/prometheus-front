@@ -132,7 +132,7 @@ span.mat-option-text {
     }
 
     .mat-form-field-label-wrapper > label {
-        top: -26px !important;
+        top: -40px;
     }
 
     .mat-form-field-flex {
@@ -152,6 +152,9 @@ span.mat-option-text {
     mat-tab-group.scrollMatTabGroup > mat-tab-header {
         max-width: 100%;
     }
+    .mat-dialog-content {
+        padding: 10px 24px !important;
+    }
 }
 
 mat-form-field.mat-form-field.deleteMB > .mat-form-field-wrapper {
@@ -164,4 +167,36 @@ mat-tab-group.moreWidth > .mat-tab-body-wrapper {
 
 .mat-header-row{
     background: #e2e8f0 !important;
+}
+
+mat-tab-group.changeTabStyle
+    > mat-tab-header
+    > .mat-tab-label-container
+    > .mat-tab-list
+    > .mat-tab-labels
+    > .mat-ripple.mat-tab-label.mat-focus-indicator.mat-tab-label-active.ng-star-inserted {
+    background-color: white !important;
+    color: rgb(78, 98, 214) !important;
+    border-bottom: 2px solid rgb(78, 98, 214) !important ;
+    border-radius: 0 !important;
+    font-weight: 500;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+pagination-controls > pagination-template > ul > li.current {
+    background: rgb(129, 129, 204) !important;
+}
+
+pagination-controls > pagination-template > ul > li {
+    font-weight: 500;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+mat-tab-group > .mat-tab-body-wrapper {
+    width: 100% !important;
+}
+
+.w-18 {
+    width: 4.5rem !important;
 }
