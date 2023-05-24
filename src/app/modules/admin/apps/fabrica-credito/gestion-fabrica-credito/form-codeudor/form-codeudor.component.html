@@ -65,16 +65,9 @@
             <mat-form-field>
                 <mat-label>Primer nombre</mat-label>
                 <input matInput type="text" [formControlName]="'primerNombre'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
-                        )
-                    " />
+                form.controls.nombreCompleto.setValue(getNombreCompleto()
+                )
+            " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.primerNombre.errors?.required">
@@ -87,16 +80,9 @@
             <mat-form-field>
                 <mat-label>Segundo nombre</mat-label>
                 <input matInput type="text" [formControlName]="'segundoNombre'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
-                        )
-                    " />
+                form.controls.nombreCompleto.setValue(getNombreCompleto()
+                )
+            " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.segundoNombre.errors?.pattern">
@@ -106,16 +92,9 @@
             <mat-form-field>
                 <mat-label>Primer apellido</mat-label>
                 <input matInput type="text" [formControlName]="'primerApellido'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
-                        )
-                    " />
+                form.controls.nombreCompleto.setValue(getNombreCompleto()
+                )
+            " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.primerApellido.errors?.required">Este campo es requerido.</mat-error>
@@ -126,14 +105,7 @@
             <mat-form-field>
                 <mat-label>Segundo apellido</mat-label>
                 <input matInput type="text" [formControlName]="'segundoApellido'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
+                        form.controls.nombreCompleto.setValue(getNombreCompleto()
                         )
                     " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">

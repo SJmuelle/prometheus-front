@@ -10,10 +10,10 @@ import { MenuModule } from './modules/admin/apps/menu/menu.module';
 import { DashboardModule } from './modules/admin/apps/dashboard/dashboard.module';
 import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
-import { PagoMasivoModule } from './modules/admin/apps/pago-masivo/pago-masivo.module';
 import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
-import { ProntoPagoModule } from './modules/admin/apps/pronto-pago/pronto-pago.module';
 import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
+import { TransportadorasModule } from './modules/admin/apps/transportadoras/transportadoras.module';
+import { CuentasPorCobrarModule } from './modules/admin/apps/cuentas-por-cobrar/cuentas-por-cobrar.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -77,7 +77,7 @@ export const appRoutes: Route[] = [
         ]
     },
      // Landing routes
-    
+
             {path: 'hv', loadChildren: () => import('app/modules/admin/apps/hojavida/hojavida.module').then(m => m.HojavidaModule)},
 
 
@@ -120,7 +120,7 @@ export const appRoutes: Route[] = [
                 loadChildren: () => FechaCorridaModule
             },
             {
-                path: 'activities', 
+                path: 'activities',
                 loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule),
             },
             {
@@ -128,13 +128,18 @@ export const appRoutes: Route[] = [
                 loadChildren: () => PagaduriaModule
             },
             {
-                path: 'pronto-pago',
-                loadChildren: () => ProntoPagoModule
+                path: 'transportadora',
+                loadChildren: () => TransportadorasModule
+            },
+            {
+                path: 'cuentas-por-cobrar',
+                loadChildren: () => CuentasPorCobrarModule
             },
             {
                 path: 'procesos',
                 loadChildren: () => ProcesosModule
             },
+
             // {
             //     path: 'act',
             //     loadChildren: () => ActivitiesModule

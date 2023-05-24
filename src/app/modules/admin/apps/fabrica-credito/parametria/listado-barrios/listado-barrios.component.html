@@ -1,16 +1,16 @@
 <div class=" px-3 w-100  m-4 pb-40 overflow-auto h-screen scrollbar-hide">
 
     <ng-container class="pb-60">
-    
+
     <div class="bg-white  py-3 px-3 rounded-lg my-4">
         <h2>Listado de barrios</h2>
     </div>
     <div class="bg-white w-full rounded-lg p-8">
-        <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
+        <div class="flex flex-col gap-4 w-100 mb-2">
 
-            <div class="col-span-12 grid grid-cols-4 gap-4">
+            <div class="flex justify-center items-center gap-4 w-full">
 
-                <mat-form-field class="flex-auto w-100">
+                <mat-form-field class="flex-auto w-full">
                     <mat-label>Departamento</mat-label>
                     <mat-select [(ngModel)]="datos.departamento" name="direccion"
                         (ngModelChange)="consultaMunicipio(datos.departamento);">
@@ -20,7 +20,7 @@
                     </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="flex-auto w-100">
+                <mat-form-field class="flex-auto w-full">
                     <mat-label>Municipio / Ciudad</mat-label>
                     <mat-select [(ngModel)]="datos.municipio" name="municipio"
                         (ngModelChange)="listarBarrios(datos.municipio);">
@@ -34,13 +34,8 @@
 
 
 
-            <div class="col-span-12 grid grid-cols-6 mt-4">
-                <div class="col-span-6" *ngIf="datos.municipio">
-                    <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
-                        Crear nuevo
-                    </button>
-                </div>
-                <div class="col-span-6 justify-self-center my-2" *ngIf="listado.length>0">
+            <div class="col-span-12 relative flex flex-row mt-4 justify-center items-center gap-5">
+                <div class="flex justify-center items-center my-2" *ngIf="listado.length>0">
                     <input class="border rounded p-2 bg-gray-100  w-90 filtrado" type="text" autocomplete="off"
                         name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
                         (ngModelChange)="page = 1" />
@@ -51,23 +46,28 @@
                         <option value="30">30</option>
                     </select>
                 </div>
+                <div class=" flex items-end justify-end mb-1 " *ngIf="datos.municipio">
+                    <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+                        Crear nuevo
+                    </button>
+                </div>
             </div>
         </div>
 
-        <div class=" md:overflow-x-hidden flex justify-center items-center flex-col xl:overflow-x-hidden p-2 gap-2"
+        <div class=" md:overflow-x-hidden flex justify-center items-center flex-col xl:overflow-x-hidden p-2 py-4 gap-2"
             *ngIf="listado.length>0">
-            <table class="w-10/12 sombra p-2 border-separate rounded-2xl" style="border-spacing: 0 15px;">
-                <thead class="rounded-2xl" style="background-color: #F9FAFB;">
+            <table class="w-10/12 sombra border-separate rounded-2xl" style="border-spacing: 0 0px;">
+                <thead class="rounded-2xl" style="background-color: #f4f4f4;">
                     <tr class="text-md font-semibold
                         tracking-wide text-left text-gray-400
-                          border-gray-600">
-                        <th class="px-4 py-3 text-center w-0">Editar</th>
-                        <th class="px-4 py-3 text-center">Código</th>
-                        <th class="px-4 py-3 text-center">Nombre del barrio</th>
-                        <th class="px-4 py-3 text-center">Estado</th>
+                          border-gray-600 ">
+                        <th class="px-4 py-3 text-center w-0  rounded-tl-2xl">Editar</th>
+                        <th class="px-4 py-3 text-center ">Código</th>
+                        <th class="px-4 py-3 text-center ">Nombre del barrio</th>
+                        <th class="px-4 py-3 text-center rounded-tr-2xl">Estado</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white">
+                <tbody class="bg-white " >
                     <tr class="text-gray-700" *ngFor="
                         let item of listado
                             | filter: filtrarTabla
@@ -77,17 +77,17 @@
                                         currentPage: page
                                     }
                     ">
-                        <td class="px-2 text-sm  text-center cursor-pointer" (click)="abrirModal(item, 'A')">
+                        <td class="border-t-84 border-transparent px-2 text-sm  text-center cursor-pointer rounded-2xl" (click)="abrirModal(item, 'A')">
                             <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
                         </td>
-                        <td class="px-2 text-sm font-bold text-center">
+                        <td class="border-t-4  border-transparent px-2 text-sm font-bold text-center">
                             {{ item.id }}
                         </td>
-                        <td class="px-2 text-sm font-semibold text-center">
+                        <td class="border-t-4 border-transparent px-2 text-sm font-semibold text-center">
                             {{ item.barrio }}
                         </td>
-                        <td class="px-2 text-sm  text-center w-0">
-                            <div class="py-1" [ngClass]="
+                        <td class="border-t-4 border-transparent px-2 text-sm  text-center w-0 rounded-2xl">
+                            <div class="py-1 rounded-md " [ngClass]="
                                 item.estado == 'Inactivo'
                                     ? 'bg-red-300'
                                     : 'bg-green-300'">

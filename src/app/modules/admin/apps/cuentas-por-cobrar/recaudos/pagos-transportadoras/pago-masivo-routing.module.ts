@@ -5,13 +5,9 @@ import { ImportFileComponent } from './import-file/import-file.component';
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: 'import-file',
-        component: ImportFileComponent
-      }
-    ]
-  }
+    component: ImportFileComponent
+  },
+  
 ];
 
 @NgModule({

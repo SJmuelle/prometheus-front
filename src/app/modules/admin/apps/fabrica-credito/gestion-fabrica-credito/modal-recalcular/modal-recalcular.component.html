@@ -17,6 +17,13 @@
              ></recalcular-oferta-consumo-plexa>
         </div>
 
+        <div *ngSwitchCase="1">
+            <app-recalcular-oferta-micro
+            [numeroSolicitud]="data.numeroSolicitud"
+            [identificacion]="data.identificacion"
+             ></app-recalcular-oferta-micro>
+        </div>
+
         <div *ngSwitchDefault>
             No se encuentra informacion de capacidad de pago y oferta para la unidad  negocio elegida
         </div>

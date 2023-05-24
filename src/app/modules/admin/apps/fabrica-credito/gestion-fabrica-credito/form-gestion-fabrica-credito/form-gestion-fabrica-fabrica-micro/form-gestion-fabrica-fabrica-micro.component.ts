@@ -212,6 +212,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description:
      */
     public onPostDatos(): void {
+        this.setConyugueNombreCompleto()
         const datos: FormularioCreditoMicro = this.form.getRawValue();
         const { numeroHijos, antiguedadLocal, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
         const fechaNacimientoFormato = moment(fechaNacimiento.toString()).format('YYYY-MM-DD');
@@ -275,6 +276,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
+                this.setConyugueNombreCompleto()
+
                 this.formatearDataInicial();
                 this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
@@ -865,7 +868,7 @@ setTimeout(() => {
             if (e === 'S') {
                 this.form.get('tieneRut')?.setValidators([Validators.required])
                 this.form.get('tieneRut')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.minLength(9), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('nitNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
@@ -1212,6 +1215,21 @@ setTimeout(() => {
         return this.form.controls.primerApellido.errors?.required ||
             (this.form.controls.primerApellido.dirty ||
                 this.form.controls.primerApellido.touched);
+    }
+
+    setConyugueNombreCompleto(){
+        let strings: string[] = []
+
+        strings.push(
+            this.form.controls['primerNombreConyuge'].value,
+            this.form.controls['segundoNombreConyuge'].value,
+            this.form.controls['primerApellidoConyuge'].value,
+            this.form.controls['segundoApellidoConyuge'].value,
+        )
+
+        strings = strings.filter(item => item !== '')
+
+        this.form.controls['nombreCompletoConyuge'].setValue(strings.join(' '))
     }
 
     ngOnDestroy(): void {
