@@ -868,7 +868,7 @@ setTimeout(() => {
             if (e === 'S') {
                 this.form.get('tieneRut')?.setValidators([Validators.required])
                 this.form.get('tieneRut')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.minLength(9), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('nitNegocio')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('nitNegocio')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
