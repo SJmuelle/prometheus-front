@@ -21,7 +21,7 @@ export class GridAgendaDecisionComponent implements OnInit, OnDestroy {
   public mostrar: boolean = true;
   public datos: any[] = [];
   public page: number = 1;
-  public tamanoTabl = new FormControl("5");
+  public tamanoTabl = new FormControl("10");
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
