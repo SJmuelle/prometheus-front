@@ -140,7 +140,7 @@
                                 <tr class="text-gray-700 border-t border-b ">
                                     <td rowspan="2" class="py-3 text-sm my-3 min-w-18">
                                         <div class="text-gray-700 grid-cols-2 grid">
-                                            <div class="py-0 text-sm">
+                                            <div class="py-0F text-sm">
                                                 <button mat-icon-button matTooltip="Gestionar"
                                                     (click)="onGetAgenda(item)">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
@@ -346,7 +346,7 @@
                                             </div>
                                             <button mat-icon-button matTooltip="ver devolución"
                                                 *ngIf="item.cantidadDevolucion>0"
-                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
+                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='v'?'f':'v'">
                                                 <mat-icon
                                                     [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                                 </mat-icon>
