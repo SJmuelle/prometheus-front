@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { KeyValue } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-ver-documentos',
@@ -31,7 +32,8 @@ export class VerDocumentosComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private documentosServices: DocumentosAdjuntosService,
-        private fabricaCreditoService: FabricaCreditoService
+        private fabricaCreditoService: FabricaCreditoService,
+        public sanitizer: DomSanitizer
     ) { }
 
     ngOnInit(): void {
@@ -98,7 +100,6 @@ export class VerDocumentosComponent implements OnInit {
                 })
             }
 
-            console.log('documentos', this.documentos);
 
         });
 
@@ -124,7 +125,7 @@ export class VerDocumentosComponent implements OnInit {
     }
 
     getExtension(nombreArchivoReal: string) {
-        const split = nombreArchivoReal.split('.')
+        const split = nombreArchivoReal.split('.')       
         return split[split.length - 1];
     }
 
@@ -175,9 +176,10 @@ export class VerDocumentosComponent implements OnInit {
             numeroSolicitud: this.numeroSolicitud,
             idAdjunto: datos.idArchivoCargado,
         };
+        
         this.documentosServices
-            .getDocumento(datosDescargar)
-            .subscribe((res) => {
+        .getDocumento(datosDescargar)
+        .subscribe((res) => {
                 datos.base64 =  res.data.base64
                 datos.display = !datos.display
             });
