@@ -29,9 +29,9 @@
                     </div>
                     <div class="text-md font-medium truncate">Total en obligaciones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2">
-                        ${{totales.valorDisponible|number}}
+                        ${{totales.valorSolicitado|number}}
                     </div>
-                    <div class="text-md font-medium truncate">Valor disponible</div>
+                    <div class="text-md font-medium truncate">Valor solicitado</div>
                 </div>
                 <div class="flex items-center justify-center w-full text-secondary mt-1">
                 </div>
@@ -423,9 +423,7 @@
                         <th class="px-2 py-3 text-center w-1/12">Nit</th>
                         <th class="px-2 py-3 text-center w-2/12">Entidad</th>
                         <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
                         <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
                         <th class="px-4 py-3 text-center w-1/12">Estado</th>
                     </tr>
                 </thead>
@@ -437,9 +435,9 @@
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                         <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
+                                            [disabled]="permisoEditar">
                                             <mat-option value="">Sin gestión</mat-option>
-                                            <mat-option value="COM">Comprar</mat-option>
+                                            <mat-option (click)="liquidacionSaldos(item)" value="RET" [disabled]="!item.aplicaRetanqueo">Retanqueo</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -448,9 +446,7 @@
                                 <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                                 <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                                 <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                                 <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
                                 <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
@@ -460,14 +456,14 @@
                                         {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
                                     </span>
                                 </td>
-                                <td class="text-sm border w-0">
+                                <!-- <td class="text-sm border w-0">
                                     <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
                                         (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
                                         <mat-icon
                                             [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                         </mat-icon>
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                             <ng-container *ngIf="item.mostrarEstado=='v'">
                                 <tr>
