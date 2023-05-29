@@ -130,7 +130,6 @@ export class GridCarteraMicroComponent implements OnInit {
             }
         }
       })
-      console.log('interna Micro', this.internoTitularCartera);
       
     })
 
@@ -162,7 +161,6 @@ export class GridCarteraMicroComponent implements OnInit {
   }
 
   public liquidacionSaldos(item){
-    console.log('item', item);
     
     const data = {
       numeroSolicitud: item.numeroSolicitud,
@@ -170,11 +168,31 @@ export class GridCarteraMicroComponent implements OnInit {
       idObligacion: item.id,
       gestionCartera: item.gestionCartera,
     }
-    console.log('data',data);
     
-    // this._listadoCarteraService.agregarLiquidacionSaldos(item).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+     this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      if(rep.data.resultado ===  'OK'){
+        Swal.fire('Guardado', 'Retanqueo realizado de forma exitosa', 'success')
+      }else{
+        Swal.fire('Error en el retanqueo', rep.data.resultado, 'error')
+      }
+     })
+  }
 
-    // })
+  public revertirRetanqueo(item){
+    const data = {
+      numeroSolicitud: item.numeroSolicitud,
+      codigoNegocio: item.numeroCuenta,
+      idObligacion: item.id,
+      gestionCartera: '',
+    }
+    
+     this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      if(rep.data.resultado ===  'OK'){
+        Swal.fire('Guardado', 'Retanqueo revertido de forma exitosa', 'success')
+      }else{
+        Swal.fire('Error en al revertir retanqueo', rep.data.resultado, 'error')
+      }
+     })
   }
 
   public cambioEstado(event, item) {

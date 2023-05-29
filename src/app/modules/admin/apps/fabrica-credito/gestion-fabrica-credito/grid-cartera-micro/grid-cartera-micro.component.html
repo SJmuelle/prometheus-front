@@ -436,8 +436,8 @@
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                         <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                             [disabled]="permisoEditar">
-                                            <mat-option value="">Sin gestión</mat-option>
-                                            <mat-option (click)="liquidacionSaldos(item)" value="RET" [disabled]="true">Retanqueo</mat-option>
+                                            <mat-option value="" (click)="item.aplicaRetanqueo && revertirRetanqueo(item)">Sin gestión</mat-option>
+                                            <mat-option (click)="item.aplicaRetanqueo && liquidacionSaldos(item)" value="RET" [disabled]="!item.aplicaRetanqueo">Retanqueo</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
