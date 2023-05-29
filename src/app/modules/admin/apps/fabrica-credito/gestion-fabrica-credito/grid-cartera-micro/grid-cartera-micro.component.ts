@@ -183,7 +183,7 @@ export class GridCarteraMicroComponent implements OnInit {
       numeroSolicitud: item.numeroSolicitud,
       codigoNegocio: item.numeroCuenta,
       idObligacion: item.id,
-      gestionCartera: '',
+      gestionCartera: item.gestionCartera,
     }
     
      this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
