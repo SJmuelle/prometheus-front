@@ -341,6 +341,7 @@ export class AppSettingsService {
             validadorTotalLibranza: EndPoints.uri('/generic/validador-total-libranza'),
             //negociacion
             gestionCartera: EndPoints.uri('/generic/agregar-negociacion-cartera'),
+            liquidacionSaldos: EndPoints.uri('/generic/agrega-liquidacion-saldos'),
             obtenerObligacion: EndPoints.uri('/generic/qry/tk/obtener-obligaciones-carteras-a-negociar'),
         }
     };

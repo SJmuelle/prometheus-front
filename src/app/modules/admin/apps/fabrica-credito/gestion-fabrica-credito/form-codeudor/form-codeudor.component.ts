@@ -633,6 +633,7 @@ export class FormCodeudorComponent implements OnInit {
                     .get('nitNegocio')
                     ?.setValidators([
                         Validators.required,
+                        Validators.minLength(5),
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
                     ]);
                 this.form

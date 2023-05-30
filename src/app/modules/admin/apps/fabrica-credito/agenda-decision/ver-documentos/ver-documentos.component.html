@@ -97,8 +97,8 @@
                                                 </svg>
 
                                             </mat-icon>
-                                            <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay">
-                                                <source [src]="documento.base64" [type]="'audio/'+getExtension(documento.nombreArchivoReal).toLowerCase()">
+                                            <audio controls="controls" autobuffer="autobuffer" [autoplay]="false">
+                                                <source [src]="sanitizer.bypassSecurityTrustResourceUrl(documento.base64)" [type]="'audio/'+getExtension(documento.nombreArchivoReal).toLowerCase()">
 
                                                 Your browser does not support the audio element.
                                             </audio>
