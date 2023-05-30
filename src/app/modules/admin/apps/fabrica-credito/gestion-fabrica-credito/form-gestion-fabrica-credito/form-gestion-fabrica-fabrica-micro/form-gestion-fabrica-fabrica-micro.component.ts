@@ -182,8 +182,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     marginTopInputDynamic() {
         if (window.innerWidth < 600) {
-            console.log('ejecutando');
-
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
 
@@ -194,15 +192,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
                     let titleSpanHeigth = titleSpan?.clientHeight
                     element.style.width = '20px' + ' !important';
-                    element.style['marginTop'] = '20px !important'
-                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
-                    if (titleSpanHeigth > 30) {
-                        if (titleSpanHeigth > 50) {
-                            titleSpan.style.top = '-60px'
-                        } else {
-                            titleSpan.style.top = '-42px'
-                        }
-                    }
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth + 'px') : '30px'), 'important')
+                    titleSpan.style.top = '-'+(titleSpanHeigth + 6) +'px'
                 });
             }, 1000);
         }
