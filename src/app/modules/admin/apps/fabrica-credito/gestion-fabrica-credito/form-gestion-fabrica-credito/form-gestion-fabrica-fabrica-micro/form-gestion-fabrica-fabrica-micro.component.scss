@@ -1,0 +1,428 @@
+.barDataCredito{
+    position: relative;
+    color: rgb(172, 170, 170);
+    width: 100%;
+    height: 10px;
+    border-radius: 2px;
+    background: rgb(196,31,31);
+    background: linear-gradient(90deg, rgba(196,31,31,1) 0%, rgba(233,97,97,1) 51%, rgba(214,217,204,1) 61%, rgba(240,243,106,1) 69%, rgba(170,236,152,1) 80%, rgba(49,175,81,1) 100%);
+}
+
+.barDataCredito > div {
+    font-size: smaller;
+}
+
+.currentScore{
+    position: absolute;
+    height: 20px;
+    width: 4px;
+    background-color: rgb(63, 63, 185);
+    z-index: 200;
+    top: -10px;
+    box-shadow: inset rgb(250, 250, 250) 0px 0px 2px ;
+}
+
+.currentScore::before{
+    content: '';
+    position: absolute;
+    border-radius: 360px;
+    top: -4px;
+    left: -2px;
+    width: 8px;
+    height: 8px;
+    background-color: rgb(63, 63, 185);
+    z-index: 200;
+}
+
+.bar0{
+    display: inline-block;
+    position: absolute;
+    left: -4px;
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar05{
+    display: inline-block;
+    position: absolute;
+    left: calc(10.5% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar1{
+    display: inline-block;
+    position: absolute;
+    left: calc(15.7% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar2{
+    display: inline-block;
+    position: absolute;
+    left: calc(26.3% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar3{
+    display: inline-block;
+    position: absolute;
+    left: calc(36.8% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar4{
+    display: inline-block;
+    position: absolute;
+    left: calc(47.3% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar5{
+    display: inline-block;
+    position: absolute;
+    left: calc(57.8% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar6{
+    display: inline-block;
+    position: absolute;
+    left: calc(68.4% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar7{
+    display: inline-block;
+    position: absolute;
+    left: calc(78.9% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar8{
+    display: inline-block;
+    position: absolute;
+    left: calc(89.4% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+.bar9{
+    display: inline-block;
+    position: absolute;
+    left: calc(100% - 14px);
+    bottom: -28px;
+    padding-left: 2px;
+}
+
+
+
+
+.bordersScore{
+    position: absolute;
+    width: 100%;
+    bottom: -10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30000;
+}
+
+.bordersScore > span {
+    border-right: 1px solid rgb(173, 173, 173);
+    height: 10px;
+}
+
+
+.border0{
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border1{
+    display: inline-block;
+    position: absolute;
+    left: calc(15.7%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border2{
+    display: inline-block;
+    position: absolute;
+    left: calc(26.3%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border3{
+    display: inline-block;
+    position: absolute;
+    left: calc(36.8%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border4{
+    display: inline-block;
+    position: absolute;
+    left: calc(47.3%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border5{
+    display: inline-block;
+    position: absolute;
+    left: calc(57.8%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border6{
+    display: inline-block;
+    position: absolute;
+    left: calc(68.4%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border7{
+    display: inline-block;
+    position: absolute;
+    left: calc(78.9%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border8{
+    display: inline-block;
+    position: absolute;
+    left: calc(89.4%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border9{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.border05{
+    display: inline-block;
+    position: absolute;
+    left: calc(10%);
+    bottom: 0;
+    padding-left: 2px;
+}
+
+.titleScore{
+    font-weight: 500;
+    color: 30,41,59;
+    font: 400 0.875rem/1.2857142857 "Inter var", ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    --bs-body-font-family: var(--bs-font-sans-serif);
+}
+
+
+/* Generic styles just to make this pen look better */
+body {
+    background: var(--background-color);
+    font: 16px/1 Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(var(--rating-size), var(--rating-size))
+    );
+    gap: var(--bar-size);
+    justify-content: start;
+    padding: var(--bar-size);
+  }
+
+  /* ----- The actual thing ----- */
+
+  /* Variables */
+
+  :root {
+    --rating-size: 10rem;
+    --bar-size: 1rem;
+    --background-color: #e7f2fa;
+    --rating-color-default: #2980b9;
+    --rating-color-background: #c7e1f3;
+    --rating-color-good: #27ae60;
+    --rating-color-meh: #f1c40f;
+    --rating-color-bad: #e74c3c;
+  }
+
+  /* Rating item */
+  .rating {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    overflow: hidden;
+
+    background: var(--rating-color-default);
+    color: var(--rating-color-default);
+    width: var(--rating-size);
+    height: var(--rating-size);
+
+    /* Basic style for the text */
+    font-size: calc(var(--rating-size) / 3);
+    line-height: 1;
+  }
+
+  /* Rating circle content */
+  .rating span {
+    position: relative;
+    display: flex;
+    font-weight: bold;
+    z-index: 2;
+  }
+
+  .rating span small {
+    font-size: 0.5em;
+    font-weight: 900;
+    align-self: center;
+  }
+
+  /* Bar mask, creates an inner circle with the same color as thee background */
+  .rating::after {
+    content: "";
+    position: absolute;
+    inset: var(--bar-size);
+    background: var(--background-color);
+    border-radius: inherit;
+    z-index: 1;
+  }
+
+  /* Bar background */
+  .rating::before {
+    content: "";
+    position: absolute;
+    inset: var(--bar-size);
+    border-radius: inherit;
+    box-shadow: 0 0 0 1rem var(--rating-color-background);
+    z-index: -1;
+  }
+
+  /* Classes to give different colors to ratings, based on their score */
+  .rating.good {
+    background: var(--rating-color-good);
+    color: var(--rating-color-good);
+  }
+
+  .rating.meh {
+    background: var(--rating-color-meh);
+    color: var(--rating-color-meh);
+  }
+
+  .rating.bad {
+    background: var(--rating-color-bad);
+    color: var(--rating-color-bad);
+  }
+
+
+  .container {
+    width: 400px;
+    height: 350px;
+    margin: 0 auto;
+    position: relative;
+    transform: scale(0.6) translateY(-40%);
+}
+
+@media screen AND (max-width: 600px) {
+    .container {
+        width: 400px;
+        height: 350px;
+        margin: 0 auto;
+        position: relative;
+        transform: scale(0.6) translateY(-40%) translateX(-40%);
+    }
+}
+#score-dial {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: rotateX(180deg);
+}
+
+.score-band-wrapper {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+}
+
+.fixheigh{
+    height: 200px;
+}
+
+.score-band-wrapper .score-band-label {
+    font-weight: bold;
+    font-size: 30px;
+    line-height: 20px;
+}
+
+.score-band-wrapper small {
+    display: block;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 12px;
+}
+
+.score-dial-wrapper {
+    margin: 0 auto;
+    top: -40%;
+    width: 60%;
+    position: relative;
+    text-align: center;
+}
+
+.score-dial-wrapper input {
+    width: 100%;
+}
+
+.legend {
+    margin-top: 60px;
+}
+
+.legend li {
+    border-left: 20px solid #fff;
+    padding: 10px;
+    list-style-type: none;
+    font-size: 14px;
+}
+
+.legend li.excellent {
+    border-color: #1f9c4c;
+}
+
+.legend li.good {
+    border-color: #91c738;
+}
+
+.legend li.fair {
+    border-color: #fadd00;
+}
+
+.legend li.poor {
+    border-color: #f79a38;
+}
+
+.legend li.vpoor {
+    border-color: #bd2727;
+}

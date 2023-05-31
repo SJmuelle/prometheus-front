@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
@@ -45,8 +45,48 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public actividadEconomica: any;
     public salarioMinimo: number = 0;
     public diccionarioValidarCampo: any = {};
+    public score: any;
+    public descripcionScore: any;
+    public decisionFiltrosDuros: any;
+    public agendaActual: string;
 
     fechaActual: any = moment().locale("co");
+
+    currentScoreElement: HTMLElement;
+
+    radius: number = 140;
+  circumference: number = 2 * Math.PI * this.radius; // 879.2
+  customCircumference: number = this.circumference * 0.85; // 747.32
+  arcLength: number = this.customCircumference / 5; // 149.46
+  offset: number = this.arcLength * 5;
+
+     /* Saved minimum, maximum values and length for all 5 Arc's */
+  redArc = {
+    min: 0.00,
+    max: 573.00,
+    length: 573.00
+  };
+  orangeArc = {
+    min: 574.00,
+    max: 615.00,
+    length: 41.00
+  };
+  yellowArc = {
+    min: 616.00,
+    max: 690.00,
+    length: 74.00
+  };
+  lightGreenArc = {
+    min: 691.00,
+    max: 800.00,
+    length: 109.00
+  };
+  greenArc = {
+    min: 801.00,
+    max: 950.00,
+    length: 149.00
+  };
+  scoreBandLabel: string = "";
 
     constructor(
         private fabricaCreditoService: FabricaCreditoService,
@@ -84,6 +124,37 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     }
 
+    updateScore(score: number): void {
+        if (score >= this.redArc.min) {
+          const greyRed = this.el.nativeElement.querySelector(".greyRed");
+          greyRed.setAttribute("stroke-dasharray",
+            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.redArc.min)) / this.redArc.length)}`);
+        }
+
+        if (score >= this.orangeArc.min) {
+          const greyOrange = this.el.nativeElement.querySelector(".greyOrange");
+          greyOrange.setAttribute("stroke-dasharray",
+            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.orangeArc.min)) / this.orangeArc.length)}`);
+        }
+
+        if (score >= this.yellowArc.min) {
+          const greyYellow = this.el.nativeElement.querySelector(".greyYellow");
+          greyYellow.setAttribute("stroke-dasharray",
+            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.yellowArc.min)) / this.yellowArc.length)}`);
+        }
+
+        if (score >= this.lightGreenArc.min) {
+          const greyLightGreen = this.el.nativeElement.querySelector(".greyLightGreen");
+          greyLightGreen.setAttribute("stroke-dasharray",
+            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.lightGreenArc.min)) / this.lightGreenArc.length)}`);
+        }
+
+        const greyGreen = this.el.nativeElement.querySelector(".greyGreen");
+        let greenArchCalc = ((this.arcLength * (score - this.greenArc.min)) / this.greenArc.length);
+        greyGreen.setAttribute("stroke-dasharray", `${this.arcLength - greenArchCalc},${this.customCircumference}`);
+        greyGreen.setAttribute("stroke-dashoffset", -greenArchCalc);
+      }
+
 
     private cargueInicial() {
         let data = {
@@ -103,26 +174,26 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.get('destinoCredito')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.destinoCredito) {
                 if (data !== this.antiBucle['destinoCredito']) {
-                this.validacionCampos(
-                    'Destino del crédito',
-                    'Este campo modifica el motor de decisión y políticas SARC',
-                    'destinoCredito',
-                    'STRING'
-                )
-            }
+                    this.validacionCampos(
+                        'Destino del crédito',
+                        'Este campo modifica el motor de decisión y políticas SARC',
+                        'destinoCredito',
+                        'STRING'
+                    )
+                }
             }
         })
 
         this.form.get('plazo')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.plazo) {
                 if (data !== this.antiBucle['plazo']) {
-                this.validacionCampos(
-                    'Plazo',
-                    'Este campo actualiza la capacidad de pago del cliente',
-                    'plazo',
-                    'INTEGER'
-                )
-            }
+                    this.validacionCampos(
+                        'Plazo',
+                        'Este campo actualiza la capacidad de pago del cliente',
+                        'plazo',
+                        'INTEGER'
+                    )
+                }
             }
         })
 
@@ -150,21 +221,21 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                         'Este campo modifica el motor de decisión y políticas SARC',
                         'antiguedadNegocio',
                         'INTEGER'
-                        )
-                    }
+                    )
+                }
             }
         })
 
         this.form.get('antiguedadLocal')?.valueChanges.subscribe(data => {
             if (!this.diccionarioValidarCampo.antiguedadLocal) {
                 if (data !== this.antiBucle['antiguedadLocal']) {
-                this.validacionCampos(
-                    'Antigüedad en el local actual',
-                    'Este campo modifica el motor de decisión y políticas SARC',
-                    'antiguedadLocal',
-                    'INTEGER'
-                )
-            }
+                    this.validacionCampos(
+                        'Antigüedad en el local actual',
+                        'Este campo modifica el motor de decisión y políticas SARC',
+                        'antiguedadLocal',
+                        'INTEGER'
+                    )
+                }
             }
         })
     }
@@ -267,6 +338,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
+
                 this.setConyugueNombreCompleto()
 
                 this.formatearDataInicial();
@@ -321,11 +393,33 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     descripcionTipo: data.descripcionTipo,
                     codigoBarrio: data.codigoBarrio
                 });
+                this.agendaActual = data.agenda
+                this.descripcionScore = data.descripcionScore;
+                this.score = data.score;
+                this.setCurrentScoreUI()
+                setTimeout(() => {
+                    this.updateScore(this.score)
+                }, 2000);
+
+                this.decisionFiltrosDuros = data.decisionFiltrosDuros
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
 
 
             });
+    }
+
+    public setCurrentScoreUI() {
+        setTimeout(() => {
+            let currenScoreUI: HTMLElement = this.el.nativeElement.querySelector('.currentScore')
+
+            if (currenScoreUI) {
+                currenScoreUI.style.left = this.score / 950 * 100 + '%'
+                console.log('left: ' + this.score / 950 * 100);
+
+            }
+        }, 2000);
+
     }
 
     public formatearDataInicial(): void {
@@ -458,7 +552,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtiene el listado de barrios del negocio
      */
     private getBarriosNegocio(codigo: string): void {
-         this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
+        this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
             this.barriosNegocio = rep;
         })
     }
@@ -468,26 +562,26 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      */
     private postFormularioFabrica(datos: FormularioCreditoMicro): void {
 
-        Swal.fire('Cargando','Guardando información'); Swal.showLoading();
-setTimeout(() => {
-    this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
-    .subscribe(() => {
-        Swal.fire(
-            'Completado',
-            'Información guardada con éxito',
-            'success',
-        ).then(rep => {
-            location.reload()
-        });
-        //   this.router.navigate(['/credit-factory/agenda-completion']);
-    }, (error) => {
-        Swal.fire({
-            icon: 'error',
-            title: 'Ha ocurrido un error',
-            text: error.error.msg,
-        });
-    });
-}, 1);
+        Swal.fire('Cargando', 'Guardando información'); Swal.showLoading();
+        setTimeout(() => {
+            this.subscription$ = this.fabricaCreditoService.postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+                .subscribe(() => {
+                    Swal.fire(
+                        'Completado',
+                        'Información guardada con éxito',
+                        'success',
+                    ).then(rep => {
+                        location.reload()
+                    });
+                    //   this.router.navigate(['/credit-factory/agenda-completion']);
+                }, (error) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ha ocurrido un error',
+                        text: error.error.msg,
+                    });
+                });
+        }, 1);
 
     }
 
@@ -1208,7 +1302,7 @@ setTimeout(() => {
                 this.form.controls.primerApellido.touched);
     }
 
-    setConyugueNombreCompleto(){
+    setConyugueNombreCompleto() {
         let strings: string[] = []
 
         strings.push(

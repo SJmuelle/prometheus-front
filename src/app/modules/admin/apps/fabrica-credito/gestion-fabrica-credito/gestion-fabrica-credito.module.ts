@@ -78,6 +78,7 @@ import { GridCarteraMicroComponent } from './grid-cartera-micro/grid-cartera-mic
 import { VerDocumentosComponent } from '../agenda-decision/ver-documentos/ver-documentos.component';
 import { VerReferenciacionComponent } from '../agenda-decision/ver-referenciacion/ver-referenciacion.component';
 import { RecalcularOfertaMicroComponent } from './recalcular-oferta-micro/recalcular-oferta-micro.component';
+import { GridFiltrosDurosComponent } from './grid-filtros-duros/grid-filtros-duros.component';
 
 
 
@@ -124,7 +125,8 @@ import { RecalcularOfertaMicroComponent } from './recalcular-oferta-micro/recalc
         GridOfertaMicroComponent,
         GridCarteraMicroComponent,
         VerDocumentosComponent,
-        RecalcularOfertaMicroComponent
+        RecalcularOfertaMicroComponent,
+        GridFiltrosDurosComponent
     ],
     imports: [
         CommonModule,
