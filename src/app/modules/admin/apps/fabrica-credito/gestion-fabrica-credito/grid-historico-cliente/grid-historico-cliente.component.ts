@@ -39,8 +39,8 @@ export class GridHistoricoClienteComponent implements OnInit {
       Swal.close();
       if (res.status === 200) {
         this.datosGeneral=res.data;
-       
-        
+
+
       } else {
         this.datosGeneral = []
       }
