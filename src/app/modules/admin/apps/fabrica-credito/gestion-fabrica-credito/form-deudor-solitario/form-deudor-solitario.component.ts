@@ -199,11 +199,11 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             numeroCuentaBancaria: [''],
             autorizacionBanco: [''],
             tipoDeudor: [''],
-            legalCargoPublico: ['', Validators.required],
+            legalCargoPublico: ['N', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
             fechaDesvinculacionPublico: [''],
-            legalPersonalExpuesta: ['', Validators.required],
+            legalPersonalExpuesta: ['N', Validators.required],
             tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
             familiarDePersonaExpuestaPyP: [''],
@@ -216,14 +216,14 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             cargoExpuesta: [''],
             vinculadoActualExpuesta: [''],
             fechaDesvinculacionExpuesta: [''],
-            legalDesarrollaActividadApnfd: ['', Validators.required],
-            legalCargoPartidoPolitico: ['', Validators.required],
-            legalOperacionCriptomoneda: ['', Validators.required],
+            legalDesarrollaActividadApnfd: ['N', Validators.required],
+            legalCargoPartidoPolitico: ['N', Validators.required],
+            legalOperacionCriptomoneda: ['N', Validators.required],
             tipoOperacionCripto: [''],
             tipoOperacionCriptomoneda: [''],
-            legalOperacionExtranjera: ['', Validators.required],
+            legalOperacionExtranjera: ['N', Validators.required],
             tipoOperacionExtranjera: [''],
-            declaroIngresoDeclaracionAuto: ['', Validators.required],
+            declaroIngresoDeclaracionAuto: ['N', Validators.required],
             otroIngresoDeclaracionAuto: [''],
             plazo: [''],
             descripcionTipo: [''],
@@ -241,7 +241,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
             parentesco: ['', Validators.required],
-            declaraRenta: ['', Validators.required],
+            declaraRenta: ['N', Validators.required],
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
@@ -433,7 +433,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+            .postDatosFabricaCreditoSolitario(datos).pipe(takeUntil(this.unSubscribe$))
 
             .subscribe(
                 (res) => {
@@ -441,10 +441,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                         'Completado',
                         res.data.mensaje,
                         'success'
-                    );
-                    setTimeout(() => {
-                        // location.reload();
-                    }, 1000);
+                    ).then(rep =>{
+                        location.reload();
+                    })
+
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
                 (error) => {
@@ -766,7 +766,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
     public cambiarNacionalidad(e: MatSelectChange) {
         if (e.value === 'CC') {
-            this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO(A)');
+            this.formDeudorSolidario.controls.nacionalidadExpuesta.setValue('COLOMBIANO');
         }
     }
 

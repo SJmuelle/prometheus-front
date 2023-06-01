@@ -20,6 +20,13 @@ export class GenericasService {
         const params: string = 'ESTADO-REFERENCIA';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
+
+    /**
+     * @description: Relacion comercial
+     */
+    public getRelacionComercial(): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.referenciaComercial}`);
+    }
     /**
      * @description: Obtiene listado
      */
@@ -296,4 +303,12 @@ export class GenericasService {
         const params: string = 'subestados-creditos';
         return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}/${data}`);
     }
+
+    /**
+     * @description: Obtiene numero de negocio
+     */
+    public getUnidadNegocio(numSolicitud: string): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.unidadNegocio}/${numSolicitud}`);
+    }
+
 }

@@ -138,7 +138,7 @@
                                 *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
 
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td rowspan="2" class="py-3 text-sm my-3">
+                                    <td rowspan="2" class="py-3 text-sm my-3 min-w-18">
                                         <div class="text-gray-700 grid-cols-2 grid">
                                             <div class="py-0 text-sm">
                                                 <button mat-icon-button matTooltip="Gestionar"
@@ -212,8 +212,8 @@
                                                     svgIcon="heroicons_solid:user"></mat-icon>
                                                 {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
                                             </span>
-
-                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                            {{item.idUnidadNegocio}}
+                                            <span *ngIf="item.unidadNegocioFabrica === 1" class="text-xs text-black font-medium" matTooltipPosition="right"
                                                 matTooltip="Asesor micro">
                                                 <mat-icon class="icon-size-3 text-green-500"
                                                     svgIcon="heroicons_solid:user"></mat-icon>

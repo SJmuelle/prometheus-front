@@ -33,11 +33,25 @@ export class AppSettingsService {
             baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/documentos-negocio')
         }
     };
+    /**
+     * @description: End-point de pago masivo
+     */
+    public transportadora = {
+        url: {
+            base: EndPoints.uri('/generic/qry/detalle-pronto-pago'),
+            basePropietario:EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
+            baseAceptar:EndPoints.uri('/generic/aceptacion-pronto-pago'),
+            baseRechazar:EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
+            baseTransportadora:EndPoints.uri('/generic/qry/transportadoras'),
+            baseActualizar:EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
+            baseTrazabilidad:EndPoints.uri('/generic/trazabilidad-pronto-pago')
+        }
+    };
 
     /**
      * @description: End-point de pago masivo
      */
-     public pago = {
+    public pago = {
         url: {
             base: EndPoints.uri('/generic/aplicacion-pago-finl'),
             baseConvenios: EndPoints.uri('/generic/qry/convenios-unidad-negocio-finl'),
@@ -160,7 +174,9 @@ export class AppSettingsService {
     public genericas = {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
-            basetk: EndPoints.uri('/generic/qry/tk')
+            basetk: EndPoints.uri('/generic/qry/tk'),
+            unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio'),
+            referenciaComercial: EndPoints.uri('/generic/qry/consulta-lista-generica/RELACION-COMERCIAL')
         }
     };
     /**
@@ -194,6 +210,8 @@ export class AppSettingsService {
             baseReferenciaCrear: EndPoints.uri('/generic/cre-agregar-referencia'),
             baseCliente: EndPoints.uri('/generic/actualizar-nits-referencias'),
             baseNegocio: EndPoints.uri('/generic/cre-actualizar-info-negocio-ref'),
+            agregarReferencia: EndPoints.uri('/generic/cre-agregar-referencia'),
+            actualizarReferencia: EndPoints.uri('/generic/cre-actualizar-referencia')
         }
     };
     /**
@@ -275,6 +293,7 @@ export class AppSettingsService {
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
+            baseCausalAnulacion: EndPoints.uri('/generic/cau-anulacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
             getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda')

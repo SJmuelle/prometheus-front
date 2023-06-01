@@ -154,7 +154,6 @@ export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
    * @returns 
    */
   cambiarFecha(date) {
-
     if (date) {
       moment.locale('es');
       return moment(date).format('MMMM D YYYY')

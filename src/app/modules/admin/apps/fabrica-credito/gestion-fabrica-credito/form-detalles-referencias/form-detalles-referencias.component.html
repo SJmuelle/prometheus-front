@@ -1,154 +1,160 @@
 <h2 mat-dialog-title>
     <ng-container *ngIf="form.controls['tipo'].value === 'P'">
-        <span >Referencia personal</span>
+        <span>Referencia personal</span>
     </ng-container>
     <ng-container *ngIf="form.controls['tipo'].value === 'C'">
-        <span >Referencia comercial</span>
+        <span>Referencia comercial</span>
     </ng-container>
     <ng-container *ngIf="form.controls['tipo'].value === 'F'">
-        <span >Referencia familiar</span>
+        <span>Referencia familiar</span>
     </ng-container>
 </h2>
 <mat-dialog-content>
     <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 py-2">
             <form [formGroup]="form">
                 <div class="bg-white flex flex-col">
-                        <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Razón social</mat-label>
-                                    <input matInput type="text" placeholder="Nombre completo" [formControlName]="'nombreCompleto'">
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
-                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                    <mat-label>Primer nombre</mat-label>
-                                    <input matInput type="text" placeholder="Primer nombre" [formControlName]="'primerNombre'">
-                                </mat-form-field>
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Segundo nombre</mat-label>
-                                    <input matInput type="text" placeholder="Segundo nombre" [formControlName]="'segundoNombre'">
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
-                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                    <mat-label>Primer apellido</mat-label>
-                                    <input matInput type="text" placeholder="Primer apellido" [formControlName]="'primerApellido'">
-                                </mat-form-field>
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                        <mat-label>Segundo apellido</mat-label>
-                                        <input matInput type="text" placeholder="Segundo apellido" [formControlName]="'segundoApellido'">
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex">
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value === 'C'">
                             <mat-form-field class="w-full fuse-mat-dense">
-                                <mat-label>Teléfono / Celular</mat-label>
-                                <input matInput type="text" placeholder="Número celular"  mask="(000) 000 00 00"   [formControlName]="'celular'">
-                                <mat-error *ngIf="soloNumero('celular')" >
-                                    Este campo solo acepta números.
-                                </mat-error>
+                                <mat-label>Razón social</mat-label>
+                                <input matInput type="text" placeholder="Nombre completo"
+                                    [formControlName]="'nombreCompleto'">
                             </mat-form-field>
-                        </div>
-
-                        <div *ngIf="form.controls['tipo'].value === 'P'" class="md:flex">
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio === 1">
+                            <mat-form-field *ngIf="tipoReferencia$ | async as tiporeferencias"
+                                class="w-full fuse-mat-dense">
+                                <mat-label>Tipo de referencia</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoReferencia'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                    <mat-option *ngFor="let item of tiporeferencias.data"
+                                        [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Primer nombre</mat-label>
+                                <input matInput type="text" placeholder="Primer nombre"
+                                    [formControlName]="'primerNombre'">
+                            </mat-form-field>
                             <mat-form-field class="w-full fuse-mat-dense">
-                                <mat-label>Tiempo conocido (meses)</mat-label>
-                                <input matInput type="number" min="0" [formControlName]="'tiempoConocido'" >
+                                <mat-label>Segundo nombre</mat-label>
+                                <input matInput type="text" placeholder="Segundo nombre"
+                                    [formControlName]="'segundoNombre'">
                             </mat-form-field>
-                        </div>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value !== 'C'">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Primer apellido</mat-label>
+                                <input matInput type="text" placeholder="Primer apellido"
+                                    [formControlName]="'primerApellido'">
+                            </mat-form-field>
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Segundo apellido</mat-label>
+                                <input matInput type="text" placeholder="Segundo apellido"
+                                    [formControlName]="'segundoApellido'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Teléfono / Celular</mat-label>
+                            <input matInput type="text" placeholder="Número celular" mask="(000) 000 00 00"
+                                [formControlName]="'celular'">
+                            <mat-error *ngIf="soloNumero('celular')">
+                                Este campo solo acepta números.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
 
-                        <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
-                                <ng-container *ngIf="departamentos$ | async as departamentos">
-                                    <mat-form-field class="w-full fuse-mat-dense">
-                                        <mat-label>Departamento de residencia</mat-label>
-                                        <mat-select (selectionChange)="seleccionDepartamento($event)"
-                                                    [value]="'seleccione'"
-                                                    [formControlName]="'codigoDepartamento'"
-                                        >
-                                            <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                            <mat-option *ngFor="let departamento of departamentos.data"
-                                                        [value]="departamento.codigo"
-                                            >{{departamento.nombre}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </ng-container>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
-                                <ng-container *ngIf="ciudades$ | async as ciudades">
-                                    <mat-form-field class="w-full fuse-mat-dense">
-                                        <mat-label>Ciudad / municipio de residencia</mat-label>
-                                        <mat-select
-                                                    [value]="'seleccione'"
-                                                    [formControlName]="'codigoCiudad'"
-                                        >
-                                            <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                            <mat-option *ngFor="let ciudad of ciudades.data"
-                                                        [value]="ciudad.codigo"
-                                            >{{ciudad.nombre}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </ng-container>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex">
-                            <ng-container *ngIf="form.controls['tipo'].value === 'C'">
+                    <div *ngIf="form.controls['tipo'].value === 'P'" class="md:flex">
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Tiempo conocido (meses)</mat-label>
+                            <input matInput type="number" min="0" [formControlName]="'antiguedad'">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio !== 1">
+                            <ng-container *ngIf="departamentos$ | async as departamentos">
                                 <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Antigüedad de ser cliente (meses)</mat-label>
-                                    <input matInput type="number" placeholder="Ingrese la antigüedad en meses" [formControlName]="'antiguedad'">
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
-                        <div class="md:flex">
-                            <ng-container *ngIf="estadoReferencia$ | async as items">
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>Estado</mat-label>
-                                    <mat-select
-                                        [value]="'seleccione'"
-                                        [formControlName]="'estado'"
-                                    >
+                                    <mat-label>Departamento de residencia</mat-label>
+                                    <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
+                                        [formControlName]="'codigoDepartamento'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
-                                        <mat-option *ngFor="let item of items.data"
-                                                    [value]="item.codigoOpcion"
-                                        >{{item.descripcionOpcion}}
+                                        <mat-option *ngFor="let departamento of departamentos.data"
+                                            [value]="departamento.codigo">{{departamento.nombre}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </ng-container>
-                        </div>
-                        <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'">
-                            <!--{{form.controls.tipo.value}}-->
-                            <ng-container *ngIf="parentescos$ | async as items">
-                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                    <mat-label>Tipo de parentesco</mat-label>
-                                    <mat-select [formControlName]="'parentesco'">
-                                        <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
-                                            {{item.descripcionOpcion}}
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value === 'C'">
+                            <ng-container *ngIf="ciudades$ | async as ciudades">
+                                <mat-form-field class="w-full fuse-mat-dense">
+                                    <mat-label>Ciudad / municipio de residencia</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudad'">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                        <mat-option *ngFor="let ciudad of ciudades.data"
+                                            [value]="ciudad.codigo">{{ciudad.nombre}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </ng-container>
-                            <ng-container *ngIf="form.controls['parentesco'].value === 'F'">
-                                <mat-form-field class="w-full mr-2 fuse-mat-dense">
-                                    <mat-label>Otro, indique cual </mat-label>
-                                    <mat-select [formControlName]="'otroParentesco'">
-                                        <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
-                                            {{item.descripcionOpcion}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </ng-container>
-                        </div>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="form.controls['tipo'].value === 'C' && unidadNegocio !== 1">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Antigüedad de ser cliente (meses)</mat-label>
+                                <input matInput type="number" placeholder="Ingrese la antigüedad en meses"
+                                    [formControlName]="'antiguedad'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex">
+                        <ng-container *ngIf="estadoReferencia$ | async as items">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Estado</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'estado'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione</mat-option>
+                                    <mat-option *ngFor="let item of items.data"
+                                        [value]="item.codigoOpcion">{{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
+                    <div class="md:flex" *ngIf="form.controls['tipo'].value === 'F'">
+                        <!--{{form.controls.tipo.value}}-->
+                        <ng-container *ngIf="parentescos$ | async as items">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Tipo de parentesco</mat-label>
+                                <mat-select [formControlName]="'parentesco'">
+                                    <mat-option *ngFor="let item of items.data" [value]="item.codigoOpcion">
+                                        {{item.descripcionOpcion}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container *ngIf="form.controls['parentesco'].value === 'OT'">
+                            <mat-form-field class="w-full mr-2 fuse-mat-dense">
+                                <mat-label>Otro, indique cual </mat-label>
+                                <input matInput type="text" [formControlName]="'otroParentesco'">
+                            </mat-form-field>
+                        </ng-container>
+                    </div>
                 </div>
             </form>
         </div>
@@ -156,18 +162,10 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button  *ngIf="!permisoEditar"
-                color="primary"
-                type="button"
-                (click)="onActualizar()"
-        >
+        <button mat-raised-button *ngIf="!permisoEditar" color="primary" type="button" (click)="onActualizar()">
             Actualizar
         </button>
-        <button mat-raised-button
-                class="mr-2 bg-gray-400 text-white"
-                type="button"
-                (click)="onDialogo()"
-        >
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onDialogo()">
             Cerrar
         </button>
     </div>

@@ -29,6 +29,9 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
     public totales: any[];
     minuto = 0;
     porcentaje: number;
+    intervalVentaDigital: any;
+
+
     constructor(
         private _agendaVentaService: AgendaVentaService,
         // private agendaCarteraService: AgendaCarteraService,
@@ -44,7 +47,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
         this.getAgenda();
 
 
-        setInterval(() => {
+        this.intervalVentaDigital = setInterval(() => {
             this.getAgenda();
             this.minuto = 0;
         }, 30000);
@@ -154,7 +157,10 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
 
 
     ngOnDestroy(): void {
-        this.unsubscribe$.unsubscribe();
+        this.unsubscribe$.next();
+        this.unsubscribe$.complete();
+
+        clearInterval(this.intervalVentaDigital);
     }
 
 }

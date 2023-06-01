@@ -1,0 +1,36 @@
+.permitirAceptar:enabled {
+    background-color: rgba(74, 222, 128, var(--tw-bg-opacity));
+}
+
+.permitirActualizar:enabled {
+    background-color: rgba(245,158,12,255);
+}
+
+.permitirRechazar:enabled {
+    background-color: rgba(248, 113, 113, var(--tw-bg-opacity));
+}
+
+.bloquear:disabled{
+    background-color: white;
+    border: 1px solid rgb(212, 212, 212);
+}
+
+thead th {
+    position: -webkit-sticky; /* for Safari */
+    position: sticky;
+    top: 0;
+    background-color: #F9FAFB;
+    z-index: 90;
+}
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+}

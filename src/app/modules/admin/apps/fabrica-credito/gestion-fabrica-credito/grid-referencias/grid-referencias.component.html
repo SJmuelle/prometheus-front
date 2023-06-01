@@ -1,5 +1,5 @@
 <div class="row" [ngSwitch]="esVer">
-    <div class="flex justify-end mb-4" *ngIf="!permisoEditar">
+    <div class="flex sm:justify-end justify-items-start mb-4 relative min-h-10" *ngIf="!permisoEditar">
         <ng-container *ngIf="!datos">
             <button mat-raised-button color="accent" type="button" (click)="onDialogReferencia()">
                 Nueva referencia
@@ -24,7 +24,7 @@
                 <thead class="bg-accent-50">
                     <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                         <th class="px-4 py-3"></th>
-                        <th class="px-4 py-3">Nombre / Razon social</th>
+                        <th class="px-4 py-3 min-w-50">Nombre / Razon social</th>
                         <th class="px-4 py-3">Teléfono / celular</th>
                         <th class="px-4 py-3">Tipo de referencia</th>
                         <th class="px-4 py-3">Estado</th>
@@ -40,8 +40,9 @@
                                         matTooltip="Ver información">
                                         <mat-icon [svgIcon]="'mat_outline:visibility'"></mat-icon>
                                     </button>
-                                    <button *ngIf="item.tipoReferenciacion !=='C'" mat-icon-button
-                                        (click)="onDialogReferenciacionFormGenerico(item)"
+                                    <button
+                                        *ngIf="item.tipoReferenciacion !=='C' && item.descripcionEstado !== 'INACTIVO' && item.unidadNegocio === 1"
+                                        mat-icon-button (click)="onDialogReferenciacionFormGenerico(item)"
                                         matTooltip="Ver referenciación">
                                         <mat-icon svgIcon="heroicons_outline:phone"></mat-icon>
                                     </button>
@@ -69,7 +70,7 @@
                     <thead class="bg-accent-50">
                         <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                             <th class="px-4 py-3"></th>
-                            <th class="px-4 py-3">Nombre / Razon social</th>
+                            <th class="px-4 py-3 min-w-50">Nombre / Razon social</th>
                             <th class="px-4 py-3">Teléfono / celular</th>
                             <th class="px-4 py-3">Tipo de referencia</th>
                             <th class="px-4 py-3">Estado</th>
@@ -101,7 +102,7 @@
         </ng-container>
     </ng-container>
     <!--Formulario detalles referencias-->
-    <div class="sm:mt-13">
+    <div class="mt-13 sm:mb-0 mb-10">
         <!--<ng-container *ngSwitchCase="true">
              <app-form-detalles-referencias
                  (cerrarFormulario)=onCerrarFormularioDetalle($event)

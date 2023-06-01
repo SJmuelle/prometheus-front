@@ -227,7 +227,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                     break;
 
                 default:
-                    if (element.buscar.length > 1) {
+                    if (element.buscar.length > 0) {
                         return element
                     }
                     break;

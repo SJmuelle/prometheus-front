@@ -26,6 +26,9 @@ export class GridCentralesComponent implements OnInit {
     public numeroIdentificacion;
     public numeroSolicitud;
     public datosDocumentosCentrales: any[] = [];
+    public titularDocumentosCentrales: any[]= [];
+    public codeudorDocumentosCentrales: any[]= [];
+    public solidarioDocumentosCentrales: any[]= [];
 
     constructor(
         private route: ActivatedRoute,
@@ -60,9 +63,25 @@ export class GridCentralesComponent implements OnInit {
             numeroSolicitud:Number(this.numeroSolicitud)
         };
         this.centralesService.getComentarios(data).subscribe((res) => {
-            this.datosDocumentosCentrales = res.data;
+            this.asignarDatosDocumentos(res.data)
             Swal.close();
         });
+    }
+
+    private asignarDatosDocumentos(datos: any[]){ 
+        datos.forEach(item => {
+            switch(item.tipoTercero){
+                case 'T':
+                this.titularDocumentosCentrales.push(item);
+                break;
+                case 'C':
+                this.codeudorDocumentosCentrales.push(item);
+                break;
+                case 'S':
+                this.solidarioDocumentosCentrales.push(item);
+                break;
+            }
+        })
     }
 
     public getDownloadHistorico(data: any) {

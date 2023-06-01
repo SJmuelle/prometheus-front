@@ -37,6 +37,14 @@ export class GridCarteraMicroComponent implements OnInit {
     verificacion: string;
   };
   informacionCompra: { idMostrar: number;  };
+
+  externaTitularCartera: any[] = [];
+  externaCodeudorCartera: any[] = [];
+  externaSolidarioCartera: any[] = [];
+
+  internoTitularCartera: any[] = [];
+  internoCodeudorCartera: any[] = [];
+  internoSolidarioCartera: any[] = [];
   // informacionCompra: any;
 
   constructor(private route: ActivatedRoute,
@@ -59,7 +67,70 @@ export class GridCarteraMicroComponent implements OnInit {
 
 
   private getListadoCartera(numeroSolicitud: number): void {
-    this.listadoCartera$ = this._listadoCarteraService.getListadoCartera(numeroSolicitud);
+    this.externaTitularCartera = [];
+    this.externaCodeudorCartera = [];
+    this.externaSolidarioCartera = [];
+  
+    this.internoTitularCartera = [];
+    this.internoCodeudorCartera = [];
+    this.internoSolidarioCartera = [];
+    
+    this._listadoCarteraService.getListadoCartera(numeroSolicitud).subscribe(data => {
+      data.data.forEach(item => {
+        switch(item.carteraInterna){
+          case 'N':
+            switch(item.tipoTercero){
+              case 'T':
+                if(item.alDia === 'f'){
+                  this.externaTitularCartera.push(item);
+                }else{
+                  this.externaTitularCartera.unshift(item)
+                }
+              break;
+              case 'C':
+                if(item.alDia === 'f'){
+                  this.externaCodeudorCartera.push(item)
+                }else{
+                  this.externaCodeudorCartera.unshift(item)
+                }
+              break;
+              case 'S':
+                if(item.alDia === 'f'){
+                  this.externaSolidarioCartera.push(item);
+                }else{
+                  this.externaSolidarioCartera.unshift(item);
+                }
+              break;
+            }
+            break;
+          case 'S':
+            switch(item.tipoTercero){
+              case 'T':
+                if(item.alDia === 'f'){
+                  this.internoTitularCartera.push(item);
+                }else{
+                  this.internoTitularCartera.unshift(item);
+                }
+              break;
+              case 'C':
+                if(item.alDia === 'f'){
+                  this.internoCodeudorCartera.push(item)
+                }else{
+                  this.internoCodeudorCartera.unshift(item)
+                }
+              break;
+              case 'S':
+                if(item.alDia === 'f'){
+                  this.internoSolidarioCartera.push(item);
+                }else{
+                  this.internoSolidarioCartera.unshift(item);
+                }
+              break;
+            }
+        }
+      })
+    })
+
     this.validadorTotalLibranza();
   }
 
@@ -198,5 +269,14 @@ export class GridCarteraMicroComponent implements OnInit {
   }
 
 
-
+  public transformTipoTercero(tipo: string){
+    switch(tipo){
+      case 'T':
+      return 'Titular'
+      case 'C':
+      return 'Codeudor'
+      case 'S':
+      return 'Dedudor solidario'
+    }
+  }
 }

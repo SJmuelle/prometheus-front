@@ -102,6 +102,10 @@ export class FormCodeudorComponent implements OnInit {
                 this.addValidation();
                 this.form.patchValue(data);
 
+                if (this.form.controls['ocupacion'].value === 'INDEFO' || this.form.controls['ocupacion'].value === 'PROIN' || this.form.controls['ocupacion'].value === 'INDNFO') {
+                    this.actividadEconomica$ = this.genericaServices.postActividadEconomica(this.form.controls['ocupacion'].value)
+                }
+
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 this.form.controls.clausulaAnticurrupcionClaracionAuto.setValue(data?.autoricacionDatosPersonalClaracionAuto === 'S')
                 // formatear data para los select
@@ -324,12 +328,12 @@ export class FormCodeudorComponent implements OnInit {
             numeroCuentaBancaria: [''],
             autorizacionBanco: [''],
             tipoDeudor: [''],
-            legalCargoPublico: ['', Validators.required],
+            legalCargoPublico: ['N', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
             fechaDesvinculacionPublico: [''],
-            declaraRenta: ['', Validators.required],
-            legalPersonalExpuesta: ['', Validators.required],
+            declaraRenta: ['N', Validators.required],
+            legalPersonalExpuesta: ['N', Validators.required],
             tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
             familiarDePersonaExpuestaPyP: [''],
@@ -342,12 +346,12 @@ export class FormCodeudorComponent implements OnInit {
             cargoExpuesta: [''],
             vinculadoActualExpuesta: [''],
             fechaDesvinculacionExpuesta: [''],
-            legalDesarrollaActividadApnfd: ['', Validators.required],
-            legalCargoPartidoPolitico: ['', Validators.required],
-            legalOperacionCriptomoneda: ['', Validators.required],
+            legalDesarrollaActividadApnfd: ['N', Validators.required],
+            legalCargoPartidoPolitico: ['N', Validators.required],
+            legalOperacionCriptomoneda: ['N', Validators.required],
             tipoOperacionCripto: [''],
             tipoOperacionCriptomoneda: [''],
-            legalOperacionExtranjera: ['', Validators.required],
+            legalOperacionExtranjera: ['N', Validators.required],
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: ['', Validators.required],
             otroIngresoDeclaracionAuto: [''],
@@ -538,7 +542,7 @@ export class FormCodeudorComponent implements OnInit {
     }
 
     public cambiarNacionalidad(e: MatSelectChange) {
-        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO(A)')
+        e.value === 'CC' && this.form.controls.nacionalidad.setValue('COLOMBIANO')
     }
 
     public cargarActividadEconomica(e: MatSelectChange) {
@@ -562,7 +566,7 @@ export class FormCodeudorComponent implements OnInit {
                     ?.setValidators([
                         Validators.required,
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                        Validators.minLength(10),
+                        Validators.minLength(9),
                         Validators.maxLength(10),
                     ]);
                 this.form
@@ -1196,6 +1200,7 @@ export class FormCodeudorComponent implements OnInit {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
+                this.form.get('modificadaSolicitud').setValue('S');
             } else {
                 if (type === 'INTEGER') {
                     this.form.controls[variable].setValue(
@@ -1330,7 +1335,7 @@ export class FormCodeudorComponent implements OnInit {
             },
         }).then((result) => { });
         this.subscription$ = this.fabricaCreditoService
-            .postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+            .postDatosFabricaCreditoCodeudor(datos).pipe(takeUntil(this.unSubscribe$))
 
             .subscribe(
                 (res) => {
@@ -1338,10 +1343,9 @@ export class FormCodeudorComponent implements OnInit {
                         'Completado',
                         res.data.mensaje,
                         'success'
-                    );
-                    setTimeout(() => {
+                    ).then(rep => {
                         location.reload()
-                    }, 1000);
+                    });
                     //   this.router.navigate(['/credit-factory/agenda-completion']);
                 },
                 (error) => {

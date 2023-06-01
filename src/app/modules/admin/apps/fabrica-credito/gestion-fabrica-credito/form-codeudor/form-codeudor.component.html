@@ -11,7 +11,8 @@
                     (selectionChange)="cambiarNacionalidad($event)">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
-                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [value]="item.codigo">{{ item.valor }}
+                    <mat-option *ngFor="let item of dataInicial?.tiposDocumentos" [disabled]="item.codigo === 'CE'"
+                        [value]="item.codigo">{{ item.valor }}
                     </mat-option>
                 </mat-select>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'heroicons_outline:identification'">
@@ -207,7 +208,7 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de nacimiento </mat-label>
-                <input matInput [readonly]="true" [matDatepicker]="fechaNacimiento"
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaNacimiento"
                     [formControlName]="'fechaNacimiento'" (dateChange)="
                         validacionCampos(
                             'Fecha de nacimiento',
@@ -271,8 +272,8 @@
         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
             <mat-form-field>
                 <mat-label>Fecha de expedición </mat-label>
-                <input matInput [matDatepicker]="fechaExpedicionDocumento" [formControlName]="'fechaExpedicion'"
-                    [readonly]="true" />
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaExpedicionDocumento"
+                    [formControlName]="'fechaExpedicion'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento" [disabled]="false">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
@@ -289,7 +290,7 @@
 
             <mat-form-field>
                 <mat-label>Departamento de expedición</mat-label>
-                <mat-select (selectionChange)="seleccionDepartamentoExpedicion($event)" [value]="'seleccione'"
+                <mat-select (selectionChange)="seleccionDepartamentoExpedicion($event) " [value]="'seleccione'"
                     [formControlName]="'codigoDepartamentoExpedicion'">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
@@ -518,7 +519,8 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Meses de residencia</mat-label>
-                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0" max="11"/>
+                <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0"
+                    max="11" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.mesesTiempoResidencia.errors?.required">
@@ -593,8 +595,8 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Teléfono de la empresa</mat-label>
-                <input autocomplete="off" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16" matInput type="text"
-                    [formControlName]="'telefonoEmpresa'" />
+                <input autocomplete="off" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
+                    matInput type="text" [formControlName]="'telefonoEmpresa'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.telefonoEmpresa.errors?.required">
@@ -604,14 +606,14 @@
                 form.controls.telefonoEmpresa.errors
                     ?.minlength
             ">
-            Debe tener mínimo 7 dígitos
-        </mat-error>
-        <mat-error *ngIf="
+                    Debe tener mínimo 7 dígitos
+                </mat-error>
+                <mat-error *ngIf="
                 form.controls.telefonoEmpresa.errors
                     ?.maxlength
             ">
-            Debe tener máximo 10 dígitos
-        </mat-error>
+                    Debe tener máximo 10 dígitos
+                </mat-error>
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Dirección de la empresa</mat-label>
@@ -659,7 +661,8 @@
             </mat-form-field>
             <mat-form-field class="fuse-mat-dense">
                 <mat-label>Fecha de ingreso</mat-label>
-                <input matInput [matDatepicker]="fechaIngresoFabrica" [formControlName]="'fechaIngresoFabrica'" />
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaIngresoFabrica"
+                    [formControlName]="'fechaIngresoFabrica'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaIngresoFabrica">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaIngresoFabrica></mat-datepicker>
@@ -682,9 +685,12 @@
             " class="grid gap-2 sm:grid-cols-4 grid-cols-1">
             <mat-form-field *ngIf="actividadEconomica$ | async as actividadEconomica">
                 <mat-label>Actividad económica </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'" [matTooltip]="
-                        '¿Se encuentra registrado en camára de comercio?'
-                    ">
+                <mat-select [value]="'seleccione'" [formControlName]="'actividadEconomica'" (selectionChange)="validacionCampos(
+                            'Actividad económica',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'actividadEconomica',
+                            'STRING'
+                        )">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let ocupacion of actividadEconomica.data" [value]="ocupacion.codigo">{{
@@ -717,7 +723,12 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Registrado en cámara de comercio </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'camaraComercio'" [matTooltip]="
+                <mat-select [value]="'seleccione'" (selectionChange)="validacionCampos(
+                            'Registrado en cámara de comercio',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'camaraComercio',
+                            'STRING'
+                        )" [formControlName]="'camaraComercio'" [matTooltip]="
                         '¿Se encuentra registrado en camára de comercio?'
                     ">
                     <mat-option disabled [value]="'seleccione'">Seleccione
@@ -738,11 +749,17 @@
                         form.controls.ocupacion.value === 'INDEFO')
                 ">
                 <mat-label>N° de ID en cámara de comercio </mat-label>
-                <input autocomplete="off" maxlength="13" matInput type="text" mask="separator.0" thousandSeparator="."
+                <input autocomplete="off" matInput type="text" mask="separator.0" thousandSeparator="."
                     [formControlName]="'nitNegocio'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                 <mat-error *ngIf="form.controls.nitNegocio.errors?.required">
                     Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
+                    Mínimo 9 digitos
+                </mat-error>
+                <mat-error *ngIf="form.controls.nitNegocio.errors?.maxlength">
+                    Maximo 10 digitos
                 </mat-error>
             </mat-form-field>
             <mat-form-field>
@@ -761,8 +778,12 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Departamento del negocio </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'codigoDepartamentoNegocio'"
-                    (selectionChange)="seleccionDepartamentoNegocio($event)">
+                <mat-select [value]="'seleccione'" [formControlName]="'codigoDepartamentoNegocio'" (selectionChange)="seleccionDepartamentoNegocio($event); validacionCampos(
+                            'Departamento del negocio',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'codigoDepartamentoNegocio',
+                            'STRING'
+                        )">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="
@@ -780,8 +801,12 @@
             <ng-container *ngIf="ciudadesNegocio$ | async as ciudades">
                 <mat-form-field>
                     <mat-label>Municipio / Ciudad del negocio</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'"
-                        (selectionChange)="seleccionCiudadNegocio($event)">
+                    <mat-select [value]="'seleccione'" [formControlName]="'codigoCiudadNegocio'" (selectionChange)="seleccionCiudadNegocio($event); validacionCampos(
+                            'Municipio / Ciudad del negocio',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'codigoCiudadNegocio',
+                            'STRING'
+                        )">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
@@ -800,7 +825,12 @@
             <ng-container *ngIf="barrios$ | async as barrios">
                 <mat-form-field>
                     <mat-label>Barrio del negocio</mat-label>
-                    <mat-select [value]="'seleccione'" [formControlName]="'codigoBarrioNegocio'">
+                    <mat-select [value]="'seleccione'" (selectionChange)="validacionCampos(
+                            'Barrio del negocio',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'codigoBarrioNegocio',
+                            'STRING'
+                        )" [formControlName]="'codigoBarrioNegocio'">
                         <mat-option disabled [value]="'seleccione'">Seleccione
                         </mat-option>
                         <mat-option *ngFor="let barrio of barrios.data" [value]="barrio.codigo">
@@ -973,23 +1003,29 @@
             " class="grid gap-2 sm:grid-cols-4 grid-cols-1">
             <mat-form-field>
                 <mat-label>Teléfono / celular del negocio</mat-label>
-                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16" [formControlName]="'telefonoNegocio'" />
+                <input matInput type="text" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
+                    [formControlName]="'telefonoNegocio'" />
                 <mat-error *ngIf="
                 form.controls.telefonoNegocio.errors
                     ?.minlength
             ">
-            Debe tener mínimo 7 dígitos
-        </mat-error>
-        <mat-error *ngIf="
+                    Debe tener mínimo 7 dígitos
+                </mat-error>
+                <mat-error *ngIf="
                 form.controls.telefonoNegocio.errors
                     ?.maxlength
             ">
-            Debe tener máximo 10 dígitos
-        </mat-error>
+                    Debe tener máximo 10 dígitos
+                </mat-error>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Ubicación del negocio </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'">
+                <mat-select (selectionChange)="validacionCampos(
+                            'Ubicación del negocio',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'tipoUbicacionNegocio',
+                            'STRING'
+                        )" [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let ocupacion of dataInicial?.tipoUbicacion" [value]="ocupacion.codigo">{{
@@ -1017,7 +1053,12 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Antigüedad en local actual </mat-label>
-                <mat-select [value]="'seleccione'" [formControlName]="'antiguedadLocal'">
+                <mat-select (selectionChange)="validacionCampos(
+                            'Antigüedad en local actual',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'antiguedadLocal',
+                            'INTEGER'
+                        )" [value]="'seleccione'" [formControlName]="'antiguedadLocal'">
                     <mat-option disabled [value]="'seleccione'">Seleccione
                     </mat-option>
                     <mat-option *ngFor="let ocupacion of dataInicial?.antiguedadLocal" [value]="ocupacion.codigo">{{
@@ -1190,8 +1231,8 @@ titular" />
             </mat-form-field>
             <mat-form-field *ngIf="form.controls.vinculadoActualPublico.value === 'N'">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacionPublico"
-                    [formControlName]="'fechaDesvinculacionPublico'" [readonly]="true" />
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaDesvinculacionPublico"
+                    [formControlName]="'fechaDesvinculacionPublico'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionPublico" [disabled]="false">
                 </mat-datepicker-toggle>
                 <mat-datepicker #fechaDesvinculacionPublico readonly></mat-datepicker>
@@ -1287,7 +1328,7 @@ titular" />
 
             <mat-form-field *ngIf="form.controls.vinculadoActualExpuesta.value === 'N'">
                 <mat-label>Fecha de desvinculación</mat-label>
-                <input matInput [matDatepicker]="fechaDesvinculacionExpuesta"
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaDesvinculacionExpuesta"
                     [formControlName]="'fechaDesvinculacionExpuesta'" />
                 <mat-datepicker-toggle matSuffix [for]="fechaDesvinculacionExpuesta" [disabled]="false">
                 </mat-datepicker-toggle>
@@ -1463,10 +1504,11 @@ titular" />
                     target="_blank">Autorización de
                     tratamiento de datos personales</a> </mat-checkbox>
             <mat-checkbox class="ml-3" formControlName="clausulaAnticurrupcionClaracionAuto"> <a
-                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline" target="_blank"> Cláusula de
+                    href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline"
+                    target="_blank"> Cláusula de
                     Anticorrupción y Antilavado </a></mat-checkbox>
         </div>
-        <div class="flex justify-end" *ngIf="!permisoEditar">
+        <div class="flex justify-end mb-15" *ngIf="!permisoEditar">
             <button mat-raised-button color="primary" type="button" (click)="validationPost()">
                 Guardar
             </button>

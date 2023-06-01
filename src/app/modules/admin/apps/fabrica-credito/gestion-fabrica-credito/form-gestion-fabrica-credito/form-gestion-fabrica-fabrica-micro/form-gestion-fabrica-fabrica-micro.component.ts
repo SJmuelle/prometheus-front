@@ -174,7 +174,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.formatearDataInicial();
                 this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
-
+                this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico:'N')
+                this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta:'N')
+                this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico:'N')
+                this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera:'N')
+                this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda:'N')
+                this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd:'N')
+                this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta:'N')
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -358,10 +364,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     'Completado',
                     'Información guardada con éxito',
                     'success'
-                );
-                setTimeout(() => {
+                ).then(rep =>{
                     location.reload()
-                }, 1000);
+                });
                 //   this.router.navigate(['/credit-factory/agenda-completion']);
             }, (error) => {
                 Swal.fire({
@@ -385,7 +390,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-
+                this.form.get('modificadaSolicitud').setValue('S')
             } else {
                 if (type === "INTEGER") {
 
@@ -511,11 +516,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             numeroCuentaBancaria: [''],
             autorizacionBanco: [''],
             tipoDeudor: ['', Validators.required],
-            legalCargoPublico: ['', Validators.required],
+            legalCargoPublico: ['N', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
             fechaDesvinculacionPublico: [''],
-            legalPersonalExpuesta: ['', Validators.required],
+            legalPersonalExpuesta: ['N', Validators.required],
             tiposTercerosSolicitud: [''],
             vinculacionExpuesta: [''],
             familiarDePersonaExpuestaPyP: [''],
@@ -528,12 +533,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             cargoExpuesta: [''],
             vinculadoActualExpuesta: [''],
             fechaDesvinculacionExpuesta: [''],
-            legalDesarrollaActividadApnfd: ['', Validators.required],
-            legalCargoPartidoPolitico: ['', Validators.required],
-            legalOperacionCriptomoneda: ['', Validators.required],
+            legalDesarrollaActividadApnfd: ['N', Validators.required],
+            legalCargoPartidoPolitico: ['N', Validators.required],
+            legalOperacionCriptomoneda: ['N', Validators.required],
             tipoOperacionCripto: [''],
             tipoOperacionCriptomoneda: [''],
-            legalOperacionExtranjera: ['', Validators.required],
+            legalOperacionExtranjera: ['N', Validators.required],
             tipoOperacionExtranjera: [''],
             declaroIngresoDeclaracionAuto: ['', Validators.required],
             otroIngresoDeclaracionAuto: [''],
@@ -548,7 +553,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             destinoCredito: ['', [Validators.required]],
             codeudorMicro: [''],
             codigoBarrio: ['', [Validators.required]],
-            declaraRenta: ['', [Validators.required]],
+            declaraRenta: ['N', [Validators.required]],
             cargoPublico: [''],
             entidad: [''],
             vinculadoActualmente: [''],
@@ -963,27 +968,27 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
             // Local comercial propio
             if (e === '1') {
-                this.form.controls.tipoLocalCalulado.setValue('Propio.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
+                this.form.controls.tipoLocalCalulado.setValue('Propio')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte')
             }
             else if (e === '2') {
-                this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte.')
+                this.form.controls.tipoLocalCalulado.setValue('Arrendado')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Local aparte')
             } else if (e === '3') {
-                this.form.controls.tipoLocalCalulado.setValue('Arrendado.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('Arrendado')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
             else if (e === '4') {
-                this.form.controls.tipoLocalCalulado.setValue('Familiar.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('Familiar')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
             else if (e === '5') {
-                this.form.controls.tipoLocalCalulado.setValue('Propio.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('Propio')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
             else if (e === '6') {
-                this.form.controls.tipoLocalCalulado.setValue('No tiene.')
-                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda.')
+                this.form.controls.tipoLocalCalulado.setValue('No tiene')
+                this.form.controls.ubicacionNegocioCalculado.setValue('Vivienda')
             }
         })
 

@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MicrocreditoComponent } from './microcredito/microcredito.component';
+import { EdicionFormularioResolver } from '../fabrica-credito-resolver';
 
 const routes: Routes = [
   {
     path: 'microcredito',
-    component: MicrocreditoComponent
+    component: MicrocreditoComponent,
+    resolve:{EdicionFormularioResolver}
   },
   {
     path: 'microcredito/:unidadNegocio/:tipoIdentificacion/:id/:num',
-    component: MicrocreditoComponent
+    component: MicrocreditoComponent,
+    resolve:{EdicionFormularioResolver}
   }
 ]; 
 
