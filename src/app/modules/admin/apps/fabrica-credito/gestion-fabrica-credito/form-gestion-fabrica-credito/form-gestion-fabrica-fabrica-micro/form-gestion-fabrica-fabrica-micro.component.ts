@@ -49,44 +49,45 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public descripcionScore: any;
     public decisionFiltrosDuros: any;
     public agendaActual: string;
+    public currentScoreColor: 'red'| 'orange' | 'yellow' | 'light-green' | 'green'
 
     fechaActual: any = moment().locale("co");
 
     currentScoreElement: HTMLElement;
 
     radius: number = 140;
-  circumference: number = 2 * Math.PI * this.radius; // 879.2
-  customCircumference: number = this.circumference * 0.85; // 747.32
-  arcLength: number = this.customCircumference / 5; // 149.46
-  offset: number = this.arcLength * 5;
+    circumference: number = 2 * Math.PI * this.radius; // 879.2
+    customCircumference: number = this.circumference * 0.85; // 747.32
+    arcLength: number = this.customCircumference / 5; // 149.46
+    offset: number = this.arcLength * 5;
 
-     /* Saved minimum, maximum values and length for all 5 Arc's */
-  redArc = {
-    min: 0.00,
-    max: 573.00,
-    length: 573.00
-  };
-  orangeArc = {
-    min: 574.00,
-    max: 615.00,
-    length: 41.00
-  };
-  yellowArc = {
-    min: 616.00,
-    max: 690.00,
-    length: 74.00
-  };
-  lightGreenArc = {
-    min: 691.00,
-    max: 800.00,
-    length: 109.00
-  };
-  greenArc = {
-    min: 801.00,
-    max: 950.00,
-    length: 149.00
-  };
-  scoreBandLabel: string = "";
+    /* Saved minimum, maximum values and length for all 5 Arc's */
+    redArc = {
+        min: 0.00,
+        max: 573.00,
+        length: 573.00
+    };
+    orangeArc = {
+        min: 574.00,
+        max: 615.00,
+        length: 41.00
+    };
+    yellowArc = {
+        min: 616.00,
+        max: 690.00,
+        length: 74.00
+    };
+    lightGreenArc = {
+        min: 691.00,
+        max: 800.00,
+        length: 109.00
+    };
+    greenArc = {
+        min: 801.00,
+        max: 950.00,
+        length: 149.00
+    };
+    scoreBandLabel: string = "";
 
     constructor(
         private fabricaCreditoService: FabricaCreditoService,
@@ -124,36 +125,97 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     }
 
+    updatePointer(score, minScore, maxScore) {
+        let porcentaje = 0;
+        const maxRotate = 336
+        const minRotate = 32;
+        const maxTranslate = -100;
+
+        if(this.currentScoreColor === 'red'){
+           let porcentajeLocal = ((score - this.redArc.min) / this.redArc.length)
+           // se divide entre la cantidad de porcentajes que serian 20% cada uno
+           porcentaje = porcentajeLocal * 0.2
+        }
+        if(this.currentScoreColor === 'orange'){
+            let porcentajeLocal = ((score - this.orangeArc.min) / this.orangeArc.length)
+            // se divide entre la cantidad de porcentajes que serian 20% cada uno
+            porcentaje = porcentajeLocal * 0.2 + 0.2
+         }
+         if(this.currentScoreColor === 'yellow'){
+            let porcentajeLocal = ((score - this.yellowArc.min) / this.yellowArc.length)
+            // se divide entre la cantidad de porcentajes que serian 20% cada uno
+            porcentaje = porcentajeLocal * 0.2 + 0.4
+         }
+         if(this.currentScoreColor === 'light-green'){
+            let porcentajeLocal = ((score - this.lightGreenArc.min) / this.lightGreenArc.length)
+            // se divide entre la cantidad de porcentajes que serian 20% cada uno
+            porcentaje = porcentajeLocal * 0.2 + 0.6
+         }
+         if(this.currentScoreColor === 'green'){
+            let porcentajeLocal = ((score - this.greenArc.min) / this.greenArc.length)
+            // se divide entre la cantidad de porcentajes que serian 20% cada uno
+            porcentaje = porcentajeLocal * 0.2 + 0.8
+         }
+
+
+        const amplitud = maxRotate - minRotate;
+        const rotate = porcentaje * amplitud + minRotate;
+
+        console.log('rotar a', rotate);
+
+        const polygon = this.el.nativeElement.querySelector('.punteroPo');
+        const polygonGrande = this.el.nativeElement.querySelector('.punteroPoGrande');
+
+        polygon.style.transform = `rotate(${rotate}deg) translateY(140px) rotate(-${rotate}deg)`
+        polygonGrande.style.transform = `rotate(${rotate}deg) translateY(140px) rotate(-${rotate}deg)`
+    }
+
     updateScore(score: number): void {
+
         if (score >= this.redArc.min) {
-          const greyRed = this.el.nativeElement.querySelector(".greyRed");
-          greyRed.setAttribute("stroke-dasharray",
-            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.redArc.min)) / this.redArc.length)}`);
+            const greyRed = this.el.nativeElement.querySelector(".greyRed");
+            greyRed.setAttribute("stroke-dasharray",
+                `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.redArc.min)) / this.redArc.length)}`);
+            this.currentScoreColor = 'red'
         }
 
         if (score >= this.orangeArc.min) {
-          const greyOrange = this.el.nativeElement.querySelector(".greyOrange");
-          greyOrange.setAttribute("stroke-dasharray",
-            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.orangeArc.min)) / this.orangeArc.length)}`);
+            const greyOrange = this.el.nativeElement.querySelector(".greyOrange");
+            greyOrange.setAttribute("stroke-dasharray",
+                `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.orangeArc.min)) / this.orangeArc.length)}`);
+            this.currentScoreColor = 'orange'
         }
 
         if (score >= this.yellowArc.min) {
-          const greyYellow = this.el.nativeElement.querySelector(".greyYellow");
-          greyYellow.setAttribute("stroke-dasharray",
-            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.yellowArc.min)) / this.yellowArc.length)}`);
+            const greyYellow = this.el.nativeElement.querySelector(".greyYellow");
+            greyYellow.setAttribute("stroke-dasharray",
+                `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.yellowArc.min)) / this.yellowArc.length)}`);
+
+            this.currentScoreColor = 'yellow'
         }
 
         if (score >= this.lightGreenArc.min) {
-          const greyLightGreen = this.el.nativeElement.querySelector(".greyLightGreen");
-          greyLightGreen.setAttribute("stroke-dasharray",
-            `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.lightGreenArc.min)) / this.lightGreenArc.length)}`);
+            const greyLightGreen = this.el.nativeElement.querySelector(".greyLightGreen");
+            greyLightGreen.setAttribute("stroke-dasharray",
+                `${this.arcLength},${this.customCircumference + ((this.arcLength * (score - this.lightGreenArc.min)) / this.lightGreenArc.length)}`);
+
+            this.currentScoreColor = 'light-green'
         }
 
         const greyGreen = this.el.nativeElement.querySelector(".greyGreen");
         let greenArchCalc = ((this.arcLength * (score - this.greenArc.min)) / this.greenArc.length);
         greyGreen.setAttribute("stroke-dasharray", `${this.arcLength - greenArchCalc},${this.customCircumference}`);
         greyGreen.setAttribute("stroke-dashoffset", -greenArchCalc);
-      }
+
+        if(score >= this.greenArc.min){
+            this.currentScoreColor = 'green'
+        }
+
+        // Llamar a la función con el ángulo deseado
+        const minScore = 0;
+        const maxScore = 950;
+         this.updatePointer(score, minScore, maxScore);
+    }
 
 
     private cargueInicial() {
@@ -264,7 +326,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     let titleSpanHeigth = titleSpan?.clientHeight
                     element.style.width = '20px' + ' !important';
                     element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth + 'px') : '30px'), 'important')
-                    titleSpan.style.top = '-'+(titleSpanHeigth + 6) +'px'
+                    titleSpan.style.top = '-' + (titleSpanHeigth + 6) + 'px'
                 });
             }, 1000);
         }
@@ -391,15 +453,19 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 Swal.close();
                 this.form.patchValue({
                     descripcionTipo: data.descripcionTipo,
-                    codigoBarrio: data.codigoBarrio
+                    codigoBarrio: data.codigoBarrio,
+                    score: data.score
                 });
                 this.agendaActual = data.agenda
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;
                 this.setCurrentScoreUI()
-                setTimeout(() => {
-                    this.updateScore(this.score)
-                }, 2000);
+                if(this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO'){
+                    setTimeout(() => {
+                        this.updateScore(this.score)
+                    }, 2000);
+                }
+
 
                 this.decisionFiltrosDuros = data.decisionFiltrosDuros
                 this.unidadNegocio = data.unidadNegocio;
@@ -786,6 +852,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionVeredaNegocio: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
+            score: ['']
         },
         );
     }

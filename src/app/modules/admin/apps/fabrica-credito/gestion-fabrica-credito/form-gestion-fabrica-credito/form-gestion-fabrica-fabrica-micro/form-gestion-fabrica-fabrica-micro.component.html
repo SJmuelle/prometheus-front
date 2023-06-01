@@ -157,42 +157,45 @@
                     </mat-form-field>
                 </div>
 
-                <span  class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de riesgo</span>
-                <div  class="flex justify-start gap-6 sm:flex-row flex-col">
-                    <div *ngIf="agendaActual !== 'CM' && agendaActual !== 'VI'" class="w-4/12 fixheigh">
+                <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de riesgo</span>
+                <div class="flex justify-start gap-6 sm:flex-row flex-col">
+                    <div *ngIf="agendaActual === 'RE' || agendaActual === 'DE' || agendaActual === 'CO'" class="w-4/12 fixheigh">
                         <div class="container scale-50">
-
                             <svg height="500px" width="500px">
-                                 <circle id="red" fill="none" stroke="#bd2727" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="597" />
-                                 <circle class="grey greyRed" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="597" />
+                                <circle id="red" fill="none" stroke="#bd2727" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="597" />
+                                <circle class="grey greyRed" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="597" />
 
-                                 <circle id="orange" fill="none" stroke="#f79a38" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="447" />
-                                 <circle class="grey greyOrange" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="447" />
+                                <circle id="orange" fill="none" stroke="#f79a38" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="447" />
+                                <circle class="grey greyOrange" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="447" />
 
-                                 <circle id="yellow" fill="none" stroke="#fadd00" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="297" />
-                                 <circle class="grey greyYellow" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="297" />
+                                <circle id="yellow" fill="none" stroke="#fadd00" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="297" />
+                                <circle class="grey greyYellow" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="297" />
 
-                                 <circle id="light-green" fill="none" stroke="#91c738" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="147" />
-                                 <circle class="grey greyLightGreen" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="147" />
+                                <circle id="light-green" fill="none" stroke="#91c738" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="147" />
+                                <circle class="grey greyLightGreen" fill="none" stroke="#F1F1F1" stroke-width="30"
+                                    cx="200" cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="147" />
 
-                                 <circle id="green" fill="none" stroke="#1f9c4c" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="0" />
-                                 <circle class="grey greyGreen" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200" cy="200" r="140"
-                                     stroke-dasharray="150, 747" stroke-dashoffset="0" />
-                             </svg>
-                             <div class="score-band-wrapper flex justify-center items-center flex-col gap-4">
-                                 <small class="text-xl font-bold">Tu score es</small>
-                                 <p class="score-band-label">{{score}}</p>
-                             </div>
-                         </div>
+                                <circle id="green" fill="none" stroke="#1f9c4c" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
+                                <circle class="grey greyGreen" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
+                                    <circle cx="200" cy="200" r="12" fill="none" stroke="black" stroke-width="3"
+                                        class="punteroPo" />
+                                <circle cx="200" cy="200" r="30" fill="none" stroke="black" stroke-width="3"
+                                    class="punteroPoGrande" />
+                            </svg>
+                            <div class="score-band-wrapper flex justify-center items-center flex-col gap-4">
+                                <small class="text-xl font-bold">Tu score es</small>
+                                <p class="score-band-label">{{score}}</p>
+                            </div>
+                        </div>
                         <!-- <div class="barContainer mt-4 relative">
                             <div class="marker"></div>
                             <span class="beacon"></span>
@@ -224,7 +227,8 @@
                         </div> -->
                     </div>
                     <div class="sm:w-8/12 w-full  flex flex-col justify-center items-center flex-wrap">
-                        <mat-form-field *ngIf="agendaActual !== 'CM' && agendaActual !== 'VI'" class="mat-form-field-disabled w-full">
+                        <mat-form-field *ngIf="agendaActual === 'RE' || agendaActual === 'DE' || agendaActual === 'CO'"
+                            class="mat-form-field-disabled w-full">
                             <mat-label>Resultados filtro duros</mat-label>
                             <input matInput type="text" [value]="decisionFiltrosDuros" [readonly]="true" />
                         </mat-form-field>
@@ -2597,13 +2601,13 @@
                     <ng-template matTabLabel>Referencias</ng-template>
                     <app-grid-referencias></app-grid-referencias>
                 </mat-tab>
-                <ng-container >
+                <ng-container>
                     <mat-tab>
                         <ng-template matTabLabel>Politicas</ng-template>
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <ng-container>
+                <ng-container *ngIf="agendaActual === 'RE' || agendaActual === 'DE' || agendaActual === 'CO'">
                     <mat-tab>
                         <ng-template matTabLabel>Filtros duros</ng-template>
                         <app-grid-filtros-duros></app-grid-filtros-duros>
