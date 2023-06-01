@@ -10,6 +10,7 @@ import { AgendaComercialService } from '../../../../../../core/services/agenda-c
 import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 import { FormDialogDevolverFabricaComponent } from '../form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import moment from 'moment';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
   selector: 'app-grid-agenda-comercial',
@@ -29,7 +30,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
     private agendaReferenciaService: AgendaReferenciacionService,
-    private router: Router
+    private router: Router,
+    public _permisosService: PermisosService
   ) { }
 
   ngOnInit(): void {
@@ -98,7 +100,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
     } else {
         //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-
+        this._permisosService.ruta = 'agenda-comercial';
         this.router.navigate([`/credit-factory/formularios/microcredito`]);
     }
 }

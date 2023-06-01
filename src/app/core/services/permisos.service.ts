@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class PermisosService {
 
+  ruta: string;
   constructor() { }
 
   permisoPorModuleTrazxabilidad(ruta: any){
@@ -23,6 +24,10 @@ export class PermisosService {
     let ruta = localStorage.getItem("rutaAnterior");
     let rutaAnterior=ruta.includes('agenda-comercial');
     return rutaAnterior;
+  }
+
+  anteriorRuta(ruta: string){
+    this.ruta = ruta;
   }
 
   permisoPorModuleTrazabilidad(){

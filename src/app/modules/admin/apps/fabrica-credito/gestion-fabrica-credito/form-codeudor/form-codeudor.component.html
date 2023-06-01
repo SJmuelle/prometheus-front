@@ -65,16 +65,9 @@
             <mat-form-field>
                 <mat-label>Primer nombre</mat-label>
                 <input matInput type="text" [formControlName]="'primerNombre'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
-                        )
-                    " />
+                form.controls.nombreCompleto.setValue(getNombreCompleto()
+                )
+            " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.primerNombre.errors?.required">
@@ -87,16 +80,9 @@
             <mat-form-field>
                 <mat-label>Segundo nombre</mat-label>
                 <input matInput type="text" [formControlName]="'segundoNombre'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
-                        )
-                    " />
+                form.controls.nombreCompleto.setValue(getNombreCompleto()
+                )
+            " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.segundoNombre.errors?.pattern">
@@ -106,16 +92,9 @@
             <mat-form-field>
                 <mat-label>Primer apellido</mat-label>
                 <input matInput type="text" [formControlName]="'primerApellido'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
-                        )
-                    " />
+                form.controls.nombreCompleto.setValue(getNombreCompleto()
+                )
+            " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
                 <mat-error *ngIf="form.controls.primerApellido.errors?.required">Este campo es requerido.</mat-error>
@@ -126,14 +105,7 @@
             <mat-form-field>
                 <mat-label>Segundo apellido</mat-label>
                 <input matInput type="text" [formControlName]="'segundoApellido'" (keyup)="
-                        form.controls.nombreCompleto.setValue(
-                            form.controls.primerNombre.value +
-                                ' ' +
-                                form.controls.segundoNombre.value +
-                                ' ' +
-                                form.controls.primerApellido.value +
-                                ' ' +
-                                form.controls.segundoApellido.value
+                        form.controls.nombreCompleto.setValue(getNombreCompleto()
                         )
                     " />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -756,7 +728,7 @@
                     Este campo es requerido.
                 </mat-error>
                 <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
-                    Mínimo 9 digitos
+                    Mínimo 5 digitos
                 </mat-error>
                 <mat-error *ngIf="form.controls.nitNegocio.errors?.maxlength">
                     Maximo 10 digitos
@@ -1495,7 +1467,7 @@ titular" />
                 </mat-error>
             </mat-form-field>
         </div>
-        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Terminos y
+        <!-- <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Terminos y
             condiciones</span>
 
         <div class="grid grid-cols-1">
@@ -1507,7 +1479,48 @@ titular" />
                     href="./assets/documentos/documentosMicroForms/anticorrupcion_lavado.pdf" class="no-underline"
                     target="_blank"> Cláusula de
                     Anticorrupción y Antilavado </a></mat-checkbox>
-        </div>
+        </div> -->
+
+
+        <ng-container *ngIf="mostrarOTP">
+
+            <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">
+                Validación de OTP
+            </span>
+            <div class="bg-white sm:px-8 px-0 pt-6 grid grid-cols-1   md:grid-cols-1">
+                <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Código OTP</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="numeroOTP" [disabled]="this.form.invalid" placeholder="Presionar el botón para enviar el código del celular">
+                <mat-icon svgIcon="feather:check-circle" [ngClass]="{'text-green-400': this.otpValidado}" matTooltip="Verificar código OTP" class="cursor-pointer mx-2" (click)="validarCodigo()"></mat-icon>
+                <mat-icon svgIcon="feather:send" [ngClass]="{'text-blue-400': this.form.valid}" class="cursor-pointer" matTooltip="Enviar código OTP" (click)="solicitarCodigo()"></mat-icon>
+            </mat-form-field> -->
+                <div class="w-full px-3 fuse-mat-dense flex justify-center items-center pt-4 flex-col">
+                    <button mat-raised-button color="primary" type="button" style="width: 80% !important"
+                        class="rounded-md cursor-pointer" [disabled]="contador !== 180 || validandoOTPLoading"
+                        (click)="solicitarCodigo()">
+                        {{changeTextOTP ? 'Reenviar código OTP' : 'Enviar código OTP'}}
+                    </button>
+
+                </div>
+
+                <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;">
+                    <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()"
+                        autocomplete="off" [formControlName]="'numeroOTP'"  min="6" max="6">
+                </mat-form-field>
+
+                <div *ngIf="contador !== 180 && !otpValidado"
+                    class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
+                    <mat-progress-bar style="width: 80%;" mode="determinate"
+                        [value]="(contador / 180) * 100"></mat-progress-bar>
+                </div>
+                <div class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-10">
+                    <mat-icon *ngIf="validandoOTPLoading" svgIcon="settings"
+                        class="animate-spin-slow icon-size-12 mt-4"></mat-icon>
+                    <mat-icon *ngIf="otpValidado" class="text-green-500 icon-size-12 mt-4"
+                        svgIcon="mat_solid:check_circle"></mat-icon>
+                </div>
+            </div>
+        </ng-container>
         <div class="flex justify-end mb-15" *ngIf="!permisoEditar">
             <button mat-raised-button color="primary" type="button" (click)="validationPost()">
                 Guardar

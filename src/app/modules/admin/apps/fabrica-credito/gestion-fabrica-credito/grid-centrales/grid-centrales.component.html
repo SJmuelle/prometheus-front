@@ -22,11 +22,12 @@
             </div>
         </div>
     </div>
-    <mat-tab-group class="flex w-full justify-items-center items-center mt-4 max-w-full scrollMatTabGroup"
+    <mat-tab-group
+        class="flex w-full justify-items-center items-center mt-4 max-w-full scrollMatTabGroup changeTabStyle"
         *ngIf="!(titularDocumentosCentrales.length && !codeudorDocumentosCentrales.length && !solidarioDocumentosCentrales.length)">
-        <mat-tab *ngIf="titularDocumentosCentrales.length" label="Titular" >
+        <mat-tab *ngIf="titularDocumentosCentrales.length" label="Titular">
             <div class="flex flex-col w-full bg-card">
-                <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
+                <div cdkscrollable="" class="mat-drawer-inner-container w-full">
                     <div *ngFor="let item of titularDocumentosCentrales; let i = index">
                         <div class="flex flex-col flex-auto p-4 md:p-6">
                             <div class="flex flex-col items-start mt-1">
@@ -73,6 +74,13 @@
                                     <span matripple="" class="mat-ripple mat-button-ripple"></span>
                                     <span class="mat-button-focus-overlay"></span>
                                 </button>
+                                <button *ngIf="i === 0" mat-flat-button="" (click)="renovarConsultaCredit('T')"
+                                    matTooltip="Renovar consulta de datacredito"
+                                    class="mat-focus-indicator flex-auto mat-flat-button mat-button-base bg-gray-500 text-white">
+                                    <span class="mat-button-wrapper"> Actualizar </span>
+                                    <span matripple="" class="mat-ripple mat-button-ripple"></span>
+                                    <span class="mat-button-focus-overlay"></span>
+                                </button>
                             </div>
                             <hr />
                         </div>
@@ -81,8 +89,8 @@
                     <!---->
                 </div>
             </div>
-        </mat-tab>        
-        <mat-tab *ngIf="codeudorDocumentosCentrales.length" label="Codeudor"   >
+        </mat-tab>
+        <mat-tab *ngIf="codeudorDocumentosCentrales.length" label="Codeudor">
             <div class="flex flex-col w-full overflow-auto bg-card">
                 <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
                     <div *ngFor="let item of codeudorDocumentosCentrales; let i = index">
@@ -128,6 +136,13 @@
                                     class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary"
                                     (click)="getDownloadHistorico(item)">
                                     <span class="mat-button-wrapper"> Descargar </span>
+                                    <span matripple="" class="mat-ripple mat-button-ripple"></span>
+                                    <span class="mat-button-focus-overlay"></span>
+                                </button>
+                                <button *ngIf="i === 0" mat-flat-button="" (click)="renovarConsultaCredit('C')"
+                                    matTooltip="Renovar consulta de datacredito"
+                                    class="mat-focus-indicator flex-auto mat-flat-button mat-button-base bg-gray-500 text-white">
+                                    <span class="mat-button-wrapper"> Actualizar </span>
                                     <span matripple="" class="mat-ripple mat-button-ripple"></span>
                                     <span class="mat-button-focus-overlay"></span>
                                 </button>
@@ -189,6 +204,13 @@
                                     <span matripple="" class="mat-ripple mat-button-ripple"></span>
                                     <span class="mat-button-focus-overlay"></span>
                                 </button>
+                                <button *ngIf="i === 0" mat-flat-button="" (click)="renovarConsultaCredit('S')"
+                                    matTooltip="Renovar consulta de datacredito"
+                                    class="mat-focus-indicator flex-auto mat-flat-button mat-button-base bg-gray-500 text-white">
+                                    <span class="mat-button-wrapper"> Actualizar </span>
+                                    <span matripple="" class="mat-ripple mat-button-ripple"></span>
+                                    <span class="mat-button-focus-overlay"></span>
+                                </button>
                             </div>
                             <hr />
                         </div>
@@ -245,6 +267,13 @@
                             class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary"
                             (click)="getDownloadHistorico(item)">
                             <span class="mat-button-wrapper"> Descargar </span>
+                            <span matripple="" class="mat-ripple mat-button-ripple"></span>
+                            <span class="mat-button-focus-overlay"></span>
+                        </button>
+                        <button *ngIf="i === 0" mat-flat-button="" (click)="renovarConsultaCredit('T')"
+                            matTooltip="Renovar consulta de datacredito"
+                            class="mat-focus-indicator flex-auto mat-flat-button mat-button-base bg-gray-500 text-white">
+                            <span class="mat-button-wrapper"> Actualizar </span>
                             <span matripple="" class="mat-ripple mat-button-ripple"></span>
                             <span class="mat-button-focus-overlay"></span>
                         </button>

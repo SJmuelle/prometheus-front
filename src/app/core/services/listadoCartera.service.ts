@@ -90,6 +90,13 @@ export class ListadoCarteraService {
     return this._http.post(this._appSettings.listadoCartera.url.gestionCartera, data);
   }
 
+    /**
+ * @description:
+ */
+    public agregarLiquidacionSaldos(data: any): Observable<any> {
+      return this._http.post(this._appSettings.listadoCartera.url.liquidacionSaldos, data);
+    }
+
 
 
 }

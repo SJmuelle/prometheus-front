@@ -29,9 +29,14 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   public verDevoluciones: boolean = false;
   public minimizarDevoluciones: boolean = false;
   public verCentrales: boolean = false;
+  public verDocumentos: boolean = false;
+  public verReferencias: boolean = false;
   public minimizarCentrales: boolean = false;
   public habilitaDevolucion: boolean = true;
   public habilitaSiguiente: boolean = true;
+  public habilitaDocumentos: boolean = false;
+  public habilitarReferencias: boolean = false;
+  @Input() apiData: any;
   dialogMostrar: string;
   toolText: string = 'Siguiente';
   iconoSvg: string = '';
@@ -111,6 +116,11 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
           case 'DE':
             this.habilitaDevolucion = true;
             this.habilitaSiguiente = true;
+            this.habilitaDocumentos = true;
+            if(data.unidadNegocio === 1 ){
+              this.habilitarReferencias = true;
+            }
+
             break;
           case 'GC':
             this.habilitaDevolucion = true;
@@ -131,8 +141,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
         }
       });
     }
-    
-    
+
+
   }
 
   //funciones privadas
@@ -217,6 +227,29 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * @description: Modal de documentos
+   */
+  public onDialogoDocumentos(): void {
+    let dialogRef;
+    dialogRef = this._dialog.open(FormDialogoChecklistComponent, {
+      minWidth: '60%',
+      maxHeight: '80%',
+      data: {
+        numeroSolicitud: this.numeroSolicitud,
+        tipoDocumento: this.fabricaDatos.tipoDocumento,
+        agenda: this.fabricaDatos.agenda,
+        unidadNegocio: this.fabricaDatos.unidadNegocio,
+        tipo: ''
+
+      },
+      disableClose: false,
+    });
+    dialogRef.afterClosed().toPromise().then(() => {
+    });
+
+  }
+
+  /**
      * @description: Modal de decision
      */
   public abrirDecision(): void {
@@ -234,6 +267,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
+      console.log('log',res);
+      
       if (this.fabricaDatos.unidadNegocio != 32) {
         if (res == true) {
           this.abrirModal('recalcular')
@@ -303,6 +338,36 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
     this.minimizarComentarios = event;
   }
 
+    /**
+   * @description: Minimiza el componente documentos
+   */
+    public onMinimizaDocumentos(event): void {
+        this.verDocumentos = event;
+      }
+
+      /**
+    * @description:
+    */
+      public onCerrarDocumentos(event): void {
+        this.verDocumentos = event;
+      }
+
+
+      /**
+   * @description: Minimiza el componente documentos
+   */
+      public onMinimizaReferencias(event): void {
+        this.verReferencias = event;
+      }
+
+      /**
+    * @description:
+    */
+      public onCerrarReferencias(event): void {
+        this.verReferencias = event;
+      }
+
+      
   /**
 * @description:
 */

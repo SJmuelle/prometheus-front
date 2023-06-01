@@ -13,6 +13,8 @@ export class EndPoints {
     static uri(url: string): string {
         return environment.apiUrl+'api-fintra/api' + url;
     }
+
+
     /**
      * @description: URL pagaduria
      */

@@ -76,14 +76,6 @@ export class FormAgendaReferenciacionComponent implements OnInit {
       const id: any = params['id'];
       // Código...
 
-
-
-
-
-
-
-
-
     });
   }
 
@@ -237,11 +229,29 @@ export class FormAgendaReferenciacionComponent implements OnInit {
     this.fabricaCreditoService.obtenerStepsAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-
+        if(this.CodUnidadNegocio === '1'){
+          this.ordenarDataStepOrden(data)
+        }
         this.steps = data
+        
         this.totalsteps = this.steps.length;
         this.maxOrdenNumber = this.getMaxOrdenNumber(this.steps);
       });
+  }
+
+  /**
+  * Ordena el array del backend y le asigna el numero en su orden, esto evita que salta orden  1 - 3 - 4
+  *
+  * @param data 
+  */
+  ordenarDataStepOrden(data: any[]){
+    data.sort((first,second) => {
+      return first.order - second.order
+    })
+    data.map((item,i) => {
+      item.order = i
+      return item
+    })
   }
 
 

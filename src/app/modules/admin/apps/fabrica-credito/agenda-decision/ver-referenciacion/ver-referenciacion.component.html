@@ -1,0 +1,340 @@
+<div class="bg-white sm:h-128 lg:h-screen overflow-auto px-3 py-2 rounded-lg shadow w-full">
+    <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent">
+        <div class="flex flex-col">
+            <div class="flex flex-row flex-0 sm:items-center justify-end">
+                <button mat-icon-button matTooltip="Minimizar" (click)="onMinimiza();">
+                    <mat-icon [svgIcon]="'mat_outline:minimize'"></mat-icon>
+                </button>
+                <button mat-icon-button matTooltip="Cerrar" (click)="onCerrar()">
+                    <mat-icon [svgIcon]="'mat_outline:close'"></mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="relative flex flex-col flex-auto min-w-0 overflow-hidden w-full">
+        <!-- Main -->
+        <div class="flex flex-col flex-auto px-2 py-4 sm:pb-20">
+            <!-- Activity feed -->
+            <!-- Activity feed -->
+            <div class="w-full mb-4">
+                <!-- Title -->
+                <h3 class="mb-2 text-gray-900">Referenciación</h3>
+                <span class="font-semibold text-gray-500">Listado de referencias</span>
+
+
+            </div>
+
+            <div
+                    class=" grid sm:grid-cols-2 grid-cols-1 gap-y-8 justify-center max-w-sm mb-2 md:gap-x-12 md:grid-cols-2 md:max-w-6xl mt-5 w-full">
+                    <!-- card Titutlar-->
+                    <ng-container *ngFor="let titular of listado?.referenciaTitulo">
+                        <div
+                            class="w-full h-auto relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+
+                            <div class="flex flex-col flex-auto p-8">
+
+                                <div class="flex flex-wrap">
+                                    <span class="text-xl font-semibold w-screen">
+                                        Referencia titular
+                                    </span>
+                                    <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                        [ngClass]="titular.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                        {{titular.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                    </span>
+                                </div>
+
+                                <hr class="w-full border-t my-6">
+
+                                <div class="flex flex-col ">
+                                    <div class="capitalize">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                        </mat-icon> {{titular.nombreCompleto}}
+                                    </div>
+                                    <div class="text-secondary text-md truncate" *ngIf="titular.email">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_outline:mail'">
+                                        </mat-icon>{{miniscula(titular.email)}}
+                                    </div>
+                                    <div class="text-secondary text-md" *ngIf="titular.celular">
+                                        <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                        </mat-icon>{{titular.celular}}
+                                    </div>
+                                    <div class="text-secondary text-md" *ngIf="titular.direccion">
+                                        <mat-icon class="icon-size-3 mr-2"
+                                            [svgIcon]="'heroicons_solid:location-marker'">
+                                        </mat-icon>{{titular.direccion}}
+                                    </div>
+                                </div>
+                            </div>
+                            <ng-container >
+                                <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                    <a class="flex items-center  no-underline"
+                                        [routerLink]="'/credit-factory/agenda-referencing/1/'+numeroSolicitud+'/'+identificacion+'/'+titular.identificacion+'/T/'+titular.tipoId+'/'+titular.tipoDocumento">
+                                        <mat-icon class="mr-2 icon-size-8 text-white"
+                                            [svgIcon]="'heroicons_solid:phone'">
+                                        </mat-icon>
+                                        <span class="font-medium text-white">Llamar</span>
+                                    </a>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+
+                    <ng-container
+                    *ngFor="let codeudor of listado.referenciaComercialTitular | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                    <div
+                        class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+                        <div class="flex flex-col flex-auto p-8">
+                            <div class="flex flex-wrap">
+                                <span class="text-xl font-semibold w-screen">
+                                    Comercial titular
+                                </span>
+                                <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                    [ngClass]="codeudor.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                    {{codeudor.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                                </span>
+                            </div>
+                            <hr class="w-full border-t my-6">
+                            <div class="flex flex-col ">
+                                <div class="capitalize">
+                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                    </mat-icon> {{codeudor.nombreCompleto}}
+                                </div>
+                                <div class="text-secondary text-md" *ngIf="codeudor.telefono">
+                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                    </mat-icon>{{codeudor.telefono}}
+                                </div>
+                                <div class="text-secondary text-md" *ngIf="codeudor.celular">
+                                    <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                    </mat-icon>{{codeudor.celular}}
+                                </div>
+                                <div class="text-secondary text-md" *ngIf="codeudor.direccion">
+                                    <mat-icon class="icon-size-3 mr-2"
+                                        [svgIcon]="'heroicons_solid:location-marker'">
+                                    </mat-icon>{{codeudor.direccion}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <ng-container >
+                            <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                                <a class="flex items-center  no-underline"
+                                    [routerLink]="'/credit-factory/agenda-referencing/1/'+numeroSolicitud+'/'+identificacion+'/'+codeudor.identificacion+'/'+codeudor.tipoId+'/'+codeudor.tipoTercero+'/'+codeudor.tipoDocumento">
+                                    <mat-icon class="mr-2 icon-size-8 text-white"
+                                        [svgIcon]="'heroicons_solid:phone'">
+                                    </mat-icon>
+                                    <span class="font-medium text-white no-underline">Llamar</span>
+                                </a>
+                            </div>
+                        </ng-container>
+                    </div>
+                </ng-container>
+
+                <ng-container
+                *ngFor="let codeudor of listado?.referenciaCodeudor | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                <div
+                    class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+
+                    <div class="flex flex-col flex-auto p-8">
+                        <div class="flex flex-wrap">
+                            <span class="text-xl font-semibold w-screen">
+                                Referencia codeudor
+                            </span>
+                            <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                [ngClass]="codeudor.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                {{codeudor.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                            </span>
+                        </div>
+                        <hr class="w-full border-t my-6">
+                        <div class="flex flex-col ">
+                            <div class="capitalize">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                </mat-icon> {{codeudor.nombreCompleto}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudor.telefono">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>{{codeudor.telefono}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudor.celular">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                </mat-icon>{{codeudor.celular}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudor.direccion">
+                                <mat-icon class="icon-size-3 mr-2"
+                                    [svgIcon]="'heroicons_solid:location-marker'">
+                                </mat-icon>{{codeudor.direccion}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-container >
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                            <a class="flex items-center  no-underline"
+                                [routerLink]="'/credit-factory/agenda-referencing/1/'+numeroSolicitud+'/'+identificacion+'/'+codeudor.identificacion+'/'+codeudor.tipoId+'/'+codeudor.tipoTercero+'/'+codeudor.tipoDocumento">
+                                <mat-icon class="mr-2 icon-size-8 text-white"
+                                    [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>
+                                <span class="font-medium text-white no-underline">Llamar</span>
+                            </a>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+
+            <ng-container *ngFor="let codeudorFamiliar of listado?.referenciaFamiliarCodeudor
+        | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                <div
+                    class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+                    <div class="flex flex-col flex-auto p-8">
+                        <div class="flex flex-wrap">
+                            <span class="text-xl font-semibold w-screen">
+                                Referencia familiar codeudor
+                            </span>
+                            <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                [ngClass]="codeudorFamiliar.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                {{codeudorFamiliar.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                            </span>
+                        </div>
+                        <hr class="w-full border-t my-6">
+                        <div class="flex flex-col ">
+                            <div class="capitalize">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                </mat-icon> {{codeudorFamiliar.nombreCompleto}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudorFamiliar.telefono">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>{{codeudorFamiliar.telefono}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudorFamiliar.celular">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                </mat-icon>{{codeudorFamiliar.celular}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudorFamiliar.direccion">
+                                <mat-icon class="icon-size-3 mr-2"
+                                    [svgIcon]="'heroicons_solid:location-marker'">
+                                </mat-icon>{{codeudorFamiliar.direccion}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-container>
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                            <a class="flex items-center  no-underline"
+                                [routerLink]="'/credit-factory/agenda-referencing/1/'+numeroSolicitud+'/'+identificacion+'/'+codeudorFamiliar.identificacion+'/'+codeudorFamiliar.tipoId+'/'+codeudorFamiliar.tipoTercero+'/'+codeudorFamiliar.tipoDocumento">
+                                <mat-icon class="mr-2 icon-size-8 text-white"
+                                    [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>
+                                <span class="font-medium text-white no-underline">Llamar</span>
+                            </a>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngFor="let codeudorPersonal of listado?.referenciaPersonalCodeudor
+            | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                <div
+                    class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+                    <div class="flex flex-col flex-auto p-8">
+                        <div class="flex flex-wrap">
+                            <span class="text-xl font-semibold w-screen">
+                                Referencia personal codeudor
+                            </span>
+                            <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                [ngClass]="codeudorPersonal.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                {{codeudorPersonal.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                            </span>
+                        </div>
+                        <hr class="w-full border-t my-6">
+                        <div class="flex flex-col ">
+                            <div class="capitalize">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                </mat-icon> {{codeudorPersonal.nombreCompleto}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudorPersonal.telefono">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>{{codeudorPersonal.telefono}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudorPersonal.celular">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                </mat-icon>{{codeudorPersonal.celular}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="codeudorPersonal.direccion">
+                                <mat-icon class="icon-size-3 mr-2"
+                                    [svgIcon]="'heroicons_solid:location-marker'">
+                                </mat-icon>{{codeudorPersonal.direccion}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <ng-container >
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                            <a class="flex items-center  no-underline"
+                                [routerLink]="'/credit-factory/agenda-referencing/1/'+numeroSolicitud+'/'+identificacion+'/'+codeudorPersonal.identificacion+'/'+codeudorPersonal.tipoId+'/'+codeudorPersonal.tipoTercero+'/'+codeudorPersonal.tipoDocumento">
+                                <mat-icon class="mr-2 icon-size-8 text-white"
+                                    [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>
+                                <span class="font-medium text-white no-underline">Llamar</span>
+                            </a>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-container *ngFor="let comercialCodeudor of listado?.referenciaComercialCodeudor
+            | paginate: { itemsPerPage: 1, currentPage: pageFamiliar }">
+                <div
+                    class="w-full relative flex flex-col rounded-2xl shadow hover:shadow-lg overflow-hidden bg-card transform transition-shadow ease-in-out duration-150">
+                    <div class="flex flex-col flex-auto p-8">
+                        <div class="flex flex-wrap">
+                            <span class="text-xl font-semibold w-screen">
+                                Referencia comercial codeudor
+                            </span>
+                            <span class="mt-2 py-0.5 px-3 rounded-full text-sm font-semibold "
+                                [ngClass]="comercialCodeudor.referenciaValidada!='N'?'text-blue-800 bg-blue-100':'text-red-800 bg-red-100'">
+                                {{comercialCodeudor.referenciaValidada=='N'?'Sin validar':'Validada'}}
+                            </span>
+                        </div>
+                        <hr class="w-full border-t my-6">
+                        <div class="flex flex-col ">
+                            <div class="capitalize">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:user'">
+                                </mat-icon> {{comercialCodeudor.nombreCompleto}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="comercialCodeudor.telefono">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>{{comercialCodeudor.telefono}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="comercialCodeudor.celular">
+                                <mat-icon class="icon-size-3 mr-2" [svgIcon]="'mat_outline:phone_iphone'">
+                                </mat-icon>{{comercialCodeudor.celular}}
+                            </div>
+                            <div class="text-secondary text-md" *ngIf="comercialCodeudor.direccion">
+                                <mat-icon class="icon-size-3 mr-2"
+                                    [svgIcon]="'heroicons_solid:location-marker'">
+                                </mat-icon>{{comercialCodeudor.direccion}}
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <ng-container >
+                        <div class="bg-green-500 flex items-center justify-center py-4 px-8 text-primary ">
+                            <a class="flex items-center  no-underline"
+                                [routerLink]="'/credit-factory/agenda-referencing/1/'+numeroSolicitud+'/'+identificacion+'/'+comercialCodeudor.identificacion+'/'+comercialCodeudor.tipoId+'/'+comercialCodeudor.tipoTercero+'/'+comercialCodeudor.tipoDocumento">
+                                <mat-icon class="mr-2 icon-size-8 text-white"
+                                    [svgIcon]="'heroicons_solid:phone'">
+                                </mat-icon>
+                                <span class="font-medium text-white no-underline">Llamar</span>
+                            </a>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </ng-container>
+
+
+                </div>
+
+        </div>
+    </div>
+</div>

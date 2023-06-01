@@ -169,12 +169,23 @@ export class FabricaCreditoService {
     public postDatosDeudorSolidario(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
-
-    public validacionMonto(data: any) : Observable<any> {
+    /**
+     * @description: Post libranza val monto
+     */
+    public validacionMonto(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.validacionMonto, data);
-      }
+    }
 
-      public validacionPlazo(data: any) : Observable<any> {
+    /**
+     * @description: Post libranza val plazo
+     */
+    public validacionPlazo(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.validacionPlazo, data);
-      }
+    }
+    /**
+      * @description: Enviar confirmacion codigo OTP validado
+      */
+    public postConfirmarOTP(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.autorizarConsultaOTP, data);
+    }
 }

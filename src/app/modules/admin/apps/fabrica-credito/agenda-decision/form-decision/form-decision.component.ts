@@ -148,7 +148,9 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
         if (!this.form.valid) {
             return
         }
-        if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D')) {
+
+        
+        if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D') || (this.form.value.decision == 'AN') ) {
             this.postDecicion();
         } else {
             if (this.fabricaDatos.unidadNegocio == 22) {

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogCarteraComprarComponent } from '../form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
@@ -21,6 +21,7 @@ export class GridCarteraMicroComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public permisoEditar:boolean=false;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   public listadoCartera$: Observable<any>;
   agenda_fabrica: any;
@@ -129,6 +130,7 @@ export class GridCarteraMicroComponent implements OnInit {
             }
         }
       })
+      
     })
 
     this.validadorTotalLibranza();
@@ -157,6 +159,42 @@ export class GridCarteraMicroComponent implements OnInit {
       });
 
   }
+
+  public liquidacionSaldos(item){
+    
+    const data = {
+      numeroSolicitud: item.numeroSolicitud,
+      codigoNegocio: item.numeroCuenta,
+      idObligacion: item.id,
+      gestionCartera: item.gestionCartera,
+    }
+    
+     this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      if(rep.data.resultado ===  'OK'){
+        Swal.fire('Guardado', 'Retanqueo realizado de forma exitosa', 'success')
+      }else{
+        Swal.fire('Error en el retanqueo', rep.data.resultado, 'error')
+      }
+     })
+  }
+
+  public revertirRetanqueo(item){
+    const data = {
+      numeroSolicitud: item.numeroSolicitud,
+      codigoNegocio: item.numeroCuenta,
+      idObligacion: item.id,
+      gestionCartera: item.gestionCartera,
+    }
+    
+     this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      if(rep.data.resultado ===  'OK'){
+        Swal.fire('Guardado', 'Retanqueo revertido de forma exitosa', 'success')
+      }else{
+        Swal.fire('Error en al revertir retanqueo', rep.data.resultado, 'error')
+      }
+     })
+  }
+
   public cambioEstado(event, item) {
 
     if (event == 'COM') {
@@ -277,6 +315,18 @@ export class GridCarteraMicroComponent implements OnInit {
       return 'Codeudor'
       case 'S':
       return 'Dedudor solidario'
+      case 'R':
+        return 'Representante'
     }
   }
+
+      /**
+     * On destroy
+     */
+      ngOnDestroy(): void
+      {
+          // Unsubscribe from all subscriptions
+          this._unsubscribeAll.next();
+          this._unsubscribeAll.complete();
+      }
 }

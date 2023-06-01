@@ -15,6 +15,7 @@ export class FormGenericoTabComponent implements OnInit {
 
   @Input() currentStep: number;
   @Input() tipoDocumento: string = "CC";
+  @Input() steps: any;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   public referencia: string = this.route.snapshot.paramMap.get('referencia');
@@ -22,6 +23,7 @@ export class FormGenericoTabComponent implements OnInit {
   public tipoPersona: string = this.route.snapshot.paramMap.get('tipoPersona');
   public CodUnidadNegocio: string = this.route.snapshot.paramMap.get('unidadNegocio');
   public tipoDocPersona: string = this.route.snapshot.paramMap.get('tipoDocPersona');
+  public orden: any;
   @ViewChild('editor') editor;
   // dataNecesaria = new BehaviorSubject<datalocal[]>([]);
   datos = []
@@ -49,7 +51,7 @@ export class FormGenericoTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFabricaCreditoAgenda();
-
+    
   }
 
   /**
@@ -74,6 +76,8 @@ export class FormGenericoTabComponent implements OnInit {
     };
     this.fabricaCreditoService.obtenerPreguntaAgendaReferenciacion(datosSolicitud)
       .subscribe(({ data }) => {
+        this.arreglarPreguntaOrden(data)
+        
         let info = data.sort((a, b) => Number(a.orden) - Number(b.orden));
 
         this.fabricaCreditoService.obtenerDatoAgendaReferenciacion(datosSolicitudUsuario)
@@ -109,6 +113,27 @@ export class FormGenericoTabComponent implements OnInit {
             this.recorrerPregunta();
           });
       });
+  }
+
+  arreglarPreguntaOrden(data: any[]){
+     this.orden = {}
+    data.forEach(item => {
+      if(!this.orden[item.idSeccion]){
+        this.orden[item.idSeccion] = true;
+      }
+    })
+
+    Object.keys(this.orden).forEach((item,i) => {
+      this.orden[item] = i + 1
+    })
+
+    data.map(item => {
+      item.idSeccion = this.orden[item.idSeccion]+''
+    })
+  }
+
+  getMaxStep(currentStep){   
+    return Object.keys(this.orden).length - 1 === currentStep
   }
 
   public mostrarPregunta(idPregunta) {
