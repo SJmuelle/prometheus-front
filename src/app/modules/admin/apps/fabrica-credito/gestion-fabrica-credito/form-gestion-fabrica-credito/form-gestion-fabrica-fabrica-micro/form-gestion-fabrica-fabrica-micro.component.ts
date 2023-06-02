@@ -161,8 +161,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const amplitud = maxRotate - minRotate;
         const rotate = porcentaje * amplitud + minRotate;
 
-        console.log('rotar a', rotate);
-
         const polygon = this.el.nativeElement.querySelector('.punteroPo');
         const polygonGrande = this.el.nativeElement.querySelector('.punteroPoGrande');
         const polygonGrandeSegundo = this.el.nativeElement.querySelector('.punteroPoGrandeSegundo');

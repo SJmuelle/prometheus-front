@@ -407,7 +407,7 @@
 
                                     </mat-icon>
                                     <audio controls="controls" autobuffer="autobuffer" >
-                                        <source [src]="item.base64" [type]="'audio/ogg'" [autoplay]="false">
+                                        <source [src]="sanitizer.bypassSecurityTrustResourceUrl(item.base64)" [type]="'audio/ogg'" [autoplay]="false">
 
                                         Your browser does not support the audio element.
                                     </audio>
@@ -582,7 +582,7 @@
 
                                     </mat-icon>
                                     <audio controls="controls" autobuffer="autobuffer" [autoplay]="false">
-                                        <source [src]="datoPreview.base64" [type]="'audio/ogg'">
+                                        <source [src]="sanitizer.bypassSecurityTrustResourceUrl(datoPreview.base64)" [type]="'audio/ogg'">
 
                                         Your browser does not support the audio element.
                                     </audio>
