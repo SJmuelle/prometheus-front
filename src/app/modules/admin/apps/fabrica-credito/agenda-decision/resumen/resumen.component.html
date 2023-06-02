@@ -213,25 +213,25 @@
                         <mat-icon class="icon-size-24 opacity-25 text-green-600"
                             [svgIcon]="'heroicons_outline:briefcase'"></mat-icon>
                     </div>
-                    <div class="flex flex-col justify-center items-center mt-2  gap-5">
+                    <div class="flex flex-col justify-center items-center mt-2  gap-4">
                         <ng-container *ngFor="let item of datosGeneral;  index as i;">
-                            <div class="flex w-100 gap-6">
+                            <div class="flex w-100 gap-7">
                                 <div
                                     class="w-auto h-auto bg-blue-100  p-4 rounded-xl shadow-inner flex justify-center items-center">
                                     <mat-icon class="icon-size-8  text-blue-800"
                                         svgIcon="heroicons_outline:briefcase"></mat-icon>
                                 </div>
-                                <div class="w-8/12 flex flex-col">
-                                    <span class="text-sm text-gray-500 font-bold leading-3">{{item.tipoCredito}}</span>
+                                <div class=" flex flex-col">
+                                    <span class="text-sm text-blue-600 font-bold leading-3">{{item.tipoCredito}}</span>
                                     <span class="text-xs text-gray-400">{{item.codigoNegocio}} -
                                         {{item.unidadNegocio}}</span>
-                                    <h4 class="text-gray-600 font-bold leading-7 tracking-tight mb-0">$ {{item.monto |
-                                        number}}</h4>
+                                    <span class="text-gray-600 font-bold text-2xl leading-5 tracking-tight my-1">$ {{item.monto |
+                                        number}}</span>
                                     <span class="text-sm text-gray-400 leading-tight border-b-2">{{'Tasa: ' + item.tasa
                                         + '%
                                         | ' + item.estadoNegocio + ' | Aprobado: ' + item.fechaAprobacion}}</span>
                                     <span class="text-sm text-gray-500 font-bold leading-3">Segmento:
-                                        {{item.segmento}}</span>
+                                        {{item.segmento}} </span>
                                 </div>
                             </div>
                         </ng-container>
