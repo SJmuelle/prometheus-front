@@ -165,9 +165,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
         const polygon = this.el.nativeElement.querySelector('.punteroPo');
         const polygonGrande = this.el.nativeElement.querySelector('.punteroPoGrande');
+        const polygonGrandeSegundo = this.el.nativeElement.querySelector('.punteroPoGrandeSegundo');
 
         polygon.style.transform = `rotate(${rotate}deg) translateY(140px) rotate(-${rotate}deg)`
         polygonGrande.style.transform = `rotate(${rotate}deg) translateY(140px) rotate(-${rotate}deg)`
+        polygonGrandeSegundo.style.transform = `rotate(${rotate}deg) translateY(140px) rotate(-${rotate}deg)`
     }
 
     updateScore(score: number): void {
@@ -1245,8 +1247,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('identificacionConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularConyuge')?.setValidators([Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('celularConyuge')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('emailConyuge')?.setValidators([Validators.required, Validators.email])
-                this.form.get('emailConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('tipoEmpleoConyuge')?.setValidators([Validators.required])
                 this.form.get('tipoEmpleoConyuge')?.enable({ emitEvent: true, onlySelf: true })
             }
@@ -1261,8 +1261,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.get('identificacionConyuge')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularConyuge')?.setValidators(null)
                 this.form.get('celularConyuge')?.disable({ emitEvent: true, onlySelf: true })
-                this.form.get('emailConyuge')?.setValidators(null)
-                this.form.get('emailConyuge')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('tipoEmpleoConyuge')?.setValidators(null)
                 this.form.get('tipoEmpleoConyuge')?.disable({ emitEvent: true, onlySelf: true })
             }

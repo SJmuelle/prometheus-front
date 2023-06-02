@@ -186,10 +186,12 @@
                                     r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
                                 <circle class="grey greyGreen" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
                                     cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
-                                    <circle cx="200" cy="200" r="12" fill="none" stroke="black" stroke-width="3"
+                                    <circle cx="200" cy="200" r="12" fill="none" stroke="#823b8a" stroke-width="3"
                                         class="punteroPo" />
-                                <circle cx="200" cy="200" r="30" fill="none" stroke="black" stroke-width="3"
+                                <circle cx="200" cy="200" r="25" fill="none" stroke="#823b8a" stroke-width="3"
                                     class="punteroPoGrande" />
+                                    <circle cx="200" cy="200" r="25" fill="none" stroke="#823b8a" stroke-width="3"
+                                    class="punteroPoGrandeSegundo" />
                             </svg>
                             <div class="score-band-wrapper flex justify-center items-center flex-col gap-4">
                                 <small class="text-xl font-bold">Tu score es</small>
@@ -1027,7 +1029,7 @@
 
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
                             negocio</span>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div class="grid gap-3  grid-cols-1 md:grid-cols-2">
                             <mat-form-field>
                                 <mat-label>¿Comercializas productos o servicios?
                                 </mat-label>
@@ -1118,7 +1120,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿El negocio está registrado en cámara de
                                     comercio?
@@ -1661,7 +1663,7 @@
 
                         </div>
 
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-2">
                             <mat-form-field>
                                 <mat-label>Tipo de ubicación del negocio</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'"

@@ -439,18 +439,30 @@ body {
 }
 
 .punteroPo{
-    // animation: girar 2s infinite linear;
-    fill: #382d58;
-    background: rgb(56,45,88);
-background: radial-gradient(circle, rgba(56,45,88,1) 0%, rgba(56,45,88,1) 53%, rgba(0,0,0,1) 100%);
+    fill: #c65cd4;
+    animation: palpitar infinite ease-in-out 2s;
 }
 
 
 .punteroPoGrande{
     fill: none;
+    animation: ondas infinite ease-in-out 2s;
 }
 
-@keyframes girar {
-    from { transform: rotate(0deg)  translate(-100px) rotate(0deg); }
-    to { transform: rotate(360deg) translate(-100px) rotate(-360deg); }
+.punteroPoGrandeSegundo{
+    fill: none;
+    animation: ondas infinite ease-in-out 2s ;
+    animation-delay: 1s;
+}
+
+@keyframes ondas {
+    0% {  opacity: 0; r: 13;}
+    50%  {  opacity: 0.7; }
+    100%  {  opacity: 0.1; r: 50 }
+}
+
+@keyframes palpitar {
+    0% {  filter: brightness(1); }
+    50% {  filter: brightness(1.3); }
+    100%  {  filter: brightness(1); }
 }

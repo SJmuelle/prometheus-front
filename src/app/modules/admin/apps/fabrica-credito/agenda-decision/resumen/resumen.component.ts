@@ -36,13 +36,14 @@ export class ResumenComponent implements OnInit {
         private _dialog: MatDialog,
         private genericaService: GenericasService,
     ) {
+        this.getUnidadDeNegocio()
         this.getResumen();
     }
 
     ngOnInit(): void {
         // this.openModalNegocio()
         this.getResumenCliente()
-        this.getUnidadDeNegocio()
+       
     }
 
     private getUnidadDeNegocio(){
@@ -64,8 +65,8 @@ export class ResumenComponent implements OnInit {
 
         ).subscribe((res) => {
             if (res.status === 200) {
-                this.getDatos(res.data);
                 this.apiData = res.data;
+                this.getDatos(res.data);
                 console.log('this.apiData', this.apiData);
                 Swal.close();
             } else {
@@ -657,6 +658,20 @@ export class ResumenComponent implements OnInit {
                             color: "bg-blue-100 text-blue-800",
                             label: "Sumatoria embargos",
                             valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Score",
+                            valor: this.apiData?.resumenGeneral.score
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Nivel de riesgo",
+                            valor: this.apiData?.resumenGeneral.nivelRiesgo.toLocaleLowerCase()
                         },
                     ]
                 },
