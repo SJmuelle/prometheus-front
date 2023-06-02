@@ -128,7 +128,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     updatePointer(score, minScore, maxScore) {
         let porcentaje = 0;
         const maxRotate = 336
-        const minRotate = 32;
+        const minRotate = 35;
         const maxTranslate = -100;
 
         if(this.currentScoreColor === 'red'){
