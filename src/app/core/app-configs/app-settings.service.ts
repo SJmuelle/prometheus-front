@@ -39,12 +39,12 @@ export class AppSettingsService {
     public transportadora = {
         url: {
             base: EndPoints.uri('/generic/qry/detalle-pronto-pago'),
-            basePropietario:EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
-            baseAceptar:EndPoints.uri('/generic/aceptacion-pronto-pago'),
-            baseRechazar:EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
-            baseTransportadora:EndPoints.uri('/generic/qry/transportadoras'),
-            baseActualizar:EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
-            baseTrazabilidad:EndPoints.uri('/generic/trazabilidad-pronto-pago')
+            basePropietario: EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
+            baseAceptar: EndPoints.uri('/generic/aceptacion-pronto-pago'),
+            baseRechazar: EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
+            baseTransportadora: EndPoints.uri('/generic/qry/transportadoras'),
+            baseActualizar: EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
+            baseTrazabilidad: EndPoints.uri('/generic/trazabilidad-pronto-pago')
         }
     };
 
@@ -105,6 +105,9 @@ export class AppSettingsService {
             // https://prometheus.fintra.co:8443/api-fintra/api/credito/tk/property/parametros-cargue-inicial
             microcredito: EndPoints.uri('/credito/microcredito/guardado-solicitud-microcredito'),
             cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
+            cargueInicialLibranza: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
+            guardarFormularioLibranza: EndPoints.uri('/credito/tk/guardar-formulario-solicitud'),
+            guardarFormularioLibranzaLaboral: EndPoints.uri('/credito/libranza/guardar-presolicitud-datos-laborales'),
             cargueActividadEconomica: EndPoints.uri('/generic/qry/obtener-actividades-form-micro'),
             cargueSolicitudesFormularioSimulaciones: EndPoints.uri('/generic/qry/solicitudes-formulario-simulaciones'),
             listarCiudadesMicro: EndPoints.uri('/generic/qry/listar-ciudades-micro'),
@@ -140,8 +143,8 @@ export class AppSettingsService {
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
-            validacionMonto:EndPoints.uri('/generic/cre-lib-monto'),
-            validacionPlazo:EndPoints.uri('/generic/cre-lib-plazo'),
+            validacionMonto: EndPoints.uri('/generic/cre-lib-monto'),
+            validacionPlazo: EndPoints.uri('/generic/cre-lib-plazo'),
             autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
         }
     };

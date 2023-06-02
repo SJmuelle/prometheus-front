@@ -1,0 +1,363 @@
+<div class="bg-white h-screen pb-11 overflow-auto px-3 rounded-lg shadow w-full y-100" cdkScrollable>
+    <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full sm:flex-row flex-col">
+            <div class="flex items-center ">
+                <div class="flex-0 w-16 h-16  overflow-hidden">
+                    <img src="assets/images/agendas/formulario-de-llenado.png" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 mx-3">
+                    <div class="text-3xl font-bold tracking-tight leading-8 text-gray-700">Formulario de libranza
+                    </div>
+                    <div class="flex items-center">
+                        <mat-icon svgIcon="heroicons_solid:bell" class="text-gray-400"></mat-icon>
+                        <div class="font-medium tracking-tight text-secondary">
+                            Complete el formulario
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+            <app-fabrica-opciones *ngIf="!numeroSolicitud"></app-fabrica-opciones>
+        </div>
+    </div>
+
+    <form [formGroup]="form">
+        <div class="w-auto cursor-pointer font-bold mb-3 bg-accent-200 rounded-2  mt-1  mx-8 px-3 text-2xl"
+            style="margin-left: 36px; margin-right: 36px;">
+            <!-- <mat-icon svgIcon="heroicons_solid:bell" class="text-gray-400"></mat-icon> -->
+            Datos básicos
+        </div>
+        <div class="bg-white  rounded px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Tipo de identificación</mat-label>
+                <mat-select formControlName="tipoDocumento" (selectionChange)="solicitudesFormularioSimulaciones()">
+                    <mat-option *ngFor="let tiposDocumentos of dataInicial?.tipoDocumento"
+                        [value]="tiposDocumentos.codigo"
+                        [disabled]="tiposDocumentos.codigo === 'CE'">{{tiposDocumentos.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>No. de identificación</mat-label>
+                <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text" autocomplete="off"
+                    formControlName="identificacion" (change)="solicitudesFormularioSimulaciones()">
+                <mat-error *ngIf="form.controls.identificacion.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.identificacion.errors?.pattern">
+                    Cantidad de números de 5-10.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Celular</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="celular" prefix="+57 "
+                    mask="(000) 000 00 00">
+                <mat-error *ngIf="form.controls.celular.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.celular.errors?.pattern">
+                    Debe comenzar en 3 y tener 10 digitos
+                </mat-error>
+
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Primer nombre</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="primerNombre">
+                <mat-error *ngIf="form.controls.primerNombre.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.primerNombre.errors?.pattern">
+                    No se aceptan caracteres especiales.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Primer apellido</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="primerApellido">
+                <mat-error *ngIf="form.controls.primerApellido.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.primerApellido.errors?.pattern">
+                    No se aceptan caracteres especiales.
+                </mat-error>
+            </mat-form-field>
+
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Correo electrónico</mat-label>
+                <input matInput type="email" (change)="preSolicitud()" autocomplete="off" formControlName="email">
+                <mat-error *ngIf="form.controls.email.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.email.errors?.email">
+                    Email invalido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense ">
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input style="max-height: 18px !important;" matInput type="date" autocomplete="off"
+                    formControlName="fechaNacimiento">
+                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
+                </mat-error>
+                <mat-error *ngIf="form.controls.fechaNacimiento.errors?.dateMayor">
+                    La fecha tiene que ser 18 años menor al día de hoy.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="bg-white  rounded px-8 pt-6 grid grid-cols-1   md:grid-cols-2">
+
+            <div
+                class="col-lg-12 col-sm-12 cursor-pointer font-bold mb-3 bg-accent-200 rounded-2 pl-4 mt-1 text-2xl md:col-span-2">
+                Datos laborares
+            </div>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Pagduria</mat-label>
+                <mat-select formControlName="pagaduria">
+                    <mat-option *ngFor="let empresa of dataInicial?.pagadurias"
+                        [value]="empresa.codigo">{{empresa.nombre}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.pagaduria.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Otra pagaduria</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="otraPagaduria">
+                <mat-error *ngIf="form.controls.otraPagaduria.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Tipo de contrato</mat-label>
+                <mat-select formControlName="tipoContrato">
+                    <mat-option *ngFor="let data of dataInicial?.tipoContrato" [value]="data.codigo">{{data.nombre}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.tipoContrato.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+
+          
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense ">
+                <mat-label>Fecha de vinculación de contrato</mat-label>
+                <input style="max-height: 18px !important;" matInput type="date" autocomplete="off"
+                    formControlName="fechaVinculacion">
+                <mat-error *ngIf="form.controls.fechaVinculacion.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.fechaVinculacion.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense ">
+                <mat-label>Fecha de finalización de contrato
+                </mat-label>
+                <input style="max-height: 18px !important;" matInput type="date" autocomplete="off"
+                    formControlName="fechaFinalizacion">
+                <mat-error *ngIf="form.controls.fechaFinalizacion.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.fechaFinalizacion.errors?.dateError">
+                    La fecha no puede ser mayor al día de hoy.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Tipo de cargo</mat-label>
+                <mat-select formControlName="tipoCargoPerfil">
+                    <mat-option *ngFor="let tipoCargoP of dataInicial?.tiposCargosPerfil"
+                        [value]="tipoCargoP.codigo">{{tipoCargoP.nombre}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.controls.tipoCargoPerfil.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Salario básico ($)</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="salario" mask="separator.0"
+                    thousandSeparator="." >
+                <mat-error *ngIf="form.controls.salario.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.salario.errors?.min">
+                    mínimo de {{salarioMinimo}}
+                </mat-error>
+                <mat-error *ngIf="form.controls.salario.errors?.max">
+                    máximo de 100.000.000
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Descuento volante de nómina ($)
+                </mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="descuentos" mask="separator.0"
+                    thousandSeparator="." >
+                <mat-error *ngIf="form.controls.descuentos.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Comisiones / Horas Extras
+                </mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="comisiones" mask="separator.0"
+                    thousandSeparator="." >
+                <mat-error *ngIf="form.controls.comisiones.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="bg-white shadow-md rounded px-8 pt-6 grid grid-cols-1   md:grid-cols-2">
+
+            <div
+                class="col-lg-12 col-sm-12 cursor-pointer font-bold mb-3 bg-accent-200 rounded-2 pl-4 mt-1 text-2xl md:col-span-2">
+                Datos
+                del crédito
+            </div>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>¿Cuánto dinero necesitas?</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="monto" mask="separator.0"
+                    thousandSeparator="." matTooltip="¿Cuánto dinero necesitas?">
+                <mat-error *ngIf="form.controls.monto.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.monto.errors?.min">
+                    Monto mínimo de {{salarioMinimo}}
+                </mat-error>
+                <mat-error *ngIf="form.controls.monto.errors?.max">
+                    Monto máximo de 100.000.000
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>¿En cuántos meses vas a pagar tu crédito?</mat-label>
+                <input matInput type="number" autocomplete="off" [min]="plazosCredito?.data[0].plazoMinimo"
+                    [max]="plazosCredito?.data[0].plazoMaximo" formControlName="cuotas">
+                <mat-error *ngIf="form.controls.cuotas.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="
+                form.controls.cuotas.errors
+                    ?.min
+            ">
+                    No puede ser menor a {{plazosCredito?.data[0].plazoMinimo}}
+                </mat-error>
+                <mat-error *ngIf="
+                form.controls.cuotas.errors
+                    ?.max
+            ">
+                    No puede ser mayor a {{plazosCredito?.data[0].plazoMaximo}}
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Asesor de libranza</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="asesorMicro">
+
+            </mat-form-field>
+
+        </div>
+
+
+
+        <!-- <div class="bg-white shadow-md rounded px-8 pt-6 grid grid-cols-1   md:grid-cols-1"> -->
+
+
+        <!-- <div class="w-auto cursor-pointer font-bold mb-3 bg-accent-200 rounded-2  mt-1  px-3 text-2xl">
+                Validación de OTP
+            </div> -->
+        <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
+                <mat-label>Código OTP</mat-label>
+                <input matInput type="text" autocomplete="off" formControlName="numeroOTP" [disabled]="this.form.invalid" placeholder="Presionar el botón para enviar el código del celular">
+                <mat-icon svgIcon="feather:check-circle" [ngClass]="{'text-green-400': this.otpValidado}" matTooltip="Verificar código OTP" class="cursor-pointer mx-2" (click)="validarCodigo()"></mat-icon>
+                <mat-icon svgIcon="feather:send" [ngClass]="{'text-blue-400': this.form.valid}" class="cursor-pointer" matTooltip="Enviar código OTP" (click)="solicitarCodigo()"></mat-icon>
+            </mat-form-field> -->
+        <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center pt-4 flex-col">
+                <button mat-raised-button color="primary" type="button" style="width: 80% !important"
+                    class="rounded-md cursor-pointer"
+                    [disabled]="this.form.invalid || contador !== 180 || validandoOTPLoading"
+                    (click)="solicitarCodigo()">
+                    {{changeTextOTP ? 'Reenviar código OTP' : 'Enviar código OTP'}}
+                </button>
+
+            </div> -->
+
+        <!-- <mat-form-field class="px-3 fuse-mat-dense mt-5" style=" width: 80% !important; margin-left: 10%;">
+                <input matInput type="text" placeholder="Código" [readonly]="otpValidado" (keyup)="validarCodigo()"
+                    autocomplete="off" formControlName="numeroOTP" min="6" max="6">
+                <mat-error *ngIf="form.controls.numeroOTP.errors?.required">
+                    Este campo es requerido.
+                </mat-error>
+                <mat-error *ngIf="form.controls.numeroOTP.errors?.min">
+                    Mínimo 6 dígitos
+                </mat-error>
+            </mat-form-field> -->
+
+        <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
+                style="min-height: 200px !important;">
+
+                <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
+                    <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
+                        formControlName="numOTP1" id="num1"  (keyup)="changeFocus()"
+                        class="text-center h-6 font-bold sm:text-xl text-sm " style="width: 40px !important;">
+                </mat-form-field>
+                <mat-form-field class="w-10 sm:w-1/12 sm:px-3  fuse-mat-dense">
+                    <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
+                        formControlName="numOTP2" id="num2"  (keyup)="changeFocus()"
+                        class="text-center h-6 font-bold sm:text-xl text-sm">
+                </mat-form-field>
+                <mat-form-field class="w-10 sm:w-1/12 md:px-3  fuse-mat-dense">
+                    <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
+                        formControlName="numOTP3" id="num3" (keyup)="changeFocus()"
+                        class="text-center h-6 font-bold sm:text-xl text-sm">
+                </mat-form-field>
+                <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
+                    <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
+                        formControlName="numOTP4" id="num4" (keyup)="changeFocus()"
+                        class="text-center h-6 font-bold sm:text-xl text-sm">
+                </mat-form-field>
+                <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
+                    <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
+                        formControlName="numOTP5" id="num5" (keyup)="changeFocus()"
+                        class="text-center h-6 font-bold sm:text-xl text-sm">
+                </mat-form-field>
+                <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
+                    <input [readonly]="otpValidado" matInput type="text" maxlength="1" autocomplete="off"
+                        formControlName="numOTP6" id="num6" (keyup)="validarCodigo()"
+                        class="text-center h-6 font-bold sm:text-xl text-sm">
+                </mat-form-field>
+            </div> -->
+
+        <!-- 
+            <div *ngIf="contador !== 180 && !otpValidado"
+                class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
+                <mat-progress-bar style="width: 80%;" mode="determinate"
+                    [value]="(contador / 180) * 100"></mat-progress-bar>
+            </div>
+            <div class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-10">
+                <mat-icon *ngIf="validandoOTPLoading" svgIcon="settings"
+                    class="animate-spin-slow icon-size-12 mt-4"></mat-icon>
+                <mat-icon *ngIf="otpValidado" class="text-green-500 icon-size-12 mt-4"
+                    svgIcon="mat_solid:check_circle"></mat-icon>
+            </div> -->
+        <!-- </div> -->
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-18 sm:flex sm:justify-end gap-4">
+            <button mat-raised-button color="primary" type="button" 
+                (click)="save()">
+                Guardar
+            </button>
+        </div>
+    </form>
+</div>

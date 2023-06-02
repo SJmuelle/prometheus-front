@@ -33,11 +33,13 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
+import { LibranzaComponent } from './libranza/libranza.component';
 
 
 @NgModule({
   declarations: [
-    MicrocreditoComponent
+    MicrocreditoComponent,
+    LibranzaComponent
   ],
   imports: [
     CommonModule,

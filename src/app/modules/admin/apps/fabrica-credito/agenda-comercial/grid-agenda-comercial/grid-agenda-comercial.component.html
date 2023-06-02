@@ -53,9 +53,13 @@
                         </div>
                     </div>
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="onGetAgendaDigital(null)">
-                            <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/logo-microcredito.png">
+                        <button mat-menu-item (click)="onGetAgendaDigital(null,'microcredito')">
+                            <img alt="linea de negocio microcredito" class="w-11 mr-3" src="assets/images/logo/logo-microcredito.png">
                             <span>Microcrédito</span>
+                        </button>
+                        <button mat-menu-item (click)="onGetAgendaDigital(null,'libranza')">
+                            <img alt="linea de negocio libranza" class="w-11 mr-3" src="https://fintra.co/AssetsTic/LOGO_LIBRANZA.png">
+                            <span>Libranza</span>
                         </button>
                     </mat-menu>
                 </div>
