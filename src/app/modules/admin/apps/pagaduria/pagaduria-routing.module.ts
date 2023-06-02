@@ -5,12 +5,7 @@ import { PagaduriaComponent } from './pagaduria/pagaduria.component';
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: 'par',
-        component: PagaduriaComponent
-      }
-    ]
+    component: PagaduriaComponent
   }
 ];
 

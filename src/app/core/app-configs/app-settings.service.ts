@@ -3,6 +3,9 @@ import { EndPoints } from './end-points';
 
 @Injectable()
 export class AppSettingsService {
+  getQuery(url: string, arg1: boolean) {
+    throw new Error('Method not implemented.');
+  }
     /**
      * @description: End-point agenda de completacion
      */
@@ -328,9 +331,9 @@ export class AppSettingsService {
             metasUpdateMetaColocacion: EndPoints.uri('/generic/metas-update-meta-colocacion'),
             obtenerInformacionUsuarios: EndPoints.uri('/generic/qry/tk/obtener-informacion-usuarios'),
             metasAgregarAsesor: EndPoints.uri('/generic/metas-agregar-asesor'),
-
         }
     };
+    
     /**
      * @description: End-Point
      */
@@ -465,7 +468,23 @@ export class AppSettingsService {
     public analisisFinanciero = {
         url: {
             base: EndPoints.uri('/generic/qry/info-analisis-financiero'),
-            guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
+            guardado: EndPoints.uri('/generic/guardar-analisis-financiero'),
         }
     };
+
+    /**
+     * @description: End-point gestion pagaduria
+     */
+    public gestionPagaduria = {
+        url: {
+            pagadurias: EndPoints.uri('/generic/qry/cre-lib-pagadurias'),
+            configuracion:EndPoints.uri('/generic/qry/cre-lib-configuracion-plazos'),
+            guardar:EndPoints.uri('/generic/cre-lib-guardar-plazo'),
+            eliminar:EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
+            editar:EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
+            informacion:EndPoints.uri('/generic/cre-lib-info-pagadurias'),
+            crear:EndPoints.uri('/generic/cre-lib-guardar-pagaduria')
+         
+    } 
+};
 }

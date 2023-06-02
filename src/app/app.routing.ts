@@ -14,6 +14,8 @@ import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-cor
 import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
 import { TransportadorasModule } from './modules/admin/apps/transportadoras/transportadoras.module';
 import { CuentasPorCobrarModule } from './modules/admin/apps/cuentas-por-cobrar/cuentas-por-cobrar.module';
+import { GestionPagaduriaModule } from './modules/admin/apps/gestion-pagaduria/gestion-pagaduria.module';
+import { PagoMasivoModule } from './modules/admin/apps/cuentas-por-cobrar/recaudos/pagos-transportadoras/pago-masivo.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
@@ -124,7 +126,7 @@ export const appRoutes: Route[] = [
                 loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule),
             },
             {
-                path: 'pagaduria',
+                path: 'pagaduria/par',
                 loadChildren: () => PagaduriaModule
             },
             {
@@ -134,6 +136,14 @@ export const appRoutes: Route[] = [
             {
                 path: 'cuentas-por-cobrar',
                 loadChildren: () => CuentasPorCobrarModule
+            },
+            {
+                path: 'pagaduria/parametria',
+                loadChildren: () => GestionPagaduriaModule
+            },
+            {
+                path: 'pago-masivo',
+                loadChildren: () => PagoMasivoModule
             },
             {
                 path: 'procesos',

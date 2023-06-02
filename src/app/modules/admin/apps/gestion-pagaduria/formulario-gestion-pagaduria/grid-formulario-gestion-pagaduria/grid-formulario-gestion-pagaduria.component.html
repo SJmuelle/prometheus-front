@@ -1,0 +1,194 @@
+<div class="h-full card py-3 px-4 w-100 shadow bg-white m-4 rounded-lg ">
+  <div [formGroup]="form">
+    <h2 class="text-gray-900 col-span-12 mb-4">Crear nueva pagaduria</h2>
+    <div class="grid grid-cols-3 grid-rows-3 w-100 mb-2">
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user-circle'">
+          </mat-icon>
+          <mat-label> Razón social </mat-label>
+          <input matInput type="text" autocomplete="off" formControlName="razonSocial">
+          <mat-error *ngIf="form.controls.razonSocial.errors?.required">
+            Este campo es requerido.
+          </mat-error>
+          <mat-error *ngIf="form.controls.razonSocial.errors?.pattern">
+            No se aceptan caracteres especiales.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:identification'">
+          </mat-icon>
+          <mat-label> Numero de documento </mat-label>
+          <input matInput type="text" (change)="onDocumentoChange($event)" autocomplete="off"
+            formControlName="documento">
+          <mat-error *ngIf="form.controls.documento.errors?.required">
+            Este campo es requerido.
+          </mat-error>
+          <mat-error *ngIf="form.controls.documento.errors?.pattern">
+            Cantidad de números de 5-10.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:check'">
+          </mat-icon>
+          <mat-label> Dv</mat-label>
+          <input matInput type="number" autocomplete="off" formControlName="dv">
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Departamento</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          </mat-icon>
+          <mat-select name="direccion" formControlName="departamento" (selectionChange)="consultaMunicipio()">
+            <mat-option value="{{item.codigo}}" *ngFor="let item of listadoDepartamento">
+              {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Ciudad</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          </mat-icon>
+          <mat-select name="municipio" formControlName="municipio">
+            <mat-option value="{{item.codigo}}" *ngFor="let item of listadoCiudades">
+              {{item.nombre}} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:location-marker'">
+          </mat-icon>
+          <mat-label> Dirección</mat-label>
+          <input matInput type="text" autocomplete="off" formControlName="direccion">
+          <mat-error *ngIf="form.controls.direccion.errors?.required">
+            Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="w-full px-3 fuse-mat-dense">
+        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:mail'">
+        </mat-icon>
+        <mat-label>Correo electrónico</mat-label>
+        <input matInput type="email" autocomplete="off" formControlName="correo">
+        <mat-error *ngIf="form.controls.correo.errors?.required">
+          Este campo es requerido.
+        </mat-error>
+        <mat-error *ngIf="form.controls.correo.errors?.email">
+          Email invalido.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:phone'">
+          </mat-icon>
+          <mat-label> Telefono</mat-label>
+          <input matInput type="text" autocomplete="off" formControlName="telefono" prefix="+57 "
+            mask="(000) 000 00 00">
+          <mat-error *ngIf="form.controls.telefono.errors?.required">
+            Este campo es requerido.
+          </mat-error>
+          <mat-error *ngIf="form.controls.telefono.errors?.pattern">
+            Debe comenzar en 3 y tener 10 digitos
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Tipo de empresa</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="tipoEmpresa">
+            <mat-option *ngFor="let tipo of tipoEmpresa" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Empresa Aliada</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:office-building'">
+          </mat-icon>
+          <mat-select formControlName="empresaAliada">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Convenio especial temporal</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="convenioEspecialTemporal">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Contrato Fijo</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'">
+          </mat-icon>
+          <mat-select formControlName="contratoFijo">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'attach_money'">
+          </mat-icon>
+          <mat-label> Porcentaje Ingreso Bruto</mat-label>
+          <input matInput type="number" autocomplete="off" formControlName="porcentajeIngresosBrutos"
+            pattern="^[0-9]+(\.[0-9]{1,2})?%?$" required>
+          <mat-error>Ingrese un porcentaje válido (Ej. 25%)</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Carta laboral</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:annotation'">
+          </mat-icon>
+          <mat-select formControlName="requiereCartaLaboral">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-span-1">
+        <mat-form-field class="w-full px-3 fuse-mat-dense">
+          <mat-label>Liquidacion Sin Pagaduria</mat-label>
+          <mat-icon class="icon-size-5" matPrefix [svgIcon]="'attach_money'">
+          </mat-icon>
+          <mat-select formControlName="liqSinPagaduria">
+            <mat-option *ngFor="let tipo of seleccion" [value]="tipo.value">
+              {{ tipo.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="w-full col-span-3 h-full flex items-center justify-end ">
+        <mat-dialog-actions align="end" class="flex gap-6">
+          <button mat-button [disabled]="form.invalid" class=" color_fintra text-white" (click)="crearPagaduria()">Guardar
+          </button>
+       </mat-dialog-actions>
+      </div>
+    </div>
+  </div>
+</div>

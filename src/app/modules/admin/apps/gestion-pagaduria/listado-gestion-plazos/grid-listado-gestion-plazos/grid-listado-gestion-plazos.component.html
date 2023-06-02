@@ -1,0 +1,106 @@
+<div class="h-full card py-3 px-4 w-100 shadow bg-white m-4 rounded-lg ">
+    <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
+        <h2 class="text-gray-900 col-span-12 mb-4">Configuración de plazos</h2>
+        <div class="col-span-12 grid grid-cols-12">
+            <div class="col-span-6">
+                <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+                    Crear nuevo
+                </button>
+            </div>
+            <div class="col-span-6 justify-self-end">
+                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em" type="text"
+                    autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
+                    (ngModelChange)="page = 1" />
+                <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
+                    [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="h-auto w-full sm:h-100 xl:h-160 ">
+        <table class="w-full shadow p-1">
+            <thead style="background-color: #F9FAFB;">
+                <tr class="text-md font-semibold
+                    tracking-wide text-left text-gray-400
+                    capitalize border-b border-gray-600 ">
+                    <th class="px-4 py-3 text-center w-0">Editar</th>
+                    <!-- <th class="px-4 py-3 text-center w-0">Id plazos</th> -->
+                    <th class="px-4 py-3 text-center">Tipo de contrato</th>
+                    <th class="px-4 py-3 text-center">Antiguedad minima</th>
+                    <th class="px-4 py-3 text-center">Antiguedad maxima</th>
+                    <th class="px-4 py-3 text-center">Plazo minimo </th>
+                    <th class="px-4 py-3 text-center">Plazo maximo</th>
+                    <th class="px-4 py-3 text-center">Estado</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700" *ngFor="
+                    let item of listado
+                        | filter: filtrarTabla
+                        | paginate
+                            : {
+                                    itemsPerPage: tamanoTabl,
+                                    currentPage: page
+                                }
+                ">
+                    <td class="px-20 text-sm border text-center" (click)="abrirModal(item, 'A')">
+                        <mat-icon svgIcon="heroicons_outline:pencil-alt"></mat-icon>
+                    </td>
+                    <!-- <td class="px-2 text-sm border text-center">
+                        {{ item.idPlazo }}
+                    </td> -->
+
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.tipoContrato === 'F' ? 'FIJO' : 
+                           item.tipoContrato === 'O' ? 'OBRA LABOR' :
+                           item.tipoContrato === 'I' ? 'INDEFINIDO' :
+                           item.tipoContrato }}
+                    </td>
+
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.antiguedadMinima }} MESES
+                    </td>
+
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.antiguedadMaxima}}
+                    </td>
+
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.plazoMinimo}} MESES
+                    </td>
+
+                    <td class="px-2 text-sm border text-center">
+                        {{ item.plazoMaximo}} MESES
+                    </td>
+                    <td class="px-2 text-sm border text-center w-0">
+                        <div [ngClass]="
+                            item.descripcionEstado == 'INACTIVO'
+                                ? 'bg-pink-300'
+                                : 'bg-green-300'
+                        ">
+                            <span class="
+                                px-2
+                                py-1
+                                font-semibold
+                                leading-tight
+                                text-gray-700
+                                rounded-sm
+                                w-0
+                            ">
+                                {{ item.descripcionEstado }}
+
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="grid mb-10 mt-2">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+                nextLabel="Siguiente"></pagination-controls>
+        </div>
+    </div>
+</div>
