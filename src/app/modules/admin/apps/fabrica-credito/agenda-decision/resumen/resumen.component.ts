@@ -67,7 +67,6 @@ export class ResumenComponent implements OnInit {
             if (res.status === 200) {
                 this.apiData = res.data;
                 this.getDatos(res.data);
-                console.log('this.apiData', this.apiData);
                 Swal.close();
             } else {
                 Swal.close();
@@ -904,8 +903,6 @@ export class ResumenComponent implements OnInit {
       } else {
         this.datosGeneral = []
       }
-
-      console.log('dato general', this.datosGeneral);
 
     });
   }

@@ -84,7 +84,7 @@ export class VerDocumentosComponent implements OnInit {
                     this.documentos[item.tipoTercero].push(item)
                 }
             }
-
+            
             // ordenar alfabeticamente
             for(const documento in this.documentos){
                    this.documentos[documento] = this.documentos[documento].sort((a,b) => {

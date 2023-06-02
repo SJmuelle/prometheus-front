@@ -481,7 +481,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
             if (currenScoreUI) {
                 currenScoreUI.style.left = this.score / 950 * 100 + '%'
-                console.log('left: ' + this.score / 950 * 100);
 
             }
         }, 2000);

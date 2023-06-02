@@ -38,7 +38,6 @@ export class GridPoliticasComponent implements OnInit {
                     this.representante.push(element)
                 }
             });
-            console.log('titular', this.titular);
 
         });
     }
