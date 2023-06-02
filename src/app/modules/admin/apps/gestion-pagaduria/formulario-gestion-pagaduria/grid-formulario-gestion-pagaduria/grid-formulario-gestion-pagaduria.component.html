@@ -21,7 +21,7 @@
         <mat-form-field class="w-full px-3 fuse-mat-dense">
           <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_outline:identification'">
           </mat-icon>
-          <mat-label> Numero de documento </mat-label>
+          <mat-label> Número de documento </mat-label>
           <input matInput type="text" (change)="onDocumentoChange($event)" autocomplete="off"
             formControlName="documento">
           <mat-error *ngIf="form.controls.documento.errors?.required">
