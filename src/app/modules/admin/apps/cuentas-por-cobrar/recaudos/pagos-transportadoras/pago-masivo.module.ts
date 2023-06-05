@@ -10,7 +10,7 @@ import { Ng2SearchPipeModule } from "ng2-search-filter";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
 
-import { FuseCardModule } from '../../../../../@fuse/components/card/card.module';
+import { FuseCardModule } from '@fuse/components/card'; 
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';

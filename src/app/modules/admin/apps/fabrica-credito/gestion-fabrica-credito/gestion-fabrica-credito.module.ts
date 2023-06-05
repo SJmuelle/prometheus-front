@@ -77,6 +77,8 @@ import { GridOfertaMicroComponent } from './grid-oferta-micro/grid-oferta-micro.
 import { GridCarteraMicroComponent } from './grid-cartera-micro/grid-cartera-micro.component';
 import { VerDocumentosComponent } from '../agenda-decision/ver-documentos/ver-documentos.component';
 import { VerReferenciacionComponent } from '../agenda-decision/ver-referenciacion/ver-referenciacion.component';
+import { RecalcularOfertaMicroComponent } from './recalcular-oferta-micro/recalcular-oferta-micro.component';
+
 
 
 
@@ -121,12 +123,12 @@ import { VerReferenciacionComponent } from '../agenda-decision/ver-referenciacio
         FormDeudorSolitarioComponent,
         GridOfertaMicroComponent,
         GridCarteraMicroComponent,
-        VerDocumentosComponent
+        VerDocumentosComponent,
+        RecalcularOfertaMicroComponent
     ],
     imports: [
         CommonModule,
         GestionFabricaCreditoRoutingModule,
-
         MatExpansionModule,
         MatFormFieldModule,
         MatInputModule,

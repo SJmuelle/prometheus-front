@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { KeyValue } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-ver-documentos',
@@ -31,11 +32,12 @@ export class VerDocumentosComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private documentosServices: DocumentosAdjuntosService,
-        private fabricaCreditoService: FabricaCreditoService
+        private fabricaCreditoService: FabricaCreditoService,
+        public sanitizer: DomSanitizer
     ) { }
 
     ngOnInit(): void {
-        this.getDocumentosData()       
+        this.getDocumentosData()
     }
 
     public onCerrar(): void {
@@ -54,7 +56,7 @@ export class VerDocumentosComponent implements OnInit {
             numeroSolicitud: this.numeroSolicitud,
             identificacion: this.identificacion,
         };
-        
+
         this.fabricaCreditoService
             .getDatosFabricaAgenda(datosSolicitud)
             .pipe(takeUntil(this.unSubscribe$))
@@ -65,7 +67,7 @@ export class VerDocumentosComponent implements OnInit {
                     unidadNegocio: data.unidadNegocio,
                 };
                 // this.fabricaCreditoService.seleccionDatos.next({ data: datosDocumentos });
-                
+
                 this.datosDocumentos = datosDocumentos;
                 this.getDocumentos(datosDocumentos);
             });
@@ -80,12 +82,29 @@ export class VerDocumentosComponent implements OnInit {
                         this.documentos[item.tipoTercero] = []
                     }
                     this.documentos[item.tipoTercero].push(item)
-                }  
+                }
             }
+
+            // ordenar alfabeticamente
+            for(const documento in this.documentos){
+                   this.documentos[documento] = this.documentos[documento].sort((a,b) => {
+                    const nameA = a.descripcion.toLowerCase()
+                    const nameB = b.descripcion.toLowerCase()
+                    if (nameA < nameB) {
+                        return -1;
+                      }
+                      if (nameA > nameB) {
+                        return 1;
+                      }
+                      return 0;
+                })
+            }
+
+
         });
 
-        
-        
+
+
 
     }
 
@@ -103,10 +122,10 @@ export class VerDocumentosComponent implements OnInit {
             default:
                 return 'Titular'
         }
-    }   
+    }
 
     getExtension(nombreArchivoReal: string) {
-        const split = nombreArchivoReal.split('.')
+        const split = nombreArchivoReal.split('.')       
         return split[split.length - 1];
     }
 
@@ -157,9 +176,10 @@ export class VerDocumentosComponent implements OnInit {
             numeroSolicitud: this.numeroSolicitud,
             idAdjunto: datos.idArchivoCargado,
         };
+        
         this.documentosServices
-            .getDocumento(datosDescargar)
-            .subscribe((res) => {    
+        .getDocumento(datosDescargar)
+        .subscribe((res) => {
                 datos.base64 =  res.data.base64
                 datos.display = !datos.display
             });
@@ -186,6 +206,6 @@ export class VerDocumentosComponent implements OnInit {
             return this.apiData.resumenGeneral.codigoTipoDeudor !== '1' || this.apiData.resumenGeneral.codigoTipoDeudor !== '3'
         }else{
             return false
-        }    
+        }
     }
 }

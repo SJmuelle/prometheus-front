@@ -633,9 +633,8 @@ export class FormCodeudorComponent implements OnInit {
                     .get('nitNegocio')
                     ?.setValidators([
                         Validators.required,
+                        Validators.minLength(5),
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                        Validators.minLength(9),
-                        Validators.maxLength(10),
                     ]);
                 this.form
                     .get('nitNegocio')
@@ -1521,5 +1520,13 @@ export class FormCodeudorComponent implements OnInit {
         } else {
             return null
         }
+    }
+
+    public getNombreCompleto(): string {
+        return [
+        this.form.controls['primerNombre'].value,
+        this.form.controls['segundoNombre'].value,
+        this.form.controls['primerApellido'].value,
+        this.form.controls['segundoApellido'].value].filter(text => text !== '').join(' ')
     }
 }

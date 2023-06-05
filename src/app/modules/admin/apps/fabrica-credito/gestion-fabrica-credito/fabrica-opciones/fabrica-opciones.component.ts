@@ -267,6 +267,8 @@ export class FabricaOpcionesComponent implements OnInit, OnDestroy {
       disableClose: false,
     });
     dialogRef.afterClosed().subscribe((res) => {
+      console.log('log',res);
+      
       if (this.fabricaDatos.unidadNegocio != 32) {
         if (res == true) {
           this.abrirModal('recalcular')
