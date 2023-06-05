@@ -70,24 +70,24 @@ export class CajaVirtualService {
   }
 
   /*
-  * @description: 
+  * @description: 1
   */
   public refinanciacionTipoEstrategia(): Observable<any> {
     return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionTipoEstrategia);
   }
 
   /*
-  * @description: 
+  * @description: 2
   */
-  public refinanciacionBuscarCliente(): Observable<any> {
-    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionBuscarCliente);
+  public refinanciacionBuscarCliente(tipoDato,tipoEstrategia,id): Observable<any> {
+    return this._http.get(`${this._appSettings.cajaVirtual.url.refinanciacionBuscarCliente}/${tipoDato}/${id}/${tipoEstrategia}`);
   }
 
   /*
   * @description: 
   */
-  public refinanciacionCargarDetalleCartera(): Observable<any> {
-    return this._http.get(this._appSettings.cajaVirtual.url.refinanciacionCargarDetalleCartera);
+  public refinanciacionCargarDetalleCartera(negocio,tipoEstrategia,fecha): Observable<any> {
+    return this._http.get(`${this._appSettings.cajaVirtual.url.refinanciacionCargarDetalleCartera}/${negocio}/${tipoEstrategia}/${fecha}`);
   }
 
   /*

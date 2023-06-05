@@ -34,22 +34,41 @@
                 </g>
             </svg>
             <!-- @formatter:on -->
-            <div class="z-10 relative flex flex-col items-center">
-                <!-- <h2 class="text-xl font-semibold">HELP CENTER</h2> -->
-                <div class="mt-1 text-2xl sm:text-5xl font-extrabold tracking-tight leading-tight text-center">
-                    Realizar las estrategias de normalización (refinanciaciones y congela tu deuda)
-                </div>
-                <mat-form-field
-                    class="fuse-mat-no-subscript fuse-mat-rounded fuse-mat-bold w-full  sm:max-w-160 mt-10 sm:mt-20">
-                    <input matInput [placeholder]="'Busca número de identificación del cliente o número de negocio'">
-                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:search'"></mat-icon>
-                </mat-form-field>
+            <form [formGroup]="form">
+                <div class="z-10 relative flex flex-col items-center">
+                    <div class="mt-1 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight text-center">
+                        Realizar las estrategias de normalización 
+                    </div>
+                    <div class="grid grid-cols-3 w-full  sm:max-w-200 mt-10 sm:mt-20">
 
-                <button class="mt-10 sm:mt-20" mat-flat-button [color]="'primary'"  [routerLink]="['./222755']" >
-                    <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
-                    <span class="ml-2 mr-1">Buscar</span>
-                </button>
-            </div>
+
+                        <mat-form-field>
+                            <mat-select [formControlName]="'tipoEstrategia'">
+                                <mat-option *ngFor="let item of listado"
+                                    [value]="item.tipo">{{item.nombre}}</mat-option>
+                            </mat-select>
+                            <mat-icon matPrefix [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <mat-select [formControlName]="'tipoID'">
+                                <mat-option value="NEG">NEGOCIO</mat-option>
+                                <mat-option value="ID">IDENTIFICACIÓN DEL CLIENTE</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field>
+                            <input class="ml-3" matInput [placeholder]="'Id número de negocio'" [formControlName]="'id'">
+                        </mat-form-field>
+                    </div>
+                 
+
+                    <button class="mt-10 sm:mt-10" mat-flat-button [color]="'primary'"  [routerLink]="[form.value.tipoEstrategia+'/'+form.value.tipoID+'/'+form.value.id]">
+                        <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                        <span class="ml-2 mr-1">Buscar</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

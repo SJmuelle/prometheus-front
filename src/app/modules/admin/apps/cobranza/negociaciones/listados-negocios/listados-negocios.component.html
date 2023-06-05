@@ -1,1 +1,43 @@
-<p>listados-negocios works!</p>
+<!-- Main -->
+<div class="flex-auto bg-white  h-full h-screen overflow-auto">
+
+    <!-- Header -->
+    <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+        <!-- Title -->
+        <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 overflow-hidden">
+                <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+                <div class="text-3xl font-semibold tracking-tight leading-8">Negociaciones
+                </div>
+                <div class="flex items-center">
+                    <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                    <div class="font-medium tracking-tight text-secondary">
+                       {{tipoEstrategia=='AC'?'Congela la deuda':'Refinancimiento'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <button class="ml-4" mat-flat-button [color]="'primary'"  [routerLink]="['../../../']" >
+                <mat-icon [svgIcon]="'mat_outline:arrow_back'"></mat-icon>
+                <span class="ml-2 mr-1">Atras</span>
+            </button>
+        </div>
+
+    </div>
+
+
+    <div class="relative">
+        <div class="m-8">
+            <app-table [dataColumn]="displayedColumns" [dataOptionTable]="optionsTable" [dataRow]="dataRow"
+                (emitSelectRow)="
+                this.selecAlarmTable($event)
+            ">
+            </app-table>
+        </div>
+    </div>
+
+</div>

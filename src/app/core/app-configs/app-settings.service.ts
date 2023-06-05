@@ -474,8 +474,8 @@ export class AppSettingsService {
                 congelaGuardar: EndPoints.uri('/generic/tk/congela-guardar'),
 
                 refinanciacionTipoEstrategia: EndPoints.uri('/generic/qry/refinanciacion-tipo-estrategia'),
-                refinanciacionBuscarCliente: EndPoints.uri('/generic/qry/refinanciacion-buscar-cliente/NEG/MC0063157/Z'),
-                refinanciacionCargarDetalleCartera: EndPoints.uri('/generic/qry/refinanciacion-cargar-detalle-cartera/MC0063157/Z/2023-05-30'),
+                refinanciacionBuscarCliente: EndPoints.uri('/generic/qry/refinanciacion-buscar-cliente'),
+                refinanciacionCargarDetalleCartera: EndPoints.uri('/generic/qry/refinanciacion-cargar-detalle-cartera'),
                 refinanciacionBuscarFechaPago: EndPoints.uri('/generic/qry/refinanciacion-buscar-fecha-pago/MC0063157/Z/2023-05-01'),
                 refinanciacionCalcularCtaInicial: EndPoints.uri('/generic/refinanciacion-calcular-cta-inicial'),
                 refinanciacionCargarDtoCongela: EndPoints.uri('/generic/qry/refinanciacion-cargar-dto-congela/AC'),
