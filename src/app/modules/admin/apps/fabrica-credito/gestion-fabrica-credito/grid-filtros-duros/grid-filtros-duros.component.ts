@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PoliticasService } from "../../../../../../core/services/politicas.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { result } from 'lodash';
 
 @Component({
     selector: 'app-grid-filtros-duros',
@@ -12,6 +13,7 @@ import { ActivatedRoute } from "@angular/router";
 export class GridFiltrosDurosComponent implements OnInit {
     public politicas$: Observable<any>;
     public politicasTipos:any = {};
+    public hasFiltrosDuros: boolean = false;
 
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     constructor(
@@ -39,7 +41,9 @@ export class GridFiltrosDurosComponent implements OnInit {
 
     // 21 corresponde a la politica de filtros duros
     hasIDPolitica(array: any[]){
-        return array.find(item => item.idPolitica === 21)
+        const result = array.find(item => item.idPolitica === 21)
+        result && (this.hasFiltrosDuros = true);
+        return result
     }
 
 

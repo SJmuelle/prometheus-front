@@ -62,10 +62,48 @@
                 </div>
             </form>
             <div class="flex flex-col">
-                <div class="flex flex-col w-full justify-between">
-                    <div class="flex flex-row w-full gap-4 mt-2">
-                        <div class="flex flex-row lg:h-24 xl:h-28 lg:w-80 xl:w-96 p-2 bg-card shadow rounded-2xl overflow-hidden" *ngFor="let item of asignados">
-                            <div class="flex flex-col w-1/5 pl-2 mt-2">
+                <div class="flex flex-col w-full justify-between relative">
+                    <div class="absolute leftScrollButton cursor-pointer hover:text-blue-500" (click)="leftScroll()">
+                        <mat-icon class="hover:text-blue-500 scaleHover" svgIcon="heroicons_outline:chevron-left"></mat-icon>
+                    </div>
+                    <div class="absolute rigthScrollButton right-3 cursor-pointer" (click)="rigthScroll()">
+                        <mat-icon class="hover:text-blue-500 scaleHover" svgIcon="heroicons_outline:chevron-right"></mat-icon>
+                    </div>
+                    <div class="flex flex-row w-97P gap-4 mt-2 overflow-scroll scrollbar-hide  relative m-auto p-3" id="scrollContainer">
+                        <div class="flex flex-row  p-2 bg-card shadow rounded-2xl  w-auto m-auto" *ngFor="let item of asignados">
+                            <div class="flex flex-col p-2 gap-4 min-w-50 w-auto">
+                                <div class="text-lg font-medium truncate text-center">{{item.nombreAgenda}}</div>
+                                <div class="flex w-full  justify-center items-center">
+                                    <img  src="assets/images/agendas/{{item.icono}}" class="text-current icon-size-16">
+                                </div>
+                                <div class="flex flex-row justify-center gap-3">
+                                    <div class="flex flex-row gap-1">
+                                        <div class="bg-green-200 flex flex-row p-1 items-center justify-center rounded-3xl">
+                                            <mat-icon class="ml-1 cursor-pointer icon-size-4" svgIcon="heroicons_outline:user-add" matTooltip="Asignadas"></mat-icon>
+                                        </div>
+                                        <div class="text-xl font-bold tracking-tight flex items-center">
+                                            {{item.asignados}}
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-row gap-1">
+                                        <div class="bg-blue-200 flex flex-row p-1 items-center justify-center rounded-3xl">
+                                            <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6" svgIcon="heroicons_outline:refresh" matTooltip="Reasignadas"></mat-icon>
+                                        </div>
+                                        <div class=" text-xl  font-bold tracking-tight flex items-center">
+                                            {{item.re_asignados}}
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-row gap-1">
+                                        <div class="bg-red-200  flex flex-row p-1 items-center justify-center rounded-3xl">
+                                            <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6" svgIcon="heroicons_outline:dots-circle-horizontal" matTooltip="Sin asignar"></mat-icon>
+                                        </div>
+                                        <div class="text-xl font-bold tracking-tight flex items-center">
+                                            {{item.sin_asignar}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="flex flex-col w-1/5 pl-2 mt-2">
                                 <div class="lg:w-15 xl:w-20 lg:h-15 xl:h-20">
                                     <img src="assets/images/agendas/{{item.icono}}" class="text-current">
                                 </div>
@@ -98,13 +136,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mt-4 flex flex-row w-full justify-between">
+        <div class="flex flex-row w-full my-4 justify-between">
             <div class="flex flex-row lg:w-2/4 xl:w-1/4 gap-2">
                 <button mat-raised-button class="text-white lg:w-32 xl:w-30 permitir bloquear" [disabled]="soliAsignar.length<1" (click)="asignarVarias()">
                     <div class="flex flex-row w-full justify-between gap-2">
@@ -137,8 +175,8 @@
                     </div>
                 </button>
             </div>
-            <div class="flex flex-row lg:w-2/4 xl:w-3/4 justify-end">
-                <input class="border rounded p-2 bg-gray-100 w-52" style="font-size: 10px; margin-right: 1em;"
+            <div class="flex flex-row w-full justify-end">
+                <input class="border rounded p-2 bg-gray-100 w-4/6" style="font-size: 10px; margin-right: 1em;"
                         type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
                         placeholder="Filtrar...">
             </div>

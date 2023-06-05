@@ -199,6 +199,8 @@ export class VerDocumentosComponent implements OnInit {
 
 
     private ocultarTercero(key: string){
+        console.log(key, 'key');
+        
         if(key === 'S'){
             return this.apiData.resumenGeneral.codigoTipoDeudor !== '2' || this.apiData.resumenGeneral.codigoTipoDeudor !== '3'
         }

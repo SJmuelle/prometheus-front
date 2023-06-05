@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarVariosComponent } from './asignar-varios/asignar-varios.component';
 import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.component';
@@ -41,7 +41,7 @@ export class ListSolicitudesComponent implements OnInit {
   agenda:string = '';
   fecha:string = '';
 
-  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
+  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef) {
     this.buscarForm = this.fb.group({
       analista: [''],
       fechaInicial: [''],
@@ -197,6 +197,43 @@ export class ListSolicitudesComponent implements OnInit {
     })
   }
 
+  leftScroll(){
+      const scrollContaier:NodeListOf<Element> = document.querySelectorAll('#scrollContainer');
+      const maxScroll = 0;
+      const currentScroll = scrollContaier.item(0).scrollLeft
+      let newLeftValue = 0;
+
+      if(currentScroll - 300 < maxScroll){
+        newLeftValue = maxScroll
+      }else{
+        newLeftValue = currentScroll - 300
+      }
+
+      scrollContaier.item(0).scrollTo({
+        left: newLeftValue,
+        behavior: 'smooth'
+      })
+  }
+
+  rigthScroll(){
+    const scrollContaier:NodeListOf<Element> = document.querySelectorAll('#scrollContainer');
+    const maxScroll = scrollContaier.item(0).scrollWidth;
+    const currentScroll = scrollContaier.item(0).scrollLeft
+    let newLeftValue = 0;
+
+    if(currentScroll + 300 > maxScroll){
+      newLeftValue = maxScroll
+    }else{
+      newLeftValue =  currentScroll + 300
+    }
+
+    scrollContaier.item(0).scrollTo({
+      left: newLeftValue,
+      behavior: 'smooth'
+    })
+  }
+
+
   buscar(){
     if (this.buscarForm.value.analista!='') {
       this.dataFiltro = {
@@ -213,6 +250,7 @@ export class ListSolicitudesComponent implements OnInit {
         ]
       }
     }
+
 
     if (this.buscarForm.value.fechaInicial!='' && this.buscarForm.value.fechaFinal!='') {
       this.dataFiltro = {
