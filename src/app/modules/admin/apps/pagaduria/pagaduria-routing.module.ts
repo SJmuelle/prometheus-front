@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagaduriaComponent } from './pagaduria/pagaduria.component';
+import { AgendaPagaduriaModule } from './agenda-pagaduria/agenda-pagaduria.module';
 
 const routes: Routes = [
   {
@@ -9,6 +10,10 @@ const routes: Routes = [
       {
         path: 'par',
         component: PagaduriaComponent
+      },
+      {
+        path: 'agenda-pagaduria',
+        loadChildren: () => AgendaPagaduriaModule
       }
     ]
   }
