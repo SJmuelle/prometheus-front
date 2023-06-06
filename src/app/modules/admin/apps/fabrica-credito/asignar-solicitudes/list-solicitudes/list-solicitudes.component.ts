@@ -40,8 +40,9 @@ export class ListSolicitudesComponent implements OnInit {
   unidad:string = '';
   agenda:string = '';
   fecha:string = '';
+  rol:number;
   public page: number = 1;
-  public tamanoTabl = new FormControl("10");
+  public tamanoTabl = new FormControl("20");
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef) {
     this.buscarForm = this.fb.group({
@@ -134,26 +135,15 @@ export class ListSolicitudesComponent implements OnInit {
       "solicitud":item.numero_solicitud,
       "fecha":this.fechAsignacion
     }
-    
-    if (item.asesor_credito=='') { 
-      if (event.checked==false) {
-        const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
-        let idxSoli = this.soliAsignar.indexOf(dataBuscar[0]);
-        this.soliAsignar.splice(idxSoli, 1);
-      }else{
-        this.soliAsignar.push(num);
-      }
-    } else {
-      if (event.checked==false) {
-        const dataBuscar = this.soliReasignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
-        let idxSoli = this.soliReasignar.indexOf(dataBuscar[0]);
-        this.soliReasignar.splice(idxSoli, 1);
-        this.antiguos.splice(idxSoli, 1);
-      }else{
-        this.soliReasignar.push(num);
-        this.antiguos.push(asesorAntiguo);
-      }
+
+    console.log('evento', );
+    if(event.checked){
+      this.soliAsignar.push(num);
+    }else{
+      const index = this.soliAsignar.findIndex(soli => soli.numeroSolicitud === item.numero_solicitud.toString())
+      this.soliAsignar.splice(index, 1)
     }
+    
   }
 
   consultarSolicitudes(){
@@ -170,8 +160,13 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       Swal.close();
       if (res) {
+        this.rol = res.data.rolUsuario.resultado
+        console.log('rol', this.rol);
+        
         this.solicitudes = res.data.listadoSolicitud
         this.asignados = res.data.solicitudAsignada;
+        console.log('asignados', this.asignados);
+        
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -325,15 +320,16 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   cambiarFecha(date) {
+    if(date === 'NO') return 'NO REGISTRA'
     if (date) {
       moment.locale('es');
       if (moment(date).format('MMMM D YYYY')=='enero 1 0099') {
-        return 'No registra'
+        return 'NO REGISTRA'
       }else{
         return moment(date).format('MMMM D YYYY')
       }
     }
-    return 'No registra'
+    return 'NO REGISTRA'
   }
 
   asignarVarias() {
@@ -341,7 +337,8 @@ export class ListSolicitudesComponent implements OnInit {
       "tipoAsesor":"E",
       "asesorNuevo":"",
       "details":this.soliAsignar
-    }
+    } 
+
     const dialogRef = this.dialog.open(AsignarVariosComponent, {
       width: '20%',
       disableClose: true,

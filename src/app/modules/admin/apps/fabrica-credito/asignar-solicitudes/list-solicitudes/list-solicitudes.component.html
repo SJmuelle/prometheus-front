@@ -1,5 +1,5 @@
-<div class=" px-3 h-screen w-100 pt-2 pb-36 bg-white rounded-lg overflow-x-auto">
-    <div class="flex items-center ml-6 mt-6">
+<div class="h-screen w-100 pt-2 pb-36 rounded-lg overflow-x-auto">
+    <div class="flex items-center pl-16 pt-6 pb-5 bg-white">
         <div class="flex-0 w-16 h-16  overflow-hidden">
             <img src="assets/images/agendas/Comercial.png" class="w-full h-full object-cover">
         </div>
@@ -10,23 +10,23 @@
             <div class="flex items-center">
                 <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                 <div class="font-medium tracking-tight text-secondary">
-                    Realiza la gestión del crédito
+                    Aquí puedes asignar los asesores a los créditos
                 </div>
             </div>
         </div>
 
     </div>
     <div class="flex flex-col w-full">
-        <div class="flex flex-col w-full px-5 mt-4">
-           
+        <div class="flex flex-col w-full px-5">
+
             <div class="flex flex-col">
                 <div class="flex flex-col w-full justify-between relative">
                     <div class="absolute leftScrollButton cursor-pointer hover:text-blue-500" (click)="leftScroll()">
-                        <mat-icon class="hover:text-blue-500 scaleHover"
+                        <mat-icon class="hover:text-blue-500 scaleHover bg-white rounded-xl shadow-xl"
                             svgIcon="heroicons_outline:chevron-left"></mat-icon>
                     </div>
                     <div class="absolute rigthScrollButton cursor-pointer" (click)="rigthScroll()">
-                        <mat-icon class="hover:text-blue-500 scaleHover"
+                        <mat-icon class="hover:text-blue-500 scaleHover bg-white rounded-xl shadow-xl"
                             svgIcon="heroicons_outline:chevron-right"></mat-icon>
                     </div>
                     <div class="flex flex-row gap-4 mt-2 overflow-scroll scrollbar-hide  relative  p-3"
@@ -46,7 +46,8 @@
                                                 svgIcon="heroicons_outline:user-add" matTooltip="Asignadas"></mat-icon>
                                         </div>
                                         <div class="text-xl font-bold tracking-tight flex items-center">
-                                            {{item.asignados}}
+                                            {{rol === 2 ? item.comercialAsignados : rol === 3 ? item.microAsignados :
+                                            item.asignados }}
                                         </div>
                                     </div>
                                     <div class="flex flex-row gap-1">
@@ -56,7 +57,8 @@
                                                 svgIcon="heroicons_outline:refresh" matTooltip="Reasignadas"></mat-icon>
                                         </div>
                                         <div class=" text-xl  font-bold tracking-tight flex items-center">
-                                            {{item.re_asignados}}
+                                            {{rol === 2 ? item.comercialReAsignados : rol === 3 ? microReAsignados :
+                                            item.re_asignados}}
                                         </div>
                                     </div>
                                     <div class="flex flex-row gap-1">
@@ -67,7 +69,8 @@
                                                 matTooltip="Sin asignar"></mat-icon>
                                         </div>
                                         <div class="text-xl font-bold tracking-tight flex items-center">
-                                            {{item.sin_asignar}}
+                                            {{rol === 2 ? item.comercialSinAsignar : rol === 3 ? item.microSinAsignar :
+                                            item.sin_asignar}}
                                         </div>
                                     </div>
                                 </div>
@@ -113,12 +116,12 @@
         </div>
         <div class="grid grid-cols-1 w-full px-5 pt-3">
             <div class="flex flex-col flex-auto pt-4 px-6 bg-card rounded-2xl shadow w-full gap-2">
-                <div class="flex flex-row w-full justify-between my-3">
-                    <div class="flex flex-col w-4/6 gap-2"> 
-                        <form [formGroup]="buscarForm">
-                            <div class="flex flex-row gap-4 justify-start">
+                <div class="flex flex-col w-full justify-between">
+                    <div class="flex flex-row w-6/6 gap-2">
+                        <form [formGroup]="buscarForm" class="w-full">
+                            <div class="flex flex-row gap-2 justify-start">
                                 <div class="w-5/12">
-                                    <mat-form-field appearance="fill" class="w-full">
+                                    <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Buscar por: </mat-label>
                                         <mat-select>
                                             <mat-option *ngFor="let item of opcionesBusqueda" [value]="item.id"
@@ -127,19 +130,21 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="w-5/12" *ngIf="busqueda=='AN'">
-                                    <mat-form-field appearance="fill" class="w-full">
+                                    <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Analista</mat-label>
                                         <mat-select formControlName="analista">
-                                            <mat-option *ngFor="let item of asesores" [value]="item.idusuario" (click)="buscar()">{{
+                                            <mat-option *ngFor="let item of asesores" [value]="item.idusuario"
+                                                (click)="buscar()">{{
                                                 item.idusuario }}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div class="w-5/12" *ngIf="busqueda=='PE'">
-                                    <mat-form-field appearance="fill" class="w-full">
+                                    <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Periodo</mat-label>
                                         <mat-date-range-input [rangePicker]="picker">
-                                            <input matStartDate formControlName="fechaInicial" placeholder="Fecha inicial">
+                                            <input matStartDate formControlName="fechaInicial"
+                                                placeholder="Fecha inicial">
                                             <input matEndDate [max]="maxFecha" formControlName="fechaFinal"
                                                 placeholder="Fecha final">
                                         </mat-date-range-input>
@@ -154,7 +159,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="w-5/12" *ngIf="busqueda=='UN'">
-                                    <mat-form-field appearance="fill" class="w-full ">
+                                    <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Unidad de negocio</mat-label>
                                         <mat-select formControlName="unidad">
                                             <mat-option *ngFor="let item of unidades" [value]="item.id"
@@ -163,7 +168,7 @@
                                     </mat-form-field>
                                 </div>
                                 <div class="w-5/12" *ngIf="busqueda=='AG'">
-                                    <mat-form-field appearance="fill" class="w-full ">
+                                    <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Agenda</mat-label>
                                         <mat-select formControlName="agenda">
                                             <mat-option *ngFor="let item of asignados" [value]="item.agenda"
@@ -173,17 +178,18 @@
                                 </div>
                                 <div class="flex
                                  justify-center items-center" *ngIf="busqueda!=''">
-                                    <button mat-fab class="text-white bg-blue-400" matTooltip="Limpiar filtro"
-                                        (click)="limpiar()">
-                                        <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6 text-gray-600"
-                                                            svgIcon="heroicons_outline:refresh" ></mat-icon>
-                                    </button>
+                                    <div mat-fab class="bg-gray-100 flex justify-center  p-2 rounded-xl text-white"
+                                        matTooltip="Limpiar filtro" (click)="limpiar()">
+                                        <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6 "
+                                            style="color: rgba(42, 44, 48, 0.5)"
+                                            svgIcon="heroicons_outline:refresh"></mat-icon>
+                                    </div>
                                 </div>
                             </div>
                         </form>
-                        <div class="flex flex-row w-full gap-2">
+                        <div class="flex flex-row w-full gap-2 items-center justify-center">
                             <button mat-raised-button class="text-white lg:w-32 xl:w-30 permitir bloquear"
-                                [disabled]="soliAsignar.length<1" (click)="asignarVarias()">
+                                [disabled]="soliAsignar.length<1 || rol === 0" (click)="asignarVarias()">
                                 <div class="flex flex-row w-full justify-between gap-2">
                                     <div>
                                         <mat-icon svgIcon="heroicons_outline:user-add"></mat-icon>
@@ -194,18 +200,7 @@
                                 </div>
                             </button>
                             <button mat-raised-button class="text-white lg:w-32 xl:w-32 permitir bloquear"
-                                [disabled]="soliReasignar.length<1" (click)="reasignarVarias()">
-                                <div class="flex flex-row w-full justify-between gap-2">
-                                    <div>
-                                        <mat-icon svgIcon="heroicons_outline:refresh"></mat-icon>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span>Reasignar</span>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-raised-button class="text-white lg:w-32 xl:w-32 permitir bloquear"
-                                [disabled]="solicitudes.length<1" (click)="setAll(false)">
+                                [disabled]="soliAsignar.length<1" (click)="setAll(false)">
                                 <div class="flex flex-row w-full justify-between gap-2">
                                     <div>
                                         <mat-icon svgIcon="heroicons_outline:backspace"></mat-icon>
@@ -217,24 +212,27 @@
                             </button>
                         </div>
                     </div>
+                    <div class="flex flex-row w-6/6 justify-end">
 
-                    <div class="flex flex-row w-2/6  justify-end items-end">
-                        <input class="border rounded p-2 w-full bg-gray-100 h-10" style="font-size: 10px; margin-right: 1em;"
-                            type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
-                            placeholder="Filtrar...">
 
-                            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400 h-10" [formControl]="tamanoTabl"
-                            (change)="page=1">
-                            <option value="10">10</option>
-                            <option value="20"> 20</option>
-                            <option value="30"> 30</option>
-                        </select>
+                        <div class="flex flex-row w-3/6  mt-2 justify-end items-end">
+                            <input class="border rounded p-2 w-full bg-gray-100 h-8"
+                                style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
+                                name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar...">
+
+                            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400 h-8"
+                                [formControl]="tamanoTabl" (change)="page=1">
+                                <option value="20">20</option>
+                                <option value="30"> 30</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div *ngIf="solicitudes.length>0" class="w-full mt-2 min-h-100">
                     <table class="p-0">
                         <tbody class="bg-white">
-                            <ng-container *ngFor="let item of solicitudes | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                            <ng-container
+                                *ngFor="let item of solicitudes | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
                                 <tr class="text-gray-700 border-t border-b">
                                     <td rowspan="2" class="py-3 text-sm my-10">
                                         <div class="ml-2.5">
@@ -281,40 +279,105 @@
                                     <td class="px-2 pb-0">
                                         <div class="flex flex-column">
                                             <small class="text-accent-600 text-xs">Analista actual:</small>
-                                            <span class="text-md text-black font-medium">
-                                                <mat-icon class="icon-size-3"
-                                                    svgIcon="heroicons_outline:user"></mat-icon>
-                                                {{item.asesor_credito}}
+                                            <span *ngIf="rol === 2" class="text-xs text-black font-medium"
+                                                matTooltip="Asesor Comercial" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{item.asesorComercial ? item.asesorComercial : 'APPWEB'}}
+                                            </span>
+                                            <span *ngIf="rol === 4" class="text-xs text-black font-medium"
+                                                matTooltip="Asesor fábrica" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3  text-blue-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{item.asesor_credito ? item.asesor_credito : 'NO REGISTRA' }}
+                                            </span>
+                                            <span *ngIf="item.id_unidad_negocio === 1 && rol === 3"
+                                                class="text-xs text-black font-medium" matTooltip="Asesor micro"
+                                                matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3  text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{item.asesorMicro ? item.asesorMicro : 'NO REGISTRA'}}
                                             </span>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-0">
                                         <div class="flex flex-column">
                                             <small class="text-accent-600 text-xs">Fecha de asignación:</small>
-                                            <span class="text-md text-black font-medium">
-                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                            <span *ngIf="rol === 2"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Comercial" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.fechaAsignacionComercial) }}
+                                            </span>
+                                            <span *ngIf="rol === 4"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Fábrica" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:calendar">
                                                 </mat-icon>
                                                 {{ cambiarFecha(item.fecha_asigacion) }}
+                                            </span>
+                                            <span *ngIf="item.id_unidad_negocio === 1 && rol === 3"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Micro" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.fechaAsignacionMicro) }}
                                             </span>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-0 ">
                                         <div class="flex flex-column">
                                             <small class="text-accent-600 text-xs">Analista anterior:</small>
-                                            <span class="text-md text-black font-medium">
-                                                <mat-icon class="icon-size-3"
-                                                    svgIcon="heroicons_outline:user"></mat-icon>
-                                                {{item.asesor_antiguo}}
+                                            <span *ngIf="rol === 2"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Comercial" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{item.asesorComercialAntiguo ? item.asesorComercialAntiguo : 'NO
+                                                REGISTRA'}}
+                                            </span>
+                                            <span *ngIf="rol === 4"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Fábrica" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{item.asesor_antiguo ? item.asesor_antiguo : 'NO REGISTRA'}}
+                                            </span>
+                                            <span *ngIf="item.id_unidad_negocio === 1 && rol === 3"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Micro" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{item.asesorMicroAntiguo ? item.asesorMicroAntiguo : 'NO REGISTRA'}}
                                             </span>
                                         </div>
                                     </td>
                                     <td class="px-2 pb-0 ">
                                         <div class="flex flex-column">
                                             <small class="text-accent-600 text-xs">Fecha de últ reasignación:</small>
-                                            <span class="text-md text-black font-medium">
-                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                            <span *ngIf="rol === 2"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Comercial" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.asesorReAsignadoComercial) }}
+                                            </span>
+                                            <span *ngIf="rol === 4"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Fábrica" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:calendar">
                                                 </mat-icon>
                                                 {{ cambiarFecha(item.fecha_re_asigado) }}
+                                            </span>
+                                            <span *ngIf="item.id_unidad_negocio === 1 && rol === 3"
+                                                class="text-xs text-black font-medium flex items-center gap-1"
+                                                matTooltip="Micro" matTooltipPosition="right">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.asesorReAsignadoMicro) }}
                                             </span>
                                         </div>
                                     </td>
@@ -349,12 +412,23 @@
                                             </span>
                                         </div>
                                     </td>
+                                    <td *ngIf="item.id_unidad_negocio === 1 && rol === 3" class="px-2">
+                                        <div class="flex flex-column">
+                                            <small class="text-accent-600 text-xs">Agencia</small>
+                                            <span class="text-md text-black font-medium">
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:location-marker"></mat-icon>
+                                                {{item.nombreAgencia }}
+                                            </span>
+                                        </div>
+                                    </td>
                                 </tr>
                             </ng-container>
                         </tbody>
                     </table>
                     <div class="flex items-center mt-auto justify-center py-4">
-                        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+                        <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                            nextLabel="Siguiente">
                         </pagination-controls>
                     </div>
                 </div>
