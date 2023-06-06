@@ -4,7 +4,7 @@ import { AsignarVariosComponent } from './asignar-varios/asignar-varios.componen
 import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.component';
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -40,6 +40,8 @@ export class ListSolicitudesComponent implements OnInit {
   unidad:string = '';
   agenda:string = '';
   fecha:string = '';
+  public page: number = 1;
+  public tamanoTabl = new FormControl("10");
 
   constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef) {
     this.buscarForm = this.fb.group({

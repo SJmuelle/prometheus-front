@@ -67,7 +67,7 @@
 }
 
 .leftScrollButton{
-    left: -5px;
+    left: -25px;
     height: 20px;
     bottom: calc(50% - 10px);
     z-index: 100;
@@ -78,6 +78,7 @@
 // }
 
 .rigthScrollButton{
+    right: -20px;
     height: 20px;
     bottom: calc(50% - 10px);
     z-index: 100;
