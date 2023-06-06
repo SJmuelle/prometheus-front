@@ -191,19 +191,21 @@ export class GridFormularioGestionPagaduriaComponent implements OnInit {
     }
     this._GestionPagaduriaService.postCrear(data).subscribe(rep => {
       console.log(rep)
-      if(rep.status === 200 && rep.data.resultado === 'OK'){
-        Swal.fire({
-          icon: 'success',
-          title: 'Exito',
-          text: 'Pagaduria creada con exito',
-        });
-      }else if(rep.status === 500 && rep.data.resultado === 'OK'){
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error al crear la pagaduria',
-        });
-      }
+      if (rep.data.respuesta === 'OK') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Exito',
+            text: 'Configuracion guardada con exito',
+          }).then(() => {
+              location.reload();
+          });
+        } else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: rep.data.respuesta
+          });
+        }
     })
   }
 }

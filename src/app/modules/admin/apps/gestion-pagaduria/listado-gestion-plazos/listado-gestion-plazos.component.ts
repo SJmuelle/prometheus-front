@@ -114,8 +114,8 @@ export class ListadoGestionPlazosComponent implements OnInit {
         antiguedadMaxima: this.form.getRawValue().antiguedadMaxima,
         plazoMinimo: this.form.getRawValue().plazoMinimo,
         plazoMaximo: this.form.getRawValue().plazoMaximo,
-        idPlazo: this.data.idPlazo
-
+        idPlazo: this.data.idPlazo,
+        estado:""
       }
 
       console.log(this.data);
@@ -124,7 +124,7 @@ export class ListadoGestionPlazosComponent implements OnInit {
 
         //this.matDialogRef.close()
 
-        if (rep.data.respuesta === 'OK') {
+        if (rep.data[0].respuesta === 'OK') {
           Swal.fire({
             icon: 'success',
             title: 'Exito',
@@ -132,11 +132,11 @@ export class ListadoGestionPlazosComponent implements OnInit {
           }).then(() => {
             this.matDialogRef.close();
           });
-        } else if (rep.data.respuesta) {
+        } else{
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: rep.data.respuesta
+            text: rep.data[0].respuesta
           });
         }
       });
