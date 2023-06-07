@@ -10,7 +10,7 @@
                 <img src="assets/images/cajaVirtual/Asignacion.png" class="w-full h-full object-cover">
             </div>
             <div class="flex-1 mx-3">
-                <div class="text-3xl font-semibold tracking-tight leading-8">Detalle de la negociaciones
+                <div class="text-3xl font-semibold tracking-tight leading-8">Formulario de negociación
                 </div>
                 <div class="flex items-center">
                     <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
@@ -29,7 +29,7 @@
 
     </div>
     <div class="flex flex-auto justify-between items-center">
-        <form [formGroup]="form">
+        <!-- <form [formGroup]="form">
             <div class="w-full flex items-baseline">
                 <mat-form-field class="w-90 mx-8">
                     <mat-label>Fecha de negociacion</mat-label>
@@ -46,18 +46,18 @@
         <button *ngIf="dataRow.length>0" class="mr-9" mat-flat-button [color]="'primary'" (click)="irFormRefinacionamiento()">
             <mat-icon [svgIcon]="'heroicons_outline:calculator'"></mat-icon>
             <span class="ml-2 mr-1">Refinancimiento</span>
-        </button>
+        </button> -->
     </div>
 
 
     <div class="relative h-cal">
-        <div class="m-8">
+        <!-- <div class="m-8">
             <app-table [dataColumn]="displayedColumns" [dataOptionTable]="optionsTable" [dataRow]="dataRow"
                 (emitSelectRow)="
                 this.selecAlarmTable($event)
             ">
             </app-table>
-        </div>
+        </div> -->
     </div>
 
 </div>

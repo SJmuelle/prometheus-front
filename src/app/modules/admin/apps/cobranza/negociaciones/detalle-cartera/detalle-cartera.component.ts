@@ -123,14 +123,9 @@ export class DetalleCarteraComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataRow=[]
-    // this.getInformacionNegocios();
   }
   selecAlarmTable(data) {
     console.log(data)
-    // const info=JSON.stringify(data)
-    // console.log(info)
-
-    // localStorage.setItem("detalle",info)
     this.router.navigate([`/cobranza/negociaciones/detalle/${this.tipoEstrategia}/${data.negocio}`]);
   }
 
@@ -140,4 +135,20 @@ export class DetalleCarteraComponent implements OnInit {
     });
   }
 
+  formatFecha(fecha: Date): string {
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1; // Los meses en JavaScript son zero-based, por lo que se suma 1
+    const anio = fecha.getFullYear();
+    
+    // Agrega un cero inicial si el día o el mes tienen un solo dígito
+    const diaFormateado = dia < 10 ? '0' + dia : dia;
+    const mesFormateado = mes < 10 ? '0' + mes : mes;
+    
+    return `${diaFormateado}-${mesFormateado}-${anio}`;
+  }
+
+
+  irFormRefinacionamiento(){
+    this.router.navigate([`/cobranza/negociaciones/${this.tipoEstrategia}/${this.tipoID}/${this.id}/${this.negocio}/${this.formatFecha(this.form.value.fecha._d)}`]);
+  }
 }

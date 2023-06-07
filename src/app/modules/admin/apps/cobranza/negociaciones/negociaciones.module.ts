@@ -26,6 +26,7 @@ import { ListadosNegociosComponent } from './listados-negocios/listados-negocios
 import { DetalleCarteraComponent } from './detalle-cartera/detalle-cartera.component';
 import { RefinanciacionComponent } from './refinanciacion/refinanciacion.component';
 import { CongelaTuDeudaComponent } from './congela-tu-deuda/congela-tu-deuda.component';
+import { FormRefinancimientoComponent } from './form-refinancimiento/form-refinancimiento.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { CongelaTuDeudaComponent } from './congela-tu-deuda/congela-tu-deuda.com
     ListadosNegociosComponent,
     DetalleCarteraComponent,
     RefinanciacionComponent,
-    CongelaTuDeudaComponent
+    CongelaTuDeudaComponent,
+    FormRefinancimientoComponent
   ],
   imports: [
     CommonModule,

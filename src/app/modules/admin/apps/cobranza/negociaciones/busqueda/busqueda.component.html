@@ -39,7 +39,7 @@
                     <div class="mt-1 text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight text-center">
                         Realizar las estrategias de normalización 
                     </div>
-                    <div class="grid grid-cols-3 w-full  sm:max-w-200 mt-10 sm:mt-20">
+                    <div class="grid grid-cols-3 w-full sm:max-w-75 mt-10 sm:w-240">
 
 
                         <mat-form-field>
@@ -58,7 +58,7 @@
                         </mat-form-field>
 
                         <mat-form-field>
-                            <input class="ml-3" matInput [placeholder]="'Id número de negocio'" [formControlName]="'id'">
+                            <input class="ml-3" matInput [placeholder]="form.value.tipoID=='NEG'?'Número del negocio':'Identificación del cliente'" [formControlName]="'id'">
                         </mat-form-field>
                     </div>
                  

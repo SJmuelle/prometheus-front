@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { ListadosNegociosComponent } from './listados-negocios/listados-negocios.component';
 import { DetalleCarteraComponent } from './detalle-cartera/detalle-cartera.component';
+import { FormRefinancimientoComponent } from './form-refinancimiento/form-refinancimiento.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: ':tipoEstrategia/:tipoID/:id/:negocio',
     component: DetalleCarteraComponent,
+  },
+  {
+    path: ':tipoEstrategia/:tipoID/:id/:negocio/:fecha',
+    component: FormRefinancimientoComponent,
   },
 ];
 
