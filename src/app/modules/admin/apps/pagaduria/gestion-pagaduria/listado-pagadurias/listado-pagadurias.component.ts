@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { FormDialogDevolverFabricaComponent } from '../../../fabrica-credito/age
 import { FormDialogReprogramarComponent } from '../../../fabrica-credito/agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.service';
 import { MatDrawer } from '@angular/material/sidenav';
+import { FuseMediaWatcherService } from '@fuse/services/tailwind';
 
 @Component({
   selector: 'app-listado-pagadurias',
@@ -20,7 +21,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 })
 export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
   @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
-  drawerMode: 'side' | 'over'='side';
+  drawerMode: 'side' | 'over';
   open: boolean = true;
 
   public unsubscribe$: Subject<any> = new Subject();
@@ -31,23 +32,64 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   constructor(private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
     private agendaReferenciaService: AgendaReferenciacionService,
-    private _gestionPagaduriaService:GestionPagaduriaService,
+    private _gestionPagaduriaService: GestionPagaduriaService,
+    private _fuseMediaWatcherService: FuseMediaWatcherService,
+    
+    private _changeDetectorRef: ChangeDetectorRef,
     private router: Router) { }
 
   ngOnInit(): void {
     this.cambiarEstado(true);
     this.getAgendaComercial();
+
+    // Subscribe to MatDrawer opened change
+    this.matDrawer.openedChange.subscribe((opened) => {
+      if (!opened) {
+        // Remove the selected contact when drawer closed
+        // this.selectedContact = null;
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+      }
+    });
+
+    // Subscribe to media changes
+    this._fuseMediaWatcherService.onMediaChange$
+      .pipe(takeUntil(this._unsubscribeAll))
+      .subscribe(({ matchingAliases }) => {
+
+        // Set the drawerMode if the given breakpoint is active
+        if (matchingAliases.includes('lg')) {
+          this.drawerMode = 'side';
+        }
+        else {
+          this.drawerMode = 'over';
+        }
+
+        // Mark for check
+        this._changeDetectorRef.markForCheck();
+      });
   }
 
 
-  onBackdropClicked(){
-
+  /**
+     * On backdrop clicked
+     */
+  onBackdropClicked(): void {
+    this.open = false;
+    this._changeDetectorRef.markForCheck();
   }
 
+  mostrarDetalle() {
+    this.open = true;
+    this._changeDetectorRef.markForCheck();
+
+  }
   /**
      * @description: Obtiene el listado de agenda de completacion
     */
@@ -116,5 +158,7 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
+    this._unsubscribeAll.next(null);
+    this._unsubscribeAll.complete();
   }
 }

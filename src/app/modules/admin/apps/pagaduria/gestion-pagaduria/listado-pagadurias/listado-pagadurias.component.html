@@ -4,7 +4,7 @@
         (backdropClick)="onBackdropClicked()">
 
         <!-- Drawer -->
-        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="open" [position]="'end'"
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="false" [position]="'end'"
             [disableClose]="true" #matDrawer>
             <router-outlet></router-outlet>
         </mat-drawer>

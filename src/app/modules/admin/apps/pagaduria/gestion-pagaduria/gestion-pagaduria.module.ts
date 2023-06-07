@@ -33,11 +33,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AgendaReferenciacionModule } from '../../fabrica-credito/agenda-referenciacion/agenda-referenciacion.module';
 import { GestionFabricaCreditoModule } from '../../fabrica-credito/gestion-fabrica-credito/gestion-fabrica-credito.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { DetallePagaduriaComponent } from './detalle-pagaduria/detalle-pagaduria.component';
 
 
 @NgModule({
   declarations: [
-    ListadoPagaduriasComponent
+    ListadoPagaduriasComponent,
+    DetallePagaduriaComponent
   ],
   imports: [
     CommonModule,
