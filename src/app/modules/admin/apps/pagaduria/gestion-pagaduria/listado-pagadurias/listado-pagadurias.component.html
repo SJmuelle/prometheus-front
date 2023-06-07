@@ -50,28 +50,41 @@
                                 <th></th>
                                 <th>Codigo</th>
                                 <th>Nombre</th>
-                                <th>Estado</th>
+                                <th class="text-center">Estado</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                             <ng-container
-                                *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
-
+                                *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }; let i = index; ">
+                                <ng-container
+                                    *ngIf="i === 0 || item.nombre.toUpperCase().charAt(0) !== datos[i - 1].nombre.toUpperCase().charAt(0)">
+                                    <tr
+                                        class="z-99 top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">
+                                        <td colspan="4"> {{item.nombre.toUpperCase().charAt(0)}}</td>
+                                    </tr>
+                                </ng-container>
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td>
-                                        {{item.codigo}}
+                                    <td class="flex justify-center p-2">
+                                        <div
+                                            class="flex items-center justify-center w-10 rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                                            {{item.nombre.charAt(0)+item.nombre.charAt(1)}}
+                                        </div>
                                     </td>
                                     <td>
                                         {{item.codigo}}
                                     </td>
                                     <td>
-                                        {{item.nombre}}
+                                        {{item.nombre.toUpperCase()}}
                                     </td>
-                                    <td>
-                                        {{item.descripcionEstado}}
+                                    <td class="flex justify-center p-2">
+                                        
+                                        <div [ngClass]="item.estado=='A'?'bg-pink-300':'bg-green-300'">
+                                            <span
+                                                class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                {{ item.descripcionEstado}} </span>
+                                        </div>
                                     </td>
                                 </tr>
-
                             </ng-container>
                         </tbody>
                     </table>
