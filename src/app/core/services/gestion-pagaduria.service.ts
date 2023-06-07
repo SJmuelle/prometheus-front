@@ -14,8 +14,9 @@ export class GestionPagaduriaService {
     
   ) { }
 
-  public getPagaduria(usuario: string): Observable<any>{
-    return this._http.get(`${this._appSettings.gestionPagaduria.url.pagadurias}/${usuario}`);
+  public getPagaduria(): Observable<any>{
+    const  usuario=JSON.parse(localStorage.getItem("usuario"));
+    return this._http.get(`${this._appSettings.gestionPagaduria.url.pagadurias}/${usuario.user}`);
   } 
 
   public getPlazos(usuario:string): Observable<any>{

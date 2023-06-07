@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagaduriaComponent } from './pagaduria/pagaduria.component';
 import { AgendaPagaduriaModule } from './agenda-pagaduria/agenda-pagaduria.module';
+import { GestionPagaduriaModule } from './gestion-pagaduria/gestion-pagaduria.module';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
       {
         path: 'agenda-pagaduria',
         loadChildren: () => AgendaPagaduriaModule
+      },
+      {
+        path: 'parametria',
+        loadChildren: () => GestionPagaduriaModule
       }
     ]
   }

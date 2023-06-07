@@ -145,18 +145,18 @@
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                     </mat-icon>
-                                                   <strong>Plazo:</strong> 
+                                                   <strong>Plazo:</strong>   {{ item.plazo}}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:currency-dollar">
                                                     </mat-icon>
-                                                    <strong> Valor cuota:</strong>
+                                                    <strong> Valor cuota:</strong>  {{ item.valorCuota}}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon 
                                                         class="icon-size-3"  svgIcon="heroicons_outline:arrow-long-up">
                                                     </mat-icon>
-                                                    <strong>Destino</strong>
+                                                    <strong>Destino</strong>  {{ item.agencia}}
                                                     
                                                 </span>
                                             </div>
@@ -223,9 +223,9 @@
                                                 [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                                                 <small class="text-xs">Reactivaciones</small>
                                                 <span class="text-current">
-                                                    {{ item.cantidadDevolucion}}
+                                                    {{ item.cantidadReactivado}}
                                                 </span>
-                                                <small class="text-xs">{{ cambiarFecha(item.fechaDevolucion)}}</small>
+                                                <small class="text-xs">{{ cambiarFecha(item.fechaReactivacion)}}</small>
                                             </div>
                                         </div>
                                     </td>

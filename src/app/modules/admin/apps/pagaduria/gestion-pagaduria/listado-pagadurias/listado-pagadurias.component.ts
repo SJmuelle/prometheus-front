@@ -4,20 +4,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AgendaComercialService } from 'app/core/services/agenda-comercial.service';
 import { AgendaReferenciacionService } from 'app/core/services/agenda-referenciacion.service';
-import { PermisosService } from 'app/core/services/permisos.service';
 import moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogDevolverFabricaComponent } from '../../../fabrica-credito/agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { FormDialogReprogramarComponent } from '../../../fabrica-credito/agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
+import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.service';
 
 @Component({
-  selector: 'app-listado-creditos',
-  templateUrl: './listado-creditos.component.html',
-  styleUrls: ['./listado-creditos.component.scss']
+  selector: 'app-listado-pagadurias',
+  templateUrl: './listado-pagadurias.component.html',
+  styleUrls: ['./listado-pagadurias.component.scss']
 })
-export class ListadoCreditosComponent implements   OnInit, OnDestroy {
+export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
@@ -30,12 +30,12 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
   constructor(private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
     private agendaReferenciaService: AgendaReferenciacionService,
+    private _gestionPagaduriaService:GestionPagaduriaService,
     private router: Router) { }
 
   ngOnInit(): void {
     this.cambiarEstado(true);
     this.getAgendaComercial();
-    this.getTotalesAgendaComercial();
   }
 
 
@@ -45,7 +45,7 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
-    this.agendaComercialService.getAgendaPagaduria().pipe(
+    this._gestionPagaduriaService.getPagaduria().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
 
@@ -58,26 +58,7 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
     });
   }
 
-  /**
-   * @description: Guarda la reprogramacion
-   */
-  public onReprogramar(data): void {
-    const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
-      width: '30%',
-      data: {
-        numeroSolicitud: data.numeroSolicitud
-      },
-      disableClose: true
-    });
 
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
-        this.getAgendaComercial();
-        this.agendaComercialService.refrescarListado$.next({ estado: true });
-        //  this.onCerrar();
-      }
-    });
-  }
 
   /**
    * @description: abre la agenda
@@ -88,66 +69,9 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
     this.router.navigate(['/pagaduria/agenda-pagaduria/detalleCreditoPagaduria', numeroSolicitud, identificacion]);
   }
 
-  /**
-   * @description: Guarda el comentario para devolvee
-   */
-  public onComentario(data): void {
-    //  
-    const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
-      width: '30%',
-      data: {
-        numeroSolicitud: data.numeroSolicitud,
-        tipo: 'C'
-      },
-      disableClose: true
-    });
 
-    dialogRef.afterClosed().subscribe((res) => {
 
-      this.getAgendaComercial();
-      this.agendaComercialService.refrescarListado$.next({ estado: true });
 
-    });
-  }
-
-  /**
- * @description: Guarda el comentario para devolvee
- */
-  public onComentarioRechazar(data): void {
-    //  
-    const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
-      width: '30%',
-      data: {
-        numeroSolicitud: data.numeroSolicitud,
-        tipo: 'R'
-      },
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-
-      this.getAgendaComercial();
-      this.agendaComercialService.refrescarListado$.next({ estado: true });
-
-    });
-  }
-  /**
-   * @description: Obtiene el listado de agenda de comercial
-   */
-  private getTotalesAgendaComercial(): void {
-    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getTotalesAgendaComiteComercial().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe((res) => {
-      if (res.status === 200) {
-        this.totales = res.data;
-        Swal.close();
-      } else {
-        Swal.close();
-        this.totales = []
-      }
-    });
-  }
   /**
    * 
    * @param date 
@@ -186,5 +110,4 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
   }
-
 }

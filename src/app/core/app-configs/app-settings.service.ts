@@ -388,6 +388,16 @@ export class AppSettingsService {
     };
 
     /**
+ * @description: End-point agenda pagaduria
+ * https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/solicitudes-pagaduria/
+ */
+    public agendaPagadura = {
+        url: {
+            base: EndPoints.uri('/generic/qry/solicitudes-pagaduria')
+        }
+    };
+
+    /**
     * @description: End-point agenda decision
     */
     public agendaDecision = {

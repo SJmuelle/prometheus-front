@@ -23,6 +23,14 @@ export class AgendaComercialService {
   }
 
     /**
+   * @description: Listado de agendas comercial
+   */
+    public getAgendaPagaduria(): Observable<any> {
+      const  usuario=JSON.parse(localStorage.getItem("usuario"));
+      return this._http.get(`${this._appSettings.agendaPagadura.url.base}/${usuario.user}`);
+    }
+ 
+    /**
    * @description: Listado de agendas visitas
    */
     public getAgendaVisitas(): Observable<any> {
