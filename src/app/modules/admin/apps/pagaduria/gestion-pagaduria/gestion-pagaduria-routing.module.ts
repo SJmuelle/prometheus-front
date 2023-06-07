@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListadoPagaduriasComponent } from './listado-pagadurias/listado-pagadurias.component';
 import { DetallePagaduriaComponent } from './detalle-pagaduria/detalle-pagaduria.component';
+import { CanDeactivateGestionPagaduria } from './gestion-pagaduria-guards';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
       {
         path: ':pagaduria',
         component: DetallePagaduriaComponent,
+        canDeactivate: [CanDeactivateGestionPagaduria]
       },
     ],
   }

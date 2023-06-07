@@ -172,12 +172,12 @@
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                     </mat-icon>
 
-                                                    {{ cambiarFecha(item.fechaEmision) }}
+                                                    {{ cambiarFecha(item.fechaSolicitud) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
                                                     </mat-icon>
-                                                    {{ cambiarHora(item.fechaEmision) }}
+                                                    {{ cambiarHora(item.fechaSolicitud) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
@@ -199,12 +199,12 @@
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                     </mat-icon>
-                                                    {{ cambiarFecha(item.fechaIngresoAgendaActual) }}
+                                                    {{ cambiarFecha(item.fechaIngresoAgenda) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
                                                     </mat-icon>
-                                                    {{ cambiarHora(item.fechaIngresoAgendaActual) }}
+                                                    {{ cambiarHora(item.fechaIngresoAgenda) }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
