@@ -1,7 +1,7 @@
 <div class="h-screen w-100 pt-2 pb-36 rounded-lg overflow-x-auto">
     <div class="flex items-center pl-16 pt-6 pb-5 bg-white">
         <div class="flex-0 w-16 h-16  overflow-hidden">
-            <img src="assets/images/agendas/Comercial.png" class="w-full h-full object-cover">
+            <img src="assets/images/agendas/Asignacion.png" class="w-full h-full object-cover">
         </div>
         <div class="flex-1 mx-3">
             <div class="text-3xl font-semibold tracking-tight leading-8">
@@ -33,47 +33,51 @@
                         id="scrollContainer">
                         <div class="flex flex-row  p-2 bg-card shadow rounded-2xl  w-auto m-auto"
                             *ngFor="let item of asignados">
-                            <div class="flex flex-col p-2 gap-4 min-w-50 w-auto">
-                                <div class="text-lg font-medium truncate text-center">{{item.nombreAgenda}}</div>
+                            <div class="flex flex-col p-2 gap-2 min-w-50 w-auto">
+
                                 <div class="flex w-full  justify-center items-center">
                                     <img src="assets/images/agendas/{{item.icono}}" class="text-current icon-size-16">
                                 </div>
-                                <div class="flex flex-row justify-center gap-3">
-                                    <div class="flex flex-row gap-1">
-                                        <div
-                                            class="bg-green-200 flex flex-row p-1 items-center justify-center rounded-3xl">
-                                            <mat-icon class="ml-1 cursor-pointer icon-size-4"
-                                                svgIcon="heroicons_outline:user-add" matTooltip="Asignadas"></mat-icon>
+                                <div class="flex flex-col gap-1">
+                                    <div class="text-lg font-medium truncate text-center">{{item.nombreAgenda}}</div>
+                                    <div class="flex flex-row justify-center gap-3">
+                                        <div class="flex flex-row gap-1">
+                                            <div
+                                                class="bg-green-200 flex flex-row p-1 items-center justify-center rounded-3xl">
+                                                <mat-icon class="ml-1 cursor-pointer icon-size-4 " style="color: #2d3e50"
+                                                    svgIcon="heroicons_outline:user-add" matTooltip="Asignadas"></mat-icon>
+                                            </div>
+                                            <div class="text-xl font-bold tracking-tight flex items-center">
+                                                {{rol === 2 ? item.comercialAsignados : rol === 3 ? item.microAsignados :
+                                                item.asignados }}
+                                            </div>
                                         </div>
-                                        <div class="text-xl font-bold tracking-tight flex items-center">
-                                            {{rol === 2 ? item.comercialAsignados : rol === 3 ? item.microAsignados :
-                                            item.asignados }}
+                                        <div class="flex flex-row gap-1">
+                                            <div
+                                                class="bg-blue-200 flex flex-row p-1 items-center justify-center rounded-3xl">
+                                                <mat-icon style="color: #2d3e50" class="cursor-pointer lg:icon-size-5 xl:icon-size-6"
+                                                    svgIcon="heroicons_outline:refresh" matTooltip="Reasignadas"></mat-icon>
+                                            </div>
+                                            <div class=" text-xl  font-bold tracking-tight flex items-center">
+                                                {{rol === 2 ? item.comercialReAsignados : rol === 3 ? microReAsignados :
+                                                item.re_asignados}}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1">
-                                        <div
-                                            class="bg-blue-200 flex flex-row p-1 items-center justify-center rounded-3xl">
-                                            <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6"
-                                                svgIcon="heroicons_outline:refresh" matTooltip="Reasignadas"></mat-icon>
-                                        </div>
-                                        <div class=" text-xl  font-bold tracking-tight flex items-center">
-                                            {{rol === 2 ? item.comercialReAsignados : rol === 3 ? microReAsignados :
-                                            item.re_asignados}}
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-row gap-1">
-                                        <div
-                                            class="bg-red-200  flex flex-row p-1 items-center justify-center rounded-3xl">
-                                            <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6"
-                                                svgIcon="heroicons_outline:dots-circle-horizontal"
-                                                matTooltip="Sin asignar"></mat-icon>
-                                        </div>
-                                        <div class="text-xl font-bold tracking-tight flex items-center">
-                                            {{rol === 2 ? item.comercialSinAsignar : rol === 3 ? item.microSinAsignar :
-                                            item.sin_asignar}}
+                                        <div class="flex flex-row gap-1">
+                                            <div
+                                                class="bg-red-200  flex flex-row p-1 items-center justify-center rounded-3xl">
+                                                <mat-icon style="color: #2d3e50" class="cursor-pointer lg:icon-size-5 xl:icon-size-6"
+                                                    svgIcon="heroicons_outline:dots-circle-horizontal"
+                                                    matTooltip="Sin asignar"></mat-icon>
+                                            </div>
+                                            <div class="text-xl font-bold tracking-tight flex items-center">
+                                                {{rol === 2 ? item.comercialSinAsignar : rol === 3 ? item.microSinAsignar :
+                                                item.sin_asignar}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <!-- <div class="flex flex-col w-1/5 pl-2 mt-2">
                                 <div class="lg:w-15 xl:w-20 lg:h-15 xl:h-20">
@@ -115,12 +119,12 @@
             </div>
         </div>
         <div class="grid grid-cols-1 w-full px-5 pt-3">
-            <div class="flex flex-col flex-auto pt-4 px-6 bg-card rounded-2xl shadow w-full gap-2">
+            <div class="flex flex-col flex-auto pt-4 px-6 bg-card rounded-2xl gap-2 shadow w-full">
                 <div class="flex flex-col w-full justify-between">
-                    <div class="flex flex-row w-6/6 gap-2">
-                        <form [formGroup]="buscarForm" class="w-full">
-                            <div class="flex flex-row gap-2 justify-start">
-                                <div class="w-5/12">
+                    <div class="flex flex-row w-6/6">
+                        <form [formGroup]="buscarForm" class="w-3/6">
+                            <div class="flex flex-row gap-2 ">
+                                <div class="w-3/6">
                                     <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Buscar por: </mat-label>
                                         <mat-select>
@@ -129,7 +133,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="w-5/12" *ngIf="busqueda=='AN'">
+                                <div class="w-3/6" *ngIf="busqueda=='AN'">
                                     <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Analista</mat-label>
                                         <mat-select formControlName="analista">
@@ -139,7 +143,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="w-5/12" *ngIf="busqueda=='PE'">
+                                <div class="w-3/6" *ngIf="busqueda=='PE'">
                                     <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Periodo</mat-label>
                                         <mat-date-range-input [rangePicker]="picker">
@@ -158,7 +162,7 @@
                                         </mat-date-range-picker>
                                     </mat-form-field>
                                 </div>
-                                <div class="w-5/12" *ngIf="busqueda=='UN'">
+                                <div class="w-3/6" *ngIf="busqueda=='UN'">
                                     <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Unidad de negocio</mat-label>
                                         <mat-select formControlName="unidad">
@@ -167,7 +171,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="w-5/12" *ngIf="busqueda=='AG'">
+                                <div class="w-3/6" *ngIf="busqueda=='AG'">
                                     <mat-form-field appearance="fill" class="w-full heigthMin">
                                         <mat-label>Agenda</mat-label>
                                         <mat-select formControlName="agenda">
@@ -178,7 +182,7 @@
                                 </div>
                                 <div class="flex
                                  justify-center items-center" *ngIf="busqueda!=''">
-                                    <div mat-fab class="bg-gray-100 flex justify-center  p-2 rounded-xl text-white"
+                                    <div mat-fab class="bg-gray-100 flex justify-center mt-2 p-2 rounded-xl text-white"
                                         matTooltip="Limpiar filtro" (click)="limpiar()">
                                         <mat-icon class="cursor-pointer lg:icon-size-5 xl:icon-size-6 "
                                             style="color: rgba(42, 44, 48, 0.5)"
@@ -187,7 +191,10 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="flex flex-row w-full gap-2 items-center justify-center">
+
+                    </div>
+                    <div class="flex flex-row w-6/6 justify-end">
+                        <div class="flex flex-row w-3/6 gap-2 items-center">
                             <button mat-raised-button class="text-white lg:w-32 xl:w-30 permitir bloquear"
                                 [disabled]="soliAsignar.length<1 || rol === 0" (click)="asignarVarias()">
                                 <div class="flex flex-row w-full justify-between gap-2">
@@ -211,12 +218,9 @@
                                 </div>
                             </button>
                         </div>
-                    </div>
-                    <div class="flex flex-row w-6/6 justify-end">
-
 
                         <div class="flex flex-row w-3/6  mt-2 justify-end items-end">
-                            <input class="border rounded p-2 w-full bg-gray-100 h-8"
+                            <input class="border rounded p-2 w-50 bg-gray-100 h-8"
                                 style="font-size: 10px; margin-right: 1em;" type="text" autocomplete="off"
                                 name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar...">
 
