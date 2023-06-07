@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { FormDialogDevolverFabricaComponent } from '../../../fabrica-credito/agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { FormDialogReprogramarComponent } from '../../../fabrica-credito/agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.service';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-listado-pagadurias',
@@ -18,6 +19,10 @@ import { GestionPagaduriaService } from 'app/core/services/gestion-pagaduria.ser
   styleUrls: ['./listado-pagadurias.component.scss']
 })
 export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
+  @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
+  drawerMode: 'side' | 'over'='side';
+  open: boolean = true;
+
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
@@ -39,7 +44,9 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
   }
 
 
+  onBackdropClicked(){
 
+  }
 
   /**
      * @description: Obtiene el listado de agenda de completacion

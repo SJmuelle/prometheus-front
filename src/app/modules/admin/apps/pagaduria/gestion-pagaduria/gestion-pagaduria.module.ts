@@ -32,6 +32,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AgendaReferenciacionModule } from '../../fabrica-credito/agenda-referenciacion/agenda-referenciacion.module';
 import { GestionFabricaCreditoModule } from '../../fabrica-credito/gestion-fabrica-credito/gestion-fabrica-credito.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { GestionFabricaCreditoModule } from '../../fabrica-credito/gestion-fabri
     SharedModule,
     MatListModule,
     GestionFabricaCreditoModule,
+    MatSidenavModule
   ]
 })
 export class GestionPagaduriaModule { }
