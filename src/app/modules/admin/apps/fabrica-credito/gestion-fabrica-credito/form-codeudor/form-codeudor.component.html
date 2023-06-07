@@ -361,7 +361,7 @@
         </div>
 
         <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Tipo de via</mat-label>
                 <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'" (selectionChange)="
                         form.controls.direccionResidencial.setValue(
@@ -388,7 +388,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Via principal</mat-label>
                 <input (keyup)="
                         form.controls.direccionResidencial.setValue(
@@ -410,7 +410,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Número vía</mat-label>
                 <input matInput type="text" (keyup)="
                         form.controls.direccionResidencial.setValue(
@@ -431,7 +431,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Distancia vía</mat-label>
                 <input matInput type="text" (keyup)="
                         form.controls.direccionResidencial.setValue(
@@ -455,7 +455,7 @@
         </div>
 
         <mat-form-field class="sm:col-span-1 md:col-span-1">
-            <mat-label class="fuse-mat-dense">Complemento</mat-label>
+            <mat-label >Complemento</mat-label>
             <input matInput type="text" [formControlName]="'direccionComplemento'" (keyup)="
                     form.controls.direccionResidencial.setValue(
                         form.controls.direccionTipoVia.value +
@@ -477,7 +477,7 @@
             <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
         </mat-form-field>
         <div class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Años de residencia</mat-label>
                 <input matInput type="number" [formControlName]="'annosTiempoResidencia'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -489,7 +489,7 @@
                     No se aceptan número negativos.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field>
                 <mat-label>Meses de residencia</mat-label>
                 <input autocomplete="off" matInput type="number" [formControlName]="'mesesTiempoResidencia'" min="0"
                     max="11" />
@@ -556,7 +556,7 @@
             </mat-error>
         </mat-form-field>
         <div *ngIf="form.controls.ocupacion.value === 'EPLDO'" class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Nombre de la empresa</mat-label>
                 <input autocomplete="off" matInput type="text" [formControlName]="'nombreEmpresa'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -565,7 +565,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Teléfono de la empresa</mat-label>
                 <input autocomplete="off" mask="(000) 000 00 00" [validation]="false" [minlength]="7" [maxlength]="16"
                     matInput type="text" [formControlName]="'telefonoEmpresa'" />
@@ -587,7 +587,7 @@
                     Debe tener máximo 10 dígitos
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Dirección de la empresa</mat-label>
                 <input autocomplete="off" matInput type="text" [formControlName]="'direccionEmpresa'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -611,7 +611,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Cargo</mat-label>
                 <input autocomplete="off" matInput type="text" [formControlName]="'cargo'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -620,7 +620,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Salario</mat-label>
                 <span matPrefix>$</span>
                 <input autocomplete="off" mask="separator.0" thousandSeparator="." matInput type="text"
@@ -631,7 +631,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Fecha de ingreso</mat-label>
                 <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaIngresoFabrica"
                     [formControlName]="'fechaIngresoFabrica'" />
@@ -674,7 +674,7 @@
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Actividad específica</mat-label>
                 <input autocomplete="off" matInput type="text" [formControlName]="'actividadEspecifica'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -684,7 +684,7 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Nombre comercial microempresa</mat-label>
                 <input autocomplete="off" matInput type="text" [formControlName]="'nombreNegocio'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -825,7 +825,7 @@
                 form.controls.ocupacion.value === 'INDEFO'
             ">
             <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-                <mat-form-field class="fuse-mat-dense">
+                <mat-form-field >
                     <mat-label>Tipo de via</mat-label>
                     <mat-select [value]="'seleccione'" [formControlName]="'direccionNegocioVia'" (selectionChange)="
                             form.controls.direccionNegocio.setValue(
@@ -856,7 +856,7 @@
                         Este campo es requerido.
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="fuse-mat-dense">
+                <mat-form-field >
                     <mat-label>Via principal</mat-label>
                     <input (keyup)="
                             form.controls.direccionNegocio.setValue(
@@ -883,7 +883,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="fuse-mat-dense">
+                <mat-form-field >
                     <mat-label>Número vía</mat-label>
                     <input matInput type="text" (keyup)="
                             form.controls.direccionNegocio.setValue(
@@ -909,7 +909,7 @@
                         Este campo es requerido.
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field class="fuse-mat-dense">
+                <mat-form-field >
                     <mat-label>Distancia vía</mat-label>
                     <input matInput type="text" (keyup)="
                             form.controls.direccionNegocio.setValue(
@@ -1091,7 +1091,7 @@ titular" />
         </div>
         <!-- Si es pensionado -->
         <div *ngIf="form.controls.ocupacion.value === 'PENSI'" class="grid gap-2 sm:grid-cols-2 grid-cols-1">
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Nombre de la empresa</mat-label>
                 <input autocomplete="off" matInput type="text" [formControlName]="'nombreEmpresa'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -1100,7 +1100,7 @@ titular" />
                     Este campo es requerido.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>¿Hace cuánto está pensionado? (Meses)</mat-label>
                 <input autocomplete="off" matInput type="number" [formControlName]="'tiempoPensionado'" />
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
@@ -1112,7 +1112,7 @@ titular" />
                     Solo se aceptan números.
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="fuse-mat-dense">
+            <mat-form-field >
                 <mat-label>Salario</mat-label>
                 <span matPrefix>$</span>
                 <input autocomplete="off" matInput type="text" mask="separator.0" [formControlName]="'salarioBasico'" />

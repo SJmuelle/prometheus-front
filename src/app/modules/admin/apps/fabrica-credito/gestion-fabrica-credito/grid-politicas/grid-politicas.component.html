@@ -12,7 +12,7 @@
             <tbody class="bg-white">
                 <ng-container *ngIf="titular.length">
                     <ng-container *ngFor="let item of titular">
-                        <tr>
+                        <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border min-w-30">{{item.nombre}}</td>
                             <td class="px-2 text-sm border min-w-100">{{item.descripcion}}</td>
                             <td class="px-2 text-sm border w-0" [ngClass]="
@@ -37,6 +37,7 @@
     <div class="mt-13 sm:mt-13"></div>
 </div>
 
+
 <div *ngIf="representante.length" class="grid grid-cols-12">
     <strong class="col-span-12 p-1.5 rounded-1 mb-3">Políticas administrativas del representante</strong>
     <div class="col-span-12 overflow-scroll scrollbar-hide">
@@ -51,7 +52,7 @@
             <tbody class="bg-white">
                 <ng-container *ngIf="representante.length">
                     <ng-container *ngFor="let item of representante">
-                        <tr>
+                        <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border min-w-30">{{item.nombre}}</td>
                             <td class="px-2 text-sm border min-w-100">{{item.descripcion}}</td>
                             <td class="px-2 text-sm border w-0" [ngClass]="
@@ -90,7 +91,7 @@
             <tbody class="bg-white">
                 <ng-container *ngIf="codeudor.length">
                     <ng-container *ngFor="let item of codeudor">
-                        <tr>
+                        <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
                             <td class="px-2 text-sm border w-0" [ngClass]="
@@ -129,7 +130,7 @@
             <tbody class="bg-white">
                 <ng-container *ngIf="solidario.length">
                     <ng-container *ngFor="let item of solidario">
-                        <tr>
+                        <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
                             <td class="px-2 text-sm border w-0" [ngClass]="

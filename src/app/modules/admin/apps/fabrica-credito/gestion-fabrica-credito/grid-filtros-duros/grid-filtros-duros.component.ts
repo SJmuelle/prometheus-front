@@ -4,16 +4,15 @@ import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-    selector: 'app-grid-politicas',
-    templateUrl: './grid-politicas.component.html',
-    styleUrls: ['./grid-politicas.component.scss']
-})
-export class GridPoliticasComponent implements OnInit {
+    selector: 'app-grid-filtros-duros',
+    templateUrl: './grid-filtros-duros.component.html',
+    styleUrls: ['./grid-filtros-duros.component.scss']
+  })
+
+export class GridFiltrosDurosComponent implements OnInit {
     public politicas$: Observable<any>;
-    public titular: any[] = [];
-    public codeudor: any[] = [];
-    public representante: any[] = [];
-    public solidario: any[] = [];
+    public politicasTipos:any = {};
+
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     constructor(
         private politicasService: PoliticasService,
@@ -27,18 +26,13 @@ export class GridPoliticasComponent implements OnInit {
     private getPoliticas(numeroSolicitud: string): void {
         this.politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
             data.data.forEach(element => {
-                if (element.tipoTercero === 'T') {
-                    this.titular.push(element)
+                if(!this.politicasTipos[element.tipoTercero]){
+                    this.politicasTipos[element.tipoTercero] = []
                 }
-                else if (element.tipoTercero === 'C') {
-                    this.codeudor.push(element)
-                } else if (element.tipoTercero === 'S') {
-                    this.solidario.push(element)
-                }else if(element.tipoTercero === 'R'){
-                    this.representante.push(element)
-                }
+
+                this.politicasTipos[element.tipoTercero].push(element)
             });
-            console.log('titular', this.titular);
+
 
         });
     }
@@ -46,6 +40,23 @@ export class GridPoliticasComponent implements OnInit {
     // 21 corresponde a la politica de filtros duros
     hasIDPolitica(array: any[]){
         return array.find(item => item.idPolitica === 21)
+    }
+
+
+    getTitulo(tipo: string){
+        const titulo = tipo.toUpperCase()
+
+        if(titulo === 'C'){
+            return 'Filtros duros del codedudor'
+        }
+        if(titulo === 'S'){
+            return 'Filtros duros del dedudor solidario'
+        }
+        if(titulo === 'R'){
+            return 'Filtros duros del representante'
+        }
+
+        return 'Filtros duros del titular'
     }
 
 }

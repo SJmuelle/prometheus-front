@@ -33,7 +33,6 @@ export class FormDialogDevolucionesComponent implements OnInit, OnDestroy {
     this.agendaFabrica = this.data.agenda;
     this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
     this.form.controls.agenda.setValue(this.data.agenda);
-    // console.log('sdsdsdsds->'+this.data.agenda)
     if (this.data.idDevolucion) {
       this.form.controls.observacion.setValue(this.data.descripcionDevolucion);
       this.form.controls.descripcionCausal.setValue(this.data.descripcionCausal);
