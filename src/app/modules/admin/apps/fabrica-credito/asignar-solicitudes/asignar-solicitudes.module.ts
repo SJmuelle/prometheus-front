@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asignar-varios.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asigna
     MatExpansionModule,
     MatTooltipModule,
     Ng2SearchPipeModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgxPaginationModule
   ]
 })
 export class AsignarSolicitudesModule { }

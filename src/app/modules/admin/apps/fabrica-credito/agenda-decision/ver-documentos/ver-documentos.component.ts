@@ -84,7 +84,7 @@ export class VerDocumentosComponent implements OnInit {
                     this.documentos[item.tipoTercero].push(item)
                 }
             }
-
+            
             // ordenar alfabeticamente
             for(const documento in this.documentos){
                    this.documentos[documento] = this.documentos[documento].sort((a,b) => {
@@ -199,6 +199,8 @@ export class VerDocumentosComponent implements OnInit {
 
 
     private ocultarTercero(key: string){
+        console.log(key, 'key');
+        
         if(key === 'S'){
             return this.apiData.resumenGeneral.codigoTipoDeudor !== '2' || this.apiData.resumenGeneral.codigoTipoDeudor !== '3'
         }

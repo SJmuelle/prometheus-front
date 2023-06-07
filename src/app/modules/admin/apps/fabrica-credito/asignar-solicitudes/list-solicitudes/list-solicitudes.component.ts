@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import { AsignarVariosComponent } from './asignar-varios/asignar-varios.component';
 import { ReasignarVariosComponent } from './reasignar-varios/reasignar-varios.component';
 import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes.service';
 import moment from 'moment';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -40,8 +40,11 @@ export class ListSolicitudesComponent implements OnInit {
   unidad:string = '';
   agenda:string = '';
   fecha:string = '';
+  rol:number;
+  public page: number = 1;
+  public tamanoTabl = new FormControl("20");
 
-  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder) {
+  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef) {
     this.buscarForm = this.fb.group({
       analista: [''],
       fechaInicial: [''],
@@ -132,26 +135,15 @@ export class ListSolicitudesComponent implements OnInit {
       "solicitud":item.numero_solicitud,
       "fecha":this.fechAsignacion
     }
-    
-    if (item.asesor_credito=='') { 
-      if (event.checked==false) {
-        const dataBuscar = this.soliAsignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
-        let idxSoli = this.soliAsignar.indexOf(dataBuscar[0]);
-        this.soliAsignar.splice(idxSoli, 1);
-      }else{
-        this.soliAsignar.push(num);
-      }
-    } else {
-      if (event.checked==false) {
-        const dataBuscar = this.soliReasignar.filter(num => num.numeroSolicitud == item.numeroSolicitud);
-        let idxSoli = this.soliReasignar.indexOf(dataBuscar[0]);
-        this.soliReasignar.splice(idxSoli, 1);
-        this.antiguos.splice(idxSoli, 1);
-      }else{
-        this.soliReasignar.push(num);
-        this.antiguos.push(asesorAntiguo);
-      }
+
+    console.log('evento', );
+    if(event.checked){
+      this.soliAsignar.push(num);
+    }else{
+      const index = this.soliAsignar.findIndex(soli => soli.numeroSolicitud === item.numero_solicitud.toString())
+      this.soliAsignar.splice(index, 1)
     }
+    
   }
 
   consultarSolicitudes(){
@@ -168,8 +160,13 @@ export class ListSolicitudesComponent implements OnInit {
     this.asigService.getSolicitudes(data).subscribe((res: any) => {
       Swal.close();
       if (res) {
+        this.rol = res.data.rolUsuario.resultado
+        console.log('rol', this.rol);
+        
         this.solicitudes = res.data.listadoSolicitud
         this.asignados = res.data.solicitudAsignada;
+        console.log('asignados', this.asignados);
+        
       }else{
         this.solicitudes = [];
         this.asignados = [];
@@ -197,6 +194,43 @@ export class ListSolicitudesComponent implements OnInit {
     })
   }
 
+  leftScroll(){
+      const scrollContaier:NodeListOf<Element> = document.querySelectorAll('#scrollContainer');
+      const maxScroll = 0;
+      const currentScroll = scrollContaier.item(0).scrollLeft
+      let newLeftValue = 0;
+
+      if(currentScroll - 300 < maxScroll){
+        newLeftValue = maxScroll
+      }else{
+        newLeftValue = currentScroll - 300
+      }
+
+      scrollContaier.item(0).scrollTo({
+        left: newLeftValue,
+        behavior: 'smooth'
+      })
+  }
+
+  rigthScroll(){
+    const scrollContaier:NodeListOf<Element> = document.querySelectorAll('#scrollContainer');
+    const maxScroll = scrollContaier.item(0).scrollWidth;
+    const currentScroll = scrollContaier.item(0).scrollLeft
+    let newLeftValue = 0;
+
+    if(currentScroll + 300 > maxScroll){
+      newLeftValue = maxScroll
+    }else{
+      newLeftValue =  currentScroll + 300
+    }
+
+    scrollContaier.item(0).scrollTo({
+      left: newLeftValue,
+      behavior: 'smooth'
+    })
+  }
+
+
   buscar(){
     if (this.buscarForm.value.analista!='') {
       this.dataFiltro = {
@@ -213,6 +247,7 @@ export class ListSolicitudesComponent implements OnInit {
         ]
       }
     }
+
 
     if (this.buscarForm.value.fechaInicial!='' && this.buscarForm.value.fechaFinal!='') {
       this.dataFiltro = {
@@ -285,15 +320,16 @@ export class ListSolicitudesComponent implements OnInit {
   }
 
   cambiarFecha(date) {
+    if(date === 'NO') return 'NO REGISTRA'
     if (date) {
       moment.locale('es');
       if (moment(date).format('MMMM D YYYY')=='enero 1 0099') {
-        return 'No registra'
+        return 'NO REGISTRA'
       }else{
         return moment(date).format('MMMM D YYYY')
       }
     }
-    return 'No registra'
+    return 'NO REGISTRA'
   }
 
   asignarVarias() {
@@ -301,7 +337,8 @@ export class ListSolicitudesComponent implements OnInit {
       "tipoAsesor":"E",
       "asesorNuevo":"",
       "details":this.soliAsignar
-    }
+    } 
+
     const dialogRef = this.dialog.open(AsignarVariosComponent, {
       width: '20%',
       disableClose: true,
