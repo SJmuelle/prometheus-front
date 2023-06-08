@@ -155,6 +155,9 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
     this.mostrarTotales = estado;
   }
 
+  detalle(pagaduria){
+    this.router.navigate([`parametria/gestion-pagaduria/${pagaduria}`]);
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
