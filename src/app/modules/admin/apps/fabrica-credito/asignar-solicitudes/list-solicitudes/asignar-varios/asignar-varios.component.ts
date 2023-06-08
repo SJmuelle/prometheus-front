@@ -34,6 +34,8 @@ export class AsignarVariosComponent implements OnInit {
     
     this.asigService.postAsesores(this.data).subscribe((res: any) => {
       if (res) {
+        console.log('respuesta', res);
+        
         if (this.data.details.length > 1) {
           Swal.fire(
             '¡Correcto!',

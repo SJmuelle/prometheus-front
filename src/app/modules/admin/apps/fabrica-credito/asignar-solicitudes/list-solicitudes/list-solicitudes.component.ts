@@ -6,6 +6,7 @@ import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -44,7 +45,7 @@ export class ListSolicitudesComponent implements OnInit {
   public page: number = 1;
   public tamanoTabl = new FormControl("20");
 
-  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef) {
+  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef, private refreshToken: AuthService) {
     this.buscarForm = this.fb.group({
       analista: [''],
       fechaInicial: [''],
@@ -57,9 +58,12 @@ export class ListSolicitudesComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   ngOnInit(): void {
-    this.consultarAsesores();
-    this.consultarSolicitudes();
-    this.consultarUnidades();
+    this.refreshToken.signInUsingToken().subscribe(rep => {
+      this.consultarAsesores();
+      this.consultarSolicitudes();
+      this.consultarUnidades();
+    })
+
     this.maxFecha = new Date(this.fechActual);
     this.opcionesBusqueda = [
       {
