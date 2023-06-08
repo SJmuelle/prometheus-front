@@ -30,11 +30,8 @@ export class AsignarVariosComponent implements OnInit {
 
   guardarAnalista(){
     this.data.asesorNuevo=this.asignarForm.value.analista;
-    console.log('data a enviar', this.data);
     
     this.asigService.postAsesores(this.data).subscribe((res: any) => {
-      if (res) {
-        console.log('respuesta', res);
         
         if (this.data.details.length > 1) {
           Swal.fire(
@@ -49,21 +46,6 @@ export class AsignarVariosComponent implements OnInit {
               'success'
             ).then(() => this.dialogRef.close(true))
         }
-      } else {
-        if (this.data.details.length > 1) {
-          Swal.fire(
-            'Error!',
-            'Las solicitudes no han podido ser asignadas, porfavor intente mas tarde.',
-            'error'
-          ).then(() => this.dialogRef.close(true))
-        } else {
-          Swal.fire(
-            'Error!',
-            'La solicitud N° '+this.data.details[0].numeroSolicitud+' no pudo ser asignada, porfavor intente mas tarde.',
-            'error'
-          ).then(() => this.dialogRef.close(true))
-        }
-      }
     })
   }
 

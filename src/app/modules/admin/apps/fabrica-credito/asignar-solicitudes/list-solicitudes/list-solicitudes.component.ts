@@ -140,7 +140,6 @@ export class ListSolicitudesComponent implements OnInit {
       "fecha":this.fechAsignacion
     }
 
-    console.log('evento', );
     if(event.checked){
       this.soliAsignar.push(num);
     }else{
@@ -165,11 +164,9 @@ export class ListSolicitudesComponent implements OnInit {
       Swal.close();
       if (res) {
         this.rol = res.data.rolUsuario.resultado
-        console.log('rol', this.rol);
         
         this.solicitudes = res.data.listadoSolicitud
         this.asignados = res.data.solicitudAsignada;
-        console.log('asignados', this.asignados);
         
       }else{
         this.solicitudes = [];
