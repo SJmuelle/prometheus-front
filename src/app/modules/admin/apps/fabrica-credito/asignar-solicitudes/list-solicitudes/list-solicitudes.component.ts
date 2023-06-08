@@ -7,6 +7,8 @@ import moment from 'moment';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthService } from 'app/core/auth/auth.service';
+import { Subject } from 'rxjs';
+import {  takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -42,6 +44,7 @@ export class ListSolicitudesComponent implements OnInit {
   agenda:string = '';
   fecha:string = '';
   rol:number;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   public page: number = 1;
   public tamanoTabl = new FormControl("20");
 
@@ -58,7 +61,7 @@ export class ListSolicitudesComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   ngOnInit(): void {
-    this.refreshToken.signInUsingToken().subscribe(rep => {
+    this.refreshToken.signInUsingToken().pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
       this.consultarAsesores();
       this.consultarSolicitudes();
       this.consultarUnidades();
@@ -381,4 +384,10 @@ export class ListSolicitudesComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this._unsubscribeAll.next()
+    this._unsubscribeAll.complete()
+  }
 }
