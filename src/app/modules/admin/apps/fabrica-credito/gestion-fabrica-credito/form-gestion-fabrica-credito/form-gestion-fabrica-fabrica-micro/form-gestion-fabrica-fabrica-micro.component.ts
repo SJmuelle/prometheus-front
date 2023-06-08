@@ -381,6 +381,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             ...data
         };
 
+       
+        
         const postDataLL: geoCodingAddress = {
             departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === datosFormularios.codigoDepartamentoNegocio).nombre,
             ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === datosFormularios.codigoCiudad).nombre,
@@ -499,8 +501,30 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             });
     }
 
+    ngAfterViewInit(): void {
+        //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+        //Add 'implements AfterViewInit' to the class.
+
+
+    }
+
     cargarMap() {
         this.mostrarMapaPreview = !this.mostrarMapaPreview
+
+        const postDataLL: geoCodingAddress = {
+            departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === this.form.get('codigoDepartamentoNegocio').value).nombre,
+            ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === this.form.get('codigoCiudadNegocio').value).nombre,
+            direccion: this.form.get('direccionNegocio').value
+        };
+
+        this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+            const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+
+            L.marker([latitudNegocio, longitudNegocio]).addTo(this.map)
+                .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+                .openPopup();
+        })
 
         if (!this.map) {
             const GoogleMaps = L.tileLayer(
@@ -520,9 +544,17 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 center: [11.004313, -74.808137],
                 zoom: 20,
                 attributionControl: false,
+                whenReady: () => { this.map.invalidateSize(); }
             });
+
+            setTimeout(() => {
+                this.map.invalidateSize();
+            }, 500);
         }
-        
+    }
+
+    reSize() {
+        this.map.invalidateSize();
     }
 
     public setCurrentScoreUI() {

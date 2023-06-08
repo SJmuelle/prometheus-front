@@ -1516,7 +1516,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div  class="grid-cols-1 p-5" [ngStyle]="{'display': !mostrarMapaPreview ? 'none' : 'block'}" >
+                        <div  class="grid-cols-1 p-5" [ngClass]="{'hidden': !mostrarMapaPreview}" >
                             <div  #map id="map" class="h-96 max-w-full rounded-xl">
 
                             </div>
