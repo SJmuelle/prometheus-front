@@ -2,7 +2,7 @@ import { Component, ElementRef, OnChanges, OnDestroy, OnInit, ViewChild } from '
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
-import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-credito.interface';
+import { FormularioCreditoMicro, geoCodingAddress } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { PermisosService } from 'app/core/services/permisos.service';
@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { FuseValidators } from '@fuse/validators';
 import { GenericasService } from 'app/core/services/genericas.service';
+import * as L from 'leaflet'
+import 'leaflet/dist/leaflet.css';
 
 @Component({
     selector: 'form-gestion-fabrica-fabrica-micro',
@@ -49,9 +51,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public descripcionScore: any;
     public decisionFiltrosDuros: any;
     public agendaActual: string;
-    public currentScoreColor: 'red'| 'orange' | 'yellow' | 'light-green' | 'green'
+    public currentScoreColor: 'red' | 'orange' | 'yellow' | 'light-green' | 'green'
 
     fechaActual: any = moment().locale("co");
+    map: L.map;
 
     currentScoreElement: HTMLElement;
 
@@ -60,6 +63,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     customCircumference: number = this.circumference * 0.85; // 747.32
     arcLength: number = this.customCircumference / 5; // 149.46
     offset: number = this.arcLength * 5;
+    mostrarMapaPreview: boolean = false;
 
     /* Saved minimum, maximum values and length for all 5 Arc's */
     redArc = {
@@ -131,31 +135,31 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         const minRotate = 35;
         const maxTranslate = -100;
 
-        if(this.currentScoreColor === 'red'){
-           let porcentajeLocal = ((score - this.redArc.min) / this.redArc.length)
-           // se divide entre la cantidad de porcentajes que serian 20% cada uno
-           porcentaje = porcentajeLocal * 0.2
+        if (this.currentScoreColor === 'red') {
+            let porcentajeLocal = ((score - this.redArc.min) / this.redArc.length)
+            // se divide entre la cantidad de porcentajes que serian 20% cada uno
+            porcentaje = porcentajeLocal * 0.2
         }
-        if(this.currentScoreColor === 'orange'){
+        if (this.currentScoreColor === 'orange') {
             let porcentajeLocal = ((score - this.orangeArc.min) / this.orangeArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.2
-         }
-         if(this.currentScoreColor === 'yellow'){
+        }
+        if (this.currentScoreColor === 'yellow') {
             let porcentajeLocal = ((score - this.yellowArc.min) / this.yellowArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.4
-         }
-         if(this.currentScoreColor === 'light-green'){
+        }
+        if (this.currentScoreColor === 'light-green') {
             let porcentajeLocal = ((score - this.lightGreenArc.min) / this.lightGreenArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.6
-         }
-         if(this.currentScoreColor === 'green'){
+        }
+        if (this.currentScoreColor === 'green') {
             let porcentajeLocal = ((score - this.greenArc.min) / this.greenArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.8
-         }
+        }
 
 
         const amplitud = maxRotate - minRotate;
@@ -207,14 +211,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         greyGreen.setAttribute("stroke-dasharray", `${this.arcLength - greenArchCalc},${this.customCircumference}`);
         greyGreen.setAttribute("stroke-dashoffset", -greenArchCalc);
 
-        if(score >= this.greenArc.min){
+        if (score >= this.greenArc.min) {
             this.currentScoreColor = 'green'
         }
 
         // Llamar a la función con el ángulo deseado
         const minScore = 0;
         const maxScore = 950;
-         this.updatePointer(score, minScore, maxScore);
+        this.updatePointer(score, minScore, maxScore);
     }
 
 
@@ -336,6 +340,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description:
      */
     public onPostDatos(): void {
+
+        this._formularioCreditoService
         this.setConyugueNombreCompleto()
         const datos: FormularioCreditoMicro = this.form.getRawValue();
         const { numeroHijos, antiguedadLocal, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
@@ -374,20 +380,36 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             antiguedadLocal: antiguedadLocal ? antiguedadLocal : 0,
             ...data
         };
-        Swal.fire({
-            title: 'Guardar información',
-            text: '¿Está seguro de guardar información?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#a3a0a0',
-            confirmButtonText: 'Guardar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.postFormularioFabrica(datosFormularios);
-            }
-        });
+
+        const postDataLL: geoCodingAddress = {
+            departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === datosFormularios.codigoDepartamentoNegocio).nombre,
+            ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === datosFormularios.codigoCiudad).nombre,
+            direccion: datosFormularios.direccionNegocio
+        };
+
+        this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            datosFormularios.latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+            datosFormularios.longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+
+            console.log('data a enviar', datosFormularios);
+
+            Swal.fire({
+                title: 'Guardar información',
+                text: '¿Está seguro de guardar información?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#a3a0a0',
+                confirmButtonText: 'Guardar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.postFormularioFabrica(datosFormularios);
+                }
+            });
+        })
+
+
     }
 
     /**
@@ -413,6 +435,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
                 this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+
+
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -460,7 +484,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;
                 this.setCurrentScoreUI()
-                if(this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO'){
+                if (this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO') {
                     setTimeout(() => {
                         this.updateScore(this.score)
                     }, 2000);
@@ -473,6 +497,32 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
 
             });
+    }
+
+    cargarMap() {
+        this.mostrarMapaPreview = !this.mostrarMapaPreview
+
+        if (!this.map) {
+            const GoogleMaps = L.tileLayer(
+                'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
+                {
+                    maxZoom: 20,
+                    minZoom: 3,
+                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+                }
+            );
+
+            this.map = L.map('map', {
+                zoomAnimation: true,
+                layers: GoogleMaps,
+                inertia: true,
+                worldCopyJump: true,
+                center: [11.004313, -74.808137],
+                zoom: 20,
+                attributionControl: false,
+            });
+        }
+        
     }
 
     public setCurrentScoreUI() {
