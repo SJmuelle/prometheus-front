@@ -55,6 +55,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     fechaActual: any = moment().locale("co");
     map: L.map;
+    divIcon = L.divIcon({
+        iconSize: [30, 30], iconAnchor: [18, 40], className: 'border-none z-99999 ',
+        html: `<svg width="30" height="50" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 19C5.73693 17.9227 4.56619 16.7416 3.5 15.4691C1.9 13.5581 8.83662e-07 10.712 8.83662e-07 8.00005C-0.00141728 5.1676 1.70425 2.61344 4.32107 1.52945C6.93789 0.445455 9.95007 1.04529 11.952 3.04905C13.2685 4.35966 14.0059 6.14244 14 8.00005C14 10.712 12.1 13.5581 10.5 15.4691C9.43382 16.7416 8.26307 17.9227 7 19ZM7 5.00005C5.92821 5.00005 4.93782 5.57185 4.40193 6.50005C3.86603 7.42825 3.86603 8.57185 4.40193 9.50005C4.93782 10.4283 5.92821 11.0001 7 11.0001C8.65686 11.0001 10 9.6569 10 8.00005C10 6.3432 8.65686 5.00005 7 5.00005Z" fill="red"/>
+      </svg>`});
 
     currentScoreElement: HTMLElement;
 
@@ -511,6 +516,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     cargarMap() {
         this.mostrarMapaPreview = !this.mostrarMapaPreview
 
+        console.log('ciudades', this.form.get('codigoCiudadNegocio').value);
         const postDataLL: geoCodingAddress = {
             departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === this.form.get('codigoDepartamentoNegocio').value).nombre,
             ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === this.form.get('codigoCiudadNegocio').value).nombre,
@@ -521,7 +527,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
             const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
 
-            L.marker([latitudNegocio, longitudNegocio]).addTo(this.map)
+            L.marker([latitudNegocio, longitudNegocio],{
+                icon: this.divIcon
+            }).addTo(this.map)
                 .bindPopup('A pretty CSS popup.<br> Easily customizable.')
                 .openPopup();
         })
