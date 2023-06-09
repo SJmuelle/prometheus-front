@@ -318,5 +318,11 @@ export class GenericasService {
     public getUnidadNegocio(numSolicitud: string): Observable<any> {
         return this._http.get(`${this._appSettings.genericas.url.unidadNegocio}/${numSolicitud}`);
     }
+      /**
+     * @description: Obtiene REPORTE RD
+     */
+      public getReporteRd(): Observable<any> {
+        const params: string = 'informacion-reporterd-mercadeo';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);}
 
 }
