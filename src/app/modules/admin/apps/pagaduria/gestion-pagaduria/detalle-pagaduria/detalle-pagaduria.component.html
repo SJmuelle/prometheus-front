@@ -121,7 +121,7 @@
                             <div class="flex sm:items-center">
                                 <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
                                 <div class="ml-6 leading-6">
-                                    <strong>Tipo de empresa</strong> {{datos.empresaAliada?'SI':'NO'}}
+                                    <strong>Empresa aliada</strong> {{datos.empresaAliada?'SI':'NO'}}
                                 </div>
                             </div>
                         </ng-container>
@@ -282,7 +282,7 @@
                                         {{data.tipo_empresa}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.municipio.tipoEmpresa?.required">
+                                <mat-error *ngIf="form.controls.tipoEmpresa.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>

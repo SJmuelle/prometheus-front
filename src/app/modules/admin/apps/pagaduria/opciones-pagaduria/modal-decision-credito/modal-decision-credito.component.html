@@ -40,20 +40,29 @@
                         </div>
                         <ng-container *ngIf="form.value.causal=='18'">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mr-2">
-                                <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-form-field class="w-full fuse-mat-dense col-span-2">
                                     <mat-label>Cargo</mat-label>
                                     <input matInput type="text" autocomplete="off" formControlName="cargo">
                                     <mat-error *ngIf="form.controls.cargo.errors?.required">
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
-                                <mat-form-field class="w-full fuse-mat-dense">
-                                    <mat-label>tipoContrato</mat-label>
-                                    <input matInput type="text" autocomplete="off" formControlName="tipoContrato">
-                                    <mat-error *ngIf="form.controls.tipoContrato.errors?.required">
-                                        Este campo es requerido.
-                                    </mat-error>
-                                </mat-form-field>
+                                <ng-container *ngIf="tipoContrato$ | async as tipo">
+                                    <mat-form-field class="w-full fuse-mat-dense">
+                                        <mat-label>Tipo contrato</mat-label>
+                                        <mat-select [value]="'seleccione'" [formControlName]="'tipoContrato'"
+                                            [required]="">
+                                            <mat-option disabled [value]="'seleccione'">Seleccione
+                                            </mat-option>
+                                            <mat-option *ngFor="let data of tipo.data" [value]="data.codigo">
+                                                {{data.nombre}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="form.controls.tipoContrato.errors?.required">
+                                            Este campo es requerido.
+                                        </mat-error>
+                                    </mat-form-field>
+                                </ng-container>
                                 <mat-form-field class="w-full fuse-mat-dense">
                                     <mat-label>Salario</mat-label>
                                     <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
@@ -77,6 +86,20 @@
                                     <mat-error *ngIf="form.controls.comisiones.errors?.required">
                                         Este campo es requerido.
                                     </mat-error>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Fecha vinculación</mat-label>
+                                    <input matInput [matDatepicker]="picker1" [formControlName]="'fechaVinculacion'">
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field>
+                                    <mat-label>Fecha finalización</mat-label>
+                                    <input matInput [matDatepicker]="picker2" [formControlName]="'fechaFinalizacion'">
+                                    <mat-hint>MM/DD/YYYY</mat-hint>
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
                                 </mat-form-field>
                             </div>
                         </ng-container>

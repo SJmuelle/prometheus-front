@@ -30,6 +30,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
   tituloModal: string;
   listadoAgenda: any;
   public salarioMinimo: number = 0;
+  tipoContrato$: Observable<any>;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +44,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     private router: Router,
     private genericaServices: GenericasService,
     private _formularioCreditoService: FormularioCreditoService,
+    
   ) {
     this.crearFormulario();
   }
@@ -51,9 +53,10 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     this.getDecision();
     this.escuchaObservable();
     this.getCausal();
+    this.getTipoContrato()
     this.tituloModal = "Decisión"
     this.form.controls.numeroSolicitud.setValue(this.data.numeroSolicitud);
-    this.form.controls.unidadNegocio.setValue(this.data.numeroSolicitud);
+    this.form.controls.unidadNegocio.setValue(this.data.unidadNegocio);
 
   }
 
@@ -77,6 +80,10 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
       const data: any = { ...this.form.getRawValue() };
       data.numeroSolicitud = Number(this.form.controls.numeroSolicitud.value);
       data.cupo = Number(this.utility.enviarNumero(this.form.controls.cupo.value));
+      data.descuentos = Number(this.form.controls.descuentos.value);
+      data.comisiones = Number(this.form.controls.comisiones.value);
+      data.salario = Number(this.form.controls.salario.value);
+      data.causal = Number(this.form.controls.causal.value);
       Swal.fire({
         title: 'Guardar información',
         text: '¿Está seguro de guardar información?',
@@ -91,6 +98,9 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           switch (data.concepto) {
             case 'A':
               this.postDecision(data);
+              break;
+            case 'R':
+              this.postDecisionNoVisado(data)
               break;
 
             default:
@@ -239,6 +249,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           this.form.controls['comisiones'].setValue("");
           this.form.controls['comisiones'].setValidators(Validators.required);
           this.form.controls['comisiones'].updateValueAndValidity();
+          this.dataCreditoRechazo();
 
           break;
         default:
@@ -280,6 +291,13 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
   }
 
   /**
+ * @description: Obtiene el listado de opciones
+ */
+  private getTipoContrato(): void {
+    this.tipoContrato$ = this.genericaServices.getSelectDinamicoSinBase('tipos-contratos');
+  }
+
+  /**
    * @description: Obtiene el listado de causales
    */
   private getCausal(): void {
@@ -293,6 +311,59 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
     this.decisionService.postDecision(data).pipe(takeUntil(this.unsuscribe$))
       .subscribe((res) => {
+        Swal.close();
+        let respuesta: any = {};
+        switch (res.status) {
+          case 200:
+            if (res.data.resultado == 'OK') {
+              respuesta = {
+                icon: 'success',
+                title: 'Mensaje',
+                text: 'Ha cambiado el estado con éxito'
+              };
+              this.mostrarAlerta(respuesta);
+              setTimeout(() => {
+                this._dialog.close(true);
+              }, 1000);
+            } else {
+              respuesta = {
+                icon: 'error',
+                title: 'Mensaje',
+                text: res.data.resultado
+              };
+              this.mostrarAlerta(respuesta);
+            }
+            break;
+          case 400:
+            respuesta = {
+              icon: 'error',
+              title: 'Mensaje',
+              text: 'Advertencia'
+            };
+            this.mostrarAlerta(respuesta);
+            break;
+          case 500:
+            respuesta = {
+              icon: 'error',
+              title: 'Mensaje',
+              text: 'Ha ocurrido un error'
+            };
+            this.mostrarAlerta(respuesta);
+            break;
+          default:
+            break;
+        }
+      });
+  }
+
+  /**
+   * @description: Guarda la cre-lib-no-visar
+   */
+  private postDecisionNoVisado(data: any): void {
+    Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+    this.decisionService.postDecisionNoVisado(data).pipe(takeUntil(this.unsuscribe$))
+      .subscribe((res) => {
+        Swal.close();
         let respuesta: any = {};
         switch (res.status) {
           case 200:
@@ -340,8 +411,17 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
 
 
-
-
+  /**
+    * @description: Obtiene el listado de agenda de completacion
+   */
+  private dataCreditoRechazo(): void {
+    let info = {
+      numeroSolicitud: this.data.numeroSolicitud
+    }
+    this.decisionService.dataCreditoRechazo(info).subscribe((res) => {
+      this.form.patchValue(res.data);
+    });
+  }
 
 
   /**

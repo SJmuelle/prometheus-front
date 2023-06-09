@@ -56,7 +56,7 @@
                                     <div *ngIf="campo.valor4" class="text-sm font-medium "
                                         style="margin-top: 6px; line-height: 15px;" [innerHtml]="campo.valor4"></div>
                                     <div  *ngIf="campo.valor5" class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
-                                       ><a href="">{{campo.valor5}}</a>
+                                       ><a class="text-primary-600 decoration-slice" (click)="descargarArchivo()">{{campo.valor5}}</a>
                                     </div>
                                 </div>
                             </div>

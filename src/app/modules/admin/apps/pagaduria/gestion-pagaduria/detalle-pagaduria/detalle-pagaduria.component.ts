@@ -11,6 +11,7 @@ import { GenericasService } from 'app/core/services/genericas.service';
 import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { PagaduriaService } from 'app/core/services/pagaduria.service';
 
 @Component({
   selector: 'app-detalle-pagaduria',
@@ -31,6 +32,7 @@ export class DetallePagaduriaComponent implements OnInit {
     private _listadoPagaduriasComponent: ListadoPagaduriasComponent,
     private route: ActivatedRoute,
     private router: Router,
+
     private _gestionPagaduriaService: GestionPagaduriaService,
     private fb: FormBuilder,
     private _activatedRoute: ActivatedRoute,
@@ -209,4 +211,6 @@ export class DetallePagaduriaComponent implements OnInit {
     data.dv = Number(data.dv)
     this.postFormulario(data);
   }
+
+
 }

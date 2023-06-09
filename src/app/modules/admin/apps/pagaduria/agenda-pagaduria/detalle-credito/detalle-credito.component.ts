@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import Swal from 'sweetalert2';
 import { FormDecisionComponent } from '../../../fabrica-credito/agenda-decision/form-decision/form-decision.component';
+import { PagaduriaService } from 'app/core/services/pagaduria.service';
 
 @Component({
   selector: 'app-detalle-credito',
@@ -28,6 +29,8 @@ export class DetalleCreditoComponent implements OnInit {
     private _fabricaCreditoService: FabricaCreditoService,
     private route: ActivatedRoute,
     private router: Router,
+    public _pagaduriaService: PagaduriaService,
+
     private _dialog: MatDialog,
   ) {
     this.getResumen();
@@ -229,4 +232,29 @@ export class DetalleCreditoComponent implements OnInit {
     return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
   }
 
+  descargarArchivo(){
+    this._pagaduriaService.descargarArchivos(this.numeroSolicitud).subscribe((response:any)=>{
+      if(response) {
+        if (response.status==202) {
+          Swal.fire(
+            '¡Error!',
+            `No existen adjuntos pertenecientes a esta solicitud.`,
+            'error'
+          ).then();
+        }else{
+
+          const archivo = response.data[0].filepath.split(',');
+          const extension = 'pdf'
+          const link = document.createElement('a');
+          document.body.appendChild(link);
+          link.href = `${archivo}`;
+          link.target = '_self';
+          link.download = response.data[0].filename
+          link.click();
+          Swal.close();
+          
+        }
+      }
+    }) 
+  }
 }
