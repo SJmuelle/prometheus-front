@@ -55,10 +55,10 @@ export class FabricaCreditoService {
      /**
     * @description: resumenes de credito
     */
-     public getResumenCreditoPagadueia(datos): Observable<any> {
-        const { numeroSolicitud } = datos;
-        return this._http.get(`${this._appSettings.fabricaDatos.url.resumenesPagaduria}/${numeroSolicitud}`);
-        // return this._http.post(this._appSettings.fabricaDatos.url.resumenesPagaduria, datos);
+     public getResumenCreditoPagaduria(datos): Observable<any> {
+        // const { numeroSolicitud } = datos;
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.resumenesPagaduria}/${numeroSolicitud}`);
+        return this._http.post(this._appSettings.fabricaDatos.url.resumenesPagaduria, datos);
 
     }
     /**

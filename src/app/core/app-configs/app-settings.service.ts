@@ -139,7 +139,7 @@ export class AppSettingsService {
             agendaReferenciacionGuardarPregunta: EndPoints.uri('/credito/fabrica/guardado-preguntas-referenciacion'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
-            resumenesPagaduria: EndPoints.uri('/generic/qry/obtener-resumen-credito-pagaduria'),
+            resumenesPagaduria: EndPoints.uri('/credito/tk/property/cards-informacion-visado'),
             historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),

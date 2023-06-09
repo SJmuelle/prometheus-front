@@ -24,6 +24,8 @@ export class DetalleCreditoComponent implements OnInit {
   verComentarios: boolean = false;
   resumenCuentasMora: any[] = [];
   formaterMoneda = Intl.NumberFormat('es-co', { style: 'currency', currency: 'COP' })
+  obligaciones: any;
+  total: any;
 
   constructor(
     private _fabricaCreditoService: FabricaCreditoService,
@@ -38,6 +40,7 @@ export class DetalleCreditoComponent implements OnInit {
 
   ngOnInit(): void {
     // this.openModalNegocio()
+    this.consultaObligaciones();
   }
 
   /**
@@ -47,10 +50,10 @@ export class DetalleCreditoComponent implements OnInit {
 
     Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     let data = {
-      "numeroSolicitud": this.numeroSolicitud,
+      "numeroSolicitud": Number(this.numeroSolicitud),
       "identificacion": this.identificacion
     }
-    this._fabricaCreditoService.getResumenCredito(data).pipe(
+    this._fabricaCreditoService.getResumenCreditoPagaduria(data).pipe(
 
     ).subscribe((res) => {
       if (res.status === 200) {
@@ -257,4 +260,16 @@ export class DetalleCreditoComponent implements OnInit {
       }
     }) 
   }
+
+    /**
+   * @description: metodo para cargar todas las obligaciones
+   */
+    consultaObligaciones(){
+      this._pagaduriaService.getObligaciones(this.numeroSolicitud).subscribe((response: any) => {
+        if (response) {
+          this.obligaciones = response.data;
+        }
+        this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valor_recoger), 0);
+      });
+    }
 }

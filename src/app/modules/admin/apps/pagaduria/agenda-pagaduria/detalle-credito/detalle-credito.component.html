@@ -55,8 +55,10 @@
                                         [innerHtml]="campo.valor3"></div>
                                     <div *ngIf="campo.valor4" class="text-sm font-medium "
                                         style="margin-top: 6px; line-height: 15px;" [innerHtml]="campo.valor4"></div>
-                                    <div  *ngIf="campo.valor5" class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
-                                       ><a class="text-primary-600 decoration-slice" (click)="descargarArchivo()">{{campo.valor5}}</a>
+                                    <div *ngIf="campo.valor5" class="text-sm font-medium "
+                                        style="margin-top: 6px; line-height: 15px;"><a
+                                            class="text-primary-600 decoration-slice"
+                                            (click)="descargarArchivo()">{{campo.valor5}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +69,54 @@
 
 
 
-
+            <div
+                class="col-span-2  relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+                <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                    <mat-icon class="icon-size-24 opacity-25 " [ngClass]="'text-orange-800'" [svgIcon]="'heroicons_outline:currency-dollar'">
+                    </mat-icon>
+                </div>
+                <div class="flex items-center">
+                    <div class="flex flex-col">
+                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                           Obligaciones a recoger
+                        </div>
+                        <div class=" font-medium text-sm" [ngClass]="'text-orange-800'">
+                            Listado de obligaciones pendiente del cliente
+                        </div>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr class="text-md border-b font-semibold tracking-wide text-left text-gray-900">
+                            <th class="px-4 py-2 text-center">Entidad</th>
+                            <th class="px-4 py-2 text-center">NIT</th>
+                            <th class="px-4 py-2 text-center">Tipo de cuenta</th>
+                            <th class="px-4 py-2 text-center">N° de cuenta</th>
+                            <th class="px-4 py-2 text-center">Valor a recoger</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white">
+                        <tr class="text-gray-700" *ngFor="let item of obligaciones">
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.entidad}}</td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.nit_entidad}}</td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.tipo_cuenta}}</td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">{{item.numero_cuenta}}
+                            </td>
+                            <td class="px-2 py-2 text-center text-md text-gray-600 capitalize">$ {{item.valor_recoger |
+                                number}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="text-md border-t font-semibold tracking-wide text-left text-gray-900 capitalize">
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center"></th>
+                            <th class="px-4 py-2 text-center text-base">Total:</th>
+                            <th class="px-4 py-2 text-center">$ {{ total | number}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
 
 
 
@@ -75,30 +124,3 @@
     </div>
 
 </div>
-
-<fuse-drawer class="w-full sm:max-w-9/12 min-w-150" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
-    [position]="'right'" #settingsDrawer>
-    <ng-container *ngIf="true">
-        <div class="fixed z-999 w-full">
-            <app-grid-comentarios (cerrarComponente)="onCerrar($event);settingsDrawer.close()"
-                (minimizarComponente)="onMinimiza($event);settingsDrawer.close(); verComentarios = true">
-            </app-grid-comentarios>
-        </div>
-    </ng-container>
-</fuse-drawer>
-
-
-<mat-menu #MenuResumenCuentasMora="matMenu">
-    <mat-list>
-        <mat-list-item *ngFor="let item of resumenCuentasMora">
-            <mat-icon mat-list-icon>note</mat-icon>
-            <div mat-line> <span>Entidad: {{item.entidad}}</span></div>
-            <div mat-line> <span class="text-xs text-secondary"> No Cuenta {{item.numeroCuenta}} </span></div>
-            <div mat-line> <span class="text-xs">Saldo ${{item.saldoActual | number}} </span></div>
-        </mat-list-item>
-        <mat-list-item *ngIf="resumenCuentasMora">
-            <mat-icon mat-list-icon>note</mat-icon>
-            <div mat-line> <span>No tiene embargos</span></div>
-        </mat-list-item>
-    </mat-list>
-</mat-menu>
