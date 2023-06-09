@@ -28,7 +28,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ReporterdMercadeoComponent } from '../mercadeo/reporterd-mercadeo/reporterd-mercadeo.component';
 
 
 
@@ -42,7 +41,6 @@ import { ReporterdMercadeoComponent } from '../mercadeo/reporterd-mercadeo/repor
     AprobarCapacidadPagoComponent,
     RechazarCapacidadPagoComponent,
     GestionSolicitudesComponent,
-    ReporterdMercadeoComponent
   ],
   imports: [
     CommonModule,

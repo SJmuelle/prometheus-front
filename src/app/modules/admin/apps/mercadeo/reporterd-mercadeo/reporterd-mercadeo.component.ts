@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
-import { FormCausalesComponent } from '../../pqr/causales-pqrs/form-causales/form-causales.component';
 import { PqrService } from '../../pqr/pqr.service';
+
+
 
 @Component({
   selector: 'app-reporterd-mercadeo',
@@ -13,13 +14,11 @@ export class ReporterdMercadeoComponent implements OnInit {
     listadoTipo: any;
     datos: any = {};
     constructor(
-        public matDialogRef: MatDialogRef<FormCausalesComponent>,
-        @Inject(MAT_DIALOG_DATA) public data,
         private _pqrService: PqrService
     ) {}
 
     ngOnInit(): void {
-        this.datos = this.data;
+        this.datos = {}
         this.consultaListadoTipo();
     }
     consultaListadoTipo() {
@@ -86,7 +85,7 @@ export class ReporterdMercadeoComponent implements OnInit {
                         'success'
                     ).then((resultado) => {
                         if (resultado) {
-                            this.matDialogRef.close();
+                        
                         }
                     });
                 } else {
