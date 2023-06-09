@@ -22,7 +22,7 @@ import { FuseMediaWatcherService } from '@fuse/services/tailwind';
 export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
   @ViewChild('matDrawer', { static: true }) matDrawer: MatDrawer;
   drawerMode: 'side' | 'over';
-  open: boolean = true;
+  open: boolean = false;
 
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
@@ -39,7 +39,7 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
     private agendaReferenciaService: AgendaReferenciacionService,
     private _gestionPagaduriaService: GestionPagaduriaService,
     private _fuseMediaWatcherService: FuseMediaWatcherService,
-    
+
     private _changeDetectorRef: ChangeDetectorRef,
     private router: Router) { }
 
@@ -49,7 +49,10 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
 
     // Subscribe to MatDrawer opened change
     this.matDrawer.openedChange.subscribe((opened) => {
+      this.open = opened;
       if (!opened) {
+        this.getAgendaComercial();
+
         // Remove the selected contact when drawer closed
         // this.selectedContact = null;
 
@@ -81,12 +84,10 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
      * On backdrop clicked
      */
   onBackdropClicked(): void {
-    this.open = false;
     this._changeDetectorRef.markForCheck();
   }
 
   mostrarDetalle() {
-    this.open = true;
     this._changeDetectorRef.markForCheck();
 
   }
@@ -155,8 +156,9 @@ export class ListadoPagaduriasComponent implements OnInit, OnDestroy {
     this.mostrarTotales = estado;
   }
 
-  detalle(pagaduria){
-    this.router.navigate([`parametria/gestion-pagaduria/${pagaduria}`]);
+  detalle(pagaduria) {
+    this.open = true;
+    this.router.navigate([`/pagaduria/parametria/gestion-pagaduria/${pagaduria}`]);
   }
 
   ngOnDestroy(): void {

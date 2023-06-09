@@ -52,8 +52,17 @@ export class FabricaCreditoService {
         return this._http.post(this._appSettings.fabricaDatos.url.resumenes, datos);
 
     }
+     /**
+    * @description: resumenes de credito
+    */
+     public getResumenCreditoPagadueia(datos): Observable<any> {
+        const { numeroSolicitud } = datos;
+        return this._http.get(`${this._appSettings.fabricaDatos.url.resumenesPagaduria}/${numeroSolicitud}`);
+        // return this._http.post(this._appSettings.fabricaDatos.url.resumenesPagaduria, datos);
+
+    }
     /**
-* @description: resumenes de credito
+* @description: resumenes de credito pagaduria
 */
     public getHistoricoCliente(datos): Observable<any> {
         // return this._http.get(this._appSettings.fabricaDatos.url.resumenes);

@@ -1,0 +1,53 @@
+<!-- Menu -->
+<div class="flex items-center mt-8 mb-4 lg:m-0 lg:ml-auto space-x-6">
+    <div class="menu flex flex-row overflow-auto scrollbar-hide h-auto py-4 px-2 scroll-smooth">
+
+        <ng-container ngSwitch=""></ng-container>
+
+
+        <ng-container [ngSwitch]="apiData">
+            <div *ngSwitchCase="'resumen'">
+
+                <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right touch-auto" (click)="irAtras()"
+                    [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atrás"
+                    style="touch-action: auto !important;">
+                    <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
+                </button>
+
+                <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
+                    (click)="abrirDecision()" [ngClass]="animacionVer==true?'show':'hidden'">
+                    <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
+                </button>
+
+                <button mat-fab class="mx-1 bg-blue-500" matTooltip="Menú"
+                    (click)="animacionVer=animacionVer==true?false:true">
+                    <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
+                </button>
+            </div>
+
+            <div *ngSwitchCase="'pagaduria'">
+
+                <!-- <button mat-fab class="mx-1 bg-orange-500 roll-in-blurred-right touch-auto" (click)="irAtras()"
+                    [ngClass]="animacionVer==true?'show':'hidden'" matTooltip="Ir atrás"
+                    style="touch-action: auto !important;">
+                    <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
+                </button> -->
+                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" matTooltip="Nueva pagaduria"
+                    (click)="nuevaPagaduria()" [ngClass]="animacionVer==true?'show':'hidden'">
+                    <mat-icon svgIcon="add"></mat-icon>
+                </button>
+                <button mat-fab class="mx-1 bg-blue-500" matTooltip="Menú"
+                    (click)="animacionVer=animacionVer==true?false:true">
+                    <mat-icon svgIcon="heroicons_outline:adjustments"></mat-icon>
+                </button>
+            </div>
+
+
+
+            <div *ngSwitchDefault>
+                <!-- Código a ejecutar si no coincide con ninguna opción -->
+            </div>
+        </ng-container>
+    </div>
+
+</div>

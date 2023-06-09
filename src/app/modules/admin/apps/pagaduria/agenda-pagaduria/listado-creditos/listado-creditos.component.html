@@ -137,7 +137,7 @@
                                         </div>
                                     </td>
                                     <td class="px-2 pb-1 pt-1">
-                                        <div class="flex w-24">
+                                        <div class="flex">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
                                                     Datos del crédito
@@ -150,13 +150,13 @@
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:currency-dollar">
                                                     </mat-icon>
-                                                    <strong> Valor cuota:</strong>  {{ item.valorCuota}}
+                                                    <strong> Valor cuota:</strong> $ {{ item.valorCuota | number:0 }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon 
-                                                        class="icon-size-3"  svgIcon="heroicons_outline:arrow-long-up">
+                                                        class="icon-size-3"  svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
-                                                    <strong>Destino</strong>  {{ item.agencia}}
+                                                    <strong>Destino</strong>  {{ item.destino}}
                                                     
                                                 </span>
                                             </div>

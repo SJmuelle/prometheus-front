@@ -33,12 +33,14 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="flex items-center">
-                        <button class="ml-4" mat-flat-button [color]="'primary'"  [routerLink]="['./222755']" (click)="mostrarDetalle()">
+                    <div class="flex items-center">
+                        <!-- <button class="ml-4" mat-flat-button [color]="'primary'"  [routerLink]="['./222755']" (click)="mostrarDetalle()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                             <span class="ml-2 mr-1">Listado</span>
-                        </button>
-                    </div> -->
+                        </button> -->
+
+                        <app-botonera-pagaduria [apiData]="'pagaduria'"></app-botonera-pagaduria>
+                    </div>
 
                 </div>
 
@@ -66,7 +68,7 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Codigo</th>
+                                            <th>Código</th>
                                             <th>Nombre</th>
                                             <th class="text-center">Estado</th>
                                         </tr>

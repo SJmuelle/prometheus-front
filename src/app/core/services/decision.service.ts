@@ -59,4 +59,11 @@ export class DecisionService {
     return this._http.get(this._appSettings.decision.url.baseCausalRechazo);
   }
 
+    /**
+   * @description: Obtiene el listado de causales
+   */
+    public getCausalesAgendaPagaduria(): Observable<any> {
+      return this._http.get(this._appSettings.decision.url.baseCausalRechazoPagaduria);
+    }
+
 }

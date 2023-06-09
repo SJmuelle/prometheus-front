@@ -33,6 +33,7 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
 import { SharedModule } from 'app/shared/shared.module';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { GestionFabricaCreditoModule } from '../../fabrica-credito/gestion-fabrica-credito/gestion-fabrica-credito.module';
+import { OpcionesPagaduriaModule } from '../opciones-pagaduria/opciones-pagaduria.module';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { GestionFabricaCreditoModule } from '../../fabrica-credito/gestion-fabri
     SharedModule,
     MatListModule,
     GestionFabricaCreditoModule,
+    OpcionesPagaduriaModule
   ]
 })
 export class AgendaPagaduriaModule { }

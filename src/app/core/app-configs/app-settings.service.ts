@@ -139,6 +139,7 @@ export class AppSettingsService {
             agendaReferenciacionGuardarPregunta: EndPoints.uri('/credito/fabrica/guardado-preguntas-referenciacion'),
             PostagendaReferenciacion: EndPoints.uri('/credito/tk/formulario-solicitud-tabs'),
             resumenes: EndPoints.uri('/credito/tk/property/cards-informacion-decision'),
+            resumenesPagaduria: EndPoints.uri('/generic/qry/obtener-resumen-credito-pagaduria'),
             historicoCliente: EndPoints.uri('/generic/qry/obtener-otros-creditos-vigentes'),
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
@@ -180,6 +181,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/consulta-lista-generica'),
             basetk: EndPoints.uri('/generic/qry/tk'),
+            baseGenerica: EndPoints.uri('/generic/qry'),
             unidadNegocio: EndPoints.uri('/generic/qry/obtener-unidad-negocio'),
             referenciaComercial: EndPoints.uri('/generic/qry/consulta-lista-generica/RELACION-COMERCIAL')
         }
@@ -298,6 +300,7 @@ export class AppSettingsService {
             baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
+            baseCausalRechazoPagaduria: EndPoints.uri('/generic/qry/cau-rechazo-pagaduria'),
             baseCauDesestimiento: EndPoints.uri('/generic/cau-desestimiento'),
             baseCausalAprobacion: EndPoints.uri('/generic/cau-aprobacion'),
             baseCausalAnulacion: EndPoints.uri('/generic/cau-anulacion'),
@@ -490,7 +493,8 @@ export class AppSettingsService {
             eliminar: EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
             editar: EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
             informacion: EndPoints.uri('/generic/cre-lib-info-pagadurias'),
-            crear: EndPoints.uri('/generic/cre-lib-guardar-pagaduria')
+            crear: EndPoints.uri('/generic/cre-lib-guardar-pagaduria'),
+            actualizar: EndPoints.uri('/generic/cre-lib-actualizar-pagaduria')
 
         }
     }

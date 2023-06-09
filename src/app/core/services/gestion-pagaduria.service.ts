@@ -12,19 +12,27 @@ export class GestionPagaduriaService {
     private _http: HttpClient,
     private _appSettings: AppSettingsService
     
-  ) { }
+  ) { } 
 
   public getPagaduria(): Observable<any>{
     const  usuario=JSON.parse(localStorage.getItem("usuario"));
     return this._http.get(`${this._appSettings.gestionPagaduria.url.pagadurias}/${usuario.user}`);
   } 
 
-  public getPlazos(usuario:string): Observable<any>{
+  public getPlazos(): Observable<any>{
+    const  usuario=JSON.parse(localStorage.getItem("usuario"));
     return this._http.get(`${this._appSettings.gestionPagaduria.url.configuracion}/${usuario}`);
   
 }
 public postInformacionPagadurias(data): Observable<any> {
   return this._http.post(this._appSettings.gestionPagaduria.url.informacion, data)
+  .pipe(map((res: any) => {
+    return res;
+  }));
+}
+
+public UpdateInformacionPagadurias(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.actualizar, data)
   .pipe(map((res: any) => {
     return res;
   }));

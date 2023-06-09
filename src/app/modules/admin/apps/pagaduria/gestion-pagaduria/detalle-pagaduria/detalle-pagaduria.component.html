@@ -1,20 +1,18 @@
-<p>detalle-pagaduria works!</p>
 <div class="flex flex-col w-full">
 
 
 
     <!-- Header -->
     <div class="relative w-full px-8 sm:px-12 bg-blue-200 dark:bg-accent-700">
-
         <div class="mt-3 flex items-center justify-end w-full max-w-3xl mx-auto pt-6">
             <a mat-icon-button [matTooltip]="'Cerrar'" [routerLink]="['../']" (click)="closeDrawer();">
                 <mat-icon class="text-white" [svgIcon]="'heroicons_outline:x'"></mat-icon>
             </a>
         </div>
-    </div> 
+    </div>
 
     <!-- Contact -->
-    <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+    <div class="relative flex flex-col flex-auto items-center px-6 pt-0 sm:px-12 sm:pt-0">
         <div class="w-full max-w-3xl">
 
             <!-- Avatar and actions -->
@@ -25,23 +23,25 @@
 
                     <div
                         class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-8xl font-bold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                        <!-- {{credito.cliente.charAt(0)}} -->a
+                        {{datos?datos.razonSocial.charAt(0):'N'}}
                     </div>
                 </div>
                 <!-- Actions -->
-                <!-- <div class="flex items-center ml-auto mb-1">
-                    <button mat-stroked-button>
+                <div class="flex items-center ml-auto mb-1" *ngIf="editar==false">
+                    <button mat-stroked-button (click)="editar=true">
                         <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:pencil-alt'"></mat-icon>
-                        <span class="ml-2">Gestionar</span>
+                        <span class="ml-2">Actualizar</span>
                     </button>
-                </div> -->
+                </div>
             </div>
 
-            <!-- Name -->
-            <div class="mt-3 text-3xl font-bold truncate">a</div>
+            <ng-container *ngIf="datos">
+                <ng-container *ngIf="!editar">
+                    <!-- Name -->
+                    <div class="mt-3 text-3xl font-bold truncate">{{datos.razonSocial.toUpperCase()}}</div>
 
-            <!-- Tags -->
-            <!-- <ng-container>
+                    <!-- Tags -->
+                    <!-- <ng-container>
                 <div class="flex flex-wrap items-center mt-2">
                     <ng-container>
                         <div
@@ -52,185 +52,286 @@
                 </div>
             </ng-container> -->
 
-            <div class=" mt-4 leading-6">
-                <strong>Condiciones iniciales del crédito</strong>
-            </div>
-            <div class="flex flex-col pt-6 border-t space-y-8">
-                <!-- Linea de negocio -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'heroicons_outline:briefcase'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Linea de negocio:</strong> a
-                        </div>
+                    <div class=" mt-4 leading-6">
+                        <strong>Información del la pagaduria</strong>
                     </div>
-                </ng-container>
+                    <div class="flex flex-col pt-6 border-t space-y-8">
+                        <!-- Linea de negocio -->
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:briefcase'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Nit:</strong> {{datos.documento}}<strong
+                                        class="ml-8">DV:</strong>{{datos.dv}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!-- Fecha de desembolso -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'heroicons_outline:calendar'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Fecha de desembolso:</strong>a
-                        </div>
-                    </div>
-                </ng-container>
+                        <!--Dirección del codeudor -->
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'mat_outline:person_pin_circle'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Dirección</strong> {{datos.direccion}} {{datos.municipio}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Valor desembolso -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'heroicons_outline:currency-dollar'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Valor desembolso:</strong> a
-                        </div>
-                    </div>
-                </ng-container>
 
-                <!--Valor cuota -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'heroicons_solid:academic-cap'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Valor cuota:</strong> a
-                        </div>
-                    </div>
-                </ng-container>
+                        <!--Teléfono del titular -->
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'mat_outline:local_phone'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Teléfono:</strong> {{datos.telefono}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Plazo -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:today'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Plazo:</strong>a
-                        </div>
-                    </div>
-                </ng-container>
+                        <!--Teléfono del titular -->
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'feather:mail'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Correo:</strong> {{datos.correo}}
+                                </div>
+                            </div>
+                        </ng-container>
+                        <!--Valor desembolso -->
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:currency-dollar'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Porcentaje ingresos brutos</strong> {{datos.porcentajeIngresosBrutos}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Nombre del codeudor -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:person'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Nombre del codeudor:</strong> a
-                        </div>
-                    </div>
-                </ng-container>
+                        <!--Valor desembolso -->
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:currency-dollar'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Tipo de empresa</strong> {{datos.tipoEmpresa}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Dirección del codeudor -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:person_pin_circle'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Dirección del codeudor:</strong>a
-                        </div>
-                    </div>
-                </ng-container>
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Tipo de empresa</strong> {{datos.empresaAliada?'SI':'NO'}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Nombre del negocio -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:business'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Nombre del negocio:</strong>  ---
-                        </div>
-                    </div>
-                </ng-container>
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Convenio especial temporal</strong>
+                                    {{datos.convenioEspecialTemporal?'SI':'NO'}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Teléfono del titular -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:local_phone'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Teléfono del titular:</strong> a
-                        </div>
-                    </div>
-                </ng-container>
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Contrato fijo</strong> {{datos.contratoFijo?'SI':'NO'}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!--Teléfono del codeudor -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:contact_phone'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Teléfono del codeudor:</strong>a
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-            <div class=" mt-4 leading-6">
-                <strong>Información histórica</strong>
-            </div>
-            <div class="flex flex-col pt-6 border-t space-y-8">
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>Requiere carta laboral</strong> {{datos.requiereCartaLaboral?'SI':'NO'}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!-- Número de refinanciaciones -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:format_list_numbered'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Número de refinanciaciones:</strong> ---
-                        </div>
-                    </div>
-                </ng-container>
+                        <ng-container>
+                            <div class="flex sm:items-center">
+                                <mat-icon [svgIcon]="'heroicons_outline:check'"></mat-icon>
+                                <div class="ml-6 leading-6">
+                                    <strong>liqSinPagaduria</strong> {{datos.liqSinPagaduria?'SI':'NO'}}
+                                </div>
+                            </div>
+                        </ng-container>
 
-                <!-- Número de congela tu deuda -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:format_list_numbered_rtl'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Número de congela tu deuda:</strong> ---
-                        </div>
                     </div>
-                </ng-container>
 
-                <!-- Resultado última gestión -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'heroicons_outline:clipboard'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Resultado última gestión:</strong> Micro
-                        </div>
-                    </div>
-                </ng-container>
 
-                 <!-- Fecha última gestión -->
-                 <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:today'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Fecha última gestión:</strong> ---
-                        </div>
-                    </div>
-                </ng-container>
 
-                <!-- Valor último pago -->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_solid:attach_money'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Valor último pago:</strong> ---
-                        </div>
-                    </div>
-                </ng-container>
 
-                 <!-- Fecha último pago -->
-                 <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_outline:today'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Fecha último pago:</strong> ---
-                        </div>
-                    </div>
+                    <div class="m-7"></div>
                 </ng-container>
+            </ng-container>
 
-                <!-- Valor recaudado-->
-                <ng-container>
-                    <div class="flex sm:items-center">
-                        <mat-icon [svgIcon]="'mat_solid:attach_money'"></mat-icon>
-                        <div class="ml-6 leading-6">
-                            <strong>Valor recaudado:</strong> ---
-                        </div>
+            <ng-container *ngIf="editar">
+
+                <form [formGroup]="form">
+                    <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Nit</mat-label>
+                            <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
+                                autocomplete="off" [formControlName]="'documento'">
+                            <mat-error *ngIf="form.controls.documento.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.documento.errors?.pattern">
+                                Cantidad de números de 5-10.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>DV</mat-label>
+                            <input matInput type="number" autocomplete="off" [formControlName]="'dv'">
+                            <mat-error *ngIf="form.controls.dv.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.dv.errors?.pattern">
+                                Cantidad de números de 1.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="col-span-2 w-full fuse-mat-dense">
+                            <mat-label>Razón social</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="razonSocial">
+                            <mat-error *ngIf="form.controls.razonSocial.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Télefono</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="telefono"
+                                mask="(000) 000 00 00">
+                            <mat-error *ngIf="form.controls.telefono.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.telefono.errors?.pattern">
+                                Debe comenzar en 3 y tener 10 digitos
+                            </mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input matInput type="email" autocomplete="off" formControlName="correo">
+                            <mat-error *ngIf="form.controls.correo.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.correo.errors?.email">
+                                Email invalido.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <ng-container *ngIf="departamentos$ | async as departamentos">
+                            <mat-form-field>
+                                <mat-label>Departamento de residencia</mat-label>
+                                <mat-select (selectionChange)="seleccionDepartamento($event)" [value]="'seleccione'"
+                                    [formControlName]="'departamento'" [required]="">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let departamento of departamentos.data"
+                                        [value]="departamento.codigo">{{departamento.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.departamento.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngIf="ciudades$ | async as ciudades">
+                            <mat-form-field>
+                                <mat-label>Ciudad de residencia</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'municipio'"
+                                    (selectionChange)="seleccionCiudad($event)" [required]="">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let ciudad of ciudades.data" [value]="ciudad.codigo">
+                                        {{ciudad.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.municipio.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <mat-form-field class="col-span-2 w-full fuse-mat-dense">
+                            <mat-label>Dirección</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="direccion">
+                            <mat-error *ngIf="form.controls.razonSocial.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <ng-container *ngIf="tipoEmpresa$ | async as tipo">
+                            <mat-form-field class="w-full fuse-mat-dense">
+                                <mat-label>Tipo empresa</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'tipoEmpresa'" [required]="">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="let data of tipo.data" [value]="data.cod_tipo_empresa">
+                                        {{data.tipo_empresa}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.municipio.tipoEmpresa?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <mat-label>Porcentaje ingresos brutos</mat-label>
+                            <input mask="separator.2" separatorLimit="10" matInput type="text" autocomplete="off"
+                                [formControlName]="'porcentajeIngresosBrutos'">
+                            <mat-error *ngIf="form.controls.porcentajeIngresosBrutos.errors?.required">
+                                Este campo es requerido.
+                            </mat-error>
+                            <mat-error *ngIf="form.controls.porcentajeIngresosBrutos.errors?.pattern">
+                                Cantidad de números de 5-10.
+                            </mat-error>
+                        </mat-form-field>
+
+                        <p><mat-checkbox formControlName="empresaAliada">Empresa aliada</mat-checkbox></p>
+                        <p><mat-checkbox formControlName="convenioEspecialTemporal">Convenio especial
+                                temporal</mat-checkbox></p>
+                        <p><mat-checkbox formControlName="contratoFijo">Contrato fijo</mat-checkbox></p>
+                        <p><mat-checkbox formControlName="requiereCartaLaboral">Requiere carta laboral</mat-checkbox>
+                        </p>
+                        <p><mat-checkbox formControlName="liqSinPagaduria">liqSinPagaduria</mat-checkbox></p>
                     </div>
-                </ng-container>
-            </div>
+
+
+                    <div
+                        class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent">
+                        <button *ngIf="!nuevo" mat-raised-button color="warning" type="button" (click)="inactivar()"
+                            class="mat-mdc-tooltip-trigger mdc-button mat-mdc-button mat-warn mat-mdc-button-base">
+                            <span>
+                                Inactivar
+                            </span>
+                        </button>
+                        <button mat-raised-button type="button" (click)="editar=false"
+                            class="mat-mdc-tooltip-trigger ml-auto mdc-button mat-mdc-button mat-unthemed mat-mdc-button-base">
+                            <span> Cancelar </span>
+                        </button>
+                        <button mat-raised-button color="primary" class="mx-3" type="button" (click)="save()">
+                            Guardar
+                        </button>
+                    </div>
+
+
+
+                </form>
+            </ng-container>
+
         </div>
     </div>
 

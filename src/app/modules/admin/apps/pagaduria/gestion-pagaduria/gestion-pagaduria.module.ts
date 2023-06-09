@@ -34,6 +34,9 @@ import { AgendaReferenciacionModule } from '../../fabrica-credito/agenda-referen
 import { GestionFabricaCreditoModule } from '../../fabrica-credito/gestion-fabrica-credito/gestion-fabrica-credito.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { DetallePagaduriaComponent } from './detalle-pagaduria/detalle-pagaduria.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { OpcionesPagaduriaModule } from '../opciones-pagaduria/opciones-pagaduria.module';
 
 
 @NgModule({
@@ -76,7 +79,10 @@ import { DetallePagaduriaComponent } from './detalle-pagaduria/detalle-pagaduria
     SharedModule,
     MatListModule,
     GestionFabricaCreditoModule,
-    MatSidenavModule
+    MatSidenavModule,
+    NgxMaskModule.forRoot(),
+    MatCheckboxModule,
+    OpcionesPagaduriaModule
   ]
 })
 export class GestionPagaduriaModule { }
