@@ -524,21 +524,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             direccion: this.form.get('direccionNegocio').value
         };
 
-        this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-            const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
-            const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
-
-            L.marker([latitudNegocio, longitudNegocio],{
-                icon: L.icon({
-                    iconUrl: this.iconUrl,
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 20],
-                  })
-            }).addTo(this.map)
-                .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-                .openPopup();
-        })
-
+        
         if (!this.map) {
             const GoogleMaps = L.tileLayer(
                 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
@@ -557,13 +543,27 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 center: [11.004313, -74.808137],
                 zoom: 20,
                 attributionControl: false,
-                whenReady: () => { this.map.invalidateSize(); }
             });
 
             setTimeout(() => {
                 this.map.invalidateSize();
             }, 500);
+            
         }
+
+        this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+            const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+
+            L.marker([latitudNegocio, longitudNegocio],{
+                icon: L.icon({
+                    iconUrl: this.iconUrl,
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 20],
+                  })
+            }).addTo(this.map)
+        })
+
     }
 
     reSize() {
