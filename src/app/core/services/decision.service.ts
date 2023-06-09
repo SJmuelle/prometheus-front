@@ -26,6 +26,13 @@ export class DecisionService {
   }
 
   /**
+   * @description: Envia mensaje a asesor
+   */
+  public postSMSUnidades(data: any): Observable<any> {
+    return this._http.post(this._appSettings.decision.url.smsUnidades, data);
+  }
+
+  /**
  * @description: Guarda la decision de aprobado agenda de comite comercial
  */
   public postAprobado(data: any): Observable<any> {

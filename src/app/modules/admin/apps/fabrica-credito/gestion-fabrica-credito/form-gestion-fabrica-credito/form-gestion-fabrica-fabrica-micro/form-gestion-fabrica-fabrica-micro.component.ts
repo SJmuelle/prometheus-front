@@ -51,16 +51,16 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public descripcionScore: any;
     public decisionFiltrosDuros: any;
     public agendaActual: string;
-    public currentScoreColor: 'red' | 'orange' | 'yellow' | 'light-green' | 'green'
+    public currentScoreColor: 'red' | 'orange' | 'yellow' | 'light-green' | 'green';
+
+    markers: any[] = [];
 
     fechaActual: any = moment().locale("co");
     map: L.map;
-     iconUrl = 'data:image/svg+xml,' +
-      encodeURIComponent(
-        '<svg width="14" height="19" viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 19C5.73693 17.9227 4.56619 16.7416 3.5 15.4691C1.9 13.5581 8.83662e-07 10.712 8.83662e-07 8.00005C-0.00141728 5.1676 1.70425 2.61344 4.32107 1.52945C6.93789 0.445455 9.95007 1.04529 11.952 3.04905C13.2685 4.35966 14.0059 6.14244 14 8.00005C14 10.712 12.1 13.5581 10.5 15.4691C9.43382 16.7416 8.26307 17.9227 7 19ZM7 5.00005C5.92821 5.00005 4.93782 5.57185 4.40193 6.50005C3.86603 7.42825 3.86603 8.57185 4.40193 9.50005C4.93782 10.4283 5.92821 11.0001 7 11.0001C8.65686 11.0001 10 9.6569 10 8.00005C10 6.3432 8.65686 5.00005 7 5.00005Z" fill="' +
-        'red' +
-        '"/></svg>'
-      );
+    iconUrl = 'data:image/svg+xml,' +
+        encodeURIComponent(
+            '<svg height="240px" width="240px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-30.74 -30.74 573.81 573.81" xml:space="preserve" fill="#000000" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)" stroke="#000000" stroke-width="0.00512332"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fbf9f9" stroke-width="51.2332"> <path style="fill:#1e293b;" d="M125.6,55.063L125.6,55.063c-65.324,64.441-72.386,165.076-21.186,236.579l75.917,106.814 l75.917,113.876l78.566-117.407l70.621-99.752c53.848-72.386,47.669-175.669-18.538-240.993l0,0 C314.51-18.206,197.986-18.206,125.6,55.063"></path> <path style="fill:#ffffff;" d="M397.49,185.711c0-77.683-63.559-141.241-141.241-141.241s-141.241,63.559-141.241,141.241 s63.559,141.241,141.241,141.241S397.49,263.394,397.49,185.711"></path> <g> <polygon style="fill:#1e293b;" points="256.248,88.607 159.145,185.711 185.628,212.194 256.248,141.573 256.248,141.573 256.248,141.573 326.869,212.194 353.352,185.711 "></polygon> <polygon style="fill:#1e293b;" points="256.248,141.573 203.283,194.538 203.283,256.332 309.214,256.332 309.214,194.538 "></polygon> </g> </g><g id="SVGRepo_iconCarrier"> <path style="fill:#1e293b;" d="M125.6,55.063L125.6,55.063c-65.324,64.441-72.386,165.076-21.186,236.579l75.917,106.814 l75.917,113.876l78.566-117.407l70.621-99.752c53.848-72.386,47.669-175.669-18.538-240.993l0,0 C314.51-18.206,197.986-18.206,125.6,55.063"></path> <path style="fill:#ffffff;" d="M397.49,185.711c0-77.683-63.559-141.241-141.241-141.241s-141.241,63.559-141.241,141.241 s63.559,141.241,141.241,141.241S397.49,263.394,397.49,185.711"></path> <g> <polygon style="fill:#1e293b;" points="256.248,88.607 159.145,185.711 185.628,212.194 256.248,141.573 256.248,141.573 256.248,141.573 326.869,212.194 353.352,185.711 "></polygon> <polygon style="fill:#1e293b;" points="256.248,141.573 203.283,194.538 203.283,256.332 309.214,256.332 309.214,194.538 "></polygon> </g> </g></svg>'
+        );
 
     currentScoreElement: HTMLElement;
 
@@ -387,8 +387,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             ...data
         };
 
-       
-        
+
+
         const postDataLL: geoCodingAddress = {
             departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === datosFormularios.codigoDepartamentoNegocio).nombre,
             ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === datosFormularios.codigoCiudad).nombre,
@@ -524,7 +524,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             direccion: this.form.get('direccionNegocio').value
         };
 
-        
+
         if (!this.map) {
             const GoogleMaps = L.tileLayer(
                 'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
@@ -543,26 +543,58 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 center: [11.004313, -74.808137],
                 zoom: 20,
                 attributionControl: false,
+                zoomControl: false
             });
 
             setTimeout(() => {
                 this.map.invalidateSize();
             }, 500);
-            
         }
 
-        this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-            const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
-            const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+        if(this.mostrarMapaPreview){
+            this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+                const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
 
-            L.marker([latitudNegocio, longitudNegocio],{
-                icon: L.icon({
-                    iconUrl: this.iconUrl,
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 20],
-                  })
-            }).addTo(this.map)
-        })
+                this.markers.forEach((marker) =>{                  
+                    this.map.removeLayer(marker)
+                })
+
+
+                this.markers = []
+    
+                const marker = L.marker([latitudNegocio, longitudNegocio], {
+                    icon: L.icon({
+                        iconUrl: this.iconUrl,
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 20],
+                    })
+                }).addTo(this.map)
+    
+                
+    
+                // const popup = L.popup()
+                //     .setLatLng([latitudNegocio, longitudNegocio])
+                //     .setContent("<div class='text-black text-lg'> Usted esta aquí. </div>")
+                //     .openOn(this.map);
+    
+                let tooltip = L.tooltip([latitudNegocio, longitudNegocio], {
+                    content: "<div class='text-white font-bold flex flex-col w-full justify-center items-center'> <div class='text-xl'>"+ this.form.get('nombreNegocio').value + "</div> <div>" 
+                    +  
+                    this.form.get('direccionNegocio').value
+                    +  "</div> <div class='text-sm'>" + this.barriosNegocio.data.find(barrio => barrio.codigo == this.form.get('codigoBarrioNegocio').value).nombre +"</div>" + 
+                    " </div>",
+                    className: "bg-accent-700 text-white border-none",
+                    permanent: false,
+                    id: 23232333,
+                    offset: L.point(14,-5)
+                  }).addTo(this.map);
+    
+                  this.markers.push(tooltip)
+                this.map.fitBounds([tooltip.getLatLng()]);
+            })
+        }
+       
 
     }
 

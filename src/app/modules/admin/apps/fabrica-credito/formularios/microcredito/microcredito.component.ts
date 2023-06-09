@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { PermisosService } from 'app/core/services/permisos.service';
+import { DecisionService } from 'app/core/services/decision.service';
 @Component({
     selector: 'app-microcredito',
     templateUrl: './microcredito.component.html',
@@ -46,7 +47,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         private router: Router,
         private el: ElementRef,
         private genericaServices: GenericasService,
-        public _permisosService: PermisosService
+        public _permisosService: PermisosService,
+        private decisionService: DecisionService,
     ) { }
 
     ngOnInit(): void {
@@ -417,17 +419,27 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             data.terminosCondiciones = 'S'
 
         Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-        this._formularioCreditoService.postDatos(data).subscribe((datos) => {
+        this._formularioCreditoService.postDatos(data).pipe(takeUntil(this.unSubscribe$)).subscribe((datos) => {
             if(datos.data.resultado === 'OK'){
-                Swal.fire(
-                    'Completado',
-                    datos.data.mensaje,
-                ).then((result) => {
-                    if (result) {
-                        this.form.reset();
-                        this.irAtras()
-                    }
+                const dataAEnviar = {
+                    numeroSolicitud: this.numeroSolicitud ? this.numeroSolicitud : this.numeroSolicitudTemporal,
+                    destino: 'C',
+                    idAgenda: 'V',
+                    concepto: ''
+                }
+                
+                this.decisionService.postSMSUnidades(dataAEnviar).subscribe(respuesta =>{
+                    Swal.fire(
+                        'Completado',
+                        datos.data.mensaje,
+                    ).then((result) => {
+                        if (result) {
+                            this.form.reset();
+                            this.irAtras()
+                        }
+                    })
                 })
+               
             }else{
                 Swal.fire({
                     icon: 'error',
