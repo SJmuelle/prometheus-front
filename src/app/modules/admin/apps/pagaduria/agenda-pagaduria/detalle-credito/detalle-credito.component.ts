@@ -57,9 +57,10 @@ export class DetalleCreditoComponent implements OnInit {
 
     ).subscribe((res) => {
       if (res.status === 200) {
+        Swal.close();
         this.getDatos(res.data);
         this.apiData = res.data;
-        Swal.close();
+  
       } else {
         Swal.close();
         this.datos = []
@@ -72,96 +73,122 @@ export class DetalleCreditoComponent implements OnInit {
     //general
 
     let DatosCredito = []
-    switch (data.resumenGeneral.unidadNegocio) {
 
-      case 22:
-        DatosCredito.push(
+    DatosCredito.push(
+      {
+        titulo: "Información del cliente:",
+        tipo: "campos",
+        icono: "feather:user",
+        color: "text-blue-600",
+        descripcion: "Datos específicos del cliente:",
+        campos: [
           {
-            titulo: "Información del cliente:",
-            tipo: "campos",
-            icono: "feather:user",
-            color: "text-blue-600",
-            descripcion: "Datos específicos del cliente:",
-            campos: [
-              {
-                icono: "heroicons_outline:user-circle",
-                color: "bg-blue-100 text-blue-800",
-                label: "Cliente:",
-                valor: data.resumenCredito.nombreCompleto.toUpperCase(),
-                valor2: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion
-              },
-              {
-                icono: "mat_outline:email",
-                color: "bg-pink-100 text-pink-800",
-                label: "Correo: ",
-                valor:  data.resumenCredito.renovacion,
-              },
-              {
-                icono: "mat_outline:phone_iphone",
-                color: "bg-purple-100 text-purple-800",
-                label: "Celular: ",
-                valor: data.resumenCredito.departamentoVivienda.toLowerCase() + ", " + data.resumenCredito.ciudadVivienda.toLowerCase()
-              }
-            ]
+            icono: "heroicons_outline:user-circle",
+            color: "bg-blue-100 text-blue-800",
+            label: "Cliente:",
+            valor: data.resumenCliente.nombreCompleto,
+            valor2: data.resumenCliente.tipoDocumento + '-' + data.resumenCliente.identificacion
           },
-        )
-        break;
-    }
-
-
-    // resumenCredito
-    switch (data.resumenGeneral.unidadNegocio) {
-      case 22:
-        DatosCredito.push(
           {
-            titulo: "Información laboral",
-            tipo: "campos",
-            icono: "heroicons_outline:briefcase",
-            color: "text-gray-400",
-            descripcion: "Pagaduria",
-            campos: [
-              {
-                icono: "heroicons_outline:briefcase",
-                color: "bg-blue-100 text-blue-800",
-                label: "Pagaduria",
-                // valor: "<span class='text-sm font-medium text-secondary'>Pagaduria </span> " ,
-                valor: data.resumenCredito.nombrePagaduria.toUpperCase(),
-                valor3: "<span class='text-sm font-medium text-secondary'>Cargo </span>" + data.resumenCredito.cargo.toUpperCase(),
-              },
-
-              {
-                icono: "heroicons_outline:document-text",
-                color: "bg-purple-100 text-purple-800",
-                label: "Tipo de contrato",
-                valor: data.resumenCredito.descripcionTipoContrato.toUpperCase()
-              },
-              {
-                icono: "heroicons_outline:calendar",
-                color: "bg-pink-100 text-pink-800",
-                label: "Fechas de contrato",
-                valor2: "<span class='text-sm font-medium text-secondary'>Vinculación: </span>" + data.resumenCredito.fechaVinculacion,
-                valor3: "<span class='text-sm font-medium text-secondary'>Finalización: </span>" + data.resumenCredito.fechaFinalizacionContrato
-              },
-              {
-                icono: "feather:dollar-sign",
-                color: "bg-yellow-100 text-yellow-800",
-                valor2: "<span class='text-sm font-medium text-secondary'>Salario: </span>" + this.separatos(data.resumenCredito.salarioBasico),
-                valor: "<span class='text-sm font-medium text-secondary'>Comision: </span>" + data.resumenCredito.comision,
-                valor3: "<span class='text-sm font-medium text-secondary'>Descuentos: </span>" + data.resumenCredito.descuento
-              },
-              {
-                icono: "mat_outline:download_for_offline",
-                color: "bg-purple-100 text-purple-800",
-                valor5: "Descargar Carta laboral"
-              }
-            ]
+            icono: "mat_outline:email",
+            color: "bg-pink-100 text-pink-800",
+            label: "Correo: ",
+            valor: data.resumenCliente.correo,
           },
-        )
-        break;
-      default:
-        break;
-    }
+          {
+            icono: "mat_outline:phone_iphone",
+            color: "bg-purple-100 text-purple-800",
+            label: "Celular: ",
+            valor: data.resumenCliente.celular 
+          }
+        ]
+      },
+    )
 
+
+    // resumenCliente
+
+    DatosCredito.push(
+      {
+        titulo: "Información laboral",
+        tipo: "campos",
+        icono: "heroicons_outline:briefcase",
+        color: "text-gray-400",
+        descripcion: "Pagaduria",
+        campos: [
+          // {
+          //   icono: "heroicons_outline:briefcase",
+          //   color: "bg-blue-100 text-blue-800",
+          //   label: "Pagaduria",
+          //   // valor: "<span class='text-sm font-medium text-secondary'>Pagaduria </span> " ,
+          //   valor: data.resumenLaboral.nombrePagaduria,
+          //   valor3: "<span class='text-sm font-medium text-secondary'>Cargo </span>" + data.resumenLaboral.cargo,
+          // },
+
+          {
+            icono: "heroicons_outline:document-text",
+            color: "bg-purple-100 text-purple-800",
+            valor3: "<span class='text-sm font-medium text-secondary'>Tipo contrato: </span>" + data.resumenLaboral.tipoContrato,
+            valor2: "<span class='text-sm font-medium text-secondary'>Cargo: </span>" + data.resumenLaboral.cargo,
+          },
+          {
+            icono: "heroicons_outline:calendar",
+            color: "bg-pink-100 text-pink-800",
+            label: "Fechas de contrato",
+            valor2: "<span class='text-sm font-medium text-secondary'>Vinculación: </span>" + data.resumenLaboral.fechaVinculacion,
+            valor3: "<span class='text-sm font-medium text-secondary'>Finalización: </span>" + data.resumenLaboral.fechaFinalizacion
+          },
+          {
+            icono: "feather:dollar-sign",
+            color: "bg-yellow-100 text-yellow-800",
+            valor2: "<span class='text-sm font-medium text-secondary'>Salario: </span> $" + this.separatos(data.resumenLaboral.salarioBasico),
+            valor: "<span class='text-sm font-medium text-secondary'>Comision: </span> $" + this.separatos(data.resumenLaboral.comisiones),
+            valor3: "<span class='text-sm font-medium text-secondary'>Descuentos: </span> $" +this.separatos(data.resumenLaboral.descuentoNomina)
+          },
+          {
+            icono: "mat_outline:download_for_offline",
+            color: "bg-purple-100 text-purple-800",
+            valor5: "Descargar Carta laboral"
+          }
+        ]
+      },
+    )
+
+    DatosCredito.push(
+      {
+        titulo: "Capacidad de pago y oferta",
+        tipo: "campos",
+        icono: "heroicons_outline:briefcase",
+        color: "text-gray-400",
+        descripcion: "Información del crédito",
+        campos: [
+          {
+            icono: "heroicons_outline:document-text",
+            color: "bg-purple-100 text-purple-800",
+            label: "Monto",
+            valor:  "$" +this.separatos(data.resumenCapacidad.monto),
+          },
+          {
+            icono: "heroicons_outline:document-text",
+            color: "bg-purple-100 text-purple-800",
+            label: "Plazo",
+            valor:  data.resumenCapacidad.plazo,
+          },
+          {
+            icono: "heroicons_outline:calendar",
+            color: "bg-pink-100 text-pink-800",
+            label: "Valor cuota",
+            valor: "$" +this.separatos(data.resumenCapacidad.valorCuota),
+          },
+          {
+            icono: "feather:dollar-sign",
+            color: "bg-yellow-100 text-yellow-800",
+            label: "Cartera comprar",
+            valor:  "$" +this.separatos(data.resumenCapacidad.carteraComprar),
+          },
+        ]
+      },
+    )
 
 
 
@@ -189,11 +216,11 @@ export class DetalleCreditoComponent implements OnInit {
   }
 
   capitalize(text: string) {
-    return text.charAt(0).toUpperCase() + text.slice(1).toLocaleLowerCase();
+    return text.charAt(0) + text.slice(1).toLocaleLowerCase();
   }
 
   capitalizeText(text: string) {
-    text = text.toLowerCase()
+    text = text
     let chars = text.split(' ')
 
     chars = chars.map(char => {
@@ -235,16 +262,16 @@ export class DetalleCreditoComponent implements OnInit {
     return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
   }
 
-  descargarArchivo(){
-    this._pagaduriaService.descargarArchivos(this.numeroSolicitud).subscribe((response:any)=>{
-      if(response) {
-        if (response.status==202) {
+  descargarArchivo() {
+    this._pagaduriaService.descargarArchivos(this.numeroSolicitud).subscribe((response: any) => {
+      if (response) {
+        if (response.status == 202) {
           Swal.fire(
             '¡Error!',
             `No existen adjuntos pertenecientes a esta solicitud.`,
             'error'
           ).then();
-        }else{
+        } else {
 
           const archivo = response.data[0].filepath.split(',');
           const extension = 'pdf'
@@ -255,21 +282,21 @@ export class DetalleCreditoComponent implements OnInit {
           link.download = response.data[0].filename
           link.click();
           Swal.close();
-          
+
         }
       }
-    }) 
+    })
   }
 
-    /**
-   * @description: metodo para cargar todas las obligaciones
-   */
-    consultaObligaciones(){
-      this._pagaduriaService.getObligaciones(this.numeroSolicitud).subscribe((response: any) => {
-        if (response) {
-          this.obligaciones = response.data;
-        }
-        this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valor_recoger), 0);
-      });
-    }
+  /**
+ * @description: metodo para cargar todas las obligaciones
+ */
+  consultaObligaciones() {
+    this._pagaduriaService.getObligaciones(this.numeroSolicitud).subscribe((response: any) => {
+      if (response) {
+        this.obligaciones = response.data;
+      }
+      this.total = response.data.reduce((acc, obj) => acc + (1 * obj.valor_recoger), 0);
+    });
+  }
 }
