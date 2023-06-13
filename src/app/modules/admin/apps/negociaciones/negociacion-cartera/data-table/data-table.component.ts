@@ -2,6 +2,9 @@ import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-data-table',
@@ -13,10 +16,12 @@ export class DataTableComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @Input() dataRow: any[] = []
   public dataReport: any = {}
+  public dataFilter: string = ''
   public buttonTable: any = {
     icon: 'heroicons_solid:eye',
-    text: 'reportDispatch.viewHistory',
+    text: 'Editar',
     action: (data) => {
+      console.log('accion disparada')
     },
   };
   public dataOptionTable: any[] = [
@@ -24,6 +29,7 @@ export class DataTableComponent implements OnInit, OnChanges {
       name: 'identificacion',
       text: 'Identificacion',
       typeField: 'text',
+
     },
     {
       name: 'cod_neg',
@@ -39,40 +45,49 @@ export class DataTableComponent implements OnInit, OnChanges {
       name: 'gastos_cobranza',
       text: 'Gastos cobranza',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'saldo_total',
       text: 'Saldo total',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'capital',
       text: 'Capital',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'mora_actual',
       text: 'Mora actual',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'interes_mora',
       text: 'Mora actual',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'Debido',
       text: 'Debido',
       typeField: 'text',
+      pipeName: 'number'
+
     },
+
 
   ];
   public dataSource: MatTableDataSource<any>;
 
-  public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name)];
+  public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name).concat('action')];
   public whitEspace: boolean = false
+  private unsubscribe$ = new Subject<void>();
 
-  constructor() { }
+  constructor(private _tableFilter: TableDataFilterService) { }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -85,6 +100,13 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.dataSource = new MatTableDataSource(this.dataRow);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this._tableFilter.filterTable$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((dataFilter) => {
+        this.dataSource.filter = dataFilter;
+        this.dataFilter = dataFilter;
+      });
   }
 
 

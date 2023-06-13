@@ -10,8 +10,8 @@
                     <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
                         <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
                             <span [ngStyle]="{'white-space': !!whitEspace? 'nowrap' : 'normal'}"
-                                [ngClass]="dataOption.classTailwind">
-                                {{(row[dataOption.name] )}}
+                                [ngClass]="dataOption.classTailwind"> {{(row[dataOption.name] ) | dataTable:
+                                dataOption.pipeName || "text" }}
                             </span>
                         </td>
                     </ng-container>
@@ -55,15 +55,15 @@
                 </ng-container>
             </ng-container>
 
-            <!-- <ng-container *ngIf="this.buttonTable" matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let row">
-            <button class="ml-4" mat-icon-button [matTooltip]="this.buttonTable.text "
-              matTooltipPosition="above" (click)="this.buttonTable.action(row)">
-              <mat-icon [svgIcon]="this.buttonTable.icon"></mat-icon>
-            </button>
-          </td>
-        </ng-container> -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
+                <td mat-cell *matCellDef="let row">
+                    <button class="ml-4" mat-icon-button [matTooltip]="this.buttonTable.text "
+                        matTooltipPosition="above" (click)="this.buttonTable.action(row)">
+                        <mat-icon [svgIcon]="this.buttonTable.icon"></mat-icon>
+                    </button>
+                </td>
+            </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="this.dataColumn"></tr>
             <tr mat-row *matRowDef="let row; columns: this.dataColumn"></tr>

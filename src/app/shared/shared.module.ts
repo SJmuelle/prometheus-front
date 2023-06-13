@@ -49,7 +49,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         FuseDrawerModule,
         FuseCardModule,
         MatTooltipModule,
-        MatSortModule
+        MatSortModule,
+
         // FabricaCreditoModule
 
     ],
@@ -72,11 +73,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatRadioModule,
         MatFormFieldModule,
         MatCardModule,
-        MatSortModule
+        MatSortModule,
 
     ],
     declarations: [
-        DirectionsBasicComponent
+        DirectionsBasicComponent,
+
     ],
 })
 export class SharedModule { }

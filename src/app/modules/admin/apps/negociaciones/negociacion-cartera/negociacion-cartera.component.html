@@ -69,7 +69,7 @@
 
             <div class="w-full sm:w-64 -mt-3 sm:mt-0 rounded-md border-2 border-gray-200 h-10 p-2 flex items-center ">
                 <mat-icon>search</mat-icon>
-                <input type="text" class="ml-2" placeholder="filtrar...">
+                <input (keyup)="filtrar(text.value)" #text type="text" class="ml-2" placeholder="filtrar...">
 
 
             </div>
