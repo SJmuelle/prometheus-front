@@ -159,7 +159,7 @@
 
                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de riesgo</span>
                 <div class="flex justify-start gap-6 sm:flex-row flex-col">
-                    <div *ngIf="agendaActual === 'RE' || agendaActual === 'DE' || agendaActual === 'CO'" class="w-4/12 fixheigh">
+                    <div *ngIf="verScorePermiso()" class="w-4/12 fixheigh">
                         <div class="container scale-50">
                             <svg height="500px" width="500px">
                                 <circle id="red" fill="none" stroke="#bd2727" stroke-width="30" cx="200" cy="200"
@@ -229,7 +229,7 @@
                         </div> -->
                     </div>
                     <div class="sm:w-8/12 w-full  flex flex-col justify-center items-center flex-wrap">
-                        <mat-form-field *ngIf="agendaActual === 'RE' || agendaActual === 'DE' || agendaActual === 'CO'"
+                        <mat-form-field *ngIf="verScorePermiso()"
                             class="mat-form-field-disabled w-full">
                             <mat-label>Resultados filtro duros</mat-label>
                             <input matInput type="text" [value]="decisionFiltrosDuros" [readonly]="true" />
@@ -2622,7 +2622,7 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <ng-container *ngIf="agendaActual === 'RE' || agendaActual === 'DE' || agendaActual === 'CO'">
+                <ng-container *ngIf="verScorePermiso()">
                     <mat-tab>
                         <ng-template matTabLabel>Filtros duros</ng-template>
                         <app-grid-filtros-duros></app-grid-filtros-duros>

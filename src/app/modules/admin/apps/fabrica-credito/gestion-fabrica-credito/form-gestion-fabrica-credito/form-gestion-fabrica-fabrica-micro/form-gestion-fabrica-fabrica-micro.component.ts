@@ -124,7 +124,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     ngOnInit(): void {
         this.cargueInicial();
-        this.addValidation()
         this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
         if (this.permisoEditar) {
@@ -132,12 +131,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         }
         this.getSalarioMinimo();
         this.marginTopInputDynamic();
-
     }
+
 
     updatePointer(score, minScore, maxScore) {
         let porcentaje = 0;
-        const maxRotate = 336
+        const maxRotate = 330
         const minRotate = 35;
         const maxTranslate = -100;
 
@@ -399,8 +398,6 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             datosFormularios.latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
             datosFormularios.longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
 
-            console.log('data a enviar', datosFormularios);
-
             Swal.fire({
                 title: 'Guardar información',
                 text: '¿Está seguro de guardar información?',
@@ -480,6 +477,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             numeroSolicitud: numeroSolicitud,
             identificacion: identificacion
         }
+        
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
@@ -488,21 +486,22 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     codigoBarrio: data.codigoBarrio,
                     score: data.score
                 });
+
                 this.agendaActual = data.agenda
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;
+                
                 this.setCurrentScoreUI()
-                if (this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO') {
+                this.decisionFiltrosDuros = data.decisionFiltrosDuros
+                this.unidadNegocio = data.unidadNegocio;
+                this.fabricaDatos = data;
+                
+                if (this.verScorePermiso()) {
                     setTimeout(() => {
                         this.updateScore(this.score)
                     }, 2000);
                 }
-
-
-                this.decisionFiltrosDuros = data.decisionFiltrosDuros
-                this.unidadNegocio = data.unidadNegocio;
-                this.fabricaDatos = data;
-
+                
 
             });
     }
@@ -511,13 +510,12 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
         //Add 'implements AfterViewInit' to the class.
 
-
+        this.addValidation()
     }
 
     cargarMap() {
         this.mostrarMapaPreview = !this.mostrarMapaPreview
 
-        console.log('ciudades', this.form.get('codigoCiudadNegocio').value);
         const postDataLL: geoCodingAddress = {
             departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === this.form.get('codigoDepartamentoNegocio').value).nombre,
             ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === this.form.get('codigoCiudadNegocio').value).nombre,
@@ -1511,5 +1509,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.unSubscribe$.complete();
     }
 
-
+    public verScorePermiso():boolean{
+        if(this.fabricaDatos.observaScoreTrazabilidad === 'S'){
+            return true;
+        }else{
+            return this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO' 
+        }
+    }
 }
