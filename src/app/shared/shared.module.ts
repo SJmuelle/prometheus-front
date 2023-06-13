@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DirectionsBasicComponent } from './modal/directions-basic/directions-basic.component';
+import { MatSortModule } from '@angular/material/sort';
 // import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fabrica-opciones.component';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseDrawerModule } from '@fuse/components/drawer';
@@ -48,6 +49,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         FuseDrawerModule,
         FuseCardModule,
         MatTooltipModule,
+        MatSortModule
         // FabricaCreditoModule
 
     ],
@@ -69,10 +71,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatDialogModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatCardModule
+        MatCardModule,
+        MatSortModule
+
     ],
     declarations: [
-    DirectionsBasicComponent
-  ],
+        DirectionsBasicComponent
+    ],
 })
-export class SharedModule {}
+export class SharedModule { }
