@@ -6,6 +6,9 @@ import { AsignarSolicitudesService } from 'app/core/services/asignar-solicitudes
 import moment from 'moment';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective, FormControl } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { AuthService } from 'app/core/auth/auth.service';
+import { Subject } from 'rxjs';
+import {  takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-solicitudes',
@@ -41,10 +44,11 @@ export class ListSolicitudesComponent implements OnInit {
   agenda:string = '';
   fecha:string = '';
   rol:number;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
   public page: number = 1;
   public tamanoTabl = new FormControl("20");
 
-  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef) {
+  constructor(public dialog: MatDialog, public asigService: AsignarSolicitudesService, private fb: FormBuilder,private el: ElementRef, private refreshToken: AuthService) {
     this.buscarForm = this.fb.group({
       analista: [''],
       fechaInicial: [''],
@@ -57,9 +61,12 @@ export class ListSolicitudesComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
 
   ngOnInit(): void {
-    this.consultarAsesores();
-    this.consultarSolicitudes();
-    this.consultarUnidades();
+    this.refreshToken.signInUsingToken().pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      this.consultarAsesores();
+      this.consultarSolicitudes();
+      this.consultarUnidades();
+    })
+
     this.maxFecha = new Date(this.fechActual);
     this.opcionesBusqueda = [
       {
@@ -136,7 +143,6 @@ export class ListSolicitudesComponent implements OnInit {
       "fecha":this.fechAsignacion
     }
 
-    console.log('evento', );
     if(event.checked){
       this.soliAsignar.push(num);
     }else{
@@ -161,11 +167,9 @@ export class ListSolicitudesComponent implements OnInit {
       Swal.close();
       if (res) {
         this.rol = res.data.rolUsuario.resultado
-        console.log('rol', this.rol);
         
         this.solicitudes = res.data.listadoSolicitud
         this.asignados = res.data.solicitudAsignada;
-        console.log('asignados', this.asignados);
         
       }else{
         this.solicitudes = [];
@@ -377,4 +381,10 @@ export class ListSolicitudesComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this._unsubscribeAll.next()
+    this._unsubscribeAll.complete()
+  }
 }

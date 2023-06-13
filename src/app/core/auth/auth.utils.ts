@@ -168,7 +168,6 @@ export class AuthUtils
 
         // Decode the token using the Base64 decoder
         const decoded = this._urlBase64Decode(parts[1]);
-
         if ( !decoded )
         {
             throw new Error('Cannot decode the token.');
