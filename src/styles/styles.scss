@@ -194,3 +194,7 @@ mat-tab-group > .mat-tab-body-wrapper {
     height: 40px !important;
     min-height: 40px !important;
    }
+
+.text-centerTable > thead > tr > th > .mat-sort-header-container {
+    justify-content: center;
+}

@@ -1,24 +1,161 @@
-<div class="h-full h-screen overflow-auto w-full pb-40 p-10">
-      <div class="grid grid-cols-12 grid-rows-2 w-100 mb-2">
-    <h2 class="text-gray-900 col-span-12 mb-4">
-      Configuración de metas de tiempo
-    </h2>
-    <div class="col-span-12 grid grid-cols-12">
-      <div class="col-span-6">
-        <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
-          Crear nuevo
-        </button>
+<div class="w-100  pt-2 max-h-screen pb-15  rounded-lg flex-col items-center overflow-y-auto">
+  <div class="flex items-center pl-16 pt-6 pb-5 bg-white">
+    <div class="flex-0 w-16 h-16  overflow-hidden">
+      <img src="assets/images/logo/metasTiempoAgendas.png" class="w-full h-full object-cover">
+    </div>
+    <div class="flex-1 mx-3">
+      <div class="text-3xl font-semibold tracking-tight leading-8">
+        Configuración de metas de tiempo
       </div>
-      <div class="col-span-6 justify-self-end">
-        <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em" type="text"
-          autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
-          (ngModelChange)="page = 1" />
-        <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
-          [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30">30</option>
-        </select>
+      <div class="flex items-center">
+        <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+        <div class="font-medium tracking-tight text-secondary">
+          Aquí puedes analizar los tiempos de agendas
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 w-full px-5 pt-2">
+    <div class="flex flex-col w-full cardComentarios rounded-3xl my-4 p-4">
+      <div class=" w-100 my-2">
+
+        <div class="flex justify-between my-2">
+          <div>
+            <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
+              Crear nuevo
+            </button>
+          </div>
+          <div class="justify-self-end">
+            <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em" type="text"
+              autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
+              (ngModelChange)="page = 1" />
+            <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
+              [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div class="w-full  overflow-auto mt-2">
+          <table class="p-0">
+
+            <tbody class="bg-white">
+              <ng-container
+                *ngFor="let item of listado | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
+                <tr class="text-gray-700 border-t border-b ">
+                  <td class="px-2 py-3 text-sm header_fijo my-3">
+                    <img src="assets/images/agendas/{{item.iconoAgenda}}" class="text-current w-9"
+                      matTooltip="{{item.nombreAgenda}}" matTooltipClass="example-tooltip-red"
+                      aria-label="Button that shows a red tooltip">
+                  </td>
+                  <td class="px-2 py-3">
+                    <div class="flex flex-column ">
+                      <small class="text-accent-600 text-xs">Periodo:</small>
+                      <span class="text-md text-black font-medium"> {{
+                        item.periodo}}</span>
+                    </div>
+                  </td>
+                  <td class="px-2 py-3">
+                    <div class="flex flex-column ">
+                      <div class="flex-0 w-12 overflow-hidden">
+                        <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-2 py-3">
+                    <div class="flex">
+                      <div class="flex flex-column ">
+                        <small class="text-accent-600 text-xs">
+                          Rango de horas en agenda
+                        </small>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          0 hasta {{item.rangoInicioFinAgenda}} horas
+                        </span>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          Entre {{item.rangoMedioAgenda}} - {{item.rangoMedioFinAgenda}} horas
+                        </span>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          Más de {{item.rangoTotalAgenda}} horas
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-2 py-3">
+                    <div class="flex">
+                      <div class="flex flex-column ">
+                        <small class="text-accent-600 text-xs">
+                          Rango de horas en fábrica
+                        </small>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          0 hasta {{item.rangoInicioFinAgenda}} horas
+                        </span>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          Entre {{item.rangoMedioAgenda}} - {{item.rangoMedioFinAgenda}} horas
+                        </span>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          Más de {{item.rangoTotalAgenda}} horas
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-2 py-3">
+                    <div class="flex">
+                      <div class="flex flex-column ">
+                        <small class="text-accent-600 text-xs">
+                          Rango de horas totales
+                        </small>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          0 hasta {{item.rangoInicioFinAgenda}} horas
+                        </span>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          Entre {{item.rangoMedioAgenda}} - {{item.rangoMedioFinAgenda}} horas
+                        </span>
+                        <span class="text-xs text-black font-medium">
+                          <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
+                            svgIcon="mat_solid:radio_button_checked">
+                          </mat-icon>
+                          Más de {{item.rangoTotalAgenda}} horas
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid" *ngIf="listado.length>0">
+          <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
+            nextLabel="Siguiente"></pagination-controls>
+        </div>
       </div>
     </div>
   </div>
@@ -103,122 +240,4 @@
     </ng-container>
   </div> -->
 
-  <div class="w-full  overflow-auto mt-2">
-    <table class="p-0">
-
-      <tbody class="bg-white">
-        <ng-container
-          *ngFor="let item of listado | filter:filtrarTabla | paginate: { itemsPerPage: tamanoTabl, currentPage: page }">
-          <tr class="text-gray-700 border-t border-b ">
-            <td class="px-2 py-3 text-sm header_fijo my-3">
-              <img src="assets/images/agendas/{{item.iconoAgenda}}" class="text-current w-9"
-                matTooltip="{{item.nombreAgenda}}"
-                matTooltipClass="example-tooltip-red"
-                aria-label="Button that shows a red tooltip">
-            </td>
-            <td class="px-2 py-3">
-              <div class="flex flex-column ">
-                <small class="text-accent-600 text-xs">Periodo:</small>
-                <span class="text-md text-black font-medium"> {{
-                  item.periodo}}</span>
-              </div>
-            </td>
-            <td class="px-2 py-3">
-              <div class="flex flex-column ">
-                <div class="flex-0 w-12 overflow-hidden">
-                  <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
-                </div>
-              </div>
-            </td>
-            <td class="px-2 py-3">
-              <div class="flex">
-                <div class="flex flex-column ">
-                  <small class="text-accent-600 text-xs">
-                   Rango de horas en agenda
-                  </small>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
-                      svgIcon="mat_solid:radio_button_checked">
-                    </mat-icon>
-                    0 hasta {{item.rangoInicioFinAgenda}} horas
-                  </span>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
-                    svgIcon="mat_solid:radio_button_checked">
-                  </mat-icon>
-                    Entre {{item.rangoMedioAgenda}} - {{item.rangoMedioFinAgenda}} horas
-                  </span>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
-                      svgIcon="mat_solid:radio_button_checked">
-                    </mat-icon>
-                    Más de {{item.rangoTotalAgenda}} horas
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td class="px-2 py-3">
-              <div class="flex">
-                <div class="flex flex-column ">
-                  <small class="text-accent-600 text-xs">
-                   Rango de horas en fábrica
-                  </small>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
-                      svgIcon="mat_solid:radio_button_checked">
-                    </mat-icon>
-                    0 hasta {{item.rangoInicioFinAgenda}} horas
-                  </span>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
-                    svgIcon="mat_solid:radio_button_checked">
-                  </mat-icon>
-                    Entre {{item.rangoMedioAgenda}} - {{item.rangoMedioFinAgenda}} horas
-                  </span>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
-                      svgIcon="mat_solid:radio_button_checked">
-                    </mat-icon>
-                    Más de {{item.rangoTotalAgenda}} horas
-                  </span>
-                </div>
-              </div>
-            </td>
-            <td class="px-2 py-3">
-              <div class="flex">
-                <div class="flex flex-column ">
-                  <small class="text-accent-600 text-xs">
-                   Rango de horas totales
-                  </small>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#38D103'}" class="icon-size-3"
-                      svgIcon="mat_solid:radio_button_checked">
-                    </mat-icon>
-                    0 hasta {{item.rangoInicioFinAgenda}} horas
-                  </span>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#FF9E00'}" class="icon-size-3"
-                    svgIcon="mat_solid:radio_button_checked">
-                  </mat-icon>
-                    Entre {{item.rangoMedioAgenda}} - {{item.rangoMedioFinAgenda}} horas
-                  </span>
-                  <span class="text-xs text-black font-medium">
-                    <mat-icon [ngStyle]="{'color': '#FF3701'}" class="icon-size-3"
-                      svgIcon="mat_solid:radio_button_checked">
-                    </mat-icon>
-                    Más de {{item.rangoTotalAgenda}} horas
-                  </span>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="grid" *ngIf="listado.length>0">
-    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
-      nextLabel="Siguiente"></pagination-controls>
-  </div>
 </div>
