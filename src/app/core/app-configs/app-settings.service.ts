@@ -39,12 +39,12 @@ export class AppSettingsService {
     public transportadora = {
         url: {
             base: EndPoints.uri('/generic/qry/detalle-pronto-pago'),
-            basePropietario:EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
-            baseAceptar:EndPoints.uri('/generic/aceptacion-pronto-pago'),
-            baseRechazar:EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
-            baseTransportadora:EndPoints.uri('/generic/qry/transportadoras'),
-            baseActualizar:EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
-            baseTrazabilidad:EndPoints.uri('/generic/trazabilidad-pronto-pago')
+            basePropietario: EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
+            baseAceptar: EndPoints.uri('/generic/aceptacion-pronto-pago'),
+            baseRechazar: EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
+            baseTransportadora: EndPoints.uri('/generic/qry/transportadoras'),
+            baseActualizar: EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
+            baseTrazabilidad: EndPoints.uri('/generic/trazabilidad-pronto-pago')
         }
     };
 
@@ -462,6 +462,15 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/info-analisis-financiero'),
             guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
+        }
+    };
+
+    /**
+     * @description: End-Point
+     */
+    public negociacionCartera = {
+        url: {
+            base: EndPoints.uri('/generic/qry/negocios-cartera'),
         }
     };
 }
