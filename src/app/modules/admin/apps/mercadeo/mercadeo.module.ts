@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { MercadeoRoutingModule } from './mercadeo-routing.module';
 import { ReporterdMercadeoComponent } from './reporterd-mercadeo/reporterd-mercadeo.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -17,6 +17,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
   imports: [
     CommonModule,
     FormsModule,
+    Ng2SearchPipeModule,
     MercadeoRoutingModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -48,6 +53,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatStepperModule,
     MatExpansionModule,
     MatTooltipModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
   ]
 })
 export class MercadeoModule { }

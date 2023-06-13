@@ -1,51 +1,87 @@
-<h2 mat-dialog-title>{{datos.titulo=='N'?'Nueva':'Actualizar'}} causal {{ datos.id ? '('+datos.id+')' : '' }}</h2>
-<div class="bg-white col-lg-12 col-sm-12  5 ">
-    <div class="row">
-        <div class="bg-white col l12">
-            <div class="row justify-start ">
-                <div class="col-sm-12 col-lg-12">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Nombre</mat-label>
-                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.descripcion"
-                            [required]="datos.titulo=='N'" [disabled]="datos.titulo!='N'">
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard-list'"></mat-icon>
-                    </mat-form-field>
+<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
+    <div class="grid grid-cols-12 w-100 mb-2" >
+        <h2 class="text-gray-900 col-span-12 mb-4">Reporte de envio RD</h2>
+    </div>
+    <div>
+        <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
+            <div class="flex flex-row gap-1.5 w-full" matPrefix>
+                <div>
+                    <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
                 </div>
-                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo=='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Tipo de PQRS </mat-label>
-                        <mat-select [(ngModel)]="datos.idTipo" name="legal" [required]="datos.titulo=='N'">
-                            <mat-option value="{{l.id}}" *ngFor="let l of listadoTipo">{{l.tipoPqrs}}</mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">
-                        </mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Tipo de PQRS </mat-label>
-                        <input matInput type="text" autocomplete="off" name="tipo" [(ngModel)]="datos.idTipo"
-                            disabled>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:key'">
-                        </mat-icon>
-                    </mat-form-field>
-                </div>
-                <div class="col-sm-12 col-lg-12" *ngIf="datos.titulo!='N'">
-                    <mat-form-field class="flex-auto w-100">
-                        <mat-label>Estado</mat-label>
-                        <mat-select [(ngModel)]="datos.estado" name="legal">
-                            <mat-option value="A">Activo</mat-option>
-                            <mat-option value="I">Inactivo</mat-option>
-                        </mat-select>
-                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:check'">
-                        </mat-icon>
-                    </mat-form-field>
+                <div class="margin-button">
+                    Exportar
                 </div>
             </div>
-        </div>
+        </button>
     </div>
+
+    <div class="flex items-center justify-between my-10">
+        
+        <div class="text-secondary font-medium "> <input
+                class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 h-12" type="text"
+                autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                placeholder="Filtrar..."></div>
+
+        <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400 h-12" [formControl]="tamanoTabl"
+            (change)="page=1">
+            <option value="10">10</option>
+            <option value="20"> 20</option>
+            <option value="30"> 30</option>
+        </select>
+
+    </div>
+<div class="h-80 xl:h-140 w-full shadow overflow-y-scroll overflow-x-scroll lg:overflow-x-hidden" >
+    <table>
+        <thead class="bg-gray-100">
+            <tr class="text-lg font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
+              
+             
+                <th class="px-3 py-3 text-center">Identificacion</th>
+                <th class="px-3 py-3 text-center" >Nombres</th>
+                <th class="px-2 py-3 text-center">Codigo Negocio</th>
+                <th class="px-2 py-3 text-center ">Fecha Pago</th>
+                <th class="px-3 py-3 text-center">Valor Cuota</th>
+                <th class="px-4 py-3 text-center">Referencia Pago</th>
+                <th class="px-2 py-3 text-center">Estado</th>
+               <th class="px-2 py-3 text-center">Fecha de Creacion</th>
+               
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            <tr class="text-gray-700" *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }"  >
+                
+                
+          
+                <td class="text-sm border text-center">{{item.identificacion}}</td>
+             
+                <td class="text-md border text-center py-3">{{item.nombre}}</td>
+                <td class="text-md border text-center py-3">{{item.codigo_negocio}}</td>
+                <td class="text-md border text-center py-3">{{item.fecha_pago}}</td>
+                <td class="text-md border text-center py-3">{{item.valor_cuota}}</td>
+                <td class="text-md border text-center py-3">{{item.referencia_pago}}</td>
+                <td class="text-md border text-center py-3">{{item.estado}}</td>
+                <td class="text-md border text-center py-3">{{item.creation_date}}</td>
+            
+               
+            </tr>
+        </tbody>
+    </table>
+    
 </div>
-<mat-dialog-actions align="end">
-    <button mat-button class="color_fintra text-white" (click)="guardar()">Guardar </button>
-    <button mat-button mat-dialog-close class="bg-gray-400 text-white">Cerrar </button>
-</mat-dialog-actions>
+<div class="flex items-center mt-auto">
+    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+    </pagination-controls>
+</div>
+<div>
+    <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
+        <div class="flex flex-row gap-1.5 w-full" matPrefix>
+            <div>
+                <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
+            </div>
+            <div class="margin-button">
+                Exportar
+            </div>
+        </div>
+    </button>
+</div>
+</div>
