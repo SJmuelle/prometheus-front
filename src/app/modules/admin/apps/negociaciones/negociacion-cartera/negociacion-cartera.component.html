@@ -9,7 +9,7 @@
                 Negociación cartera
             </div>
             <div class="flex items-center">
-                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                <mat-icon class="mr-2" svgIcon="heroicons_solid:bell"></mat-icon>
                 <div class="font-medium tracking-tight text-secondary">
                     Aquí puedes realizar negociaciones de cartera
                 </div>
@@ -19,52 +19,67 @@
     </div>
 
     <div
-        class="bg-gray-200 h-auto rounded-xl  flex-col justify-start flex-wrap mt-6 mb-6 ml-6 mr-6 shadow-md border-1 border-gray-100 ">
+        class="bg-white h-auto rounded-xl  flex-col justify-start flex-wrap mt-6 mb-6 ml-6 mr-6 shadow-md border-1 border-gray-100 ">
 
 
 
-        <div class="flex flex-row w-full gap-4 items-center mr-6 ml-6 mt-2 flex-wrap" style="width: 400px;">
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-between mr-6 ml-6 mt-2 flex-wrap">
+            <!-- (selectionChange)="changeDocumentType()" -->
 
-            <mat-form-field class=" fuse-mat-dense mt-3 w-64">
-                <input matInput [(ngModel)]="valueSearch" type="text" required>
-                <mat-select (selectionChange)="changeDocumentType()" class="mr-1.5" [(ngModel)]="seacrhType" matPrefix>
-                    <mat-select-trigger>
-                        <span class="flex items-center gap-2">
-                            <mat-icon *ngIf="seacrhType === 'Cedula' "
-                                svgIcon="heroicons_outline:identification"></mat-icon>
-                            <mat-icon *ngIf="seacrhType === 'Negocio' "
-                                svgIcon="heroicons_outline:clipboard-check"></mat-icon>
-                            <span class="sm:mx-0.5 font-medium text-default">{{seacrhType ==='Cedula'?
-                                'Cedula' : 'Negocio'}}</span>
-                        </span>
-                    </mat-select-trigger>
-                    <ng-container>
-                        <mat-option value="Cedula">
-                            <span class="flex items-center">
-                                <mat-icon svgIcon="heroicons_outline:identification"></mat-icon>
-                                <span class="ml-2 font-medium">{{ 'Cedula' }}</span>
+            <div class="flex gap-6 flex-wrap">
+                <mat-form-field class=" fuse-mat-dense w-full sm:w-64 sm:mt-3 -mt-4">
+                    <input matInput [(ngModel)]="valueSearch" type="text">
+                    <mat-select class="mr-1.5" [(ngModel)]="seacrhType" matPrefix>
+                        <mat-select-trigger>
+                            <span class="flex items-center gap-2">
+                                <mat-icon *ngIf="seacrhType === 'Cedula' "
+                                    svgIcon="heroicons_outline:identification"></mat-icon>
+                                <mat-icon *ngIf="seacrhType === 'Negocio' "
+                                    svgIcon="heroicons_outline:clipboard-check"></mat-icon>
+                                <span class="sm:mx-0.5 font-medium text-default">{{seacrhType ==='Cedula'?
+                                    'Cedula' : 'Negocio'}}</span>
                             </span>
-                        </mat-option>
-                        <mat-option value="Negocio">
-                            <span class="flex items-center">
-                                <mat-icon svgIcon="heroicons_outline:clipboard-check"></mat-icon>
-                                <span class="ml-2 font-medium">{{ 'Negocio' }}</span>
-                            </span>
-                        </mat-option>
-                    </ng-container>
-                </mat-select>
-            </mat-form-field>
+                        </mat-select-trigger>
+                        <ng-container>
+                            <mat-option value="Cedula">
+                                <span class="flex items-center">
+                                    <mat-icon svgIcon="heroicons_outline:identification"></mat-icon>
+                                    <span class="ml-2 font-medium">{{ 'Cedula' }}</span>
+                                </span>
+                            </mat-option>
+                            <mat-option value="Negocio">
+                                <span class="flex items-center">
+                                    <mat-icon svgIcon="heroicons_outline:clipboard-check"></mat-icon>
+                                    <span class="ml-2 font-medium">{{ 'Negocio' }}</span>
+                                </span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
 
-            <button mat-flat-button color="accent" class="p-2 w-32">
-                <mat-icon class="mr-1">search</mat-icon>
-                Consultar
-            </button>
+
+                <button (click)="search()" [disabled]="!valueSearch.length" mat-flat-button color="accent"
+                    class="p-2  w-full sm:w-32 -mt-4 sm:mt-3 mb-2 sm:mb-0">
+                    <mat-icon class="mr-1">search</mat-icon>
+                    Consultar
+                </button>
+
+            </div>
+
+
+            <div class="w-full sm:w-64 -mt-3 sm:mt-0 rounded-md border-2 border-gray-200 h-10 p-2 flex items-center ">
+                <mat-icon>search</mat-icon>
+                <input type="text" class="ml-2" placeholder="filtrar...">
+
+
+            </div>
+
         </div>
 
 
-        <div class=" flex-col mt-2  ml-6 mr-6 flex">
+        <div class=" flex-col mt-3  ml-6 mr-6  mb-4 flex">
 
-            <app-data-table></app-data-table>
+            <app-data-table [dataRow]="dataRow"></app-data-table>
 
         </div>
 
