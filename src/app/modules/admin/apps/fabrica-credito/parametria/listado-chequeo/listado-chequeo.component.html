@@ -65,12 +65,12 @@
                         <td class="px-2 text-sm border text-center">
                             {{ item.nombre }}
                         </td>
-                        <td class="px-2 text-sm border text-center w-0">
-                            <div [ngClass]="
-                                item.estado == 'Inactivo'
-                                    ? 'bg-pink-300'
-                                    : 'bg-green-300'
-                            ">
+                        <td class="px-2 text-sm border text-center w-0" [ngClass]="
+                        item.estado == 'Inactivo'
+                            ? 'bg-pink-300'
+                            : 'bg-green-300'
+                    ">
+                            <div >
                                 <span class="
                                     px-2
                                     py-1
