@@ -16,7 +16,7 @@
 
 
 
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-20 mx-3">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 mb-20 mx-3">
             <ng-container *ngFor="let item of datos;  index as i;">
                 <div
                     class="col-span-2 sm:col-span-1 relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
@@ -70,7 +70,7 @@
 
 
             <div
-                class="col-span-2  relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
+                class="sm:col-span-3  relative flex flex-col flex-auto p-6 pr-3 pb-3 bg-card rounded-2xl shadow overflow-hidden">
                 <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
                     <mat-icon class="icon-size-24 opacity-25 " [ngClass]="'text-orange-800'" [svgIcon]="'heroicons_outline:currency-dollar'">
                     </mat-icon>

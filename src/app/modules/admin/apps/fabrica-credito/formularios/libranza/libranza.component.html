@@ -88,7 +88,7 @@
 
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Correo electrónico</mat-label>
-                <input matInput type="email" (change)="preSolicitud()" autocomplete="off" formControlName="email">
+                <input matInput type="email"  autocomplete="off" formControlName="email">
                 <mat-error *ngIf="form.controls.email.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -119,7 +119,7 @@
                 Datos laborares
             </div>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>Pagduria</mat-label>
+                <mat-label>Pagaduría</mat-label>
                 <mat-select formControlName="pagaduria">
                     <mat-option *ngFor="let empresa of dataInicial?.pagadurias"
                         [value]="empresa.codigo">{{empresa.nombre}}
@@ -130,7 +130,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
-                <mat-label>Otra pagaduria</mat-label>
+                <mat-label>Otra pagaduría</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="otraPagaduria">
                 <mat-error *ngIf="form.controls.otraPagaduria.errors?.required">
                     Este campo es requerido.

@@ -87,7 +87,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
      */
     public onGetAgenda(data: any): void {
         if (data) {
-            const { tipoDocumento, identificacion,numeroSolicitud } = data;
+            const { tipoDocumento, identificacion, numeroSolicitud } = data;
             this.router.navigate([`/credit-factory/formularios/microcredito/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
         } else {
             //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
@@ -97,7 +97,19 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
         }
     }
 
-
+    /**
+      * @description: abre la agenda
+      */
+    public onGetAgendaDigital(data: any, agenda: string): void {
+        if (data) {
+            const { tipoDocumento, identificacion, numeroSolicitud } = data;
+            this.router.navigate([`/credit-factory/formularios/${agenda}/1/${tipoDocumento}/${identificacion}/${numeroSolicitud}`]);
+        } else {
+            //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+            this._permisosService.ruta = 'agenda-comercial';
+            this.router.navigate([`/credit-factory/formularios/${agenda}`]);
+        }
+    }
 
 
 

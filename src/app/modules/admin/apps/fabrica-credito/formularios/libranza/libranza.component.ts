@@ -60,33 +60,6 @@ export class LibranzaComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       genero: [''],
       fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
-      // nivelEstudio: ['', [Validators.required]],
-      // estrato: ['', [Validators.required]],
-
-      // tipoActividad: ['', [Validators.required]],
-      // camaraComercio: ['', [Validators.required]],
-      // tipoLocal: ['', [Validators.required]],
-      // actividadEconomica: ['', [Validators.required]],
-      // actividadEspecifica: ['', [Validators.required]],
-      // antiguedadActividad: ['', [Validators.required, Validators.min(0)]],
-      // antiguedadNegocio: ['', [Validators.required, Validators.min(0)]],
-      // departamentoNegocio: ['', [Validators.required]],
-      // ciudadNegocio: ['', [Validators.required]],
-      // barrioNegocio: ['', [Validators.required]],
-      // valorCredito: ['', [Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)]],
-      // plazoCredito: ['', [Validators.required]],
-      // asesorMicro: [''],
-      // antiguedadLocal: [0],
-      // autorizacionCentrales: [true],
-      // clausulaVeracidad: [true],
-      // terminosCondiciones: [true],
-      // numeroOTP: [''],
-      // numOTP1: [''],
-      // numOTP2: [''],
-      // numOTP3: [''],
-      // numOTP4: [''],
-      // numOTP5: [''],
-      // numOTP6: [''],
       asesorComercial: [''],
       pagaduria: ['', [Validators.required]],
       otraPagaduria: [{ value: '', disabled: true }],
@@ -153,32 +126,9 @@ export class LibranzaComponent implements OnInit, OnDestroy {
     }
   }
 
-  public preSolicitud() {
-    const data = {
-      celular: this.form.get('celular').value,
-      identificacion: this.form.get('identificacion').value,
-      tipoDocumento: this.form.get('tipoDocumento').value,
-      email: this.form.get('email').value
-    }
 
-    this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-      this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
-      if (rep.data.resultado !== 'OK') {
-        Swal.fire({
-          icon: 'info',
-          text: rep.data.msg,
-        }).then(rep => {
-          this.form.reset();
-        });
-      }
-
-    })
-
-  }
 
   ngAfterViewChecked(): void {
-    //Called after every check of the component's view. Applies to components only.
-    //Add 'implements AfterViewChecked' to the class.
     this.marginTopInputDynamic()
   }
 
@@ -234,7 +184,6 @@ export class LibranzaComponent implements OnInit, OnDestroy {
     const valueControl = control?.value ?? '';
     const date = moment(valueControl).format('YYYY-MM-DD')
     const errors = { dateError: true };
-    // Set the validation error on the matching control
     if (this.fechaActual.isBefore(date)) {
 
       return errors
@@ -250,7 +199,6 @@ export class LibranzaComponent implements OnInit, OnDestroy {
 
     const fechaMayor = moment().locale('co')
     fechaMayor.subtract(18, 'years');
-    // Set the validation error on the matching control
 
     if (fechaMayor.isBefore(date)) {
 
@@ -308,7 +256,7 @@ export class LibranzaComponent implements OnInit, OnDestroy {
     const datos = this.form.getRawValue();
     const { tipoDocumento, identificacion, } = datos;
     if ((tipoDocumento) && (identificacion)) {
-      this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 1).subscribe((resp: any) => {
+      this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 22).subscribe((resp: any) => {
         if (resp) {
           this.form.patchValue(resp.data);
 
@@ -321,7 +269,6 @@ export class LibranzaComponent implements OnInit, OnDestroy {
           this.form.controls.fechaNacimiento.setValue(resp.data?.fechaNacimiento === '0099-01-01' ? '' : resp.data?.fechaNacimiento)
 
           if (resp.data?.celular) {
-            this.preSolicitud()
           }
           if (resp.data?.departamentoNegocio) {
             this.listarCiudades();
@@ -420,33 +367,14 @@ export class LibranzaComponent implements OnInit, OnDestroy {
       }, 200);
       return;
     }
-    // let data = this.form.getRawValue();
-
-    // const { barrioNegocio, valorCredito } = data;
-    // delete data.barrioNegocio
-    // data.barrioNegocio = Number(barrioNegocio)
-    // delete data.valorCredito
-    // data.valorCredito = Number(valorCredito)
-    // data.autorizacionCentrales = 'S',
-    //   data.terminosCondiciones = 'S',
-    //   data.clausulaVeracidad = 'S',
-    //   data.unidadNegocio = 1,
-    //   data.tipoTercero = 'T',
-    //   data.autorizacionCentrales = 'S',
-    //   data.clausulaVeracidad = 'S',
-    //   data.terminosCondiciones = 'S'
 
     let dataTempo = this.form.value;
     dataTempo.recurso = "guardar-presolicitud-datos-basico",
-      dataTempo.numeroSolicitud = '';
+    dataTempo.numeroSolicitud = '';
     dataTempo.idSimulacion = '';
     dataTempo.tipoTercero = 'T';
     dataTempo.unidadNegocio = 22;
     dataTempo.documento = dataTempo.identificacion;
-    // dataTempo.primerApellido = this.formulario.primerApellido
-    // dataTempo.email = this.formulario.email
-    // dataTempo.documento = this.formulario.identificacion
-    // dataTempo.idSimulacion = ""
     let data = dataTempo;
     this._formularioCreditoService.postGuardarFormularioSolicitud(data).subscribe((resp) => {
       if (resp.data.resultado === 'OK') {
@@ -459,11 +387,14 @@ export class LibranzaComponent implements OnInit, OnDestroy {
           pagaduria: this.form.value.pagaduria,
           otraPagaduria: this.form.value.otraPagaduria ? this.form.value.otraPagaduria : '',
           tipoContrato: this.form.value.tipoContrato,
-          salarioBasico: this.form.value.salario,
-          descuentos: this.form.value.descuentos,
-          comisiones: this.form.value.comisiones,
-          valorSolicitado: this.form.value.monto,
           plazo: this.form.value.cuotas,
+          fechaVinculacion: this.form.value.fechaVinculacion,
+          fechaFinalizacion: this.form.value.fechaFinalizacion? this.form.value.fechaFinalizacion : '',
+          descuentos: Number(this.form.value.descuentos),
+          comisiones: Number(this.form.value.comisiones),
+          salarioBasico:  Number(this.form.value.salario),
+          valorSolicitado: Number(this.form.value.monto),
+
           aceptoCentrales: 'S',
           aceptoTerminos: 'S',
         }
@@ -489,70 +420,7 @@ export class LibranzaComponent implements OnInit, OnDestroy {
           }
         });
       }
-      // let dataTempo2 = {
-      //   numeroSolicitud: Number(this.numeroSolicitud),
-      //   tipoCargo: this.form.value.tipoCargoPerfil,
-      //   rechazoContratoFijo: this.form.value.rechazoContratoFijo ? this.form.value.rechazoContratoFijo : 'OK',
-      //   tipoTercero: this.form.value.tipoTercero,
-      //   pagaduria: this.form.value.pagaduria,
-      //   otraPagaduria: this.form.value.otraPagaduria ? this.form.value.otraPagaduria : '',
-      //   tipoContrato: this.form.value.tipoContrato,
-      //   fechaVinculacion: this.form.value.fechaVinculacion ? moment(this.form.value.fechaVinculacion).format("MM-DD-YYYY") : '',
-      //   fechaFinalizacion: this.form.value.fechaFinalizacion ? moment(this.form.value.fechaFinalizacion).format("MM-DD-YYYY") : '',
-      //   salarioBasico: this.form.value.salario,
-      //   descuentos: this.form.value.descuentos,
-      //   comisiones: this.form.value.comisiones,
-      //   valorSolicitado: this.form.value.monto,
-      //   plazo: this.form.value.cuotas,
-      //   aceptoCentrales: 'S',
-      //   aceptoTerminos: 'S',
-      // }
-      // let data2: DatosLaborales = dataTempo2;
-      // this._simulacionService.postGuardarFormularioSolicitudLaborales(data2).subscribe((resp: Response) => {
-      //   Swal.fire(
-      //     'Correcto',
-      //     'Datos actualizada.',
-      //     'success'
-      //   )
-      //   setTimeout(() => {
-      //     this.modal.close()
-      //     this.router.navigate(['/dashboard/listado'])
-      //     setTimeout(() => {
-      //       location.reload();  
-      //     }, 1000);
-      //   }, 1000);
-      // })
     })
-    // Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    // this._formularioCreditoService.postDatos(data).subscribe((datos) => {
-    //   if (datos.data.resultado === 'OK') {
-    //     Swal.fire(
-    //       'Completado',
-    //       datos.data.mensaje,
-    //     ).then((result) => {
-    //       if (result) {
-    //         this.form.reset();
-    //         this.irAtras()
-    //       }
-    //     })
-    //   } else {
-    //     Swal.fire({
-    //       icon: 'error',
-    //       title: 'Error al guardar',
-    //       text: datos.data.msg,
-    //     }).then(rep => {
-    //       this.form.reset();
-    //     });
-    //   }
-
-
-    // }, (error) => {
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Ha ocurrido un error',
-    //     text: error.error.msg,
-    //   });
-    // });
 
 
   }

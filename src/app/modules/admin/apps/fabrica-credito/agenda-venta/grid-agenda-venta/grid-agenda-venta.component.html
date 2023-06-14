@@ -35,13 +35,18 @@
                     </div>
                 </div>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="onGetAgenda(null)">
+                    <button mat-menu-item (click)="onGetAgendaDigital(null,'microcredito')">
                         <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/logo-microcredito.png">
                         <span>Microcrédito</span>
                     </button>
+                    <button mat-menu-item (click)="onGetAgendaDigital(null,'libranza')">
+                        <img alt="linea de negocio libranza" class="w-11 mr-3" src="https://fintra.co/AssetsTic/LOGO_LIBRANZA.png">
+                        <span>Libranza</span>
+                    </button>
                 </mat-menu>
+                
             </div>
-        </div>
+        </div> 
 
 
         <div class="grid grid-cols-1 w-full px-5 pt-3">
@@ -76,7 +81,7 @@
                                         <div class="text-gray-700 grid-cols-2 grid">
                                             <div class="py-0 text-sm">
                                                 <button mat-icon-button matTooltip="Gestionar"
-                                                    (click)="onGetAgenda(item)">
+                                                    (click)="onGetAgendaDigital(item,item.unidadNegocio==1?'microcredito':'libranza')">
                                                     <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                                 </button>
                                             </div>
