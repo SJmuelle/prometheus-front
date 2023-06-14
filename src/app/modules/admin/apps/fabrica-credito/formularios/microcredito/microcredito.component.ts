@@ -103,7 +103,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         });
 
         this.form.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
-            
+
             this.getPlazosCredito(!!valor ? valor : '0' )
         })
 
@@ -144,18 +144,20 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             email: this.form.get('email').value
         }
 
-        this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-            this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
-            if (rep.data.resultado !== 'OK') {
-                Swal.fire({
-                    icon: 'info',
-                    text: rep.data.msg,
-                }).then(rep => {
-                    this.form.reset();
-                });
-            }
+        if(data.celular && data.identificacion && data.identificacion && data.email ){
+            this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
+                if (rep.data.resultado !== 'OK') {
+                    Swal.fire({
+                        icon: 'info',
+                        text: rep.data.msg,
+                    }).then(rep => {
+                        this.form.reset();
+                    });
+                }
+            })
+        }
 
-        })  
 
     }
 
@@ -191,21 +193,21 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         if(window.innerWidth < 600){
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
-    
+
             elementToMargin.forEach((element: HTMLElement) => {
-    
+
                 let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
                 titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
-                
+
                 let titleSpanHeigth = titleSpan?.clientHeight
                 element.style.width =  '20px'+ ' !important';
                 element.style['marginTop'] = '20px !important'
                 element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
                 if(titleSpanHeigth > 30){
                     if(titleSpanHeigth > 50){
-                        titleSpan.style.top = '-60px'   
+                        titleSpan.style.top = '-60px'
                     }else{
-                        titleSpan.style.top = '-42px'                   
+                        titleSpan.style.top = '-42px'
                     }
                 }
            });
@@ -345,7 +347,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
          this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
             this.plazosCredito = rep
-            
+
         })
 
     }
@@ -427,7 +429,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     idAgenda: 'V',
                     concepto: ''
                 }
-                
+
                 this.decisionService.postSMSUnidades(dataAEnviar).subscribe(respuesta =>{
                     Swal.fire(
                         'Completado',
@@ -439,7 +441,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                         }
                     })
                 })
-               
+
             }else{
                 Swal.fire({
                     icon: 'error',
@@ -449,7 +451,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.form.reset();
                 });
             }
-            
+
 
         }, (error) => {
             Swal.fire({
