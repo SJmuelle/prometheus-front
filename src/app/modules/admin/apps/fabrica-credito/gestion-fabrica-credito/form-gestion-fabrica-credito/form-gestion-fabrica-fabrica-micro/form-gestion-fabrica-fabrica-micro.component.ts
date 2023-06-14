@@ -136,7 +136,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     updatePointer(score, minScore, maxScore) {
         let porcentaje = 0;
-        const maxRotate = 330
+        const maxRotate = 335
         const minRotate = 35;
         const maxTranslate = -100;
 
@@ -477,7 +477,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             numeroSolicitud: numeroSolicitud,
             identificacion: identificacion
         }
-        
+
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
@@ -490,18 +490,18 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.agendaActual = data.agenda
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;
-                
+
                 this.setCurrentScoreUI()
                 this.decisionFiltrosDuros = data.decisionFiltrosDuros
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
-                
+
                 if (this.verScorePermiso()) {
                     setTimeout(() => {
                         this.updateScore(this.score)
                     }, 2000);
                 }
-                
+
 
             });
     }
@@ -554,13 +554,13 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
                 const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
 
-                this.markers.forEach((marker) =>{                  
+                this.markers.forEach((marker) =>{
                     this.map.removeLayer(marker)
                 })
 
 
                 this.markers = []
-    
+
                 const marker = L.marker([latitudNegocio, longitudNegocio], {
                     icon: L.icon({
                         iconUrl: this.iconUrl,
@@ -568,31 +568,31 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                         iconAnchor: [20, 20],
                     })
                 }).addTo(this.map)
-    
-                
-    
+
+
+
                 // const popup = L.popup()
                 //     .setLatLng([latitudNegocio, longitudNegocio])
                 //     .setContent("<div class='text-black text-lg'> Usted esta aquí. </div>")
                 //     .openOn(this.map);
-    
+
                 let tooltip = L.tooltip([latitudNegocio, longitudNegocio], {
-                    content: "<div class='text-white font-bold flex flex-col w-full justify-center items-center'> <div class='text-xl'>"+ this.form.get('nombreNegocio').value + "</div> <div>" 
-                    +  
+                    content: "<div class='text-white font-bold flex flex-col w-full justify-center items-center'> <div class='text-xl'>"+ this.form.get('nombreNegocio').value + "</div> <div>"
+                    +
                     this.form.get('direccionNegocio').value
-                    +  "</div> <div class='text-sm'>" + this.barriosNegocio.data.find(barrio => barrio.codigo == this.form.get('codigoBarrioNegocio').value).nombre +"</div>" + 
+                    +  "</div> <div class='text-sm'>" + this.barriosNegocio.data.find(barrio => barrio.codigo == this.form.get('codigoBarrioNegocio').value).nombre +"</div>" +
                     " </div>",
                     className: "bg-accent-700 text-white border-none",
                     permanent: false,
                     id: 23232333,
                     offset: L.point(14,-5)
                   }).addTo(this.map);
-    
+
                   this.markers.push(tooltip)
                 this.map.fitBounds([tooltip.getLatLng()]);
             })
         }
-       
+
 
     }
 
@@ -1513,7 +1513,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if(this.fabricaDatos.observaScoreTrazabilidad === 'S'){
             return true;
         }else{
-            return this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO' 
+            return this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO'
         }
     }
 }
