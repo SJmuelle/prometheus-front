@@ -242,6 +242,11 @@
                                                     svgIcon="mat_solid:location_on"></mat-icon>
                                                 {{item.agencia}}
                                             </span>
+                                            <span *ngIf="item.idUnidadNegocio === 1" class="text-sm text-black font-medium" matTooltip="Origen">
+                                                <mat-icon class="icon-size-3"
+                                                    svgIcon="heroicons_outline:globe-alt"></mat-icon>
+                                                {{item.origen ? item.origen : 'NO REGISTRA'}}
+                                            </span>
 
                                             <ng-container *ngIf="item.idUnidadNegocio === 22">
                                                 <span class="text-sm text-black font-medium uppercase flex justify-start items-center gap-1"  matTooltip="Pagaduria">
@@ -249,8 +254,8 @@
                                                     {{item.pagaduria ? item.pagaduria : 'No registra'}}
                                                 </span>
                                             </ng-container>
-                                            
-                                            
+
+
                                         </div>
                                     </td>
                                     <td class="px-2">
