@@ -67,7 +67,15 @@ export class BotoneraPagaduriaComponent implements OnInit, OnDestroy {
   nuevaPagaduria(){
     this.redireccionar('/pagaduria/parametria/gestion-pagaduria/0');
   }
-
+  nuevoPlazo(){
+    this.redireccionar('/pagaduria/plazo/parametria/gestion-plazo/0');
+  }
+  gestionPlazo(){
+    this.redireccionar('/pagaduria/plazo/parametria/gestion-plazo');
+  }
+  gestionPagaduria(){
+    this.redireccionar('/pagaduria/parametria/gestion-pagaduria/0');
+  }
   /**
  * @description: Valida que el campo solo sea numeros
  */

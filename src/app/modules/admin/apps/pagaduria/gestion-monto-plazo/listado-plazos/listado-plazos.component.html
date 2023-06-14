@@ -1,0 +1,126 @@
+<div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
+
+    <mat-drawer-container class="flex-auto h-full h-screen bg-card dark:bg-transparent"
+        (backdropClick)="onBackdropClicked()">
+
+        <!-- Drawer -->
+        <mat-drawer class="w-full md:w-160 dark:bg-gray-900" [mode]="drawerMode" [opened]="false" [position]="'end'"
+            [disableClose]="true" #matDrawer>
+            <router-outlet></router-outlet>
+        </mat-drawer>
+
+        <mat-drawer-content class="flex flex-col">
+
+            <!-- Main -->
+            <div class="flex-auto">
+
+                <!-- Header -->
+                <div class="flex flex-auto justify-between py-8 px-6 md:px-8 border-b">
+
+                    <!-- Title -->
+                    <div class="flex items-center ml-6">
+                        <div class="flex-0 w-16 overflow-hidden">
+                            <img src="assets/images/agendas/pagadurias.png" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 mx-3">
+                            <div class="text-3xl font-semibold tracking-tight leading-8">Gestión de plazos
+                            </div>
+                            <div class="flex items-center">
+                                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                                <div class="font-medium tracking-tight text-secondary">
+                                    Realiza la gestión de la configuración personalizada de plazos
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+
+                        <app-botonera-pagaduria [apiData]="'pagos'"></app-botonera-pagaduria>
+                    </div>
+
+                </div>
+
+                <!-- Contacts list -->
+                <div class="relative h-cal">
+                    <div class="grid grid-cols-1 w-full px-5 pt-3">
+                        <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
+                            <div class="flex items-center justify-between">
+
+                                <div class="text-secondary font-medium"> <input
+                                        class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                                        autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                                        placeholder="Filtrar..."></div>
+
+                                <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400"
+                                    [formControl]="tamanoTabl" (change)="page=1">
+                                    <option value="10">10</option>
+                                    <option value="20"> 20</option>
+                                    <option value="30"> 30</option>
+                                </select>
+
+                            </div>
+                            <div class="w-full  overflow-auto mt-2">
+                                <table class="p-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Id</th>
+                                            <th class="text-center">Tipo contrato</th>
+                                            <th class="text-center">Antiguedad minima</th>
+                                            <th class="text-center">Antiguedad maxima</th>
+                                            <th class="text-center">Plazo minimo</th>
+                                            <th class="text-center">Plazo maximo</th>
+                                            <th class="text-center">Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white">
+                                        <ng-container
+                                            *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }; let i = index; ">
+                        
+                                            <tr class="text-gray-700 border-t border-b " (click)="detalle(item.tipoContrato)">
+                                               
+                                                <td class="text-center">
+                                                    {{i+1}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{item.tipoContrato.toUpperCase()}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{item.antiguedadMinima}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{item.antiguedadMaxima}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{item.plazoMinimo}}
+                                                </td>
+                                                <td class="text-center">
+                                                    {{item.plazoMaximo}}
+                                                </td>
+                                                <td class="flex justify-center p-2">
+                                                    <div [ngClass]="item.estado=='A'?'bg-pink-300':'bg-green-300'">
+                                                        <span
+                                                            class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                                            {{ item.descripcionEstado}} </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="flex items-center mt-auto">
+                                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                                    nextLabel="Siguiente">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </mat-drawer-content>
+
+    </mat-drawer-container>
+
+</div>
