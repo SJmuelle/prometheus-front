@@ -126,7 +126,7 @@ export class DetalleCarteraComponent implements OnInit {
   }
   selecAlarmTable(data) {
     console.log(data)
-    this.router.navigate([`/cobranza/negociaciones/detalle/${this.tipoEstrategia}/${data.negocio}`]);
+    // this.router.navigate([`/cobranza/negociaciones/detalle/${this.tipoEstrategia}/${data.negocio}`]);
   }
 
   getInformacionNegocios() {

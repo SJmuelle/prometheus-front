@@ -27,6 +27,7 @@ import { DetalleCarteraComponent } from './detalle-cartera/detalle-cartera.compo
 import { RefinanciacionComponent } from './refinanciacion/refinanciacion.component';
 import { CongelaTuDeudaComponent } from './congela-tu-deuda/congela-tu-deuda.component';
 import { FormRefinancimientoComponent } from './form-refinancimiento/form-refinancimiento.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -59,7 +60,9 @@ import { FormRefinancimientoComponent } from './form-refinancimiento/form-refina
     MatTooltipModule,
     MatPaginatorModule,
     SharedModule,
-    FuseCardModule
+    FuseCardModule,
+    NgxMaskModule.forRoot(),
+
   ]
 })
 export class NegociacionesModule { }
