@@ -122,7 +122,7 @@ export class ListadoBarriosComponent implements OnInit {
         if (response) {
           this.listado = response.data;
           console.log('listado', this.listado);
-          
+
           this.dataSource = new MatTableDataSource(this.listado)
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -145,7 +145,7 @@ export class ListadoBarriosComponent implements OnInit {
       }
     } else {
       ;
-      
+
       envio = {
         id:datos.id,
         codigoDepartamento:this.datos.departamento,
@@ -169,4 +169,7 @@ export class ListadoBarriosComponent implements OnInit {
 
   }
 
+  filtrar(){
+    this.dataSource.filter = this.filtrarTabla.trim().toUpperCase()
+  }
 }

@@ -117,4 +117,8 @@ export class ListadoChequeoComponent implements OnInit {
 
   }
 
+  filtrar(){
+    this.dataSource.filter = this.filtrarTabla.trim().toUpperCase()
+  }
+
 }
