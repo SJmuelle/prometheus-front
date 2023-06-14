@@ -10,7 +10,7 @@ const routes: Routes = [
   component:ListadoPlazosComponent,
   children: [
     {
-      path: ':tipoContrato',
+      path: ':idPlazo',
       component: DetallePlazoComponent,
       canDeactivate: [CanDeactivateGestionPlazo]
     },

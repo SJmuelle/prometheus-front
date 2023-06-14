@@ -76,13 +76,13 @@
                                         <ng-container
                                             *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }; let i = index; ">
                         
-                                            <tr class="text-gray-700 border-t border-b " (click)="detalle(item.tipoContrato)">
+                                            <tr class="text-gray-700 border-t border-b " (click)="detalle(item.idPlazo)">
                                                
                                                 <td class="text-center">
                                                     {{i+1}}
                                                 </td>
                                                 <td class="text-center">
-                                                    {{item.tipoContrato.toUpperCase()}}
+                                                    {{item.descripcionContrato.toUpperCase()}}
                                                 </td>
                                                 <td class="text-center">
                                                     {{item.antiguedadMinima}}

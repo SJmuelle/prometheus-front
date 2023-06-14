@@ -31,6 +31,13 @@ public postInformacionPagadurias(data): Observable<any> {
   }));
 }
 
+public postInformacionPagaduriasCrear(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.crear, data)
+  .pipe(map((res: any) => {
+    return res;
+  }));
+}
+
 public UpdateInformacionPagadurias(data): Observable<any> {
   return this._http.post(this._appSettings.gestionPagaduria.url.actualizar, data)
   .pipe(map((res: any) => {
@@ -38,15 +45,15 @@ public UpdateInformacionPagadurias(data): Observable<any> {
   }));
 }
 
-public postGuardar(data): Observable<any> {
-  return this._http.post(this._appSettings.gestionPagaduria.url.guardar, data)
+public postGuardarPlazo(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.guardarPlazo, data)
   .pipe(map((res: any) => {
     return res;
   }));
 
 }
-public postEditar(data): Observable<any> {
-  return this._http.post(this._appSettings.gestionPagaduria.url.editar, data)
+public postEditarPlazo(data): Observable<any> {
+  return this._http.post(this._appSettings.gestionPagaduria.url.editarPlazo, data)
   .pipe(map((res: any) => {
     return res;
   }));

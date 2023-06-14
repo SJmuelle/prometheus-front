@@ -491,9 +491,9 @@ export class AppSettingsService {
         url: {
             pagadurias: EndPoints.uri('/generic/qry/cre-lib-pagadurias'),
             configuracion: EndPoints.uri('/generic/qry/cre-lib-configuracion-plazos'),
-            guardar: EndPoints.uri('/generic/cre-lib-guardar-plazo'),
-            eliminar: EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
-            editar: EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
+            guardarPlazo: EndPoints.uri('/generic/cre-lib-guardar-plazo'),
+            eliminarPlazo: EndPoints.uri('/generic/cre-lib-eliminar-plazo'),
+            editarPlazo: EndPoints.uri('/generic/cre-lib-actualizar-plazo'),
             informacion: EndPoints.uri('/generic/cre-lib-info-pagadurias'),
             crear: EndPoints.uri('/generic/cre-lib-guardar-pagaduria'),
             actualizar: EndPoints.uri('/generic/cre-lib-actualizar-pagaduria')

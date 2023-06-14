@@ -19,9 +19,11 @@ import { ListadoPlazosComponent } from '../listado-plazos/listado-plazos.compone
 export class DetallePlazoComponent implements OnInit {
 
   form: FormGroup;
-  public pagaduria: string = '';
+  public plazo: string = '';
   datos: any;
-  editar: boolean = false;
+  idConfigPlazo: any;
+  editar: boolean = true;
+  public tipoContrato$: Observable<any>;
   public departamentos$: Observable<any>;
   public ciudades$: Observable<any>;
   public barrios$: Observable<any>;
@@ -40,36 +42,38 @@ export class DetallePlazoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.GetTipoEmpresa();
-    this.getDepartamentos();
+    
+    this.GetTipoContrato();
     this._listadoPlazoComponent.matDrawer.open();
     this._activatedRoute.params.subscribe((param) => {
-      if(param.tipoContrato==0){
+      if (param.idPlazo == 0) {
         this.createForm();
-        this.editar=true;
-        this.nuevo=true;
+        this.editar = true;
+        this.nuevo = true;
+        this.idConfigPlazo=param.idPlazo 
         return
       }
-      this.getDataPagaduria(param.tipoContrato);
+      this.getDataPagaduria(param.idPlazo);
       this.createForm();
-      this.editar=false;
-      this.nuevo=false;
-
+      this.editar = false;
+      this.nuevo = false;
+      this.idConfigPlazo=param.idPlazo
     });
   }
 
   /**
    * @description: Obtiene el listado de agenda de completacion
   */
-  private getDataPagaduria(pagaduria): void {
-    let info = {
-      nitPagaduria: pagaduria
-    }
-    this._gestionPagaduriaService.postInformacionPagadurias(info).subscribe((res) => {
-      this.datos = res.data;
-      this.form.patchValue(res.data);
+  private getDataPagaduria(idPlazo): void {
 
-      this.pagaduria = pagaduria;
+    this._gestionPagaduriaService.getPlazos().subscribe((res) => {
+      let datos = res.data;
+      let dataEncontrada = datos.find(function (data) {
+        return data.idPlazo == idPlazo;
+      });
+      this.form.patchValue(dataEncontrada);
+      this.datos = dataEncontrada
+      this.plazo = dataEncontrada;
     });
   }
 
@@ -82,55 +86,30 @@ export class DetallePlazoComponent implements OnInit {
 
   createForm() {
     this.form = this.fb.group({
-      regStatus: '',
-      razonSocial: ['', [Validators.required]],
-      dv: ['', [Validators.required, Validators.pattern('^[0-9]{1,1}$')]],
-      departamento: ['', [Validators.required]],
-      municipio: ['', [Validators.required]],
-      direccion: ['', [Validators.required]],
-      telefono: ['', [Validators.required]],
-      correo: ['', [Validators.required, Validators.email]],
-      tipoEmpresa: ['', [Validators.required]],
-      empresaAliada: [false],
-      convenioEspecialTemporal: [false],
-      contratoFijo: [false],
-      porcentajeIngresosBrutos: ['', [Validators.required]],
-      requiereCartaLaboral: [false],
-      liqSinPagaduria: [false],
-      documento: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
+      
+      idPlazo: [null],
+      estado:[''],
+      tipoContrato: ['', [Validators.required]],
+      antiguedadMinima: ['', [Validators.required]],
+      antiguedadMaxima: ['', [Validators.required]],
+      plazoMinimo:['', [Validators.required]],
+      plazoMaximo: ['', [Validators.required]],
     });
   }
 
+
+
+
+
+  
   /**
- * @description: Obtiene el listado de departamento
+ * @description: Obtiene el listado de GetTipoContrato
  */
-  private getDepartamentos(): void {
-    this.departamentos$ =
-      this.departamentosCiudadesService.getDepartamentos();
+  private GetTipoContrato(): void {
+    this.tipoContrato$ = this.genericaServices.getSelectDinamicoSinBase('tipos-contratos');
   }
 
-  /**
-   * @description: Obtiene el listado de ciudades
-   */
-  private getCiudades(codigo: string): void {
-    this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
-  }
 
-  /**
- * @description: Selecciona el codigo para cargar el api ciudades
- *
- */
-  public seleccionDepartamento(event: MatSelectChange): void {
-    const codigo: string = event.value;
-    this.getCiudades(codigo);
-  }
-
-  /**
- * @description: Obtiene el listado de tipoEmpresa
- */
-  private GetTipoEmpresa(): void {
-    this.tipoEmpresa$ = this.genericaServices.getSelectDinamicoSinBase('tipo-empresa');
-  }
 
   save() {
     if (this.form.invalid) {
@@ -138,9 +117,6 @@ export class DetallePlazoComponent implements OnInit {
       return
     }
     let data = { ...this.form.value }
-    data.dv = Number(data.dv)
-    data.nitPagaduria=data.documento
-    data.porcentajeIngresosBrutos = Number(data.porcentajeIngresosBrutos)
     this.postFormulario(data)
   }
 
@@ -158,16 +134,27 @@ export class DetallePlazoComponent implements OnInit {
       },
     }).then((result) => { });
     if (this.nuevo) {
-      this._gestionPagaduriaService.postInformacionPagadurias(datos).subscribe(
+      this._gestionPagaduriaService.postGuardarPlazo(datos).subscribe(
         (res) => {
+          if(res.data.respuesta!='OK'){
+            Swal.fire(
+              'Advertencia',
+              res.data.respuesta,
+              'warning'
+            ).then(rep => {
+              return
+            })
+            return
+
+          }
           Swal.fire(
             'Completado',
-            res.data.mensaje,
+           'Se guardo con exito',
             'success'
           ).then(rep => {
-            this.router.navigate(['/pagaduria/parametria/gestion-pagaduria/']);
+            this.router.navigate(['/pagaduria/plazo/parametria/gestion-plazo']);
           })
-           this.router.navigate(['/pagaduria/parametria/gestion-pagaduria']);
+          this.router.navigate(['/pagaduria/plazo/parametria/gestion-plazo']);
         },
         (error) => {
           Swal.fire({
@@ -177,37 +164,53 @@ export class DetallePlazoComponent implements OnInit {
           });
         }
       );
-    }else{
+    } else {
       this._gestionPagaduriaService
-      .UpdateInformacionPagadurias(datos).subscribe(
-        (res) => {
-          Swal.fire(
-            'Completado',
-            res.data.mensaje,
-            'success'
-          ).then(rep => {
-            this.router.navigate(['/pagaduria/parametria/gestion-pagaduria/']);
-          })
-           this.router.navigate(['/pagaduria/parametria/gestion-pagaduria']);
+        .postEditarPlazo(datos).subscribe(
+          (res) => {
+            if(res.data.respuesta!='OK'){
+              Swal.fire(
+                'Advertencia',
+                res.data.respuesta,
+                'warning'
+              ).then(rep => {
+                return
+              })
+              return
+
+            }
+            Swal.fire(
+              'Completado',
+              'Se guardo con exito',
+              'success'
+            ).then(rep => {
+              this.router.navigate(['/pagaduria/plazo/parametria/gestion-plazo']);
+            })
+            this.router.navigate(['/pagaduria/plazo/parametria/gestion-plazo']);
 
 
-        },
-        (error) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Ha ocurrido un error',
-            text: error.error.msg,
-          });
-        }
-      );
+          },
+          (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Ha ocurrido un error',
+              text: error.error.msg,
+            });
+          }
+        );
     }
-    
+
   }
 
   inactivar() {
     let data = { ...this.form.value }
-    data.regStatus = 'A'
-    data.dv = Number(data.dv)
+    data.estado = 'A'
+    this.postFormulario(data);
+  }
+
+  activar() {
+    let data = { ...this.form.value }
+    data.estado = ''
     this.postFormulario(data);
   }
 

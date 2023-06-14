@@ -159,7 +159,7 @@ export class DetallePagaduriaComponent implements OnInit {
       },
     }).then((result) => { });
     if (this.nuevo) {
-      this._gestionPagaduriaService.postInformacionPagadurias(datos).subscribe(
+      this._gestionPagaduriaService.postInformacionPagaduriasCrear(datos).subscribe(
         (res) => {
           Swal.fire(
             'Completado',

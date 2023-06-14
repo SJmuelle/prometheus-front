@@ -153,9 +153,9 @@ export class ListadoPlazosComponent implements OnInit, OnDestroy {
     this.mostrarTotales = estado;
   }
 
-  detalle(contrato) {
+  detalle(idPlazo) {
     this.open = true;
-    this.router.navigate([`/pagaduria/plazo/parametria/gestion-plazo/${contrato}`]);
+    this.router.navigate([`/pagaduria/plazo/parametria/gestion-plazo/${idPlazo}`]);
   }
 
   ngOnDestroy(): void {

@@ -32,7 +32,7 @@ export class CanDeactivateGestionPlazo implements CanDeactivate<DetallePlazoComp
         }
 
         // If we are navigating to another asignacion...
-        if ( nextRoute.paramMap.get('tipoContrato') )
+        if ( nextRoute.paramMap.get('idPlazo') )
         {
             // Just navigate
             return true;

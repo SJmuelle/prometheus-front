@@ -32,11 +32,14 @@
             </div>
 
             <div *ngSwitchCase="'pagos'">
-                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" matTooltip="Nueva pagaduria"
-                    (click)="nuevaPagaduria()" [ngClass]="animacionVer==true?'show':'hidden'">
+                <button mat-fab class="mx-1 bg-green-500 roll-in-blurred-right" matTooltip="Nuevo plazo"
+                    (click)="nuevoPlazo()" [ngClass]="animacionVer==true?'show':'hidden'">
                     <mat-icon svgIcon="add"></mat-icon>
                 </button>
-
+                <button mat-fab class="mx-1 bg-purple-500 roll-in-blurred-right" matTooltip="Gestión de pagaduria"
+                    (click)="gestionPagaduria()" [ngClass]="animacionVer==true?'show':'hidden'">
+                    <mat-icon svgIcon="business"></mat-icon>
+                </button>
             </div>
 
             <button mat-fab class="mx-1 bg-blue-500" matTooltip="Menú"
