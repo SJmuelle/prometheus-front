@@ -19,6 +19,10 @@ const routes: Routes = [
       {
         path: 'parametria',
         loadChildren: () => GestionPagaduriaModule
+      },
+      {
+        path: 'plazo',
+        loadChildren: () => GestionPagaduriaModule
       }
     ]
   }
