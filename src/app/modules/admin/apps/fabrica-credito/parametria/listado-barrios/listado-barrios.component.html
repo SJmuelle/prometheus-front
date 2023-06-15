@@ -16,9 +16,9 @@
         </div>
     </div>
     <div class="grid grid-cols-1 w-full px-5 pt-2">
-        <div class="flex flex-col w-full cardComentarios rounded-3xl my-4 p-4">
+        <div class="flex flex-col w-full  cardComentarios rounded-3xl my-4 p-4">
 
-            <div class="flex justify-center items-center gap-4 w-full">
+            <div class="flex px-2 justify-center items-center gap-4 w-full">
 
                 <mat-form-field class="flex-auto w-full">
                     <mat-label>Departamento</mat-label>
@@ -44,24 +44,16 @@
 
 
 
-            <div  *ngIf="datos.municipio" class="col-span-12 relative flex flex-row mt-4 justify-center items-center gap-5">
+            <div  *ngIf="datos.municipio" class="col-span-12 px-2 relative flex flex-row mt-4 justify-between  items-center gap-5">
                 <div class=" flex items-end justify-end mb-1 " >
                     <button mat-button class="color_fintra text-white w-30" (click)="abrirModal(null, 'N')">
                         Crear nuevo
                     </button>
                 </div>
-                <div class="flex justify-center items-center my-2" *ngIf="listado.length>0">
-                    <input class="border rounded p-2 bg-gray-100  w-90 filtrado" type="text" autocomplete="off"
-                        name="filtrarTabla" (keyup)="filtrar()" [(ngModel)]="filtrarTabla" placeholder="Filtrar..."
-                        (ngModelChange)="page = 1" />
-                    <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100 filtrado ml-4"
-                        (change)="page = 1" [(ngModel)]="tamanoTabl">
-                        <option value="10">10</option>
-                        <option value="20">20</option>
-                        <option value="30">30</option>
-                    </select>
+                <div class="w-full col-span-6 sm:w-64 -mt-3 sm:mt-0 rounded-full justify-self-end justify-content-between border-2 border-gray-200 h-10 p-2 flex items-center ">
+                    <input (keyup)="filtrar()" #text [(ngModel)]="filtrarTabla" type="text" class="ml-2" placeholder="filtrar...">
+                    <mat-icon>search</mat-icon>
                 </div>
-
             </div>
 
 

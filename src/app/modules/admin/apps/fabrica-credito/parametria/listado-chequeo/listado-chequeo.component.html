@@ -24,16 +24,14 @@
                             Crear nuevo
                         </button>
                     </div>
-                    <div class="col-span-6 justify-self-end">
+                    <!-- <div class="col-span-6 justify-self-end">
                         <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
                             type="text" autocomplete="off" name="filtrarTabla" (keyup)="filtrar()" [(ngModel)]="filtrarTabla"
                             placeholder="Filtrar..." (ngModelChange)="page = 1" />
-                        <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
-                            [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                        </select>
+                    </div> -->
+                    <div class="w-full col-span-6 sm:w-64 -mt-3 sm:mt-0 rounded-full justify-self-end justify-content-between border-2 border-gray-200 h-10 p-2 flex items-center ">
+                        <input (keyup)="filtrar()" #text [(ngModel)]="filtrarTabla" type="text" class="ml-2" placeholder="filtrar...">
+                        <mat-icon>search</mat-icon>
                     </div>
                 </div>
             </div>
