@@ -65,7 +65,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                 if ((e.fechaInicial != null) && (e.fechaInicial != '') && (e.fechaFinal != '') && (e.fechaFinal != null)) {
                     let fechaFinal = moment(e.fechaFinal._d).format("YYYY-MM-DD");
                     let fechaInicial = moment(e.fechaInicial._d).format("YYYY-MM-DD");
-  
+
                     this.form.controls.fechaInicial=new FormGroup({
                         tipo: new FormControl('FECHA_INICIAL'),
                         buscar: new FormControl(fechaInicial)
@@ -74,18 +74,22 @@ export class BusquedaComponent implements OnInit, OnDestroy {
                         tipo: new FormControl('FECHA_FINAL'),
                         buscar: new FormControl(fechaFinal)
                     })
-                  
-                
-
                 }
-
+                this.armarConsulta(Object.values(this.form.getRawValue()))
             }
         })
 
         this.form.valueChanges.subscribe((e: any) => {
             let data = Object.values(e)
             this.armarConsulta(data)
+            console.log(Object.values(this.form.getRawValue()), 'valores');
+
         })
+
+        // this.formPeriodo.valueChanges.subscribe((e: any) => {
+        //     let data = Object.values(e)
+        //     this.armarConsultaFecha(data)
+        // })
     }
 
 
@@ -217,6 +221,8 @@ export class BusquedaComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     private armarConsulta(data) {
+        console.log('armando consulta', data);
+
         const filtered = data.filter(function (element: any) {
             switch (element.tipo) {
                 case 'IDENTIFICACION':
@@ -234,6 +240,7 @@ export class BusquedaComponent implements OnInit, OnDestroy {
             }
 
         });
+
         if (filtered.length > 0) {
             let dataEnvio = {
                 entidad: 'TRAZABILIDAD',
