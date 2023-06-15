@@ -23,5 +23,38 @@ export class NegociacionCarteraService {
     return this.http.get(`${this._appSettings.negociacionCartera.url.base}/${data}`)
   }
 
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
+  public guardarNegociacionCartera(data: any): Observable<any> {
+
+    return this.http.post(`${this._appSettings.negociacionCartera.url.guardado}`, data)
+  }
+
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
+  public ObtenerListadoNegociaciones(diasMora): Observable<any> {
+
+    return this.http.get(`${this._appSettings.negociacionCartera.url.listadoNegociaciones}/${diasMora}`)
+  }
+
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
+  public ObtenerNegociacionRealizada(cod_negocio: string): Observable<any> {
+
+    return this.http.get(`${this._appSettings.negociacionCartera.url.negociacionRealizada}/${cod_negocio}`)
+  }
+
+
+
+
 
 }

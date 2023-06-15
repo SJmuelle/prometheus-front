@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
 import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-data-table',
@@ -15,15 +17,10 @@ export class DataTableComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() dataRow: any[] = []
+  @Output() selectRow: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectListaOpciones: EventEmitter<any> = new EventEmitter<any>();
   public dataReport: any = {}
   public dataFilter: string = ''
-  public buttonTable: any = {
-    icon: 'heroicons_solid:eye',
-    text: 'Editar',
-    action: (data) => {
-      console.log('accion disparada')
-    },
-  };
   public dataOptionTable: any[] = [
     {
       name: 'identificacion',
@@ -42,8 +39,31 @@ export class DataTableComponent implements OnInit, OnChanges {
       typeField: 'text',
     },
     {
+      name: 'capital',
+      text: 'Capital',
+      typeField: 'text',
+      pipeName: 'number'
+    },
+    {
+      name: 'interes_mora',
+      text: 'Interes mora',
+      typeField: 'text',
+      pipeName: 'number'
+    },
+    {
+      name: 'mora_actual',
+      text: 'Mora actual',
+      typeField: 'text',
+    },
+    {
       name: 'gastos_cobranza',
       text: 'Gastos cobranza',
+      typeField: 'text',
+      pipeName: 'number'
+    },
+    {
+      name: 'debido_cobrar',
+      text: 'Valor debido',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -53,41 +73,22 @@ export class DataTableComponent implements OnInit, OnChanges {
       typeField: 'text',
       pipeName: 'number'
     },
-    {
-      name: 'capital',
-      text: 'Capital',
-      typeField: 'text',
-      pipeName: 'number'
-    },
-    {
-      name: 'mora_actual',
-      text: 'Mora actual',
-      typeField: 'text',
-      pipeName: 'number'
-    },
-    {
-      name: 'interes_mora',
-      text: 'Mora actual',
-      typeField: 'text',
-      pipeName: 'number'
-    },
-    {
-      name: 'Debido',
-      text: 'Debido',
-      typeField: 'text',
-      pipeName: 'number'
-
-    },
 
 
   ];
   public dataSource: MatTableDataSource<any>;
 
-  public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name).concat('action')];
-  public whitEspace: boolean = false
+  public dataColumn: string[] = ['action', ...this.dataOptionTable.map(({ name }) => name)];
+
+  public whitEspace: boolean = false;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private _tableFilter: TableDataFilterService) { }
+  constructor(private _tableFilter: TableDataFilterService, private paginatorIntl: MatPaginatorIntl, private _negociacionCarteraServices: NegociacionCarteraService
+  ) {
+    this.paginatorIntl.itemsPerPageLabel = 'Items por pagina : ';
+    // mat-paginator-range-label
+
+  }
 
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -107,13 +108,42 @@ export class DataTableComponent implements OnInit, OnChanges {
         this.dataSource.filter = dataFilter;
         this.dataFilter = dataFilter;
       });
-  }
 
+
+  }
 
 
   public actionSelectRow(row: any): void {
-    console.log(row);
+
+
 
   }
+
+  public createNegociacion(): void {
+    this.selectRow.emit(this.dataReport)
+    this._negociacionCarteraServices.ObtenerListadoNegociaciones(this.dataReport.mora_actual_dias).subscribe({
+      next: (resp) => {
+        this.selectListaOpciones.emit(resp.data);
+      },
+      error: (err) => { }
+    })
+    this.dataReport = null;
+  }
+
+  public openNegociacion(): void {
+    this._negociacionCarteraServices.ObtenerNegociacionRealizada(this.dataReport.cod_neg).subscribe({
+      next: (resp) => {
+        const data = {
+          negociacion: resp.data,
+          datosCliente: this.dataRow
+        }
+        this.selectRow.emit(data);
+        console.log('opened realizado cliente', resp.data);
+      },
+      error: () => { }
+    })
+    this.dataReport = null;
+  }
+
 
 }

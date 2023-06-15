@@ -20,6 +20,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DirectionsBasicComponent } from './modal/directions-basic/directions-basic.component';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
 // import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fabrica-opciones.component';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseDrawerModule } from '@fuse/components/drawer';
@@ -50,7 +54,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         FuseCardModule,
         MatTooltipModule,
         MatSortModule,
-
+        MatSliderModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatMenuModule
         // FabricaCreditoModule
 
     ],
@@ -74,7 +81,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatFormFieldModule,
         MatCardModule,
         MatSortModule,
-
+        MatSliderModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatMenuModule
     ],
     declarations: [
         DirectionsBasicComponent,

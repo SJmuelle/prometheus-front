@@ -471,6 +471,11 @@ export class AppSettingsService {
     public negociacionCartera = {
         url: {
             base: EndPoints.uri('/generic/qry/negocios-cartera'),
+            guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
+            listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
+            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera')
+
         }
     };
 }
+

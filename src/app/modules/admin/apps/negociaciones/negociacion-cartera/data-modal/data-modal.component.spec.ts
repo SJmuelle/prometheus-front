@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataModalComponent } from './data-modal.component';
+import { DataModalComponent } from "./DataModalComponent";
 
 describe('DataModalComponent', () => {
   let component: DataModalComponent;
@@ -8,9 +8,9 @@ describe('DataModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataModalComponent ]
+      declarations: [DataModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {

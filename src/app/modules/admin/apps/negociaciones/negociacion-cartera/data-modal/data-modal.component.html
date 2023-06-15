@@ -1,1 +1,203 @@
-<p>data-modal works!</p>
+<div class="h-auto p-4 rounded-md w-screen overflow-y-auto" style="max-width: 508px; min-width: 360px;">
+
+    <div class="text-3xl font-bold text-center">
+        <p>Negociación cliente</p>
+    </div>
+
+    <hr>
+
+    <div class="flex flex-row flex-wrap w-full">
+
+        <div class="flex flex-row w-full">
+            <form [formGroup]="formNegociacionCartera" class="w-full " (ngSubmit)="saveData()">
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="panelOpenState" (opened)="panelOpenState = true"
+                        (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header class="h-12">
+                            <mat-panel-title class="text-xl">
+                                Resumen
+                            </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+
+                        <div class="w-full p-2 mr-2 gap-2 flex flex-col justify-between">
+
+                            <div class="flex justify-between">
+
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Debido a cobrar
+                                        :</span> </mat-label>
+                                <div>
+                                    <span> ${{ dataRow?.debido_cobrar | number}}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Interés por mora
+                                        :</span></mat-label>
+                                <div>
+                                    <span> ${{ dataRow?.interes_mora | number }}</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between">
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Gasto cobranza
+                                        :</span></mat-label>
+                                <div>
+                                    <span>{{ '$'+(dataRow?.gastos_cobranza | number)}}</span>
+                                </div>
+                            </div>
+                            <hr class="-mt-1">
+                            <div class="flex justify-between -mt-4">
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Total : </span>
+                                </mat-label>
+                                <div>
+                                    <span class="font-semibold">${{ (dataRow?.gastos_cobranza +dataRow?.interes_mora +
+                                        dataRow?.debido_cobrar)
+                                        | number}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+
+                <!-- <div class="w-full p-2 mr-2 gap-2 flex flex-col">
+
+                    <h3>Resumen</h3>
+
+                    <mat-label class="w-full block"> <span class="text-lg font-semibold">Debido a cobrar : </span>
+                        {{ 'valor ###' }} </mat-label>
+
+                    <mat-label class="w-full block"> <span class="text-lg font-semibold">Interes por mora : </span>
+                        {{ 'valor ###' }} </mat-label>
+
+                    <mat-label class="w-full block"> <span class="text-lg font-semibold">Gasto cobranza : </span>
+                        {{ 'valor ###' }} </mat-label>
+
+                    <mat-label class="w-full block"> <span class="text-lg font-semibold">Total : </span>
+                        {{ 'valor ###' }} </mat-label>
+
+
+
+                </div> -->
+
+                <div class="h-10 w-full"></div>
+
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="panelOpenStateForm" (opened)="panelOpenStateForm = true"
+                        (closed)="panelOpenStateForm = false">
+                        <mat-expansion-panel-header class="h-12">
+                            <mat-panel-title class="text-xl">
+                                Descuentos
+                            </mat-panel-title>
+
+                        </mat-expansion-panel-header>
+                        <div class="w-full p-2 mr-2  flex flex-col">
+
+
+
+                            <mat-form-field class="w-full fuse-mat-dense text-lg font-semibold">
+
+                                <mat-label> <span class="text-lg font-semibold"> Tipo de negociación :
+                                    </span></mat-label>
+
+                                <mat-select (selectionChange)="resetRanges($event)" required
+                                    formControlName="tipoNegociacion">
+                                    <mat-select-trigger>
+                                        <span class="font-normal">{{ selectedDescuento }}</span>
+                                    </mat-select-trigger>
+
+
+                                    <mat-option *ngFor="let item of ListadoNegociaciones"
+                                        [value]="item.codigo">{{item.descripcion}}</mat-option>
+
+                                </mat-select>
+
+
+
+                            </mat-form-field>
+
+
+
+
+                            <mat-label class="-mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Descuento
+                                    debido total :
+                                </span> <span class="text-gray-800">{{formNegociacionCartera.controls['descuento'].value
+                                    + ' %'}} </span> </mat-label>
+
+                            <div [ngStyle]="{'background-color' : disabled?  '#fcfcfc' : 'transparent' }"
+                                class="border-1 border-gray-300 rounded-md px-2 w-full h-11 flex items-center">
+                                <mat-slider formControlName="descuento" class="w-full " thumbLabel tickInterval="0.1"
+                                    step="0.1" min="0" [max]="valuesRangeInputs.descuento_debido_total"
+                                    aria-label="units"></mat-slider>
+                            </div>
+
+
+
+
+
+                            <mat-label class="mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Mora :
+                                </span><span class="text-gray-800">{{formNegociacionCartera.controls['mora'].value + '
+                                    %'}}</span></mat-label>
+                            <div [ngStyle]="{'background-color' : disabled?  '#fcfcfc' : 'transparent' }"
+                                class="border-1 border-gray-300 rounded-md px-2 w-full h-11 flex items-center">
+                                <mat-slider formControlName="mora" class="w-full " thumbLabel tickInterval="0.1"
+                                    step="0.1" min="0" [max]="valuesRangeInputs.descuento_ixm"
+                                    aria-label="units"></mat-slider>
+                            </div>
+
+
+
+
+                            <mat-label class="mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Gasto
+                                    cobranza :
+                                </span><span
+                                    class="text-gray-800">{{formNegociacionCartera.controls['gastoCobranza'].value + '
+                                    %'}}</span>
+                            </mat-label>
+                            <div [ngStyle]="{'background-color' : disabled?  '#fcfcfc' : 'transparent' }"
+                                class="border-1 border-gray-300 rounded-md px-2 w-full h-11 flex items-center">
+                                <mat-slider formControlName="gastoCobranza" class="w-full " thumbLabel
+                                    tickInterval="0.1" step="0.1" min="0" [max]="valuesRangeInputs.descuento_gac"
+                                    aria-label="units"></mat-slider>
+                            </div>
+
+                            <mat-form-field class="w-full mt-2 text-lg font-semibold">
+                                <mat-label> <span class="text-lg font-semibold"> Descripción </span></mat-label>
+                                <textarea style="resize: none;" class="font-normal" matInput
+                                    formControlName="comentario" rows="3"></textarea>
+                            </mat-form-field>
+
+
+
+
+                        </div>
+
+
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+                <div class="flex flex-row justify-end gap-4 mb-30 mt-6 mr-2">
+                    <button type="button" mat-stroked-button (click)="cancelForm()">Cerrar</button>
+
+                    <button *ngIf="!disabled" mat-flat-button type="submit" class=" " [disabled]="disabledForm"
+                        [ngClass]="disabledForm?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
+
+                        <span>Guardar </span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+        <div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
