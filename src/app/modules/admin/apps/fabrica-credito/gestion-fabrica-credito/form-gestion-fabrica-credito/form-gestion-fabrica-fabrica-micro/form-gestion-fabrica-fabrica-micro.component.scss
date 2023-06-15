@@ -341,7 +341,7 @@ body {
     height: 350px;
     margin: 0 auto;
     position: relative;
-    transform: scale(0.6) translateY(-40%);
+    transform: scale(0.6);
 }
 
 @media screen AND (max-width: 600px) {
@@ -350,7 +350,7 @@ body {
         height: 350px;
         margin: 0 auto;
         position: relative;
-        transform: scale(0.6) translateY(-40%) translateX(-40%);
+        transform: scale(0.6);
     }
 }
 #score-dial {
