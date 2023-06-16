@@ -53,7 +53,7 @@ const routerConfig: ExtraOptions = {
         MarkdownModule.forRoot({}),
         NgxPaginationModule,
         // NgxMaskModule.forRoot(),
-        
+
 
     ],
     bootstrap   : [

@@ -42,4 +42,9 @@ export class GridPoliticasComponent implements OnInit {
         });
     }
 
+    // 21 corresponde a la politica de filtros duros
+    hasIDPolitica(array: any[]){
+        return array.find(item => item.idPolitica === 21)
+    }
+
 }

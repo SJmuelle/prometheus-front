@@ -125,9 +125,6 @@ export class ListadoBarriosComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
-
       this.listarBarrios(this.datos.municipio)
 
     });
