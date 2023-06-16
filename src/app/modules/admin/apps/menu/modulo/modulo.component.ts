@@ -49,9 +49,7 @@ export class ModuloComponent implements OnInit, OnDestroy {
     // Get the icons
     this.icons$ = this._menuService.icons;
     // this.empresa$=this._menuService.empresas;
-    // console.log('his.empresa$')
 
-    // console.log(this.empresa$)
     // Subscribe to icons
     this._menuService.icons
       .pipe(takeUntil(this._unsubscribeAll))

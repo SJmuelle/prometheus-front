@@ -479,7 +479,6 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             clausulaAnticurrupcionClaracionAuto: 'S',
             autoricacionDatosPersonalClaracionAuto: 'S',
         };
-        console.log('datos a enviar', data);
 
         Swal.fire({
             title: 'Guardar información',

@@ -183,7 +183,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
             data: { numeroSolicitud: this.numeroSolicitud, tipoDocumento: this.tipoDocumento }
         });
         dialogRef.afterClosed().subscribe((result) => {
-            // console.log('The dialog was closed');
         });
     }
     /**
@@ -839,7 +838,6 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
 
         // Se valida el nit
         if (isNaN(data)) {
-            // console.log('El nit/cédula \'' + data + '\' no es válido(a).');
             return '';
         };
 

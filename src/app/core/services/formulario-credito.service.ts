@@ -14,7 +14,12 @@ export class FormularioCreditoService {
     ) { }
 
 
-
+    getLatitudLongitud(data){
+        return this._utilityService.postQuery(this._appSettings.formulario.url.latitudLongitud, data)
+            .pipe(map((res: any) => {
+                return res;
+            }));
+    }    
 
     validatarOTP(data) {
         return this._utilityService.postQuery(this._appSettings.formulario.url.validarOTP, data)

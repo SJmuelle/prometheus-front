@@ -23,6 +23,8 @@ import moment from 'moment';
 import 'moment/locale/es';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 @Component({
     selector: 'app-grid-documentacion',
@@ -57,7 +59,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         private documentosServices: DocumentosAdjuntosService,
         private fabricaCreditoService: FabricaCreditoService,
         private _dialog: MatDialog,
-        public _permisosService: PermisosService
+        public _permisosService: PermisosService,
+        public sanitizer: DomSanitizer
     ) {
         this.identificacion = this.route.snapshot.paramMap.get('id');
         this.numeroSolicitud = this.route.snapshot.paramMap.get('num');

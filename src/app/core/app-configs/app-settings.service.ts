@@ -103,6 +103,7 @@ export class AppSettingsService {
     public formulario = {
         url: {
             // https://prometheus.fintra.co:8443/api-fintra/api/credito/tk/property/parametros-cargue-inicial
+            latitudLongitud: EndPoints.alfa('/geocoding-address'),
             microcredito: EndPoints.uri('/credito/microcredito/guardado-solicitud-microcredito'),
             cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
             cargueInicialLibranza: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
