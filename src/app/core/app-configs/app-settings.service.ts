@@ -398,7 +398,7 @@ export class AppSettingsService {
  */
     public agendaPagadura = {
         url: {
-            base: EndPoints.uri('/generic/qry/solicitudes-pagaduria')
+            base: EndPoints.uri('/generic/solicitudes-pagaduria')
         }
     };
 

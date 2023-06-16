@@ -45,7 +45,8 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   private getAgendaComercial(): void {
-    this.agendaComercialService.getAgendaPagaduria().pipe(
+    let dato={"estadoPagaduria": "R"}
+    this.agendaComercialService.getAgendaPagaduria(dato).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
 
