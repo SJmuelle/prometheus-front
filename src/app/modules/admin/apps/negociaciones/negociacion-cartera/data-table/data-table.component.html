@@ -5,7 +5,7 @@
             <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
                 <td mat-cell *matCellDef="let row">
-                    <button (click)="dataReport = row" [matMenuTriggerFor]="menu" class="ml-4" mat-icon-button>
+                    <button (click)="dataReport = row || {}" [matMenuTriggerFor]="menu" class="ml-4" mat-icon-button>
                         <mat-icon>format_list_bulleted</mat-icon>
                     </button>
                 </td>
@@ -13,12 +13,13 @@
 
             <!-- [disabled]="dataReport.tiene_negociacion==='SI'" -->
             <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="createNegociacion()">
+                <button mat-menu-item [disabled]="dataReport?.tiene_negociacion==='Negociado'"
+                    (click)="createNegociacion()">
                     <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> Realizar
                     negociación</button>
-                <button mat-menu-item (click)="openNegociacion()"><mat-icon
-                        svgIcon="heroicons_outline:document-text"></mat-icon> Ver
-                    detalle</button>
+                <button [disabled]="dataReport?.tiene_negociacion!=='Negociado'" mat-menu-item
+                    (click)="openNegociacion()"><mat-icon svgIcon="heroicons_outline:document-text"></mat-icon> Ver
+                    detalle negociación</button>
             </mat-menu>
             <!-- (click)="this.buttonTable.action(row) -->
 
@@ -56,16 +57,16 @@
                         </td>
                     </ng-container> -->
 
-                    <!-- <ng-container *ngSwitchCase="'statusStyle'">
+                    <ng-container *ngSwitchCase="'statusStyle'">
                         <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
-                            <div class="flex gap-2 items-center">
+                            <div class="flex gap-2 items-center pt-3">
                                 <p class="w-4 h-4 rounded-full" [ngClass]="dataOption.styleCondition(row)"></p>
                                 <p class="whitespace-nowrap">
                                     {{ row[dataOption.name] }}
                                 </p>
                             </div>
                         </td>
-                    </ng-container> -->
+                    </ng-container>
 
                     <!-- <ng-container *ngSwitchCase="'checked'">
                         <td class="cursor-pointer" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">

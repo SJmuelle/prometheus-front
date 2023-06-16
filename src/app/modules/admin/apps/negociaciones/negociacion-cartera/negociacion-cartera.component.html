@@ -35,7 +35,7 @@
             </div>
 
 
-            <div class="bg-white h-auto rounded-xl  flex-col justify-start flex-wrap mt-6 mb-6 ml-6 mr-6 shadow-md border-1 border-gray-100 "
+            <div class="bg-white h-auto rounded-xl  flex-col justify-start flex-wrap mt-6 mb-40 ml-6 mr-6 shadow-md border-1 border-gray-100 "
                 style=" max-width : calc(100%-560px) !important; min-width: 330px;">
 
 
@@ -79,9 +79,10 @@
 
                         <button (click)="search()" [disabled]="valueSearch.length===0 " mat-flat-button
                             class="p-2  w-full sm:w-32 -mt-4 sm:mt-3 mb-2 sm:mb-0 color_fintra flex items-center"
-                            [ngClass]=" valueSearch.length===0? ' opacity-50' : '' ">
-                            <mat-icon class="mr-1 " style="color: white !important;">search</mat-icon>
-
+                            [ngClass]="valueSearch.length===0?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
+                            <mat-icon class="mr-1 "
+                                [ngStyle]="{'color' : valueSearch.length===0 ? '' : 'white !important' }">search</mat-icon>
+                            <!-- style="color: white !important;" -->
                             <span [ngClass]=" valueSearch.length===0? ' text-disabled' : 'text-white' ">Consultar</span>
                         </button>
 

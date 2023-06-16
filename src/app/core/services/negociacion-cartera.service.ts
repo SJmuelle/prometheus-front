@@ -1,17 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AppSettingsService } from '../app-configs/app-settings.service';
+
+const reload = { reload: false };
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class NegociacionCarteraService {
 
   constructor(
     private http: HttpClient,
     private _appSettings: AppSettingsService
   ) { }
+  public reloadData$: BehaviorSubject<any> = new BehaviorSubject(reload);
 
   /**
    * 

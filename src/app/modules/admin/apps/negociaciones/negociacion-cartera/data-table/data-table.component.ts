@@ -73,7 +73,17 @@ export class DataTableComponent implements OnInit, OnChanges {
       typeField: 'text',
       pipeName: 'number'
     },
-
+    {
+      name: 'tiene_negociacion',
+      text: 'Estado',
+      typeField: 'statusStyle',
+      styleCondition: (data): string => {
+        const stateName = data?.tiene_negociacion
+        if (stateName === 'Negociado') { return 'bg-green-400' } else {
+          return 'bg-red-400';
+        }
+      }
+    },
 
   ];
   public dataSource: MatTableDataSource<any>;
@@ -123,7 +133,7 @@ export class DataTableComponent implements OnInit, OnChanges {
     this.selectRow.emit(this.dataReport)
     this._negociacionCarteraServices.ObtenerListadoNegociaciones(this.dataReport.mora_actual_dias).subscribe({
       next: (resp) => {
-        this.selectListaOpciones.emit(resp.data);
+        this.selectListaOpciones.emit(resp.data || []);
       },
       error: (err) => { }
     })
@@ -134,11 +144,10 @@ export class DataTableComponent implements OnInit, OnChanges {
     this._negociacionCarteraServices.ObtenerNegociacionRealizada(this.dataReport.cod_neg).subscribe({
       next: (resp) => {
         const data = {
-          negociacion: resp.data,
-          datosCliente: this.dataRow
+          negociacion: resp.data || [],
+          datosCliente: this.dataRow || []
         }
         this.selectRow.emit(data);
-        console.log('opened realizado cliente', resp.data);
       },
       error: () => { }
     })

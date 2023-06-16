@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
 import Swal from 'sweetalert2';
+import { NegociacionCarteraComponent } from '../negociacion-cartera.component';
 
 @Component({
     selector: 'app-data-modal',
@@ -12,6 +13,7 @@ export class DataModalComponent implements OnInit, OnChanges {
     @Input() dataRow: any = null;
     @Output() closedEmit: EventEmitter<void> = new EventEmitter<void>();
     @Input() ListadoNegociaciones: any[] = []
+    @ViewChild(NegociacionCarteraComponent) update: NegociacionCarteraComponent
     public formNegociacionCartera: FormGroup
     public panelOpenState: boolean = true;
     public panelOpenStateForm: boolean = true;
@@ -24,50 +26,61 @@ export class DataModalComponent implements OnInit, OnChanges {
 
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log('entre en change');
 
         this.panelOpenState = true;
         this.panelOpenStateForm = true;
         this.disabled = false;
-        this.formNegociacionCartera.enable();
+        if (this.formNegociacionCartera) {
+            this.formNegociacionCartera.enable();
 
-        const reset = {
-            tipoNegociacion: ' ',
-            descuento: 0,
-            mora: 0,
-            gastoCobranza: 0,
-            comentario: ' '
-        }
-        this.formNegociacionCartera.controls['comentario'].markAsUntouched();
-        this.formNegociacionCartera.controls['tipoNegociacion'].markAsUntouched();
-        this.formNegociacionCartera.reset({ ...reset });
-
-
-
-        let negociacion = null;
-        negociacion = this.dataRow.negociacion[0];
-        console.log('change', negociacion);
-
-        if (negociacion !== undefined) {
-            this.dataRow = this.dataRow.datosCliente[0];
-            this.selectedDescuento = negociacion.tiponegociacion;
-            this.ListadoNegociaciones = [{ codigo: 1, descripcion: negociacion.tiponegociacion }]
-            const payload = {
-                tipoNegociacion: 1,
-                descuento: negociacion.por_descuento_deb,
-                mora: negociacion.por_descuento_ixmora,
-                gastoCobranza: negociacion.por_descuento_gac,
-                comentario: negociacion.descripcion
+            const reset = {
+                tipoNegociacion: ' ',
+                descuento: 0,
+                mora: 0,
+                gastoCobranza: 0,
+                comentario: ' '
             }
 
-            this.formNegociacionCartera.setValue({ ...payload });
-            this.formNegociacionCartera.disable();
+            this.formNegociacionCartera.controls['comentario'].markAsUntouched();
+            this.formNegociacionCartera.controls['tipoNegociacion'].markAsUntouched();
+            this.formNegociacionCartera.reset({ ...reset });
+            let negociacion = null;
 
-            this.disabled = true;
-        } else {
+            if (this.dataRow.tiene_negociacion === 'Por negociar') {
+                return
+            }
 
-            this.disabled = false;
-            this.formNegociacionCartera.enable();
+            negociacion = this.dataRow?.negociacion[0]
+
+
+            if (negociacion !== undefined) {
+                this.dataRow = this.dataRow?.datosCliente[0];
+                this.selectedDescuento = negociacion?.tiponegociacion;
+                this.ListadoNegociaciones = [{ codigo: 1, descripcion: negociacion.tiponegociacion }]
+                const payload = {
+                    tipoNegociacion: 1,
+                    descuento: negociacion.por_descuento_deb,
+                    mora: negociacion.por_descuento_ixmora,
+                    gastoCobranza: negociacion.por_descuento_gac,
+                    comentario: negociacion.descripcion
+                }
+
+                this.formNegociacionCartera.setValue({ ...payload });
+                this.formNegociacionCartera.disable();
+
+                this.disabled = true;
+
+
+            } else {
+
+                this.disabled = false;
+                this.formNegociacionCartera.enable();
+
+            }
+
+
+
+
 
         }
     }
@@ -133,12 +146,16 @@ export class DataModalComponent implements OnInit, OnChanges {
                 Swal.close();
                 this._negociacionCarteraService.guardarNegociacionCartera(json).subscribe({
                     next: (resp) => {
+
+                        this._negociacionCarteraService.reloadData$.next({ reload: true })
+
                         Swal.fire(
                             'Correcto',
                             'Solicitud realizada correctamente',
                             'success'
                         )
                         this.cancelForm();
+
                     },
                     error: () => {
                         Swal.fire(
