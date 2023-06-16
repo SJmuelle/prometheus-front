@@ -335,6 +335,6 @@ export class GridCarteraMicroComponent implements OnInit {
   * Funcion que retorna True o false si el titular interno tiene retanqueo marcado
   */
   public tieneRetanqueoArray(titularInterno):boolean {
-    return !!this.internoTitularCartera.find(titular => titular.gestionCartera === titularInterno.gestionCartera)
+    return !!this.internoTitularCartera.find(titular => titular.gestionCartera === 'RET')
   }
 }
