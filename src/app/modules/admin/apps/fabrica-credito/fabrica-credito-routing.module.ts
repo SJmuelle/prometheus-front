@@ -16,6 +16,7 @@ import { FormulariosModule } from './formularios/formularios.module';
 import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
 import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
 import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
+import { AgendaFirmaDigitalModule } from './agenda-firma-digital/agenda-firma-digital.module';
 
 
 const routes: Routes = [
@@ -94,6 +95,11 @@ const routes: Routes = [
                 path: 'agenda-visitas',
                 loadChildren: () => AgendaVisitasModule,
                 resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
+                path: 'agenda-firma-digital',
+                loadChildren: () => AgendaFirmaDigitalModule,
+                resolve: { EdicionTrazabilidadResolver }
             }
         ]
     }

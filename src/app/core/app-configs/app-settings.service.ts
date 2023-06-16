@@ -384,6 +384,16 @@ export class AppSettingsService {
     };
 
     /**
+     * @description: End-point agenda firma digital
+     */
+    public agendaFirmaDigital = {
+        url: {
+            base: EndPoints.uri('/generic/qry/agendas-credito/FI'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FI')
+        }
+    };
+
+    /**
     * @description: End-point agenda decision
     */
     public agendaDecision = {
