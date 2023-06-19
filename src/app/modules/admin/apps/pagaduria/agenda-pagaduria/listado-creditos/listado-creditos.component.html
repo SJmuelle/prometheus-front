@@ -1,7 +1,7 @@
 <div class="h-full h-screen overflow-auto w-full pb-40">
     <div class="flex flex-col flex-auto">
 
-        <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+        <div class="flex flex-wrap w-full mx-auto p-6  bg-white z-10 pb-20">
 
             <!-- Title and action buttons -->
             <div class="flex items-center justify-between w-full">
@@ -10,12 +10,12 @@
                         <img src="assets/images/agendas/pagadurias.png" class="w-full h-full object-cover">
                     </div>
                     <div class="flex-1 mx-3">
-                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda de pagadurias
+                        <div class="text-3xl font-semibold tracking-tight leading-8">Agenda de pagaduría
                         </div>
                         <div class="flex items-center">
                             <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                             <div class="font-medium tracking-tight text-secondary">
-                                Realiza la gestión del crédito por parte de la pagaduria
+                                Realiza el visado de crédito
                             </div>
                         </div>
                     </div>
@@ -24,7 +24,18 @@
 
             </div>
         </div>
+        <mat-tab-group class="flex w-full justify-items-center max-w-full scrollMatTabGroup changeTabStyle -mt-10 z-20" (selectedTabChange)="tabChanged($event)">
+            <mat-tab label="PENDIENTE" id="P">
 
+
+            </mat-tab>
+            <mat-tab label="APROBADO" id="A">
+
+            </mat-tab>
+            <mat-tab label="NO APROBADO" id="R">
+
+            </mat-tab>
+        </mat-tab-group>
 
         <div class="grid grid-cols-1 w-full px-5 pt-3">
             <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
@@ -145,19 +156,20 @@
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                     </mat-icon>
-                                                   <strong>Plazo:</strong>   {{ item.plazo}}
+                                                    <strong>Plazo:</strong> {{ item.plazo}}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:currency-dollar">
+                                                    <mat-icon class="icon-size-3"
+                                                        svgIcon="heroicons_outline:currency-dollar">
                                                     </mat-icon>
                                                     <strong> Valor cuota:</strong> $ {{ item.valorCuota | number:0 }}
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
-                                                    <mat-icon 
-                                                        class="icon-size-3"  svgIcon="mat_solid:radio_button_checked">
+                                                    <mat-icon class="icon-size-3"
+                                                        svgIcon="mat_solid:radio_button_checked">
                                                     </mat-icon>
-                                                    <strong>Destino</strong>  {{ item.destino}}
-                                                    
+                                                    <strong>Destino</strong> {{ item.destino}}
+
                                                 </span>
                                             </div>
                                         </div>

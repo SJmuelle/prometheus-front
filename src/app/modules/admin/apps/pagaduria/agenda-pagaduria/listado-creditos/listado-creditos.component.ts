@@ -17,7 +17,7 @@ import { FormDialogReprogramarComponent } from '../../../fabrica-credito/agenda-
   templateUrl: './listado-creditos.component.html',
   styleUrls: ['./listado-creditos.component.scss']
 })
-export class ListadoCreditosComponent implements   OnInit, OnDestroy {
+export class ListadoCreditosComponent implements OnInit, OnDestroy {
   public unsubscribe$: Subject<any> = new Subject();
   public mostrar: boolean = true;
   public datos: any[] = [];
@@ -34,7 +34,7 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.cambiarEstado(true);
-    this.getAgendaComercial();
+    this.getAgendaComercial('P');
     this.getTotalesAgendaComercial();
   }
 
@@ -44,8 +44,8 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
   /**
      * @description: Obtiene el listado de agenda de completacion
     */
-  private getAgendaComercial(): void {
-    let dato={"estadoPagaduria": "R"}
+  public getAgendaComercial(estado): void {
+    let dato = { "estadoPagaduria": estado }
     this.agendaComercialService.getAgendaPagaduria(dato).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
@@ -57,6 +57,14 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
       } else {
       }
     });
+  }
+
+  /**
+   * @description: Obtiene el listado de agenda de completacion
+  */
+  public tabChanged(event): void {
+    // console.log('Pestaña seleccionada:', );
+    this.getAgendaComercial(event.tab._viewContainerRef._hostTNode.attrs[3])
   }
 
   /**
@@ -73,7 +81,7 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        this.getAgendaComercial();
+        this.getAgendaComercial('P');
         this.agendaComercialService.refrescarListado$.next({ estado: true });
         //  this.onCerrar();
       }
@@ -105,7 +113,7 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
 
-      this.getAgendaComercial();
+
       this.agendaComercialService.refrescarListado$.next({ estado: true });
 
     });
@@ -127,7 +135,7 @@ export class ListadoCreditosComponent implements   OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
 
-      this.getAgendaComercial();
+
       this.agendaComercialService.refrescarListado$.next({ estado: true });
 
     });

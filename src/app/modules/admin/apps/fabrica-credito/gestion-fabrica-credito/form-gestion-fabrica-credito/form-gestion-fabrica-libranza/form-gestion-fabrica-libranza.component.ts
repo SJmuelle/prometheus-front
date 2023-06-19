@@ -1211,7 +1211,8 @@ export class FormGestionFabricaLibranzaComponent implements OnInit, OnDestroy {
         }
         let data = {
             pagaduria: pagaduria,
-            salario: Number(this.utility.enviarNumero(salarioBasico))
+            salario: Number(this.utility.enviarNumero(salarioBasico)),
+            codigoTipoCargo:0
         }
         this.fabricaCreditoService.validacionMonto(data).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
