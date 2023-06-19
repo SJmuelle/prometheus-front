@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IOptionTable } from 'app/core/interfaces';
 import { CajaVirtualService } from 'app/core/services/caja-virtual.service';
@@ -9,9 +10,12 @@ import { CajaVirtualService } from 'app/core/services/caja-virtual.service';
   styleUrls: ['./listados-negocios.component.scss']
 })
 export class ListadosNegociosComponent implements OnInit {
-  public tipoEstrategia: string = this.route.snapshot.paramMap.get('tipoEstrategia');
-  public tipoID: string = this.route.snapshot.paramMap.get('tipoID');
-  public id: string = this.route.snapshot.paramMap.get('id');
+  public form: FormGroup;
+  public listado = [];
+
+  // public tipoEstrategia: string = this.route.snapshot.paramMap.get('tipoEstrategia');
+  // public tipoID: string = this.route.snapshot.paramMap.get('tipoID');
+  // public id: string = this.route.snapshot.paramMap.get('id');
 
   dataRow = [];
   public optionsTable: IOptionTable[] = [
@@ -62,20 +66,30 @@ export class ListadosNegociosComponent implements OnInit {
   constructor(private _cajaVirtualService: CajaVirtualService,
     private router: Router,
     private route: ActivatedRoute,
+    private fb: FormBuilder,
   ) {
+    this.form = fb.group({
+      tipoEstrategia: [''],
+      tipoID: [''],
+      id: [''],
+    });
   }
 
   ngOnInit(): void {
-    this.getInformacionNegocios();
+    // this.getInformacionNegocios();
+    this._cajaVirtualService.refinanciacionTipoEstrategia().subscribe((res) => {
+      this.listado = res.data;
+    });
   }
   selecAlarmTable(data) {
     const info=JSON.stringify(data)
-    localStorage.setItem("detalle",info)
-    this.router.navigate([`/cobranza/negociaciones/${this.tipoEstrategia}/${this.tipoID}/${this.id}/${data.negocio}`]);
+    let form=this.form.value;
+    this.router.navigate([`/cobranza/negociaciones/${form.tipoEstrategia}/${form.tipoID}/${form.id}/${data.negocio}`]);
   }
 
   getInformacionNegocios() {
-    this._cajaVirtualService.refinanciacionBuscarCliente(this.tipoID,this.tipoEstrategia,this.id).subscribe((res) => {
+    let data=this.form.value;
+    this._cajaVirtualService.refinanciacionBuscarCliente(data.tipoID,data.tipoEstrategia,data.id).subscribe((res) => {
       this.dataRow = res.data;
     });
   }

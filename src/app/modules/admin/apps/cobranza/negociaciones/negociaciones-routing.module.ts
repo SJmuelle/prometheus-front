@@ -7,11 +7,11 @@ import { FormRefinancimientoComponent } from './form-refinancimiento/form-refina
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'busqueda',
     component: BusquedaComponent,
   },
   {
-    path: ':tipoEstrategia/:tipoID/:id',
+    path: '',
     component: ListadosNegociosComponent,
   },
   {

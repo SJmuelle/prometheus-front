@@ -15,19 +15,43 @@
                 <div class="flex items-center">
                     <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
                     <div class="font-medium tracking-tight text-secondary">
-                       {{tipoEstrategia=='AC'?'Congela la deuda':'Refinancimiento'}}
+                        Realizar las estrategias de negociociación 
                     </div>
                 </div>
             </div>
         </div>
-        <div class="flex items-center">
-            <button class="ml-4" mat-flat-button [color]="'primary'"  [routerLink]="['../../../']" >
-                <mat-icon [svgIcon]="'mat_outline:arrow_back'"></mat-icon>
-                <span class="ml-2 mr-1">Atras</span>
-            </button>
-        </div>
 
     </div>
+    <form [formGroup]="form">
+        <div class="flex flex-auto justify-between items-center mx-8 ">
+            <div class="grid grid-cols-4 w-full mt-10 gap-4">
+                <mat-form-field>
+                    <mat-select [formControlName]="'tipoEstrategia'">
+                        <mat-option *ngFor="let item of listado" [value]="item.tipo">{{item.nombre}}</mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-select [formControlName]="'tipoID'">
+                        <mat-option value="NEG">NEGOCIO</mat-option>
+                        <mat-option value="ID">IDENTIFICACIÓN DEL CLIENTE</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input class="ml-3" matInput
+                        [placeholder]="form.value.tipoID=='NEG'?'Número del negocio':'Identificación del cliente'"
+                        [formControlName]="'id'">
+                </mat-form-field>
+
+                <button  mat-flat-button [color]="'primary'" (click)="getInformacionNegocios()">
+                    <mat-icon [svgIcon]="'heroicons_outline:search'"></mat-icon>
+                    <span class="ml-2 mr-1">Buscar</span>
+                </button>
+            </div>
+        </div>
+    </form>
 
 
     <div class="relative">
