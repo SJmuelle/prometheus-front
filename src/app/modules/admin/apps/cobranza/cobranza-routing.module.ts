@@ -6,6 +6,8 @@ import { NegociacionesModule } from './negociaciones/negociaciones.module';
 import { HistoricoGestionesModule } from './historico-gestiones/historico-gestiones.module';
 import { HistoricoNegociacionesModule } from './historico-negociaciones/historico-negociaciones.module';
 import { HistoricoPagoClienteModule } from './historico-pago-cliente/historico-pago-cliente.module';
+import { HistialPagosModule } from './histial-pagos/histial-pagos.module';
+import { ArqueoCajaModule } from './arqueo-caja/arqueo-caja.module';
 
 const routes: Routes = [
   {
@@ -63,6 +65,26 @@ const routes: Routes = [
       {
         path: 'historico-paagos',
         loadChildren: () => HistoricoPagoClienteModule,
+      }
+    ]
+  }
+  ,
+  {
+    path: '',
+    children: [
+      {
+        path: 'historial-pagos',
+        loadChildren: () => HistialPagosModule,
+      }
+    ]
+  }
+  ,
+  {
+    path: '',
+    children: [
+      {
+        path: 'arqueo-caja',
+        loadChildren: () => ArqueoCajaModule,
       }
     ]
   }
