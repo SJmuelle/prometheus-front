@@ -8,6 +8,7 @@ import { HistoricoNegociacionesModule } from './historico-negociaciones/historic
 import { HistoricoPagoClienteModule } from './historico-pago-cliente/historico-pago-cliente.module';
 import { HistialPagosModule } from './histial-pagos/histial-pagos.module';
 import { ArqueoCajaModule } from './arqueo-caja/arqueo-caja.module';
+import { AperturaCajaModule } from './apertura-caja/apertura-caja.module';
 
 const routes: Routes = [
   {
@@ -85,6 +86,16 @@ const routes: Routes = [
       {
         path: 'arqueo-caja',
         loadChildren: () => ArqueoCajaModule,
+      }
+    ]
+  }
+  ,
+  {
+    path: '',
+    children: [
+      {
+        path: 'apertura-caja',
+        loadChildren: () => AperturaCajaModule,
       }
     ]
   }
