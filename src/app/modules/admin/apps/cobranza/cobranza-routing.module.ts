@@ -9,6 +9,9 @@ import { HistoricoPagoClienteModule } from './historico-pago-cliente/historico-p
 import { HistialPagosModule } from './histial-pagos/histial-pagos.module';
 import { ArqueoCajaModule } from './arqueo-caja/arqueo-caja.module';
 import { AperturaCajaModule } from './apertura-caja/apertura-caja.module';
+import { ActualizacionDatosModule } from './actualizacion-datos/actualizacion-datos.module';
+import { ConsignacionesModule } from './consignaciones/consignaciones.module';
+import { IngresoRecaudoModule } from './ingreso-recaudo/ingreso-recaudo.module';
 
 const routes: Routes = [
   {
@@ -96,6 +99,36 @@ const routes: Routes = [
       {
         path: 'apertura-caja',
         loadChildren: () => AperturaCajaModule,
+      }
+    ]
+  }
+  ,
+  {
+    path: '',
+    children: [
+      {
+        path: 'actualizacion-datos',
+        loadChildren: () => ActualizacionDatosModule,
+      }
+    ]
+  }
+  ,
+  {
+    path: '',
+    children: [
+      {
+        path: 'consignacion',
+        loadChildren: () => ConsignacionesModule,
+      }
+    ]
+  }
+  ,
+  {
+    path: '',
+    children: [
+      {
+        path: 'ingreso-recaudo',
+        loadChildren: () => IngresoRecaudoModule,
       }
     ]
   }
