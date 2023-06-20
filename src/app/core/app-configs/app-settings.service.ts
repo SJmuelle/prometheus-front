@@ -464,4 +464,13 @@ export class AppSettingsService {
             guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
         }
     };
+
+        /**
+     * @description: End-Point
+     */
+        public rdStation = {
+            url: {
+                info_rd: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo')
+            }
+        };
 }

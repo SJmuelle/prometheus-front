@@ -321,8 +321,7 @@ export class GenericasService {
       /**
      * @description: Obtiene REPORTE RD
      */
-      public getReporteRd(): Observable<any> {
-        const params: string = 'informacion-reporterd-mercadeo';
-        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);}
-
+      public getReporteRd(fechaInicial: String, fechaFinal: String): Observable<any> {
+       return this._http.get(`${this._appSettings.rdStation.url.info_rd}/${fechaInicial}/${fechaFinal}`);
+    }
 }

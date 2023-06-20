@@ -1,8 +1,8 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
-    <div class="grid grid-cols-12 w-100 mb-2" >
-        <h2 class="text-gray-900 col-span-12 mb-4">Reporte de envio RD</h2>
+    <div class="grid grid-cols-12 w-100 mb-2">
+        <h2 class="text-gray-900 col-span-12 mb-4">Reporte de envio de ciclos de pagos</h2>
     </div>
-    <div>
+    <div *ngIf="element == true">
         <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
             <div class="flex flex-row gap-1.5 w-full" matPrefix>
                 <div>
@@ -14,74 +14,75 @@
             </div>
         </button>
     </div>
-
     <div class="flex items-center justify-between my-10">
-        
-        <div class="text-secondary font-medium "> <input
-                class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 h-12" type="text"
-                autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
-                placeholder="Filtrar..."></div>
+        <form [formGroup]="filtroBusqueda">
+            <!-- <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Fecha Inicial</mat-label>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker1"
+                    formControlName="fechaInicial" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+                <mat-label>Fecha Final</mat-label>
+                <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker2" formControlName="fechaFinal"
+                    readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+            </mat-form-field> -->
 
-        <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400 h-12" [formControl]="tamanoTabl"
-            (change)="page=1">
-            <option value="10">10</option>
-            <option value="20"> 20</option>
-            <option value="30"> 30</option>
-        </select>
 
+            <div class="flex border-2 p-2 cursor-pointer w-52" (click)="picker.open()">
+                <div color="accent">
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate formControlName="fechaInicial" placeholder="Fecha Inicial" />
+                        <input matEndDate formControlName="fechaFinal" placeholder="Fecha Final" />
+                    </mat-date-range-input>
+                    <mat-date-range-picker #picker>
+                        <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>
+                                {{ "Cancelar" }}
+                            </button>
+                            <button mat-raised-button [color]="'accent'" matDatepickerApply >
+                                {{ "search" }}
+                            </button>
+                        </mat-datepicker-actions>
+                    </mat-date-range-picker>
+                </div>
+                <mat-icon class="icon-size-5" matSuffix svgIcon="feather:calendar">
+                </mat-icon>
+            </div>
+
+        </form>
     </div>
-<div class="h-80 xl:h-140 w-full shadow overflow-y-scroll overflow-x-scroll lg:overflow-x-hidden" >
-    <table>
-        <thead class="bg-gray-100">
-            <tr class="text-lg font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
-              
-             
-                <th class="px-3 py-3 text-center">Identificacion</th>
-                <th class="px-3 py-3 text-center" >Nombres</th>
-                <th class="px-2 py-3 text-center">Codigo Negocio</th>
-                <th class="px-2 py-3 text-center ">Fecha Pago</th>
-                <th class="px-3 py-3 text-center">Valor Cuota</th>
-                <th class="px-4 py-3 text-center">Referencia Pago</th>
-                <th class="px-2 py-3 text-center">Estado</th>
-               <th class="px-2 py-3 text-center">Fecha de Creacion</th>
-               
-            </tr>
-        </thead>
-        <tbody class="bg-white">
-            <tr class="text-gray-700" *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }"  >
-                
-                
-          
-                <td class="text-sm border text-center">{{item.identificacion}}</td>
-             
-                <td class="text-md border text-center py-3">{{item.nombre}}</td>
-                <td class="text-md border text-center py-3">{{item.codigo_negocio}}</td>
-                <td class="text-md border text-center py-3">{{item.fecha_pago}}</td>
-                <td class="text-md border text-center py-3">{{item.valor_cuota}}</td>
-                <td class="text-md border text-center py-3">{{item.referencia_pago}}</td>
-                <td class="text-md border text-center py-3">{{item.estado}}</td>
-                <td class="text-md border text-center py-3">{{item.creation_date}}</td>
-            
-               
-            </tr>
-        </tbody>
-    </table>
-    
-</div>
-<div class="flex items-center mt-auto">
-    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
-    </pagination-controls>
-</div>
-<div>
-    <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
-        <div class="flex flex-row gap-1.5 w-full" matPrefix>
-            <div>
-                <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
-            </div>
-            <div class="margin-button">
-                Exportar
-            </div>
-        </div>
-    </button>
-</div>
+    <div class="h-80 xl:h-140 w-full shadow overflow-y-scroll overflow-x-scroll lg:overflow-x-hidden"
+        *ngIf="element == true">
+        <table>
+            <thead class="bg-gray-100">
+                <tr class="text-lg font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600 arriba">
+                    <th class="px-3 py-3 text-center">Identificación</th>
+                    <th class="px-3 py-3 text-center">Nombres</th>
+                    <th class="px-2 py-3 text-center">Código Negocio</th>
+                    <th class="px-2 py-3 text-center ">Fecha Pago</th>
+                    <th class="px-3 py-3 text-center">Valor Cuota</th>
+                    <th class="px-4 py-3 text-center">Referencia Pago</th>
+                    <th class="px-2 py-3 text-center">Estado</th>
+                    <th class="px-2 py-3 text-center">Fecha</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="text-gray-700"
+                    *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+                    <td class="text-sm border text-center">{{item.identificacion}}</td>
+                    <td class="text-md border text-center py-3">{{item.nombre}}</td>
+                    <td class="text-md border text-center py-3">{{item.codigoNegocio}}</td>
+                    <td class="text-md border text-center py-3">{{item.fechaPago}}</td>
+                    <td class="text-md border text-center py-3">{{item.valorCuota}}</td>
+                    <td class="text-md border text-center py-3">{{item.referenciaPago}}</td>
+                    <td class="text-md border text-center py-3">{{item.estado}}</td>
+                    <td class="text-md border text-center py-3">{{item.fechaCreacion}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

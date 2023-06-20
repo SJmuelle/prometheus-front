@@ -20,6 +20,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { MaterialLayoutModule } from 'app/layout/layouts/horizontal/material/material.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatTooltipModule,
     MatPaginatorModule,
     NgxPaginationModule,
+    MaterialLayoutModule,
+    MatDatepickerModule
   ]
 })
 export class MercadeoModule { }
