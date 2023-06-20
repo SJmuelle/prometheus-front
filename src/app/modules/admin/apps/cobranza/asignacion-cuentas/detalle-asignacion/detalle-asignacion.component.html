@@ -80,7 +80,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'heroicons_outline:currency-dollar'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Valor desembolso:</strong> {{credito.valorDesembolso}}
+                            <strong>Valor desembolso:</strong> ${{credito.valorDesembolso | number:'1.0-0' }}
                         </div>
                     </div>
                 </ng-container>
@@ -90,7 +90,7 @@
                     <div class="flex sm:items-center">
                         <mat-icon [svgIcon]="'heroicons_solid:academic-cap'"></mat-icon>
                         <div class="ml-6 leading-6">
-                            <strong>Valor cuota:</strong> {{credito.valorCuota}}
+                            <strong>Valor cuota:</strong> ${{credito.valorCuota | number:'1.0-0'}}
                         </div>
                     </div>
                 </ng-container>

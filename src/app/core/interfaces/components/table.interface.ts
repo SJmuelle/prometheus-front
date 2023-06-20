@@ -1,7 +1,7 @@
 export interface IOptionTable {
     name: string;
     text: string;
-    typeField: 'text' | 'switch' | 'circleColor' | 'statusStyle' | 'checked';
+    typeField: 'text' | 'switch' | 'circleColor' | 'statusStyle' | 'checked' | 'number' | 'moneda';
     pipeName?: 'percentage' | 'date' | 'speed' | 'titleCase';
     defaultValue?: string;
     classTailwind?: string;

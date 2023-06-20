@@ -15,7 +15,7 @@ export class ListadoComponent implements OnInit {
     {
       name: 'numeroDocumentos',
       text: 'N°',
-      typeField: 'text',
+      typeField: 'number',
     },
     {
       name: 'numeroSolicitud',
@@ -30,12 +30,12 @@ export class ListadoComponent implements OnInit {
     {
       name: 'identificacion',
       text: 'CC del cliente',
-      typeField: 'text',
+      typeField: 'number',
     },
     {
       name: 'saldoCartera',
       text: 'Debito a cobrar',
-      typeField: 'text',
+      typeField: 'moneda',
     },
     {
       name: 'diasMora1',

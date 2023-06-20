@@ -52,3 +52,8 @@ a.ng-star-inserted {
   
     text-decoration: none !important;
 }
+
+.bg-primary-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgba(var(--fuse-primary-600-rgb), var(--tw-bg-opacity));
+}
