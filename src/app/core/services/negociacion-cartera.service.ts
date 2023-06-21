@@ -3,13 +3,19 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AppSettingsService } from '../app-configs/app-settings.service';
 
-const reload = { reload: false };
+
+
+type Ireload = { reload?: boolean, fullTable?: boolean };
+
+const reload: Ireload = { reload: false, fullTable: true };
 
 @Injectable({
   providedIn: 'root'
 })
 
+
 export class NegociacionCarteraService {
+
 
   constructor(
     private http: HttpClient,

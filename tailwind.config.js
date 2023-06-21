@@ -122,6 +122,7 @@ const config = {
             print: {
                 'raw': 'print'
             },
+            xs: '440px',
             sm: '600px',
             md: '960px',
             lg: '1280px',

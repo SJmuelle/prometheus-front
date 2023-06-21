@@ -40,62 +40,42 @@
 
 
 
-                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between mr-6 ml-6 mt-2 flex-wrap">
+                <div class="flex flex-row gap-4 items-center justify-between mr-6 ml-6 mt-2 flex-wrap">
                     <!-- (selectionChange)="changeDocumentType()" -->
 
-                    <div class="flex gap-6 flex-wrap">
-                        <div class=" w-full sm:w-64  rounded-full h-10 items-center flex flex-row border-2"
-                            style="margin-top: 12px;">
-                            <mat-icon svgIcon="heroicons_outline:identification" class="ml-2 mr-2"></mat-icon>
-                            <input matInput [(ngModel)]="valueSearch" type="text">
-                            <!-- <mat-select class="mr-1.5" [(ngModel)]="seacrhType" matPrefix>
-                                <mat-select-trigger>
-                                    <span class="flex items-center gap-2">
-                                        <mat-icon *ngIf="seacrhType === 'Cedula' "
-                                            svgIcon="heroicons_outline:identification"></mat-icon>
-                                        <mat-icon *ngIf="seacrhType === 'Negocio' "
-                                            svgIcon="heroicons_outline:clipboard-check"></mat-icon>
-                                        <span class="sm:mx-0.5 font-medium text-default">{{seacrhType ==='Cedula'?
-                                            'Cedula' : 'Negocio'}}</span>
-                                    </span>
-                                </mat-select-trigger>
-                                <ng-container>
-                                    <mat-option value="Cedula">
-                                        <span class="flex items-center">
-                                            <mat-icon svgIcon="heroicons_outline:identification"></mat-icon>
-                                            <span class="ml-2 font-medium">{{ 'Cedula' }}</span>
-                                        </span>
-                                    </mat-option>
-                                    <mat-option value="Negocio">
-                                        <span class="flex items-center">
-                                            <mat-icon svgIcon="heroicons_outline:clipboard-check"></mat-icon>
-                                            <span class="ml-2 font-medium">{{ 'Negocio' }}</span>
-                                        </span>
-                                    </mat-option>
-                                </ng-container>
-                            </mat-select> -->
+                    <div class="flex gap-6 flex-wrap w-full justify-between p-2 mt-2">
+                        <div class="w-full sm:w-auto flex flex-row flex-wrap gap-2 ">
+                            <div class=" w-full sm:w-64  rounded-full h-10 items-center flex flex-row border-2">
+                                <mat-icon svgIcon="heroicons_outline:identification" class="ml-2 mr-2"></mat-icon>
+                                <input matInput [(ngModel)]="valueSearch" type="text">
+
+                            </div>
+
+
+                            <button (click)="search()" [disabled]="valueSearch.length===0 " mat-flat-button
+                                class="p-2  w-full sm:w-32  color_fintra flex items-center"
+                                [ngClass]="valueSearch.length===0?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
+                                <mat-icon class="mr-1 "
+                                    [ngStyle]="{'color' : valueSearch.length===0 ? '' : 'white !important' }">search</mat-icon>
+                                <!-- style="color: white !important;" -->
+                                <span
+                                    [ngClass]=" valueSearch.length===0? ' text-disabled' : 'text-white' ">Consultar</span>
+                            </button>
+
                         </div>
 
 
-                        <button (click)="search()" [disabled]="valueSearch.length===0 " mat-flat-button
-                            class="p-2  w-full sm:w-32 -mt-4 sm:mt-3 mb-2 sm:mb-0 color_fintra flex items-center"
-                            [ngClass]="valueSearch.length===0?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
-                            <mat-icon class="mr-1 "
-                                [ngStyle]="{'color' : valueSearch.length===0 ? '' : 'white !important' }">search</mat-icon>
-                            <!-- style="color: white !important;" -->
-                            <span [ngClass]=" valueSearch.length===0? ' text-disabled' : 'text-white' ">Consultar</span>
-                        </button>
+                        <div
+                            class="w-full sm:w-64 -mt-3.5 sm:mt-0  rounded-full border-2 border-gray-200 h-10 p-2 flex items-center justify-between">
+                            <input (keyup)="filtrar(text.value)" #text type="text" class="ml-2 w-full"
+                                placeholder="filtrar...">
 
+
+                            <mat-icon>search</mat-icon>
+                        </div>
                     </div>
 
 
-                    <div
-                        class="w-full sm:w-64 -mt-5 sm:mt-0 rounded-full border-2 border-gray-200 h-10 p-2 flex items-center justify-between">
-                        <input (keyup)="filtrar(text.value)" #text type="text" class="ml-2" placeholder="filtrar...">
-
-
-                        <mat-icon>search</mat-icon>
-                    </div>
 
                 </div>
 

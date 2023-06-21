@@ -28,6 +28,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TableComponent } from './componentes/table/table.component';
+import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
+import { DataTablePipe } from './pipes/data-table.pipe'
+
+
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
 @NgModule({
@@ -57,7 +62,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatSliderModule,
         MatSidenavModule,
         MatExpansionModule,
-        MatMenuModule
+        MatMenuModule,
         // FabricaCreditoModule
 
     ],
@@ -84,10 +89,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatSliderModule,
         MatSidenavModule,
         MatExpansionModule,
-        MatMenuModule
+        MatMenuModule,
+        SmPaginatorPipe,
+        DataTablePipe
     ],
     declarations: [
         DirectionsBasicComponent,
+        TableComponent,
+        SmPaginatorPipe,
+        DataTablePipe
+
 
     ],
 })

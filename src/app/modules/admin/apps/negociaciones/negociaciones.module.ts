@@ -6,14 +6,14 @@ import { NegociacionCarteraComponent } from './negociacion-cartera/negociacion-c
 import { DataTableComponent } from './negociacion-cartera/data-table/data-table.component';
 import { DataModalComponent } from "./negociacion-cartera/data-modal/data-modal.component";
 import { SharedModule } from 'app/shared/shared.module';
-import { DataTablePipe } from '../../../../shared/pipes/data-table.pipe'
 
 @NgModule({
   declarations: [
     NegociacionCarteraComponent,
     DataTableComponent,
     DataModalComponent,
-    DataTablePipe
+
+
 
   ],
   imports: [
@@ -22,6 +22,6 @@ import { DataTablePipe } from '../../../../shared/pipes/data-table.pipe'
     SharedModule,
 
   ],
-  exports: [DataTablePipe]
+  exports: []
 })
 export class NegociacionesModule { }

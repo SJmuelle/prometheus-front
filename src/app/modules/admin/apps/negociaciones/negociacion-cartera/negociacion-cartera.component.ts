@@ -12,7 +12,8 @@ import { Subscription } from 'rxjs'
 export class NegociacionCarteraComponent implements OnInit, OnDestroy {
 
   public seacrhType: 'Cedula' | 'Negocio' = 'Cedula'
-  public valueSearch: string = 'MC17223';
+  public valueSearch: string = '';
+  // public valueSearch: string = 'MC17223';
   public dataRow: any[] = [];
   public opened: boolean = false;
   public dataRowSelect: any = {};
@@ -35,6 +36,9 @@ export class NegociacionCarteraComponent implements OnInit, OnDestroy {
     this._tableFilter.sendFilterData(filterValue);
 
 
+
+
+
   }
 
   public dataSelect(dataRow: any): void {
@@ -48,41 +52,88 @@ export class NegociacionCarteraComponent implements OnInit, OnDestroy {
     this.ListadoNegociaciones = listadoOpcionesDisponibles || []
   }
 
-  public async search(): Promise<any> {
+  public search(): void {
 
-    return new Promise((resolve) => {
-      if (this.valueSearch.length === 0) { return }
-      Swal.fire({ title: 'Cargando', html: 'Por favor espere', allowOutsideClick: false, timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+    this.dataRow = [
+      {
+        identificacion: '55235881',
+        nombre: 'FLOREZ MIRANDA LEIDI VANESSA',
+        cod_neg: 'MC17223',
+        mora_actual_dias: '1356',
+        mora_actual: '14- MAYOR A 1 ANIO',
+        interes_mora: 13153659,
+        gastos_cobranza: 0,
+        saldo_total: 6276424,
+        capital: 12689868,
+        debido_cobrar: 25843527,
+        tiene_negociacion: 'Negociado'
+      },
+      {
+        identificacion: '123123',
+        nombre: 'Leonardo Arape',
+        cod_neg: 'MC17223',
+        mora_actual_dias: '1356',
+        mora_actual: '14- MAYOR A 1 ANIO',
+        interes_mora: 999999,
+        gastos_cobranza: 999999,
+        saldo_total: 999999,
+        capital: 999999,
+        debido_cobrar: 999999,
+        tiene_negociacion: 'Por negociar'
+      },
+      {
+        identificacion: '1231213',
+        nombre: 'Juancho perez',
+        cod_neg: 'MC17223',
+        mora_actual_dias: '1356',
+        mora_actual: '14- MAYOR A 1 ANIO',
+        interes_mora: 88888,
+        gastos_cobranza: 88888,
+        saldo_total: 88888,
+        capital: 88888,
+        debido_cobrar: 88888,
+        tiene_negociacion: 'Por negociar'
+      },
 
-      this.opened = false;
-      this.dataRow = []
-      const data = `${this.valueSearch?.toUpperCase()}`
+    ]
+    if (this.valueSearch.length === 0) { return }
 
-      this._negociacionCarteraService.ObtenerNegociacionCartera(data).subscribe({
-        next: (resp) => {
+    this.opened = false;
+
+    this._negociacionCarteraService.reloadData$.next({ fullTable: true })
+
+    // Swal.fire({ title: 'Cargando', html: 'Por favor espere', allowOutsideClick: false, timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
+    // this.dataRow = []
+    const data = `${this.valueSearch?.toUpperCase()}`
+
+    // this._negociacionCarteraService.ObtenerNegociacionCartera(data).subscribe({
+    //   next: (resp) => {
 
 
-          (resp.data || []).forEach((item) => {
+    //     (resp?.data || []).forEach((item) => {
 
-            if (item?.tiene_negociacion === 'SI') {
-              item.tiene_negociacion = 'Negociado'
-            } else {
+    //       if (item?.tiene_negociacion === 'SI') {
+    //         item.tiene_negociacion = 'Negociado'
+    //       } else {
 
-              item.tiene_negociacion = 'Por negociar'
-            }
+    //         item.tiene_negociacion = 'Por negociar'
+    //       }
 
-          })
+    //     })
 
-          this.dataRow = resp.data || []
-          Swal.close();
-          resolve(this.dataRow);
-        }, error: (err) => {
-          console.log(err);
-          Swal.close();
+    //     this.dataRow = resp.data || []
 
-        }
-      })
-    })
+
+    //     Swal.close();
+
+    //   }, error: (err) => {
+    //     console.log(err);
+    //     Swal.close();
+
+    //   }
+    // })
+
 
 
 

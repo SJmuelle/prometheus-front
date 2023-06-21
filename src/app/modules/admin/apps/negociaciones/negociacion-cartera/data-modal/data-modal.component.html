@@ -23,27 +23,52 @@
 
                         <div class="w-full p-2 mr-2 gap-2 flex flex-col justify-between">
 
-                            <div class="flex justify-between">
+                            <div class="flex justify-start flex-row items-center -mt-2">
+
+                                <mat-label class="w-full block"> <span
+                                        class="text-lg font-semibold">{{dataRow?.nombre}}</span> </mat-label>
+
+                            </div>
+
+                            <div class="flex justify-start flex-row items-center whitespace-pre-wrap">
+
+                                <mat-label class="text-lg font-semibold">No. de documento : </mat-label> <span class="">
+                                    {{dataRow?.identificacion}}</span>
+
+                            </div>
+
+                            <div class="flex justify-start flex-row items-center whitespace-pre-wrap">
+
+                                <mat-label class="text-lg font-semibold">Código negocio : </mat-label> <span
+                                    class="">{{dataRow?.cod_neg}}</span>
+
+                            </div>
+
+                            <hr class="-mt-0.5">
+
+                            <div class="flex justify-between -mt-3">
 
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Debido a cobrar
                                         :</span> </mat-label>
                                 <div>
-                                    <span> ${{ dataRow?.debido_cobrar | number}}</span>
+                                    <span class="flex whitespace-nowrap"> $ {{ dataRow?.debido_cobrar | number}}</span>
                                 </div>
                             </div>
+
 
                             <div class="flex justify-between">
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Interés por mora
                                         :</span></mat-label>
                                 <div>
-                                    <span> ${{ dataRow?.interes_mora | number }}</span>
+                                    <span class="flex whitespace-nowrap"> $ {{ dataRow?.interes_mora | number }}</span>
                                 </div>
                             </div>
                             <div class="flex justify-between">
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Gasto cobranza
                                         :</span></mat-label>
                                 <div>
-                                    <span>{{ '$'+(dataRow?.gastos_cobranza | number)}}</span>
+                                    <span class="flex whitespace-nowrap">{{ '$ '+(dataRow?.gastos_cobranza |
+                                        number)}}</span>
                                 </div>
                             </div>
                             <hr class="-mt-1">
@@ -51,7 +76,8 @@
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Total : </span>
                                 </mat-label>
                                 <div>
-                                    <span class="font-semibold">${{ (dataRow?.gastos_cobranza +dataRow?.interes_mora +
+                                    <span class="font-semibold flex whitespace-nowrap">$ {{ (dataRow?.gastos_cobranza
+                                        +dataRow?.interes_mora +
                                         dataRow?.debido_cobrar)
                                         | number}}</span>
                                 </div>
@@ -120,14 +146,20 @@
                             </mat-form-field>
 
 
+                            <div class="flex flex-row justify-between w-full items-center -mt-2 mb-3">
+
+                                <mat-label class=""> <span class="text-lg font-semibold text-gray-800">
+                                        Descuento
+                                        debido total :
+                                    </span> <span
+                                        class="text-gray-800">{{formNegociacionCartera.controls['descuento'].value
+                                        + ' %'}} </span> </mat-label>
+                                <span>$ {{(formNegociacionCartera.controls['descuento'].value /100) *
+                                    dataRow?.debido_cobrar | number: '1.0-0' }}</span>
+                            </div>
 
 
-                            <mat-label class="-mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Descuento
-                                    debido total :
-                                </span> <span class="text-gray-800">{{formNegociacionCartera.controls['descuento'].value
-                                    + ' %'}} </span> </mat-label>
-
-                            <div [ngStyle]="{'background-color' : disabled?  '#fcfcfc' : 'transparent' }"
+                            <div [ngStyle]="{'background-color' : disabledInput?  '#fcfcfc' : 'transparent' }"
                                 class="border-1 border-gray-300 rounded-md px-2 w-full h-11 flex items-center">
                                 <mat-slider formControlName="descuento" class="w-full " thumbLabel tickInterval="0.1"
                                     step="0.1" min="0" [max]="valuesRangeInputs.descuento_debido_total"
@@ -136,12 +168,20 @@
 
 
 
+                            <div class="flex flex-row justify-between w-full items-center">
+
+                                <mat-label class="mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Mora :
+                                    </span><span class="text-gray-800">{{formNegociacionCartera.controls['mora'].value +
+                                        '
+                                        %'}}</span></mat-label>
+                                <span>$ {{(formNegociacionCartera.controls['mora'].value/100 ) * dataRow?.interes_mora |
+                                    number: '1.0-0' }}</span>
+                            </div>
 
 
-                            <mat-label class="mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Mora :
-                                </span><span class="text-gray-800">{{formNegociacionCartera.controls['mora'].value + '
-                                    %'}}</span></mat-label>
-                            <div [ngStyle]="{'background-color' : disabled?  '#fcfcfc' : 'transparent' }"
+
+
+                            <div [ngStyle]="{'background-color' : disabledInput?  '#fcfcfc' : 'transparent' }"
                                 class="border-1 border-gray-300 rounded-md px-2 w-full h-11 flex items-center">
                                 <mat-slider formControlName="mora" class="w-full " thumbLabel tickInterval="0.1"
                                     step="0.1" min="0" [max]="valuesRangeInputs.descuento_ixm"
@@ -149,15 +189,25 @@
                             </div>
 
 
+                            <div class="flex flex-row justify-between w-full items-center">
+
+                                <mat-label class="mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Gasto
+                                        cobranza :
+                                    </span><span
+                                        class="text-gray-800">{{formNegociacionCartera.controls['gastoCobranza'].value +
+                                        '
+                                        %'}}</span>
+                                </mat-label>
+
+                                <span>$ {{ (formNegociacionCartera.controls['gastoCobranza'].value / 100 ) *
+                                    dataRow?.gastos_cobranza | number: '1.0-0'}}</span>
+
+                            </div>
 
 
-                            <mat-label class="mt-2 mb-3"> <span class="text-lg font-semibold text-gray-800"> Gasto
-                                    cobranza :
-                                </span><span
-                                    class="text-gray-800">{{formNegociacionCartera.controls['gastoCobranza'].value + '
-                                    %'}}</span>
-                            </mat-label>
-                            <div [ngStyle]="{'background-color' : disabled?  '#fcfcfc' : 'transparent' }"
+
+
+                            <div [ngStyle]="{'background-color' : disabledInput ?  '#fcfcfc' : 'transparent' }"
                                 class="border-1 border-gray-300 rounded-md px-2 w-full h-11 flex items-center">
                                 <mat-slider formControlName="gastoCobranza" class="w-full " thumbLabel
                                     tickInterval="0.1" step="0.1" min="0" [max]="valuesRangeInputs.descuento_gac"
@@ -165,9 +215,10 @@
                             </div>
 
                             <mat-form-field class="w-full mt-2 text-lg font-semibold">
-                                <mat-label> <span class="text-lg font-semibold"> Descripción </span></mat-label>
+                                <mat-label> <span class="text-lg font-semibold"> Descripción :</span></mat-label>
                                 <textarea style="resize: none;" class="font-normal" matInput
-                                    formControlName="comentario" rows="3"></textarea>
+                                    formControlName="comentario"
+                                    placeholder="Indique descripción de al menos 16 caracteres" rows="3"></textarea>
                             </mat-form-field>
 
 
@@ -182,7 +233,7 @@
                 <div class="flex flex-row justify-end gap-4 mb-30 mt-6 mr-2">
                     <button type="button" mat-stroked-button (click)="cancelForm()">Cerrar</button>
 
-                    <button *ngIf="!disabled" mat-flat-button type="submit" class=" " [disabled]="disabledForm"
+                    <button *ngIf="!disabledInput" mat-flat-button type="submit" class=" " [disabled]="disabledForm"
                         [ngClass]="disabledForm?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">
 
                         <span>Guardar </span>

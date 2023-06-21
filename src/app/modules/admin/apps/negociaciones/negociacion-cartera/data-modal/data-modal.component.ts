@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
 import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
 import Swal from 'sweetalert2';
 import { NegociacionCarteraComponent } from '../negociacion-cartera.component';
@@ -19,26 +19,47 @@ export class DataModalComponent implements OnInit, OnChanges {
     public panelOpenStateForm: boolean = true;
     public valuesRangeInputs: any = { descuento_debido_total: 100, descuento_gac: 100, descuento_ixm: 100 }
     public selectedDescuento: string = '';
-    public disabled: boolean = false;
+    public disabledInput: boolean = false;
+    public disabledSlider: boolean = true;
+
 
 
     constructor(private fb: FormBuilder, private _negociacionCarteraService: NegociacionCarteraService) { }
 
 
     ngOnChanges(changes: SimpleChanges): void {
-
         this.panelOpenState = true;
         this.panelOpenStateForm = true;
-        this.disabled = false;
+        this.disabledInput = false;
+
+
+        this.valuesRangeInputs = { descuento_debido_total: 100, descuento_gac: 100, descuento_ixm: 100 }
+
+
+
+
         if (this.formNegociacionCartera) {
+
+            this.formNegociacionCartera.controls['descuento'].setValue(0);
+            this.formNegociacionCartera.controls['mora'].setValue(0);
+            this.formNegociacionCartera.controls['gastoCobranza'].setValue(0);
+
+            setTimeout(() => {
+
+                this.valuesRangeInputs.descuento_debido_total = 0,
+                    this.valuesRangeInputs.descuento_gac = 0,
+                    this.valuesRangeInputs.descuento_ixm = 0
+            }, 50);
+
+
             this.formNegociacionCartera.enable();
 
             const reset = {
-                tipoNegociacion: ' ',
+                tipoNegociacion: null,
                 descuento: 0,
                 mora: 0,
                 gastoCobranza: 0,
-                comentario: ' '
+                comentario: null
             }
 
             this.formNegociacionCartera.controls['comentario'].markAsUntouched();
@@ -54,7 +75,8 @@ export class DataModalComponent implements OnInit, OnChanges {
 
 
             if (negociacion !== undefined) {
-                this.dataRow = this.dataRow?.datosCliente[0];
+                this.dataRow = this.dataRow?.datosCliente;
+
                 this.selectedDescuento = negociacion?.tiponegociacion;
                 this.ListadoNegociaciones = [{ codigo: 1, descripcion: negociacion.tiponegociacion }]
                 const payload = {
@@ -68,12 +90,12 @@ export class DataModalComponent implements OnInit, OnChanges {
                 this.formNegociacionCartera.setValue({ ...payload });
                 this.formNegociacionCartera.disable();
 
-                this.disabled = true;
+                this.disabledInput = true;
 
 
             } else {
 
-                this.disabled = false;
+                this.disabledInput = false;
                 this.formNegociacionCartera.enable();
 
             }
@@ -83,6 +105,9 @@ export class DataModalComponent implements OnInit, OnChanges {
 
 
         }
+
+
+
     }
 
 
@@ -113,8 +138,12 @@ export class DataModalComponent implements OnInit, OnChanges {
 
                 }
             });
-        }, 50);
 
+            if (this.dataRow?.gastos_cobranza === 0) {
+                this.valuesRangeInputs.descuento_gac = 0
+            }
+
+        }, 50);
 
 
     }
@@ -180,12 +209,14 @@ export class DataModalComponent implements OnInit, OnChanges {
 
     public cancelForm(): void {
 
+        this._negociacionCarteraService.reloadData$.next({ fullTable: true })
+
         const reset = {
-            tipoNegociacion: ' ',
+            tipoNegociacion: null,
             descuento: 0,
             mora: 0,
             gastoCobranza: 0,
-            comentario: ' '
+            comentario: null
         }
         this.formNegociacionCartera.controls['comentario'].markAsUntouched();
         this.formNegociacionCartera.controls['tipoNegociacion'].markAsUntouched();
@@ -199,7 +230,7 @@ export class DataModalComponent implements OnInit, OnChanges {
             descuento: [0, Validators.required],
             mora: [0, Validators.required],
             gastoCobranza: [0, Validators.required],
-            comentario: ['', Validators.required],
+            comentario: [, [Validators.required, Validators.minLength(16)]],
         })
     }
 
