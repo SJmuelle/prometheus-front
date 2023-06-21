@@ -130,8 +130,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             this.form.disable();
         }
         this.getSalarioMinimo();
-        this.marginTopInputDynamic();
+
     }
+
+
 
 
     updatePointer(score, minScore, maxScore) {
@@ -324,6 +326,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     marginTopInputDynamic() {
         if (window.innerWidth < 600) {
+
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
 
@@ -471,6 +474,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 if (data.tipoActividad) {
                     this.getActividadEconomica();
                 }
+                this.marginTopInputDynamic();
             });
 
         const datosSolicitud: any = {
@@ -511,6 +515,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         //Add 'implements AfterViewInit' to the class.
 
         this.addValidation()
+        this.marginTopInputDynamic();
     }
 
     cargarMap() {
@@ -679,6 +684,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     private getCiudades(codigo: string): void {
         this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
             this.ciudades = rep
+            this.marginTopInputDynamic()
         })
     }
 
