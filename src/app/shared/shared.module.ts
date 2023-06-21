@@ -19,10 +19,20 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DirectionsBasicComponent } from './modal/directions-basic/directions-basic.component';
+import { MatSortModule } from '@angular/material/sort';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
 // import { FabricaOpcionesComponent } from './opciones/button/fabrica-opciones/fabrica-opciones.component';
 import { FuseCardModule } from '@fuse/components/card';
 import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TableComponent } from './componentes/table/table.component';
+import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
+import { DataTablePipe } from './pipes/data-table.pipe'
+
+
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
 @NgModule({
@@ -48,6 +58,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         FuseDrawerModule,
         FuseCardModule,
         MatTooltipModule,
+        MatSortModule,
+        MatSliderModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatMenuModule,
         // FabricaCreditoModule
 
     ],
@@ -69,10 +84,24 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         MatDialogModule,
         MatRadioModule,
         MatFormFieldModule,
-        MatCardModule
+        MatCardModule,
+        MatSortModule,
+        MatSliderModule,
+        MatSidenavModule,
+        MatExpansionModule,
+        MatMenuModule,
+        SmPaginatorPipe,
+        DataTablePipe,
+        TableComponent
     ],
     declarations: [
-    DirectionsBasicComponent
-  ],
+        DirectionsBasicComponent,
+        SmPaginatorPipe,
+        DataTablePipe,
+        TableComponent
+
+
+
+    ],
 })
-export class SharedModule {}
+export class SharedModule { }

@@ -22,10 +22,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { MaterialLayoutModule } from 'app/layout/layouts/horizontal/material/material.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    ReporterdMercadeoComponent
+    ReporterdMercadeoComponent,
   ],
   imports: [
     CommonModule,
@@ -58,7 +59,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatPaginatorModule,
     NgxPaginationModule,
     MaterialLayoutModule,
-    MatDatepickerModule
-  ]
+    MatDatepickerModule,
+    SharedModule
+  ],
+
 })
 export class MercadeoModule { }

@@ -1,22 +1,11 @@
 <div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
     <div class="grid grid-cols-12 w-100 mb-2">
-        <h2 class="text-gray-900 col-span-12 mb-4">Reporte de envio de ciclos de pagos</h2>
+        <h2 class="text-gray-900 col-span-12 mb-4">Reporte de envío de ciclos de pagos</h2>
     </div>
-    <div *ngIf="element == true">
-        <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
-            <div class="flex flex-row gap-1.5 w-full" matPrefix>
-                <div>
-                    <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
-                </div>
-                <div class="margin-button">
-                    Exportar
-                </div>
-            </div>
-        </button>
-    </div>
-    <div class="flex items-center justify-between my-10">
-        <form [formGroup]="filtroBusqueda">
-            <!-- <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
+
+    <!-- <div class="flex items-center justify-between my-10">
+        <form [formGroup]="filtroBusqueda"> -->
+    <!-- <mat-form-field class="w-3/4 sm:w-2/4 md:w-2/5">
                 <mat-label>Fecha Inicial</mat-label>
                 <input matInput [min]="minFecha" [max]="maxFecha" [matDatepicker]="picker1"
                     formControlName="fechaInicial" readonly>
@@ -31,7 +20,7 @@
                 <mat-datepicker #picker2 disabled="false"></mat-datepicker>
             </mat-form-field> -->
 
-
+    <!-- 
             <div class="flex border-2 p-2 cursor-pointer w-52" (click)="picker.open()">
                 <div color="accent">
                     <mat-date-range-input [rangePicker]="picker">
@@ -43,7 +32,7 @@
                             <button mat-button matDatepickerCancel>
                                 {{ "Cancelar" }}
                             </button>
-                            <button mat-raised-button [color]="'accent'" matDatepickerApply >
+                            <button mat-raised-button [color]="'accent'" matDatepickerApply>
                                 {{ "search" }}
                             </button>
                         </mat-datepicker-actions>
@@ -51,11 +40,77 @@
                 </div>
                 <mat-icon class="icon-size-5" matSuffix svgIcon="feather:calendar">
                 </mat-icon>
+            </div> -->
+
+    <!-- </form>
+    </div> -->
+    <div class="w-full flex flex-col sm:flex-row justify-between gap-4 ">
+
+
+        <div class="flex flex-row ">
+
+            <div class="border-2 rounded-full  pr-4 pt-2 pb-2 pl-2 items-center w-full sm:w-60">
+                <mat-select class="w-full pl-4">
+                    <mat-option [value]="item" *ngFor="let item of selectLotes">{{item}}</mat-option>
+
+                </mat-select>
+
             </div>
 
-        </form>
+
+
+
+        </div>
+
+
+        <div class="flex flex-row gap-4 items-center w-full sm:w-auto">
+            <button matTooltip="Exportar" mat-icon-button class="bg-green-500 text-white flex flex-row"
+                (click)="exportAsXLSX()">
+                <div class="flex flex-row gap-1.5 w-full items-center" matPrefix>
+
+                    <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
+
+                    <!-- <div class="margin-button">
+                    Exportar
+                </div> -->
+                </div>
+            </button>
+
+
+            <div class="w-full sm:w-60 rounded-full border-2 flex flex-row p-2 justify-between mr-2">
+                <input #searchinput type="text" placeholder="Filtrar..." (keyup)="search(searchinput.value)"
+                    class="ml-1 w-full not-uppercase">
+                <mat-icon>search</mat-icon>
+            </div>
+
+
+        </div>
+
+
+
+
     </div>
-    <div class="h-80 xl:h-140 w-full shadow overflow-y-scroll overflow-x-scroll lg:overflow-x-hidden"
+
+    <div class="mt-4 mb-10">
+        <app-table [allDataRows]="datos" [dataColumn]="dataColumn" [dataOptionTable]="dataOptionTable"></app-table>
+    </div>
+    <!-- 
+    <div class="w-full mt-4 border-2 bg-fintra-gray rounded-2xl flex justify-start p-4">
+
+        <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
+            <div class="flex flex-row gap-1.5 w-full items-center" matPrefix>
+                <div>
+                    <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
+                </div>
+                <div class="margin-button">
+                    Exportar
+                </div>
+            </div>
+        </button>
+
+    </div> -->
+
+    <!-- <div class="h-80 xl:h-140 w-full shadow overflow-y-scroll overflow-x-scroll lg:overflow-x-hidden"
         *ngIf="element == true">
         <table>
             <thead class="bg-gray-100">
@@ -84,5 +139,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
 </div>

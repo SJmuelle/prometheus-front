@@ -1,0 +1,207 @@
+<div>
+    <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl">
+
+
+
+
+
+
+        <div class="flex flex-col sm:hidden min-h-40  max-h-90 ">
+
+
+            <div>
+                <div class="h-14 min-h-14 flex-col w-full flex z-999"
+                    style="background: #E2E8F0; position: sticky; top: 0px; ">
+                    <span class="pl-6 pt-3 flex-col font-semibold text-lg">Negociaciones</span>
+                </div>
+
+                <div class="text-center" *ngIf="!this.allDataRows.length">
+                    <div class="flex items-center content-center justify-center mt-7 gap-3">
+                        <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+                        <p class="text-5xl font-semibold tracking-tight">
+                            {{ "Aviso" }}
+                        </p>
+                    </div>
+                    <p class="text-lg mb-8">
+                        {{ "Lo sentimos, no se encontraron datos " }}
+                    </p>
+                </div>
+
+                <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number" class="border-1 p-4">
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row">
+                        <span class="w-full " [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
+
+                            <span class=" font-semibold">{{item.text}} : </span>
+
+                            <span *ngIf="item.typeField === 'text'"> {{value[item.name]
+                                |dataTable:item.pipeName
+                                ||"text"}}</span>
+
+                            <span *ngIf="item.typeField === 'statusStyle'" class="flex items-center"> <span
+                                    class="w-4 h-4 rounded-full bg-gray-600 mr-2 ml-2 "></span>{{value[item.name]
+                                |dataTable:item.pipeName
+                                ||"text"}}</span>
+
+
+                        </span>
+
+
+
+
+                    </div>
+
+                    <div class="w-full h-10 -mb-3 mt-1 flex justify-end" *ngIf="Options.function">
+
+                        <button [matMenuTriggerFor]="menu1" (click)="dataReport = value" mat-stroked-button>
+                            <mat-icon>format_list_bulleted</mat-icon>Opciones</button>
+
+
+                        <mat-menu #menu1="matMenu" class="ml-24">
+                            <button mat-menu-item [disabled]="dataReport?.tiene_negociacion==='Negociado'"
+                                (click)="createNegociacion()">
+                                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> Realizar
+                                negociación</button>
+                            <button [disabled]="dataReport?.tiene_negociacion!=='Negociado'" mat-menu-item
+                                (click)="openNegociacion()"><mat-icon
+                                    svgIcon="heroicons_outline:document-text"></mat-icon>
+                                Ver
+                                detalle negociación</button>
+                        </mat-menu>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="hidden sm:flex flex-col">
+
+            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 ">
+
+                <!-- <ng-container matColumnDef="action" *ngIf="Options.function">
+                    <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button *ngIf="Options.multifunction" (click)="dataReport = row" [matMenuTriggerFor]="menu"
+                            class="" mat-icon-button>
+                            <mat-icon>format_list_bulleted</mat-icon>
+                        </button>
+                        <button *ngIf="!Options.multifunction" (click)="dataReport = row" class="" mat-icon-button>
+                            <mat-icon>format_list_bulleted</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <!-- [disabled]="dataReport.tiene_negociacion==='SI'" -->
+                <!-- <mat-menu #menu="matMenu" *ngIf="Options.multifunction">
+                    <button mat-menu-item [disabled]="dataReport?.tiene_negociacion==='Negociado'"
+                        (click)="createNegociacion()">
+                        <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> Realizar
+                        negociación</button>
+                    <button [disabled]="dataReport?.tiene_negociacion!=='Negociado'" mat-menu-item
+                        (click)="openNegociacion()"><mat-icon svgIcon="heroicons_outline:document-text"></mat-icon> Ver
+                        detalle negociación</button>
+                </mat-menu> -->
+                <!-- (click)="this.buttonTable.action(row) -->
+
+                <ng-container [matColumnDef]="dataOption.name" *ngFor="let dataOption of this.dataOptionTable">
+
+                    <th class=" " style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef mat-sort-header>
+                        {{ dataOption.text }}
+                    </th>
+
+                    <ng-container [ngSwitch]="dataOption.typeField">
+                        <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
+                            <td class="cursor-pointer text-center -mr-2" mat-cell *matCellDef="let row"
+                                (click)="actionSelectRow(row)">
+                                <span [ngStyle]="{'white-space': !!whitEspace? 'nowrap' : 'normal'}"
+                                    [ngClass]="dataOption.classTailwind"> {{(row[dataOption.name] ) | dataTable:
+                                    dataOption.pipeName || "text" }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+                        <!-- <ng-container *ngSwitchCase="'switch'">
+                            <td mat-cell *matCellDef="let row">
+                                <span class="w-full h-full">
+                                    <mat-slide-toggle (change)="actionSwitch($event, row)" color="primary"
+                                        [checked]="row[dataOption.name]" [value]="row[dataOption.name]">
+                                    </mat-slide-toggle>
+                                </span>
+                            </td>
+                        </ng-container> -->
+
+                        <!-- <ng-container *ngSwitchCase="'circleColor'">
+                            <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                                <p [ngClass]="dataOption.classTailwind + ' ' + dataOption.styleCondition(row) + ' whitespace-nowrap'"
+                                    [ngStyle]="{backgroundColor:dataOption.styleCondition(row)}">
+                                </p>
+                            </td>
+                        </ng-container> -->
+
+                        <!-- <ng-container *ngSwitchCase="'statusStyle'">
+                            <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row"
+                                (click)="actionSelectRow(row)">
+                                <div class="flex gap-2 items-center pt-3">
+                                    <p class="w-4 h-4 rounded-full" [ngClass]="dataOption.styleCondition(row)"></p>
+                                    <p class="whitespace-nowrap">
+                                        {{ row[dataOption.name] }}
+                                    </p>
+                                </div>
+                            </td>
+                        </ng-container> -->
+
+                        <!-- <ng-container *ngSwitchCase="'checked'">
+                            <td class="cursor-pointer" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                                <mat-checkbox readonly disabled type="checkbox" [checked]="row[dataOption.name]"
+                                    class="flex items-center justify-center" [ngClass]="dataOption.classTailwind">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container> -->
+                    </ng-container>
+
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="this.dataColumn"></tr>
+                <tr mat-row *matRowDef="let row; columns: this.dataColumn"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell text-center" colspan="12" *ngIf="!this.allDataRows.length">
+                        <div class="flex items-center content-center justify-center mt-7 gap-3">
+                            <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+                            <p class="text-5xl font-semibold tracking-tight">
+                                {{ "Aviso" }}
+                            </p>
+                        </div>
+                        <p class="text-lg mb-8">
+                            {{ "Lo sentimos, no se encontraron datos " }}
+                        </p>
+                    </td>
+                    <td class="mat-cell text-center" colspan="12" *ngIf="this.allDataRows.length">
+                        <div class="flex items-center content-center justify-center mt-7 gap-3">
+                            <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+                            <p class="text-xl font-semibold tracking-tight">
+                                {{ "No se encontraron datos con el termino :" }}
+                            </p>
+                        </div>
+                        <p class="mb-8 mt-2 text-lg text-red-600 font-medium">
+                            "{{ this.dataFilter }}"
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <mat-paginator (page)="pageEvent($event)" class="border-t border-b rounded-t-none rounded-xl"
+        style="background-color: #E2E8F0;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
+        [pageSize]="5" [pageSizeOptions]="[5,10,20]">
+    </mat-paginator>
+</div>
