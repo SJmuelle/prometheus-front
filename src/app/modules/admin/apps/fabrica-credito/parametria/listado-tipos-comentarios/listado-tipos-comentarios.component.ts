@@ -96,7 +96,6 @@ export class ListadoTiposComentariosComponent implements OnInit {
 
 
   abrirModal(datos, titulo) {
-    console.log('datos', datos);
 
     if (titulo == 'N') {
       this.datos = {

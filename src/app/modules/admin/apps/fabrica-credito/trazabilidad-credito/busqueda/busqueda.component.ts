@@ -221,7 +221,6 @@ export class BusquedaComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
 
     private armarConsulta(data) {
-        console.log('armando consulta', data);
 
         const filtered = data.filter(function (element: any) {
             switch (element.tipo) {

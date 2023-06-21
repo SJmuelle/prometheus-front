@@ -121,7 +121,6 @@ export class ListadoBarriosComponent implements OnInit {
         Swal.close();
         if (response) {
           this.listado = response.data;
-          console.log('listado', this.listado);
 
           this.dataSource = new MatTableDataSource(this.listado)
           this.dataSource.paginator = this.paginator;
