@@ -13,7 +13,7 @@ export const environment = {
     // apiUrl:"http://192.168.138.221:8010/",
     // apiUrl:"http://192.168.140.197:8084/",
     // apiUrl:"http://demo.fintra.co:8011/",
-    alfaFintra: "http://192.168.190.222:3000/",
+
     urlprometheus: 'https://prometheus.fintra.co:8444/fintra/EndPointCoreServlet',
 };
 
