@@ -332,4 +332,20 @@ export class GenericasService {
     public getLotes(): Observable<any> {
         return this._http.get(`${this._appSettings.rdStation.url.listaLote}`);
     }
+
+    /**
+    * 
+    * @returns ACTUALIZA LISTADO DE MERCADEO RD
+    */
+    public getDataLotes(idLote: string): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.dataLotes}/${idLote}`);
+    }
+
+
+
+
+
+
+
+
 }

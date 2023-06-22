@@ -10,7 +10,7 @@
 
 
             <div>
-                <div class="h-14 min-h-14 flex-col w-full flex z-999"
+                <div class="h-14 min-h-14 flex-col w-full flex z-99"
                     style="background: #E2E8F0; position: sticky; top: 0px; ">
                     <span class="pl-6 pt-3 flex-col font-semibold text-lg">Negociaciones</span>
                 </div>
@@ -110,9 +110,15 @@
 
                 <ng-container [matColumnDef]="dataOption.name" *ngFor="let dataOption of this.dataOptionTable">
 
-                    <th class=" " style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th class=" sticky top-0" style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef
+                        mat-sort-header>
                         {{ dataOption.text }}
                     </th>
+
+
+
+
+
 
                     <ng-container [ngSwitch]="dataOption.typeField">
                         <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
@@ -164,6 +170,8 @@
                         </ng-container> -->
                     </ng-container>
 
+
+
                 </ng-container>
 
 
@@ -202,6 +210,6 @@
 
     <mat-paginator (page)="pageEvent($event)" class="border-t border-b rounded-t-none rounded-xl"
         style="background-color: #E2E8F0;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
-        [pageSize]="5" [pageSizeOptions]="[5,10,20]">
+        [pageSize]="5" [pageSizeOptions]="[5,10]">
     </mat-paginator>
 </div>

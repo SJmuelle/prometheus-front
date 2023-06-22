@@ -471,7 +471,8 @@ export class AppSettingsService {
     public rdStation = {
         url: {
             info_rd: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo'),
-            listaLote: EndPoints.uri('/generic/qry/obtener-select-lote')
+            listaLote: EndPoints.uri('/generic/qry/obtener-select-lote'),
+            dataLotes: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo-lotes')
         }
     };
     /**

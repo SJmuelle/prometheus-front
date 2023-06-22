@@ -1,7 +1,10 @@
-<div class="py-2 px-3 h-screen w-100 bg-white rounded-lg overflow-x-auto">
-    <div class="grid grid-cols-12 w-100 mb-2">
+<div class="py-2 px-3 h-screen w-screen bg-white rounded-lg overflow-x-auto">
+
+    <app-header [infoTitulo]="infoTitulo"></app-header>
+
+    <!-- <div class="grid grid-cols-12 w-100 mb-2">
         <h2 class="text-gray-900 col-span-12 mb-4">Reporte de envío de ciclos de pagos</h2>
-    </div>
+    </div> -->
 
     <!-- <div class="flex items-center justify-between my-10">
         <form [formGroup]="filtroBusqueda"> -->
@@ -50,8 +53,13 @@
         <div class="flex flex-row ">
 
             <div class="border-2 rounded-full  pr-4 pt-2 pb-2 pl-2 items-center w-full sm:w-60">
-                <mat-select class="w-full pl-4">
-                    <mat-option [value]="item" *ngFor="let item of selectLotes">{{item}}</mat-option>
+                <mat-select (selectionChange)="SelectLote($event)" class="w-full pl-4">
+
+
+
+                    <mat-option value="0">Borrar filtro</mat-option>
+
+                    <mat-option [value]="item.lote" *ngFor="let item of selectLotes">{{item.lote}}</mat-option>
 
                 </mat-select>
 
@@ -91,7 +99,7 @@
 
     </div>
 
-    <div class="mt-4 mb-10">
+    <div class="mt-4 mb-60">
         <app-table [allDataRows]="datos" [dataColumn]="dataColumn" [dataOptionTable]="dataOptionTable"></app-table>
     </div>
     <!-- 

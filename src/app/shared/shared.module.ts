@@ -30,7 +30,8 @@ import { FuseDrawerModule } from '@fuse/components/drawer';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableComponent } from './componentes/table/table.component';
 import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
-import { DataTablePipe } from './pipes/data-table.pipe'
+import { DataTablePipe } from './pipes/data-table.pipe';
+import { HeaderComponent } from './componentes/header/header.component'
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -92,13 +93,15 @@ import { DataTablePipe } from './pipes/data-table.pipe'
         MatMenuModule,
         SmPaginatorPipe,
         DataTablePipe,
-        TableComponent
+        TableComponent,
+        HeaderComponent
     ],
     declarations: [
         DirectionsBasicComponent,
         SmPaginatorPipe,
         DataTablePipe,
-        TableComponent
+        TableComponent,
+        HeaderComponent
 
 
 

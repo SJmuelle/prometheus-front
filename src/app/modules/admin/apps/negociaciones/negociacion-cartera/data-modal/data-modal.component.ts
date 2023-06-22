@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
 import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
+import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import Swal from 'sweetalert2';
 import { NegociacionCarteraComponent } from '../negociacion-cartera.component';
 
@@ -24,7 +25,11 @@ export class DataModalComponent implements OnInit, OnChanges {
 
 
 
-    constructor(private fb: FormBuilder, private _negociacionCarteraService: NegociacionCarteraService) { }
+    constructor(
+        private fb: FormBuilder,
+        private _negociacionCarteraService: NegociacionCarteraService,
+        private _sweetAlert: Sweetalert2Service
+    ) { }
 
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -151,51 +156,57 @@ export class DataModalComponent implements OnInit, OnChanges {
 
     public saveData(): void {
 
-        const data = this.formNegociacionCartera.getRawValue();
-        const json = {
-            codneg: this.dataRow.cod_neg,
-            descripcion: data.comentario,
-            debido: this.dataRow.debido_cobrar,
-            por_descuento_deb: data.descuento,
-            ixmora: this.dataRow.interes_mora,
-            por_descuento_ixmora: data.mora,
-            gac: this.dataRow.gastos_cobranza,
-            por_descuento_gac: data.gastoCobranza,
-            tneg: data.tipoNegociacion
+        const callBack = () => {
+            const data = this.formNegociacionCartera.getRawValue();
+            const json = {
+                codneg: this.dataRow.cod_neg,
+                descripcion: data.comentario,
+                debido: this.dataRow.debido_cobrar,
+                por_descuento_deb: data.descuento,
+                ixmora: this.dataRow.interes_mora,
+                por_descuento_ixmora: data.mora,
+                gac: this.dataRow.gastos_cobranza,
+                por_descuento_gac: data.gastoCobranza,
+                tneg: data.tipoNegociacion
+            }
+
+            Swal.fire({
+                title: 'Cargando',
+                html: 'Por favor espere',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                timer: 500000,
+                didOpen: () => {
+                    Swal.showLoading()
+                    Swal.close();
+                    this._negociacionCarteraService.guardarNegociacionCartera(json).subscribe({
+                        next: (resp) => {
+
+                            this._negociacionCarteraService.reloadData$.next({ reload: true })
+
+                            Swal.fire(
+                                'Correcto',
+                                'Solicitud realizada correctamente',
+                                'success'
+                            )
+                            this.cancelForm();
+
+                        },
+                        error: () => {
+                            Swal.fire(
+                                'Error',
+                                'Solicitud no pudo ser procesada, porfavor intente mas tarde.',
+                                'error'
+                            )
+                        }
+                    });
+                }
+            })
         }
 
-        Swal.fire({
-            title: 'Cargando',
-            html: 'Por favor espere',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-            timer: 500000,
-            didOpen: () => {
-                Swal.showLoading()
-                Swal.close();
-                this._negociacionCarteraService.guardarNegociacionCartera(json).subscribe({
-                    next: (resp) => {
+        this._sweetAlert.alertConfirmation(callBack);
 
-                        this._negociacionCarteraService.reloadData$.next({ reload: true })
 
-                        Swal.fire(
-                            'Correcto',
-                            'Solicitud realizada correctamente',
-                            'success'
-                        )
-                        this.cancelForm();
-
-                    },
-                    error: () => {
-                        Swal.fire(
-                            'Error',
-                            'Solicitud no pudo ser procesada, porfavor intente mas tarde.',
-                            'error'
-                        )
-                    }
-                });
-            }
-        })
 
     }
 

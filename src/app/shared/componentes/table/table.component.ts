@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
 import { Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 interface Ioptions {
   modeMobil?: boolean,
@@ -75,51 +75,36 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
   }
 
-
-
-
-
   pageEvent(event): void {
     this.page_size = event.pageSize
     this.page_number = event.pageIndex
   }
 
   private listenObservable(): void {
-    this.susbcripcion$ = this._filterTable.filterTable$.pipe(takeUntil(this.unsuscribre$)).subscribe(dataFilter => {
+    this.susbcripcion$ = this._filterTable.filterTable$.pipe(debounceTime(400), takeUntil(this.unsuscribre$)).subscribe(dataFilter => {
       this.dataSource.filter = dataFilter
-
       this.dataFilter = dataFilter;
       this.allDataRows = this.dataCopy;
       let keys = []
       if (this.allDataRows[0]) {
-
         keys = Object.keys(this.allDataRows[0])
       }
       const copyData = [];
       (this.allDataRows || []).forEach((item) => {
-
         keys.forEach((keyValue) => {
-
-          if (item[keyValue]?.toString().toUpperCase().includes(dataFilter?.toUpperCase().trim())) {
+          if (item[keyValue]?.toString()?.trim()?.toUpperCase()?.includes(dataFilter?.toUpperCase()?.trim())) {
             if (!copyData.find(valueoff => valueoff === item)) {
               copyData.push(item);
             }
-
-
           }
         })
-
-
       });
       if (dataFilter.length === 0) {
         this.allDataRows = this.dataCopy;
       } else {
+        this.page_number = 0
         this.allDataRows = copyData
-
       }
-
-
     })
   }
-
 }

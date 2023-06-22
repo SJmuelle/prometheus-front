@@ -284,7 +284,6 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   private listenObservable(): void {
     this.susbcription$ = this._negociacionCarteraServices.reloadData$.subscribe(resp => {
-      console.log('respuesta observable', resp)
       if (resp.fullTable === true) {
         this.dataOptionTable = [
           {

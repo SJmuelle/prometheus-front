@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSelect } from '@angular/material/select';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
+import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { PqrService } from '../../pqr/pqr.service';
 
 
@@ -12,9 +14,11 @@ import { PqrService } from '../../pqr/pqr.service';
 })
 export class ReporterdMercadeoComponent implements OnInit {
   public datos: any[] = [];
+  public dataCopy: any[] = [];
   public fechaActual = new Date();
   public page: number = 1;
-  public selectLotes: any[] = []
+  public selectLotes: any[] = [];
+  public infoTitulo: IinfoTitulo = { titulo: 'Mercadeo', subtitulo: 'Reporte de envío de ciclos de pagos' }
 
   public dataOptionTable: any[] = [
     {
@@ -90,9 +94,15 @@ export class ReporterdMercadeoComponent implements OnInit {
 
       next: (resp) => {
         this.datos = resp?.data || []
+        this.dataCopy = this.datos
         this._sweetAlert.stopLoading();
       },
-      error: (err) => { }
+      error: (err) => {
+
+
+        this._sweetAlert.alertError();
+
+      }
 
     })
   }
@@ -104,4 +114,35 @@ export class ReporterdMercadeoComponent implements OnInit {
     const filterValue = value.trim().toUpperCase();
     this._tableDataFilterService.sendFilterData(filterValue);
   }
+
+  public SelectLote(Lote: MatSelect): void {
+
+    if (Lote.value === "0") {
+      this._sweetAlert.startLoading();
+      setTimeout(() => {
+        this.datos = this.dataCopy;
+        this._sweetAlert.stopLoading();
+      }, 100);
+    } else {
+
+      this._sweetAlert.startLoading();
+      this._genericasService.getDataLotes(Lote.value).subscribe({
+        next: (resp) => {
+          this._sweetAlert.stopLoading();
+          this.datos = resp?.data || []
+        },
+        error: () => {
+          this._sweetAlert.alertError();
+        }
+      })
+
+
+    }
+
+
+
+  }
+
+
+
 }
