@@ -1,20 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PagaduriaRoutingModule } from './pagaduria-routing.module';
-import { PagaduriaComponent } from './pagaduria/pagaduria.component';
-import { ObligacionesComponent } from './pagaduria/obligaciones/obligaciones.component';
-import { AprobarReferenciaLaboralComponent } from './pagaduria/aprobar-referencia-laboral/aprobar-referencia-laboral.component';
-import { RechazarReferenciaLaboralComponent } from './pagaduria/rechazar-referencia-laboral/rechazar-referencia-laboral.component';
-import { AprobarCapacidadPagoComponent } from './pagaduria/aprobar-capacidad-pago/aprobar-capacidad-pago.component';
-import { RechazarCapacidadPagoComponent } from './pagaduria/rechazar-capacidad-pago/rechazar-capacidad-pago.component';
-import { GestionSolicitudesComponent } from './pagaduria/gestion-solicitudes/gestion-solicitudes.component';
-
-import { FuseAlertModule } from '@fuse/components/alert';
-import { Ng2SearchPipeModule } from "ng2-search-filter";
-
+import { MercadeoRoutingModule } from './mercadeo-routing.module';
+import { ReporterdMercadeoComponent } from './reporterd-mercadeo/reporterd-mercadeo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -28,26 +17,23 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
-
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { MaterialLayoutModule } from 'app/layout/layouts/horizontal/material/material.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    PagaduriaComponent,
-    ObligacionesComponent,
-    AprobarReferenciaLaboralComponent,
-    RechazarReferenciaLaboralComponent,
-    AprobarCapacidadPagoComponent,
-    RechazarCapacidadPagoComponent,
-    GestionSolicitudesComponent,
+    ReporterdMercadeoComponent,
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
     FormsModule,
+    Ng2SearchPipeModule,
+    MercadeoRoutingModule,
     ReactiveFormsModule,
-    PagaduriaRoutingModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -60,8 +46,6 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatExpansionModule,
     MatTooltipModule,
     MatButtonToggleModule,
-    FuseAlertModule,
-    Ng2SearchPipeModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -72,7 +56,12 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatStepperModule,
     MatExpansionModule,
     MatTooltipModule,
-    FuseAlertModule,
-  ]
+    MatPaginatorModule,
+    NgxPaginationModule,
+    MaterialLayoutModule,
+    MatDatepickerModule,
+    SharedModule
+  ],
+
 })
-export class PagaduriaModule { }
+export class MercadeoModule { }

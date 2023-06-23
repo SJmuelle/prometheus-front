@@ -99,7 +99,8 @@ const config = {
             teal: colors.teal,
             blue: colors.blue,
             indigo: colors.indigo,
-            purple: colors.purple
+            purple: colors.purple,
+            fintra: colors.fintra
         },
         fontSize: {
             'xs': '0.625rem',
@@ -122,6 +123,7 @@ const config = {
             print: {
                 'raw': 'print'
             },
+            xs: '440px',
             sm: '600px',
             md: '960px',
             lg: '1280px',
