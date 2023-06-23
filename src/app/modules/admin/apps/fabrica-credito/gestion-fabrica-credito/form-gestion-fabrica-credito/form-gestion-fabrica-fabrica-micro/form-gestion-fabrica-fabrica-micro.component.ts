@@ -391,15 +391,15 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
 
 
-        const postDataLL: geoCodingAddress = {
-            departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === datosFormularios.codigoDepartamentoNegocio).nombre,
-            ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === datosFormularios.codigoCiudad).nombre,
-            direccion: datosFormularios.direccionNegocio
-        };
+        // const postDataLL: geoCodingAddress = {
+        //     departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === datosFormularios.codigoDepartamentoNegocio).nombre,
+        //     ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === datosFormularios.codigoCiudad).nombre,
+        //     direccion: datosFormularios.direccionNegocio
+        // };
 
-        this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-            datosFormularios.latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
-            datosFormularios.longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+        // this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+        //     datosFormularios.latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+        //     datosFormularios.longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
 
             Swal.fire({
                 title: 'Guardar información',
@@ -415,7 +415,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     this.postFormularioFabrica(datosFormularios);
                 }
             });
-        })
+        // })
 
 
     }
@@ -520,84 +520,84 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     }
 
     cargarMap() {
-        this.mostrarMapaPreview = !this.mostrarMapaPreview
+        // this.mostrarMapaPreview = !this.mostrarMapaPreview
 
-        const postDataLL: geoCodingAddress = {
-            departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === this.form.get('codigoDepartamentoNegocio').value).nombre,
-            ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === this.form.get('codigoCiudadNegocio').value).nombre,
-            direccion: this.form.get('direccionNegocio').value
-        };
-
-
-        if (!this.map) {
-            const GoogleMaps = L.tileLayer(
-                'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
-                {
-                    maxZoom: 20,
-                    minZoom: 3,
-                    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-                }
-            );
-
-            this.map = L.map('map', {
-                zoomAnimation: true,
-                layers: GoogleMaps,
-                inertia: true,
-                worldCopyJump: true,
-                center: [11.004313, -74.808137],
-                zoom: 20,
-                attributionControl: false,
-                zoomControl: false
-            });
-
-            setTimeout(() => {
-                this.map.invalidateSize();
-            }, 500);
-        }
-
-        if(this.mostrarMapaPreview){
-            this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-                const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
-                const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
-
-                this.markers.forEach((marker) =>{
-                    this.map.removeLayer(marker)
-                })
+        // const postDataLL: geoCodingAddress = {
+        //     departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === this.form.get('codigoDepartamentoNegocio').value).nombre,
+        //     ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === this.form.get('codigoCiudadNegocio').value).nombre,
+        //     direccion: this.form.get('direccionNegocio').value
+        // };
 
 
-                this.markers = []
+        // if (!this.map) {
+        //     const GoogleMaps = L.tileLayer(
+        //         'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
+        //         {
+        //             maxZoom: 20,
+        //             minZoom: 3,
+        //             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        //         }
+        //     );
 
-                const marker = L.marker([latitudNegocio, longitudNegocio], {
-                    icon: L.icon({
-                        iconUrl: this.iconUrl,
-                        iconSize: [40, 40],
-                        iconAnchor: [20, 20],
-                    })
-                }).addTo(this.map)
+        //     this.map = L.map('map', {
+        //         zoomAnimation: true,
+        //         layers: GoogleMaps,
+        //         inertia: true,
+        //         worldCopyJump: true,
+        //         center: [11.004313, -74.808137],
+        //         zoom: 20,
+        //         attributionControl: false,
+        //         zoomControl: false
+        //     });
+
+        //     setTimeout(() => {
+        //         this.map.invalidateSize();
+        //     }, 500);
+        // }
+
+        // if(this.mostrarMapaPreview){
+        //     this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+        //         const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+        //         const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+
+        //         this.markers.forEach((marker) =>{
+        //             this.map.removeLayer(marker)
+        //         })
+
+
+        //         this.markers = []
+
+        //         const marker = L.marker([latitudNegocio, longitudNegocio], {
+        //             icon: L.icon({
+        //                 iconUrl: this.iconUrl,
+        //                 iconSize: [40, 40],
+        //                 iconAnchor: [20, 20],
+        //             })
+        //         }).addTo(this.map)
 
 
 
-                // const popup = L.popup()
-                //     .setLatLng([latitudNegocio, longitudNegocio])
-                //     .setContent("<div class='text-black text-lg'> Usted esta aquí. </div>")
-                //     .openOn(this.map);
+        //         // const popup = L.popup()
+        //         //     .setLatLng([latitudNegocio, longitudNegocio])
+        //         //     .setContent("<div class='text-black text-lg'> Usted esta aquí. </div>")
+        //         //     .openOn(this.map);
 
-                let tooltip = L.tooltip([latitudNegocio, longitudNegocio], {
-                    content: "<div class='text-white font-bold flex flex-col w-full justify-center items-center'> <div class='text-xl'>"+ this.form.get('nombreNegocio').value + "</div> <div>"
-                    +
-                    this.form.get('direccionNegocio').value
-                    +  "</div> <div class='text-sm'>" + this.barriosNegocio.data.find(barrio => barrio.codigo == this.form.get('codigoBarrioNegocio').value).nombre +"</div>" +
-                    " </div>",
-                    className: "bg-accent-700 text-white border-none",
-                    permanent: false,
-                    id: 23232333,
-                    offset: L.point(14,-5)
-                  }).addTo(this.map);
+        //         let tooltip = L.tooltip([latitudNegocio, longitudNegocio], {
+        //             content: "<div class='text-white font-bold flex flex-col w-full justify-center items-center'> <div class='text-xl'>"+ this.form.get('nombreNegocio').value + "</div> <div>"
+        //             +
+        //             this.form.get('direccionNegocio').value
+        //             +  "</div> <div class='text-sm'>" + this.barriosNegocio.data.find(barrio => barrio.codigo == this.form.get('codigoBarrioNegocio').value).nombre +"</div>" +
+        //             " </div>",
+        //             className: "bg-accent-700 text-white border-none",
+        //             permanent: false,
+        //             id: 23232333,
+        //             offset: L.point(14,-5)
+        //           }).addTo(this.map);
 
-                  this.markers.push(tooltip)
-                this.map.fitBounds([tooltip.getLatLng()]);
-            })
-        }
+        //           this.markers.push(tooltip)
+        //         this.map.fitBounds([tooltip.getLatLng()]);
+        //     })
+        // }
 
 
     }
