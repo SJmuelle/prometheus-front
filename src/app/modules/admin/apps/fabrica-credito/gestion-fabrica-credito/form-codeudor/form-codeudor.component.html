@@ -633,18 +633,18 @@
             </mat-form-field>
             <mat-form-field >
                 <mat-label>Fecha de ingreso</mat-label>
-                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaVinculacion"
-                    [formControlName]="'fechaVinculacion'" />
-                <mat-datepicker-toggle matSuffix [for]="fechaVinculacion">
+                <input matInput placeholder="DD/MM/YYYY" [matDatepicker]="fechaIngresoFabrica"
+                    [formControlName]="'fechaIngresoFabrica'" />
+                <mat-datepicker-toggle matSuffix [for]="fechaIngresoFabrica">
                 </mat-datepicker-toggle>
-                <mat-datepicker #fechaVinculacion></mat-datepicker>
+                <mat-datepicker #fechaIngresoFabrica></mat-datepicker>
 
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                 </mat-icon>
-                <mat-error *ngIf="form.controls.fechaVinculacion.errors?.required">
+                <mat-error *ngIf="form.controls.fechaIngresoFabrica.errors?.required">
                     Este campo es requerido.
                 </mat-error>
-                <mat-error *ngIf="form.controls.fechaVinculacion.errors?.dateError">
+                <mat-error *ngIf="form.controls.fechaIngresoFabrica.errors?.dateError">
                     La fecha no puede ser mayor al día de hoy.
                 </mat-error>
             </mat-form-field>
