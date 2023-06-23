@@ -243,7 +243,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         files = Array.from(files);
 
         if (files.length === 2) {
-            files.map((file, i) => {
+            for(let i = 0; i < files.length; i++){
+                const file = files[i]
                 const fileToRead = file;
                 let ext = fileToRead.name.split('.');
                 ext = ext[ext.length - 1].toUpperCase();
@@ -303,7 +304,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             );
                     }
                 };
-            });
+            };
         } else {
             Swal.fire(
                 'Error',
@@ -317,9 +318,11 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     async createMultipleImgOnPDF(files: any, item: any) {
         const pdfDoc = await PDFDocument.create();
         let error = false;
+
         files = Array.from(files);
 
-        files.map((file, i) => {
+        for(let i = 0; i < files.length; i++){
+            const file = files[i]
             const fileToRead = file;
             let ext = fileToRead.name.split('.');
             ext = ext[ext.length - 1].toUpperCase();
@@ -378,7 +381,9 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                         );
                 }
             };
-        });
+        }
+
+
     }
 
     private async drawImgToPDF(
@@ -537,7 +542,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             .subscribe((res) => {
                 const archivo = res.data.base64.split(',')[1];
                 const extension = res.data.nombreArchivo.split('.')[1];
-                // console.log(extension);
                 const link = document.createElement('a');
                 document.body.appendChild(link);
                 link.href = `data:application/${extension};base64,${archivo}`;
@@ -559,7 +563,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         this.documentosServices
             .getDocumento(datosDescargar)
             .subscribe((res) => {
-                // console.log(extension);
 
                 this.datoPreview.base64 = res.data.base64
                 this.datoPreview.extension =  res.data.extension

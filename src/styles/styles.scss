@@ -186,4 +186,8 @@ mat-tab-group>.mat-tab-body-wrapper {
 .mat-sort-header-container {
     display: flex !important;
     justify-content: center !important;
+   }
+
+.text-centerTable > thead > tr > th > .mat-sort-header-container {
+    justify-content: center;
 }
