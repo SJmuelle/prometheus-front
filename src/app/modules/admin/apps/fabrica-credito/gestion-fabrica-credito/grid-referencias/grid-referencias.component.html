@@ -103,7 +103,7 @@
         </div>
     </ng-container>
     <ng-container *ngIf="codeduor">
-        <div class="my-4">
+        <div class="md:my-4 sm:my-2 flex md:block justify-center items-center w-full">
             <strong class="text-xl">Codeudor</strong>
         </div>
         <ng-container *ngIf="referencias$ | async as items">
@@ -164,7 +164,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-white">
-                        <ng-container>
+                        <ng-container >
                             <ng-container *ngFor="let item of items.data">
                                 <tr *ngIf="item.tipoTercero =='C'">
                                     <td class="px-1 text-sm border">
