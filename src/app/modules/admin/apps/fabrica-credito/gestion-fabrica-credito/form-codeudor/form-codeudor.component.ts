@@ -698,15 +698,6 @@ export class FormCodeudorComponent implements OnInit {
                 this.form
                     .get('salarioBasico')
                     ?.enable({ emitEvent: true, onlySelf: true });
-                this.form
-                    .get('fechaIngresoFabrica')
-                    ?.setValidators([
-                        Validators.required,
-                        this.validatedDate.bind(this),
-                    ]);
-                this.form
-                    .get('fechaIngresoFabrica')
-                    ?.enable({ emitEvent: true, onlySelf: true });
             } else {
                 this.form.get('telefonoEmpresa')?.setValidators(null);
                 this.form
@@ -723,11 +714,6 @@ export class FormCodeudorComponent implements OnInit {
                 this.form.get('cargo')?.setValidators(null);
                 this.form
                     .get('cargo')
-                    ?.disable({ emitEvent: true, onlySelf: true });
-
-                this.form.get('fechaIngresoFabrica')?.setValidators(null);
-                this.form
-                    .get('fechaIngresoFabrica')
                     ?.disable({ emitEvent: true, onlySelf: true });
             }
             // independiente y sus derivados
