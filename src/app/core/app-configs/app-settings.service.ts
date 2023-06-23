@@ -103,6 +103,7 @@ export class AppSettingsService {
     public formulario = {
         url: {
             // https://prometheus.fintra.co:8443/api-fintra/api/credito/tk/property/parametros-cargue-inicial
+            latitudLongitud: EndPoints.alfa('/geocoding-address'),
             microcredito: EndPoints.uri('/credito/microcredito/guardado-solicitud-microcredito'),
             cargueInicial: EndPoints.uri('/credito/tk/property/parametros-cargue-inicial'),
             cargueActividadEconomica: EndPoints.uri('/generic/qry/obtener-actividades-form-micro'),
@@ -290,6 +291,7 @@ export class AppSettingsService {
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
+            smsUnidades: EndPoints.uri('/credito/info-sms-unidades'),
             baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),

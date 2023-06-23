@@ -2,7 +2,7 @@ import { Component, ElementRef, OnChanges, OnDestroy, OnInit, ViewChild } from '
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
-import { FormularioCreditoMicro } from 'app/core/interfaces/formulario-fabrica-credito.interface';
+import { FormularioCreditoMicro, geoCodingAddress } from 'app/core/interfaces/formulario-fabrica-credito.interface';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { PermisosService } from 'app/core/services/permisos.service';
@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { FuseValidators } from '@fuse/validators';
 import { GenericasService } from 'app/core/services/genericas.service';
+import * as L from 'leaflet'
+import 'leaflet/dist/leaflet.css';
 
 @Component({
     selector: 'form-gestion-fabrica-fabrica-micro',
@@ -49,9 +51,16 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public descripcionScore: any;
     public decisionFiltrosDuros: any;
     public agendaActual: string;
-    public currentScoreColor: 'red'| 'orange' | 'yellow' | 'light-green' | 'green'
+    public currentScoreColor: 'red' | 'orange' | 'yellow' | 'light-green' | 'green';
+
+    markers: any[] = [];
 
     fechaActual: any = moment().locale("co");
+    map: L.map;
+    iconUrl = 'data:image/svg+xml,' +
+        encodeURIComponent(
+            '<svg height="240px" width="240px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-30.74 -30.74 573.81 573.81" xml:space="preserve" fill="#000000" transform="rotate(0)matrix(1, 0, 0, 1, 0, 0)" stroke="#000000" stroke-width="0.00512332"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#fbf9f9" stroke-width="51.2332"> <path style="fill:#1e293b;" d="M125.6,55.063L125.6,55.063c-65.324,64.441-72.386,165.076-21.186,236.579l75.917,106.814 l75.917,113.876l78.566-117.407l70.621-99.752c53.848-72.386,47.669-175.669-18.538-240.993l0,0 C314.51-18.206,197.986-18.206,125.6,55.063"></path> <path style="fill:#ffffff;" d="M397.49,185.711c0-77.683-63.559-141.241-141.241-141.241s-141.241,63.559-141.241,141.241 s63.559,141.241,141.241,141.241S397.49,263.394,397.49,185.711"></path> <g> <polygon style="fill:#1e293b;" points="256.248,88.607 159.145,185.711 185.628,212.194 256.248,141.573 256.248,141.573 256.248,141.573 326.869,212.194 353.352,185.711 "></polygon> <polygon style="fill:#1e293b;" points="256.248,141.573 203.283,194.538 203.283,256.332 309.214,256.332 309.214,194.538 "></polygon> </g> </g><g id="SVGRepo_iconCarrier"> <path style="fill:#1e293b;" d="M125.6,55.063L125.6,55.063c-65.324,64.441-72.386,165.076-21.186,236.579l75.917,106.814 l75.917,113.876l78.566-117.407l70.621-99.752c53.848-72.386,47.669-175.669-18.538-240.993l0,0 C314.51-18.206,197.986-18.206,125.6,55.063"></path> <path style="fill:#ffffff;" d="M397.49,185.711c0-77.683-63.559-141.241-141.241-141.241s-141.241,63.559-141.241,141.241 s63.559,141.241,141.241,141.241S397.49,263.394,397.49,185.711"></path> <g> <polygon style="fill:#1e293b;" points="256.248,88.607 159.145,185.711 185.628,212.194 256.248,141.573 256.248,141.573 256.248,141.573 326.869,212.194 353.352,185.711 "></polygon> <polygon style="fill:#1e293b;" points="256.248,141.573 203.283,194.538 203.283,256.332 309.214,256.332 309.214,194.538 "></polygon> </g> </g></svg>'
+        );
 
     currentScoreElement: HTMLElement;
 
@@ -60,6 +69,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     customCircumference: number = this.circumference * 0.85; // 747.32
     arcLength: number = this.customCircumference / 5; // 149.46
     offset: number = this.arcLength * 5;
+    mostrarMapaPreview: boolean = false;
 
     /* Saved minimum, maximum values and length for all 5 Arc's */
     redArc = {
@@ -114,48 +124,49 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     ngOnInit(): void {
         this.cargueInicial();
-        this.addValidation()
         this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
         this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
         if (this.permisoEditar) {
             this.form.disable();
         }
         this.getSalarioMinimo();
-        this.marginTopInputDynamic();
 
     }
 
+
+
+
     updatePointer(score, minScore, maxScore) {
         let porcentaje = 0;
-        const maxRotate = 336
+        const maxRotate = 335
         const minRotate = 35;
         const maxTranslate = -100;
 
-        if(this.currentScoreColor === 'red'){
-           let porcentajeLocal = ((score - this.redArc.min) / this.redArc.length)
-           // se divide entre la cantidad de porcentajes que serian 20% cada uno
-           porcentaje = porcentajeLocal * 0.2
+        if (this.currentScoreColor === 'red') {
+            let porcentajeLocal = ((score - this.redArc.min) / this.redArc.length)
+            // se divide entre la cantidad de porcentajes que serian 20% cada uno
+            porcentaje = porcentajeLocal * 0.2
         }
-        if(this.currentScoreColor === 'orange'){
+        if (this.currentScoreColor === 'orange') {
             let porcentajeLocal = ((score - this.orangeArc.min) / this.orangeArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.2
-         }
-         if(this.currentScoreColor === 'yellow'){
+        }
+        if (this.currentScoreColor === 'yellow') {
             let porcentajeLocal = ((score - this.yellowArc.min) / this.yellowArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.4
-         }
-         if(this.currentScoreColor === 'light-green'){
+        }
+        if (this.currentScoreColor === 'light-green') {
             let porcentajeLocal = ((score - this.lightGreenArc.min) / this.lightGreenArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.6
-         }
-         if(this.currentScoreColor === 'green'){
+        }
+        if (this.currentScoreColor === 'green') {
             let porcentajeLocal = ((score - this.greenArc.min) / this.greenArc.length)
             // se divide entre la cantidad de porcentajes que serian 20% cada uno
             porcentaje = porcentajeLocal * 0.2 + 0.8
-         }
+        }
 
 
         const amplitud = maxRotate - minRotate;
@@ -207,14 +218,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         greyGreen.setAttribute("stroke-dasharray", `${this.arcLength - greenArchCalc},${this.customCircumference}`);
         greyGreen.setAttribute("stroke-dashoffset", -greenArchCalc);
 
-        if(score >= this.greenArc.min){
+        if (score >= this.greenArc.min) {
             this.currentScoreColor = 'green'
         }
 
         // Llamar a la función con el ángulo deseado
         const minScore = 0;
         const maxScore = 950;
-         this.updatePointer(score, minScore, maxScore);
+        this.updatePointer(score, minScore, maxScore);
     }
 
 
@@ -315,6 +326,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
     marginTopInputDynamic() {
         if (window.innerWidth < 600) {
+
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
 
@@ -336,6 +348,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description:
      */
     public onPostDatos(): void {
+
+        this._formularioCreditoService
         this.setConyugueNombreCompleto()
         const datos: FormularioCreditoMicro = this.form.getRawValue();
         const { numeroHijos, antiguedadLocal, autorizacionBanco, autoricacionDatosPersonalClaracionAuto, clausulaAnticurrupcionClaracionAuto, telefonoNegocio, barrioResidencia, antiguedadActividad, valorSolicitado, plazo, personasACargo, fechaDesvinculacionExpuesta, fechaDesvinculacionPublico, fechaNacimiento, fechaExpedicion, estrato, ...data } = datos;
@@ -374,20 +388,36 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             antiguedadLocal: antiguedadLocal ? antiguedadLocal : 0,
             ...data
         };
-        Swal.fire({
-            title: 'Guardar información',
-            text: '¿Está seguro de guardar información?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#a3a0a0',
-            confirmButtonText: 'Guardar',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.postFormularioFabrica(datosFormularios);
-            }
-        });
+
+
+
+        // const postDataLL: geoCodingAddress = {
+        //     departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === datosFormularios.codigoDepartamentoNegocio).nombre,
+        //     ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === datosFormularios.codigoCiudad).nombre,
+        //     direccion: datosFormularios.direccionNegocio
+        // };
+
+        // this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+        //     datosFormularios.latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+        //     datosFormularios.longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+
+            Swal.fire({
+                title: 'Guardar información',
+                text: '¿Está seguro de guardar información?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#a3a0a0',
+                confirmButtonText: 'Guardar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.postFormularioFabrica(datosFormularios);
+                }
+            });
+        // })
+
+
     }
 
     /**
@@ -413,6 +443,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
                 this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+
+
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
                 this.form.controls.autoricacionDatosPersonalClaracionAuto.setValue(data.autoricacionDatosPersonalClaracionAuto === 'S')
@@ -442,12 +474,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 if (data.tipoActividad) {
                     this.getActividadEconomica();
                 }
+                this.marginTopInputDynamic();
             });
 
         const datosSolicitud: any = {
             numeroSolicitud: numeroSolicitud,
             identificacion: identificacion
         }
+
         this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 Swal.close();
@@ -456,23 +490,120 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                     codigoBarrio: data.codigoBarrio,
                     score: data.score
                 });
+
                 this.agendaActual = data.agenda
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;
+
                 this.setCurrentScoreUI()
-                if(this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO'){
+                this.decisionFiltrosDuros = data.decisionFiltrosDuros
+                this.unidadNegocio = data.unidadNegocio;
+                this.fabricaDatos = data;
+
+                if (this.verScorePermiso()) {
                     setTimeout(() => {
                         this.updateScore(this.score)
                     }, 2000);
                 }
 
 
-                this.decisionFiltrosDuros = data.decisionFiltrosDuros
-                this.unidadNegocio = data.unidadNegocio;
-                this.fabricaDatos = data;
-
-
             });
+    }
+
+    ngAfterViewInit(): void {
+        //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+        //Add 'implements AfterViewInit' to the class.
+        console.log('view inizializada');
+
+        this.addValidation()
+        this.marginTopInputDynamic();
+    }
+
+    cargarMap() {
+        // this.mostrarMapaPreview = !this.mostrarMapaPreview
+
+        // const postDataLL: geoCodingAddress = {
+        //     departamento: this.dataInicial.deparamentosGenerales.find(departamento => departamento.codigo === this.form.get('codigoDepartamentoNegocio').value).nombre,
+        //     ciudad: this.ciudadesNegocio.data.find(ciudad => ciudad.codigo === this.form.get('codigoCiudadNegocio').value).nombre,
+        //     direccion: this.form.get('direccionNegocio').value
+        // };
+
+
+        // if (!this.map) {
+        //     const GoogleMaps = L.tileLayer(
+        //         'https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}',
+        //         {
+        //             maxZoom: 20,
+        //             minZoom: 3,
+        //             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        //         }
+        //     );
+
+        //     this.map = L.map('map', {
+        //         zoomAnimation: true,
+        //         layers: GoogleMaps,
+        //         inertia: true,
+        //         worldCopyJump: true,
+        //         center: [11.004313, -74.808137],
+        //         zoom: 20,
+        //         attributionControl: false,
+        //         zoomControl: false
+        //     });
+
+        //     setTimeout(() => {
+        //         this.map.invalidateSize();
+        //     }, 500);
+        // }
+
+        // if(this.mostrarMapaPreview){
+        //     this._formularioCreditoService.getLatitudLongitud(postDataLL).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+        //         const latitudNegocio = rep.data?.latitud ? rep.data.latitud : ''
+        //         const longitudNegocio = rep.data?.longitud ? rep.data.longitud : ''
+
+        //         this.markers.forEach((marker) =>{
+        //             this.map.removeLayer(marker)
+        //         })
+
+
+        //         this.markers = []
+
+        //         const marker = L.marker([latitudNegocio, longitudNegocio], {
+        //             icon: L.icon({
+        //                 iconUrl: this.iconUrl,
+        //                 iconSize: [40, 40],
+        //                 iconAnchor: [20, 20],
+        //             })
+        //         }).addTo(this.map)
+
+
+
+        //         // const popup = L.popup()
+        //         //     .setLatLng([latitudNegocio, longitudNegocio])
+        //         //     .setContent("<div class='text-black text-lg'> Usted esta aquí. </div>")
+        //         //     .openOn(this.map);
+
+        //         let tooltip = L.tooltip([latitudNegocio, longitudNegocio], {
+        //             content: "<div class='text-white font-bold flex flex-col w-full justify-center items-center'> <div class='text-xl'>"+ this.form.get('nombreNegocio').value + "</div> <div>"
+        //             +
+        //             this.form.get('direccionNegocio').value
+        //             +  "</div> <div class='text-sm'>" + this.barriosNegocio.data.find(barrio => barrio.codigo == this.form.get('codigoBarrioNegocio').value).nombre +"</div>" +
+        //             " </div>",
+        //             className: "bg-accent-700 text-white border-none",
+        //             permanent: false,
+        //             id: 23232333,
+        //             offset: L.point(14,-5)
+        //           }).addTo(this.map);
+
+        //           this.markers.push(tooltip)
+        //         this.map.fitBounds([tooltip.getLatLng()]);
+        //     })
+        // }
+
+
+    }
+
+    reSize() {
+        this.map.invalidateSize();
     }
 
     public setCurrentScoreUI() {
@@ -554,6 +685,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     private getCiudades(codigo: string): void {
         this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
             this.ciudades = rep
+            this.marginTopInputDynamic()
         })
     }
 
@@ -1384,5 +1516,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this.unSubscribe$.complete();
     }
 
-
+    public verScorePermiso():boolean{
+        if(this.fabricaDatos.observaScoreTrazabilidad === 'S'){
+            return true;
+        }else{
+            return this.agendaActual === 'RE' || this.agendaActual === 'DE' || this.agendaActual === 'CO'
+        }
+    }
 }
