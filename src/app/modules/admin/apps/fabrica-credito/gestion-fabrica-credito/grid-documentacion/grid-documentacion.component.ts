@@ -270,20 +270,30 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 promiseArray.push(this.readFileAndAddToMap(fileToRead, ext))
             };
 
-        // se ejecuta cuando se cargan todas las imagenes en cache
+            // se ejecuta cuando se cargan todas las imagenes en cache
             Promise.all(promiseArray).then(async (values) => {
                 for (let [i, file] of values.entries()) {
                     const pag = pdfDoc.addPage();
 
                     const fileToDraw: string | ArrayBuffer | null =
                         file.renderResult;
-
                     switch (file.ext) {
-                        case 'JPG' || 'JPEG':
+                        case 'JPG':
                             const imgJPG = await pdfDoc.embedJpg(fileToDraw);
                             await this.drawImgToPDF(
                                 pag,
                                 imgJPG,
+                                i === values.length - 1,
+                                item,
+                                pdfDoc,
+                                error
+                            );
+                            break;
+                        case 'JPEG':
+                            const imgJPEG = await pdfDoc.embedJpg(fileToDraw);
+                            await this.drawImgToPDF(
+                                pag,
+                                imgJPEG,
                                 i === values.length - 1,
                                 item,
                                 pdfDoc,
@@ -303,6 +313,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             break;
                         default:
                             error = true;
+                            console.log('entrando a no img', file.ext === 'JPEG');
+
                             await this.drawImgToPDF(
                                 pag,
                                 null,
@@ -327,7 +339,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
     async createMultipleImgOnPDF(files: any, item: any) {
         const pdfDoc = await PDFDocument.create();
         let error = false;
-        
+
         files = Array.from(files);
         const promiseArray: Promise<any>[] = []
 
@@ -341,19 +353,30 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
 
         // se ejecuta cuando se cargan todas las imagenes en cache
         Promise.all(promiseArray).then(async (values) => {
-            
+
             for (let [i, file] of values.entries()) {
                 const pag = pdfDoc.addPage();
 
                 const fileToDraw: string | ArrayBuffer | null =
                     file.renderResult;
-                
+
                 switch (file.ext) {
-                    case 'JPG' || 'JPEG':
+                    case 'JPG':
                         const imgJPG = await pdfDoc.embedJpg(fileToDraw);
                         await this.drawImgToPDF(
                             pag,
                             imgJPG,
+                            i === values.length - 1,
+                            item,
+                            pdfDoc,
+                            error
+                        );
+                        break;
+                    case 'JPEG':
+                        const imgJPEG = await pdfDoc.embedJpg(fileToDraw);
+                        await this.drawImgToPDF(
+                            pag,
+                            imgJPEG,
                             i === values.length - 1,
                             item,
                             pdfDoc,
@@ -408,8 +431,8 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 y: pngDim.height > pag.getHeight() ? pag.getHeight() / 2 - pag.getHeight() / 2 : pag.getHeight() / 2 - pngDim.height / 2,
                 width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
                 height: pngDim.height > pag.getHeight() ? pag.getHeight() : pngDim.height,
-            });     
-            
+            });
+
             if (guardar) {
                 const pdfBase64 = await pdfDoc.saveAsBase64();
                 const formulario = {
