@@ -197,6 +197,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 const extension: string = fileToRead.type.split('/')[1];
                 const fechaHoy = Date.now();
 
+                // casos de uso 
                 if (item.idArchivo === 303 || item.idArchivo === 615 || item.idArchivo === 327) {
                     this.cedulaCrearPDF(files, item)
                 } else if (files.length > 1) {
@@ -237,34 +238,52 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         }
     }
 
+    readFileAndAddToMap(file, ext) {
+        return new Promise(function (resolve, reject) {
+            var reader = new FileReader();
+
+            reader.readAsDataURL(file);
+
+            reader.onload = function (progressEvent) {
+                //add to Map here 
+                resolve({ renderResult: reader.result, ext, file });
+            }
+
+            reader.onerror = function (error) {
+                reject(error);
+            }
+        });
+    }
+
     async cedulaCrearPDF(files: any, item: any) {
         const pdfDoc = await PDFDocument.create();
         let error = false;
         files = Array.from(files);
+        const promiseArray: Promise<any>[] = []
 
         if (files.length === 2) {
-            for(let i = 0; i < files.length; i++){
-                const file = files[i]
+            for await (let [i, file] of files.entries()) {
                 const fileToRead = file;
                 let ext = fileToRead.name.split('.');
                 ext = ext[ext.length - 1].toUpperCase();
 
-                const reader = new FileReader();
-                reader.readAsDataURL(fileToRead);
+                promiseArray.push(this.readFileAndAddToMap(fileToRead, ext))
+            };
 
-                reader.onloadend = async (rep) => {
+            // se ejecuta cuando se cargan todas las imagenes en cache
+            Promise.all(promiseArray).then(async (values) => {
+                for (let [i, file] of values.entries()) {
                     const pag = pdfDoc.addPage();
 
                     const fileToDraw: string | ArrayBuffer | null =
-                        reader.result;
-
-                    switch (ext) {
+                        file.renderResult;
+                    switch (file.ext) {
                         case 'JPG':
                             const imgJPG = await pdfDoc.embedJpg(fileToDraw);
-                            this.drawImgToPDF(
+                            await this.drawImgToPDF(
                                 pag,
                                 imgJPG,
-                                i === files.length - 1,
+                                i === values.length - 1,
                                 item,
                                 pdfDoc,
                                 error
@@ -272,10 +291,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             break;
                         case 'JPEG':
                             const imgJPEG = await pdfDoc.embedJpg(fileToDraw);
-                            this.drawImgToPDF(
+                            await this.drawImgToPDF(
                                 pag,
                                 imgJPEG,
-                                i === files.length - 1,
+                                i === values.length - 1,
                                 item,
                                 pdfDoc,
                                 error
@@ -283,10 +302,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             break;
                         case 'PNG':
                             const imgPNG = await pdfDoc.embedPng(fileToDraw);
-                            this.drawImgToPDF(
+                            await this.drawImgToPDF(
                                 pag,
                                 imgPNG,
-                                i === files.length - 1,
+                                i === values.length - 1,
                                 item,
                                 pdfDoc,
                                 error
@@ -294,17 +313,19 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             break;
                         default:
                             error = true;
-                            this.drawImgToPDF(
+                            console.log('entrando a no img', file.ext === 'JPEG');
+
+                            await this.drawImgToPDF(
                                 pag,
                                 null,
-                                i === files.length - 1,
+                                i === values.length - 1,
                                 item,
                                 pdfDoc,
                                 error
                             );
                     }
-                };
-            };
+                }
+            })
         } else {
             Swal.fire(
                 'Error',
@@ -320,28 +341,32 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         let error = false;
 
         files = Array.from(files);
+        const promiseArray: Promise<any>[] = []
 
-        for(let i = 0; i < files.length; i++){
-            const file = files[i]
+        for await (let [i, file] of files.entries()) {
             const fileToRead = file;
             let ext = fileToRead.name.split('.');
             ext = ext[ext.length - 1].toUpperCase();
 
-            const reader = new FileReader();
-            reader.readAsDataURL(fileToRead);
+            promiseArray.push(this.readFileAndAddToMap(fileToRead, ext))
+        }
 
-            reader.onloadend = async (rep) => {
+        // se ejecuta cuando se cargan todas las imagenes en cache
+        Promise.all(promiseArray).then(async (values) => {
+
+            for (let [i, file] of values.entries()) {
                 const pag = pdfDoc.addPage();
 
-                const fileToDraw: string | ArrayBuffer | null = reader.result;
+                const fileToDraw: string | ArrayBuffer | null =
+                    file.renderResult;
 
-                switch (ext) {
+                switch (file.ext) {
                     case 'JPG':
                         const imgJPG = await pdfDoc.embedJpg(fileToDraw);
-                        this.drawImgToPDF(
+                        await this.drawImgToPDF(
                             pag,
                             imgJPG,
-                            i === files.length - 1,
+                            i === values.length - 1,
                             item,
                             pdfDoc,
                             error
@@ -349,10 +374,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                         break;
                     case 'JPEG':
                         const imgJPEG = await pdfDoc.embedJpg(fileToDraw);
-                        this.drawImgToPDF(
+                        await this.drawImgToPDF(
                             pag,
                             imgJPEG,
-                            i === files.length - 1,
+                            i === values.length - 1,
                             item,
                             pdfDoc,
                             error
@@ -360,10 +385,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                         break;
                     case 'PNG':
                         const imgPNG = await pdfDoc.embedPng(fileToDraw);
-                        this.drawImgToPDF(
+                        await this.drawImgToPDF(
                             pag,
                             imgPNG,
-                            i === files.length - 1,
+                            i === values.length - 1,
                             item,
                             pdfDoc,
                             error
@@ -371,19 +396,17 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                         break;
                     default:
                         error = true;
-                        this.drawImgToPDF(
+                        await this.drawImgToPDF(
                             pag,
                             null,
-                            i === files.length - 1,
+                            i === values.length - 1,
                             item,
                             pdfDoc,
                             error
                         );
                 }
-            };
-        }
-
-
+            }
+        })
     }
 
     private async drawImgToPDF(
@@ -397,22 +420,21 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         if (error) {
             Swal.fire(
                 'Error',
-                'Solo se permiten extensiones JPG, JPEG o PNG',
+                'Si se suben multiples archivos solo se permiten JPG, JPEG o PNG',
                 'error'
             );
         } else {
             const pngDim = png.scale(0.5);
 
             pag.drawImage(png, {
-                x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
+                x: pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
                 y: pngDim.height > pag.getHeight() ? pag.getHeight() / 2 - pag.getHeight() / 2 : pag.getHeight() / 2 - pngDim.height / 2,
                 width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
-                height: pngDim.height > pag.getHeight() ? pag.getHeight(): pngDim.height,
+                height: pngDim.height > pag.getHeight() ? pag.getHeight() : pngDim.height,
             });
 
             if (guardar) {
                 const pdfBase64 = await pdfDoc.saveAsBase64();
-
                 const formulario = {
                     nombreArchivo: item.nombreCategoria,
                     extension: 'pdf',
@@ -447,10 +469,10 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
         const pngDim = pngImage.scale(0.5);
 
         pag.drawImage(pngImage, {
-            x:  pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
+            x: pngDim.width > pag.getWidth() ? 0 : pag.getWidth() / 2 - pngDim.width / 2,
             y: pngDim.height > pag.getHeight() ? pag.getHeight() / 2 - pag.getHeight() / 2 : pag.getHeight() / 2 - pngDim.height / 2,
             width: pngDim.width > pag.getWidth() ? pag.getWidth() : pngDim.width,
-            height: pngDim.height > pag.getHeight() ? pag.getHeight(): pngDim.height,
+            height: pngDim.height > pag.getHeight() ? pag.getHeight() : pngDim.height,
         });
 
         const pdfBase64 = await pdfDoc.saveAsBase64();
@@ -565,7 +587,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             .subscribe((res) => {
 
                 this.datoPreview.base64 = res.data.base64
-                this.datoPreview.extension =  res.data.extension
+                this.datoPreview.extension = res.data.extension
             });
 
         return true
