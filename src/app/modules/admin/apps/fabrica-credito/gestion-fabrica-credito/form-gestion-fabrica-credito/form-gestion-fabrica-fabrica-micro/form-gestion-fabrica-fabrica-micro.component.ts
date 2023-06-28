@@ -636,6 +636,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
+        // eliminar la ciudad y barrio anterior
+        this.form.get('codigoCiudad').setValue('')
+        this.form.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -652,6 +655,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public seleccionDepartamentoNegocio(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesNegocio(codigo);
+        // eliminar la ciudad y barrio anterior
+        this.form.get('codigoCiudadNegocio').setValue('')
+        this.form.get('codigoBarrioNegocio').setValue('')
     }
 
     /**
@@ -660,6 +666,8 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesExpedicion(codigo);
+         // eliminar la ciudad
+         this.form.get('codigoCiudadExpedicion').setValue('')
     }
 
     /**
@@ -669,6 +677,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public seleccionCiudad(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getBarrios(codigo);
+        this.form.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -677,6 +686,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public seleccionCiudadNegocio(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getBarriosNegocio(codigo);
+        this.form.get('codigoBarrioNegocio').setValue('')
     }
 
     /**
