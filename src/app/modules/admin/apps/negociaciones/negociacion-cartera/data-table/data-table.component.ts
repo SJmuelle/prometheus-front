@@ -25,6 +25,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
   public dataCopy: any[] = [];
   public dataFilter: string = '';
   public dataOptionTable: any[] = [
+
     {
       name: 'identificacion',
       text: 'Identificación',
