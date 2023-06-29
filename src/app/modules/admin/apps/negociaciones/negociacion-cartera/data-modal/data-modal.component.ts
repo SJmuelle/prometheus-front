@@ -170,38 +170,17 @@ export class DataModalComponent implements OnInit, OnChanges {
                 tneg: data.tipoNegociacion
             }
 
-            Swal.fire({
-                title: 'Cargando',
-                html: 'Por favor espere',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                timer: 500000,
-                didOpen: () => {
-                    Swal.showLoading()
-                    Swal.close();
-                    this._negociacionCarteraService.guardarNegociacionCartera(json).subscribe({
-                        next: (resp) => {
-
-                            this._negociacionCarteraService.reloadData$.next({ reload: true })
-
-                            Swal.fire(
-                                'Correcto',
-                                'Solicitud realizada correctamente',
-                                'success'
-                            )
-                            this.cancelForm();
-
-                        },
-                        error: () => {
-                            Swal.fire(
-                                'Error',
-                                'Solicitud no pudo ser procesada, porfavor intente mas tarde.',
-                                'error'
-                            )
-                        }
-                    });
+            this._negociacionCarteraService.guardarNegociacionCartera(json).subscribe({
+                next: (resp) => {
+                    this._negociacionCarteraService.reloadData$.next({ reload: true })
+                    this.cancelForm();
+                },
+                error: () => {
+                    this._sweetAlert.alertError();
                 }
-            })
+            });
+
+
         }
 
         this._sweetAlert.alertConfirmation(callBack);
@@ -229,10 +208,31 @@ export class DataModalComponent implements OnInit, OnChanges {
             gastoCobranza: 0,
             comentario: null
         }
+        this.formNegociacionCartera.reset({ ...reset });
         this.formNegociacionCartera.controls['comentario'].markAsUntouched();
         this.formNegociacionCartera.controls['tipoNegociacion'].markAsUntouched();
-        this.formNegociacionCartera.reset({ ...reset });
         this.closedEmit.emit();
+    }
+
+    public reverseNegociacion(): void {
+
+        const callBack = () => {
+
+            const negocio = this.dataRow.cod_neg;
+
+            this._negociacionCarteraService.reversarNegociacionRealizada(negocio).subscribe({
+                next: (data) => {
+                    this._negociacionCarteraService.reloadData$.next({ reload: true })
+                },
+                error: (err) => {
+                    this._sweetAlert.alertError();
+                }
+            })
+        }
+
+
+
+        this._sweetAlert.alertConfirmation(callBack);
     }
 
     private form(): void {

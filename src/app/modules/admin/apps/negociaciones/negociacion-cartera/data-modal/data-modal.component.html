@@ -51,7 +51,8 @@
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Debido a cobrar
                                         :</span> </mat-label>
                                 <div>
-                                    <span class="flex whitespace-nowrap"> $ {{ dataRow?.debido_cobrar | number}}</span>
+                                    <span class="flex whitespace-nowrap"> {{ dataRow?.debido_cobrar |
+                                        dataTable:'number'}}</span>
                                 </div>
                             </div>
 
@@ -60,26 +61,76 @@
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Interés por mora
                                         :</span></mat-label>
                                 <div>
-                                    <span class="flex whitespace-nowrap"> $ {{ dataRow?.interes_mora | number }}</span>
+                                    <span class="flex whitespace-nowrap"> {{ dataRow?.interes_mora | dataTable:'number'
+                                        }}</span>
                                 </div>
                             </div>
                             <div class="flex justify-between">
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Gasto cobranza
                                         :</span></mat-label>
                                 <div>
-                                    <span class="flex whitespace-nowrap">{{ '$ '+(dataRow?.gastos_cobranza |
-                                        number)}}</span>
+                                    <span class="flex whitespace-nowrap">{{ (dataRow?.gastos_cobranza |
+                                        dataTable:'number')}}</span>
                                 </div>
                             </div>
                             <hr class="-mt-1">
+
+                            <div class="text-xl -mt-4 mb-1.5 text-center font-semibold">Descuentos realizados</div>
+
+                            <div class="flex justify-between -mt-3">
+
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Descuento debido
+                                        total :</span> </mat-label>
+                                <div>
+                                    <span class="flex whitespace-nowrap text-red-600"> {{
+                                        (formNegociacionCartera.controls['descuento'].value /100) *
+                                        dataRow?.debido_cobrar | dataTable: 'number'}}</span>
+                                </div>
+                            </div>
+
+
+                            <div class="flex justify-between">
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Descuento interés
+                                        por mora :</span></mat-label>
+                                <div>
+                                    <span class="flex whitespace-nowrap text-red-600"> {{
+                                        (formNegociacionCartera.controls['mora'].value/100 ) * dataRow?.interes_mora |
+                                        dataTable: 'number'
+                                        }}</span>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <mat-label class="w-full block"> <span class="text-lg font-semibold">Descuento gasto
+                                        cobranza :</span></mat-label>
+                                <div>
+                                    <span class="flex whitespace-nowrap text-red-600">{{
+                                        (formNegociacionCartera.controls['gastoCobranza'].value / 100 ) *
+                                        dataRow?.gastos_cobranza | dataTable: 'number' }}</span>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                            <hr class="-mt-1">
+
                             <div class="flex justify-between -mt-4">
                                 <mat-label class="w-full block"> <span class="text-lg font-semibold">Total : </span>
                                 </mat-label>
                                 <div>
-                                    <span class="font-semibold flex whitespace-nowrap">$ {{ (dataRow?.gastos_cobranza
-                                        +dataRow?.interes_mora +
-                                        dataRow?.debido_cobrar)
-                                        | number}}</span>
+                                    <span class="font-semibold flex whitespace-nowrap"> {{
+                                        (dataRow?.gastos_cobranza +
+                                        dataRow?.interes_mora +
+                                        dataRow?.debido_cobrar - (
+                                        (formNegociacionCartera.controls['gastoCobranza'].value / 100 ) *
+                                        dataRow?.gastos_cobranza +
+                                        (formNegociacionCartera.controls['mora'].value/100 ) * dataRow?.interes_mora +
+                                        (formNegociacionCartera.controls['descuento'].value /100) *
+                                        dataRow?.debido_cobrar ) )
+                                        | dataTable:'number' }}</span>
                                 </div>
                             </div>
 
@@ -154,8 +205,8 @@
                                     </span> <span
                                         class="text-gray-800">{{formNegociacionCartera.controls['descuento'].value
                                         + ' %'}} </span> </mat-label>
-                                <span>$ {{(formNegociacionCartera.controls['descuento'].value /100) *
-                                    dataRow?.debido_cobrar | number: '1.0-0' }}</span>
+                                <span> {{(formNegociacionCartera.controls['descuento'].value /100) *
+                                    dataRow?.debido_cobrar | dataTable: 'number' }}</span>
                             </div>
 
 
@@ -174,8 +225,8 @@
                                     </span><span class="text-gray-800">{{formNegociacionCartera.controls['mora'].value +
                                         '
                                         %'}}</span></mat-label>
-                                <span>$ {{(formNegociacionCartera.controls['mora'].value/100 ) * dataRow?.interes_mora |
-                                    number: '1.0-0' }}</span>
+                                <span> {{(formNegociacionCartera.controls['mora'].value/100 ) * dataRow?.interes_mora |
+                                    dataTable: 'number' }}</span>
                             </div>
 
 
@@ -199,8 +250,8 @@
                                         %'}}</span>
                                 </mat-label>
 
-                                <span>$ {{ (formNegociacionCartera.controls['gastoCobranza'].value / 100 ) *
-                                    dataRow?.gastos_cobranza | number: '1.0-0'}}</span>
+                                <span> {{ (formNegociacionCartera.controls['gastoCobranza'].value / 100 ) *
+                                    dataRow?.gastos_cobranza | dataTable: 'number'}}</span>
 
                             </div>
 
@@ -232,6 +283,11 @@
 
                 <div class="flex flex-row justify-end gap-4 mb-30 mt-6 mr-2">
                     <button type="button" mat-stroked-button (click)="cancelForm()">Cerrar</button>
+
+                    <button *ngIf="disabledInput" (click)="reverseNegociacion()" mat-flat-button type="button"
+                        class="text-white color_fintra ">
+                        <span>Reversar negociación</span>
+                    </button>
 
                     <button *ngIf="!disabledInput" mat-flat-button type="submit" class=" " [disabled]="disabledForm"
                         [ngClass]="disabledForm?  ' text-black bg-gray-200 ' : ' text-white color_fintra' ">

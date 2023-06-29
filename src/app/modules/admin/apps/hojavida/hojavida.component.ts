@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalIngresoComponent } from 'app/components/hojadevida/modal-ingreso/modal-ingreso.component';
 import { ModalcarteraComponent } from 'app/components/hojadevida/modalcartera/modalcartera.component';
 import { ModalcreditoComponent } from 'app/components/hojadevida/modalcredito/modalcredito.component';
+import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
 import { CarteraService } from 'app/resources/services/hojadevida/cartera/cartera.service';
 import { CreditoService } from 'app/resources/services/hojadevida/credito/credito.service';
 import { HistorialGestionService } from 'app/resources/services/hojadevida/historial-gestion.service';
@@ -53,6 +54,82 @@ export class HojavidaComponent implements OnInit {
     // CERTIFICACIONES
     historialCertificado: any = [];
     infoLiquidacion: any = [];
+    public dataOptionTable: any[] = [
+        {
+            name: 'negocio',
+            text: 'Negocio',
+            typeField: 'text',
+        },
+        {
+            name: 'periodoLote',
+            text: 'Periodo',
+            typeField: 'text',
+        },
+        {
+            name: 'novedad',
+            text: 'Novedad',
+            typeField: 'text',
+        },
+        {
+            name: 'cuotasMora',
+            text: ' Dìas en mora ',
+            typeField: 'text',
+        },
+        {
+            name: 'saldoDeuda',
+            text: 'Valor',
+            typeField: 'text',
+            pipeName: 'number'
+        },
+        {
+            name: 'saldoMora',
+            text: ' Saldo en mora ',
+            typeField: 'text',
+            pipeName: 'number'
+        },
+    ];
+
+    public dataOptionTablePQRS: any[] = [
+        {
+            name: 'fechaCreacion',
+            text: 'Fecha',
+            typeField: 'text',
+            pipeName: 'date'
+        },
+        {
+            name: 'numeroPqrs',
+            text: 'Numero',
+            typeField: 'text',
+        },
+        {
+            name: 'tipoPqrs',
+            text: 'Tipo',
+            typeField: 'text',
+        },
+        {
+            name: 'causalPqrs',
+            text: 'Causal',
+            typeField: 'text',
+        },
+        {
+            name: 'estado',
+            text: 'Estado',
+            typeField: 'text',
+        },
+        {
+            name: 'responsable',
+            text: 'Responsable',
+            typeField: 'text',
+
+        },
+        {
+            name: 'solucion',
+            text: 'Solución',
+            typeField: 'text',
+        },
+    ];
+    public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name)]
+    public dataColumnPQRS: string[] = [...this.dataOptionTablePQRS.map(({ name }) => name)]
 
     constructor(
         private _hojadevidaService: HojadevidaService,
@@ -64,8 +141,9 @@ export class HojavidaComponent implements OnInit {
         private router: Router,
         private _historialService: HistorialGestionService,
         private _negociacionesService: NegociacionesService,
+        private _tableSearch: TableDataFilterService,
         private fb: FormBuilder
-    ) {}
+    ) { }
 
     busqueda: string;
     clienteID: number;
@@ -103,6 +181,11 @@ export class HojavidaComponent implements OnInit {
             });
     }
 
+    public search(): void {
+        this._tableSearch.sendFilterData(this.filtrarReporteC);
+
+    }
+
     buscarClientes() {
         if (this.busqueda == '1') {
             if (
@@ -134,7 +217,7 @@ export class HojavidaComponent implements OnInit {
                 didOpen: () => {
                     Swal.showLoading();
                 },
-            }).then((result) => {});
+            }).then((result) => { });
             this._hojadevidaService
                 .getInfoCliente(this.codigoNegocio)
                 .subscribe((res2: any) => {
@@ -142,10 +225,9 @@ export class HojavidaComponent implements OnInit {
                     if (res2.status == 202) {
                         Swal.fire(
                             '¡Advertencia!',
-                            `${
-                                this.busqueda == '2'
-                                    ? 'El código del negocio '
-                                    : 'El documento '
+                            `${this.busqueda == '2'
+                                ? 'El código del negocio '
+                                : 'El documento '
                             } ingresado no corresponde a ningún registro guardado. Favor verificar`,
                             'error'
                         );
@@ -156,10 +238,9 @@ export class HojavidaComponent implements OnInit {
                         if (res2.data.length == 0) {
                             Swal.fire(
                                 '¡Advertencia!',
-                                `${
-                                    this.busqueda == '2'
-                                        ? 'El código del negocio '
-                                        : 'El documento '
+                                `${this.busqueda == '2'
+                                    ? 'El código del negocio '
+                                    : 'El documento '
                                 } ingresado no corresponde a ningún registro guardado. Favor verificar`,
                                 'error'
                             );
@@ -195,7 +276,7 @@ export class HojavidaComponent implements OnInit {
                 didOpen: () => {
                     Swal.showLoading();
                 },
-            }).then((result) => {});
+            }).then((result) => { });
             this._hojadevidaService
                 .getInfoCliente(this.codigoNegocio)
                 .subscribe((res2: any) => {
@@ -203,10 +284,9 @@ export class HojavidaComponent implements OnInit {
                     if (res2.status == 202) {
                         Swal.fire(
                             '¡Advertencia!',
-                            `${
-                                this.busqueda == '2'
-                                    ? 'El código del negocio '
-                                    : 'El documento '
+                            `${this.busqueda == '2'
+                                ? 'El código del negocio '
+                                : 'El documento '
                             } ingresado no corresponde a ningún registro guardado. Favor verificar`,
                             'error'
                         );
@@ -217,10 +297,9 @@ export class HojavidaComponent implements OnInit {
                     if (res2.data.length == 0) {
                         Swal.fire(
                             '¡Advertencia!',
-                            `${
-                                this.busqueda == '2'
-                                    ? 'El código del negocio '
-                                    : 'El documento '
+                            `${this.busqueda == '2'
+                                ? 'El código del negocio '
+                                : 'El documento '
                             } ingresado no corresponde a ningún registro guardado. Favor verificar`,
                             'error'
                         );
@@ -258,7 +337,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this.listadoCredito = [];
                 // SERVICIO DE LA PESTAÑA DEL CREDITO
                 this._creditoService
@@ -280,7 +359,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._carteraService
                     .getCartera(this.info_cliente.identificacion)
                     .subscribe((respCartera: any) => {
@@ -302,7 +381,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._historialService
                     .getHistorialGestion(this.codigoNegocio)
                     .subscribe((response: any) => {
@@ -324,7 +403,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._negociacionesService
                     .getNegociaciones(this.codigoNegocio)
                     .subscribe((response: any) => {
@@ -347,7 +426,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._negociacionesService
                     .getInformacionExtractos(this.codigoNegocio)
                     .subscribe((response: any) => {
@@ -370,7 +449,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._negociacionesService
                     .getReporteCentrales(this.codigoNegocio)
                     .subscribe((response: any) => {
@@ -393,7 +472,7 @@ export class HojavidaComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 let url = `informacion-historial-pqrs/${this.info_cliente.identificacion}`;
                 this._pqrService.getListados(url).subscribe((response: any) => {
                     // this.listadoReporteCentrales = response.data;
@@ -419,7 +498,7 @@ export class HojavidaComponent implements OnInit {
             // mixHeight: '550px',
             data: { codigoNegocio },
         });
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { });
     }
 
     openDialogCartera(index, saldo, id): void {
@@ -437,7 +516,7 @@ export class HojavidaComponent implements OnInit {
             data: { codigoNegocio: index, ideNegocio: id },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { });
     }
 
     openDialogIngreso(index): void {
@@ -450,7 +529,7 @@ export class HojavidaComponent implements OnInit {
             },
         });
 
-        dialogRef.afterClosed().subscribe((result) => {});
+        dialogRef.afterClosed().subscribe((result) => { });
     }
 
     mostrar_mensaje(titulo, mensaje) {
@@ -470,7 +549,7 @@ export class HojavidaComponent implements OnInit {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this._carteraService.getPlanPago(codigo).subscribe((respuesta: any) => {
             Swal.close();
             if (respuesta.data) {
@@ -538,7 +617,7 @@ export class HojavidaComponent implements OnInit {
         });
     }
 
-    limpiarCertificaciones() {}
+    limpiarCertificaciones() { }
 
     fechaValida(): void {
         const anioActual = moment(new Date(), 'yyyy-MM-dd');
@@ -562,7 +641,7 @@ export class HojavidaComponent implements OnInit {
         }
     }
 
-    descargar(){
+    descargar() {
         let url = `/generar-certificado-info`;
         let data = {
             "negocio": this.formCertificados.controls.negocio.value,
@@ -570,27 +649,27 @@ export class HojavidaComponent implements OnInit {
             "tipoCertificado": Number(this.formCertificados.controls.tipoCertificado.value),
             "tipoCliente": Number(this.formCertificados.controls.propietario.value),
             "titulo": Number(this.formCertificados.controls.tratoCliente.value),
-            "fecha":this.formCertificados.controls.tipoCertificado.value == 2?this.formCertificados.controls.fechaMaxima.value:'',
-            "valor":0
+            "fecha": this.formCertificados.controls.tipoCertificado.value == 2 ? this.formCertificados.controls.fechaMaxima.value : '',
+            "valor": 0
         }
         this._pqrService.generarCertificados(url, data).subscribe((resp) => {
             const downloadLink = document.createElement('a');
             document.body.appendChild(downloadLink);
-            downloadLink.href = 'data:application/pdf;base64,'+resp.data.base64;
+            downloadLink.href = 'data:application/pdf;base64,' + resp.data.base64;
             downloadLink.target = '_self';
             switch (this.formCertificados.controls.tipoCertificado.value) {
                 case "1":
                     downloadLink.download = 'Certificado al día.pdf';
-                break;
+                    break;
                 case "2":
                     downloadLink.download = 'Certificado de deuda.pdf';
-                break;
+                    break;
                 case "3":
                     downloadLink.download = 'Certificado de paz y salvo.pdf';
-                break;
+                    break;
                 case "4":
                     downloadLink.download = 'Certificado de vínculo comercial.pdf';
-                break;
+                    break;
             }
 
             downloadLink.click();

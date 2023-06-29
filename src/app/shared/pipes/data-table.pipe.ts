@@ -17,7 +17,7 @@ export class DataTablePipe implements PipeTransform {
 
   private pipeDataTable: PipeDataTable = {
     text: (value: any = '---') => value,
-    number: (value: any = 0.00) => `$ ${Intl.NumberFormat('es-ES',).format(value)}`,
+    number: (value: any = 0.00) => `$ ${Intl.NumberFormat('es-ES').format(Math.trunc(value))}`,
     percentage: (value: any) => `${value}%`,
     date: (value: any) => value ? this.convertDateAlert(value) : '---',
     titleCase: (value: any) => {

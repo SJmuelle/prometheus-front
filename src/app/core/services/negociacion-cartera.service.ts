@@ -5,7 +5,7 @@ import { AppSettingsService } from '../app-configs/app-settings.service';
 
 
 
-type Ireload = { reload?: boolean, fullTable?: boolean };
+interface Ireload { reload?: boolean, fullTable?: boolean };
 
 const reload: Ireload = { reload: false, fullTable: true };
 
@@ -61,6 +61,16 @@ export class NegociacionCarteraService {
   public ObtenerNegociacionRealizada(cod_negocio: string): Observable<any> {
 
     return this.http.get(`${this._appSettings.negociacionCartera.url.negociacionRealizada}/${cod_negocio}`)
+  }
+
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
+  public reversarNegociacionRealizada(codneg: string): Observable<any> {
+
+    return this.http.post(`${this._appSettings.negociacionCartera.url.reversarNegociacion}`, { codneg })
   }
 
 

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +12,9 @@ export class Sweetalert2Service {
 
 
 
-  public startLoading(): void {
-    Swal.fire({ title: 'Cargando', html: 'Por favor espere', allowOutsideClick: false, timer: 500000, didOpen: () => { Swal.showLoading() }, })
+  public startLoading({ title = 'Cargando', html = 'Por favor espere' }): void {
+
+    Swal.fire({ title, html, allowOutsideClick: false, timer: 500000, didOpen: () => { Swal.showLoading() }, })
 
   }
 
@@ -27,13 +30,18 @@ export class Sweetalert2Service {
     Swal.fire({
       allowOutsideClick: false,
       title: '¿Estas seguro?',
-      text: "esta acción no se puede deshacer",
+      text: "Esta acción no se puede deshacer",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        actions: 'flex-row-reverse gap-2',
+        cancelButton: 'rounded-full w-26 bg-gray-500 outline-none',
+        confirmButton: 'rounded-full w-26 outline-none'
+      }
     }).then((result: any) => {
       if (result.isConfirmed) {
         callBack();
@@ -42,20 +50,33 @@ export class Sweetalert2Service {
   }
 
   public alertSuccess(): void {
-    Swal.fire(
-      'Correcto!',
-      'Solicitud realizada correctamente',
-      'success'
-    )
+
+
+    Swal.fire({
+      allowOutsideClick: true,
+      title: 'Correcto!',
+      text: "Solicitud realizada correctamente",
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+      customClass: {
+        confirmButton: 'rounded-full w-20 bg-blue-400 outline-none'
+      }
+    })
   }
 
   public alertError(): void {
+
     this.stopLoading();
-    Swal.fire(
-      'Error!',
-      'Su solicitud no pudo ser procesada, por favor intente nuevamente.',
-      'error'
-    )
+
+    Swal.fire({
+      allowOutsideClick: true,
+      title: 'Error!',
+      text: "Su solicitud no pudo ser procesada, por favor intente nuevamente",
+      icon: 'error',
+      customClass: {
+        confirmButton: 'rounded-full w-20 bg-gray-400 outline-none'
+      }
+    })
   }
 
 

@@ -33,7 +33,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'cod_neg',
-      text: 'Cod negocio',
+      text: 'Negocio',
       typeField: 'text',
     },
     {
@@ -43,7 +43,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'capital',
-      text: 'Capital',
+      text: 'Capital total',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -66,7 +66,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'debido_cobrar',
-      text: 'Valor debido',
+      text: 'Debido total',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -99,7 +99,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private _tableFilter: TableDataFilterService, private paginatorIntl: MatPaginatorIntl, private _negociacionCarteraServices: NegociacionCarteraService
   ) {
-    this.paginatorIntl.itemsPerPageLabel = 'Items por pagina : ';
+    this.paginatorIntl.itemsPerPageLabel = 'Items por página : ';
     // mat-paginator-range-label
 
   }
