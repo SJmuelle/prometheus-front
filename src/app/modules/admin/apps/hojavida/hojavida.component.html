@@ -629,13 +629,21 @@
                         <div class="m-5"></div>
                     </mat-tab>
                     <mat-tab label="Historial gestión">
-                        <div class="row items-center">
+                        <div class="flex flex-row items-center justify-between w-full">
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">
                                     Historial gestión
                                 </div>
                             </span>
-                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                            <div class="rounded-full h-9 items-center border-2 pt-1 pl-2">
+                                <input (keyup)="search(inputFiltrarTable.value)" #inputFiltrarTable type="text"
+                                    class="not-uppercase w-full" autocomplete="off" name="filtrarTablaHG"
+                                    [(ngModel)]="filtrarTablaHG" placeholder="Filtrar..." />
+
+
+
+                            </div>
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
                                 <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
                                     type="text" autocomplete="off" name="filtrarTablaHG" [(ngModel)]="filtrarTablaHG"
                                     placeholder="Filtrar..." />
@@ -650,10 +658,18 @@
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <hr />
-                        <div class="row">
+
+                        <div class="mb-40">
+                            <app-table [allDataRows]="listaHistoria"
+                                [dataOptionTable]="dataOptionTableHistorial"></app-table>
+
+
+
+                        </div>
+                        <!-- <div class="row">
                             <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 p-0">
@@ -728,19 +744,19 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <!-- <div class="col-lg-12 col-sm-12 text-end">
+                                    </div> -->
+                        <!-- <div class="col-lg-12 col-sm-12 text-end">
                                         <pagination-controls (pageChange)="pageHG=$event" previousLabel="Anterior"
                                             nextLabel="Siguiente"></pagination-controls>
                                     </div> -->
-                                    <div class="col-lg-12 col-sm-12 text-end">
+                        <!-- <div class="col-lg-12 col-sm-12 text-end">
                                         <pagination-controls (pageChange)="pageHG = $event" previousLabel="Anterior"
                                             nextLabel="Siguiente"></pagination-controls>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="m-5"></div>
+                        <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="Negociaciones">
                         <!-- <div class="flex items-center">
@@ -876,7 +892,7 @@
                                     Extractos
                                 </div>
                             </span>
-                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
                                 <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
                                     type="text" autocomplete="off" name="filtrarTablaExt" [(ngModel)]="filtrarTablaExt"
                                     placeholder="Filtrar..." />
@@ -890,10 +906,17 @@
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <hr />
-                        <div class="row">
+
+                        <div class="mb-40">
+
+                            <app-table [allDataRows]="listadoExtractos"
+                                [dataOptionTable]="dataOptionExtratos"></app-table>
+
+                        </div>
+                        <!-- <div class="row">
                             <div class="col-lg-12" *ngIf="listadoExtractos.length != 0">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -936,14 +959,14 @@
                                                     </td>
                                                     <td class="px-4 py-1 text-sm border">
                                                         {{ item.metodoEnvio }}
-                                                    </td>
-                                                    <!-- <td class="px-4 py-3 text-sm border"> <a href="{{item.extracto}}"
+                                                    </td> -->
+                        <!-- <td class="px-4 py-3 text-sm border"> <a href="{{item.extracto}}"
                                                             target="_blank">
                                                             <mat-icon class="material-icons-two-tone"
                                                                 style="    align-self: center; height: 100%;">
                                                                 description</mat-icon>
                                                         </a></td> -->
-                                                    <td class="px-2 text-sm border text-center">
+                        <!-- <td class="px-2 text-sm border text-center">
                                                         <a class="sindec">
                                                             <mat-icon class="material-icons-two-tone cursor-pointer"
                                                                 style="
@@ -975,7 +998,7 @@
                                 </fuse-card>
                             </div>
                         </div>
-                        <div class="m-5"></div>
+                        <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="Reporte centrales">
 
@@ -986,9 +1009,10 @@
                                     Reporte de las Centrales
                                 </div>
                             </span>
-                            <div class="rounded-full h-9 items-center border-2 pt-1 pl-2 w-40">
-                                <input (keyup)="search()" type="text" class="not-uppercase w-full" autocomplete="off"
-                                    name="filtrarReporteC" [(ngModel)]="filtrarReporteC" placeholder="Filtrar..." />
+                            <div class="rounded-full h-9 items-center border-2 pt-1 pl-2 ">
+                                <input (keyup)="search(inputReporteC.value)" #inputReporteC type="text"
+                                    class="not-uppercase w-full" autocomplete="off" name="filtrarReporteC"
+                                    [(ngModel)]="filtrarReporteC" placeholder="Filtrar..." />
 
 
                                 <!-- <select
@@ -1012,7 +1036,7 @@
                         <hr />
                         <div class="mb-40">
 
-                            <app-table [allDataRows]="listadoReporteCentrales" [dataColumn]="dataColumn"
+                            <app-table [allDataRows]="listadoReporteCentrales"
                                 [dataOptionTable]="dataOptionTable"></app-table>
                         </div>
 
@@ -1168,8 +1192,7 @@
 
                         <div class="mb-40">
 
-                            <app-table [allDataRows]="listadoPQRS" [dataColumn]="dataColumnPQRS"
-                                [dataOptionTable]="dataOptionTablePQRS"></app-table>
+                            <app-table [allDataRows]="listadoPQRS" [dataOptionTable]="dataOptionTablePQRS"></app-table>
                         </div>
 
                         <!-- <div class="row">

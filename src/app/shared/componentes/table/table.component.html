@@ -12,7 +12,8 @@
             <div>
                 <div class="h-14 min-h-14 flex-col w-full flex z-99"
                     style="background: #E2E8F0; position: sticky; top: 0px; ">
-                    <span class="pl-6 pt-3 flex-col font-semibold text-lg">Negociaciones</span>
+                    <span class="pl-6 pt-3 flex-col font-semibold text-lg"></span>
+                    <!-- titulo de la version movil tabla -->
                 </div>
 
                 <div class="text-center" *ngIf="!this.allDataRows.length">
@@ -29,7 +30,9 @@
 
                 <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number" class="border-1 p-4">
                     <div *ngFor="let item of dataOptionTable" class="w-full flex-row">
-                        <span class="w-full " [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
+
+                        <span class="w-full " *ngIf="item.typeField!=='function'"
+                            [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
 
                             <span class=" font-semibold">{{item.text}} : </span>
 
@@ -44,6 +47,10 @@
 
 
                         </span>
+
+                        <button class="mt-2" *ngIf="item.typeField==='function'" (click)="value[item.callback(value)]"
+                            mat-stroked-button>
+                            <mat-icon>format_list_bulleted</mat-icon></button>
 
 
 
@@ -120,6 +127,9 @@
 
 
 
+
+
+
                     <ng-container [ngSwitch]="dataOption.typeField">
                         <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
                             <td class="cursor-pointer text-center -mr-2" mat-cell *matCellDef="let row"
@@ -130,6 +140,17 @@
                                 </span>
                             </td>
                         </ng-container>
+
+
+                        <ng-container *ngSwitchCase="'function'" style="white-space:normal;">
+                            <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;"></th>
+                            <td mat-cell *matCellDef="let row" class="w-11 mx-auto">
+                                <button (click)="row[dataOption.callback(row)]" class="mx-auto" mat-icon-button>
+                                    <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
 
                         <!-- <ng-container *ngSwitchCase="'switch'">
                             <td mat-cell *matCellDef="let row">

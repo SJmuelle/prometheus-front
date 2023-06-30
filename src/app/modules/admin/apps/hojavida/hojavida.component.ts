@@ -12,10 +12,18 @@ import { CreditoService } from 'app/resources/services/hojadevida/credito/credit
 import { HistorialGestionService } from 'app/resources/services/hojadevida/historial-gestion.service';
 import { HojadevidaService } from 'app/resources/services/hojadevida/hojadevida.service';
 import { NegociacionesService } from 'app/resources/services/hojadevida/negociaciones.service';
+import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import moment, { Moment } from 'moment';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr/pqr.service';
 import { CertificadorDeudaComponent } from './modales/certificador-deuda/certificador-deuda.component';
+
+
+/**
+ * Se utiliza un arreglo de opciones para pintar la tabla
+ */
+
+
 
 @Component({
     selector: 'app-hojavida',
@@ -128,8 +136,78 @@ export class HojavidaComponent implements OnInit {
             typeField: 'text',
         },
     ];
-    public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name)]
-    public dataColumnPQRS: string[] = [...this.dataOptionTablePQRS.map(({ name }) => name)]
+
+    public dataOptionTableHistorial: IoptionTable[] = [
+        {
+            name: 'fechaGestion',
+            text: 'Fecha gestión',
+            typeField: 'text',
+            pipeName: 'date'
+
+        },
+        {
+            name: 'gestor',
+            text: 'Gestor',
+            typeField: 'text',
+        },
+        {
+            name: 'tipoGestion',
+            text: 'Tipo gestión',
+            typeField: 'text',
+        },
+        {
+            name: 'proximaAccion',
+            text: 'Proxima acción',
+            typeField: 'text',
+        },
+        {
+            name: 'fechaProxAccion',
+            text: 'Fecha prox acción',
+            typeField: 'text',
+            pipeName: 'date'
+        },
+        {
+            name: 'Detalle',
+            text: 'Detalle',
+            typeField: 'function',
+            callback: (dataRow) => {
+                const titulo = dataRow.tipoGestion;
+                const name = dataRow.detalleGestion;
+                this.mostrar_mensaje(titulo, name);
+            }
+
+        },
+    ];
+
+    public dataOptionExtratos: any[] = [
+        {
+            name: 'consecutivo',
+            text: 'Consecutivo',
+            typeField: 'text',
+        },
+        {
+            name: 'fechaEnvio',
+            text: 'Fecha envio',
+            typeField: 'text',
+            pipeName: 'date'
+        },
+        {
+            name: 'metodoEnvio',
+            text: 'Método envio',
+            typeField: 'text',
+        },
+        {
+            name: 'Detalle',
+            text: 'Extracto',
+            typeField: 'function',
+            callback: (dataRow) => {
+                const { extracto } = dataRow
+                this.busacar_url2(extracto)
+            }
+
+        },
+    ];
+
 
     constructor(
         private _hojadevidaService: HojadevidaService,
@@ -181,8 +259,8 @@ export class HojavidaComponent implements OnInit {
             });
     }
 
-    public search(): void {
-        this._tableSearch.sendFilterData(this.filtrarReporteC);
+    public search(value: string): void {
+        this._tableSearch.sendFilterData(value);
 
     }
 

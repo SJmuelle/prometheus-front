@@ -17,7 +17,49 @@ interface IFuntions {
   name?: string,
   icon?: string,
   disabled?: boolean,
-  function?: Function
+  callback?: Function
+}
+
+export type OptionTableArray = IoptionTable[]
+
+/** @description se muestras todos los registros de la lista 
+ * @param :  name: string,
+      text: string,
+      typeField: 'text' | 'function',
+      pipeName?: 'date' | 'fullday' | 'currency' | 'number'
+      callback? : Function
+      iconCallback?: string
+*/
+
+export interface IoptionTable {
+  /**
+   * este es el nombre de la propiedad que viene de la api
+   */
+  name: string,
+  /**
+   * Texto que quiero mostrar en el header de la table
+   */
+  text: string,
+  /**
+   * se especifica si es de tipo texto o llama una funcion 
+   */
+  typeField: 'text' | 'function',
+  /**
+   * se utiliza en caso de querer formatear el texto
+   */
+  pipeName?: 'date' | 'fullday' | 'currency' | 'number'
+  /**
+   * se llama si se quiere utilizar una funcion y se le envia la datarow
+   */
+  callback?: Function
+  /**
+   * se establece un icono especifico de la plantilla
+   */
+  iconFuse?: string
+  /**
+   * se establece un icono especifico de angular material
+   */
+  iconAngularMaterial?: string
 }
 
 @Component({
@@ -30,12 +72,12 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @Input() allDataRows: any[] = []
   @Input() dataOptionTable: any[] = []
-  @Input() dataColumn: string[] = []
   @Input() Options: Ioptions = { modeMobil: false, multifunction: false, function: false }
   @Input() Funtions: IFuntions[] = []
   @Output() dataRowSelect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataFunctionSelect: EventEmitter<any> = new EventEmitter<any>();
 
+  public dataColumn: string[] = []
   public dataSource: MatTableDataSource<any>;
   public page_number: number = 0
   public page_size: number = 5
@@ -55,6 +97,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.dataColumn = [...this.dataOptionTable.map(({ name }) => name)]
     this.dataCopy = this.allDataRows;
     this.dataSource = new MatTableDataSource(this.allDataRows);
     this.dataSource.paginator = this.paginator;
@@ -62,6 +105,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.dataColumn = [...this.dataOptionTable.map(({ name }) => name)]
     this.listenObservable();
     this.dataCopy = this.allDataRows;
     this.dataSource = new MatTableDataSource(this.allDataRows);
@@ -73,6 +117,10 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   public actionSelectRow(row): void {
     console.log(row);
 
+  }
+
+  public action(row): void {
+    this.Funtions[0].callback();
   }
 
   pageEvent(event): void {

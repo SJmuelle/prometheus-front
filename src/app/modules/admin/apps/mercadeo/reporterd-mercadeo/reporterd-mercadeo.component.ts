@@ -62,7 +62,6 @@ export class ReporterdMercadeoComponent implements OnInit {
       typeField: 'text',
     },
   ];
-  public dataColumn: string[] = [...this.dataOptionTable.map((value) => { return value.name })];
 
   constructor(
     private _sweetAlert: Sweetalert2Service,
