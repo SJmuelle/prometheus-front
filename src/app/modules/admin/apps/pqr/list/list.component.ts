@@ -29,7 +29,7 @@ export class ListComponent implements OnInit {
   }
 
   exportAsXLSX():void {
-    this._pqrService.exportAsExcelFile(this.listado, 'listado');
+    this._pqrService.exportAsExcelFile(this.listado, 'listado_gestion');
   }
 
   consulta(){

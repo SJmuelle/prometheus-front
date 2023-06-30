@@ -30,6 +30,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 
+
+
 @NgModule({
   declarations: [
     PagaduriaComponent,
@@ -38,7 +40,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     RechazarReferenciaLaboralComponent,
     AprobarCapacidadPagoComponent,
     RechazarCapacidadPagoComponent,
-    GestionSolicitudesComponent
+    GestionSolicitudesComponent,
   ],
   imports: [
     CommonModule,
@@ -59,7 +61,18 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatTooltipModule,
     MatButtonToggleModule,
     FuseAlertModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    FuseAlertModule,
   ]
 })
 export class PagaduriaModule { }

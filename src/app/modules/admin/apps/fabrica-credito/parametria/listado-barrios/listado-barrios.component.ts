@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
-import { ListadoChequeoFormComponent } from '../listado-chequeo/listado-chequeo-form/listado-chequeo-form.component';
 import { ListadoBarriosFormComponent } from './listado-barrios-form/listado-barrios-form.component';
+import { MatPaginator } from '@angular/material/paginator';
+import {MatSort, Sort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-listado-barrios',
@@ -11,6 +13,8 @@ import { ListadoBarriosFormComponent } from './listado-barrios-form/listado-barr
   styleUrls: ['./listado-barrios.component.scss']
 })
 export class ListadoBarriosComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   listado: any = [];
   page: number = 1;
@@ -20,6 +24,35 @@ export class ListadoBarriosComponent implements OnInit {
   datos: any = {};
   listadoDepartamento: any[];
   listadoCiudades: any[];
+
+  public dataOptionTable: any[] = [
+    {
+      name: 'editar',
+      text: 'Editar',
+      typeField: 'button',
+    },
+    {
+      name: 'id',
+      text: 'Código',
+      typeField: 'text',
+    },
+    {
+      name: 'barrio',
+      text: 'Nombre del barrio',
+      typeField: 'text',
+    },
+    {
+      name: 'tipoIdentificacion',
+      text: 'Estado',
+      typeField: 'estado',
+    },
+
+  ];
+
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource([]);
+  public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name),];
+  public dataRow: any[] = []
+  public whitEspace: boolean = false
 
   constructor(
     public dialog: MatDialog,
@@ -88,6 +121,10 @@ export class ListadoBarriosComponent implements OnInit {
         Swal.close();
         if (response) {
           this.listado = response.data;
+
+          this.dataSource = new MatTableDataSource(this.listado)
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         } else {
           this.listado = [];
         }
@@ -107,7 +144,7 @@ export class ListadoBarriosComponent implements OnInit {
       }
     } else {
       ;
-      
+
       envio = {
         id:datos.id,
         codigoDepartamento:this.datos.departamento,
@@ -131,4 +168,7 @@ export class ListadoBarriosComponent implements OnInit {
 
   }
 
+  filtrar(){
+    this.dataSource.filter = this.filtrarTabla.trim().toUpperCase()
+  }
 }

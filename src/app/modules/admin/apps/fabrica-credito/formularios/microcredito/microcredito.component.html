@@ -34,7 +34,7 @@
         <div class="bg-white  rounded px-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Tipo de identificación</mat-label>
-                <mat-select formControlName="tipoDocumento" (selectionChange)="solicitudesFormularioSimulaciones()">
+                <mat-select formControlName="tipoDocumento" (selectionChange)="solicitudesFormularioSimulaciones();preSolicitud()">
                     <mat-option *ngFor="let tiposDocumentos of dataInicial?.tiposDocumentos"
                         [value]="tiposDocumentos.codigo"
                         [disabled]="tiposDocumentos.codigo === 'CE'">{{tiposDocumentos.valor}}
@@ -44,7 +44,7 @@
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>No. de identificación</mat-label>
                 <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text" autocomplete="off"
-                    formControlName="identificacion" (change)="solicitudesFormularioSimulaciones()">
+                    formControlName="identificacion" (change)="solicitudesFormularioSimulaciones();preSolicitud()">
                 <mat-error *ngIf="form.controls.identificacion.errors?.required">
                     Este campo es requerido.
                 </mat-error>
@@ -54,7 +54,7 @@
             </mat-form-field>
             <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Celular</mat-label>
-                <input matInput type="text" autocomplete="off" formControlName="celular" prefix="+57 "
+                <input (change)="preSolicitud()" matInput type="text" autocomplete="off" formControlName="celular" prefix="+57 "
                     mask="(000) 000 00 00">
                 <mat-error *ngIf="form.controls.celular.errors?.required">
                     Este campo es requerido.

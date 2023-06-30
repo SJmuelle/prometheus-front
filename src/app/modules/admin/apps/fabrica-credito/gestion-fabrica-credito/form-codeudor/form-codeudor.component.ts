@@ -478,6 +478,10 @@ export class FormCodeudorComponent implements OnInit {
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
+
+        // resetear barrio y ciudad al cambiar departamento
+        this.form.get('codigoCiudad').setValue('')
+        this.form.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -494,6 +498,10 @@ export class FormCodeudorComponent implements OnInit {
     public seleccionDepartamentoNegocio(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesNegocio(codigo);
+
+        // resetear barrio y ciudad al cambiar departamento
+        this.form.get('codigoCiudadNegocio').setValue('')
+        this.form.get('codigoBarrioNegocio').setValue('')
     }
 
     /**
@@ -502,6 +510,9 @@ export class FormCodeudorComponent implements OnInit {
     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesExpedicion(codigo);
+
+         // resetear  ciudad al cambiar departamento
+         this.form.get('codigoCiudadExpedicion').setValue('')
     }
 
     /**
@@ -512,6 +523,7 @@ export class FormCodeudorComponent implements OnInit {
         const codigo: string = event.value;
 
         this.getBarrios(codigo);
+        this.form.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -527,7 +539,7 @@ export class FormCodeudorComponent implements OnInit {
      * @description: Obtiene el listado de ciudades
      */
     private getCiudades(codigo: string): void {
-        this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo)
     }
 
     /**

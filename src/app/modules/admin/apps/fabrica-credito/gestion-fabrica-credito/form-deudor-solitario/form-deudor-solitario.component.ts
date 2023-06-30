@@ -374,6 +374,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
+
+        this.formDeudorSolidario.get('codigoCiudad').setValue('')
+        this.formDeudorSolidario.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -383,6 +386,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public seleccionCiudad(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getBarrios(codigo);
+
+        this.formDeudorSolidario.get('barrioResidencia').setValue('')
     }
 
     /**

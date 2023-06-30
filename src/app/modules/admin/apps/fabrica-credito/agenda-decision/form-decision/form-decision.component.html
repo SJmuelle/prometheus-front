@@ -48,7 +48,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" (click)="guardar()" [disabled]="form.invalid">Guardar
+        <button mat-raised-button color="primary" type="button" (click)="guardar()" [disabled]="form.invalid || bloquearDecision">Guardar
             decisión</button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" mat-dialog-close
             id="cancelar">Cancelar</button>
