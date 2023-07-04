@@ -147,7 +147,7 @@ export class AppSettingsService {
 
     public libranzaPublica = {
         url: {
-            guardeBasico: EndPoints.uri('/lp-guardar-datos-basico'),
+            guardeBasico: EndPoints.uri('/generic/lp-guardar-datos-basico'),
             cargueInicialFormularioCorto: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial')
         }
     }

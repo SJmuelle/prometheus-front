@@ -40,7 +40,7 @@ export class LibranzaPublicaComponent implements OnInit {
     ngOnInit(): void {
         this.datosBasicos = this.fb.group({
             tipoDocumento: ['', [Validators.required]],
-            identificacion: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
+            documento: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
             celular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
             email: ['', [Validators.required, Validators.email]],
             primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
@@ -49,19 +49,20 @@ export class LibranzaPublicaComponent implements OnInit {
             fechaNacimiento: [this.mayorDeEdadFecha.format('YYYY-MM-DD'), [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
             codigoAsesor: [''],
         });
-        console.log(this.fechaActual.subtract(18, 'years').format('DD-MM-YYYY 00000'))
+
         this.datosLaborares = this.fb.group({
             ocupacio: ['', [Validators.required]],
             pagaduria: ['', [Validators.required]],
-            otraPagaduria: ['', [Validators.required]],
-            tipoContrato: ['', [Validators.required]],
-            fechaVinculacion: ['', [Validators.required]],
+            otraPagaduria: [''],
+            tipoContrato: [''],
+            fechaVinculacion: [''],
             // la de abajo no esta asignada,
 
             fechaFinalizacionContrato: [''],
-            cargo: ['', [Validators.required, Validators.min(0)]],
+            cargo: [''],
+            pension: [''],
             salarioBasico: ['', [Validators.required, Validators.min(0)]],
-            otrosIngreso: ['', [Validators.required]],
+            otrosIngreso: [''],
             descuentoNomina: ['', [Validators.required]],
 
         });
@@ -92,8 +93,70 @@ export class LibranzaPublicaComponent implements OnInit {
                     }
                 }
             });
-        this.cargueInicial()
 
+
+        this.cargueInicial()
+        this.agregarValidaciones()
+    }
+
+    private agregarValidaciones() {
+        // disable todos los campos dinamicos
+         this.datosLaborares.get('otraPagaduria').disable()
+         this.datosLaborares.get('tipoContrato').disable()
+         this.datosLaborares.get('fechaVinculacion').disable()
+         this.datosLaborares.get('cargo').disable()
+         this.datosLaborares.get('otrosIngreso').disable()
+         this.datosLaborares.get('pension').disable()
+
+
+        // validaciones dinamicas
+        this.datosLaborares.get('pagaduria').valueChanges.subscribe((e: string) => {
+            if (e === "999989999") {
+                this.datosLaborares.get('otraPagaduria')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('otraPagaduria')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.datosLaborares.get('otraPagaduria')?.setValidators(null)
+                this.datosLaborares.get('otraPagaduria')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        this.datosLaborares.get('ocupacio').valueChanges.subscribe((e: string) => {
+            if (e === "EPLDO") {
+                this.datosLaborares.get('tipoContrato')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('tipoContrato')?.enable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('fechaVinculacion')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('fechaVinculacion')?.enable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                if(e === 'PENSI'){
+                    this.datosLaborares.get('pension')?.setValidators([Validators.required, Validators.min(0)])
+                    this.datosLaborares.get('pension')?.enable({ emitEvent: true, onlySelf: true })
+                }else{
+                    this.datosLaborares.get('pension')?.setValidators(null)
+                this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+                }
+                this.datosLaborares.get('tipoContrato')?.setValidators(null)
+                this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('fechaVinculacion')?.setValidators(null)
+                this.datosLaborares.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('cargo')?.setValidators(null)
+                this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        this.datosLaborares.get('cargo').valueChanges.subscribe((e: string) => {
+            if (e === "2" || e === "3" || e === "5") {
+                this.datosLaborares.get('otrosIngreso')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('otrosIngreso')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.datosLaborares.get('otrosIngreso')?.setValidators(null)
+                this.datosLaborares.get('otrosIngreso')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
     }
 
     ngAfterViewChecked(): void {
@@ -187,6 +250,23 @@ export class LibranzaPublicaComponent implements OnInit {
         formData.primerNombre = formData.primerNombre?.trim()
         formData.primerApellido = formData.primerApellido?.trim()
     }
+
+    onStepChange($e){
+        if($e.previouslySelectedIndex === 0){
+            const datosAEnviar = {...this.datosBasicos.getRawValue()}
+
+            datosAEnviar.unidadNegocio = 22
+            datosAEnviar.tipoTercero = 'T'
+            
+            console.log('datos a enviar', datosAEnviar);
+            
+            this._libranzaService.guardarDatosBasicos(datosAEnviar).subscribe(data => {
+                console.log('datos recibidos', data);
+                
+            })
+        }
+    }
+
     ngOnDestroy() {
         this.destroyed.next();
         this.destroyed.complete();

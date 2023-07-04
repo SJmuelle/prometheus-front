@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <mat-stepper [linear]="true" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0">
+    <mat-stepper [linear]="false" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0" (selectionChange)="onStepChange($event)">
         <mat-step [stepControl]="datosBasicos" >
             <form [formGroup]="datosBasicos">
                 <ng-template matStepLabel>Datos basicos</ng-template>
@@ -42,11 +42,11 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>No. de documento</mat-label>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="identificacion">
-                        <mat-error *ngIf="datosBasicos.controls.identificacion.errors?.required">
+                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="documento">
+                        <mat-error *ngIf="datosBasicos.controls.documento.errors?.required">
                             Este campo es requerido.
                         </mat-error>
-                        <mat-error *ngIf="datosBasicos.controls.identificacion.errors?.pattern">
+                        <mat-error *ngIf="datosBasicos.controls.documento.errors?.pattern">
                             Cantidad de números de 5-10.
                         </mat-error>
                     </mat-form-field>
@@ -98,7 +98,7 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Genero</mat-label>
                         <mat-select formControlName="genero">
-                            <mat-option *ngFor="let genero of dataInicial?.genero" [value]="genero.codigo">
+                            <mat-option *ngFor="let genero of dataInicial?.generos" [value]="genero.codigo">
                                 {{genero.nombre}}
                             </mat-option>
                         </mat-select>
@@ -121,26 +121,24 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
-                        <mat-label>Código de asesor</mat-label>
+                        <mat-label>Asesor</mat-label>
                         <mat-select formControlName="codigoAsesor">
-                            <mat-option *ngFor="let asesor of dataInicial.analistas" value="F">
-                                aaa
-                            </mat-option>
-                            <mat-option value="M">
-                                bbb
+                            <mat-option *ngFor="let asesor of dataInicial?.analistas" [value]="asesor.idusuario">
+                                {{asesor.nombre}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <div class="bg-white rounded flex justify-end items-center gap-4">
+                        <button mat-raised-button color="primary" type="button" matStepperNext (click)="guardar()">
+                            Siguiente
+                            <mat-icon svgIcon="arrow_right"></mat-icon>
+                        </button>
+                    </div>
                 </div>
             </form>
-            <div class="bg-white rounded  pt-2 pb-4 sm:flex sm:justify-end gap-4">
-                <button mat-raised-button color="primary" type="button" matStepperNext (click)="guardar()">
-                    Siguiente
-                    <mat-icon svgIcon="arrow_right"></mat-icon>
-                </button>
-            </div>
+            
         </mat-step>
-        <mat-step [stepControl]="datosLaborares">
+        <mat-step [stepControl]="datosLaborares" >
             <form [formGroup]="datosLaborares">
                 <ng-template matStepLabel>Información laboral</ng-template>
                 <div class="bg-white  rounded  pt-6 grid grid-cols-1   md:grid-cols-2">
@@ -152,11 +150,8 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Ocupación</mat-label>
                         <mat-select formControlName="ocupacio">
-                            <mat-option value="VEB">
-                                Vendedor de bolis
-                            </mat-option>
-                            <mat-option value="VET">
-                                Vendedor de termos
+                            <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones" [value]="ocupacion.codigo">
+                                {{ocupacion.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.ocupacio.errors?.required">
@@ -164,13 +159,21 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <mat-label>Tipo de pensión</mat-label>
+                        <mat-select formControlName="pension">
+                            <mat-option  *ngFor="let tipoPension of dataInicial?.tiposPension" [value]="tipoPension.codigo">
+                                {{tipoPension.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="datosLaborares.controls.pagaduria.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿ En cúal empresa trabajas?</mat-label>
                         <mat-select formControlName="pagaduria">
-                            <mat-option value="VEB">
-                                Fintra
-                            </mat-option>
-                            <mat-option value="VET">
-                                Claro
+                            <mat-option  *ngFor="let pagaduria of dataInicial?.pagadurias" [value]="pagaduria.codigo">
+                                {{pagaduria.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.pagaduria.errors?.required">
@@ -178,7 +181,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                    <mat-form-field  class="w-full px-3 fuse-mat-dense">
                         <mat-label>Otra, Indique ¿cual?</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="otraPagaduria">
                         <mat-error *ngIf="datosLaborares.controls.otraPagaduria.errors?.required">
@@ -189,11 +192,9 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿Qué contrato tienes?</mat-label>
                         <mat-select formControlName="tipoContrato">
-                            <mat-option value="VEB">
-                                Prestación de servicios
-                            </mat-option>
-                            <mat-option value="VET">
-                                No
+                            <mat-option *ngFor="let tipoContrato of dataInicial?.tiposContratos
+                            " [value]="tipoContrato.codigo" value="VEB">
+                               {{tipoContrato.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.tipoContrato.errors?.required">
@@ -211,11 +212,9 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Cargo</mat-label>
                         <mat-select formControlName="cargo">
-                            <mat-option value="VEB">
-                                Developer
-                            </mat-option>
-                            <mat-option value="VET">
-                                No
+                            <mat-option *ngFor="let tipoContrato of dataInicial?.tiposContratos"
+                            [value]="tipoContrato.codigo">
+                                {{tipoContrato.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.cargo.errors?.required">
@@ -233,7 +232,7 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Otros ingresos del volante (AA)</mat-label>
                         <span  matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="otrosIngreso">
+                        <input matInput type="text" matTooltip="Ingresar la suma total de los ingresos por concepto de asignación adicional, visible en el volante de nómina" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="otrosIngreso">
                         <mat-error *ngIf="datosLaborares.controls.otrosIngreso.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -241,7 +240,7 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Descuento en volante de nómina ($)</mat-label>
                         <span  matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="descuentoNomina">
+                        <input matInput type="text" matTooltip="El valor a ingresar debe ser diferente a los descuento de ley (seguridad social)." [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="descuentoNomina">
                         <mat-error *ngIf="datosLaborares.controls.descuentoNomina.errors?.required">
                             Este campo es requerido.
                         </mat-error>
