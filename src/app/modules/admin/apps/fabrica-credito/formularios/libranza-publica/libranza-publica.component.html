@@ -24,15 +24,16 @@
             </div>
         </div>
     </div>
-    <mat-stepper [linear]="true" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0">
-        <mat-step [stepControl]="datosBasicos" >
+    <mat-stepper [linear]="false" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0">
+        <mat-step [stepControl]="datosBasicos">
             <form [formGroup]="datosBasicos">
                 <ng-template matStepLabel>Datos basicos</ng-template>
                 <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-2">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de documento</mat-label>
                         <mat-select formControlName="tipoDocumento">
-                            <mat-option *ngFor="let tipoDocumento of dataInicial?.tipoDocumento" [value]="tipoDocumento?.codigo" [disabled]="tipoDocumento.codigo === 'CE'">
+                            <mat-option *ngFor="let tipoDocumento of dataInicial?.tipoDocumento"
+                                [value]="tipoDocumento?.codigo" [disabled]="tipoDocumento.codigo === 'CE'">
                                 {{tipoDocumento?.nombre}}
                             </mat-option>
                         </mat-select>
@@ -42,7 +43,8 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>No. de documento</mat-label>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="identificacion">
+                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                            formControlName="identificacion">
                         <mat-error *ngIf="datosBasicos.controls.identificacion.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -63,7 +65,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Correo electrónico</mat-label>
-                        <input formControlName="email" type="email" matInput autocomplete="off"/>
+                        <input formControlName="email" type="email" matInput autocomplete="off" />
                         <mat-error *ngIf="datosBasicos.controls.email.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -71,7 +73,7 @@
                             Email invalido
                         </mat-error>
                     </mat-form-field>
-                    
+
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Primer nombre</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="primerNombre">
@@ -92,9 +94,9 @@
                             No se aceptan caracteres especiales.
                         </mat-error>
                     </mat-form-field>
-                    
-                   
-                    
+
+
+
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Genero</mat-label>
                         <mat-select formControlName="genero">
@@ -204,9 +206,9 @@
                         <mat-label>Fecha de Vinculación</mat-label>
                         <input style="max-height: 18px !important;" matInput type="date" autocomplete="off"
                             formControlName="fechaVinculacion">
-                            <mat-error *ngIf="datosLaborares.controls.fechaVinculacion.errors?.required">
-                                Este campo es requerido.
-                            </mat-error>
+                        <mat-error *ngIf="datosLaborares.controls.fechaVinculacion.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Cargo</mat-label>
@@ -224,49 +226,127 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Salario básico o pensión del volante($)</mat-label>
-                        <span  matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="salarioBasico">
+                        <span matPrefix>$</span>
+                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                            formControlName="salarioBasico">
                         <mat-error *ngIf="datosLaborares.controls.salarioBasico.errors?.required">
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Otros ingresos del volante (AA)</mat-label>
-                        <span  matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="otrosIngreso">
+                        <span matPrefix>$</span>
+                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                            formControlName="otrosIngreso">
                         <mat-error *ngIf="datosLaborares.controls.otrosIngreso.errors?.required">
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Descuento en volante de nómina ($)</mat-label>
-                        <span  matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off" formControlName="descuentoNomina">
+                        <span matPrefix>$</span>
+                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                            formControlName="descuentoNomina">
                         <mat-error *ngIf="datosLaborares.controls.descuentoNomina.errors?.required">
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
                 </div>
             </form>
-        
+
             <form [formGroup]="validationOTPForm">
 
-                <div class="bg-white  pt-6 grid grid-cols-1   md:grid-cols-1">
+
+                <div class="w-full flex  flex-col">
+
+                    <div class="rounded-2 w-full h-8 flex bg-accent-200 mb-4">
+                        <p class="text-2xl font-bold  w-full mb-4 pl-4">Codigo OTP</p>
+                    </div>
+
+                    <div class="flex flex-row px-2 mt-2 gap-4 m-10 ">
+
+                        <div class="flex flex-row justify-center w-360">
+                            <img style="width: 50%;" src="assets/images/logo/otp.png" alt="otp">
+                        </div>
+
+                        <div class="flex w-full  h-auto  p-4 items-center justify-center">
+
+                            <div class="flex flex-wrap">
+
+                                <div class="flex flex-row gap-4 justify-between">
+
+                                    <div class="w-15 h-15 flex flex-row border-blue-200 border rounded-md ">
+                                        <input type="text" class="w-full h-full pl-2">
+
+                                    </div>
+
+                                    <div class="w-15 h-15 flex flex-row border-blue-200 border rounded-md ">
+                                        <input type="text" class="w-full h-full pl-2">
+
+                                    </div>
+
+                                    <div class="w-15 h-15 flex flex-row border-blue-200 border rounded-md ">
+                                        <input type="text" class="w-full h-full pl-2">
+
+                                    </div>
+
+                                    <div class="w-15 h-15 flex flex-row border-blue-200 border rounded-md ">
+                                        <input type="text" class="w-full h-full pl-2">
+
+                                    </div>
+
+                                    <div class="w-15 h-15 flex flex-row border-blue-200 border rounded-md ">
+                                        <input type="text" class="w-full h-full pl-2">
+
+                                    </div>
+
+                                    <div class="w-15 h-15 flex flex-row border-blue-200 border rounded-md ">
+                                        <input type="text" class="w-full h-full pl-2">
+
+                                    </div>
 
 
+                                </div>
+
+                                <div class="w-full  h-20 flex flex-row items-center justify-center mt-6">
+
+                                    <button mat-stroked-button>
+                                        Solicitar Codigo
+                                    </button>
+                                </div>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- <div class="bg-white  pt-6 grid grid-cols-1   md:grid-cols-1"> -->
+
+                <!-- 
                     <div class="w-auto cursor-pointer font-bold mb-3 bg-accent-200 rounded-2  mt-1  px-3 text-2xl">
                         Validación de OTP
-                    </div>
-                    <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
+                    </div> -->
+
+
+                <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Código OTP</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="numeroOTP" [disabled]="this.form.invalid" placeholder="Presionar el botón para enviar el código del celular">
                 <mat-icon svgIcon="feather:check-circle" [ngClass]="{'text-green-400': this.otpValidado}" matTooltip="Verificar código OTP" class="cursor-pointer mx-2" (click)="validarCodigo()"></mat-icon>
                 <mat-icon svgIcon="feather:send" [ngClass]="{'text-blue-400': this.form.valid}" class="cursor-pointer" matTooltip="Enviar código OTP" (click)="solicitarCodigo()"></mat-icon>
             </mat-form-field> -->
+
+                <!--             
                     <div class="w-full px-3 fuse-mat-dense flex justify-center items-center pt-4 flex-col">
                         <button mat-raised-button color="primary" type="button" style="width: 80% !important"
                             class="rounded-md cursor-pointer">
-                                Enviar código OTP
+                            Enviar código OTP
                         </button>
 
                     </div>
@@ -280,9 +360,9 @@
                         <mat-error *ngIf="validationOTPForm.controls.numeroOTP.errors?.min">
                             Mínimo 6 dígitos
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
-                    <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
+                <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
                 style="min-height: 200px !important;">
 
                 <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
@@ -317,11 +397,12 @@
                 </mat-form-field>
             </div> -->
 
-
-                </div>
+                <!-- 
+                </div> -->
             </form>
             <div class="bg-white rounded  pt-6 pb-8 mb-18 sm:flex sm:justify-end gap-4">
-                <button mat-raised-button color="primary" type="button" [disabled]="this.validationOTPForm.invalid" (click)="guardar()">
+                <button mat-raised-button color="primary" type="button" [disabled]="this.validationOTPForm.invalid"
+                    (click)="guardar()">
                     Guardar
                 </button>
             </div>
