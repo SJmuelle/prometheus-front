@@ -32,8 +32,8 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de documento</mat-label>
                         <mat-select formControlName="tipoDocumento">
-                            <mat-option value="CC">
-                                CC
+                            <mat-option *ngFor="tipoDocumento of dataInicial?.tipoDocumento" [value]="tipoDocumento.codigo">
+                                {{tipoDocumento.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosBasicos.controls.tipoDocumento.errors?.required">
@@ -98,11 +98,8 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Genero</mat-label>
                         <mat-select formControlName="genero">
-                            <mat-option value="F">
-                                F
-                            </mat-option>
-                            <mat-option value="M">
-                                M
+                            <mat-option *ngFor="genero of dataInicial?.genero" [value]="genero.codigo">
+                                {{genero.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosBasicos.controls.genero.errors?.required">
