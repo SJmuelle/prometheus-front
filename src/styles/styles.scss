@@ -191,3 +191,11 @@ mat-tab-group>.mat-tab-body-wrapper {
 .text-centerTable > thead > tr > th > .mat-sort-header-container {
     justify-content: center;
 }
+
+.mat-vertical-content-container{
+ margin-left: 0px !important;
+}
+
+mat-step-header.mat-focus-indicator{
+    border-radius: 15px;
+}

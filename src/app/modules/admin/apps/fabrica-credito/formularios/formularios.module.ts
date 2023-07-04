@@ -34,6 +34,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
 import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.co
         MatSliderModule,
         NgxMaskModule.forRoot(),
         MatProgressBarModule,
-        GestionFabricaCreditoModule
+        GestionFabricaCreditoModule,
+        MatStepperModule
   ]
 })
 export class FormulariosModule { }

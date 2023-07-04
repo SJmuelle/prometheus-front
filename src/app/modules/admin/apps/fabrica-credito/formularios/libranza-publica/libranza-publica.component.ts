@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { StepperOrientation } from '@angular/cdk/stepper';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Subject } from 'rxjs'
 import moment from 'moment';
+import { takeUntil } from 'rxjs/operators';
+import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
+import { LibranzaPublicaService } from 'app/core/services/libranza-publica.service';
 
 @Component({
     selector: 'app-libranza-publica',
@@ -10,45 +16,90 @@ import moment from 'moment';
 export class LibranzaPublicaComponent implements OnInit {
 
     form: FormGroup;
+    datosBasicos: FormGroup;
+    datosLaborares: FormGroup;
+    validationOTPForm: FormGroup;
+    orientationStep: StepperOrientation;
+    currentScreenSize: string;
+    dataInicial;
+    displayNameMap = new Map([
+        [Breakpoints.XSmall, 'XSmall'],
+        [Breakpoints.Small, 'Small'],
+        [Breakpoints.Medium, 'Medium'],
+        [Breakpoints.Large, 'Large'],
+        [Breakpoints.XLarge, 'XLarge'],
+    ]);
+    destroyed = new Subject<void>();
     fechaActual: any = moment().locale('co');
+    mayorDeEdadFecha: any = moment().locale('co').subtract('18', 'years');
 
-    constructor(private fb: FormBuilder) { }
+    constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
+        private _formularioCreditoService: FormularioCreditoService,
+        private _libranzaService: LibranzaPublicaService) { }
 
     ngOnInit(): void {
-        this.form = this.fb.group({
+        this.datosBasicos = this.fb.group({
             tipoDocumento: ['', [Validators.required]],
             identificacion: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
-            primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
-            primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
             celular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
             email: ['', [Validators.required, Validators.email]],
-            fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
-            estrato: ['', [Validators.required]],
-            genero: [''],
-            tipoActividad: ['', [Validators.required]],
-            camaraComercio: ['', [Validators.required]],
-            tipoLocal: ['', [Validators.required]],
-            actividadEconomica: ['', [Validators.required]],
-            actividadEspecifica: ['', [Validators.required]],
-            antiguedadActividad: ['', [Validators.required, Validators.min(0)]],
-            antiguedadNegocio: ['', [Validators.required, Validators.min(0)]],
-            departamentoNegocio: ['', [Validators.required]],
-            ciudadNegocio: ['', [Validators.required]],
-            barrioNegocio: ['', [Validators.required]],
-            plazoCredito: ['', [Validators.required]],
-            asesorMicro: [''],
-            antiguedadLocal: [0],
-            autorizacionCentrales: [true],
-            clausulaVeracidad: [true],
-            terminosCondiciones: [true],
-            numeroOTP: [''],
-            numOTP1: [''],
-            numOTP2: [''],
-            numOTP3: [''],
-            numOTP4: [''],
-            numOTP5: [''],
-            numOTP6: [''],
+            primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
+            primerApellido: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
+            genero: ['', Validators.required],
+            fechaNacimiento: [this.mayorDeEdadFecha.format('YYYY-MM-DD'), [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
+            codigoAsesor: [''],
         });
+        console.log(this.fechaActual.subtract(18, 'years').format('DD-MM-YYYY 00000'))
+        this.datosLaborares = this.fb.group({
+            ocupacio: ['', [Validators.required]],
+            pagaduria: ['', [Validators.required]],
+            otraPagaduria: ['', [Validators.required]],
+            tipoContrato: ['', [Validators.required]],
+            fechaVinculacion: ['', [Validators.required]],
+            // la de abajo no esta asignada,
+
+            fechaFinalizacionContrato: [''],
+            cargo: ['', [Validators.required, Validators.min(0)]],
+            salarioBasico: ['', [Validators.required, Validators.min(0)]],
+            otrosIngreso: ['', [Validators.required]],
+            descuentoNomina: ['', [Validators.required]],
+
+        });
+
+        this.validationOTPForm = this.fb.group({
+            numeroOTP: [''],
+        })
+
+        this.breakpointObserver
+            .observe([
+                Breakpoints.XSmall,
+                Breakpoints.Small,
+                Breakpoints.Medium,
+                Breakpoints.Large,
+                Breakpoints.XLarge,
+            ])
+            .pipe(takeUntil(this.destroyed))
+            .subscribe(result => {
+
+                for (const query of Object.keys(result.breakpoints)) {
+                    if (result.breakpoints[query]) {
+                        this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+                        if (this.currentScreenSize === 'XSmall') {
+                            this.orientationStep = 'vertical'
+                        } else {
+                            this.orientationStep = 'horizontal'
+                        }
+                    }
+                }
+            });
+        this.cargueInicial()
+
+    }
+
+    ngAfterViewChecked(): void {
+        //Called after every check of the component's view. Applies to components only.
+        //Add 'implements AfterViewChecked' to the class.
+        this.marginTopInputDynamic()
     }
 
     private validatedDate(control: AbstractControl) {
@@ -79,5 +130,65 @@ export class LibranzaPublicaComponent implements OnInit {
         } else {
             return null
         }
+    }
+
+    private cargueInicial() {
+        let data = {
+            entidad: "CARGUE-LIBRANZA-PUBLICA",
+            unidadNegocio: 22
+        };
+        this._libranzaService.cargueInicialFormularioCorto(data).subscribe((resp: any) => {
+            if (resp) {
+                this.dataInicial = resp.data
+                console.log('data inicial', this.dataInicial);
+                
+            }
+        })
+    }
+
+
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
+                    }
+                });
+            }, 1000);
+        }
+    }
+
+    guardar() {
+        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue(), ...this.validationOTPForm.getRawValue() }
+
+        this.formatearDatosAntesDeEnviar(dataToSend)
+
+
+        console.log(dataToSend, 'datos a enviar');
+
+    }
+
+    formatearDatosAntesDeEnviar(formData) {
+        formData.primerNombre = formData.primerNombre?.trim()
+        formData.primerApellido = formData.primerApellido?.trim()
+    }
+    ngOnDestroy() {
+        this.destroyed.next();
+        this.destroyed.complete();
     }
 }
