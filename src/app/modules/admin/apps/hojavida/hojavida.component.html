@@ -92,6 +92,7 @@
                             {{ info_cliente.departamento }}
                         </span>
                     </div>
+
                     <div class="row items-center mt-3 mb-3" style="
                             border-left: 5px solid #b6ce1d;
                             padding-left: 3px;
@@ -118,6 +119,7 @@
                             {{ info_cliente.email }}
                         </span>
                     </div>
+
                     <div class="row items-center" style="
                             border-left: 5px solid #b6ce1d;
                             padding-left: 3px;
@@ -140,6 +142,31 @@
                             {{ info_cliente.fechaNegociacion }}
                         </span>
                     </div>
+
+                    <div class="row items-center my-3" style="
+                            border-left: 5px solid #b6ce1d;
+                            padding-left: 3px;
+                        ">
+                        <div class="col-lg-1 m-0 p-0 col-sm-2">
+                            <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                        </div>
+                        <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
+                            Segmentación
+                        </div>
+
+                        <span class="leading-none" style="
+                                line-height: 1.3em !important;
+                                font-size: 13px;
+                            ">
+                            {{ info_cliente.direccion }} <br />
+                            {{ info_cliente.barrio
+                            }}{{ info_cliente.barrio == "" ? "" : "," }}
+                            {{ info_cliente.ciudad }} -
+                            {{ info_cliente.departamento }}
+                        </span>
+                    </div>
+
+
                 </div>
             </fuse-card>
         </div>
@@ -339,6 +366,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12 mt-10 border">
+                            <fuse-card class="flex flex-row w-full h-100 shadow-md rounded-md justify-center"
+                                *ngIf="!listadoCredito.length">
+                                <div class="justify-center w-80 h-auto py-13">
+                                    <img src="assets/images/animaciones/nodata.gif" />
+
+                                    <p class="font-medium text-xl text-center w-full">No hay registros</p>
+                                </div>
+                            </fuse-card>
+                        </div>
+
+
                         <div class="m-5"></div>
                     </mat-tab>
                     <mat-tab label="Cartera">
@@ -626,6 +666,22 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
+                        <div class="col-lg-12 mt-10 border">
+                            <fuse-card class="flex flex-row w-full h-100 shadow-md rounded-md justify-center"
+                                *ngIf="!ListadoCartera.length">
+                                <div class="justify-center w-80 h-auto py-13">
+                                    <img src="assets/images/animaciones/nodata.gif" />
+                                    <p class="font-medium text-xl text-center w-full">No hay registros</p>
+                                </div>
+                            </fuse-card>
+                        </div>
+
+
+
                         <div class="m-5"></div>
                     </mat-tab>
                     <mat-tab label="Historial gestión">
@@ -777,7 +833,7 @@
                                     Negociaciones
                                 </div>
                             </span>
-                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
                                 <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
                                     type="text" autocomplete="off" name="filtrarTablaNeg" [(ngModel)]="filtrarTablaNeg"
                                     placeholder="Filtrar..." />
@@ -791,7 +847,7 @@
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <!-- <div class="leading-tight col-lg-2 col-sm-12 text-end"
                                 style="font-size: 10px; color: #9aa8bc;">
                                 <select name="tamanoTablaNeg" id="tamanoTablaNeg" class="border rounded p-2 bg-gray-100"
@@ -803,7 +859,12 @@
                             </div> -->
                         </div>
                         <hr />
-                        <div class="row">
+
+                        <div>
+                            <app-table [allDataRows]="listadoNegociaciones"
+                                [dataOptionTable]="dataOptionTableNegociaciones"></app-table>
+                        </div>
+                        <!-- <div class="row">
                             <div class="col-lg-12" *ngIf="listadoNegociaciones.length != 0">
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -883,7 +944,7 @@
                                 </fuse-card>
                             </div>
                         </div>
-                        <div class="m-5"></div>
+                        <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="Extractos">
                         <div class="row items-center">

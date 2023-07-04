@@ -31,7 +31,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableComponent } from './componentes/table/table.component';
 import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
 import { DataTablePipe } from './pipes/data-table.pipe';
-import { HeaderComponent } from './componentes/header/header.component'
+import { HeaderComponent } from './componentes/header/header.component';
+import { NoDataComponent } from './componentes/no-data/no-data.component'
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -101,7 +102,8 @@ import { HeaderComponent } from './componentes/header/header.component'
         SmPaginatorPipe,
         DataTablePipe,
         TableComponent,
-        HeaderComponent
+        HeaderComponent,
+        NoDataComponent
 
 
 

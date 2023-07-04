@@ -179,6 +179,37 @@ export class HojavidaComponent implements OnInit {
         },
     ];
 
+    public dataOptionTableNegociaciones: IoptionTable[] = [
+        {
+            name: 'codigoNegocio',
+            text: 'Código negocio',
+            typeField: 'text',
+
+        },
+        {
+            name: 'fechaCreacion',
+            text: 'Fecha creación',
+            typeField: 'text',
+            pipeName: 'date'
+        },
+        {
+            name: 'usuarioCreacion',
+            text: 'Usuario creación',
+            typeField: 'text',
+        },
+        {
+            name: 'tipoNegociacion',
+            text: 'Tipo negociación',
+            typeField: 'text',
+        },
+        {
+            name: 'fechaAplicacion',
+            text: 'Fecha aplicación',
+            typeField: 'text',
+            pipeName: 'date'
+        },
+    ];
+
     public dataOptionExtratos: any[] = [
         {
             name: 'consecutivo',

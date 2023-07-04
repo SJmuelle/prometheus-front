@@ -13,7 +13,8 @@
                             <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
                                 <div class="flex flex-row gap-1.5 w-full" matPrefix>
                                     <div>
-                                        <mat-icon svgIcon="heroicons_outline:document-download" class="text-white"></mat-icon>
+                                        <mat-icon svgIcon="heroicons_outline:document-download"
+                                            class="text-white"></mat-icon>
                                     </div>
                                     <div class="margin-button">
                                         Exportar
@@ -25,7 +26,8 @@
                             <button mat-button class="bg-gray-400 text-white gap-2" (click)="filtrarFecha()">
                                 <div class="flex flex-row gap-1.5 w-full" matPrefix>
                                     <div>
-                                        <mat-icon svgIcon="heroicons_outline:search-circle" class="text-white"></mat-icon>
+                                        <mat-icon svgIcon="heroicons_outline:search-circle"
+                                            class="text-white"></mat-icon>
                                     </div>
                                     <div class="margin-button">
                                         Búsqueda específica
@@ -34,7 +36,8 @@
                             </button>
                         </div>
                         <div>
-                            <button mat-button class="permitir bloquear text-white" *ngIf="filRegistros!=maxRegistros" (click)="consulta()">Restablecer</button>
+                            <button mat-button class="permitir bloquear text-white" *ngIf="filRegistros!=maxRegistros"
+                                (click)="consulta()">Restablecer</button>
                         </div>
                     </div>
                 </span>
@@ -51,7 +54,11 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div>
+                <app-table [allDataRows]="listado" [dataOptionTable]="dataOptionsTable"></app-table>
+            </div>
+
+            <!-- <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-12 max-h-100 xl:max-h-140 overflow-auto">
@@ -108,14 +115,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <!-- <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around">
+                <div class="col-lg-12"> -->
+            <!-- <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around">
                         <div class="w-3/12">
                             <img src="assets/images/animaciones/nodatos.gif">
                         </div>
                     </fuse-card> -->
-                </div>
-            </div>
+            <!-- </div>
+            </div> -->
         </div>
 
     </div>

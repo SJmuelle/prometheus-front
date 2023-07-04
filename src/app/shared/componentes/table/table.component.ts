@@ -47,7 +47,7 @@ export interface IoptionTable {
   /**
    * se utiliza en caso de querer formatear el texto
    */
-  pipeName?: 'date' | 'fullday' | 'currency' | 'number'
+  pipeName?: 'date' | 'fullday' | 'currency' | 'number' | 'titleCase'
   /**
    * se llama si se quiere utilizar una funcion y se le envia la datarow
    */
@@ -55,7 +55,7 @@ export interface IoptionTable {
   /**
    * se establece un icono especifico de la plantilla
    */
-  iconFuse?: string
+  iconSGV?: string
   /**
    * se establece un icono especifico de angular material
    */
