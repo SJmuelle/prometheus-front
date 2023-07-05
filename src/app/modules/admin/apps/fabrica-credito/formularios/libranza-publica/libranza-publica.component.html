@@ -32,7 +32,7 @@
                 <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-2">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de documento</mat-label>
-                        <mat-select formControlName="tipoDocumento">
+                        <mat-select formControlName="tipoDocumento" (selectionChange)="preCargueDeDatos()">
                             <mat-option *ngFor="let tipoDocumento of dataInicial?.tipoDocumento"
                                 [value]="tipoDocumento?.codigo" [disabled]="tipoDocumento.codigo === 'CE'">
                                 {{tipoDocumento?.nombre}}
@@ -44,7 +44,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>No. de documento</mat-label>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                        <input matInput (change)="preCargueDeDatos()" type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
                             formControlName="documento">
                         <mat-error *ngIf="datosBasicos.controls.documento.errors?.required">
                             Este campo es requerido.
@@ -264,7 +264,7 @@
                 <div class="w-full flex flex-col">
 
                     <div class="rounded-2 w-full h-8 flex bg-accent-200 mb-4">
-                        <p class="text-2xl font-bold w-full mb-4 pl-4">Codigo OTP</p>
+                        <p class="text-2xl font-bold w-full mb-4 pl-4">Código OTP</p>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2 mt-2 m-0 sm:m-10">
@@ -275,49 +275,61 @@
 
                         <div class="flex w-full -mt-20 sm:mt-0 sm:w-auto h-auto p-4 items-center justify-center">
 
-                            <div class="flex flex-wrap">
+                            <div class="flex flex-wrap gap-8">
+
+                                <div *ngIf="contador !== 180 && !otpValidado"
+                                class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
+                                <mat-progress-bar style="width: 100%;" mode="determinate"
+                                    [value]="(contador / 180) * 100"></mat-progress-bar>
+                            </div>
+                                <div class="w-full h-20 flex flex-row items-center justify-center mt-6">
+
+                                    <button  [disabled]="this.validationOTPForm.invalid || contador !== 180 " mat-raised-button (click)="solicitarCodigo()" class="w-full sm:w-auto rounded-sm" color="primary" mat-stroked-button>
+                                        {{changeTextOTP ? 'Reenviar código OTP' : 'Solicitar código OTP'}}
+                                    </button>
+                                </div>
 
                                 <div class="w-full grid grid-cols-1 gap-4">
 
                                     <div class="flex flex-row justify-between w-full gap-2">
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input1 type="text" class="w-full h-full md:pl-6 pl-2.5">
+                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input1 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
                                         </div>
 
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input2 type="text" class="w-full h-full md:pl-6 pl-2.5">
+                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input2 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
                                         </div>
 
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input3 type="text" class="w-full h-full md:pl-6 pl-2.5">
+                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input3 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
                                         </div>
 
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input4 type="text" class="w-full h-full md:pl-6 pl-2.5">
+                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input4 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
                                         </div>
 
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input5 type="text" class="w-full h-full md:pl-6 pl-2.5">
+                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input5 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
                                         </div>
 
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input6 type="text" class="w-full h-full md:pl-6 pl-2.5">
+                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input6 (keyup)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
                                         </div>
 
                                     </div>
 
                                 </div>
 
-                                <div class="w-full h-20 flex flex-row items-center justify-center mt-6">
+                                <div class="w-full h-20 flex flex-row items-center justify-center">
 
-                                    <button class="w-full sm:w-auto" mat-stroked-button>
-                                        Solicitar Codigo
+                                    <button mat-raised-button class="w-full sm:w-auto rounded-sm" color="primary" mat-stroked-button>
+                                        Verificar OTP
                                     </button>
                                 </div>
 

@@ -7,6 +7,9 @@ import moment from 'moment';
 import { takeUntil } from 'rxjs/operators';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { LibranzaPublicaService } from 'app/core/services/libranza-publica.service';
+import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { ModalConfirmarDatosOTPComponent } from '../modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
 
 @Component({
     selector: 'app-libranza-publica',
@@ -29,6 +32,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     orientationStep: StepperOrientation;
     currentScreenSize: string;
     dataInicial;
+    numeroSolicitudTemporal: number;
     displayNameMap = new Map([
         [Breakpoints.XSmall, 'XSmall'],
         [Breakpoints.Small, 'Small'],
@@ -39,10 +43,14 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     destroyed = new Subject<void>();
     fechaActual: any = moment().locale('co');
     mayorDeEdadFecha: any = moment().locale('co').subtract('18', 'years');
+    public contador: number = 180;
+    otpValidado: boolean = false;
+    changeTextOTP: boolean = false;
+    timerInterval: any;
 
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
-        private _libranzaService: LibranzaPublicaService) { }
+        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog) { }
 
 
     ngAfterViewInit() {
@@ -51,6 +59,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this.focusNextInput(this.input3.nativeElement, this.input4.nativeElement);
         this.focusNextInput(this.input4.nativeElement, this.input5.nativeElement);
         this.focusNextInput(this.input5.nativeElement, this.input6.nativeElement);
+
+        this.focusPreviusInput(this.input2.nativeElement, this.input1.nativeElement);
+        this.focusPreviusInput(this.input3.nativeElement, this.input2.nativeElement);
+        this.focusPreviusInput(this.input4.nativeElement, this.input3.nativeElement);
+        this.focusPreviusInput(this.input5.nativeElement, this.input4.nativeElement);
+        this.focusPreviusInput(this.input6.nativeElement, this.input5.nativeElement);
 
     }
 
@@ -86,7 +100,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         });
 
         this.validationOTPForm = this.fb.group({
-            numeroOTP: [''],
+            numeroOTP: ['', [Validators.required, Validators.minLength(6)]],
         })
 
 
@@ -186,9 +200,21 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     }
 
     public focusNextInput(currentInput: HTMLInputElement, nextInput: HTMLInputElement): void {
-        currentInput.addEventListener('input', () => {
+        currentInput.addEventListener('input', ($e) => {
             if (currentInput.value.length === 1) {
+                console.log('cambiando de ', currentInput.value);
                 nextInput.focus();
+            }
+        });
+    }
+
+    public focusPreviusInput(currentInput: HTMLInputElement, previusInput: HTMLInputElement): void {
+        currentInput.addEventListener('keydown', ($e) => {
+            if ($e.key === 'Backspace') {
+                // bug donde primero se hace el focus y luego se borra, entonces se borraba el anterior y no el actual
+                setTimeout(() => {
+                    previusInput.focus();
+                }, 100);
             }
         });
     }
@@ -290,13 +316,76 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
             this._libranzaService.guardarDatosBasicos(datosAEnviar).subscribe(data => {
                 console.log('datos recibidos', data);
-
+                this.numeroSolicitudTemporal = data.numeroSolicitud
             })
         }
+    }
+
+    solicitarCodigo(){
+        let dialogRef;
+        dialogRef = this._dialog.open(ModalConfirmarDatosOTPComponent, {
+          maxWidth: '50%',
+          maxHeight: '80%',
+          data: {
+            documento: this.datosBasicos.get('documento').value,
+            celular: this.datosBasicos.get('celular').value,
+            email: this.datosBasicos.get('email').value,
+          },
+          disableClose: false,
+        });
+        dialogRef.afterClosed().toPromise().then((data) => {
+            console.log('data', data);
+            this.datosBasicos.patchValue(data);
+            this.startTimer()
+        });
+    }
+
+    preCargueDeDatos(){
+        const tipoDocumento = this.datosBasicos.get('tipoDocumento').value
+        const documento = this.datosBasicos.get('documento').value
+
+        if(tipoDocumento && documento){
+            this._libranzaService.consultarDatosSolicitudConDocumento({tipoDocumento, documento}).subscribe(rep => {
+                console.log('api responde con ', rep);
+                this.datosBasicos.patchValue(rep.data);
+            })
+        }
+    }
+
+    startTimer() {
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
+            }
+        }, 1000)
+    }
+
+    updateOTPInput(){
+        const num1 = this.input1.nativeElement.value;
+        const num2 = this.input2.nativeElement.value;
+        const num3 = this.input3.nativeElement.value;
+        const num4 = this.input4.nativeElement.value;
+        const num5 = this.input5.nativeElement.value;
+        const num6 = this.input6.nativeElement.value;
+
+
+        this.validationOTPForm.controls.numeroOTP.setValue(num1+num2+num3+num4+num5+num6);
+
+        console.log('dato OTP', this.validationOTPForm.controls.numeroOTP.value);
+
     }
 
     ngOnDestroy() {
         this.destroyed.next();
         this.destroyed.complete();
     }
+
+
 }
+
+
