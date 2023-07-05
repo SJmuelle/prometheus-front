@@ -1,5 +1,5 @@
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Subject } from 'rxjs'
@@ -13,7 +13,14 @@ import { LibranzaPublicaService } from 'app/core/services/libranza-publica.servi
     templateUrl: './libranza-publica.component.html',
     styleUrls: ['./libranza-publica.component.scss']
 })
-export class LibranzaPublicaComponent implements OnInit {
+export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
+    @ViewChild('input1') input1!: ElementRef<HTMLInputElement>;
+    @ViewChild('input2') input2!: ElementRef<HTMLInputElement>;
+    @ViewChild('input3') input3!: ElementRef<HTMLInputElement>;
+    @ViewChild('input4') input4!: ElementRef<HTMLInputElement>;
+    @ViewChild('input5') input5!: ElementRef<HTMLInputElement>;
+    @ViewChild('input6') input6!: ElementRef<HTMLInputElement>;
+
 
     form: FormGroup;
     datosBasicos: FormGroup;
@@ -36,6 +43,17 @@ export class LibranzaPublicaComponent implements OnInit {
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
         private _libranzaService: LibranzaPublicaService) { }
+
+
+    ngAfterViewInit() {
+        this.focusNextInput(this.input1.nativeElement, this.input2.nativeElement);
+        this.focusNextInput(this.input2.nativeElement, this.input3.nativeElement);
+        this.focusNextInput(this.input3.nativeElement, this.input4.nativeElement);
+        this.focusNextInput(this.input4.nativeElement, this.input5.nativeElement);
+        this.focusNextInput(this.input5.nativeElement, this.input6.nativeElement);
+
+    }
+
 
     ngOnInit(): void {
         this.datosBasicos = this.fb.group({
@@ -70,6 +88,8 @@ export class LibranzaPublicaComponent implements OnInit {
             numeroOTP: [''],
         })
 
+
+
         this.breakpointObserver
             .observe([
                 Breakpoints.XSmall,
@@ -100,6 +120,14 @@ export class LibranzaPublicaComponent implements OnInit {
         //Called after every check of the component's view. Applies to components only.
         //Add 'implements AfterViewChecked' to the class.
         this.marginTopInputDynamic()
+    }
+
+    public focusNextInput(currentInput: HTMLInputElement, nextInput: HTMLInputElement): void {
+        currentInput.addEventListener('input', () => {
+            if (currentInput.value.length === 1) {
+                nextInput.focus();
+            }
+        });
     }
 
     private validatedDate(control: AbstractControl) {
@@ -141,7 +169,7 @@ export class LibranzaPublicaComponent implements OnInit {
             if (resp) {
                 this.dataInicial = resp.data
                 console.log('data inicial', this.dataInicial);
-                
+
             }
         })
     }
