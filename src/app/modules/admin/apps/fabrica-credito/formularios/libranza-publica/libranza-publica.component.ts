@@ -121,12 +121,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
     private agregarValidaciones() {
         // disable todos los campos dinamicos
-         this.datosLaborares.get('otraPagaduria').disable()
-         this.datosLaborares.get('tipoContrato').disable()
-         this.datosLaborares.get('fechaVinculacion').disable()
-         this.datosLaborares.get('cargo').disable()
-         this.datosLaborares.get('otrosIngreso').disable()
-         this.datosLaborares.get('pension').disable()
+        this.datosLaborares.get('otraPagaduria').disable()
+        this.datosLaborares.get('tipoContrato').disable()
+        this.datosLaborares.get('fechaVinculacion').disable()
+        this.datosLaborares.get('cargo').disable()
+        this.datosLaborares.get('otrosIngreso').disable()
+        this.datosLaborares.get('pension').disable()
 
 
         // validaciones dinamicas
@@ -151,12 +151,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
-                if(e === 'PENSI'){
+                if (e === 'PENSI') {
                     this.datosLaborares.get('pension')?.setValidators([Validators.required, Validators.min(0)])
                     this.datosLaborares.get('pension')?.enable({ emitEvent: true, onlySelf: true })
-                }else{
+                } else {
                     this.datosLaborares.get('pension')?.setValidators(null)
-                this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+                    this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
                 }
                 this.datosLaborares.get('tipoContrato')?.setValidators(null)
                 this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
@@ -279,18 +279,18 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         formData.primerApellido = formData.primerApellido?.trim()
     }
 
-    onStepChange($e){
-        if($e.previouslySelectedIndex === 0){
-            const datosAEnviar = {...this.datosBasicos.getRawValue()}
+    onStepChange($e) {
+        if ($e.previouslySelectedIndex === 0) {
+            const datosAEnviar = { ...this.datosBasicos.getRawValue() }
 
             datosAEnviar.unidadNegocio = 22
             datosAEnviar.tipoTercero = 'T'
-            
+
             console.log('datos a enviar', datosAEnviar);
-            
+
             this._libranzaService.guardarDatosBasicos(datosAEnviar).subscribe(data => {
                 console.log('datos recibidos', data);
-                
+
             })
         }
     }
