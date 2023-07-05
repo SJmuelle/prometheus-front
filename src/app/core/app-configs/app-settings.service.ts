@@ -388,8 +388,14 @@ export class AppSettingsService {
      */
     public agendaFirmaDigital = {
         url: {
-            base: EndPoints.uri('/generic/qry/agendas-credito/FI'),
-            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FI')
+            // https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/agenda-firma
+            // ESTA ES LA API : http://localhost:8084/api-fintra/api/generic/update-estado-evidente
+            // http://localhost:8084/api-fintra/api/generic/update-reenviar-firma
+            base: EndPoints.uri('/generic/qry/agenda-firma'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FI'),
+            correoDecision: EndPoints.uri('/credito/sendmail/correo-decision'),
+            updateEstadoEvidente: EndPoints.uri('/generic/update-estado-evidente'),
+            updateReenviarFirma: EndPoints.uri('/generic/update-reenviar-firma'),
         }
     };
 
@@ -474,4 +480,6 @@ export class AppSettingsService {
             guardado: EndPoints.uri('/generic/guardar-analisis-financiero')
         }
     };
+
+      
 }

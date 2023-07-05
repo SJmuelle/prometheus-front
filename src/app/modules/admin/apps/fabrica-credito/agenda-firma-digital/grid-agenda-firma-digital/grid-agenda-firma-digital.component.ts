@@ -11,6 +11,7 @@ import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form
 import moment from 'moment';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
+import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -28,6 +29,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public totales: any[];
   constructor(
     private agendaComercialService: AgendaComercialService,
+    private _agendaFirma: AgendaFirmaService,
     private _matDialog: MatDialog,
     private router: Router,
     public _permisosService: PermisosService
@@ -59,6 +61,62 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  public correoDecision(numeroSolicitud, tipo): void {
+    let data =
+    {
+      numeroSolicitud: numeroSolicitud,
+      tipo: tipo
+    }
+    this._agendaFirma.correoDecision(data).pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe((res) => {
+      debugger
+      if (res.status === 200) {
+
+
+      } else {
+      }
+    });
+  }
+
+  public UpdateEstadoEvidente(numeroSolicitud, identificacion): void {
+    let data =
+    {
+      numeroSolicitud: numeroSolicitud,
+      identificacion: identificacion
+    }
+    this._agendaFirma.UpdateEstadoEvidente(data).pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe((res) => {
+      debugger
+      if (res.status === 200) {
+
+
+      } else {
+      }
+    });
+  }
+
+  public updateReenviarFirma(numeroSolicitud, identificacion): void {
+    let data =
+    {
+      numeroSolicitud: numeroSolicitud,
+    }
+    this._agendaFirma.updateReenviarFirma(data).pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe((res) => {
+      debugger
+      if (res.status === 200) {
+
+
+      } else {
+      }
+    });
+  }
+
+
+  
   /**
    * @description: abre la agenda
    */
