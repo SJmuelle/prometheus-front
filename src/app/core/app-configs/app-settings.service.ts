@@ -482,9 +482,7 @@ export class AppSettingsService {
         }
     };
 
-<<<<<<< HEAD
       
-=======
     /**
  * @description: End-Point
  */
@@ -507,6 +505,5 @@ export class AppSettingsService {
 
         }
     };
->>>>>>> 8a293c0e205129cbaf39aa0d1e9d9e35db0cf3aa
 }
 

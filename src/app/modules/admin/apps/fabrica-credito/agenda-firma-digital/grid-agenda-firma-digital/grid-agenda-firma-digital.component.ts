@@ -27,6 +27,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
+  public filtrado = 'P'
   constructor(
     private agendaComercialService: AgendaComercialService,
     private _agendaFirma: AgendaFirmaService,
@@ -68,12 +69,23 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
       tipo: tipo
     }
+    Swal.fire({ title: 'Cargando', html: 'Enviando correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this._agendaFirma.correoDecision(data).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
-      debugger
+      Swal.close();
       if (res.status === 200) {
-
+        if (res.data.status == 200) {
+          Swal.fire({
+            title: res.data.data.title,
+            html: `<p>${res.data.data.body} <strong>${res.data.data.value}</strong> </p>`,
+            icon: 'success'
+          }).then(rep => {
+          })
+        }
+        setTimeout(() => {
+          this.getAgendaFirmaDigital();          
+        }, 1000);
 
       } else {
       }
@@ -86,29 +98,48 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
       identificacion: identificacion
     }
+    Swal.fire({ title: 'Cargando', html: 'Actualizando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this._agendaFirma.UpdateEstadoEvidente(data).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
-      debugger
+      Swal.close();
       if (res.status === 200) {
-
+        if(res.data.respuesta=='OK'){
+          Swal.fire({
+            title: "Realizado",
+            html: `Estado evidente cambiado con exito`,
+            icon: 'success'
+          }).then(rep => {
+          })
+          setTimeout(() => {
+            this.getAgendaFirmaDigital();          
+          }, 1000);
+        }
 
       } else {
       }
     });
   }
 
-  public updateReenviarFirma(numeroSolicitud, identificacion): void {
+  public updateReenviarFirma(numeroSolicitud): void {
     let data =
     {
       numeroSolicitud: numeroSolicitud,
     }
+    Swal.fire({ title: 'Cargando', html: 'Enviando correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this._agendaFirma.updateReenviarFirma(data).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
-      debugger
       if (res.status === 200) {
-
+        Swal.close();
+        if(res.data.firma_interna_reenviar){
+          Swal.fire({
+            title: "Se reenvio con exito",
+            html: `<p>Reenvio de firma con exito</p>`,
+            icon: 'success'
+          }).then(rep => {
+          })
+        }
 
       } else {
       }
@@ -116,7 +147,9 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   }
 
 
-  
+
+
+
   /**
    * @description: abre la agenda
    */

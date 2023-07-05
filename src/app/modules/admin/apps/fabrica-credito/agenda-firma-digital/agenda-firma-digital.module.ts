@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSelectModule,
     MatExpansionModule,
     AgendaReferenciacionModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonToggleModule
   ]
 })
 export class AgendaFirmaDigitalModule { }
