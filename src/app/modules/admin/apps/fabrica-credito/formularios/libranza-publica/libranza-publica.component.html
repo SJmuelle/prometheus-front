@@ -24,7 +24,8 @@
             </div>
         </div>
     </div>
-    <mat-stepper [linear]="false" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0">
+    <mat-stepper [linear]="false" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0"
+        (selectionChange)="onStepChange($event)">
         <mat-step [stepControl]="datosBasicos">
             <form [formGroup]="datosBasicos">
                 <ng-template matStepLabel>Datos basicos</ng-template>
@@ -44,11 +45,11 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>No. de documento</mat-label>
                         <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
-                            formControlName="identificacion">
-                        <mat-error *ngIf="datosBasicos.controls.identificacion.errors?.required">
+                            formControlName="documento">
+                        <mat-error *ngIf="datosBasicos.controls.documento.errors?.required">
                             Este campo es requerido.
                         </mat-error>
-                        <mat-error *ngIf="datosBasicos.controls.identificacion.errors?.pattern">
+                        <mat-error *ngIf="datosBasicos.controls.documento.errors?.pattern">
                             Cantidad de números de 5-10.
                         </mat-error>
                     </mat-form-field>
@@ -100,7 +101,7 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Genero</mat-label>
                         <mat-select formControlName="genero">
-                            <mat-option *ngFor="let genero of dataInicial?.genero" [value]="genero.codigo">
+                            <mat-option *ngFor="let genero of dataInicial?.generos" [value]="genero.codigo">
                                 {{genero.nombre}}
                             </mat-option>
                         </mat-select>
@@ -123,24 +124,22 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
-                        <mat-label>Código de asesor</mat-label>
+                        <mat-label>Asesor</mat-label>
                         <mat-select formControlName="codigoAsesor">
-                            <mat-option *ngFor="let asesor of dataInicial.analistas" value="F">
-                                aaa
-                            </mat-option>
-                            <mat-option value="M">
-                                bbb
+                            <mat-option *ngFor="let asesor of dataInicial?.analistas" [value]="asesor.idusuario">
+                                {{asesor.nombre}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <div class="bg-white rounded flex justify-end items-center gap-4">
+                        <button mat-raised-button color="primary" type="button" matStepperNext (click)="guardar()">
+                            Siguiente
+                            <mat-icon svgIcon="arrow_right"></mat-icon>
+                        </button>
+                    </div>
                 </div>
             </form>
-            <div class="bg-white rounded  pt-2 pb-4 sm:flex sm:justify-end gap-4">
-                <button mat-raised-button color="primary" type="button" matStepperNext (click)="guardar()">
-                    Siguiente
-                    <mat-icon svgIcon="arrow_right"></mat-icon>
-                </button>
-            </div>
+
         </mat-step>
         <mat-step [stepControl]="datosLaborares">
             <form [formGroup]="datosLaborares">
@@ -154,11 +153,8 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Ocupación</mat-label>
                         <mat-select formControlName="ocupacio">
-                            <mat-option value="VEB">
-                                Vendedor de bolis
-                            </mat-option>
-                            <mat-option value="VET">
-                                Vendedor de termos
+                            <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones" [value]="ocupacion.codigo">
+                                {{ocupacion.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.ocupacio.errors?.required">
@@ -166,13 +162,22 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <mat-label>Tipo de pensión</mat-label>
+                        <mat-select formControlName="pension">
+                            <mat-option *ngFor="let tipoPension of dataInicial?.tiposPension"
+                                [value]="tipoPension.codigo">
+                                {{tipoPension.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="datosLaborares.controls.pagaduria.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿ En cúal empresa trabajas?</mat-label>
                         <mat-select formControlName="pagaduria">
-                            <mat-option value="VEB">
-                                Fintra
-                            </mat-option>
-                            <mat-option value="VET">
-                                Claro
+                            <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias" [value]="pagaduria.codigo">
+                                {{pagaduria.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.pagaduria.errors?.required">
@@ -191,11 +196,9 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>¿Qué contrato tienes?</mat-label>
                         <mat-select formControlName="tipoContrato">
-                            <mat-option value="VEB">
-                                Prestación de servicios
-                            </mat-option>
-                            <mat-option value="VET">
-                                No
+                            <mat-option *ngFor="let tipoContrato of dataInicial?.tiposContratos
+                            " [value]="tipoContrato.codigo" value="VEB">
+                                {{tipoContrato.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.tipoContrato.errors?.required">
@@ -213,11 +216,9 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Cargo</mat-label>
                         <mat-select formControlName="cargo">
-                            <mat-option value="VEB">
-                                Developer
-                            </mat-option>
-                            <mat-option value="VET">
-                                No
+                            <mat-option *ngFor="let tipoContrato of dataInicial?.tiposContratos"
+                                [value]="tipoContrato.codigo">
+                                {{tipoContrato.nombre}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="datosLaborares.controls.cargo.errors?.required">
@@ -236,7 +237,9 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Otros ingresos del volante (AA)</mat-label>
                         <span matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                        <input matInput type="text"
+                            matTooltip="Ingresar la suma total de los ingresos por concepto de asignación adicional, visible en el volante de nómina"
+                            [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
                             formControlName="otrosIngreso">
                         <mat-error *ngIf="datosLaborares.controls.otrosIngreso.errors?.required">
                             Este campo es requerido.
@@ -245,7 +248,9 @@
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Descuento en volante de nómina ($)</mat-label>
                         <span matPrefix>$</span>
-                        <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                        <input matInput type="text"
+                            matTooltip="El valor a ingresar debe ser diferente a los descuento de ley (seguridad social)."
+                            [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
                             formControlName="descuentoNomina">
                         <mat-error *ngIf="datosLaborares.controls.descuentoNomina.errors?.required">
                             Este campo es requerido.
@@ -256,95 +261,18 @@
 
             <form [formGroup]="validationOTPForm">
 
-                <div class="w-full flex flex-col">
-
-                    <div class="rounded-2 w-full h-8 flex bg-accent-200 mb-4">
-                        <p class="text-2xl font-bold w-full mb-4 pl-4">Codigo OTP</p>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2 mt-2 m-0 sm:m-10">
-
-                        <div class="flex justify-center -mt-18 sm:mt-0 min-w-full bg-contain bg-center bg-no-repeat h-90"
-                            style="background-image: url('../../../../../../../assets/images/logo/otp.png');">
-                        </div>
-
-                        <div class="flex w-full -mt-20 sm:mt-0 sm:w-auto h-auto p-4 items-center justify-center">
-
-                            <div class="flex flex-wrap">
-
-                                <div class="w-full grid grid-cols-1 gap-4">
-
-                                    <div class="flex flex-row justify-between w-full gap-2">
-                                        <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input1 type="text" class="w-full h-full md:pl-6 pl-2.5">
-                                        </div>
-
-                                        <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input2 type="text" class="w-full h-full md:pl-6 pl-2.5">
-                                        </div>
-
-                                        <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input3 type="text" class="w-full h-full md:pl-6 pl-2.5">
-                                        </div>
-
-                                        <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input4 type="text" class="w-full h-full md:pl-6 pl-2.5">
-                                        </div>
-
-                                        <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input5 type="text" class="w-full h-full md:pl-6 pl-2.5">
-                                        </div>
-
-                                        <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-200 border rounded-md">
-                                            <input #input6 type="text" class="w-full h-full md:pl-6 pl-2.5">
-                                        </div>
-
-                                    </div>
-
-                                </div>
-
-                                <div class="w-full h-20 flex flex-row items-center justify-center mt-6">
-
-                                    <button class="w-full sm:w-auto" mat-stroked-button>
-                                        Solicitar Codigo
-                                    </button>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <div class="bg-white  pt-6 grid grid-cols-1   md:grid-cols-1">
 
 
-
-
-
-
-                <!-- <div class="bg-white  pt-6 grid grid-cols-1   md:grid-cols-1"> -->
-
-                <!-- 
                     <div class="w-auto cursor-pointer font-bold mb-3 bg-accent-200 rounded-2  mt-1  px-3 text-2xl">
                         Validación de OTP
-                    </div> -->
-
-
-                <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
+                    </div>
+                    <!-- <mat-form-field class="w-full px-3 fuse-mat-dense">
                 <mat-label>Código OTP</mat-label>
                 <input matInput type="text" autocomplete="off" formControlName="numeroOTP" [disabled]="this.form.invalid" placeholder="Presionar el botón para enviar el código del celular">
                 <mat-icon svgIcon="feather:check-circle" [ngClass]="{'text-green-400': this.otpValidado}" matTooltip="Verificar código OTP" class="cursor-pointer mx-2" (click)="validarCodigo()"></mat-icon>
                 <mat-icon svgIcon="feather:send" [ngClass]="{'text-blue-400': this.form.valid}" class="cursor-pointer" matTooltip="Enviar código OTP" (click)="solicitarCodigo()"></mat-icon>
             </mat-form-field> -->
-
-                <!--             
                     <div class="w-full px-3 fuse-mat-dense flex justify-center items-center pt-4 flex-col">
                         <button mat-raised-button color="primary" type="button" style="width: 80% !important"
                             class="rounded-md cursor-pointer">
@@ -362,9 +290,9 @@
                         <mat-error *ngIf="validationOTPForm.controls.numeroOTP.errors?.min">
                             Mínimo 6 dígitos
                         </mat-error>
-                    </mat-form-field> -->
+                    </mat-form-field>
 
-                <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
+                    <!-- <div class="w-full px-3 fuse-mat-dense flex justify-center items-center"
                 style="min-height: 200px !important;">
 
                 <mat-form-field class="w-10 sm:w-1/12 sm:px-3 fuse-mat-dense">
@@ -399,8 +327,8 @@
                 </mat-form-field>
             </div> -->
 
-                <!-- 
-                </div> -->
+
+                </div>
             </form>
             <div class="bg-white rounded  pt-6 pb-8 mb-18 sm:flex sm:justify-end gap-4">
                 <button mat-raised-button color="primary" type="button" [disabled]="this.validationOTPForm.invalid"
