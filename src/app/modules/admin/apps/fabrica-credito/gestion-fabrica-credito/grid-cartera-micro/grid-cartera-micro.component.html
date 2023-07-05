@@ -437,7 +437,7 @@
                                         <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
                                             [disabled]="permisoEditar">
                                             <mat-option value="" (click)="item.aplicaRetanqueo && revertirRetanqueo(item)">Sin gestión</mat-option>
-                                            <mat-option (click)="item.aplicaRetanqueo && liquidacionSaldos(item)" value="RET" [disabled]="!item.aplicaRetanqueo">Retanqueo</mat-option>
+                                            <mat-option (click)="item.aplicaRetanqueo && liquidacionSaldos(item)" value="RET" [disabled]="!item.aplicaRetanqueo && !tieneRetanqueoArray()">Retanqueo</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>

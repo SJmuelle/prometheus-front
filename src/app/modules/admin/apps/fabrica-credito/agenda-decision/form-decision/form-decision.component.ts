@@ -25,7 +25,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     valorNum: number; // almacenar el valor digitado en el input de valor
     listadoDeciones: any = [];// listado de decisiones
     listadoCausales: any = [];// listado de causales
-
+    bloquearDecision:boolean = false;
 
 
     constructor(
@@ -53,7 +53,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     consultaDecisiones() {
         this.fabricaDatos.agenda
         let agenda;
-        
+
         switch (this.fabricaDatos.agenda) {
             case 'DE':
                 agenda = 'DECISION';
@@ -120,7 +120,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     }
 
     public getlistadoCausales() {
-        
+
         switch (this.form.value.decision) {
             case 'R':
                 this.consultaCausalesRechazo();
@@ -149,7 +149,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             return
         }
 
-        
+        this.bloquearDecision = true;
         if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D') || (this.form.value.decision == 'AN') ) {
             this.postDecicion();
         } else {
@@ -185,6 +185,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             causal: Number(this.form.value.causal),
             unidadNegocio: this.fabricaDatos.unidadNegocio,
         }
+
         this._decisionesService.postGuardado(datos).subscribe((response: any) => {
             Swal.close()
             if (response) {

@@ -39,12 +39,12 @@ export class AppSettingsService {
     public transportadora = {
         url: {
             base: EndPoints.uri('/generic/qry/detalle-pronto-pago'),
-            basePropietario:EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
-            baseAceptar:EndPoints.uri('/generic/aceptacion-pronto-pago'),
-            baseRechazar:EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
-            baseTransportadora:EndPoints.uri('/generic/qry/transportadoras'),
-            baseActualizar:EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
-            baseTrazabilidad:EndPoints.uri('/generic/trazabilidad-pronto-pago')
+            basePropietario: EndPoints.uri('/generic/qry/negociacion-pronto-pago'),
+            baseAceptar: EndPoints.uri('/generic/aceptacion-pronto-pago'),
+            baseRechazar: EndPoints.uri('/generic/rechazar-negociacion-pronto-pago'),
+            baseTransportadora: EndPoints.uri('/generic/qry/transportadoras'),
+            baseActualizar: EndPoints.uri('/generic/update-porcentaje-pronto-pago'),
+            baseTrazabilidad: EndPoints.uri('/generic/trazabilidad-pronto-pago')
         }
     };
 
@@ -291,6 +291,7 @@ export class AppSettingsService {
             comprobacionCampos: EndPoints.uri('/deceval/mostrar-pagare-pdf-general'),
             generarNumeroPagare: EndPoints.uri('/generic/tk/generar-numero-pagare'),
             baseDecision: EndPoints.uri('/credito/cre-decision'),
+            smsUnidades: EndPoints.uri('/credito/info-sms-unidades'),
             baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
@@ -481,5 +482,31 @@ export class AppSettingsService {
         }
     };
 
+<<<<<<< HEAD
       
+=======
+    /**
+ * @description: End-Point
+ */
+    public rdStation = {
+        url: {
+            info_rd: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo'),
+            listaLote: EndPoints.uri('/generic/qry/obtener-select-lote'),
+            dataLotes: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo-lotes')
+        }
+    };
+    /**
+     * @description: End-Point
+     */
+    public negociacionCartera = {
+        url: {
+            base: EndPoints.uri('/generic/qry/negocios-cartera'),
+            guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
+            listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
+            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera')
+
+        }
+    };
+>>>>>>> 8a293c0e205129cbaf39aa0d1e9d9e35db0cf3aa
 }
+

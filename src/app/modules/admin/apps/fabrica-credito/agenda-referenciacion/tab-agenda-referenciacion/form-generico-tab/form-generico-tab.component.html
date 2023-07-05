@@ -124,7 +124,7 @@
                                                     <mat-form-field class="w-full fuse-mat-dense">
                                                         <mat-label> {{pregunta.pregunta}} </mat-label>
                                                         <span *ngIf="pregunta.objHtml.input.mascaraInput === 'moneda'" matPrefix>$</span>
-                                                        <input matPrefix [mask]="pregunta.objHtml.input.mascaraInput === 'moneda' ? 'separator.0': '' " [thousandSeparator]="pregunta.objHtml.input.mascaraInput === 'moneda' ? '.': '' " [maxlength]="pregunta.objHtml.input.maxLength" [matTooltip]="pregunta.descripcionTooltip" matInput [type]="pregunta.tipoDato === 'numeric' ? 'text' : 'text'"
+                                                        <input matPrefix [mask]="pregunta.objHtml.input.mascaraInput === 'moneda' ? 'separator.0': '' " [thousandSeparator]="pregunta.objHtml.input.mascaraInput === 'moneda' ? '.': '' " [maxlength]="pregunta.objHtml.input.maxLength" [matTooltip]="pregunta.descripcionTooltip" matInput [type]="pregunta.tipoDato === 'numeric' && pregunta.objHtml.input.mascaraInput !== 'moneda' ? 'number' : 'text'"
                                                         autocomplete="off" 
                                                             [(ngModel)]="pregunta.objHtml.input.value">
                                                         <mat-icon class="icon-size-5" matSuffix

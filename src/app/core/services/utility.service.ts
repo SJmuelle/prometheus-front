@@ -1,7 +1,7 @@
 import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {  Observable, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
@@ -10,7 +10,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 export class UtilityService {
 
-  icono: SweetAlertIcon ="error";
+  icono: SweetAlertIcon = "error";
 
   constructor(
     private _httpClient: HttpClient,
@@ -39,7 +39,7 @@ export class UtilityService {
    * @description: para fallas de errores en las peticiones.
    */
   handleError = (err: any): Observable<HttpEvent<any>> => {
-  
+
     // this.store.dispatch(actions.stopLoading());
     //  ;
     let errorMessage = 'No hay respuesta, favor intente nuevamente';
@@ -51,7 +51,7 @@ export class UtilityService {
       switch (err.status) {
         case 401:
         case 402:
-          this.icono='warning'
+          this.icono = 'warning'
           errorMessage = `Favor coloque los valores del inicio sesión nuevamente`;
           localStorage.clear();
           localStorage.clear();
@@ -76,17 +76,17 @@ export class UtilityService {
             err.error.msg !== undefined &&
             typeof err.error.msg == 'string'
           ) {
-            errorMessage = `${err.error.msg}`;
+            errorMessage = `${err?.error?.msg}`;
           }
           break;
         case 404:
-          errorMessage = `${err.error.msg}`;
+          errorMessage = `${err?.error?.msg}`;
           break;
         case 500:
-          errorMessage = `${err.error.msg}`;
+          errorMessage = `${err?.error?.msg}`;
           break;
         default:
-          errorMessage = `${err.statusText.msg}`;
+          errorMessage = `${err?.statusText?.msg}`;
           break;
       }
     }
@@ -117,7 +117,7 @@ export class UtilityService {
   };
 
   getRouteForm(step: string): string {
-    let url ='/solicitud/formulario/';
+    let url = '/solicitud/formulario/';
     switch (step) {
       case '1':
         return url + "step-personal";
