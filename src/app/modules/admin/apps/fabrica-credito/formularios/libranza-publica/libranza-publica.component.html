@@ -1,4 +1,4 @@
-<div class="bg-white h-screen sm:pb-40 md:pb-11 pb-40 overflow-auto px-3 rounded-lg shadow w-full y-100" cdkScrollable>
+<div class="bg-white h-screen sm:pb-40 md:pb-15 pb-40 overflow-auto px-3 rounded-lg shadow w-full y-100" cdkScrollable>
     <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
 
         <!-- Title and action buttons -->
@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <mat-stepper [linear]="false" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0"
+    <mat-stepper [linear]="true" [orientation]="orientationStep " #stepper class="md:px-8 sm:px-0"
         (selectionChange)="onStepChange($event)">
         <mat-step [stepControl]="datosBasicos">
             <form [formGroup]="datosBasicos">
@@ -44,8 +44,8 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>No. de documento</mat-label>
-                        <input matInput (change)="preCargueDeDatos()" type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
-                            formControlName="documento">
+                        <input matInput (change)="preCargueDeDatos()" type="text" [mask]="'separator.0'"
+                            [thousandSeparator]="'.'" autocomplete="off" formControlName="documento">
                         <mat-error *ngIf="datosBasicos.controls.documento.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -55,6 +55,7 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Celular</mat-label>
+
                         <input matInput type="text" autocomplete="off" formControlName="celular" prefix="+57 "
                             mask="(000) 000 00 00">
                         <mat-error *ngIf="datosBasicos.controls.celular.errors?.required">
@@ -132,7 +133,7 @@
                         </mat-select>
                     </mat-form-field>
                     <div class="bg-white rounded flex justify-end items-center gap-4">
-                        <button mat-raised-button color="primary" type="button" matStepperNext (click)="guardar()">
+                        <button mat-raised-button color="primary" type="button" matStepperNext>
                             Siguiente
                             <mat-icon svgIcon="arrow_right"></mat-icon>
                         </button>
@@ -145,10 +146,6 @@
             <form [formGroup]="datosLaborares">
                 <ng-template matStepLabel>Información laboral</ng-template>
                 <div class="bg-white  rounded  pt-6 grid grid-cols-1   md:grid-cols-2">
-                    <div
-                        class="col-lg-12 col-sm-12 cursor-pointer font-bold mb-3 bg-accent-200 rounded-2 pl-4 mt-1 text-2xl md:col-span-2">
-                        Datos laborales
-                    </div>
 
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Ocupación</mat-label>
@@ -256,82 +253,182 @@
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
+                    <div class="bg-white col-span-full rounded flex justify-end items-center gap-4">
+                        <button mat-raised-button color="primary" type="button" matStepperNext>
+                            Siguiente
+                            <mat-icon svgIcon="arrow_right"></mat-icon>
+                        </button>
+                    </div>
                 </div>
             </form>
+        </mat-step>
+        <mat-step [stepControl]="validationOTPForm">
+            <ng-template matStepLabel>Código OTP</ng-template>
+
+            <h2 mat-dialog-title class="px-3">Confirmación de datos OTP</h2>
+            <mat-dialog-content class="mat-typography heightResponse">
+                <div class=" md:px-3 sm:px-0 grid md:grid-cols-2 sm:grid-cols-1">
+                    <div class="w-auto col-span-1  py-3 px-4 inline-block rounded-2xl"
+                        style="background-color: #FFF9E6;">
+                        <div class="flex justify-start gap-2 items-center w-full h-full">
+                            <div class="flex items-start ">
+                                <img src="assets/icons/alert.svg" alt="alertIcon" class="icon-size-5">
+                            </div>
+                            <div class="flex gap-1 flex-col justify-center">
+                                <strong class="max-w-full md:w-auto whitespace-normal">Verifica que el email y el celular esté bien escrito.</strong>
+                                <div class="max-w-full  md:w-auto whitespace-normal">
+                                    La persona que recibe el código OTP lo recibirá al número
+                                    <strong class="text-gray-800 text-md">{{datosBasicos.get('celular').value }}
+                                    </strong> y al correo
+
+                                    <strong class="text-gray-800 text-md"> {{datosBasicos.get('email').value }}
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <form [formGroup]="datosBasicos" class="col-span-1 flex h-full w-full justify-center items-center">
+                        <ng-template matStepLabel>Datos basicos</ng-template>
+
+                        <div class="bg-white  rounded  flex flex-col w-full">
+                            <mat-form-field class="w-full  fuse-mat-dense md:px-12 sm:px-0">
+                                <span matPrefix class="flex justify-center items-center h-full"><mat-icon
+                                        svgIcon="mat_solid:markunread"></mat-icon></span>
+                                <input formControlName="email" type="email" [value]="datosBasicos.value.email" matInput
+                                    autocomplete="off" />
+                                <mat-error *ngIf="datosBasicos.controls.email.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                                <mat-error *ngIf="datosBasicos.controls.email.errors?.email">
+                                    Email invalido
+                                </mat-error>
+                            </mat-form-field>
+                            <div class="w-full flex gap-2 flex-col md:flex-row">
+                                <mat-form-field class="md:w-4/6 w-full md:pl-12 pl-0  fuse-mat-dense">
+                                    <span matPrefix class="flex justify-center items-center h-full"><mat-icon
+                                            svgIcon="heroicons_solid:phone"></mat-icon></span>
+                                    <input matInput type="text" autocomplete="off" [value]="datosBasicos.value.celular"
+                                        formControlName="celular" mask="(000) 000 00 00">
+                                    <mat-error *ngIf="datosBasicos.controls.celular.errors?.required">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                    <mat-error *ngIf="datosBasicos.controls.celular.errors?.pattern">
+                                        Debe comenzar en 3 y tener 10 digitos
+                                    </mat-error>
+                                </mat-form-field>
+                                <div class="md:w-2/6 w-full md:pr-12 pr-0">
+                                    <div (click)="atualizarDatosOTP()"
+                                        class="flex justify-center gap-2 items-start rounded-3xl cursor-pointer hover:bg-gray-200 p-2">
+                                        <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
+                                        <span class="leading-6">Actualizar</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </form>
+                </div>
+            </mat-dialog-content>
 
             <form [formGroup]="validationOTPForm">
 
                 <div class="w-full flex flex-col">
 
-                    <div class="rounded-2 w-full h-8 flex bg-accent-200 mb-4">
-                        <p class="text-2xl font-bold w-full mb-4 pl-4">Código OTP</p>
-                    </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2 mt-2 m-0 sm:m-10">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 px-2 mt-2 m-0 sm:m-10">
 
-                        <div class="flex justify-center -mt-18 sm:mt-0 min-w-full bg-contain bg-center bg-no-repeat h-90"
+                        <div class="flex dinamicHeigth justify-center -mt-18 sm:mt-0 min-w-full bg-contain bg-center bg-no-repeat "
                             style="background-image: url('../../../../../../../assets/images/logo/otp.png');">
                         </div>
 
                         <div class="flex w-full -mt-20 sm:mt-0 sm:w-auto h-auto p-4 items-center justify-center">
 
-                            <div class="flex flex-wrap gap-8">
+                            <div class="flex flex-wrap gap-4">
 
                                 <div *ngIf="contador !== 180 && !otpValidado"
-                                class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
-                                <mat-progress-bar style="width: 100%;" mode="determinate"
-                                    [value]="(contador / 180) * 100"></mat-progress-bar>
-                            </div>
-                                <div class="w-full h-20 flex flex-row items-center justify-center mt-6">
-
-                                    <button  [disabled]="this.validationOTPForm.invalid || contador !== 180 " mat-raised-button (click)="solicitarCodigo()" class="w-full sm:w-auto rounded-sm" color="primary" mat-stroked-button>
-                                        {{changeTextOTP ? 'Reenviar código OTP' : 'Solicitar código OTP'}}
-                                    </button>
+                                    class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
+                                    <mat-progress-bar style="width: 100%;" mode="determinate"
+                                        [value]="(contador / 180) * 100"></mat-progress-bar>
                                 </div>
 
+
+                                <div class="flex justify-center items-center w-full gap-4">
+                                    <div class="w-button h-20 flex flex-row items-center justify-center   ">
+
+                                        <button [disabled]="contador !== 180 || !numeroSolicitudTemporal || actualizandoDatosOTP"
+                                            mat-raised-button (click)="solicitarCodigo()"
+                                            class="w-button sm:w-auto rounded-xl" color="primary" mat-stroked-button>
+                                            {{changeTextOTP ? 'Reenviar código OTP' : 'Solicitar código OTP'}}
+                                        </button>
+                                    </div>
+                                    <div class="w-button h-20  flex flex-row items-center justify-center">
+
+                                        <button mat-raised-button (click)="validarCodigo()" class="w-button sm:w-auto rounded-xl" color="primary"
+                                            mat-stroked-button [disabled]="this.validationOTPForm.invalid || !numeroSolicitudTemporal || validandoOTPLoading || otpValidado || !solicitarOTP">
+                                            Verificar OTP
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="w-full grid grid-cols-1 gap-4">
 
                                     <div class="flex flex-row justify-between w-full gap-2">
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input1 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
+                                            <input #input1 (change)="updateOTPInput()" type="text"
+                                                class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input2 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
+                                            <input #input2 (change)="updateOTPInput()" type="text"
+                                                class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input3 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
+                                            <input #input3 (change)="updateOTPInput()" type="text"
+                                                class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input4 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
+                                            <input #input4 (change)="updateOTPInput()" type="text"
+                                                class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input5 (change)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
+                                            <input #input5 (change)="updateOTPInput()" type="text"
+                                                class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
-                                            class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input6 (keyup)="updateOTPInput()" type="text" class="w-full h-full md:pl-6 pl-2.5" maxlength="1">
+                                            class="w-10  h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
+                                            <input #input6 (keyup)="updateOTPInput()" type="text"
+                                                class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                     </div>
 
                                 </div>
-
-                                <div class="w-full h-20 flex flex-row items-center justify-center">
-
-                                    <button mat-raised-button class="w-full sm:w-auto rounded-sm" color="primary" mat-stroked-button>
-                                        Verificar OTP
-                                    </button>
+                                <div *ngIf="otpValidado" @zoomIn class="w-full grid-cols-1 gap-2 flex justify-center items-center">
+                                    <mat-icon class="text-green-400 icon-size-10" svgIcon="heroicons_solid:check-circle"></mat-icon>
+                                    <span class="text-green-700 font-bold">OTP Validado</span>
                                 </div>
+                                <div *ngIf="validandoOTPLoading" @zoomIn class="w-full grid-cols-1 gap-2 flex justify-center items-center">
+                                    <mat-icon svgIcon="settings"
+                    class="animate-spin-slow  icon-size-10"></mat-icon>
+
+                                    <span class="text-gray-700 font-bold">Cargando</span>
+                                </div>
+
+
+
 
                             </div>
 
@@ -344,8 +441,10 @@
 
 
             </form>
-            <div class="bg-white rounded  pt-6 pb-8 mb-18 sm:flex sm:justify-end gap-4">
-                <button mat-raised-button color="primary" type="button" [disabled]="this.validationOTPForm.invalid"
+
+
+            <div class="flex bg-white rounded  pt-6 pb-8  sm:flex sm:justify-center md:justify-end gap-4 justify-center">
+                <button mat-raised-button color="primary" type="button" [disabled]="!otpValidado && datosBasicos && datosLaborares"
                     (click)="guardar()">
                     Guardar
                 </button>

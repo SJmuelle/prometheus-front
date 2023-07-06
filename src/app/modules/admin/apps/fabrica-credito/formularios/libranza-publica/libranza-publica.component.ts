@@ -10,11 +10,13 @@ import { LibranzaPublicaService } from 'app/core/services/libranza-publica.servi
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConfirmarDatosOTPComponent } from '../modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
     selector: 'app-libranza-publica',
     templateUrl: './libranza-publica.component.html',
-    styleUrls: ['./libranza-publica.component.scss']
+    styleUrls: ['./libranza-publica.component.scss'],
+    animations  : fuseAnimations,
 })
 export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     @ViewChild('input1') input1!: ElementRef<HTMLInputElement>;
@@ -47,6 +49,9 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     otpValidado: boolean = false;
     changeTextOTP: boolean = false;
     timerInterval: any;
+    validandoOTPLoading: boolean = false;
+    public actualizandoDatosOTP: boolean = false;
+    public solicitarOTP: boolean = false;
 
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
@@ -306,7 +311,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     }
 
     onStepChange($e) {
-        if ($e.previouslySelectedIndex === 0) {
+        if ($e.previouslySelectedIndex === 0 && this.datosBasicos.valid) {
             const datosAEnviar = { ...this.datosBasicos.getRawValue() }
 
             datosAEnviar.unidadNegocio = 22
@@ -316,29 +321,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
             this._libranzaService.guardarDatosBasicos(datosAEnviar).subscribe(data => {
                 console.log('datos recibidos', data);
-                this.numeroSolicitudTemporal = data.numeroSolicitud
+                this.numeroSolicitudTemporal = data.data.numeroSolicitud
             })
         }
     }
 
-    solicitarCodigo(){
-        let dialogRef;
-        dialogRef = this._dialog.open(ModalConfirmarDatosOTPComponent, {
-          maxWidth: '50%',
-          maxHeight: '80%',
-          data: {
-            documento: this.datosBasicos.get('documento').value,
-            celular: this.datosBasicos.get('celular').value,
-            email: this.datosBasicos.get('email').value,
-          },
-          disableClose: false,
-        });
-        dialogRef.afterClosed().toPromise().then((data) => {
-            console.log('data', data);
-            this.datosBasicos.patchValue(data);
-            this.startTimer()
-        });
-    }
+
 
     preCargueDeDatos(){
         const tipoDocumento = this.datosBasicos.get('tipoDocumento').value
@@ -375,8 +363,56 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
 
         this.validationOTPForm.controls.numeroOTP.setValue(num1+num2+num3+num4+num5+num6);
-
         console.log('dato OTP', this.validationOTPForm.controls.numeroOTP.value);
+
+    }
+
+    atualizarDatosOTP(){
+        const datos = {...this.datosBasicos.getRawValue()}
+
+        this.actualizandoDatosOTP = true;
+        this._libranzaService.actualizarDatosBasicosOTP(datos).subscribe(rep => {
+          console.log('respuesta', rep);
+          this.actualizandoDatosOTP = false;
+        })
+    }
+
+    solicitarCodigo(): void {
+        if (this.datosBasicos.valid) {
+            const data = {
+                numeroSolicitud: this.numeroSolicitudTemporal,
+                tipo: 'T',
+                tipoOTP : "AUTORIZACION"
+            }
+            this.validandoOTPLoading = true;
+            this.solicitarOTP = true;
+            this._formularioCreditoService.solicitarOTP(data).pipe(takeUntil(this.destroyed)).subscribe(rep => {
+                if (rep.status === 200) {
+                }
+                this.startTimer();
+                this.validandoOTPLoading = false;
+            })
+        }
+    }
+
+    validarCodigo(): void {
+        const numero = this.validationOTPForm.get('numeroOTP').value;
+        this.validandoOTPLoading = true;
+        if (numero.length === 6 && !this.otpValidado) {
+            const data = {
+                numeroSolicitud: this.numeroSolicitudTemporal,
+                tipoTercero: 'T',
+                numeroOTP: numero
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.destroyed)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+                this.validandoOTPLoading = false;
+            }, err => {
+                Swal.fire('Error',
+                'Error a validar del OTP: ' + err.msg)
+            })
+        }
 
     }
 
