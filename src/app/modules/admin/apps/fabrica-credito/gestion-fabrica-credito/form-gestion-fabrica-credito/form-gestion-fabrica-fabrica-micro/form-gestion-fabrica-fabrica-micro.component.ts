@@ -31,7 +31,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public form: FormGroup;
     public subscription$: Subscription;
     public salarioBasico: number;
-    public fabricaDatos;
+    public fabricaDatos: FormGroup;
     public unidadNegocio: any;
     public dataGeneralIncial: any;
     public permisoEditar: boolean = false;

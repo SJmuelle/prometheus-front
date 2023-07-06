@@ -79,6 +79,7 @@ import { VerDocumentosComponent } from '../agenda-decision/ver-documentos/ver-do
 import { VerReferenciacionComponent } from '../agenda-decision/ver-referenciacion/ver-referenciacion.component';
 import { RecalcularOfertaMicroComponent } from './recalcular-oferta-micro/recalcular-oferta-micro.component';
 import { GridFiltrosDurosComponent } from './grid-filtros-duros/grid-filtros-duros.component';
+import { FormGestionFabricaLibranzaPublicaComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-libranza-publica/form-gestion-fabrica-libranza-publica.component';
 
 
 
@@ -126,7 +127,8 @@ import { GridFiltrosDurosComponent } from './grid-filtros-duros/grid-filtros-dur
         GridCarteraMicroComponent,
         VerDocumentosComponent,
         RecalcularOfertaMicroComponent,
-        GridFiltrosDurosComponent
+        GridFiltrosDurosComponent,
+        FormGestionFabricaLibranzaPublicaComponent
     ],
     imports: [
         CommonModule,
