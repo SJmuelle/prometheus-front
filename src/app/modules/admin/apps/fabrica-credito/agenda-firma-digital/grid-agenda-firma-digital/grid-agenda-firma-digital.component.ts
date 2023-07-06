@@ -28,6 +28,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public mostrarTotales: boolean = true;
   public totales: any[];
   public filtrado = 'P'
+  public activeFilter: any = { color: 'bg-green-200', active: 'Totales' }
+  public activeAll: boolean = false;
   constructor(
     private agendaComercialService: AgendaComercialService,
     private _agendaFirma: AgendaFirmaService,
@@ -84,7 +86,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
           })
         }
         setTimeout(() => {
-          this.getAgendaFirmaDigital();          
+          this.getAgendaFirmaDigital();
         }, 1000);
 
       } else {
@@ -104,7 +106,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       Swal.close();
       if (res.status === 200) {
-        if(res.data.respuesta=='OK'){
+        if (res.data.respuesta == 'OK') {
           Swal.fire({
             title: "Realizado",
             html: `Estado evidente cambiado con exito`,
@@ -112,7 +114,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
           }).then(rep => {
           })
           setTimeout(() => {
-            this.getAgendaFirmaDigital();          
+            this.getAgendaFirmaDigital();
           }, 1000);
         }
 
@@ -132,7 +134,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       if (res.status === 200) {
         Swal.close();
-        if(res.data.firma_interna_reenviar){
+        if (res.data.firma_interna_reenviar) {
           Swal.fire({
             title: "Se reenvio con exito",
             html: `<p>Reenvio de firma con exito</p>`,
@@ -268,6 +270,23 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
    */
   public cambiarEstado(estado) {
     this.mostrarTotales = estado;
+  }
+
+  public selectFilter(value: string): void {
+
+    const color = {
+      Ultracem: 'bg-blue-200 text-blue-500',
+      Libranza: 'bg-red-200 text-red-500',
+      Micro: 'bg-yellow-200 text-yellow-500',
+      Consumo: 'bg-purple-200 text-purple-500',
+      Totales: 'bg-green-200 text-green-500'
+
+    }
+
+    this.activeFilter = { color: color[value], active: value }
+
+
+
   }
 
 
