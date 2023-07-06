@@ -159,29 +159,20 @@
                     <td rowspan="2" class="py-3 text-sm my-3">
                       <div class="text-gray-700 grid-cols-1 grid min-w-20 place-items-center">
                         <div class=" py-0 text-sm w-10">
-                          <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
-                            <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                          <button *ngIf="item.etapaFirma=='P'" mat-icon-button matTooltip="Enviar correo decisión" (click)="correoDecision(item.numeroSolicitud,item.tipo)">
+                            <mat-icon [svgIcon]="'send'"></mat-icon>
                           </button>
                         </div>
-                        <ng-container *ngIf="item.clienteDesistio === 'S'">
-                          <div class="py-0 text-sm w-10">
-                            <button mat-icon-button matTooltip="Rechazar" (click)="onComentarioRechazar(item)">
-                              <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
-                            </button>
-                          </div>
-                        </ng-container>
-                        <ng-container *ngIf="item.unidadNegocioFabrica ===32">
-                          <div class="py-0 text-sm w-10 ">
-                            <button mat-icon-button (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
-                              <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
-                            </button>
-                          </div>
-                        </ng-container>
-                        <!-- <div class="py-0 text-sm ">
-                          <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
-                            <mat-icon svgIcon="mat_outline:timer"></mat-icon>
+                        <div class=" py-0 text-sm w-10">
+                          <button *ngIf="item.etapaFirma=='E'" mat-icon-button matTooltip="Actualizar estado evidente" (click)="UpdateEstadoEvidente(item.numeroSolicitud,item.identificacion)">
+                            <mat-icon [svgIcon]="'update'"></mat-icon>
                           </button>
-                        </div> -->
+                        </div>
+                        <div class=" py-0 text-sm w-10">
+                          <button *ngIf="item.etapaFirma!='P'" mat-icon-button matTooltip="Reenviar firma" (click)="updateReenviarFirma(item.numeroSolicitud)">
+                            <mat-icon [svgIcon]="'send'"></mat-icon>
+                          </button>
+                        </div>
                       </div>
                     </td>
                     <td class="px-2 pb-0 pt-1" rowspan="2">
@@ -204,7 +195,7 @@
                         <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
                       </div>
                     </td>
-                    <td class="px-2 pb-0 pt-1" colspan="3">
+                    <td class="px-2 pb-0 pt-1">
                       <div class="flex flex-column ">
                         <small class="text-accent-600 text-xs">Cliente: </small>
                         <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
@@ -219,7 +210,7 @@
                       </div>
                     </td>
 
-                    <td class="px-2 pb-0 pt-1" colspan="2">
+                    <td class="px-2 pb-0 pt-1" colspan="2" >
                       <div class="flex w-full justify-center items-center">
                         <div class="w-3 h-3 rounded-3xl bg-green-300"></div>
                         <span class="px-2 py-1 font-semibold leading-tight text-gray-700  w-auto">
@@ -277,15 +268,16 @@
                             </mat-icon>
                             {{ cambiarHora(item.fechaEmision) }}
                           </span>
-                          <span class="text-xs text-black font-medium">
+                          <!-- <span class="text-xs text-black font-medium">
                             <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}" class="icon-size-3"
                               svgIcon="mat_solid:radio_button_checked">
                             </mat-icon>
                             {{item.diasTotalesCredito}} horas
-                          </span>
+                          </span> -->
                         </div>
                       </div>
                     </td>
+                   
                     <td class="px-2 pb-1 pt-1">
                       <div class="flex w-24">
                         <div class="flex flex-column ">
@@ -302,57 +294,12 @@
                             </mat-icon>
                             {{ cambiarHora(item.fechaIngresoFabrica) }}
                           </span>
-                          <span class="text-xs text-black font-medium">
+                          <!-- <span class="text-xs text-black font-medium">
                             <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}" class="icon-size-3"
                               svgIcon="mat_solid:radio_button_checked">
                             </mat-icon>
                             {{item.diasEnFabrica}} horas
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-2 pb-1 pt-1">
-                      <div class="flex w-24">
-                        <div class="flex flex-column ">
-                          <small class="text-accent-600 text-xs">
-                            Fecha agenda
-                          </small>
-                          <span class="text-xs text-black font-medium">
-                            <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                            </mat-icon>
-                            {{ cambiarFecha(item.fechaIngresoAgendaActual) }}
-                          </span>
-                          <span class="text-xs text-black font-medium">
-                            <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
-                            </mat-icon>
-                            {{ cambiarHora(item.fechaIngresoAgendaActual) }}
-                          </span>
-                          <span class="text-xs text-black font-medium">
-                            <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}" class="icon-size-3"
-                              svgIcon="mat_solid:radio_button_checked">
-                            </mat-icon>
-                            {{item.diasEnAgendaActual}} horas
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td class="px-2 pb-1 pt-1">
-                      <div class="flex w-24">
-                        <div class="flex flex-column ">
-                          <small class="text-accent-600 text-xs">
-                            Reprogramación
-                          </small>
-                          <span class="text-xs text-black font-medium">
-                            <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
-                            </mat-icon>
-                            {{ cambiarFecha(item.fechaReprogramacion) }}
-                          </span>
-                          <span class="text-xs text-black font-medium">
-                            <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
-                            </mat-icon>
-                            {{ cambiarHora(item.fechaReprogramacion) }}
-                          </span>
-
+                          </span> -->
                         </div>
                       </div>
                     </td>
@@ -360,8 +307,7 @@
                       <div class="flex justify-between">
                         <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
                           [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                          <small class="text-xs">{{item.evidente?'Se realizo evidente':'No se realizo
-                            evidente'}}</small>
+                          <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó evidente'}}</small>
                           <span class="text-current">
                             {{ item.intentosEvidente}}
                           </span>
@@ -377,7 +323,7 @@
                           [ngClass]="item.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                           <small class="text-xs">Firma Thomas </small>
                           <span class="text-current">
-                            {{item.evidente?'Se realizo':'No se realizo'}}
+                            {{item.evidente?'Se realizó':'No se realizó'}}
                           </span>
                           <small class="text-xs">{{ cambiarFecha(item.thomasFecha)}}</small>
                         </div>
@@ -389,7 +335,7 @@
                           [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                           <small class="text-xs">Firma interna pagare </small>
                           <span class="text-current">
-                            {{item.firmaInternaPagare?'Se realizo':'No se realizo'}}
+                            {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
                           </span>
                           <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
                         </div>
