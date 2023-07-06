@@ -6,9 +6,9 @@
     </div>
     <div class="row">
         <div class="bg-white col-lg-12 col-sm-12">
-            <div class="row items-center mb-3">
+            <div class=" mb-3 flex flex-row justify-between">
                 <span class="leading-none col-lg-4 col-sm-12">
-                    <div class="leading-tight titulo_tabs flex flex-row gap-3">
+                    <div class="leading-tight titulo_tabs flex flex-row gap-3 flex-wrap">
                         <div>
                             <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
                                 <div class="flex flex-row gap-1.5 w-full" matPrefix>
@@ -41,17 +41,20 @@
                         </div>
                     </div>
                 </span>
-                <div class="leading-tight col-lg-8 col-sm-12 text-end">
-                    <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
+                <div class="border rounded-full h-10 w-full sm:w-56 flex flex-row items-center ">
+                    <input type="text" class="w-full pl-3">
+                </div>
+                <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end"> -->
+                <!-- <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
                         type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
                         placeholder="Filtrar...">
                     <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100" (change)="page=1"
                         [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                         <option value="5"> 5</option>
-                        <option value="10"> 10</option>
-                        <!-- <option value="20"> 20</option> -->
-                    </select>
-                </div>
+                        <option value="10"> 10</option> -->
+                <!-- <option value="20"> 20</option> -->
+                <!-- </select> -->
+                <!-- </div> -->
             </div>
 
             <div>
