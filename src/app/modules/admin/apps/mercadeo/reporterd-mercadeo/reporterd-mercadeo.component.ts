@@ -89,7 +89,7 @@ export class ReporterdMercadeoComponent implements OnInit {
   }
 
   obtenerinformacion(): void {
-    this._sweetAlert.startLoading();
+    this._sweetAlert.startLoading({});
     this._datareporteService.getReporteRd().subscribe({
 
       next: (resp) => {
@@ -118,14 +118,14 @@ export class ReporterdMercadeoComponent implements OnInit {
   public SelectLote(Lote: MatSelect): void {
 
     if (Lote.value === "0") {
-      this._sweetAlert.startLoading();
+      this._sweetAlert.startLoading({});
       setTimeout(() => {
         this.datos = this.dataCopy;
         this._sweetAlert.stopLoading();
       }, 100);
     } else {
 
-      this._sweetAlert.startLoading();
+      this._sweetAlert.startLoading({});
       this._genericasService.getDataLotes(Lote.value).subscribe({
         next: (resp) => {
           this._sweetAlert.stopLoading();

@@ -70,13 +70,13 @@
 
 
 
-        <ng-container *ngFor="let item of totales">
+        <ng-container *ngFor="let item of estados; let i = index">
           <div class="sm:grid hidden mr-3  items-center justify-center pl-2" *ngIf="!mostrarTotales"
             (click)="cambiarEstado(false)">
-            <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.color}" [svgIcon]="'radio_button_checked'">
+            <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.colorCheck}" [svgIcon]="'radio_button_checked'">
             </mat-icon>
-            {{item.nombre_unidad_negocio}}: {{item.cantidad_solicitud
-            <10? '0' +item.cantidad_solicitud:item.cantidad_solicitud}} / {{item.cantidad_devolucion}} </div>
+            {{item.state }} {{ item.count}}
+          </div>
         </ng-container>
 
       </div>
@@ -88,14 +88,13 @@
 
       <div class="w-full md:h-15 h-auto flex flex-row items-center gap-3 flex-wrap">
 
-        <div *ngFor="let item of totales;" (click)="selectFilter(item.nombre_unidad_negocio)"
-          [class]=" ' text-gray-500'"
+        <div *ngFor="let item of estados;" (click)="selectFilter(item.state)" [class]=" ' text-gray-500'"
           class="min-w-40 w-40 h-10 flex gap-1.5 flex-row items-center rounded-full cursor-pointer"
-          [ngClass]=" activeFilter.active === item.nombre_unidad_negocio? activeFilter.color : 'bg-gray-200' ">
+          [ngClass]=" activeFilter.active === item.state? activeFilter.color : 'bg-gray-200' ">
           <p class="w-7 h-7 ml-2 mb-0 bg-white font-semibold rounded-full flex items-center justify-center shadow-md">
-            {{item.cantidad_solicitud}}
+            {{item.count}}
           </p>
-          <p [class]=" 'text-gray-500 mb-0'">{{item.nombre_unidad_negocio }}</p>
+          <p [class]=" 'text-gray-500 mb-0'">{{item.state }}</p>
         </div>
       </div>
 
@@ -127,13 +126,13 @@
       <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
         <div class="flex items-center justify-between">
           <div class="flex flex-row gap-3">
-            <div class="">
+            <!-- <div class="">
               <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
                 <mat-button-toggle class="rounded-none" (click)="filtrado='P'">Pendiente</mat-button-toggle>
                 <mat-button-toggle class="rounded-none" (click)="filtrado='E'">Enviados</mat-button-toggle>
                 <mat-button-toggle class="rounded-none" (click)="filtrado='F'">Firmados</mat-button-toggle>
               </mat-button-toggle-group>
-            </div>
+            </div> -->
             <div class="text-secondary font-medium"> <input
                 class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
                 name="filtrarTablaHG" [formControl]="filtrarTabla" placeholder="Filtrar..."></div>
@@ -158,8 +157,8 @@
                 <ng-container *ngIf="item.etapaFirma==filtrado">
                   <tr class="text-gray-700 border-t border-b ">
                     <td rowspan="2" class="py-3 text-sm my-3">
-                      <div class="text-gray-700 grid-cols-2 grid min-w-20">
-                        <div class="py-0 text-sm w-10">
+                      <div class="text-gray-700 grid-cols-1 grid min-w-20 place-items-center">
+                        <div class=" py-0 text-sm w-10">
                           <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
                             <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                           </button>
@@ -172,17 +171,17 @@
                           </div>
                         </ng-container>
                         <ng-container *ngIf="item.unidadNegocioFabrica ===32">
-                          <div class="py-0 text-sm w-10">
+                          <div class="py-0 text-sm w-10 ">
                             <button mat-icon-button (click)="onComentario(item)" matTooltip="Devolver a Fabrica">
                               <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
                             </button>
                           </div>
                         </ng-container>
-                        <div class="py-0 text-sm ">
+                        <!-- <div class="py-0 text-sm ">
                           <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
                             <mat-icon svgIcon="mat_outline:timer"></mat-icon>
                           </button>
-                        </div>
+                        </div> -->
                       </div>
                     </td>
                     <td class="px-2 pb-0 pt-1" rowspan="2">

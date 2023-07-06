@@ -10,8 +10,9 @@ export class Sweetalert2Service {
 
 
 
-  public startLoading(): void {
-    Swal.fire({ title: 'Cargando', html: 'Por favor espere', allowOutsideClick: false, timer: 500000, didOpen: () => { Swal.showLoading() }, })
+  public startLoading({ title = 'Cargando', html = 'Por favor espere' }): void {
+
+    Swal.fire({ title, html, allowOutsideClick: false, timer: 500000, didOpen: () => { Swal.showLoading() }, })
 
   }
 

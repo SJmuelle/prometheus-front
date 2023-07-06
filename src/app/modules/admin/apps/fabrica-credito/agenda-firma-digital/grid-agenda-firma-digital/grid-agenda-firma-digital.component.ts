@@ -2,16 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AgendaReferenciacionService } from '../../../../../../core/services/agenda-referenciacion.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AgendaComercialService } from '../../../../../../core/services/agenda-comercial.service';
-import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 import moment from 'moment';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
+import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
+import { rotateAndSkewTextDegreesAndTranslate, setDashPattern } from 'pdf-lib';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -28,20 +28,27 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public mostrarTotales: boolean = true;
   public totales: any[];
   public filtrado = 'P'
-  public activeFilter: any = { color: 'bg-green-200', active: 'Totales' }
+  public colorState: any = {
+    Pendiente: 'bg-red-200 text-red-500',
+    Enviados: 'bg-blue-200 text-blue-500',
+    Firmados: 'bg-green-200 text-green-500',
+  }
+  public activeFilter: any = { color: 'bg-red-200 text-red-500', active: 'Pendiente' };
+  public estados: any[] = [{ state: 'Pendiente', count: 0, colorCheck: 'red' }, { state: 'Enviados', count: 0, colorCheck: 'blue' },
+  { state: 'Firmados', count: 0, colorCheck: 'green' }]
   public activeAll: boolean = false;
   constructor(
     private agendaComercialService: AgendaComercialService,
     private _agendaFirma: AgendaFirmaService,
     private _matDialog: MatDialog,
     private router: Router,
-    public _permisosService: PermisosService
+    public _permisosService: PermisosService,
   ) { }
 
   ngOnInit(): void {
-    this.cambiarEstado(true);
-    this.getAgendaFirmaDigital();
     this.getTotalesAgendaFirmaDigital();
+    this.getAgendaFirmaDigital();
+    this.cambiarEstado(true);
   }
 
 
@@ -56,10 +63,13 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
 
       if (res.status === 200) {
-        this.datos = res.data;
+        Swal.close();
+        this.datos = res?.data || [];
+        this.estados.forEach((item) => {
+          const count = this.datos.filter(value => value.etapaFirma === item.state?.charAt(0))
+          item.count = count.length
+        })
         this.mostrar = false;
-
-      } else {
       }
     });
   }
@@ -71,7 +81,10 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
       tipo: tipo
     }
-    Swal.fire({ title: 'Cargando', html: 'Enviando correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+
+
+    Swal.fire({ title: 'Cargando', html: 'Enviado correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
+
     this._agendaFirma.correoDecision(data).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
@@ -100,7 +113,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       numeroSolicitud: numeroSolicitud,
       identificacion: identificacion
     }
-    Swal.fire({ title: 'Cargando', html: 'Actualizando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    Swal.fire({ title: 'Cargando', html: 'Actualizando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
     this._agendaFirma.UpdateEstadoEvidente(data).pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
@@ -222,12 +235,12 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
    * @description: Obtiene el listado de agenda de comercial
    */
   private getTotalesAgendaFirmaDigital(): void {
-    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
     this.agendaComercialService.getTotalesAgendaFirmaDigital().pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe((res) => {
       if (res.status === 200) {
-        this.totales = res.data;
+        this.totales = res?.data || [];
         Swal.close();
       } else {
         Swal.close();
@@ -273,20 +286,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   }
 
   public selectFilter(value: string): void {
-
-    const color = {
-      Ultracem: 'bg-blue-200 text-blue-500',
-      Libranza: 'bg-red-200 text-red-500',
-      Micro: 'bg-yellow-200 text-yellow-500',
-      Consumo: 'bg-purple-200 text-purple-500',
-      Totales: 'bg-green-200 text-green-500'
-
-    }
-
-    this.activeFilter = { color: color[value], active: value }
-
-
-
+    this.activeFilter = { color: this.colorState[value], active: value }
+    this.filtrado = value?.charAt(0)
   }
 
 
