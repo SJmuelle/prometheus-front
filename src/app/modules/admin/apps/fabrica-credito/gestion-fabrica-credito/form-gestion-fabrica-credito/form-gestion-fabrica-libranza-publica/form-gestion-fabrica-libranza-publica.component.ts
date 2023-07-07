@@ -282,6 +282,26 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             });
     }
 
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
+
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth + 'px') : '30px'), 'important')
+                    titleSpan.style.top = '-' + (titleSpanHeigth + 6) + 'px'
+                });
+            }, 1000);
+        }
+    }
+
      /**
      * @description: Departamento de nacimiento
      */
