@@ -306,18 +306,29 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     }
 
     guardar() {
-        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue(), ...this.validationOTPForm.getRawValue() }
+        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue() }
 
         this.formatearDatosAntesDeEnviar(dataToSend)
+       
+        console.log('Data formateada', dataToSend);
+        
+        this._libranzaService.guardarFormularioCorto(dataToSend).subscribe(rep => {
 
-
-        console.log(dataToSend, 'datos a enviar');
+            console.log(dataToSend, 'Respuesta de la api');
+        }, err => {
+            Swal.fire('Error', 'Error al guardar ' + err?.error?.msg, 'error')
+        })
 
     }
 
     formatearDatosAntesDeEnviar(formData) {
         formData.primerNombre = formData.primerNombre?.trim()
         formData.primerApellido = formData.primerApellido?.trim()
+
+        formData.numeroSolicitud =  this.numeroSolicitudTemporal
+
+
+        this.formatearDatos(formData);
     }
 
     onStepChange($e) {
@@ -436,6 +447,21 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this.input4.nativeElement.value = ''
         this.input5.nativeElement.value = ''
         this.input6.nativeElement.value = ''
+
+    }
+
+    formatearDatos(datos: any){
+        datos.salarioBasico = Number(datos.salarioBasico);
+        datos.otrosIngreso = Number(datos.otrosIngreso);
+        datos.descuentoNomina = Number(datos.descuentoNomina);
+
+        datos.plazo = 0;
+        datos.valorSolicitado = 0;
+
+        // verificacion
+        datos.aceptoCentrales = 'S'
+        datos.aceptoTerminos = 'S'
+        datos.aceptoVeracidad = 'S'
 
     }
 
