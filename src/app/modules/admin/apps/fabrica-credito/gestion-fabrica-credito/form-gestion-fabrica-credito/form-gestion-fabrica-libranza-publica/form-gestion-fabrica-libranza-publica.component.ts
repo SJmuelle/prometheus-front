@@ -108,8 +108,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             direccionDistanciaVia: ['', [Validators.required]],
             direccionComplemento: [''],
             tipoVivienda: ['', Validators.required],
-            annosTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
-            mesesTiempoResidencia: ['', [Validators.required, Validators.minLength(0), Validators.min(0)]],
+
             tipoActividad: ['', Validators.required],
             actividadEconomica: ['', Validators.required],
             actividadEspecifica: ['', Validators.required],
@@ -200,10 +199,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             fechaDesvinculacion: [''],
             actividadNoDesignada: [''],
             ubicacionNegocioCalculado: [''],
-            tipoVereda: ['', Validators.required],
-            descripcionVereda: [''],
             tipoVeredaNegocio: [''],
-            descripcionVeredaNegocio: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
             score: ['']
