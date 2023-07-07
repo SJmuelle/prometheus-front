@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,8 +10,6 @@ import moment from 'moment';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
-import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
-import { rotateAndSkewTextDegreesAndTranslate, setDashPattern } from 'pdf-lib';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -27,6 +25,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
+  public opened: boolean = false;
   public filtrado = 'P'
   public colorState: any = {
     Pendiente: 'bg-red-200 text-red-500',
@@ -74,6 +73,9 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
+  public openDetail(): void {
+    this.opened = true;
+  }
 
   public correoDecision(numeroSolicitud, tipo): void {
     let data =
