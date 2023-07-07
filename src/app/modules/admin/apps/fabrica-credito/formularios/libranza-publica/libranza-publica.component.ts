@@ -344,6 +344,8 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 console.log('datos recibidos', data);
                 this.numeroSolicitudTemporal = data.data.numeroSolicitud
             })
+        }else if($e.previouslySelectedIndex === 1){
+            this.datosBasicos.get('celular').setValue(this.datosBasicos.get('celular').value)
         }
     }
 
