@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
@@ -40,7 +40,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
 
     constructor(private _fabricaCreditoService: FabricaCreditoService,
         private _formularioCreditoService: FormularioCreditoService, private fb: FormBuilder,private route: ActivatedRoute
-        , private fabricaCreditoService: FabricaCreditoService,private departamentosCiudadesService: DepartamentosCiudadesService) { 
+        , private fabricaCreditoService: FabricaCreditoService,private departamentosCiudadesService: DepartamentosCiudadesService,
+        private el: ElementRef) { 
             this.createFormulario();
         }
 
@@ -57,6 +58,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
+                console.log('data inicial', resp.data);
+                
             }
         })}
 
@@ -76,7 +79,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             identificacion: [''],
             nombreCompleto: [''],
             descripcionTipoDocumento: [''],
-            celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern('^[3][0-9]{9}$')]],
+            celular: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern('^[3][0-9]+$')]],
             descripcionTipoCredito: [''],
             primerNombre: ['', [Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)]],
             descripcionEstado: [''],
@@ -177,6 +180,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             descuentoNomina: [''],
             totalIngresosLaborales: [''],
             declaraRenta: ['N', [Validators.required]],
+            codigoAsesor: ['']
         },
         );
     }
@@ -384,6 +388,51 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         })
     }
 
+    public validationPost(): void {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            setTimeout(() => {
+                this.scrollToFirstInvalidControl();
+            }, 200);
+        } else {
+          //  this.onPostDatos();
+        }
+    }
+
+   
+
+    /**
+     * @description hace scroll al primerer input invalido, puede ser un input o select
+     */
+    private scrollToFirstInvalidControl() {
+        
+        Object.keys(this.form.controls).forEach(key => {
+            const controlErrors: any = this.form.get(key).errors;
+            if (controlErrors != null) {
+              Object.keys(controlErrors).forEach(keyError => {
+               console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+              });
+            }
+          });
+
+        let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
+
+        if (!firstInvalidControl) {
+            firstInvalidControl = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-select');
+            if (!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.mat-error');
+            }
+            if (!firstInvalidControl) {
+                firstInvalidControl = this.el.nativeElement.querySelector('.error');
+            }
+        }
+
+        firstInvalidControl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
+
+    }
 }
 
 

@@ -36,12 +36,26 @@
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Tipo de crédito</mat-label>
-                        <input matInput type="text" disabled [formControlName]="'tipoCredito'" [readonly]="true" />
+                        <mat-select [value]="'seleccione'" [formControlName]="'tipoCredito'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            </mat-option>
+                            <mat-option *ngFor="
+                                    let item of dataInicial?.tipoCredito
+                                " [value]="item.codigo">
+                                {{ item.nombre }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="
+                        form.controls.tipoCredito.errors
+                            ?.required
+                    ">
+                            Este campo es requerido.
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
                         <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'">
-                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            <mat-option  [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option *ngFor="
                                     let item of dataInicial?.destinoCreditosMicro
@@ -66,7 +80,7 @@
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
                         <mat-label>Monto crédito</mat-label>
-                        <input matInput type="text" mask="separator.0" thousandSeparator="."
+                        <input matInput type="text" disabled mask="separator.0" thousandSeparator="."
                             [formControlName]="'valorSolicitado'" />
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
                             Este campo es requerido.
@@ -132,6 +146,14 @@
                             <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <mat-form-field class="w-full px-3 fuse-mat-dense">
+                        <mat-label>Asesor</mat-label>
+                        <mat-select formControlName="codigoAsesor">
+                            <mat-option *ngFor="let asesor of dataInicial?.analistas" [value]="asesor.idusuario">
+                                {{asesor.nombre}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                 </div>
 
             </div>
@@ -150,7 +172,8 @@
                 class="sm:mt-5 mt-10">
                 <mat-tab>
                     <ng-template matTabLabel>Datos del titular</ng-template>
-                    <div class="bg-white sm:shadow-none md:shadow-md  sm:px-0 md:px-8 rounded pt-6 pb-8 mb-4 flex flex-col">
+                    <div
+                        class="bg-white sm:shadow-none md:shadow-md  sm:px-0 md:px-8 rounded pt-6 pb-8 mb-4 flex flex-col">
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>Tipo de solicitante</mat-label>
@@ -173,7 +196,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Celular </mat-label>
-                                <input matInput mask="(000) 000 00 00" type="text" [formControlName]="'celular'" />
+                                <input matInput mask="(000) 000 09 99" type="text"  [formControlName]="'celular'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -449,7 +472,7 @@
                             </mat-form-field>
 
                             <ng-container *ngIf="ciudadesExpedicion">
-                                <mat-form-field >
+                                <mat-form-field>
                                     <mat-label>Ciudad de nacimiento</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="
                                             'codigoMunicipioNacimiento'
@@ -474,7 +497,7 @@
 
                             <mat-form-field>
                                 <mat-label>Nivel de estudio</mat-label>
-                                <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
+                                <mat-select  [value]="'seleccione'"
                                     [formControlName]="'nivelEstudio'">
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
@@ -520,7 +543,7 @@
                                     fecha de nacimiento.
                                 </mat-error>
                             </mat-form-field>
-                            
+
                             <mat-form-field>
                                 <mat-label>Departamento de expedición</mat-label>
                                 <mat-select (selectionChange)="
@@ -658,11 +681,11 @@
                             </ng-container>
 
 
-                            
+
                         </div>
 
                         <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Tipo de via</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'"
                                     (selectionChange)="
@@ -702,7 +725,7 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Via principal</mat-label>
                                 <input matInput type="text" [formControlName]="'direccionViaPrincipal'" (keyup)="
                                         form.controls.direccionResidencial.setValue(
@@ -734,7 +757,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Número vía</mat-label>
                                 <input matInput type="text" [formControlName]="'direccionNumeroVia'" (keyup)="
                                         form.controls.direccionResidencial.setValue(
@@ -765,7 +788,7 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Distancia vía</mat-label>
                                 <input matInput type="text" [formControlName]="'direccionDistanciaVia'" (keyup)="
                                         form.controls.direccionResidencial.setValue(
@@ -871,7 +894,7 @@
                                     Solo se aceptan números
                                 </mat-error>
                             </mat-form-field>
-                           
+
                         </div>
 
                         <span *ngIf="
@@ -994,12 +1017,14 @@
                             </mat-form-field>
                         </div>
 
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información laboral y económica</span>
+                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información laboral y
+                            económica</span>
                         <div class="grid gap-3  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                             <mat-form-field class="w-full  ">
                                 <mat-label>Ocupación</mat-label>
                                 <mat-select formControlName="ocupacio">
-                                    <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones" [value]="ocupacion.codigo">
+                                    <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones"
+                                        [value]="ocupacion.codigo">
                                         {{ocupacion.nombre}}
                                     </mat-option>
                                 </mat-select>
@@ -1010,7 +1035,8 @@
                             <mat-form-field class="w-full">
                                 <mat-label>¿ En cúal empresa trabajas o fuiste pensionado?</mat-label>
                                 <mat-select formControlName="pagaduria">
-                                    <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias" [value]="pagaduria.codigo">
+                                    <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias"
+                                        [value]="pagaduria.codigo">
                                         {{pagaduria.nombre}}
                                     </mat-option>
                                 </mat-select>
@@ -1038,7 +1064,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Fecha de vinculación</mat-label>
                                 <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaVinculacion"
                                     [formControlName]="
@@ -1060,7 +1086,7 @@
                                     La fecha no puede ser mayor al día de hoy.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Cargo</mat-label>
                                 <mat-select formControlName="cargo">
                                     <mat-option *ngFor="let tipoContrato of dataInicial?.tiposContratos"
@@ -1083,16 +1109,16 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Salario básico o pensión del volante($)</mat-label>
                                 <span matPrefix>$</span>
-                                <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
-                                    formControlName="salarioBasico">
+                                <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'"
+                                    autocomplete="off" formControlName="salarioBasico">
                                 <mat-error *ngIf="form.controls.salarioBasico.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Otros ingresos del volante (AA)</mat-label>
                                 <span matPrefix>$</span>
                                 <input matInput type="text"
@@ -1103,7 +1129,7 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Descuento en volante de nómina ($)</mat-label>
                                 <span matPrefix>$</span>
                                 <input matInput type="text"
@@ -1114,7 +1140,7 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field >
+                            <mat-form-field>
                                 <mat-label>Total de ingresos laborales</mat-label>
                                 <span matPrefix>$</span>
                                 <input matInput type="text"
@@ -1141,7 +1167,7 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                             
+
 
                         </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de
@@ -1222,8 +1248,8 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                        </div>              
-                        
+                        </div>
+
                         <div *ngIf="
                                 form.controls.poseeCuentaBancaria.value === 'N'
                             " class="grid gap-3 grid-cols-1">

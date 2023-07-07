@@ -51,6 +51,7 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
     public minimizarCentrales: boolean = false;
     public esVerComentarios: boolean = false;
     public tipoDocumento: string = '';
+    public tipoCredito: string;
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public estado: string = '';
@@ -308,6 +309,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
                 this.unidadNegocio = data.unidadNegocio;
+                this.tipoCredito = data.tipoCredito;
+                
                 this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
                 this.createValidacion()
                 if (data.tipoDocumento === 'NIT') {
