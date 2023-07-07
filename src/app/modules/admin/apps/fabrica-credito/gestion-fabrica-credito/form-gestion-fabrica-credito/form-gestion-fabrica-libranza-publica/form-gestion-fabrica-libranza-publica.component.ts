@@ -51,8 +51,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
 
     private cargueInicial() {
         let data = {
-            entidad: "CONFIG-MICRO",
-            unidadNegocio: 1
+            entidad: "CONFIG-LIBRANZA-PUBLICA",
+            unidadNegocio: 22
         };
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
@@ -109,34 +109,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             direccionComplemento: [''],
             tipoVivienda: ['', Validators.required],
 
-            tipoActividad: ['', Validators.required],
-            actividadEconomica: ['', Validators.required],
-            actividadEspecifica: ['', Validators.required],
-            antiguedadActividad: ['', [Validators.required, Validators.minLength(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            antiguedadNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            camaraComercio: ['', [Validators.required]],
-            tieneRut: [''],
-            nitNegocio: [''],
-            nombreNegocio: ['', Validators.required],
-            codigoDepartamentoNegocio: ['', [Validators.required]],
-            codigoCiudadNegocio: ['', Validators.required],
-            codigoBarrioNegocio: ['', Validators.required],
-            direccionNegocio: [''],
-            direccionNegocioVia: ['', Validators.required],
-            direccionNegocioPrincipal: ['', Validators.required],
-            direccionNegocioNroVia: ['', Validators.required],
-            direccionNegocioDistanciaVia: ['', Validators.required],
-            direccionNegocioCompleto: [''],
-            telefonoNegocio: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.minLength(7), Validators.maxLength(10)]],
-            tipoLocal: [''],
-            tipoLocalCalulado: [''],
-            antiguedadLocal: ['', Validators.required],
-            nombreArrendador: [''],
-            celularArrendador: [''],
-            tipoUbicacionNegocio: ['', Validators.required],
-            numeroEmpleados: ['', [Validators.required]],
-            nombreAtiendeNegocio: ['', Validators.required],
-            tieneOtrosPuntos: ['', Validators.required],
             tipoDocumentoConyuge: [''],
             identificacionConyuge: [''],
             nombreCompletoConyuge: [''],
@@ -145,18 +117,11 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             segundoNombreConyuge: [''],
             primerApellidoConyuge: [''],
             segundoApellidoConyuge: [''],
-            emailConyuge: [''],
-            tipoEmpleoConyuge: [''],
-            nombreEmpresaConyuge: [''],
-            cargoConyuge: [''],
-            salarioConyuge: [''],
-            telefonoEmpresaConyuge: [''],
             poseeCuentaBancaria: ['', Validators.required],
             tipoCuentaBancaria: [''],
             entidadBancaria: [''],
             numeroCuentaBancaria: [''],
             autorizacionBanco: [''],
-            tipoDeudor: ['', Validators.required],
             legalCargoPublico: ['N', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
@@ -192,17 +157,26 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
             destinoCredito: ['', [Validators.required]],
             codigoBarrio: ['', [Validators.required]],
-            declaraRenta: ['N', [Validators.required]],
             cargoPublico: [''],
             entidad: [''],
             vinculadoActualmente: [''],
             fechaDesvinculacion: [''],
             actividadNoDesignada: [''],
-            ubicacionNegocioCalculado: [''],
-            tipoVeredaNegocio: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            score: ['']
+            
+            ocupacio: [''],
+            pagaduria: ['', Validators.required],
+            otraPagaduria: [''],
+            tipoContrato: [''],
+            fechaVinculacion: [''],
+            cargo: [''],
+            claveVolantePago: [''],
+            salarioBasico: [''],
+            otrosIngreso: [''],
+            descuentoNomina: [''],
+            totalIngresosLaborales: [''],
+            declaraRenta: ['N', [Validators.required]],
         },
         );
     }
@@ -268,23 +242,16 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 if (data.codigoDepartamentoNacimiento) {
                     this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
                 }
-                if (data.codigoDepartamentoNegocio) {
-                    this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
-                }
+
                 if (data.codigoCiudad) {
                     this.getBarrios(data.codigoCiudad);
                 }
-                if (data.codigoCiudadNegocio) {
-                    this.getBarriosNegocio(data.codigoCiudadNegocio);
-                }
+
                 if (data.estrato) {
                     this.form.controls.estrato.setValue(data.estrato.toString());
                 }
                 if (data.codigoDepartamentoExpedicion) {
                     this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
-                }
-                if (data.tipoActividad) {
-                    this.getActividadEconomica();
                 }
             });
 
@@ -331,16 +298,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.getCiudadesNacimiento(codigo);
     }
 
-    /**
-     * @description: Departamento de negocio
-     */
-    public seleccionDepartamentoNegocio(event: MatSelectChange): void {
-        const codigo: string = event.value;
-        this.getCiudadesNegocio(codigo);
-        // eliminar la ciudad y barrio anterior
-        this.form.get('codigoCiudadNegocio').setValue('')
-        this.form.get('codigoBarrioNegocio').setValue('')
-    }
 
     /**
   * @description: Departamento de expedicion
@@ -362,14 +319,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.form.get('barrioResidencia').setValue('')
     }
 
-    /**
-     * @description: Selecciona el codigo para cargar el api barrios
-     */
-    public seleccionCiudadNegocio(event: MatSelectChange): void {
-        const codigo: string = event.value;
-        this.getBarriosNegocio(codigo);
-        this.form.get('codigoBarrioNegocio').setValue('')
-    }
 
     /**
      * @description: Obtiene el listado de ciudades
@@ -424,19 +373,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         })
     }
 
-    private getActividadEconomica(): void {
-        const tipoActividad = this.form.controls.tipoActividad.value;
-        const nivelEstudio = this.form.controls.nivelEstudio.value;
-        const camaraComercio = this.form.controls.camaraComercio.value;
 
-        if (tipoActividad && nivelEstudio && camaraComercio) {
-            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).pipe(takeUntil(this.unSubscribe$)).subscribe(res => {
-                this.actividadEconomica = res.data
-            });
-        }
-
-
-    }
 
      /**
      * @description: Obtener limite de plazos por el valor de credito
