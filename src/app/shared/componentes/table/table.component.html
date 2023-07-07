@@ -28,9 +28,12 @@
                     </p>
                 </div>
 
-                <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number" class="border-1 p-4">
+                <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
+                    class="border-1 p-4 flex flex-col">
 
-                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row">
+
+
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row my-0.5">
 
                         <span class="w-full " *ngIf="item.typeField!=='function'"
                             [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
@@ -41,24 +44,54 @@
                                 |dataTable:item.pipeName
                                 ||"text"}}</span>
 
-                            <span *ngIf="item.typeField === 'statusStyle'" class="flex items-center"> <span
-                                    class="w-4 h-4 rounded-full bg-gray-600 mr-2 ml-2 "></span>{{value[item.name]
+                            <span *ngIf="item.typeField === 'statusStyle'" class="flex items-center">
+                                <span class="w-4 h-4 rounded-full mr-2 ml-2"
+                                    [ngClass]="item.styleCondition(value)"></span>{{value[item.name]
                                 |dataTable:item.pipeName
                                 ||"text"}}</span>
 
 
                         </span>
 
+
+
+
+
                     </div>
 
-                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row">
 
-                        <button class="mt-2" *ngIf="item.typeField==='function'" (click)="value[item.callback(value)]"
-                            mat-stroked-button>
-                            <mat-icon>format_list_bulleted</mat-icon>
+
+
+
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-col"
+                        [ngClass]="item.typeField ==! 'function' ?? 'hidden' ">
+
+
+
+                        <button class="mt-2 w-full mb-2" *ngIf="item.typeField==='function'"
+                            (click)="value[item.callback(value)]" mat-stroked-button>
+                            <mat-icon *ngIf="item?.iconSGV" [svgIcon]="item?.iconSGV"></mat-icon>
+                            <mat-icon *ngIf="item?.iconAngularMaterial">{{item?.iconAngularMaterial}}</mat-icon>
+                            <mat-icon *ngIf="!item?.iconSGV && !item?.iconAngularMaterial"
+                                svgIcon="heroicons_outline:eye"></mat-icon>
                         </button>
 
+
+
+
+
+
                     </div>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -190,7 +223,8 @@
                                 <div class="flex gap-2 items-center pt-3">
                                     <p class="w-4 h-4 rounded-full" [ngClass]="dataOption.styleCondition(row)"></p>
                                     <p class="whitespace-nowrap">
-                                        {{ row[dataOption.name] }}
+                                        {{ row[dataOption.name] | dataTable:
+                                        dataOption.pipeName || "text" }}
                                     </p>
                                 </div>
                             </td>

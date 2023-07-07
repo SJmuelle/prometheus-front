@@ -6,6 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dial
 import { RangoComponent } from './rango/rango.component';
 import { isObject } from 'lodash';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
+import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
 
 @Component({
   selector: 'app-list',
@@ -120,7 +121,7 @@ export class ListComponent implements OnInit {
     }
   ]
 
-  constructor(private router: Router, private _pqrService: PqrService, public dialog: MatDialog) { }
+  constructor(private router: Router, private _pqrService: PqrService, public dialog: MatDialog, private _filterService: TableDataFilterService) { }
 
   ngOnInit(): void {
     this.consulta();
@@ -137,32 +138,11 @@ export class ListComponent implements OnInit {
         Swal.close();
         if (response) {
           this.listado = response || [];
-          this.listado = [
-            {
-              numeroPqrs: '01',
-              identificacion: '1047361882',
-              nombreCliente: 'Leonardo',
-              apellidosCliente: 'Arape',
-              lineaNegocio: 'neg 01',
-              tipoPqrs: 'pqrs1',
-              causalPqrs: 'queja',
-              responsable: 'leo',
-              escalado: 'no',
-              diasxvencer: '5',
-              estado: 'por vencer',
-              fechaSolucion: '20/04/2023',
-              solucionPqrs: 'por solucion',
-              numeroRechazados: '5',
-              fechaRechazo: '05/04/2023',
-              usuario_creacion: 'larape'
-            }
-          ]
           this.listado.forEach((item) => {
             item.nombreCliente = item.nombreCliente + ' ' + item.apellidosCliente
           })
           this.maxRegistros = this.listado.length;
           this.filRegistros = this.listado.length;
-          console.log('listado', this.listado);
         }
       },
       error: () => { }
@@ -186,6 +166,10 @@ export class ListComponent implements OnInit {
   gestion(x) {
     let url = `pqr/gestion/${x}`;
     this.router.navigateByUrl(url);
+  }
+
+  public search(): void {
+    this._filterService.sendFilterData(this.filtrarTabla)
   }
 
   filtrarFecha() {

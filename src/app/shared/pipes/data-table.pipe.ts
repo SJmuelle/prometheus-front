@@ -22,9 +22,15 @@ export class DataTablePipe implements PipeTransform {
     date: (value: any) => value ? this.convertDateAlert(value) : '---',
     titleCase: (value: any) => {
       if (value) {
-        const firstCaracter = (value as string).charAt(0).toUpperCase();
-        const word = (value as string).substring(1);
+        const firstCaracter = (value as string)?.charAt(0)?.toUpperCase();
+        const word = (value as string)?.substring(1)?.toLowerCase();
         return `${firstCaracter}${word}`;
+      }
+    },
+    upperCase: (value: any) => {
+      if (value) {
+        const valueString = (value as string)?.toUpperCase();
+        return `${valueString}`;
       }
     }
   };

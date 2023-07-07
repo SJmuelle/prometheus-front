@@ -85,8 +85,17 @@ export class HistorialPqrComponent implements OnInit {
     {
       name: 'estado',
       text: 'Estado',
-      typeField: 'text',
-      pipeName: 'titleCase'
+      typeField: 'statusStyle',
+      pipeName: 'titleCase',
+      styleCondition: (data) => {
+        const { estado } = data
+        const stateselect = {
+          'POR TRAMITAR': 'bg-red-200',
+          'EN TRAMITE': 'bg-blue-200',
+          'RESUELTO': 'bg-green-200'
+        }
+        return stateselect[estado] || 'bg-yellow-200'
+      }
     }
   ]
 

@@ -6,7 +6,7 @@
     </div>
     <div class="row">
         <div class="bg-white col-lg-12 col-sm-12">
-            <div class=" mb-3 flex flex-row justify-between">
+            <div class=" mb-3 flex flex-row gap-3 flex-wrap justify-between">
                 <span class="leading-none col-lg-4 col-sm-12">
                     <div class="leading-tight titulo_tabs flex flex-row gap-3 flex-wrap">
                         <div>
@@ -42,7 +42,8 @@
                     </div>
                 </span>
                 <div class="border rounded-full h-10 w-full sm:w-56 flex flex-row items-center ">
-                    <input type="text" class="w-full pl-3">
+                    <input type="text" (keyup)="search()" autocomplete="off" placeholder="Filtrar... "
+                        name="filtrarTabla" [(ngModel)]="filtrarTabla" class="w-full pl-3">
                 </div>
                 <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end"> -->
                 <!-- <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"

@@ -43,7 +43,7 @@ export interface IoptionTable {
   /**
    * se especifica si es de tipo texto o llama una funcion 
    */
-  typeField: 'text' | 'function',
+  typeField: 'text' | 'function' | 'statusStyle',
   /**
    * se utiliza en caso de querer formatear el texto
    */
@@ -60,6 +60,12 @@ export interface IoptionTable {
    * se establece un icono especifico de angular material
    */
   iconAngularMaterial?: string
+
+  /**
+   * se utiliza para los campos que utilizan estados de colores
+   */
+
+  styleCondition?: Function
 }
 
 @Component({
