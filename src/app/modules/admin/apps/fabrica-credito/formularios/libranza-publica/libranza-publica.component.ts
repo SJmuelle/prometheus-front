@@ -200,6 +200,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('otrosIngreso')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
+
+        this.validationOTPForm.get('numeroOTP').valueChanges.subscribe((e: string) => {
+            if(e.length === 6 && !this.otpValidado ){
+                this.validarCodigo()
+            }
+        })
     }
 
     ngAfterViewChecked(): void {
@@ -414,9 +420,22 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.validandoOTPLoading = false;
             }, err => {
                 Swal.fire('Error',
-                    'Error a validar del OTP: ' + err.msg)
+                    'Error al validar del OTP','error').then(()=> {
+                        this.validandoOTPLoading = false;
+                        this.borrarOTPNumbers()
+                    })
             })
         }
+
+    }
+
+    borrarOTPNumbers(): void {
+        this.input1.nativeElement.value = ''
+        this.input2.nativeElement.value = ''
+        this.input3.nativeElement.value = ''
+        this.input4.nativeElement.value = ''
+        this.input5.nativeElement.value = ''
+        this.input6.nativeElement.value = ''
 
     }
 
