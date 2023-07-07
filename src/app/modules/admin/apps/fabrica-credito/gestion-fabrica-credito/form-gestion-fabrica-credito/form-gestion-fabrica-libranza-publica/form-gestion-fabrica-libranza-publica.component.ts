@@ -174,7 +174,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             tipoContrato: [''],
             fechaVinculacion: [''],
             cargo: [''],
-            claveVolantePago: [''],
+            claveVolantePago: ['', [Validators.required, Validators.maxLength(50)]],
             salarioBasico: [''],
             otrosIngreso: [''],
             descuentoNomina: [''],
@@ -257,6 +257,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 if (data.codigoDepartamentoExpedicion) {
                     this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
                 }
+
+
             });
 
         const datosSolicitud: any = {
@@ -276,9 +278,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.agendaActual = data.agenda
                 this.unidadNegocio = data.unidadNegocio;
                 this.fabricaDatos = data;
-
-
-
 
             });
     }
