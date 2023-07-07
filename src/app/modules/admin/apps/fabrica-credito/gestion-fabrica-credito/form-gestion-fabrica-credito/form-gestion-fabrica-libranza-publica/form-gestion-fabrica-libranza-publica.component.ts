@@ -5,6 +5,10 @@ import { FormularioCreditoService } from 'app/core/services/formulario-credito.s
 import { Subject, Observable, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { MatSelectChange } from '@angular/material/select';
+import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'app-form-gestion-fabrica-libranza-publica',
@@ -17,13 +21,32 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     public fabricaDatos;
     public unSubscribe$: Subject<any> = new Subject<any>();
     public dataInicial;
+    public dataGeneralIncial: any;
+    public agendaActual: string;
+    public actividadEconomica: string;
+    public unidadNegocio: any;
+
     fechaActual: any = moment().locale("co");
+    public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
+    public identificacion: string = this.route.snapshot.paramMap.get('id');
+
+    public ciudades: any;
+    public ciudadesNacimiento$: Observable<any>;
+    public ciudadesNegocio: any;
+    public barrios: any;
+    public barriosNegocio: any;
+    public ciudadesExpedicion: any;
+    public plazosCredito: any;
 
     constructor(private _fabricaCreditoService: FabricaCreditoService,
-        private _formularioCreditoService: FormularioCreditoService, private fb: FormBuilder) { }
+        private _formularioCreditoService: FormularioCreditoService, private fb: FormBuilder,private route: ActivatedRoute
+        , private fabricaCreditoService: FabricaCreditoService,private departamentosCiudadesService: DepartamentosCiudadesService) { 
+            this.createFormulario();
+        }
 
     ngOnInit(): void {
         this.cargueInicial();
+        this.getFabricaCreditoAgenda(this.numeroSolicitud,this.identificacion);
     }
 
     private cargueInicial() {
@@ -45,7 +68,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.form = this.fb.group({
             numeroSolicitud: [''],
             tipo: [''],
-            aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
             tipoCredito: [''],
@@ -68,13 +90,15 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             nacionalidad: ['', [Validators.required]],
             fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
-            numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            // numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this), this.validateExpedicion.bind(this)]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
             codigoDepartamento: ['', [Validators.required]],
+            codigoDepartamentoNacimiento: ['', Validators.required],
+            codigoMunicipioNacimiento: ['', Validators.required],
             codigoCiudad: ['', Validators.required],
             barrioResidencia: ['', Validators.required],
             direccionResidencial: [''],
@@ -98,7 +122,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             codigoDepartamentoNegocio: ['', [Validators.required]],
             codigoCiudadNegocio: ['', Validators.required],
             codigoBarrioNegocio: ['', Validators.required],
-            segmento: [''],
             direccionNegocio: [''],
             direccionNegocioVia: ['', Validators.required],
             direccionNegocioPrincipal: ['', Validators.required],
@@ -163,14 +186,12 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             otroIngresoDeclaracionAuto: [''],
             plazo: ['', [Validators.required]],
             descripcionTipo: [''],
-            titularMicro: [''],
             aplicaCodeudor: [''],
             valorSolicitadoWeb: ['', [Validators.required, Validators.min(0)]],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
             valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
             destinoCredito: ['', [Validators.required]],
-            codeudorMicro: [''],
             codigoBarrio: ['', [Validators.required]],
             declaraRenta: ['N', [Validators.required]],
             cargoPublico: [''],
@@ -221,6 +242,215 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             return null
         }
     }
+
+    /**
+     * @description: Obtiene la data para cargar al formulario
+     */
+    private getFabricaCreditoAgenda(numeroSolicitud: string, identificacion: string): void {
+
+
+        this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
+            .subscribe(({ data }) => {
+                this.dataGeneralIncial = data;
+                this.form.patchValue(data);
+
+                // this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
+                // this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
+                // this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
+                // this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
+                // this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico : 'N')
+                // this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
+                // this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
+                // this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
+                // this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+
+                this.getPlazosCredito(this.form.controls.valorSolicitado.value)
+
+                if (data.codigoDepartamento) {
+                    this.getCiudades(data.codigoDepartamento);
+                }
+                if (data.codigoDepartamentoNacimiento) {
+                    this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
+                }
+                if (data.codigoDepartamentoNegocio) {
+                    this.getCiudadesNegocio(data.codigoDepartamentoNegocio);
+                }
+                if (data.codigoCiudad) {
+                    this.getBarrios(data.codigoCiudad);
+                }
+                if (data.codigoCiudadNegocio) {
+                    this.getBarriosNegocio(data.codigoCiudadNegocio);
+                }
+                if (data.estrato) {
+                    this.form.controls.estrato.setValue(data.estrato.toString());
+                }
+                if (data.codigoDepartamentoExpedicion) {
+                    this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
+                }
+                if (data.tipoActividad) {
+                    this.getActividadEconomica();
+                }
+            });
+
+        const datosSolicitud: any = {
+            numeroSolicitud: numeroSolicitud,
+            identificacion: identificacion
+        }
+
+        this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+            .subscribe(({ data }) => {
+                Swal.close();
+                this.form.patchValue({
+                    descripcionTipo: data.descripcionTipo,
+                    codigoBarrio: data.codigoBarrio,
+                    score: data.score
+                });
+
+                this.agendaActual = data.agenda
+                this.unidadNegocio = data.unidadNegocio;
+                this.fabricaDatos = data;
+
+
+
+
+            });
+    }
+
+     /**
+     * @description: Departamento de nacimiento
+     */
+     public seleccionDepartamento(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudades(codigo);
+        // eliminar la ciudad y barrio anterior
+        this.form.get('codigoCiudad').setValue('')
+        this.form.get('barrioResidencia').setValue('')
+    }
+
+    /**
+     * @description: Departamento de nacimiento
+     */
+    public seleccionDepartamentoNacimiento(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudadesNacimiento(codigo);
+    }
+
+    /**
+     * @description: Departamento de negocio
+     */
+    public seleccionDepartamentoNegocio(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudadesNegocio(codigo);
+        // eliminar la ciudad y barrio anterior
+        this.form.get('codigoCiudadNegocio').setValue('')
+        this.form.get('codigoBarrioNegocio').setValue('')
+    }
+
+    /**
+  * @description: Departamento de expedicion
+  */
+    public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getCiudadesExpedicion(codigo);
+         // eliminar la ciudad
+         this.form.get('codigoCiudadExpedicion').setValue('')
+    }
+
+    /**
+     * @description: Selecciona el codigo para cargar el api barrios
+     *
+     */
+    public seleccionCiudad(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getBarrios(codigo);
+        this.form.get('barrioResidencia').setValue('')
+    }
+
+    /**
+     * @description: Selecciona el codigo para cargar el api barrios
+     */
+    public seleccionCiudadNegocio(event: MatSelectChange): void {
+        const codigo: string = event.value;
+        this.getBarriosNegocio(codigo);
+        this.form.get('codigoBarrioNegocio').setValue('')
+    }
+
+    /**
+     * @description: Obtiene el listado de ciudades
+     */
+    private getCiudades(codigo: string): void {
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudades = rep
+        })
+    }
+
+    /**
+     * @description: Obtiene listado de ciudades nacimiento
+     */
+    private getCiudadesNacimiento(codigo: string): void {
+        this.ciudadesNacimiento$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.form.get('codigoMunicipioNacimiento').setValue('')
+    }
+
+    /**
+     * @description: Obtiene listado de ciudades negocio
+     */
+    private getCiudadesNegocio(codigo: string): void {
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudadesNegocio = rep
+        })
+    }
+
+    /**
+    * @description: Obtiene listado de ciudades negocio
+    */
+    private getCiudadesExpedicion(codigo: string): void {
+        this.departamentosCiudadesService.getCiudades(codigo).subscribe(rep => {
+            this.ciudadesExpedicion = rep
+        })
+    }
+
+    /**
+     * @description: Obtiene el listado de barrios
+     */
+    private getBarrios(codigo: string): void {
+        this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
+            this.barrios = rep
+        })
+    }
+
+      /**
+     * @description: Obtiene el listado de barrios del negocio
+     */
+      private getBarriosNegocio(codigo: string): void {
+        this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
+            this.barriosNegocio = rep;
+        })
+    }
+
+    private getActividadEconomica(): void {
+        const tipoActividad = this.form.controls.tipoActividad.value;
+        const nivelEstudio = this.form.controls.nivelEstudio.value;
+        const camaraComercio = this.form.controls.camaraComercio.value;
+
+        if (tipoActividad && nivelEstudio && camaraComercio) {
+            this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).pipe(takeUntil(this.unSubscribe$)).subscribe(res => {
+                this.actividadEconomica = res.data
+            });
+        }
+
+
+    }
+
+     /**
+     * @description: Obtener limite de plazos por el valor de credito
+     */
+     private getPlazosCredito(valorCredito: number) {
+        this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+            this.plazosCredito = rep
+        })
+    }
+
 }
 
 

@@ -114,25 +114,6 @@
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-
-                    <mat-form-field>
-                        <mat-label>Titular en micro</mat-label>
-                        <mat-select [value]="'seleccione'" disabled [formControlName]="'titularMicro'">
-                            <mat-option disabled [value]="'seleccione'">Seleccione
-                            </mat-option>
-                            <mat-option value="S">SI APLICA </mat-option>
-                            <mat-option value="N">NO APLICA </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                        <mat-label>Codeudor en micro</mat-label>
-                        <mat-select [value]="'seleccione'" disabled [formControlName]="'codeudorMicro'">
-                            <mat-option disabled [value]="'seleccione'">Seleccione
-                            </mat-option>
-                            <mat-option value="S">SI APLICA </mat-option>
-                            <mat-option value="N">NO APLICA </mat-option>
-                        </mat-select>
-                    </mat-form-field>
                     <mat-form-field>
                         <mat-label>Crédito titular en otras lineas</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoTitularLineas'">
@@ -151,95 +132,8 @@
                             <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="mat-form-field-disabled">
-                        <mat-label>Segmento</mat-label>
-                        <input matInput type="text" [formControlName]="'segmento'" [readonly]="true" />
-                    </mat-form-field>
                 </div>
 
-                <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de riesgo</span>
-                <div class="flex justify-start gap-6 sm:flex-row flex-col">
-                    <div *ngIf="verScorePermiso()" class="flex sm:w-full md:w-4/12 items-center justify-center fixheigh">
-                        <div class="container scale-50 ">
-                            <svg height="500px" width="500px">
-                                <circle id="red" fill="none" stroke="#bd2727" stroke-width="30" cx="200" cy="200"
-                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="597" />
-                                <circle class="grey greyRed" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
-                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="597" />
-
-                                <circle id="orange" fill="none" stroke="#f79a38" stroke-width="30" cx="200" cy="200"
-                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="447" />
-                                <circle class="grey greyOrange" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
-                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="447" />
-
-                                <circle id="yellow" fill="none" stroke="#fadd00" stroke-width="30" cx="200" cy="200"
-                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="297" />
-                                <circle class="grey greyYellow" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
-                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="297" />
-
-                                <circle id="light-green" fill="none" stroke="#91c738" stroke-width="30" cx="200"
-                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="147" />
-                                <circle class="grey greyLightGreen" fill="none" stroke="#F1F1F1" stroke-width="30"
-                                    cx="200" cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="147" />
-
-                                <circle id="green" fill="none" stroke="#1f9c4c" stroke-width="30" cx="200" cy="200"
-                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
-                                <circle class="grey greyGreen" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
-                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
-                                    <circle cx="200" cy="200" r="12" fill="none" stroke="#823b8a" stroke-width="3"
-                                        class="punteroPo" />
-                                <circle cx="200" cy="200" r="25" fill="none" stroke="#823b8a" stroke-width="3"
-                                    class="punteroPoGrande" />
-                                    <circle cx="200" cy="200" r="25" fill="none" stroke="#823b8a" stroke-width="3"
-                                    class="punteroPoGrandeSegundo" />
-                            </svg>
-                            <div class="score-band-wrapper flex justify-center items-center flex-col gap-4">
-                                <small class="text-xl font-bold">Tu score es</small>
-                                <p class="score-band-label">{{score}}</p>
-                            </div>
-                        </div>
-                        <!-- <div class="barContainer mt-4 relative">
-                            <div class="marker"></div>
-                            <span class="beacon"></span>
-                            <div class="bordersScore">
-                                <span class="border0"></span>
-                                <span class="border1"></span>
-                                <span class="border2"></span>
-                                <span class="border3"></span>
-                                <span class="border4"></span>
-                                <span class="border5"></span>
-                                <span class="border6"></span>
-                                <span class="border7"></span>
-                                <span class="border8"></span>
-                                <span class="border9"></span>
-                            </div>
-                            <div class="barDataCredito">
-                                <div class="currentScore"></div>
-                                <div class="bar0">0</div>
-                                <div class="bar1">150</div>
-                                <div class="bar2">250</div>
-                                <div class="bar3">350</div>
-                                <div class="bar4">450</div>
-                                <div class="bar5">550</div>
-                                <div class="bar6">650</div>
-                                <div class="bar7">750</div>
-                                <div class="bar8">850</div>
-                                <div class="bar9">950</div>
-                            </div>
-                        </div> -->
-                    </div>
-                    <div class="sm:w-8/12 w-full  flex flex-col justify-center items-center flex-wrap">
-                        <mat-form-field *ngIf="verScorePermiso()"
-                            class="mat-form-field-disabled w-full">
-                            <mat-label>Resultados filtro duros</mat-label>
-                            <input matInput type="text" [value]="decisionFiltrosDuros" [readonly]="true" />
-                        </mat-form-field>
-                        <mat-form-field class="mat-form-field-disabled w-full">
-                            <mat-label>Descripción del score</mat-label>
-                            <input matInput type="text" [value]="descripcionScore" [readonly]="true" />
-                        </mat-form-field>
-                    </div>
-                </div>
             </div>
         </mat-expansion-panel>
         <!--Panel datos de riesgo-->
@@ -427,8 +321,6 @@
                                 <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true" />
                             </mat-form-field>
                         </div>
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información personal del
-                            titular</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Estado civil</mat-label>
@@ -532,6 +424,55 @@
                             </mat-form-field>
 
                             <mat-form-field>
+                                <mat-label>Departamento de nacimiento</mat-label>
+                                <mat-select (selectionChange)="
+                                getCiudadesNacimiento($event)
+                                    " [value]="'seleccione'" [formControlName]="
+                                        'codigoDepartamentoNacimiento'
+                                    ">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="
+                                            let departamento of dataInicial?.deparamentosGenerales
+                                        " [value]="departamento.codigo">{{ departamento.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls
+                                            .codigoDepartamentoNacimiento.errors
+                                            ?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+
+                            <ng-container *ngIf="ciudadesExpedicion">
+                                <mat-form-field >
+                                    <mat-label>Ciudad de nacimiento</mat-label>
+                                    <mat-select [value]="'seleccione'" [formControlName]="
+                                            'codigoMunicipioNacimiento'
+                                        ">
+                                        <mat-option disabled [value]="'seleccione'">Seleccione
+                                        </mat-option>
+                                        <mat-option *ngFor="let ciudad of ciudadesExpedicion.data"
+                                            [value]="ciudad.codigo">
+                                            {{ ciudad.nombre }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                    </mat-icon>
+                                    <mat-error *ngIf="
+                                            form.controls.codigoMunicipioNacimiento
+                                                .errors?.required
+                                        ">
+                                        Este campo es requerido.
+                                    </mat-error>
+                                </mat-form-field>
+                            </ng-container>
+
+                            <mat-form-field>
                                 <mat-label>Nivel de estudio</mat-label>
                                 <mat-select (selectionChange)="getActividadEconomica()" [value]="'seleccione'"
                                     [formControlName]="'nivelEstudio'">
@@ -552,54 +493,6 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <mat-form-field>
-                                <mat-label>Número de hijos</mat-label>
-                                <input matInput type="text" [formControlName]="'numeroHijos'" />
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="
-                                        form.controls.numeroHijos.errors
-                                            ?.required
-                                    ">
-                                    Este campo es requerido.
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.numeroHijos.errors?.min
-                                    ">
-                                    No puede ser menor de 0
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.numeroHijos.errors
-                                            ?.pattern
-                                    ">
-                                    Solo se aceptan números
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-label>Personas a cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'personasACargo'" />
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="
-                                        form.controls.personasACargo.errors
-                                            ?.required
-                                    ">
-                                    Este campo es requerido.
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.personasACargo.errors?.min
-                                    ">
-                                    No puede ser menor de 0
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.personasACargo.errors
-                                            ?.pattern
-                                    ">
-                                    Solo se aceptan números
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Fecha de expedición </mat-label>
                                 <input matNativeControl [matDatepicker]="fechaExpedicionDocumento"
@@ -627,7 +520,7 @@
                                     fecha de nacimiento.
                                 </mat-error>
                             </mat-form-field>
-
+                            
                             <mat-form-field>
                                 <mat-label>Departamento de expedición</mat-label>
                                 <mat-select (selectionChange)="
@@ -676,10 +569,27 @@
                                     </mat-error>
                                 </mat-form-field>
                             </ng-container>
-                        </div>
-                        <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de
-                            residencia</span>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
+
+                            <mat-form-field>
+                                <mat-label>Estrato</mat-label>
+                                <mat-select [value]="'seleccione'" [formControlName]="'estrato'">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option *ngFor="
+                                            let item of dataInicial?.estratosVivienda
+                                        " [value]="item.codigo">
+                                        {{ item.nombre }}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
+                                </mat-icon>
+                                <mat-error *ngIf="
+                                        form.controls.estrato.errors?.required
+                                    ">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+
                             <mat-form-field>
                                 <mat-label>Departamento de residencia</mat-label>
                                 <mat-select (selectionChange)="
@@ -746,37 +656,9 @@
                                     </mat-error>
                                 </mat-form-field>
                             </ng-container>
-                        </div>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
-                            <mat-form-field>
-                                <mat-label>Vereda</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'tipoVereda'">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="
-                                            let item of dataInicial?.tiposVereda
-                                        " [value]="item.codigo">{{ item.nombre }}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="
-                                        form.controls.tipoVereda.errors
-                                            ?.required
-                                    ">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="form.controls.tipoVereda.value === '1'">
-                                <mat-label>Nombre vereda</mat-label>
-                                <input matInput type="text" [formControlName]="'descripcionVereda'" />
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="
-                                        form.controls.descripcionVereda.errors
-                                            ?.required
-                                    ">
-                                    Este campo es requerido.
-                                </mat-error>
-                            </mat-form-field>
+
+
+                            
                         </div>
 
                         <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
@@ -942,50 +824,10 @@
                             <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
                         </mat-form-field>
 
+
+
                         <div class="grid gap-2 sm:grid-cols-4 grid-cols-1">
-                            <mat-form-field>
-                                <mat-label>Años de residencia</mat-label>
-                                <input matInput type="number" [formControlName]="'annosTiempoResidencia'" />
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="
-                                        form.controls.annosTiempoResidencia
-                                            .errors?.required
-                                    ">
-                                    Este campo es requerido.
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.annosTiempoResidencia
-                                            .errors?.min
-                                    ">
-                                    No puede ser menor de 0
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field>
-                                <mat-label>Meses de residencia</mat-label>
-                                <input autocomplete="off" matInput type="number"
-                                    [formControlName]="'mesesTiempoResidencia'" min="0" max="11" />
-                                <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
-                                </mat-icon>
-                                <mat-error *ngIf="
-                                        form.controls.mesesTiempoResidencia
-                                            .errors?.required
-                                    ">
-                                    Este campo es requerido.
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.mesesTiempoResidencia
-                                            .errors?.min
-                                    ">
-                                    No puede ser menor de 0
-                                </mat-error>
-                                <mat-error *ngIf="
-                                        form.controls.mesesTiempoResidencia
-                                            .errors?.max
-                                    ">
-                                    No puede ser mayor a 11
-                                </mat-error>
-                            </mat-form-field>
+
                             <mat-form-field>
                                 <mat-label>Tipo de vivienda</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoVivienda'">
@@ -1007,24 +849,29 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Estrato</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'estrato'">
-                                    <mat-option disabled [value]="'seleccione'">Seleccione
-                                    </mat-option>
-                                    <mat-option *ngFor="
-                                            let item of dataInicial?.estratosVivienda
-                                        " [value]="item.codigo">
-                                        {{ item.nombre }}
-                                    </mat-option>
-                                </mat-select>
+                                <mat-label>Personas a cargo</mat-label>
+                                <input matInput type="text" [formControlName]="'personasACargo'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
-                                        form.controls.estrato.errors?.required
+                                        form.controls.personasACargo.errors
+                                            ?.required
                                     ">
                                     Este campo es requerido.
                                 </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.personasACargo.errors?.min
+                                    ">
+                                    No puede ser menor de 0
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.personasACargo.errors
+                                            ?.pattern
+                                    ">
+                                    Solo se aceptan números
+                                </mat-error>
                             </mat-form-field>
+                           
                         </div>
 
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
@@ -2620,12 +2467,6 @@
                     <mat-tab>
                         <ng-template matTabLabel>Politicas</ng-template>
                         <app-grid-politicas></app-grid-politicas>
-                    </mat-tab>
-                </ng-container>
-                <ng-container *ngIf="verScorePermiso()">
-                    <mat-tab>
-                        <ng-template matTabLabel>Filtros duros</ng-template>
-                        <app-grid-filtros-duros></app-grid-filtros-duros>
                     </mat-tab>
                 </ng-container>
                 <mat-tab>
