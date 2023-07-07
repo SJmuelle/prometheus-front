@@ -16,7 +16,7 @@ import { fuseAnimations } from '@fuse/animations';
     selector: 'app-libranza-publica',
     templateUrl: './libranza-publica.component.html',
     styleUrls: ['./libranza-publica.component.scss'],
-    animations  : fuseAnimations,
+    animations: fuseAnimations,
 })
 export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     @ViewChild('input1') input1!: ElementRef<HTMLInputElement>;
@@ -168,22 +168,26 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('fechaVinculacion')?.enable({ emitEvent: true, onlySelf: true })
                 this.datosLaborares.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
+
+                this.datosLaborares.get('pension')?.setValidators(null)
+                this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
             }
             else {
                 if (e === 'PENSI') {
                     this.datosLaborares.get('pension')?.setValidators([Validators.required, Validators.min(0)])
                     this.datosLaborares.get('pension')?.enable({ emitEvent: true, onlySelf: true })
-                } else {
-                    this.datosLaborares.get('pension')?.setValidators(null)
-                    this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+
+
+                    this.datosLaborares.get('tipoContrato')?.setValidators(null)
+                    this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
+                    this.datosLaborares.get('fechaVinculacion')?.setValidators(null)
+                    this.datosLaborares.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
+                    this.datosLaborares.get('cargo')?.setValidators(null)
+                    this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
                 }
-                this.datosLaborares.get('tipoContrato')?.setValidators(null)
-                this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
-                this.datosLaborares.get('fechaVinculacion')?.setValidators(null)
-                this.datosLaborares.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
-                this.datosLaborares.get('cargo')?.setValidators(null)
-                this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
             }
+
+
         })
 
         this.datosLaborares.get('cargo').valueChanges.subscribe((e: string) => {
@@ -328,12 +332,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
 
 
-    preCargueDeDatos(){
+    preCargueDeDatos() {
         const tipoDocumento = this.datosBasicos.get('tipoDocumento').value
         const documento = this.datosBasicos.get('documento').value
 
-        if(tipoDocumento && documento){
-            this._libranzaService.consultarDatosSolicitudConDocumento({tipoDocumento, documento}).subscribe(rep => {
+        if (tipoDocumento && documento) {
+            this._libranzaService.consultarDatosSolicitudConDocumento({ tipoDocumento, documento }).subscribe(rep => {
                 console.log('api responde con ', rep);
                 this.datosBasicos.patchValue(rep.data);
             })
@@ -353,7 +357,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         }, 1000)
     }
 
-    updateOTPInput(){
+    updateOTPInput() {
         const num1 = this.input1.nativeElement.value;
         const num2 = this.input2.nativeElement.value;
         const num3 = this.input3.nativeElement.value;
@@ -362,18 +366,18 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         const num6 = this.input6.nativeElement.value;
 
 
-        this.validationOTPForm.controls.numeroOTP.setValue(num1+num2+num3+num4+num5+num6);
+        this.validationOTPForm.controls.numeroOTP.setValue(num1 + num2 + num3 + num4 + num5 + num6);
         console.log('dato OTP', this.validationOTPForm.controls.numeroOTP.value);
 
     }
 
-    atualizarDatosOTP(){
-        const datos = {...this.datosBasicos.getRawValue()}
+    atualizarDatosOTP() {
+        const datos = { ...this.datosBasicos.getRawValue() }
 
         this.actualizandoDatosOTP = true;
         this._libranzaService.actualizarDatosBasicosOTP(datos).subscribe(rep => {
-          console.log('respuesta', rep);
-          this.actualizandoDatosOTP = false;
+            console.log('respuesta', rep);
+            this.actualizandoDatosOTP = false;
         })
     }
 
@@ -382,7 +386,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal,
                 tipo: 'T',
-                tipoOTP : "AUTORIZACION"
+                tipoOTP: "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this.solicitarOTP = true;
@@ -410,7 +414,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.validandoOTPLoading = false;
             }, err => {
                 Swal.fire('Error',
-                'Error a validar del OTP: ' + err.msg)
+                    'Error a validar del OTP: ' + err.msg)
             })
         }
 

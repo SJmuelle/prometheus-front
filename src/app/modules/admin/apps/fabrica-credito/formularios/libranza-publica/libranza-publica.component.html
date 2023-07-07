@@ -171,7 +171,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
-                        <mat-label>¿ En cúal empresa trabajas?</mat-label>
+                        <mat-label>¿ En cúal empresa trabajas o fuiste pensionado?</mat-label>
                         <mat-select formControlName="pagaduria">
                             <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias" [value]="pagaduria.codigo">
                                 {{pagaduria.nombre}}
@@ -379,37 +379,37 @@
                                     <div class="flex flex-row justify-between w-full gap-2">
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input1 (change)="updateOTPInput()" type="text"
+                                            <input #input1 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input2 (change)="updateOTPInput()" type="text"
+                                            <input #input2 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input3 (change)="updateOTPInput()" type="text"
+                                            <input #input3 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input4 (change)="updateOTPInput()" type="text"
+                                            <input #input4 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input5 (change)="updateOTPInput()" type="text"
+                                            <input #input5 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10  h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input6 (keyup)="updateOTPInput()" type="text"
+                                            <input #input6 (keyup)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
