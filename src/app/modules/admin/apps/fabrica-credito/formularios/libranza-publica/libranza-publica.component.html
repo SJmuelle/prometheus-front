@@ -230,6 +230,9 @@
                         <mat-error *ngIf="datosLaborares.controls.salarioBasico.errors?.required">
                             Este campo es requerido.
                         </mat-error>
+                        <mat-error *ngIf="datosLaborares.controls.salarioBasico.errors?.min">
+                            El valor ingresado No puede ser menor a un (1) SMMLV
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Otros ingresos del volante (AA)</mat-label>

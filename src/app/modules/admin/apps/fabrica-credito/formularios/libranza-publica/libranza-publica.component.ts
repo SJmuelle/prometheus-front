@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConfirmarDatosOTPComponent } from '../modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
 import { fuseAnimations } from '@fuse/animations';
+import { GenericasService } from 'app/core/services/genericas.service';
 
 @Component({
     selector: 'app-libranza-publica',
@@ -46,6 +47,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     fechaActual: any = moment().locale('co');
     mayorDeEdadFecha: any = moment().locale('co').subtract('18', 'years');
     public contador: number = 180;
+    public salarioMinimo: number;
     otpValidado: boolean = false;
     changeTextOTP: boolean = false;
     timerInterval: any;
@@ -55,7 +57,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
-        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog) { }
+        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog,private _genericaServices: GenericasService) { }
 
 
     ngAfterViewInit() {
@@ -135,6 +137,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
 
         this.cargueInicial()
+        this.getSalarioMinimo();
         this.agregarValidaciones()
     }
 
@@ -465,6 +468,14 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         datos.aceptoTerminos = 'S'
         datos.aceptoVeracidad = 'S'
 
+    }
+
+    private getSalarioMinimo() {
+        this._genericaServices.getSalarioBasico().subscribe(({ data }) => {
+            this.salarioMinimo = data.salarioMinimo;
+
+            this.datosLaborares.get('salarioBasico').setValidators([Validators.required, Validators.min(data.salarioMinimo)])
+        })
     }
 
     ngOnDestroy() {
