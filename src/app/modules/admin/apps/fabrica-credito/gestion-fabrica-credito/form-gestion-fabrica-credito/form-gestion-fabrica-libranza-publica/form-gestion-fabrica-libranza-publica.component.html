@@ -1109,6 +1109,19 @@
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.claveVolantePago.errors
+                                            ?.pattern
+                                    ">
+                                    Solo se permiten caracteres alfanumericos.
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.claveVolantePago.errors
+                                            ?.maxl
+                                            ength
+                                    ">
+                                    No puedes escribir más de 50 caracteres
+                                </mat-error>
+                                <mat-error *ngIf="
+                                        form.controls.claveVolantePago.errors
                                             ?.required
                                     ">
                                     Este campo es requerido.

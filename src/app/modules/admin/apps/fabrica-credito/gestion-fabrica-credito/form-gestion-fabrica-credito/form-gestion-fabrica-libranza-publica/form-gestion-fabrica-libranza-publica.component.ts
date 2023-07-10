@@ -178,7 +178,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             tipoContrato: [''],
             fechaVinculacion: [''],
             cargo: [''],
-            claveVolantePago: ['', [Validators.required, Validators.maxLength(50)]],
+            claveVolantePago: ['', [Validators.required, Validators.maxLength(50),Validators.pattern(/^[\w\s]*$/)]],
             salarioBasico: [''],
             otrosIngresos: [''],
             descuentoNomina: [''],
