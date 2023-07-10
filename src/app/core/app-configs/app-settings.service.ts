@@ -151,7 +151,7 @@ export class AppSettingsService {
             cargueInicialFormularioCorto: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
             reCalcularDatosOTP: EndPoints.uri('/generic/guardado-datos-basicos-otp'),
             consultaIdentificacionSolicitud: EndPoints.uri('/generic/qry/consulta-identificacion-solicitud'),
-            guardarFormularioCorto: EndPoints.uri('credito/libranzap/guardar-solicitud-libranza-publica')
+            guardarFormularioCorto: EndPoints.uri('/credito/libranzap/guardar-solicitud-libranza-publica')
         }
     }
     /**
