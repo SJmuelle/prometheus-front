@@ -168,7 +168,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
             
-            ocupacio: [''],
+            ocupacion: [''],
+            pension: [''],
             pagaduria: ['', Validators.required],
             otraPagaduria: [''],
             tipoContrato: [''],
@@ -176,13 +177,16 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             cargo: [''],
             claveVolantePago: ['', [Validators.required, Validators.maxLength(50)]],
             salarioBasico: [''],
-            otrosIngreso: [''],
+            otrosIngresos: [''],
             descuentoNomina: [''],
             totalIngresosLaborales: [''],
             declaraRenta: ['N', [Validators.required]],
             codigoAsesor: ['']
         },
         );
+
+        
+        this.agregarValidaciones();
     }
 
     private validatedDate(control: AbstractControl) {
@@ -227,7 +231,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
-
+                this.formatearDataInicial();
                 // this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 // this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
                 // this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
@@ -418,6 +422,19 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         }
     }
 
+    public formatearDataInicial(): void {
+
+        //fechas
+
+        this.form.controls.fechaDesvinculacionExpuesta.value === '0099-01-01' && this.form.controls.fechaDesvinculacionExpuesta.setValue('');
+        this.form.controls.fechaDesvinculacionPublico.value === '0099-01-01' && this.form.controls.fechaDesvinculacionPublico.setValue('');
+        this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
+        this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
+        this.form.controls.fechaVinculacion.value === '0099-01-01' && this.form.controls.fechaVinculacion.setValue('');
+        
+        console.log(this.form.controls.fechaVinculacion.value === '0099-01-01' + this.form.controls.fechaVinculacion.value );
+        
+    }
    
 
     /**
@@ -449,6 +466,224 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         firstInvalidControl.scrollIntoView({
             behavior: 'smooth',
             block: 'center'
+        })
+
+    }
+
+
+    private agregarValidaciones() {
+        // disable todos los campos dinamicos
+        this.form.get('otraPagaduria').disable()
+        this.form.get('tipoContrato').disable()
+        this.form.get('fechaVinculacion').disable()
+        this.form.get('cargo').disable()
+        this.form.get('otrosIngresos').disable()
+        this.form.get('pension').disable()
+
+
+        // validaciones dinamicas
+        this.form.get('pagaduria').valueChanges.subscribe((e: string) => {
+            if (e === "999989999") {
+                this.form.get('otraPagaduria')?.setValidators([Validators.required, Validators.min(0)])
+                this.form.get('otraPagaduria')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('otraPagaduria')?.setValidators(null)
+                this.form.get('otraPagaduria')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        this.form.get('ocupacion').valueChanges.subscribe((e: string) => {
+            if (e === "EPLDO") {
+                this.form.get('tipoContrato')?.setValidators([Validators.required, Validators.min(0)])
+                this.form.get('tipoContrato')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('fechaVinculacion')?.setValidators([Validators.required, Validators.min(0)])
+                this.form.get('fechaVinculacion')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
+                this.form.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
+
+                this.form.get('pension')?.setValidators(null)
+                this.form.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                if (e === 'PENSI') {
+                    this.form.get('pension')?.setValidators([Validators.required, Validators.min(0)])
+                    this.form.get('pension')?.enable({ emitEvent: true, onlySelf: true })
+
+
+                    this.form.get('tipoContrato')?.setValidators(null)
+                    this.form.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
+                    this.form.get('fechaVinculacion')?.setValidators(null)
+                    this.form.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
+                    this.form.get('cargo')?.setValidators(null)
+                    this.form.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
+                }
+            }
+
+
+        })
+
+        this.form.get('cargo').valueChanges.subscribe((e: string) => {
+            if (e === "2" || e === "3" || e === "5") {
+                this.form.get('otrosIngresos')?.setValidators([Validators.required, Validators.min(0)])
+                this.form.get('otrosIngresos')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('otrosIngresos')?.setValidators(null)
+                this.form.get('otrosIngresos')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // posee cuenta bancaria
+        this.form.get('poseeCuentaBancaria').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'S') {
+                this.form.get('entidadBancaria')?.setValidators([Validators.required])
+                this.form.get('entidadBancaria')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoCuentaBancaria')?.setValidators([Validators.required])
+                this.form.get('tipoCuentaBancaria')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('numeroCuentaBancaria')?.setValidators([Validators.required, Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/), Validators.min(0)])
+                this.form.get('numeroCuentaBancaria')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('entidadBancaria')?.setValidators(null)
+                this.form.get('entidadBancaria')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoCuentaBancaria')?.setValidators(null)
+                this.form.get('tipoCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('numeroCuentaBancaria')?.setValidators(null)
+                this.form.get('numeroCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
+            }
+
+            if (e === 'N') {
+                this.form.get('autorizacionBanco')?.setValidators([Validators.requiredTrue])
+                this.form.get('autorizacionBanco')?.enable({ emitEvent: true, onlySelf: true })
+            } else {
+                this.form.get('autorizacionBanco')?.setValidators(null)
+                this.form.get('autorizacionBanco')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // operacion Extranjera moneda Form
+        this.form.get('legalOperacionExtranjera').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'S') {
+                this.form.get('tipoOperacionExtranjera')?.setValidators([Validators.required])
+                this.form.get('tipoOperacionExtranjera')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('tipoOperacionExtranjera')?.setValidators(null)
+                this.form.get('tipoOperacionExtranjera')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // operacion cripto moneda Form
+        this.form.get('legalOperacionCriptomoneda').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'S') {
+                this.form.get('tipoOperacionCriptomoneda')?.setValidators([Validators.required])
+                this.form.get('tipoOperacionCriptomoneda')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('tipoOperacionCriptomoneda')?.setValidators(null)
+                this.form.get('tipoOperacionCriptomoneda')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // cargo publico
+        this.form.get('legalCargoPublico').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'S') {
+                this.form.get('cargoPublico')?.setValidators([Validators.required, Validators.maxLength(80)])
+                this.form.get('cargoPublico')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('entidadPublico')?.setValidators([Validators.required, Validators.maxLength(150)])
+                this.form.get('entidadPublico')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('vinculadoActualPublico')?.setValidators([Validators.required])
+                this.form.get('vinculadoActualPublico')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('cargoPublico')?.setValidators(null)
+                this.form.get('cargoPublico')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('entidadPublico')?.setValidators(null)
+                this.form.get('entidadPublico')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('vinculadoActualPublico')?.setValidators(null)
+                this.form.get('vinculadoActualPublico')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+        this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'N') {
+                this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required, this.validatedDate.bind(this)])
+                this.form.get('fechaDesvinculacionPublico')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('fechaDesvinculacionPublico')?.setValidators(null)
+                this.form.get('fechaDesvinculacionPublico')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // Datos cargo publico familiar
+        this.form.get('legalPersonalExpuesta').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'S') {
+                this.form.get('vinculacionExpuesta')?.setValidators([Validators.required, Validators.max(50)])
+                this.form.get('vinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('nombreExpuesta')?.setValidators([Validators.required, Validators.maxLength(100)])
+                this.form.get('nombreExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoIdentificacionExpuesta')?.setValidators([Validators.required])
+                this.form.get('tipoIdentificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('identificacionExpuesta')?.setValidators([Validators.required])
+                this.form.get('identificacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('nacionalidadExpuesta')?.setValidators([Validators.required])
+                this.form.get('nacionalidadExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('entidadExpuesta')?.setValidators([Validators.required, Validators.maxLength(150)])
+                this.form.get('entidadExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('cargoExpuesta')?.setValidators([Validators.required, Validators.maxLength(80)])
+                this.form.get('cargoExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('vinculadoActualExpuesta')?.setValidators([Validators.required])
+                this.form.get('vinculadoActualExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('vinculacionExpuesta')?.setValidators(null)
+                this.form.get('vinculacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('nombreExpuesta')?.setValidators(null)
+                this.form.get('nombreExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoIdentificacionExpuesta')?.setValidators(null)
+                this.form.get('tipoIdentificacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('identificacionExpuesta')?.setValidators(null)
+                this.form.get('identificacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('nacionalidadExpuesta')?.setValidators(null)
+                this.form.get('nacionalidadExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('entidadExpuesta')?.setValidators(null)
+                this.form.get('entidadExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('cargoExpuesta')?.setValidators(null)
+                this.form.get('cargoExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('vinculadoActualExpuesta')?.setValidators(null)
+                this.form.get('vinculadoActualExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+        this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'N') {
+                this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required, this.validatedDate.bind(this)])
+                this.form.get('fechaDesvinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('fechaDesvinculacionExpuesta')?.setValidators(null)
+                this.form.get('fechaDesvinculacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // declaro ingresos Otros declaroIngresoDeclaracionAuto
+        this.form.get('declaroIngresoDeclaracionAuto').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'OT') {
+                this.form.get('otroIngresoDeclaracionAuto')?.setValidators([Validators.required])
+                this.form.get('otroIngresoDeclaracionAuto')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                this.form.get('otroIngresoDeclaracionAuto')?.setValidators(null)
+                this.form.get('otroIngresoDeclaracionAuto')?.disable({ emitEvent: true, onlySelf: true })
+            }
         })
 
     }

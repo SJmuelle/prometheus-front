@@ -54,11 +54,11 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
-                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'">
-                            <mat-option  [value]="'seleccione'">Seleccione
+                        <mat-select  [value]="'seleccione'" [formControlName]="'destinoCredito'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option *ngFor="
-                                    let item of dataInicial?.destinoCreditosMicro
+                                    let item of dataInicial?.destinoCredito
                                 " [value]="item.codigo">
                                 {{ item.nombre }}
                             </mat-option>
@@ -456,7 +456,7 @@
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="
-                                            let departamento of dataInicial?.deparamentosGenerales
+                                            let departamento of dataInicial?.departamentos
                                         " [value]="departamento.codigo">{{ departamento.nombre }}
                                     </mat-option>
                                 </mat-select>
@@ -554,7 +554,7 @@
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="
-                                            let departamento of dataInicial?.deparamentosGenerales
+                                            let departamento of dataInicial?.departamentos
                                         " [value]="departamento.codigo">{{ departamento.nombre }}
                                     </mat-option>
                                 </mat-select>
@@ -621,7 +621,7 @@
                                     <mat-option disabled [value]="'seleccione'">Seleccione
                                     </mat-option>
                                     <mat-option *ngFor="
-                                            let departamento of dataInicial?.deparamentosGenerales
+                                            let departamento of dataInicial?.departamentos
                                         " [value]="departamento.codigo">{{ departamento.nombre }}
                                     </mat-option>
                                 </mat-select>
@@ -1022,13 +1022,25 @@
                         <div class="grid gap-3  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                             <mat-form-field class="w-full  ">
                                 <mat-label>Ocupación</mat-label>
-                                <mat-select formControlName="ocupacio">
+                                <mat-select formControlName="ocupacion">
                                     <mat-option *ngFor="let ocupacion of dataInicial?.ocupaciones"
                                         [value]="ocupacion.codigo">
                                         {{ocupacion.nombre}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.ocupacio.errors?.required">
+                                <mat-error *ngIf="form.controls.ocupacion.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field >
+                                <mat-label>Tipo de pensión</mat-label>
+                                <mat-select formControlName="pension">
+                                    <mat-option *ngFor="let tipoPension of dataInicial?.tiposPension"
+                                        [value]="tipoPension.codigo">
+                                        {{tipoPension.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.pension.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1124,8 +1136,8 @@
                                 <input matInput type="text"
                                     matTooltip="Ingresar la suma total de los ingresos por concepto de asignación adicional, visible en el volante de nómina"
                                     [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
-                                    formControlName="otrosIngreso">
-                                <mat-error *ngIf="form.controls.otrosIngreso.errors?.required">
+                                    formControlName="otrosIngresos">
+                                <mat-error *ngIf="form.controls.otrosIngresos.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
@@ -1787,10 +1799,10 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <mat-tab>
+                <!-- <mat-tab>
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera-micro></app-grid-cartera-micro>
-                </mat-tab>
+                </mat-tab> -->
                 <!-- <mat-tab *ngIf="(fabricaDatos != 'CM') && (!permisoEditar)">
                     <ng-template matTabLabel>Listado de negociaciones</ng-template>
                     <app-grid-cartera-negociacion></app-grid-cartera-negociacion>
