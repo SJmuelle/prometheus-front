@@ -200,3 +200,7 @@ mat-step-header.mat-focus-indicator{
     border-radius: 15px;
 
 }
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }

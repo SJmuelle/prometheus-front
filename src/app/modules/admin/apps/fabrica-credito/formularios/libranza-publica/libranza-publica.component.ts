@@ -11,12 +11,13 @@ import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalConfirmarDatosOTPComponent } from '../modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
 import { fuseAnimations } from '@fuse/animations';
+import { GenericasService } from 'app/core/services/genericas.service';
 
 @Component({
     selector: 'app-libranza-publica',
     templateUrl: './libranza-publica.component.html',
     styleUrls: ['./libranza-publica.component.scss'],
-    animations  : fuseAnimations,
+    animations: fuseAnimations,
 })
 export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     @ViewChild('input1') input1!: ElementRef<HTMLInputElement>;
@@ -46,6 +47,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     fechaActual: any = moment().locale('co');
     mayorDeEdadFecha: any = moment().locale('co').subtract('18', 'years');
     public contador: number = 180;
+    public salarioMinimo: number;
     otpValidado: boolean = false;
     changeTextOTP: boolean = false;
     timerInterval: any;
@@ -55,7 +57,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
     constructor(private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private el: ElementRef,
         private _formularioCreditoService: FormularioCreditoService,
-        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog) { }
+        private _libranzaService: LibranzaPublicaService, private _dialog: MatDialog,private _genericaServices: GenericasService) { }
 
 
     ngAfterViewInit() {
@@ -135,6 +137,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
 
         this.cargueInicial()
+        this.getSalarioMinimo();
         this.agregarValidaciones()
     }
 
@@ -168,22 +171,26 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('fechaVinculacion')?.enable({ emitEvent: true, onlySelf: true })
                 this.datosLaborares.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
+
+                this.datosLaborares.get('pension')?.setValidators(null)
+                this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
             }
             else {
                 if (e === 'PENSI') {
                     this.datosLaborares.get('pension')?.setValidators([Validators.required, Validators.min(0)])
                     this.datosLaborares.get('pension')?.enable({ emitEvent: true, onlySelf: true })
-                } else {
-                    this.datosLaborares.get('pension')?.setValidators(null)
-                    this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+
+
+                    this.datosLaborares.get('tipoContrato')?.setValidators(null)
+                    this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
+                    this.datosLaborares.get('fechaVinculacion')?.setValidators(null)
+                    this.datosLaborares.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
+                    this.datosLaborares.get('cargo')?.setValidators(null)
+                    this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
                 }
-                this.datosLaborares.get('tipoContrato')?.setValidators(null)
-                this.datosLaborares.get('tipoContrato')?.disable({ emitEvent: true, onlySelf: true })
-                this.datosLaborares.get('fechaVinculacion')?.setValidators(null)
-                this.datosLaborares.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
-                this.datosLaborares.get('cargo')?.setValidators(null)
-                this.datosLaborares.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
             }
+
+
         })
 
         this.datosLaborares.get('cargo').valueChanges.subscribe((e: string) => {
@@ -194,6 +201,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             else {
                 this.datosLaborares.get('otrosIngreso')?.setValidators(null)
                 this.datosLaborares.get('otrosIngreso')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        this.validationOTPForm.get('numeroOTP').valueChanges.subscribe((e: string) => {
+            if(e.length === 6 && !this.otpValidado ){
+                this.validarCodigo()
             }
         })
     }
@@ -296,18 +309,29 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     }
 
     guardar() {
-        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue(), ...this.validationOTPForm.getRawValue() }
+        const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue() }
 
         this.formatearDatosAntesDeEnviar(dataToSend)
+       
+        console.log('Data formateada', dataToSend);
+        
+        this._libranzaService.guardarFormularioCorto(dataToSend).subscribe(rep => {
 
-
-        console.log(dataToSend, 'datos a enviar');
+            console.log(dataToSend, 'Respuesta de la api');
+        }, err => {
+            Swal.fire('Error', 'Error al guardar ' + err?.error?.msg, 'error')
+        })
 
     }
 
     formatearDatosAntesDeEnviar(formData) {
         formData.primerNombre = formData.primerNombre?.trim()
         formData.primerApellido = formData.primerApellido?.trim()
+
+        formData.numeroSolicitud =  this.numeroSolicitudTemporal
+
+
+        this.formatearDatos(formData);
     }
 
     onStepChange($e) {
@@ -323,17 +347,19 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 console.log('datos recibidos', data);
                 this.numeroSolicitudTemporal = data.data.numeroSolicitud
             })
+        }else if($e.previouslySelectedIndex === 1){
+            this.datosBasicos.get('celular').setValue(this.datosBasicos.get('celular').value)
         }
     }
 
 
 
-    preCargueDeDatos(){
+    preCargueDeDatos() {
         const tipoDocumento = this.datosBasicos.get('tipoDocumento').value
         const documento = this.datosBasicos.get('documento').value
 
-        if(tipoDocumento && documento){
-            this._libranzaService.consultarDatosSolicitudConDocumento({tipoDocumento, documento}).subscribe(rep => {
+        if (tipoDocumento && documento) {
+            this._libranzaService.consultarDatosSolicitudConDocumento({ tipoDocumento, documento }).subscribe(rep => {
                 console.log('api responde con ', rep);
                 this.datosBasicos.patchValue(rep.data);
             })
@@ -353,7 +379,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         }, 1000)
     }
 
-    updateOTPInput(){
+    updateOTPInput() {
         const num1 = this.input1.nativeElement.value;
         const num2 = this.input2.nativeElement.value;
         const num3 = this.input3.nativeElement.value;
@@ -362,18 +388,18 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         const num6 = this.input6.nativeElement.value;
 
 
-        this.validationOTPForm.controls.numeroOTP.setValue(num1+num2+num3+num4+num5+num6);
+        this.validationOTPForm.controls.numeroOTP.setValue(num1 + num2 + num3 + num4 + num5 + num6);
         console.log('dato OTP', this.validationOTPForm.controls.numeroOTP.value);
 
     }
 
-    atualizarDatosOTP(){
-        const datos = {...this.datosBasicos.getRawValue()}
+    atualizarDatosOTP() {
+        const datos = { ...this.datosBasicos.getRawValue() }
 
         this.actualizandoDatosOTP = true;
         this._libranzaService.actualizarDatosBasicosOTP(datos).subscribe(rep => {
-          console.log('respuesta', rep);
-          this.actualizandoDatosOTP = false;
+            console.log('respuesta', rep);
+            this.actualizandoDatosOTP = false;
         })
     }
 
@@ -382,7 +408,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal,
                 tipo: 'T',
-                tipoOTP : "AUTORIZACION"
+                tipoOTP: "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this.solicitarOTP = true;
@@ -410,10 +436,46 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.validandoOTPLoading = false;
             }, err => {
                 Swal.fire('Error',
-                'Error a validar del OTP: ' + err.msg)
+                    'Error al validar del OTP','error').then(()=> {
+                        this.validandoOTPLoading = false;
+                        this.borrarOTPNumbers()
+                    })
             })
         }
 
+    }
+
+    borrarOTPNumbers(): void {
+        this.input1.nativeElement.value = ''
+        this.input2.nativeElement.value = ''
+        this.input3.nativeElement.value = ''
+        this.input4.nativeElement.value = ''
+        this.input5.nativeElement.value = ''
+        this.input6.nativeElement.value = ''
+
+    }
+
+    formatearDatos(datos: any){
+        datos.salarioBasico = Number(datos.salarioBasico);
+        datos.otrosIngreso = Number(datos.otrosIngreso);
+        datos.descuentoNomina = Number(datos.descuentoNomina);
+
+        datos.plazo = 0;
+        datos.valorSolicitado = 0;
+
+        // verificacion
+        datos.aceptoCentrales = 'S'
+        datos.aceptoTerminos = 'S'
+        datos.aceptoVeracidad = 'S'
+
+    }
+
+    private getSalarioMinimo() {
+        this._genericaServices.getSalarioBasico().subscribe(({ data }) => {
+            this.salarioMinimo = data.salarioMinimo;
+
+            this.datosLaborares.get('salarioBasico').setValidators([Validators.required, Validators.min(data.salarioMinimo)])
+        })
     }
 
     ngOnDestroy() {

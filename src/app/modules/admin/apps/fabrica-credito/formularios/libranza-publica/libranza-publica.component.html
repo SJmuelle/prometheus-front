@@ -1,4 +1,4 @@
-<div class="bg-white h-screen sm:pb-40 md:pb-15 pb-40 overflow-auto px-3 rounded-lg shadow w-full y-100" cdkScrollable>
+<div class="bg-white h-screen sm:pb-40 md:pb-15 pb-40 overflow-auto md:px-3 sm:px-3 rounded-lg shadow w-full y-100" cdkScrollable>
     <div class="flex flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
 
         <!-- Title and action buttons -->
@@ -171,7 +171,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
-                        <mat-label>¿ En cúal empresa trabajas?</mat-label>
+                        <mat-label>¿ En cúal empresa trabajas o fuiste pensionado?</mat-label>
                         <mat-select formControlName="pagaduria">
                             <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias" [value]="pagaduria.codigo">
                                 {{pagaduria.nombre}}
@@ -230,6 +230,9 @@
                         <mat-error *ngIf="datosLaborares.controls.salarioBasico.errors?.required">
                             Este campo es requerido.
                         </mat-error>
+                        <mat-error *ngIf="datosLaborares.controls.salarioBasico.errors?.min">
+                            El valor ingresado No puede ser menor a un (1) SMMLV
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Otros ingresos del volante (AA)</mat-label>
@@ -263,7 +266,7 @@
             </form>
         </mat-step>
         <mat-step [stepControl]="validationOTPForm">
-            <ng-template matStepLabel>Código OTP</ng-template>
+            <ng-template matStepLabel>Autorizaciones</ng-template>
 
             <h2 mat-dialog-title class="px-3">Confirmación de datos OTP</h2>
             <mat-dialog-content class="mat-typography heightResponse">
@@ -278,7 +281,7 @@
                                 <strong class="max-w-full md:w-auto whitespace-normal">Verifica que el email y el celular esté bien escrito.</strong>
                                 <div class="max-w-full  md:w-auto whitespace-normal">
                                     La persona que recibe el código OTP lo recibirá al número
-                                    <strong class="text-gray-800 text-md">{{datosBasicos.get('celular').value }}
+                                    <strong class="text-gray-800 text-md">{{datosBasicos.get('celular').value | mask: '(000) 000 00 00'}}
                                     </strong> y al correo
 
                                     <strong class="text-gray-800 text-md"> {{datosBasicos.get('email').value }}
@@ -309,7 +312,7 @@
                                 <mat-form-field class="md:w-4/6 w-full md:pl-12 pl-0  fuse-mat-dense">
                                     <span matPrefix class="flex justify-center items-center h-full"><mat-icon
                                             svgIcon="heroicons_solid:phone"></mat-icon></span>
-                                    <input matInput type="text" autocomplete="off" [value]="datosBasicos.value.celular"
+                                    <input  matInput type="text" autocomplete="off"
                                         formControlName="celular" mask="(000) 000 00 00">
                                     <mat-error *ngIf="datosBasicos.controls.celular.errors?.required">
                                         Este campo es requerido.
@@ -318,9 +321,9 @@
                                         Debe comenzar en 3 y tener 10 digitos
                                     </mat-error>
                                 </mat-form-field>
-                                <div class="md:w-2/6 w-full md:pr-12 pr-0">
+                                <div class="md:w-2/6 w-full md:pr-12 pr-0 flex justify-center items-start">
                                     <div (click)="atualizarDatosOTP()"
-                                        class="flex justify-center gap-2 items-start rounded-3xl cursor-pointer hover:bg-gray-200 p-2">
+                                        class="flex justify-center gap-2 items-start rounded-3xl cursor-pointer hover:bg-gray-200 p-2 border-2">
                                         <mat-icon svgIcon="heroicons_outline:check-circle"></mat-icon>
                                         <span class="leading-6">Actualizar</span>
                                     </div>
@@ -357,64 +360,59 @@
                                 </div>
 
 
-                                <div class="flex justify-center items-center w-full gap-4">
-                                    <div class="w-button h-20 flex flex-row items-center justify-center   ">
-
-                                        <button [disabled]="contador !== 180 || !numeroSolicitudTemporal || actualizandoDatosOTP"
-                                            mat-raised-button (click)="solicitarCodigo()"
-                                            class="w-button sm:w-auto rounded-xl" color="primary" mat-stroked-button>
-                                            {{changeTextOTP ? 'Reenviar código OTP' : 'Solicitar código OTP'}}
-                                        </button>
-                                    </div>
-                                    <div class="w-button h-20  flex flex-row items-center justify-center">
-
-                                        <button mat-raised-button (click)="validarCodigo()" class="w-button sm:w-auto rounded-xl" color="primary"
-                                            mat-stroked-button [disabled]="this.validationOTPForm.invalid || !numeroSolicitudTemporal || validandoOTPLoading || otpValidado || !solicitarOTP">
-                                            Verificar OTP
-                                        </button>
-                                    </div>
-                                </div>
+                                
                                 <div class="w-full grid grid-cols-1 gap-4">
 
                                     <div class="flex flex-row justify-between w-full gap-2">
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input1 (change)="updateOTPInput()" type="text"
+                                            <input #input1 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input2 (change)="updateOTPInput()" type="text"
+                                            <input #input2 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input3 (change)="updateOTPInput()" type="text"
+                                            <input #input3 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input4 (change)="updateOTPInput()" type="text"
+                                            <input #input4 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10 h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input5 (change)="updateOTPInput()" type="text"
+                                            <input #input5 (change)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                         <div
                                             class="w-10  h-10 sm:w-15 sm:h-15 flex-auto lg:flex-0 flex flex-row border-blue-400 border rounded-md">
-                                            <input #input6 (keyup)="updateOTPInput()" type="text"
+                                            <input #input6 (keyup)="updateOTPInput()" type="number"
                                                 class="w-full h-full text-center" maxlength="1">
                                         </div>
 
                                     </div>
 
+                                </div>
+
+                                <div class="flex justify-center items-center w-full gap-4">
+                                    <div class="w-button h-20 flex flex-row items-center justify-center   ">
+
+                                        <button [disabled]="contador !== 180 || !numeroSolicitudTemporal || actualizandoDatosOTP || validandoOTPLoading"
+                                            mat-raised-button (click)="solicitarCodigo()"
+                                            class="w-button sm:w-auto rounded-xl" color="primary" mat-stroked-button>
+                                            {{changeTextOTP ? 'Reenviar código OTP' : 'Solicitar código OTP'}}
+                                        </button>
+                                    </div>
                                 </div>
                                 <div *ngIf="otpValidado" @zoomIn class="w-full grid-cols-1 gap-2 flex justify-center items-center">
                                     <mat-icon class="text-green-400 icon-size-10" svgIcon="heroicons_solid:check-circle"></mat-icon>
