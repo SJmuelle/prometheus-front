@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSelectChange } from '@angular/material/select';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import Swal from 'sweetalert2';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-gestion-fabrica-libranza-publica',
@@ -25,6 +26,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     public agendaActual: string;
     public actividadEconomica: string;
     public unidadNegocio: any;
+    permisoEditar: boolean;
 
     fechaActual: any = moment().locale("co");
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -41,13 +43,14 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     constructor(private _fabricaCreditoService: FabricaCreditoService,
         private _formularioCreditoService: FormularioCreditoService, private fb: FormBuilder,private route: ActivatedRoute
         , private fabricaCreditoService: FabricaCreditoService,private departamentosCiudadesService: DepartamentosCiudadesService,
-        private el: ElementRef) { 
+        private el: ElementRef,public _permisosService: PermisosService) { 
             this.createFormulario();
         }
 
     ngOnInit(): void {
         this.cargueInicial();
         this.getFabricaCreditoAgenda(this.numeroSolicitud,this.identificacion);
+        
     }
 
     private cargueInicial() {
@@ -154,7 +157,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             plazo: ['', [Validators.required]],
             descripcionTipo: [''],
             aplicaCodeudor: [''],
-            valorSolicitadoWeb: ['', [Validators.required, Validators.min(0)]],
+            valorSolicitadoWeb: [''],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
             valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
@@ -169,7 +172,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             clausulaAnticurrupcionClaracionAuto: [''],
             
             ocupacion: [''],
-            pension: [''],
+            tipoPension: [''],
             pagaduria: ['', Validators.required],
             otraPagaduria: [''],
             tipoContrato: [''],
@@ -231,16 +234,22 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
+                this.permisoEditar = !this._permisosService.permisoPorModuleTrazabilidad()
+        if (!this.permisoEditar) {
+            this.form.disable();
+        }
                 this.formatearDataInicial();
                 // this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 // this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
-                // this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
-                // this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
-                // this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico : 'N')
-                // this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
-                // this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
-                // this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
-                // this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+
+                // por defecto poner algunos select en NO
+                 this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
+                 this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
+                 this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico : 'N')
+                 this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
+                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
+                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
+                 this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
@@ -419,6 +428,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             }, 200);
         } else {
           //  this.onPostDatos();
+          console.log('datos a enviar ', this.form.getRawValue());
         }
     }
 
@@ -478,7 +488,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.form.get('fechaVinculacion').disable()
         this.form.get('cargo').disable()
         this.form.get('otrosIngresos').disable()
-        this.form.get('pension').disable()
+        this.form.get('tipoPension').disable()
 
 
         // validaciones dinamicas
@@ -502,13 +512,13 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
                 this.form.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
 
-                this.form.get('pension')?.setValidators(null)
-                this.form.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoPension')?.setValidators(null)
+                this.form.get('tipoPension')?.disable({ emitEvent: true, onlySelf: true })
             }
             else {
                 if (e === 'PENSI') {
-                    this.form.get('pension')?.setValidators([Validators.required, Validators.min(0)])
-                    this.form.get('pension')?.enable({ emitEvent: true, onlySelf: true })
+                    this.form.get('tipoPension')?.setValidators([Validators.required, Validators.min(0)])
+                    this.form.get('tipoPension')?.enable({ emitEvent: true, onlySelf: true })
 
 
                     this.form.get('tipoContrato')?.setValidators(null)
@@ -611,7 +621,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         })
         this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
             this.marginTopInputDynamic()
-            if (e === 'N') {
+            if (e === 'N' && this.form.get('legalCargoPublico').value === 'S') {
                 this.form.get('fechaDesvinculacionPublico')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionPublico')?.enable({ emitEvent: true, onlySelf: true })
             }
@@ -663,7 +673,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         })
         this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
             this.marginTopInputDynamic()
-            if (e === 'N') {
+            if (e === 'N' && this.form.get('legalPersonalExpuesta').value === 'S') {
                 this.form.get('fechaDesvinculacionExpuesta')?.setValidators([Validators.required, this.validatedDate.bind(this)])
                 this.form.get('fechaDesvinculacionExpuesta')?.enable({ emitEvent: true, onlySelf: true })
             }
@@ -683,6 +693,52 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('otroIngresoDeclaracionAuto')?.setValidators(null)
                 this.form.get('otroIngresoDeclaracionAuto')?.disable({ emitEvent: true, onlySelf: true })
+            }
+        })
+
+        // conyuge form si aplica Casado o union libre
+        this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
+            this.marginTopInputDynamic()
+            if (e === 'CA' || e === 'UL') {
+                console.log('enabled');
+                this.form.get('primerNombreConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
+                this.form.get('primerNombreConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('primerApellidoConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
+                this.form.get('primerApellidoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+
+                this.form.get('segundoNombreConyuge')?.setValidators([Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
+                this.form.get('segundoNombreConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('segundoApellidoConyuge')?.setValidators([Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
+                this.form.get('segundoApellidoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+
+                this.form.get('tipoDocumentoConyuge')?.setValidators([Validators.required])
+                this.form.get('tipoDocumentoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('identificacionConyuge')?.setValidators([Validators.minLength(5), Validators.maxLength(10)])
+                this.form.get('identificacionConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('celularConyuge')?.setValidators([Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
+                this.form.get('celularConyuge')?.enable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoEmpleoConyuge')?.setValidators([Validators.required])
+                this.form.get('tipoEmpleoConyuge')?.enable({ emitEvent: true, onlySelf: true })
+            }
+            else {
+                console.log('disabled');
+                
+                this.form.get('primerNombreConyuge')?.setValidators(null)
+                this.form.get('primerNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('primerApellidoConyuge')?.setValidators(null)
+                this.form.get('primerApellidoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoDocumentoConyuge')?.setValidators(null)
+                this.form.get('tipoDocumentoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('identificacionConyuge')?.setValidators(null)
+                this.form.get('identificacionConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('celularConyuge')?.setValidators(null)
+                this.form.get('celularConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('tipoEmpleoConyuge')?.setValidators(null)
+                this.form.get('tipoEmpleoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('segundoNombreConyuge')?.setValidators(null)
+                this.form.get('segundoApellidoConyuge')?.setValidators(null)
+                this.form.get('segundoNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
+                this.form.get('segundoApellidoConyuge')?.disable({ emitEvent: true, onlySelf: true })    
             }
         })
 
