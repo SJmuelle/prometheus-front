@@ -29,6 +29,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
 
     form: FormGroup;
+    numeroOTP: string;
     datosBasicos: FormGroup;
     datosLaborares: FormGroup;
     validationOTPForm: FormGroup;
