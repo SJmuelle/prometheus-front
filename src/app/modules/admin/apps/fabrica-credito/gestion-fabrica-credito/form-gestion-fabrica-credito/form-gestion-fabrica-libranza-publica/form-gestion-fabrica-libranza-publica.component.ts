@@ -33,7 +33,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     public identificacion: string = this.route.snapshot.paramMap.get('id');
 
     public ciudades: any;
-    public ciudadesNacimiento$: Observable<any>;
+    public ciudadesNacimiento: any;
     public ciudadesNegocio: any;
     public barrios: any;
     public barriosNegocio: any;
@@ -369,7 +369,9 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
      * @description: Obtiene listado de ciudades nacimiento
      */
     private getCiudadesNacimiento(codigo: string): void {
-        this.ciudadesNacimiento$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.departamentosCiudadesService.getCiudades(codigo).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+            this.ciudadesNacimiento = rep;
+        })
         this.form.get('codigoMunicipioNacimiento').setValue('')
     }
 
