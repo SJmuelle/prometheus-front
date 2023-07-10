@@ -90,7 +90,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         });
 
         this.datosLaborares = this.fb.group({
-            ocupacio: ['', [Validators.required]],
+            ocupacion: ['', [Validators.required]],
             pagaduria: ['', [Validators.required]],
             otraPagaduria: [''],
             tipoContrato: [''],
@@ -101,7 +101,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             cargo: [''],
             pension: [''],
             salarioBasico: ['', [Validators.required, Validators.min(0)]],
-            otrosIngreso: [''],
+            otrosIngresos: [''],
             descuentoNomina: ['', [Validators.required]],
 
         });
@@ -147,7 +147,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this.datosLaborares.get('tipoContrato').disable()
         this.datosLaborares.get('fechaVinculacion').disable()
         this.datosLaborares.get('cargo').disable()
-        this.datosLaborares.get('otrosIngreso').disable()
+        this.datosLaborares.get('otrosIngresos').disable()
         this.datosLaborares.get('pension').disable()
 
 
@@ -163,7 +163,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             }
         })
 
-        this.datosLaborares.get('ocupacio').valueChanges.subscribe((e: string) => {
+        this.datosLaborares.get('ocupacion').valueChanges.subscribe((e: string) => {
             if (e === "EPLDO") {
                 this.datosLaborares.get('tipoContrato')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('tipoContrato')?.enable({ emitEvent: true, onlySelf: true })
@@ -195,12 +195,12 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
         this.datosLaborares.get('cargo').valueChanges.subscribe((e: string) => {
             if (e === "2" || e === "3" || e === "5") {
-                this.datosLaborares.get('otrosIngreso')?.setValidators([Validators.required, Validators.min(0)])
-                this.datosLaborares.get('otrosIngreso')?.enable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('otrosIngresos')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosLaborares.get('otrosIngresos')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
-                this.datosLaborares.get('otrosIngreso')?.setValidators(null)
-                this.datosLaborares.get('otrosIngreso')?.disable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('otrosIngresos')?.setValidators(null)
+                this.datosLaborares.get('otrosIngresos')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
 
@@ -457,7 +457,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
     formatearDatos(datos: any){
         datos.salarioBasico = Number(datos.salarioBasico);
-        datos.otrosIngreso = Number(datos.otrosIngreso);
+        datos.otrosIngresos = Number(datos.otrosIngresos);
         datos.descuentoNomina = Number(datos.descuentoNomina);
 
         datos.plazo = 0;
