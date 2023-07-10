@@ -420,14 +420,7 @@
                             <mat-form-field>
                                 <mat-label>Fecha de nacimiento </mat-label>
                                 <input matInput placeholder='DD/MM/YYYY' [matDatepicker]="fechaNacimiento"
-                                    [formControlName]="'fechaNacimiento'" (dateChange)="
-                                        validacionCampos(
-                                            'Fecha de nacimiento',
-                                            'Este campo modifica el motor de decisión y políticas SARC',
-                                            'fechaNacimiento',
-                                            'STRING'
-                                        )
-                                    " />
+                                    [formControlName]="'fechaNacimiento'" />
                                 <mat-datepicker-toggle matSuffix [for]="fechaNacimiento">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #fechaNacimiento></mat-datepicker>
@@ -470,7 +463,7 @@
                                 </mat-error>
                             </mat-form-field>
 
-                            <ng-container *ngIf="ciudadesExpedicion">
+                            <ng-container *ngIf="ciudadesNacimiento">
                                 <mat-form-field>
                                     <mat-label>Ciudad de nacimiento</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="
@@ -688,7 +681,7 @@
                                 <mat-label>Tipo de via</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'direccionTipoVia'"
                                     (selectionChange)="
-                                        form.controls.direccionResidencial.setValue(
+                                        form.controls.direccionResidencia.setValue(
                                             form.controls.direccionTipoVia
                                                 .value +
                                                 ' ' +
@@ -727,7 +720,7 @@
                             <mat-form-field>
                                 <mat-label>Via principal</mat-label>
                                 <input matInput type="text" [formControlName]="'direccionViaPrincipal'" (keyup)="
-                                        form.controls.direccionResidencial.setValue(
+                                        form.controls.direccionResidencia.setValue(
                                             form.controls.direccionTipoVia
                                                 .value +
                                                 ' ' +
@@ -759,7 +752,7 @@
                             <mat-form-field>
                                 <mat-label>Número vía</mat-label>
                                 <input matInput type="text" [formControlName]="'direccionNumeroVia'" (keyup)="
-                                        form.controls.direccionResidencial.setValue(
+                                        form.controls.direccionResidencia.setValue(
                                             form.controls.direccionTipoVia
                                                 .value +
                                                 ' ' +
@@ -790,7 +783,7 @@
                             <mat-form-field>
                                 <mat-label>Distancia vía</mat-label>
                                 <input matInput type="text" [formControlName]="'direccionDistanciaVia'" (keyup)="
-                                        form.controls.direccionResidencial.setValue(
+                                        form.controls.direccionResidencia.setValue(
                                             form.controls.direccionTipoVia
                                                 .value +
                                                 ' ' +
@@ -822,7 +815,7 @@
                         <mat-form-field class="sm:col-span-1 md:col-span-1">
                             <mat-label>Complemento</mat-label>
                             <input (keyup)="
-                                    form.controls.direccionResidencial.setValue(
+                                    form.controls.direccionResidencia.setValue(
                                         form.controls.direccionTipoVia.value +
                                             ' ' +
                                             form.controls.direccionViaPrincipal
@@ -843,7 +836,7 @@
                         </mat-form-field>
                         <mat-form-field class="sm:col-span-1 md:col-span-1 mat-form-field-disabled">
                             <mat-label>Dirección completa</mat-label>
-                            <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
+                            <input matInput type="text" [formControlName]="'direccionResidencia'" readonly="true" />
                         </mat-form-field>
 
 
@@ -872,22 +865,22 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Personas a cargo</mat-label>
-                                <input matInput type="text" [formControlName]="'personasACargo'" />
+                                <input matInput type="number" [formControlName]="'personasCargo'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
-                                        form.controls.personasACargo.errors
+                                        form.controls.personasCargo.errors
                                             ?.required
                                     ">
                                     Este campo es requerido.
                                 </mat-error>
                                 <mat-error *ngIf="
-                                        form.controls.personasACargo.errors?.min
+                                        form.controls.personasCargo.errors?.min
                                     ">
                                     No puede ser menor de 0
                                 </mat-error>
                                 <mat-error *ngIf="
-                                        form.controls.personasACargo.errors
+                                        form.controls.personasCargo.errors
                                             ?.pattern
                                     ">
                                     Solo se aceptan números
@@ -1105,23 +1098,23 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Clave de volante de pago</mat-label>
-                                <input matInput type="text" [formControlName]="'claveVolantePago'" />
+                                <input matInput type="text" [formControlName]="'claveVolante'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
-                                        form.controls.claveVolantePago.errors
+                                        form.controls.claveVolante.errors
                                             ?.pattern
                                     ">
                                     Solo se permiten caracteres alfanumericos.
                                 </mat-error>
                                 <mat-error *ngIf="
-                                        form.controls.claveVolantePago.errors
+                                        form.controls.claveVolante.errors
                                             ?.maxl
                                             ength
                                     ">
                                     No puedes escribir más de 50 caracteres
                                 </mat-error>
                                 <mat-error *ngIf="
-                                        form.controls.claveVolantePago.errors
+                                        form.controls.claveVolante.errors
                                             ?.required
                                     ">
                                     Este campo es requerido.
@@ -1172,14 +1165,14 @@
 
                             <mat-form-field>
                                 <mat-label>¿Es declarante de renta?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'declaraRenta'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'declarante'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">SI </mat-option>
                                     <mat-option [value]="'N'">NO </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="
-                                        form.controls.declaraRenta.errors
+                                        form.controls.declarante.errors
                                             ?.required
                                     ">
                                     Este campo es requerido.
@@ -1667,7 +1660,7 @@
                                 <mat-label>¿Es responsable de declarar renta y
                                     complementarios?
                                 </mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'declaraRenta'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'declarante'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">SI </mat-option>
@@ -1677,7 +1670,7 @@
                                 </mat-icon>
                                 <mat-error *ngIf="
                                         form.controls
-                                            .declaraRenta
+                                            .declarante
                                             .errors?.required
                                     ">
                                     Este campo es requerido.

@@ -10,6 +10,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ciudades.service';
 import Swal from 'sweetalert2';
 import { PermisosService } from 'app/core/services/permisos.service';
+import { LibranzaPublicaService } from 'app/core/services/libranza-publica.service';
 
 @Component({
     selector: 'app-form-gestion-fabrica-libranza-publica',
@@ -41,16 +42,16 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     public plazosCredito: any;
 
     constructor(private _fabricaCreditoService: FabricaCreditoService,
-        private _formularioCreditoService: FormularioCreditoService, private fb: FormBuilder,private route: ActivatedRoute
-        , private fabricaCreditoService: FabricaCreditoService,private departamentosCiudadesService: DepartamentosCiudadesService,
-        private el: ElementRef,public _permisosService: PermisosService) { 
-            this.createFormulario();
-        }
+        private _formularioCreditoService: FormularioCreditoService, private fb: FormBuilder, private route: ActivatedRoute
+        , private fabricaCreditoService: FabricaCreditoService, private departamentosCiudadesService: DepartamentosCiudadesService,
+        private el: ElementRef, public _permisosService: PermisosService, private _libranzaService: LibranzaPublicaService) {
+        this.createFormulario();
+    }
 
     ngOnInit(): void {
         this.cargueInicial();
-        this.getFabricaCreditoAgenda(this.numeroSolicitud,this.identificacion);
-        
+        this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion);
+
     }
 
     private cargueInicial() {
@@ -62,9 +63,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             if (resp) {
                 this.dataInicial = resp.data
                 console.log('data inicial', resp.data);
-                
+
             }
-        })}
+        })
+    }
 
     /**
      * @description :creando el formulario
@@ -97,7 +99,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
             // numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            personasCargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this), this.validateExpedicion.bind(this)]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
@@ -107,7 +109,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             codigoMunicipioNacimiento: ['', Validators.required],
             codigoCiudad: ['', Validators.required],
             barrioResidencia: ['', Validators.required],
-            direccionResidencial: [''],
+            direccionResidencia: [''],
             direccionTipoVia: ['', [Validators.required]],
             direccionViaPrincipal: ['', [Validators.required, Validators.min(0)]],
             direccionNumeroVia: ['', [Validators.required, Validators.min(0)]],
@@ -170,7 +172,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             actividadNoDesignada: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            
+
             ocupacion: [''],
             tipoPension: [''],
             pagaduria: ['', Validators.required],
@@ -178,17 +180,17 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             tipoContrato: [''],
             fechaVinculacion: [''],
             cargo: [''],
-            claveVolantePago: ['', [Validators.required, Validators.maxLength(50),Validators.pattern(/^[\w\s]*$/)]],
+            claveVolante: ['', [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\w\s]*$/)]],
             salarioBasico: [''],
             otrosIngresos: [''],
             descuentoNomina: [''],
             totalIngresosLaborales: [''],
-            declaraRenta: ['N', [Validators.required]],
+            declarante: ['N', [Validators.required]],
             codigoAsesor: ['']
         },
         );
 
-        
+
         this.agregarValidaciones();
     }
 
@@ -235,21 +237,21 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
                 this.permisoEditar = !this._permisosService.permisoPorModuleTrazabilidad()
-        if (!this.permisoEditar) {
-            this.form.disable();
-        }
+                if (!this.permisoEditar) {
+                    this.form.disable();
+                }
                 this.formatearDataInicial();
                 // this.form.controls.tipoVeredaNegocio.setValue(data.tipoVeredaNegocio === '' ? '2' : data.tipoVeredaNegocio);
                 // this.form.controls.tipoVereda.setValue(data.tipoVereda === '' ? '2' : data.tipoVereda);
 
                 // por defecto poner algunos select en NO
-                 this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
-                 this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
-                 this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico : 'N')
-                 this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
-                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
-                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
-                 this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+                this.form.controls['legalCargoPublico'].setValue(data.legalCargoPublico ? data.legalCargoPublico : 'N')
+                this.form.controls['legalPersonalExpuesta'].setValue(data.legalPersonalExpuesta ? data.legalPersonalExpuesta : 'N')
+                this.form.controls['legalCargoPartidoPolitico'].setValue(data.legalCargoPartidoPolitico ? data.legalCargoPartidoPolitico : 'N')
+                this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
+                this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
+                this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
+                this.form.controls['declarante'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
@@ -315,10 +317,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         }
     }
 
-     /**
-     * @description: Departamento de nacimiento
-     */
-     public seleccionDepartamento(event: MatSelectChange): void {
+    /**
+    * @description: Departamento de nacimiento
+    */
+    public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
         // eliminar la ciudad y barrio anterior
@@ -341,8 +343,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesExpedicion(codigo);
-         // eliminar la ciudad
-         this.form.get('codigoCiudadExpedicion').setValue('')
+        // eliminar la ciudad
+        this.form.get('codigoCiudadExpedicion').setValue('')
     }
 
     /**
@@ -368,9 +370,15 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     /**
      * @description: Obtiene listado de ciudades nacimiento
      */
-    private getCiudadesNacimiento(codigo: string): void {
-        this.departamentosCiudadesService.getCiudades(codigo).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+    private getCiudadesNacimiento(codigo: any): void {
+        let cod = codigo;
+        if (codigo.value) {
+            cod = codigo.value;
+        }
+        this.departamentosCiudadesService.getCiudades(cod).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.ciudadesNacimiento = rep;
+            console.log('ress', rep);
+
         })
         this.form.get('codigoMunicipioNacimiento').setValue('')
     }
@@ -402,10 +410,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         })
     }
 
-      /**
-     * @description: Obtiene el listado de barrios del negocio
-     */
-      private getBarriosNegocio(codigo: string): void {
+    /**
+   * @description: Obtiene el listado de barrios del negocio
+   */
+    private getBarriosNegocio(codigo: string): void {
         this.departamentosCiudadesService.getBarrios(codigo).subscribe(rep => {
             this.barriosNegocio = rep;
         })
@@ -413,10 +421,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
 
 
 
-     /**
-     * @description: Obtener limite de plazos por el valor de credito
-     */
-     private getPlazosCredito(valorCredito: number) {
+    /**
+    * @description: Obtener limite de plazos por el valor de credito
+    */
+    private getPlazosCredito(valorCredito: number) {
         this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
             this.plazosCredito = rep
         })
@@ -429,9 +437,27 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.scrollToFirstInvalidControl();
             }, 200);
         } else {
-          //  this.onPostDatos();
-          console.log('datos a enviar ', this.form.getRawValue());
+            this.onPostDatos();
+
         }
+    }
+
+    onPostDatos() {
+        const datos = this.form.getRawValue();
+
+        datos.tipoTercero = 'T'
+
+        // dates
+        datos.fechaNacimiento = moment(datos.fechaNacimiento.toString()).format('YYYY-MM-DD');
+        datos.fechaExpedicion = moment(datos.fechaExpedicion.toString()).format('YYYY-MM-DD');
+        datos.fechaDesvinculacionPublico = datos.fechaDesvinculacionPublico ? moment(datos.fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
+        datos.fechaDesvinculacionExpuesta = datos.fechaDesvinculacionExpuesta ? moment(datos.fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD') : "0099-01-01";
+
+        // boolean
+        datos.declarante = datos.declarante === 'S' 
+        datos.estrato = Number(datos.estrato);
+        datos.totalIngresosLaborales = Number(datos.totalIngresosLaborales);
+        console.log('datos a enviar ', datos);
     }
 
     public formatearDataInicial(): void {
@@ -443,25 +469,25 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
         this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
         this.form.controls.fechaVinculacion.value === '0099-01-01' && this.form.controls.fechaVinculacion.setValue('');
-        
-        console.log(this.form.controls.fechaVinculacion.value === '0099-01-01' + this.form.controls.fechaVinculacion.value );
-        
+
+        console.log(this.form.controls.fechaVinculacion.value === '0099-01-01' + this.form.controls.fechaVinculacion.value);
+
     }
-   
+
 
     /**
      * @description hace scroll al primerer input invalido, puede ser un input o select
      */
     private scrollToFirstInvalidControl() {
-        
+
         Object.keys(this.form.controls).forEach(key => {
             const controlErrors: any = this.form.get(key).errors;
             if (controlErrors != null) {
-              Object.keys(controlErrors).forEach(keyError => {
-               console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-              });
+                Object.keys(controlErrors).forEach(keyError => {
+                    console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+                });
             }
-          });
+        });
 
         let firstInvalidControl: HTMLElement = this.el.nativeElement.querySelector('.mat-form-field-invalid')?.querySelector('.mat-input-element');
 
@@ -724,7 +750,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             }
             else {
                 console.log('disabled');
-                
+
                 this.form.get('primerNombreConyuge')?.setValidators(null)
                 this.form.get('primerNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('primerApellidoConyuge')?.setValidators(null)
@@ -740,7 +766,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('segundoNombreConyuge')?.setValidators(null)
                 this.form.get('segundoApellidoConyuge')?.setValidators(null)
                 this.form.get('segundoNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
-                this.form.get('segundoApellidoConyuge')?.disable({ emitEvent: true, onlySelf: true })    
+                this.form.get('segundoApellidoConyuge')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
 

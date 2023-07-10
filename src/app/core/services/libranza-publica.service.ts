@@ -68,4 +68,15 @@ export class LibranzaPublicaService {
             datos
         );
     }
+
+    /**
+        * @description: guardar tab titular
+        */
+    public guardarTitular(datos): Observable<any> {
+        // return this._http.get(`${this._appSettings.fabricaDatos.url.agendaReferenciacion}`);
+        return this._http.post(
+            this._appSettings.libranzaPublica.url.guardarTitular,
+            datos
+        );
+    }
 }
