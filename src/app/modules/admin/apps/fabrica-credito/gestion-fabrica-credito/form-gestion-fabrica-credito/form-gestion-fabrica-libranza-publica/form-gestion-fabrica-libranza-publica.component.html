@@ -54,7 +54,7 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
-                        <mat-select  [value]="'seleccione'" [formControlName]="'destinoCredito'">
+                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option *ngFor="
@@ -1034,13 +1034,13 @@
                             </mat-form-field>
                             <mat-form-field >
                                 <mat-label>Tipo de pensión</mat-label>
-                                <mat-select formControlName="pension">
+                                <mat-select formControlName="tipoPension">
                                     <mat-option *ngFor="let tipoPension of dataInicial?.tiposPension"
                                         [value]="tipoPension.codigo">
                                         {{tipoPension.nombre}}
                                     </mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="form.controls.pension.errors?.required">
+                                <mat-error *ngIf="form.controls.tipoPension.errors?.required">
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>

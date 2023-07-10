@@ -99,7 +99,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
             fechaFinalizacionContrato: [''],
             cargo: [''],
-            pension: [''],
+            tipoPension: [''],
             salarioBasico: ['', [Validators.required, Validators.min(0)]],
             otrosIngresos: [''],
             descuentoNomina: ['', [Validators.required]],
@@ -148,7 +148,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this.datosLaborares.get('fechaVinculacion').disable()
         this.datosLaborares.get('cargo').disable()
         this.datosLaborares.get('otrosIngresos').disable()
-        this.datosLaborares.get('pension').disable()
+        this.datosLaborares.get('tipoPension').disable()
 
 
         // validaciones dinamicas
@@ -172,13 +172,13 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
                 this.datosLaborares.get('cargo')?.setValidators([Validators.required, Validators.min(0)])
                 this.datosLaborares.get('cargo')?.enable({ emitEvent: true, onlySelf: true })
 
-                this.datosLaborares.get('pension')?.setValidators(null)
-                this.datosLaborares.get('pension')?.disable({ emitEvent: true, onlySelf: true })
+                this.datosLaborares.get('tipoPension')?.setValidators(null)
+                this.datosLaborares.get('tipoPension')?.disable({ emitEvent: true, onlySelf: true })
             }
             else {
                 if (e === 'PENSI') {
-                    this.datosLaborares.get('pension')?.setValidators([Validators.required, Validators.min(0)])
-                    this.datosLaborares.get('pension')?.enable({ emitEvent: true, onlySelf: true })
+                    this.datosLaborares.get('tipoPension')?.setValidators([Validators.required, Validators.min(0)])
+                    this.datosLaborares.get('tipoPension')?.enable({ emitEvent: true, onlySelf: true })
 
 
                     this.datosLaborares.get('tipoContrato')?.setValidators(null)
@@ -312,12 +312,10 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         const dataToSend = { ...this.datosBasicos.getRawValue(), ...this.datosLaborares.getRawValue() }
 
         this.formatearDatosAntesDeEnviar(dataToSend)
-       
-        console.log('Data formateada', dataToSend);
-        
+        Swal.fire({ title: 'Cargando', html: 'Guardando información, no cierre la pestaña', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
         this._libranzaService.guardarFormularioCorto(dataToSend).subscribe(rep => {
 
-            console.log(dataToSend, 'Respuesta de la api');
+            Swal.fire('Guardado', 'Solicitud guardada con éxito', 'success')
         }, err => {
             Swal.fire('Error', 'Error al guardar ' + err?.error?.msg, 'error')
         })
