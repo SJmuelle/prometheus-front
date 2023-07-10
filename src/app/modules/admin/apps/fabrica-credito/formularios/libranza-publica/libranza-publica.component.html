@@ -160,13 +160,13 @@
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de pensión</mat-label>
-                        <mat-select formControlName="pension">
+                        <mat-select formControlName="tipoPension">
                             <mat-option *ngFor="let tipoPension of dataInicial?.tiposPension"
                                 [value]="tipoPension.codigo">
                                 {{tipoPension.nombre}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="datosLaborares.controls.pagaduria.errors?.required">
+                        <mat-error *ngIf="datosLaborares.controls.tipoPension.errors?.required">
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
