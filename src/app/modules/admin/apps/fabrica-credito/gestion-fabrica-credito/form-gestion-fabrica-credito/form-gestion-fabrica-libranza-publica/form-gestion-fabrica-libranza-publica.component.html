@@ -467,7 +467,7 @@
                                 <mat-form-field>
                                     <mat-label>Ciudad de nacimiento</mat-label>
                                     <mat-select [value]="'seleccione'" [formControlName]="
-                                            'codigoMunicipioNacimiento'
+                                            'codigoCiudadNacimiento'
                                         ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
@@ -479,7 +479,7 @@
                                     <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="
-                                            form.controls.codigoMunicipioNacimiento
+                                            form.controls.codigoCiudadNacimiento
                                                 .errors?.required
                                         ">
                                         Este campo es requerido.
@@ -865,22 +865,22 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Personas a cargo</mat-label>
-                                <input matInput type="number" [formControlName]="'personasCargo'" />
+                                <input matInput type="number" [formControlName]="'personasACargo'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
-                                        form.controls.personasCargo.errors
+                                        form.controls.personasACargo.errors
                                             ?.required
                                     ">
                                     Este campo es requerido.
                                 </mat-error>
                                 <mat-error *ngIf="
-                                        form.controls.personasCargo.errors?.min
+                                        form.controls.personasACargo.errors?.min
                                     ">
                                     No puede ser menor de 0
                                 </mat-error>
                                 <mat-error *ngIf="
-                                        form.controls.personasCargo.errors
+                                        form.controls.personasACargo.errors
                                             ?.pattern
                                     ">
                                     Solo se aceptan números
@@ -1165,14 +1165,14 @@
 
                             <mat-form-field>
                                 <mat-label>¿Es declarante de renta?</mat-label>
-                                <mat-select [value]="'seleccione'" [formControlName]="'declarante'">
+                                <mat-select [value]="'seleccione'" [formControlName]="'declaraRenta'">
                                     <mat-option disabled [value]="''">Seleccione
                                     </mat-option>
                                     <mat-option [value]="'S'">SI </mat-option>
                                     <mat-option [value]="'N'">NO </mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="
-                                        form.controls.declarante.errors
+                                        form.controls.declaraRenta.errors
                                             ?.required
                                     ">
                                     Este campo es requerido.

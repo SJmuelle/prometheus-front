@@ -99,14 +99,14 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
             // numeroHijos: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
-            personasCargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
+            personasACargo: ['', [Validators.required, Validators.minLength(0), Validators.min(0), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)]],
             fechaExpedicion: ['', [Validators.required, this.validatedDate.bind(this), this.validateExpedicion.bind(this)]],
             codigoDepartamentoExpedicion: ['', Validators.required],
             codigoCiudadExpedicion: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
             codigoDepartamento: ['', [Validators.required]],
             codigoDepartamentoNacimiento: ['', Validators.required],
-            codigoMunicipioNacimiento: ['', Validators.required],
+            codigoCiudadNacimiento: ['', Validators.required],
             codigoCiudad: ['', Validators.required],
             barrioResidencia: ['', Validators.required],
             direccionResidencia: [''],
@@ -129,7 +129,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             tipoCuentaBancaria: [''],
             entidadBancaria: [''],
             numeroCuentaBancaria: [''],
-            autorizacionBanco: [''],
+            autorizacionBanco: [false],
             legalCargoPublico: ['N', Validators.required],
             entidadPublico: [''],
             vinculadoActualPublico: [''],
@@ -185,6 +185,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             otrosIngresos: [''],
             descuentoNomina: [''],
             totalIngresosLaborales: [''],
+            declaraRenta: ['N', [Validators.required]],
             declarante: ['N', [Validators.required]],
             codigoAsesor: ['']
         },
@@ -251,7 +252,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.controls['legalOperacionExtranjera'].setValue(data.legalOperacionExtranjera ? data.legalOperacionExtranjera : 'N')
                 this.form.controls['legalOperacionCriptomoneda'].setValue(data.legalOperacionCriptomoneda ? data.legalOperacionCriptomoneda : 'N')
                 this.form.controls['legalDesarrollaActividadApnfd'].setValue(data.legalDesarrollaActividadApnfd ? data.legalDesarrollaActividadApnfd : 'N')
-                this.form.controls['declarante'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
+                this.form.controls['declaraRenta'].setValue(data.declaraRenta ? data.declaraRenta : 'N')
 
                 this.getPlazosCredito(this.form.controls.valorSolicitado.value)
 
@@ -380,7 +381,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             console.log('ress', rep);
 
         })
-        this.form.get('codigoMunicipioNacimiento').setValue('')
+        this.form.get('codigoCiudadNacimiento').setValue('')
     }
 
     /**
@@ -458,6 +459,49 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         datos.estrato = Number(datos.estrato);
         datos.totalIngresosLaborales = Number(datos.totalIngresosLaborales);
         console.log('datos a enviar ', datos);
+
+        Swal.fire({
+            title: 'Guardar información',
+            text: '¿Está seguro de guardar información?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.postFormularioFabrica(datos);
+            }
+        });
+    }
+
+     /**
+     * @description: Guardado de datos fabrica
+     */
+     private postFormularioFabrica(datos: any): void {
+
+        Swal.fire('Cargando', 'Guardando información'); Swal.showLoading();
+        setTimeout(() => {
+            this.fabricaCreditoService.postDatosFabricaCredita(datos).pipe(takeUntil(this.unSubscribe$))
+                .subscribe(() => {
+                    Swal.fire(
+                        'Completado',
+                        'Información guardada con éxito',
+                        'success',
+                    ).then(rep => {
+                        location.reload()
+                    });
+                    //   this.router.navigate(['/credit-factory/agenda-completion']);
+                }, (error) => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ha ocurrido un error',
+                        text: error.error.msg,
+                    });
+                });
+        }, 1);
+
     }
 
     public formatearDataInicial(): void {
