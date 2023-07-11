@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalConfirmarDatosOTPComponent } from '../modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
 import { fuseAnimations } from '@fuse/animations';
 import { GenericasService } from 'app/core/services/genericas.service';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
     selector: 'app-libranza-publica',
@@ -27,8 +28,11 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     @ViewChild('input5') input5!: ElementRef<HTMLInputElement>;
     @ViewChild('input6') input6!: ElementRef<HTMLInputElement>;
 
+    @ViewChild('stepper') stepper: MatStepper;
+
 
     form: FormGroup;
+    numeroOTP: string;
     datosBasicos: FormGroup;
     datosLaborares: FormGroup;
     validationOTPForm: FormGroup;
@@ -220,7 +224,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     public focusNextInput(currentInput: HTMLInputElement, nextInput: HTMLInputElement): void {
         currentInput.addEventListener('input', ($e) => {
             if (currentInput.value.length === 1) {
-                console.log('cambiando de ', currentInput.value);
                 nextInput.focus();
             }
         });
@@ -275,7 +278,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         this._libranzaService.cargueInicialFormularioCorto(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log('data inicial', this.dataInicial);
 
             }
         })
@@ -339,11 +341,21 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
             datosAEnviar.unidadNegocio = 22
             datosAEnviar.tipoTercero = 'T'
 
-            console.log('datos a enviar', datosAEnviar);
 
             this._libranzaService.guardarDatosBasicos(datosAEnviar).subscribe(data => {
-                console.log('datos recibidos', data);
-                this.numeroSolicitudTemporal = data.data.numeroSolicitud
+
+                if(data.data.msg !== 'OK'){
+                    Swal.fire({
+                        icon: 'info',
+                        text: data.data.msg,
+                    }).then(rep => {
+                        this.stepper.selectedIndex = 0;
+                        this.datosBasicos.reset();
+
+                    });
+                }else{
+                    this.numeroSolicitudTemporal = data.data.numeroSolicitud
+                }
             })
         }else if($e.previouslySelectedIndex === 1){
             this.datosBasicos.get('celular').setValue(this.datosBasicos.get('celular').value)
@@ -358,7 +370,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
         if (tipoDocumento && documento) {
             this._libranzaService.consultarDatosSolicitudConDocumento({ tipoDocumento, documento }).subscribe(rep => {
-                console.log('api responde con ', rep);
                 this.datosBasicos.patchValue(rep.data);
             })
         }
@@ -387,7 +398,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
 
         this.validationOTPForm.controls.numeroOTP.setValue(num1 + num2 + num3 + num4 + num5 + num6);
-        console.log('dato OTP', this.validationOTPForm.controls.numeroOTP.value);
 
     }
 
@@ -396,7 +406,6 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
         this.actualizandoDatosOTP = true;
         this._libranzaService.actualizarDatosBasicosOTP(datos).subscribe(rep => {
-            console.log('respuesta', rep);
             this.actualizandoDatosOTP = false;
         })
     }

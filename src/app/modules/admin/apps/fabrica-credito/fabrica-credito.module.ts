@@ -20,7 +20,7 @@ registerLocaleData(localEs,'es')
         GestionFabricaCreditoModule,
         MatSortModule,
         MatTableModule,
-        MatSortModule
+        MatSortModule,
     ]
 })
 export class FabricaCreditoModule { }
