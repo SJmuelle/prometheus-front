@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { DecisionService } from 'app/core/services/decision.service';
+import { StepperOrientation } from '@angular/cdk/stepper';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatStepper } from '@angular/material/stepper';
 @Component({
     selector: 'app-microcredito',
     templateUrl: './microcredito.component.html',
@@ -17,6 +20,13 @@ import { DecisionService } from 'app/core/services/decision.service';
 })
 export class MicrocreditoComponent implements OnInit, OnDestroy {
     form: FormGroup;
+    datosBasicos: FormGroup;
+    datosNegocio: FormGroup;
+    datosDelCredito: FormGroup;
+    verificacionOTP: FormGroup;
+
+    @ViewChild('stepper') stepper: MatStepper;
+
     dataInicial;
     dataGeneralIncial;
     listadoActividadEconomica: any[];
@@ -37,8 +47,18 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     public otpValidado: boolean = false;
     public validandoOTPLoading: boolean = false;
     public changeTextOTP: boolean = false;
+    orientationStep: StepperOrientation;
     fechaActual: any = moment().locale('co');
     public contador: number = 180;
+
+    currentScreenSize: string;
+    displayNameMap = new Map([
+        [Breakpoints.XSmall, 'XSmall'],
+        [Breakpoints.Small, 'Small'],
+        [Breakpoints.Medium, 'Medium'],
+        [Breakpoints.Large, 'Large'],
+        [Breakpoints.XLarge, 'XLarge'],
+    ]);
 
     constructor(
         private fb: FormBuilder,
@@ -49,11 +69,12 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         private genericaServices: GenericasService,
         public _permisosService: PermisosService,
         private decisionService: DecisionService,
+        private breakpointObserver: BreakpointObserver
     ) { }
 
     ngOnInit(): void {
         this.cargueInicial();
-        this.form = this.fb.group({
+        this.datosBasicos = this.fb.group({
             tipoDocumento: ['', [Validators.required]],
             identificacion: ['', [Validators.required, Validators.pattern('^[0-9]{5,10}$')]],
             primerNombre: ['', [Validators.required, Validators.pattern('^[a-zA-zÀ-úA-Z \u00f1\u00d1]+$')]],
@@ -63,24 +84,39 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
-            genero: [''],
+        })
+
+        this.datosNegocio = this.fb.group({
+            genero: [''], // no se usa
             tipoActividad: ['', [Validators.required]],
             camaraComercio: ['', [Validators.required]],
             tipoLocal: ['', [Validators.required]],
-            actividadEconomica: ['', [Validators.required]],
+            antiguedadLocal: [0],
             actividadEspecifica: ['', [Validators.required]],
             antiguedadActividad: ['', [Validators.required, Validators.min(0)]],
             antiguedadNegocio: ['', [Validators.required, Validators.min(0)]],
             departamentoNegocio: ['', [Validators.required]],
             ciudadNegocio: ['', [Validators.required]],
             barrioNegocio: ['', [Validators.required]],
+            actividadEconomica: ['', [Validators.required]],
+        })
+
+        this.datosDelCredito = this.fb.group({
             valorCredito: ['', [Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)]],
             plazoCredito: ['', [Validators.required]],
             asesorMicro: [''],
-            antiguedadLocal: [0],
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
+            numeroOTP: [''],
+        })
+
+        this.verificacionOTP = this.fb.group({
+            numeroOTP: [''],
+        })
+
+        this.form = this.fb.group({
+        
             numeroOTP: [''],
             numOTP1: [''],
             numOTP2: [''],
@@ -90,21 +126,44 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             numOTP6: [''],
         });
 
+        this.breakpointObserver
+            .observe([
+                Breakpoints.XSmall,
+                Breakpoints.Small,
+                Breakpoints.Medium,
+                Breakpoints.Large,
+                Breakpoints.XLarge,
+            ])
+            .pipe(takeUntil(this.unSubscribe$))
+            .subscribe(result => {
+
+                for (const query of Object.keys(result.breakpoints)) {
+                    if (result.breakpoints[query]) {
+                        this.currentScreenSize = this.displayNameMap.get(query) ?? 'Unknown';
+                        if (this.currentScreenSize === 'XSmall') {
+                            this.orientationStep = 'vertical'
+                        } else {
+                            this.orientationStep = 'horizontal'
+                        }
+                    }
+                }
+            });
+
         this.agregarValidaciones();
 
-        this.form.get('nivelEstudio')?.valueChanges.subscribe((e: string) => {
+        this.datosBasicos.get('nivelEstudio')?.valueChanges.subscribe((e: string) => {
             this.cargueActividadEconomica()
         });
-        this.form.get('tipoActividad')?.valueChanges.subscribe((e: string) => {
+        this.datosNegocio.get('tipoActividad')?.valueChanges.subscribe((e: string) => {
             this.cargueActividadEconomica()
         });
-        this.form.get('camaraComercio')?.valueChanges.subscribe((e: string) => {
+        this.datosNegocio.get('camaraComercio')?.valueChanges.subscribe((e: string) => {
             this.cargueActividadEconomica()
         });
 
-        this.form.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
+        this.datosDelCredito.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
 
-            this.getPlazosCredito(!!valor ? valor : '0' )
+            this.getPlazosCredito(!!valor ? valor : '0')
         })
 
         setTimeout(() => {
@@ -136,6 +195,42 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
     }
 
+    onStepChange($e) {
+        if ($e.previouslySelectedIndex === 0 && this.datosBasicos.valid) {
+            const datosAEnviar = { ...this.datosBasicos.getRawValue() }
+
+            datosAEnviar.unidadNegocio = 22
+            datosAEnviar.tipoTercero = 'T'
+
+
+            const data = {
+                celular: this.form.get('celular').value,
+                identificacion: this.form.get('identificacion').value,
+                tipoDocumento: this.form.get('tipoDocumento').value,
+                email: this.form.get('email').value
+            }
+
+            if (data.celular && data.identificacion && data.identificacion && data.email) {
+                this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                    this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
+                    if (rep.data.resultado !== 'OK') {
+                        Swal.fire({
+                            icon: 'info',
+                            text: rep.data.msg,
+                        }).then(rep => {
+                            this.stepper.selectedIndex = 0;
+                            this.form.reset();
+                        });
+                    }
+                })
+            }
+        }
+
+
+
+
+    }
+
     public preSolicitud() {
         const data = {
             celular: this.form.get('celular').value,
@@ -144,7 +239,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             email: this.form.get('email').value
         }
 
-        if(data.celular && data.identificacion && data.identificacion && data.email ){
+        if (data.celular && data.identificacion && data.identificacion && data.email) {
             this._formularioCreditoService.postPreSolicitud(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
                 this.numeroSolicitudTemporal = rep.data.numeroSolicitud;
                 if (rep.data.resultado !== 'OK') {
@@ -157,10 +252,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                 }
             })
         }
-
-
     }
-
     ngAfterViewChecked(): void {
         //Called after every check of the component's view. Applies to components only.
         //Add 'implements AfterViewChecked' to the class.
@@ -185,32 +277,32 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this.genericaServices.getSalarioBasico().subscribe(({ data }) => {
             this.salarioMinimo = data.salarioMinimo;
 
-            this.form.get('valorCredito').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
+            this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
         })
     }
 
-    marginTopInputDynamic(){
-        if(window.innerWidth < 600){
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
             setTimeout(() => {
                 let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
 
-            elementToMargin.forEach((element: HTMLElement) => {
+                elementToMargin.forEach((element: HTMLElement) => {
 
-                let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
-                titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
 
-                let titleSpanHeigth = titleSpan?.clientHeight
-                element.style.width =  '20px'+ ' !important';
-                element.style['marginTop'] = '20px !important'
-                element.style.setProperty('margin-top',(titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 +'px' : titleSpanHeigth+'px') : '30px'), 'important')
-                if(titleSpanHeigth > 30){
-                    if(titleSpanHeigth > 50){
-                        titleSpan.style.top = '-60px'
-                    }else{
-                        titleSpan.style.top = '-42px'
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
                     }
-                }
-           });
+                });
             }, 1000);
         }
     }
@@ -247,20 +339,20 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     private agregarValidaciones() {
 
-        this.form.get('tipoLocal').valueChanges.subscribe((e: string) => {
+        this.datosNegocio.get('tipoLocal').valueChanges.subscribe((e: string) => {
             if (e !== '6') {
-                this.form.get('antiguedadLocal')?.setValidators([Validators.required, Validators.min(0)])
-                this.form.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
+                this.datosNegocio.get('antiguedadLocal')?.setValidators([Validators.required, Validators.min(0)])
+                this.datosNegocio.get('antiguedadLocal')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
-                this.form.get('antiguedadLocal')?.setValidators(null)
-                this.form.get('antiguedadLocal')?.disable({ emitEvent: true, onlySelf: true })
+                this.datosNegocio.get('antiguedadLocal')?.setValidators(null)
+                this.datosNegocio.get('antiguedadLocal')?.disable({ emitEvent: true, onlySelf: true })
             }
         })
     }
 
     public listarBarrios() {
-        const datos = this.form.getRawValue();
+        const datos = this.datosBasicos.getRawValue();
         const { ciudadNegocio } = datos;
         this._formularioCreditoService.listarBarriosMicro(ciudadNegocio).subscribe((resp: any) => {
             if (resp) {
@@ -317,8 +409,8 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.cargueActividadEconomica();
 
                     setTimeout(() => {
-                        this.form.controls['ciudadNegocio'].setValue(resp.data?.ciudadNegocio);
-                        this.form.controls['barrioNegocio'].setValue(resp.data?.barrioNegocio.toString());
+                        this.datosBasicos.controls['ciudadNegocio'].setValue(resp.data?.ciudadNegocio);
+                        this.datosBasicos.controls['barrioNegocio'].setValue(resp.data?.barrioNegocio.toString());
                         this.form.controls['actividadEconomica'].setValue(resp.data?.actividadEconomica);
                     }, 2500);
 
@@ -345,7 +437,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
      */
     public getPlazosCredito(valorCredito: any) {
 
-         this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+        this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
             this.plazosCredito = rep
 
         })
@@ -357,7 +449,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             const data = {
                 numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
                 tipo: 'T',
-                tipoOTP : "AUTORIZACION"
+                tipoOTP: "AUTORIZACION"
             }
             this.validandoOTPLoading = true;
             this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
@@ -420,7 +512,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
         Swal.fire({ title: 'Cargando', html: 'Guardando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
         this._formularioCreditoService.postDatos(data).pipe(takeUntil(this.unSubscribe$)).subscribe((datos) => {
-            if(datos.data.resultado === 'OK'){
+            if (datos.data.resultado === 'OK') {
                 const dataAEnviar = {
                     numeroSolicitud: this.numeroSolicitud ? this.numeroSolicitud : this.numeroSolicitudTemporal,
                     destino: 'C',
@@ -428,7 +520,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     concepto: ''
                 }
 
-                this.decisionService.postSMSUnidades(dataAEnviar).subscribe(respuesta =>{
+                this.decisionService.postSMSUnidades(dataAEnviar).subscribe(respuesta => {
                     Swal.fire(
                         'Completado',
                         datos.data.mensaje,
@@ -440,7 +532,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     })
                 })
 
-            }else{
+            } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error al guardar',
@@ -540,9 +632,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     irAtras() {
-        if(this._permisosService.ruta === 'agenda-comercial'){
+        if (this._permisosService.ruta === 'agenda-comercial') {
             this.router.navigate([`/credit-factory/agenda-comercial`]);
-        }else{
+        } else {
             this.router.navigate([`/credit-factory/agenda-venta-digital`]);
         }
     }

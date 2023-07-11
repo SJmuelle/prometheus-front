@@ -44,10 +44,10 @@ import { SharedModule } from 'app/shared/shared.module';
     MicrocreditoComponent,
     LibranzaPublicaComponent,
     ModalConfirmarDatosOTPComponent,
+    
   ],
   imports: [
     CommonModule,
-    SharedModule,
     FormulariosRoutingModule,
     MatExpansionModule,
         MatFormFieldModule,
@@ -82,6 +82,7 @@ import { SharedModule } from 'app/shared/shared.module';
         MatProgressBarModule,
         GestionFabricaCreditoModule,
         MatStepperModule,
+        SharedModule
   ]
 })
 export class FormulariosModule { }

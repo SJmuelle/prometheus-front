@@ -97,7 +97,8 @@ import { NgxMaskModule } from 'ngx-mask';
         SmPaginatorPipe,
         DataTablePipe,
         TableComponent,
-        HeaderComponent
+        HeaderComponent,
+        OTPComponent
     ],
     declarations: [
         DirectionsBasicComponent,
