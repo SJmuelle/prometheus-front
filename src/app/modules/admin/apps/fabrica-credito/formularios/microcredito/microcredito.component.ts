@@ -370,8 +370,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         } else {
             this.scrollToFirstInvalidControl();
         }
-
-
     }
 
     validarCodigo(): void {

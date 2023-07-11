@@ -33,14 +33,21 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
+import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { ModalConfirmarDatosOTPComponent } from './modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
+import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
-    MicrocreditoComponent
+    MicrocreditoComponent,
+    LibranzaPublicaComponent,
+    ModalConfirmarDatosOTPComponent,
   ],
   imports: [
     CommonModule,
+    SharedModule,
     FormulariosRoutingModule,
     MatExpansionModule,
         MatFormFieldModule,
@@ -73,7 +80,8 @@ import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-
         MatSliderModule,
         NgxMaskModule.forRoot(),
         MatProgressBarModule,
-        GestionFabricaCreditoModule
+        GestionFabricaCreditoModule,
+        MatStepperModule,
   ]
 })
 export class FormulariosModule { }

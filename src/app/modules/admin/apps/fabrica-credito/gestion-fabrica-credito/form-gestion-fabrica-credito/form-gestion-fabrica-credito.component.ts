@@ -308,6 +308,8 @@ export class FormGestionFabricaCreditoComponent implements OnInit, OnDestroy {
                 this.form.patchValue(data);
                 this.agenda_fabrica = data.agenda;
                 this.unidadNegocio = data.unidadNegocio;
+                // this.tipoCredito = data.tipoCredito;
+                
                 this.dialog_a_mostrar = ((data.cantidadCheckList != data.totalCheckList) ? 'CHECKLIST' : 'SIGUIENTE');
                 this.createValidacion()
                 if (data.tipoDocumento === 'NIT') {

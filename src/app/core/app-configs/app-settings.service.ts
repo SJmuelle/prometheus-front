@@ -144,6 +144,16 @@ export class AppSettingsService {
             autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
         }
     };
+
+    public libranzaPublica = {
+        url: {
+            guardeBasico: EndPoints.uri('/generic/lp-guardar-datos-basico'),
+            cargueInicialFormularioCorto: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
+            reCalcularDatosOTP: EndPoints.uri('/generic/guardado-datos-basicos-otp'),
+            consultaIdentificacionSolicitud: EndPoints.uri('/generic/qry/consulta-identificacion-solicitud'),
+            guardarFormularioCorto: EndPoints.uri('/credito/libranzap/guardar-solicitud-libranza-publica')
+        }
+    }
     /**
      * http://demo.fintra.co:8011//api-fintra/api/credito/tk/property/cards-informacion-decision
      * @description: End-point departamentos
