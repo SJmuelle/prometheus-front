@@ -15,6 +15,7 @@ import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ci
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 import moment from 'moment';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,6 +36,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public tipoVivienda$: Observable<any>;
     public subscription$: Subscription;
     public dataInicial: any;
+    public permisoEditar: boolean = false;
     public unSubscribe$: Subject<any> = new Subject<any>();
     //variables iniciales
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -57,7 +59,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private fabricaCreditoService: FabricaCreditoService,
         private _formularioCreditoService: FormularioCreditoService,
-        private el: ElementRef
+        private el: ElementRef,
+        public _permisosService: PermisosService
     ) {
         if (!this.numeroSolicitud) {
             return;
@@ -81,7 +84,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.cargueInicial();
 
         this.addValidation();
-        this.marginTopInputDynamic()
+        this.marginTopInputDynamic();
+        
+        this.permisoEditar =
+            this._permisosService.permisoPorModuleTrazabilidad();
+        if (this.permisoEditar) {
+            this.formDeudorSolidario.disable();
+        }
     }
 
     ngOnDestroy(): void {
