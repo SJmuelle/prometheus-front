@@ -34,6 +34,7 @@ import { DataTablePipe } from './pipes/data-table.pipe';
 import { HeaderComponent } from './componentes/header/header.component';
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -66,6 +67,7 @@ import { NgxMaskModule } from 'ngx-mask';
         MatSidenavModule,
         MatExpansionModule,
         MatMenuModule,
+        MatProgressBarModule,
         NgxMaskModule.forRoot(),
         // FabricaCreditoModule
 

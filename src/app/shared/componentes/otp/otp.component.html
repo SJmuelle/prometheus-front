@@ -42,7 +42,7 @@
                     <mat-form-field class="md:w-4/6 w-full md:pl-12 pl-0  fuse-mat-dense">
                         <span matPrefix class="flex justify-center items-center h-full"><mat-icon
                                 svgIcon="heroicons_solid:phone"></mat-icon></span>
-                        <input matInput type="text" autocomplete="off" formControlName="celular" mask="(000) 000 00 00">
+                        <input matInput type="text" autocomplete="off" formControlName="celular" [value]="datosBasicos.value.celular" mask="(000) 000 00 00">
                         <mat-error *ngIf="datosBasicos.controls.celular.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -79,7 +79,7 @@
 
                     <div class="flex flex-wrap gap-4">
 
-                        <div *ngIf="contador !== 180 && !otpValidado"
+                        <div *ngIf="contador !== 180 && !optValido"
                             class="w-full px-3 fuse-mat-dense flex justify-center items-center min-h-2 mt-3">
                             <mat-progress-bar style="width: 100%;" mode="determinate"
                                 [value]="(contador / 180) * 100"></mat-progress-bar>
@@ -134,14 +134,14 @@
                             <div class="w-button h-20 flex flex-row items-center justify-center   ">
 
                                 <button
-                                    [disabled]="contador !== 180 || !numeroSolicitud || actualizandoDatosOTP || validandoOTPLoading || otpValidado"
+                                    [disabled]="contador !== 180 || !numeroSolicitud || actualizandoDatosOTP || validandoOTPLoading || optValido"
                                     mat-raised-button (click)="solicitarCodigo()" class="w-button sm:w-auto rounded-xl"
                                     color="primary" mat-stroked-button>
                                     {{changeTextOTP ? 'Reenviar código OTP' : 'Solicitar código OTP'}}
                                 </button>
                             </div>
                         </div>
-                        <div *ngIf="otpValidado" @zoomIn
+                        <div *ngIf="optValido" @zoomIn
                             class="w-full grid-cols-1 gap-2 flex justify-center items-center">
                             <mat-icon class="text-green-400 icon-size-10"
                                 svgIcon="heroicons_solid:check-circle"></mat-icon>

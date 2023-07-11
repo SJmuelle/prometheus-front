@@ -24,7 +24,7 @@
             <app-fabrica-opciones *ngIf="!numeroSolicitud"></app-fabrica-opciones>
         </div>
     </div>
-    <mat-stepper [linear]="false" [orientation]="orientationStep" #stepper class="md:px-8 sm:px-0"
+    <mat-stepper [linear]="true" [orientation]="orientationStep" #stepper class="md:px-8 sm:px-0"
         (selectionChange)="onStepChange($event)">
         <mat-step [stepControl]="datosBasicos">
             <div class="bg-white  pt-6 grid grid-cols-1   ">
@@ -135,6 +135,12 @@
                                 Este campo es requerido.
                             </mat-error>
                         </mat-form-field>
+                        <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-3 mt-2 px-3 xl:col-span-3">
+                            <button mat-raised-button color="primary" type="button" matStepperNext>
+                                Siguiente
+                                <mat-icon svgIcon="arrow_right"></mat-icon>
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -260,6 +266,12 @@
                             Este campo es requerido.
                         </mat-error>
                     </mat-form-field>
+                    <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-3 mt-2 px-3 xl:col-span-3">
+                        <button mat-raised-button color="primary" type="button" matStepperNext>
+                            Siguiente
+                            <mat-icon svgIcon="arrow_right"></mat-icon>
+                        </button>
+                    </div>
                 </form>
             </div>
         </mat-step>
@@ -306,20 +318,29 @@
                         <input matInput type="text" autocomplete="off" formControlName="asesorMicro" readonly="true">
 
                     </mat-form-field>
+                    <div class="bg-white rounded flex justify-end items-center sm:col-span-1 md:col-span-3 mt-2 px-3 xl:col-span-3">
+                        <button mat-raised-button color="primary" type="button" matStepperNext>
+                            Siguiente
+                            <mat-icon svgIcon="arrow_right"></mat-icon>
+                        </button>
+                    </div>
                 </form>
             </div>
         </mat-step>
 
         <mat-step [stepControl]="verificacionOTP">
-            <ng-template matStepLabel>Verificacion</ng-template>
-            
-            <app-otp></app-otp>
+            <div class="pt-6">
+                <ng-template matStepLabel>Verificacion</ng-template>
 
-            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-18 sm:flex sm:justify-end gap-4">
-                <button mat-raised-button color="primary" type="button"
-                    [disabled]="!this.otpValidado || this.form.invalid" (click)="save()">
-                    Guardar
-                </button>
+                <app-otp [numeroSolicitud]="numeroSolicitud ? numeroSolicitud : numeroSolicitudTemporal"
+                    (otpValidado)="otpValidadoChange($event)" [datosBasicos]="datosBasicos"></app-otp>
+
+                <div class="bg-white  rounded px-8 pt-6 pb-8 mb-18 sm:flex sm:justify-end gap-4">
+                    <button mat-raised-button color="primary" type="button"
+                        [disabled]="!this.otpValidado || this.datosBasicos.invalid" (click)="save()">
+                        Guardar
+                    </button>
+                </div>
             </div>
         </mat-step>
     </mat-stepper>

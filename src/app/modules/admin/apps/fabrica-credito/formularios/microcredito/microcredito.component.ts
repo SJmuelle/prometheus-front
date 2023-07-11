@@ -182,7 +182,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     private cargueActividadEconomica() {
-        const datos = this.form.getRawValue();
+        const datos = {...this.datosBasicos.getRawValue(), ...this.datosNegocio.getRawValue()}
         const { nivelEstudio, tipoActividad, camaraComercio } = datos;
         if ((nivelEstudio) && (nivelEstudio != null) && (tipoActividad) && (tipoActividad != null) && (camaraComercio) && (camaraComercio != null)) {
             this._formularioCreditoService.cargueActividadEconomica(nivelEstudio, tipoActividad, camaraComercio).subscribe((resp: any) => {
@@ -204,10 +204,10 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
 
             const data = {
-                celular: this.form.get('celular').value,
-                identificacion: this.form.get('identificacion').value,
-                tipoDocumento: this.form.get('tipoDocumento').value,
-                email: this.form.get('email').value
+                celular: this.datosBasicos.get('celular').value,
+                identificacion: this.datosBasicos.get('identificacion').value,
+                tipoDocumento: this.datosBasicos.get('tipoDocumento').value,
+                email: this.datosBasicos.get('email').value
             }
 
             if (data.celular && data.identificacion && data.identificacion && data.email) {
@@ -231,12 +231,16 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     }
 
+    otpValidadoChange($e){
+        this.otpValidado = $e;
+    }
+
     public preSolicitud() {
         const data = {
-            celular: this.form.get('celular').value,
-            identificacion: this.form.get('identificacion').value,
-            tipoDocumento: this.form.get('tipoDocumento').value,
-            email: this.form.get('email').value
+            celular: this.datosBasicos.get('celular').value,
+            identificacion: this.datosBasicos.get('identificacion').value,
+            tipoDocumento: this.datosBasicos.get('tipoDocumento').value,
+            email: this.datosBasicos.get('email').value
         }
 
         if (data.celular && data.identificacion && data.identificacion && data.email) {
@@ -352,7 +356,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     public listarBarrios() {
-        const datos = this.datosBasicos.getRawValue();
+        const datos = this.datosNegocio.getRawValue();
         const { ciudadNegocio } = datos;
         this._formularioCreditoService.listarBarriosMicro(ciudadNegocio).subscribe((resp: any) => {
             if (resp) {
@@ -364,7 +368,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
     }
 
     public listarCiudades() {
-        const datos = this.form.getRawValue();
+        const datos = this.datosNegocio.getRawValue();
         const { departamentoNegocio } = datos;
         this._formularioCreditoService.listarCiudadesMicro(departamentoNegocio).subscribe((resp: any) => {
             if (resp) {
@@ -377,25 +381,27 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     public getAsesor() {
 
-        const cod = this.form.controls.barrioNegocio.value
-        this._formularioCreditoService.asesorMicro(cod).subscribe(rep => this.form.controls.asesorMicro.setValue(rep?.data?.resultado))
+        const cod = this.datosNegocio.controls.barrioNegocio.value
+        this._formularioCreditoService.asesorMicro(cod).subscribe(rep => this.datosDelCredito.controls.asesorMicro.setValue(rep?.data?.resultado))
     }
 
     public solicitudesFormularioSimulaciones() {
-        const datos = this.form.getRawValue();
+        const datos = {...this.datosBasicos.getRawValue(), ...this.datosNegocio.getRawValue(), ...this.datosDelCredito.getRawValue()}
         const { tipoDocumento, identificacion, } = datos;
         if ((tipoDocumento) && (identificacion)) {
             this._formularioCreditoService.cargueSolicitudesFormularioSimulaciones(tipoDocumento, identificacion, 1).subscribe((resp: any) => {
                 if (resp) {
-                    this.form.patchValue(resp.data);
+                    this.datosBasicos.patchValue(resp.data);
+                    this.datosNegocio.patchValue(resp.data);
+                    this.datosDelCredito.patchValue(resp.data);
 
                     this.dataGeneralIncial = resp.data
                     this.getPlazosCredito(resp.data?.valorCredito | 0);
-                    this.form.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
-                    this.form.controls.autorizacionCentrales.setValue(resp.data?.autorizacionCentrales === 'S');
-                    this.form.controls.clausulaVeracidad?.setValue(resp.data?.clausulaVeracidad === 'S');
-                    this.form.controls.terminosCondiciones.setValue(resp.data?.terminosCondiciones === 'S');
-                    this.form.controls.fechaNacimiento.setValue(resp.data?.fechaNacimiento === '0099-01-01' ? '' : resp.data?.fechaNacimiento)
+                    this.datosDelCredito.controls.valorCredito.setValue(resp.data?.valorCredito | 0)
+                    this.datosDelCredito.controls.autorizacionCentrales.setValue(resp.data?.autorizacionCentrales === 'S');
+                    this.datosDelCredito.controls.clausulaVeracidad?.setValue(resp.data?.clausulaVeracidad === 'S');
+                    this.datosDelCredito.controls.terminosCondiciones.setValue(resp.data?.terminosCondiciones === 'S');
+                    this.datosBasicos.controls.fechaNacimiento.setValue(resp.data?.fechaNacimiento === '0099-01-01' ? '' : resp.data?.fechaNacimiento)
 
                     if (resp.data?.celular) {
                         this.preSolicitud()
@@ -409,9 +415,9 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                     this.cargueActividadEconomica();
 
                     setTimeout(() => {
-                        this.datosBasicos.controls['ciudadNegocio'].setValue(resp.data?.ciudadNegocio);
-                        this.datosBasicos.controls['barrioNegocio'].setValue(resp.data?.barrioNegocio.toString());
-                        this.form.controls['actividadEconomica'].setValue(resp.data?.actividadEconomica);
+                        this.datosNegocio.controls['ciudadNegocio'].setValue(resp.data?.ciudadNegocio);
+                        this.datosNegocio.controls['barrioNegocio'].setValue(resp.data?.barrioNegocio.toString());
+                        this.datosNegocio.controls['actividadEconomica'].setValue(resp.data?.actividadEconomica);
                     }, 2500);
 
                 }
@@ -444,46 +450,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
     }
 
-    solicitarCodigo(): void {
-        if (this.form.valid) {
-            const data = {
-                numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
-                tipo: 'T',
-                tipoOTP: "AUTORIZACION"
-            }
-            this.validandoOTPLoading = true;
-            this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
-                if (rep.status === 200) {
-                }
-                this.startTimer();
-                this.validandoOTPLoading = false;
-
-            })
-        } else {
-            this.scrollToFirstInvalidControl();
-        }
-    }
-
-    validarCodigo(): void {
-        const numero = this.form.get('numeroOTP').value;
-
-        if (numero.length === 6 && !this.otpValidado) {
-            const data = {
-                numeroSolicitud: this.numeroSolicitudTemporal ? this.numeroSolicitudTemporal : this.numeroSolicitud,
-                tipoTercero: 'T',
-                numeroOTP: numero
-            }
-
-            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
-                this.otpValidado = rep.data.resultado === 'OK'
-            }, err => {
-                this.form.get('numeroOTP').setValue('');
-            })
-        }
-
-    }
-
-
 
 
     save(): void {
@@ -494,8 +460,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             }, 200);
             return;
         }
-        let data = this.form.getRawValue();
-
+        let data = {...this.datosBasicos.getRawValue(), ...this.datosNegocio.getRawValue(), ...this.datosDelCredito.getRawValue()}
         const { barrioNegocio, valorCredito } = data;
         delete data.barrioNegocio
         data.barrioNegocio = Number(barrioNegocio)
@@ -595,40 +560,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         }
 
         firstInvalidControl?.focus(); //without smooth behavior
-    }
-
-    changeFocus() {
-        let firstInvalidControl2: HTMLElement = this.el.nativeElement.querySelector('#num2');
-        let firstInvalidControl3: HTMLElement = this.el.nativeElement.querySelector('#num3');
-        let firstInvalidControl4: HTMLElement = this.el.nativeElement.querySelector('#num4');
-        let firstInvalidControl5: HTMLElement = this.el.nativeElement.querySelector('#num5');
-        let firstInvalidControl6: HTMLElement = this.el.nativeElement.querySelector('#num6');
-
-        if (this.form.get('numOTP1').value !== '') {
-            if (this.form.get('numOTP2').value === '') {
-                firstInvalidControl2.focus();
-            } else {
-                if (this.form.get('numOTP3').value === '') {
-                    firstInvalidControl3.focus();
-                } else {
-                    if (this.form.get('numOTP4').value === '') {
-                        firstInvalidControl4.focus();
-                    } else {
-                        if (this.form.get('numOTP5').value === '') {
-                            firstInvalidControl5.focus();
-                        } else {
-                            if (this.form.get('numOTP6').value === '') {
-                                firstInvalidControl6.focus();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            let elemeOne: HTMLElement = this.el.nativeElement.querySelector('#num1');
-            elemeOne.focus();
-        }
     }
 
     irAtras() {
