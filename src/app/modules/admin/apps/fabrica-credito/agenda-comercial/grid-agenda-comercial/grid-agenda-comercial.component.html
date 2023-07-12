@@ -57,7 +57,7 @@
                             <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/logo-microcredito.png">
                             <span>Microcrédito</span>
                         </button>
-                        <button mat-menu-item (click)="navigateToLibranzaPublica()">
+                        <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
                             <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
                             <span>Libranza publica</span>
                         </button>
@@ -101,11 +101,11 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 w-full min-w-0 mt-3 px-5"
+        <div class="flex gap-6 w-full min-w-0 mt-3 py-2 px-5 scrollbar-hide max-w-full overflow-x-scroll"
             [ngClass]="mostrarTotales==false?'slide-out-top':'tilt-in-top-1'">
             <!-- totales -->
             <ng-container *ngFor="let item of totales">
-                <div class="flex flex-col flex-auto p-3 bg-card shadow rounded-2xl overflow-hidden">
+                <div class="flex flex-col flex-auto p-3 w-48 bg-card shadow rounded-2xl overflow-hidden">
                     <div class="flex items-start justify-between">
                         <div class="text-lg font-medium tracking-tight leading-6 truncate">
                             {{item.nombre_unidad_negocio}}

@@ -11,6 +11,7 @@ import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form
 import { FormDialogDevolverFabricaComponent } from '../form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import moment from 'moment';
 import { PermisosService } from 'app/core/services/permisos.service';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 
 @Component({
     selector: 'app-grid-agenda-comercial',
@@ -26,15 +27,18 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     public filtrarTabla = new FormControl('');
     public mostrarTotales: boolean = true;
     public totales: any[];
+    public rolID: number;
     constructor(
         private agendaComercialService: AgendaComercialService,
         private _matDialog: MatDialog,
         private agendaReferenciaService: AgendaReferenciacionService,
+        private _fabricaCredito: FabricaCreditoService,
         private router: Router,
         public _permisosService: PermisosService
     ) { }
 
     ngOnInit(): void {
+        this.getRolID();
         this.cambiarEstado(true);
         this.getAgendaComercial();
         this.getTotalesAgendaComercial();
@@ -207,6 +211,12 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
      */
     public cambiarEstado(estado) {
         this.mostrarTotales = estado;
+    }
+
+    public getRolID(){
+        this._fabricaCredito.getRolId().subscribe(data => {
+            this.rolID = data.data.rolId
+        })
     }
 
 

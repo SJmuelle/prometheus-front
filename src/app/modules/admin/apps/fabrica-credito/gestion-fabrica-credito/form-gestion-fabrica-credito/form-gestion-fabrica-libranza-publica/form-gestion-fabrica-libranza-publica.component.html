@@ -81,15 +81,15 @@
                     <mat-form-field >
                         <mat-label>Monto crédito</mat-label>
                         <input matInput type="text"    mask="separator.0" thousandSeparator="."
-                            [formControlName]="'valorSolicitado'" [max]="dataInicial?.ocupaciones[0].montoMaximoCredito"/>
+                            [formControlName]="'valorSolicitado'" />
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
                             Este campo es requerido.
                         </mat-error>
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.min">
-                            Monto mínimo de {{salarioMinimo}}
+                            Monto mínimo de {{dataInicial?.ocupaciones[0].montoMinimoCredito | currency: 'COP'}}
                         </mat-error>
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
-                            Monto máximo de {{dataInicial?.ocupaciones[0].montoMaximoCredito}}
+                            Monto máximo de {{dataInicial?.ocupaciones[0].montoMaximoCredito | currency: 'COP'}}
                         </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>

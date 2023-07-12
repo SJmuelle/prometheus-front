@@ -62,8 +62,9 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-                console.log('data inicial', resp.data);
 
+
+                this.form.get('valorSolicitado')?.setValidators([Validators.required, Validators.min(this.dataInicial?.ocupaciones[0].montoMinimoCredito), Validators.max(this.dataInicial?.ocupaciones[0].montoMaximoCredito)])
             }
         })
     }
@@ -162,7 +163,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             valorSolicitadoWeb: [''],
             creditoCodeudorLineas: [''],
             modificadaSolicitud: [''],
-            valorSolicitado: ['', [Validators.required, Validators.minLength(0)]],
+            valorSolicitado: ['', [Validators.required, Validators.min(2000000)]],
             destinoCredito: ['', [Validators.required]],
             codigoBarrio: ['', [Validators.required]],
             cargoPublico: [''],
@@ -835,6 +836,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     getPlazoMax(){
        return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMaximo || 144
     }
+
+
 }
 
 
