@@ -71,17 +71,17 @@
                         </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
-                    <mat-form-field >
+                    <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Valor solicitado</mat-label>
-                        <input matInput type="text" mask="separator.0" thousandSeparator="."
+                        <input matInput type="text" [readonly]="true" mask="separator.0" thousandSeparator="."
                             [formControlName]="'valorSolicitadoWeb'"  />
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                    <mat-form-field class="mat-form-field-disabled">
+                    <mat-form-field >
                         <mat-label>Monto crédito</mat-label>
-                        <input matInput type="text"  [readonly]="true"  mask="separator.0" thousandSeparator="."
-                            [formControlName]="'valorSolicitado'" />
+                        <input matInput type="text"    mask="separator.0" thousandSeparator="."
+                            [formControlName]="'valorSolicitado'" [max]="dataInicial?.ocupaciones[0].montoMaximoCredito"/>
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -89,14 +89,14 @@
                             Monto mínimo de {{salarioMinimo}}
                         </mat-error>
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
-                            Monto máximo de 100.000.000
+                            Monto máximo de {{dataInicial?.ocupaciones[0].montoMaximoCredito}}
                         </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field *ngIf="plazosCredito">
                         <mat-label>Plazo</mat-label>
-                        <input matInput type="number" [min]="plazosCredito?.data[0].plazoMinimo"
-                            [max]="plazosCredito?.data[0].plazoMaximo" [formControlName]="'plazo'" />
+                        <input matInput type="number" [min]="getPlazoMini()"
+                            [max]="getPlazoMax()" [formControlName]="'plazo'" />
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                         <mat-error *ngIf="
                                         form.controls.plazo.errors
@@ -108,13 +108,13 @@
                                 form.controls.plazo.errors
                                     ?.min
                             ">
-                            No puede ser menor a {{plazosCredito?.data[0].plazoMinimo}}
+                            No puede ser menor a {{getPlazoMini()}}
                         </mat-error>
                         <mat-error *ngIf="
                                 form.controls.plazo.errors
                                     ?.max
                             ">
-                            No puede ser mayor a {{plazosCredito?.data[0].plazoMaximo}}
+                            No puede ser mayor a {{getPlazoMax()}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field>
@@ -399,12 +399,12 @@
                                     </mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field>
+                                <mat-form-field [ngClass]="{'mat-form-field-disabled' : form.controls.tipoDocumento.value === 'CC'}">
                                     <mat-label>Nacionalidad</mat-label>
                                     <input matInput type="text" [formControlName]="'nacionalidad'"
-                                        [readonly]="form.controls.descripcionTipoDocumento.value === 'CÉDULA CIUDADANÍA'" />
+                                        [readonly]="form.controls.tipoDocumento.value === 'CC'" />
                                     <mat-icon
-                                        *ngIf="form.controls.descripcionTipoDocumento.value !== 'CÉDULA CIUDADANÍA'"
+                                        *ngIf="form.controls.tipoDocumento.value !== 'CC'"
                                         class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                     </mat-icon>
                                     <mat-error *ngIf="
@@ -836,7 +836,7 @@
                         </mat-form-field>
                         <mat-form-field class="sm:col-span-1 md:col-span-1 mat-form-field-disabled">
                             <mat-label>Dirección completa</mat-label>
-                            <input matInput type="text" [formControlName]="'direccionResidencia'" readonly="true" />
+                            <input matInput type="text" [formControlName]="'direccionResidencial'" readonly="true" />
                         </mat-form-field>
 
 
@@ -1123,7 +1123,7 @@
                             <mat-form-field>
                                 <mat-label>Salario básico o pensión del volante($)</mat-label>
                                 <span matPrefix>$</span>
-                                <input matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'"
+                                <input (change)="getTotalIngresos()" matInput type="text" [mask]="'separator.0'" [thousandSeparator]="'.'"
                                     autocomplete="off" formControlName="salarioBasico">
                                 <mat-error *ngIf="form.controls.salarioBasico.errors?.required">
                                     Este campo es requerido.
@@ -1132,7 +1132,7 @@
                             <mat-form-field>
                                 <mat-label>Otros ingresos del volante (AA)</mat-label>
                                 <span matPrefix>$</span>
-                                <input matInput type="text"
+                                <input (change)="getTotalIngresos()" matInput type="text"
                                     matTooltip="Ingresar la suma total de los ingresos por concepto de asignación adicional, visible en el volante de nómina"
                                     [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
                                     formControlName="otrosIngresos">
@@ -1151,11 +1151,11 @@
                                     Este campo es requerido.
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field>
+                            <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>Total de ingresos laborales</mat-label>
                                 <span matPrefix>$</span>
                                 <input matInput type="text"
-                                    matTooltip="El valor a ingresar debe ser diferente a los descuento de ley (seguridad social)."
+                                    [readonly]="true"
                                     [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
                                     formControlName="totalIngresosLaborales">
                                 <mat-error *ngIf="form.controls.totalIngresosLaborales.errors?.required">

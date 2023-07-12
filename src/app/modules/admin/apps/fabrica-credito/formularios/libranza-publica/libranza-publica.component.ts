@@ -273,7 +273,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
     private cargueInicial() {
         let data = {
             entidad: "CARGUE-LIBRANZA-PUBLICA",
-            unidadNegocio: 22
+            unidadNegocio: 23
         };
         this._libranzaService.cargueInicialFormularioCorto(data).subscribe((resp: any) => {
             if (resp) {
@@ -338,7 +338,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
         if ($e.previouslySelectedIndex === 0 && this.datosBasicos.valid) {
             const datosAEnviar = { ...this.datosBasicos.getRawValue() }
 
-            datosAEnviar.unidadNegocio = 22
+            datosAEnviar.unidadNegocio = 23
             datosAEnviar.tipoTercero = 'T'
 
 

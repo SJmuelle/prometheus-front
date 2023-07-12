@@ -57,7 +57,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     private cargueInicial() {
         let data = {
             entidad: "CONFIG-LIBRANZA-PUBLICA",
-            unidadNegocio: 22
+            unidadNegocio: 23
         };
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
@@ -109,7 +109,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             codigoCiudadNacimiento: ['', Validators.required],
             codigoCiudad: ['', Validators.required],
             barrioResidencia: ['', Validators.required],
-            direccionResidencia: [''],
+            direccionResidencial: [''],
             direccionTipoVia: ['', [Validators.required]],
             direccionViaPrincipal: ['', [Validators.required, Validators.min(0)]],
             direccionNumeroVia: ['', [Validators.required, Validators.min(0)]],
@@ -236,7 +236,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
+                console.log('datos form', data);
+
                 this.form.patchValue(data);
+                this.getTotalIngresos();
                 this.permisoEditar = !this._permisosService.permisoPorModuleTrazabilidad()
                 if (!this.permisoEditar) {
                     this.form.disable();
@@ -260,7 +263,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                     this.getCiudades(data.codigoDepartamento);
                 }
                 if (data.codigoDepartamentoNacimiento) {
-                    this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento);
+                    this.getCiudadesNacimiento(data.codigoDepartamentoNacimiento, false);
                 }
 
                 if (data.codigoCiudad) {
@@ -274,28 +277,31 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                     this.getCiudadesExpedicion(data.codigoDepartamentoExpedicion);
                 }
 
+                const datosSolicitud: any = {
+                    numeroSolicitud: numeroSolicitud,
+                    identificacion: identificacion
+                }
 
+                this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
+                    .subscribe(({ data }) => {
+                        Swal.close();
+                        console.log('datos fabrica', data);
+
+                        this.form.patchValue({
+                            descripcionTipo: data.descripcionTipo,
+                            codigoBarrio: data.codigoBarrio,
+                            score: data.score,
+                            tipoCredito: data.tipoCredito
+                        });
+
+                        this.agendaActual = data.agenda
+                        this.unidadNegocio = data.unidadNegocio;
+                        this.fabricaDatos = data;
+
+                    });
             });
 
-        const datosSolicitud: any = {
-            numeroSolicitud: numeroSolicitud,
-            identificacion: identificacion
-        }
 
-        this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
-            .subscribe(({ data }) => {
-                Swal.close();
-                this.form.patchValue({
-                    descripcionTipo: data.descripcionTipo,
-                    codigoBarrio: data.codigoBarrio,
-                    score: data.score
-                });
-
-                this.agendaActual = data.agenda
-                this.unidadNegocio = data.unidadNegocio;
-                this.fabricaDatos = data;
-
-            });
     }
 
     marginTopInputDynamic() {
@@ -371,7 +377,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
     /**
      * @description: Obtiene listado de ciudades nacimiento
      */
-    private getCiudadesNacimiento(codigo: any): void {
+    private getCiudadesNacimiento(codigo: any, clean: boolean = true): void {
         let cod = codigo;
         if (codigo.value) {
             cod = codigo.value;
@@ -379,9 +385,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.departamentosCiudadesService.getCiudades(cod).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.ciudadesNacimiento = rep;
             console.log('ress', rep);
-
         })
-        this.form.get('codigoCiudadNacimiento').setValue('')
+        if(clean){
+            this.form.get('codigoCiudadNacimiento').setValue('')
+        }
     }
 
     /**
@@ -453,9 +460,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         datos.fechaExpedicion = moment(datos.fechaExpedicion.toString()).format('YYYY-MM-DD');
         datos.fechaDesvinculacionPublico = datos.fechaDesvinculacionPublico ? moment(datos.fechaDesvinculacionPublico.toString()).format('YYYY-MM-DD') : "0099-01-01";
         datos.fechaDesvinculacionExpuesta = datos.fechaDesvinculacionExpuesta ? moment(datos.fechaDesvinculacionExpuesta.toString()).format('YYYY-MM-DD') : "0099-01-01";
+        datos.fechaVinculacion = moment(datos.fechaVinculacion.toString()).format('YYYY-MM-DD');
 
+        datos.nombreCompletoConyuge = `${datos.primerNombreConyuge}  ${datos.segundoNombreConyuge} ${datos.primerApellidoConyuge} ${datos.segundoApellidoConyuge}`
         // boolean
-        datos.declarante = datos.declarante === 'S' 
         datos.estrato = Number(datos.estrato);
         datos.totalIngresosLaborales = Number(datos.totalIngresosLaborales);
         console.log('datos a enviar ', datos);
@@ -814,6 +822,18 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             }
         })
 
+    }
+
+    getTotalIngresos(){
+        this.form.controls.totalIngresosLaborales.setValue(Number(this.form.controls.salarioBasico.value) + Number(this.form.controls.otrosIngresos.value))
+    }
+
+    getPlazoMini(){
+       return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMinimo || 6
+    }
+
+    getPlazoMax(){
+       return this.dataInicial?.ocupaciones.find(ocupacion => ocupacion.codigo === this.form.controls.ocupacion.value)?.plazoMaximo || 144
     }
 }
 

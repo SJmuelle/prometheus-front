@@ -15,13 +15,10 @@
         <div class="col-span-12">
             <div [ngSwitch]="unidadNegocio">
                 <div *ngSwitchCase="22">
-                    <ng-container *ngIf="tipoCredito == 1">
-                        <app-form-gestion-fabrica-libranza-publica></app-form-gestion-fabrica-libranza-publica>
-
-                    </ng-container>
-                    <ng-container *ngIf="tipoCredito != 1">
-                        <app-form-gestion-fabrica-libranza></app-form-gestion-fabrica-libranza>
-                    </ng-container>
+                    <app-form-gestion-fabrica-libranza></app-form-gestion-fabrica-libranza>
+                </div>
+                <div *ngSwitchCase="23">
+                    <app-form-gestion-fabrica-libranza-publica></app-form-gestion-fabrica-libranza-publica>
                 </div>
                 <div *ngSwitchCase="30">
                     <app-form-gestion-fabrica-consumo></app-form-gestion-fabrica-consumo>
