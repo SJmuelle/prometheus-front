@@ -147,9 +147,21 @@ export class AppSettingsService {
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
-            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
+            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp'),
+            getRolID: EndPoints.uri('/generic/qry/tk/obtener-rol-id-usuario')
         }
     };
+
+    public libranzaPublica = {
+        url: {
+            guardeBasico: EndPoints.uri('/generic/lp-guardar-datos-basico'),
+            cargueInicialFormularioCorto: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
+            reCalcularDatosOTP: EndPoints.uri('/generic/guardado-datos-basicos-otp'),
+            consultaIdentificacionSolicitud: EndPoints.uri('/generic/qry/consulta-identificacion-solicitud'),
+            guardarFormularioCorto: EndPoints.uri('/credito/libranzap/guardar-solicitud-libranza-publica'),
+            guardarTitular: EndPoints.uri('/generic/lp-tab-titular')
+        }
+    }
     /**
      * http://demo.fintra.co:8011//api-fintra/api/credito/tk/property/cards-informacion-decision
      * @description: End-point departamentos

@@ -164,6 +164,9 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
                             "unidadNegocio": this.fabricaDatos.unidadNegocio,
                             "tipoTercero": 'T'
                         }
+//                         Quitar servicio de comprobacion de campos para libranza publica,
+
+// se va a tirar cuando se reenviar/enviar con la misma validacion si es unidad de negocio 22
                         this._decisionesService.comprobacionCampos(datoComprobacion)
                             .subscribe((res2) => {
                                 this.postDecicion()

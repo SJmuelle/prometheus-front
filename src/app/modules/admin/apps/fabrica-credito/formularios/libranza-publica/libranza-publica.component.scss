@@ -1,0 +1,14 @@
+
+
+.w-button{
+    width: 160px;
+}
+
+.dinamicHeigth{
+    height: 300px !important;
+    @media screen and (max-width: 600px) {
+        margin-top: -60px !important;
+    }
+}
+
+
