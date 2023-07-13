@@ -65,9 +65,13 @@
                     {{ info_cliente.primerApellido }}
                     {{ info_cliente.segundoApellido }}
                 </div>
-                <span class="leading-none p-0" style="line-height: 1.3em !important; font-size: 13px">
+                <!-- <span class="leading-none p-0" style="line-height: 1.3em !important; font-size: 13px">
                     Identificación: {{ info_cliente.identificacion }}
-                </span>
+                </span> -->
+                <p class="font-medium">Identificación : <span>{{info_cliente.identificacion}}</span></p>
+
+                <p class="-mt-4 font-medium not-uppercase">Tipo de cliente : <span>{{info_cliente.tipoCliente}}</span>
+                </p>
                 <hr class="w-full border-t col-lg-12 col-sm-12" />
                 <div class="col-lg-12 col-sm-12">
                     <div class="row items-center" style="
@@ -148,7 +152,7 @@
                             padding-left: 3px;
                         ">
                         <div class="col-lg-1 m-0 p-0 col-sm-2">
-                            <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
+                            <mat-icon svgIcon="heroicons_outline:folder"></mat-icon>
                         </div>
                         <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
                             Segmentación
@@ -158,11 +162,8 @@
                                 line-height: 1.3em !important;
                                 font-size: 13px;
                             ">
-                            {{ info_cliente.direccion }} <br />
-                            {{ info_cliente.barrio
-                            }}{{ info_cliente.barrio == "" ? "" : "," }}
-                            {{ info_cliente.ciudad }} -
-                            {{ info_cliente.departamento }}
+                            Segmento : {{ info_cliente['segmento'] === '' ? 'Sin segmento' : info_cliente['segmento']}}
+
                         </span>
                     </div>
 
@@ -1070,7 +1071,7 @@
                                     Reporte de las Centrales
                                 </div>
                             </span>
-                            <div class="rounded-full h-9 items-center border-2 pt-1 pl-2 ">
+                            <div class="rounded-full h-10 items-center border-2 pt-2 pl-2 ">
                                 <input (keyup)="search(inputReporteC.value)" #inputReporteC type="text"
                                     class="not-uppercase w-full" autocomplete="off" name="filtrarReporteC"
                                     [(ngModel)]="filtrarReporteC" placeholder="Filtrar..." />

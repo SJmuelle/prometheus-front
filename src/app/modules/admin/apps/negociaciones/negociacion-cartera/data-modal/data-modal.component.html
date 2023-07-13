@@ -267,7 +267,7 @@
 
                             <mat-form-field class="w-full mt-2 text-lg font-semibold">
                                 <mat-label> <span class="text-lg font-semibold"> Descripción :</span></mat-label>
-                                <textarea style="resize: none;" class="font-normal" matInput
+                                <textarea [ngClass]="disabledInput ? 'text-black font-normal' : 'font-normal' " matInput
                                     formControlName="comentario"
                                     placeholder="Indique descripción de al menos 16 caracteres" rows="3"></textarea>
                             </mat-form-field>

@@ -94,6 +94,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     onTabChangedCredito(index): void {
+        this._sweetAlert.startLoading({});
         switch (index) {
             case 1:
                 this.getInformacionCodeudor(this.data.codigoNegocio);
@@ -102,7 +103,6 @@ export class ModalcreditoComponent implements OnInit {
             case 0:
                 this.getInformacionConyuge(this.data.codigoNegocio);
                 this.getInformacionPersonal(this.data.codigoNegocio);
-                break;
                 break;
             case 2:
                 this.getRefencias(this.data.codigoNegocio);
@@ -114,7 +114,7 @@ export class ModalcreditoComponent implements OnInit {
 
     getInformacionPersonal(data: string) {
         // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        this._sweetAlert.startLoading({ html: 'Buscando información de detalle del crédito' });
+        // this._sweetAlert.startLoading({ html: 'Buscando información de detalle del crédito' });
         this._detalleCredito
             .getInformacionPersonal(data)
             .subscribe({
@@ -123,7 +123,8 @@ export class ModalcreditoComponent implements OnInit {
                     this.infoInfoPerLab = response?.data || {};
                 },
                 error: () => {
-                    this._sweetAlert.stopLoading();
+                    console.log('error getInformacionPersonal');
+                    this._sweetAlert.alertError();
 
                 }
             });
@@ -132,12 +133,13 @@ export class ModalcreditoComponent implements OnInit {
 
 
     getRefencias(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        // this._sweetAlert.startLoading({});
+        this._detalleCredito
             .getInformacionReferencias(data)
             .subscribe((response: any) => {
                 // // console.log(response);
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
 
                     this.infoRefePer = response?.data || []
@@ -146,7 +148,7 @@ export class ModalcreditoComponent implements OnInit {
                         value.primerNombre = value.primerNombre + ' ' + value.primerApellido
                     })
                 } else {
-                    Swal.close();
+                    this._sweetAlert.stopLoading();
                     this.infoRefePer = [];
                 }
             });
@@ -154,46 +156,53 @@ export class ModalcreditoComponent implements OnInit {
 
 
     getInformacionCodeudor(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
+        this._detalleCredito
             .getInformacionCodeudor(data)
             .subscribe((response: any) => {
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
-
                     this.infoCodeu = response.data;
                 } else {
+                    this._sweetAlert.stopLoading();
                     this.infoRefePer = [];
                 }
             });
     }
 
     getInformacionNegocio(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
+        // this._sweetAlert.startLoading({});
+        this._detalleCredito
             .getInformacionNegocio(data)
             .subscribe((response: any) => {
                 // // console.log(response);
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
                     this.infoNegocio = response.data;
                 } else {
+
+                    this._sweetAlert.stopLoading();
                     this.infoNegocio = {};
                 }
             });
     }
 
     getInformacionConyuge(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
 
-        return this._detalleCredito
+        this._detalleCredito
             .getInformacionConyuge(data)
             .subscribe((response: any) => {
                 // // console.log(response);
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
                     this.infoConyugue = response.data;
                 } else {
+
+                    this._sweetAlert.stopLoading();
                     this.infoConyugue = {};
                 }
             });

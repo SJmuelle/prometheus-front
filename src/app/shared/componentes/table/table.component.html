@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl">
+    <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl rounded-b-none">
 
 
 
@@ -9,7 +9,7 @@
         <div class="flex flex-col sm:hidden min-h-40  max-h-90 ">
 
 
-            <div>
+            <div class="">
                 <div class="h-14 min-h-14 flex-col w-full flex z-99"
                     style="background: #E2E8F0; position: sticky; top: 0px; ">
                     <span class="pl-6 pt-3 flex-col font-semibold text-lg"></span>
@@ -175,7 +175,7 @@
 
 
                         <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
-                            <td class="cursor-pointer pl-2" mat-cell *matCellDef="let row"
+                            <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row"
                                 (click)="actionSelectRow(row)">
                                 <span [ngStyle]="{'white-space': !!whitEspace? 'nowrap' : 'normal'}"
                                     [ngClass]="dataOption.classTailwind"> {{(row[dataOption.name] ) | dataTable:

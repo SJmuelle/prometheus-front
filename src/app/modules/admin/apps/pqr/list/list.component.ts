@@ -93,7 +93,7 @@ export class ListComponent implements OnInit {
       pipeName: 'titleCase'
     }, {
       name: 'fechaSolucion',
-      text: 'Solución',
+      text: 'Fecha solución',
       typeField: 'text',
       pipeName: 'date'
     },

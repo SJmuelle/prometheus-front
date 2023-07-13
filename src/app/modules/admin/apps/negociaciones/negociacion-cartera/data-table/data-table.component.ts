@@ -55,8 +55,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       pipeName: 'number'
     },
     {
-      name: 'mora_actual',
-      text: 'Mora actual',
+      name: 'mora_actual_dias',
+      text: 'Dias de mora',
       typeField: 'text',
     },
     {
@@ -226,8 +226,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
         pipeName: 'number'
       },
       {
-        name: 'mora_actual',
-        text: 'Mora actual',
+        name: 'mora_actual_dias',
+        text: 'Dias de mora',
         typeField: 'text',
       },
       {
@@ -286,7 +286,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   private listenObservable(): void {
     this.susbcription$ = this._negociacionCarteraServices.reloadData$.subscribe(resp => {
-      if (resp.fullTable === true) {
+      if (resp.fullTable) {
         this.dataOptionTable = [
           {
             name: 'identificacion',
@@ -317,8 +317,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             pipeName: 'number'
           },
           {
-            name: 'mora_actual',
-            text: 'Mora actual',
+            name: 'mora_actual_dias',
+            text: 'Dias de mora',
             typeField: 'text',
           },
           {
@@ -344,6 +344,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             text: 'Estado',
             typeField: 'statusStyle',
             styleCondition: (data): string => {
+              console.log('yeloww MC17223', data?.tiene_negociacion)
               const stateName = data?.tiene_negociacion
               if (stateName === 'Negociado') { return 'bg-green-400' } else {
                 return 'bg-red-400';

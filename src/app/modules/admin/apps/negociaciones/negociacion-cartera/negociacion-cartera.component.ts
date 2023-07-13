@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
 import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
-import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs'
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 

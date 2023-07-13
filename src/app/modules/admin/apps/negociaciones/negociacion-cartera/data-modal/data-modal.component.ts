@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges, ViewChild, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
-import Swal from 'sweetalert2';
 import { NegociacionCarteraComponent } from '../negociacion-cartera.component';
+import { takeUntil } from 'rxjs/operators'
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-data-modal',
     templateUrl: './data-modal.component.html',
     styleUrls: ['./data-modal.component.scss']
 })
-export class DataModalComponent implements OnInit, OnChanges {
+export class DataModalComponent implements OnInit, OnChanges, OnDestroy {
     @Input() dataRow: any = null;
     @Output() closedEmit: EventEmitter<void> = new EventEmitter<void>();
     @Input() ListadoNegociaciones: any[] = []
@@ -22,14 +23,18 @@ export class DataModalComponent implements OnInit, OnChanges {
     public selectedDescuento: string = '';
     public disabledInput: boolean = false;
     public disabledSlider: boolean = true;
-
-
+    private unsuscribe$: Subject<void> = new Subject<void>()
 
     constructor(
         private fb: FormBuilder,
         private _negociacionCarteraService: NegociacionCarteraService,
         private _sweetAlert: Sweetalert2Service
     ) { }
+
+    ngOnDestroy(): void {
+        this.unsuscribe$.next();
+        this.unsuscribe$.complete();
+    }
 
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -169,8 +174,8 @@ export class DataModalComponent implements OnInit, OnChanges {
                 por_descuento_gac: data.gastoCobranza,
                 tneg: data.tipoNegociacion
             }
-
-            this._negociacionCarteraService.guardarNegociacionCartera(json).subscribe({
+            this._sweetAlert.startLoading({});
+            this._negociacionCarteraService.guardarNegociacionCartera(json).pipe(takeUntil(this.unsuscribe$)).subscribe({
                 next: (resp) => {
                     this._negociacionCarteraService.reloadData$.next({ reload: true })
                     this.cancelForm();
@@ -219,7 +224,7 @@ export class DataModalComponent implements OnInit, OnChanges {
         const callBack = () => {
 
             const negocio = this.dataRow.cod_neg;
-
+            this._sweetAlert.startLoading({});
             this._negociacionCarteraService.reversarNegociacionRealizada(negocio).subscribe({
                 next: (data) => {
                     this._negociacionCarteraService.reloadData$.next({ reload: true })

@@ -39,8 +39,8 @@ export class Sweetalert2Service {
       cancelButtonText: 'Cancelar',
       customClass: {
         actions: 'flex-row-reverse gap-2',
-        cancelButton: 'rounded-full w-26 bg-gray-500 outline-none',
-        confirmButton: 'rounded-full w-26 outline-none'
+        cancelButton: 'rounded-full w-26 bg-gray-500',
+        confirmButton: 'rounded-full w-26 '
       }
     }).then((result: any) => {
       if (result.isConfirmed) {
@@ -59,7 +59,7 @@ export class Sweetalert2Service {
       icon: 'success',
       confirmButtonColor: '#3085d6',
       customClass: {
-        confirmButton: 'rounded-full w-20 bg-blue-400 outline-none'
+        confirmButton: 'rounded-full w-20 bg-blue-400 '
       }
     })
   }
@@ -74,7 +74,7 @@ export class Sweetalert2Service {
       text: "Su solicitud no pudo ser procesada, por favor intente nuevamente",
       icon: 'error',
       customClass: {
-        confirmButton: 'rounded-full w-20 bg-gray-400 outline-none'
+        confirmButton: 'rounded-full w-20 bg-gray-400 '
       }
     })
   }
