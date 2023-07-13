@@ -1,0 +1,206 @@
+<div class="flex justify-between my-2 ">
+    <div class="text-2xl font-bold ">Actualizar información</div>
+    <button mat-stroked-button (click)="cerrar()">
+        <mat-icon svgIcon="close"></mat-icon>
+    </button>
+</div>
+
+<form [formGroup]="form">
+    <div class="flex justify-between ">
+        <div class="text-xl font-bold ">Datos del titular</div>
+        <mat-icon (click)="mostrar=1" class="cursor-pointer"
+            [svgIcon]="mostrar==1?'heroicons_outline:chevron-up':'heroicons_outline:chevron-down'"></mat-icon>
+    </div>
+    <hr class="m-0 p-0">
+    <div class="animated-box mt-3" *ngIf="mostrar==1" @slideInTop>
+        <div class="my-2 animated-box-content">
+            <div class="w-full">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Identificación</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="identificacionTitular">
+                </mat-form-field>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Primer nombre</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="primerNombreTitular">
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Segundo nombre</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="segundoNombreTitular">
+                </mat-form-field>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Primer apellido</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="primerApellidoTitular">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Segundo apellido</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="segundoApellidoTitular">
+                </mat-form-field>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Fecha de nacimiento</mat-label>
+                    <input matInput type="date" autocomplete="off" formControlName="fechaNacimientoTitular">
+                </mat-form-field>
+                <mat-form-field class="w-100" appearance="fill">
+                    <mat-label>Fecha de expecidión</mat-label>
+                    <input matInput type="date" autocomplete="off" formControlName="fechaExpedicionTitular">
+                </mat-form-field>
+            </div>
+            <div class="w-full">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Celular</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="celularTitular">
+                </mat-form-field>
+            </div>
+            <div class="w-full">
+                <mat-form-field class="w-full" appearance="fill">
+                    <mat-label>Correo</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="emailTitular">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <ng-container *ngIf="form.value.identificacionCodeudor!=''">
+        <div class="flex justify-between ">
+            <div class="text-xl font-bold ">Datos del codeudor</div>
+            <mat-icon (click)="mostrar=2" class="cursor-pointer"
+                [svgIcon]="mostrar==2?'heroicons_outline:chevron-up':'heroicons_outline:chevron-down'"></mat-icon>
+        </div>
+        <hr class="m-0 p-0">
+        <div class="animated-box mt-3" *ngIf="mostrar==2" @slideInTop>
+            <div class="my-2 animated-box-content">
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Identificación</mat-label>
+                        <input matInput type="text" [readOnly]="false" autocomplete="off"
+                            formControlName="identificacionCodeudor">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="primerNombreCodeudor">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="segundoNombreCodeudor">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer apellido</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="primerApellidoCodeudor">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo apellido</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="segundoApellidoCodeudor">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput type="date" autocomplete="off" formControlName="fechaNacimientoCodeudor">
+                    </mat-form-field>
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Fecha de expecidión</mat-label>
+                        <input matInput type="date" autocomplete="off" formControlName="fechaExpedicionCodeudor">
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Celular</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="celularCodeudor">
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Correo</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="emailCodeudor">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <ng-container *ngIf="form.value.identificacionDeudor!=''">
+        <div class="flex justify-between ">
+            <div class="text-xl font-bold ">Datos del deudor</div>
+            <mat-icon (click)="mostrar=3" class="cursor-pointer"
+                [svgIcon]="mostrar==3?'heroicons_outline:chevron-up':'heroicons_outline:chevron-down'"></mat-icon>
+        </div>
+        <hr class="m-0 p-0">
+        <div class="animated-box mt-3" *ngIf="mostrar==3" @slideInTop>
+            <div class="my-2 animated-box-content">
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Identificación</mat-label>
+                        <input matInput type="text" [readOnly]="false" autocomplete="off"
+                            formControlName="identificacionDeudor">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="primerNombreDeudor">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="segundoNombreDeudor">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer apellido</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="primerApellidoDeudor">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo apellido</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="segundoApellidoDeudor">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput type="date" autocomplete="off" formControlName="fechaNacimientoDeudor">
+                    </mat-form-field>
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Fecha de expecidión</mat-label>
+                        <input matInput type="date" autocomplete="off" formControlName="fechaExpedicionDeudor">
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Celular</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="celularDeudor">
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Correo</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="emailDeudor">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+
+    <div class="flex justify-end mt-5">
+        <button mat-raised-button color="primary" type="button" (click)="save()" [disabled]="form.invalid">
+            <mat-icon svgIcon="heroicons_solid:refresh"></mat-icon>
+            Actualizar información
+        </button>
+    </div>
+
+
+</form>

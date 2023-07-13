@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -41,13 +41,23 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     private _agendaFirma: AgendaFirmaService,
     private _matDialog: MatDialog,
     private router: Router,
+
     public _permisosService: PermisosService,
-  ) { }
+  ) {
+
+
+
+  }
 
   ngOnInit(): void {
     this.getTotalesAgendaFirmaDigital();
     this.getAgendaFirmaDigital();
     this.cambiarEstado(true);
+
+    this._agendaFirma.openDrawner$.subscribe((opened) => {
+      this.opened =opened;
+      this.getAgendaFirmaDigital();
+    })
   }
 
 
@@ -73,9 +83,12 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
-  public openDetail(): void {
+  public openDetail(numeroSolicitud): void {
+    this._agendaFirma.numeroSolicitud.next(numeroSolicitud)
     this.opened = true;
   }
+
+
 
   public correoDecision(numeroSolicitud, tipo): void {
     let data =
@@ -97,12 +110,15 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
             title: res.data.data.title,
             html: `<p>${res.data.data.body} <strong>${res.data.data.value}</strong> </p>`,
             icon: 'success'
-          }).then(rep => {
+          }).then(result => {
+            if (result) {
+              this.getAgendaFirmaDigital();
+            }
           })
         }
         setTimeout(() => {
           this.getAgendaFirmaDigital();
-        }, 1000);
+        }, 3000);
 
       } else {
       }
@@ -124,13 +140,16 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
         if (res.data.respuesta == 'OK') {
           Swal.fire({
             title: "Realizado",
-            html: `Estado evidente cambiado con exito`,
+            html: `Estado evidente cambiado con éxito`,
             icon: 'success'
-          }).then(rep => {
+          }).then(result => {
+            if (result) {
+              this.getAgendaFirmaDigital();
+            }
           })
           setTimeout(() => {
             this.getAgendaFirmaDigital();
-          }, 1000);
+          }, 3000);
         }
 
       } else {
@@ -152,10 +171,16 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
         if (res.data.firma_interna_reenviar) {
           Swal.fire({
             title: "Se reenvio con exito",
-            html: `<p>Reenvio de firma con exito</p>`,
+            html: `<p>Reenvio de firma con éxito</p>`,
             icon: 'success'
-          }).then(rep => {
+          }).then(result => {
+            if (result) {
+              this.getAgendaFirmaDigital();
+            }
           })
+          setTimeout(() => {
+            this.getAgendaFirmaDigital();
+          }, 3000);
         }
 
       } else {

@@ -25,11 +25,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AgendaReferenciacionModule } from '../agenda-referenciacion/agenda-referenciacion.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FormActualizarInfoComponent } from './form-actualizar-info/form-actualizar-info.component';
+import { FuseCardModule } from '@fuse/components/card';
 
 
 @NgModule({
   declarations: [
-    GridAgendaFirmaDigitalComponent
+    GridAgendaFirmaDigitalComponent,
+    FormActualizarInfoComponent
   ],
   imports: [
     AgendaFirmaDigitalRoutingModule,
@@ -56,7 +59,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     AgendaReferenciacionModule,
     MatMenuModule,
     MatButtonToggleModule,
-    SharedModule
+    SharedModule,
+    FuseCardModule
   ]
 })
 export class AgendaFirmaDigitalModule { }
