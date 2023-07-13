@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
 import { ExcepcionCreditoService } from 'app/core/services/excepcion-credito.service';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { LibranzaPublicaService } from 'app/core/services/libranza-publica.service';
@@ -28,10 +29,14 @@ export class ExcepcionCreditoComponent implements OnInit {
   public dataInicial: any;
   public listados = [];
   public listadoCount = 0;
+  public drawerMode: any;
 
-  constructor(private fb: FormBuilder, private _excepcionCreditoService: ExcepcionCreditoService,private _libranzaService: LibranzaPublicaService,
+  constructor(private fb: FormBuilder,
+    private _excepcionCreditoService: ExcepcionCreditoService,
+    private _libranzaService: LibranzaPublicaService,
     private _fabricaCreditoService: FabricaCreditoService,
-    private router: Router) {
+    private router: Router,
+    private _fuseMediaWatcherService: FuseMediaWatcherService) {
     this.form = this.fb.group({
         'FECHA_INICIAL': [''],
         'FECHA_FINAL': [''],
@@ -48,6 +53,20 @@ export class ExcepcionCreditoComponent implements OnInit {
   ngOnInit(): void {
   //  this.getBuscarPorSelect()
   this.cargueInicial()
+
+  this._fuseMediaWatcherService.onMediaChange$
+            .subscribe(({ matchingAliases }) => {
+
+                // Set the drawerMode and drawerOpened
+                if (matchingAliases.includes('md')) {
+                    this.drawerMode = 'side';
+                    this.drawerOpened = true;
+                }
+                else {
+                    this.drawerMode = 'over';
+                    this.drawerOpened = false;
+                }
+            });
   }
 
   getBuscarPorSelect(){

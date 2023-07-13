@@ -21,8 +21,8 @@ import { SharedModule } from 'app/shared/shared.module';
 registerLocaleData(localEs,'es')
 @NgModule({
   declarations: [
-
     ExcepcionCreditoComponent
+
   ],
   providers: [{provide:LOCALE_ID, useValue:'es'}],
     imports: [
