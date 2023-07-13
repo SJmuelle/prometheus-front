@@ -178,7 +178,7 @@
                         <div class="text-gray-700 grid-cols-1 grid min-w-20 place-items-center">
                           <div class=" py-0 text-sm w-10">
                             <button *ngIf="item.etapaFirma=='P'" mat-icon-button matTooltip="Enviar correo decisión"
-                              (click)="correoDecision(item.numeroSolicitud,item.tipo)">
+                              (click)="generarNumeroPagare(item.unidadNegocioNegocio,item.numeroSolicitud,item.tipo)">
                               <mat-icon [svgIcon]="'send'"></mat-icon>
                             </button>
                           </div>
@@ -198,7 +198,7 @@
 
                           <div class=" py-0 text-sm w-10">
                             <button mat-icon-button
-                              matTooltip="Ver detalle evidente" (click)="openDetail(item.numeroSolicitud)">
+                              matTooltip="Ver detalle evidente" (click)="obtenerIntentosEvidente(item.identificacion)">
                               <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
                             </button>
                           </div>

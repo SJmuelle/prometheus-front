@@ -398,7 +398,7 @@ export class AppSettingsService {
             updateEstadoEvidente: EndPoints.uri('/generic/update-estado-evidente'),
             updateReenviarFirma: EndPoints.uri('/generic/update-reenviar-firma'),
             obtenerDatosBasicosFirma: EndPoints.uri('/generic/qry/obtener-datosbasicos-firma'),
-            obtenerIntentosEvidente: EndPoints.uri('/generic/qry/obtener-intentos_evidente'),
+            obtenerIntentosEvidente: EndPoints.uri('/generic/obtener-intentos_evidente'),
             guardarDatosBasicosFirma: EndPoints.uri('/generic/guardar-datos-basicos-firma'),
 
         }

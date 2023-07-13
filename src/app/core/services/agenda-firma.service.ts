@@ -55,8 +55,8 @@ export class AgendaFirmaService {
   /**
  * @description: Listado de agendas de completacion
  */
-  public obtenerIntentosEvidente(numeroSolicitud): Observable<any> {
-    return this._http.get(`${this._appSettings.agendaFirmaDigital.url.obtenerIntentosEvidente}/${numeroSolicitud}`);
+  public obtenerIntentosEvidente(data): Observable<any> {
+    return this._http.post(`${this._appSettings.agendaFirmaDigital.url.obtenerIntentosEvidente}`,data);
   }
 
 

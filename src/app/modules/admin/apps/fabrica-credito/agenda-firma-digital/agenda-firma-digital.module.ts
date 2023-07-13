@@ -27,12 +27,14 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormActualizarInfoComponent } from './form-actualizar-info/form-actualizar-info.component';
 import { FuseCardModule } from '@fuse/components/card';
+import { TablaEvidenteComponent } from './tabla-evidente/tabla-evidente.component';
 
 
 @NgModule({
   declarations: [
     GridAgendaFirmaDigitalComponent,
-    FormActualizarInfoComponent
+    FormActualizarInfoComponent,
+    TablaEvidenteComponent
   ],
   imports: [
     AgendaFirmaDigitalRoutingModule,

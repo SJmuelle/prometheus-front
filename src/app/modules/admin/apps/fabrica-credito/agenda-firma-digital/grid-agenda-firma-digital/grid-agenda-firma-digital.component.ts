@@ -10,6 +10,7 @@ import moment from 'moment';
 import { PermisosService } from 'app/core/services/permisos.service';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
+import { DecisionesService } from 'app/core/services/decisiones.service';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -41,7 +42,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     private _agendaFirma: AgendaFirmaService,
     private _matDialog: MatDialog,
     private router: Router,
-
+    public _decisionesService: DecisionesService,
     public _permisosService: PermisosService,
   ) {
 
@@ -55,7 +56,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     this.cambiarEstado(true);
 
     this._agendaFirma.openDrawner$.subscribe((opened) => {
-      this.opened =opened;
+      this.opened = opened;
       this.getAgendaFirmaDigital();
     })
   }
@@ -90,7 +91,30 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
 
 
 
+  public generarNumeroPagare(unidadNegocio,numeroSolicitud, tipo) {
+    if (unidadNegocio == 22) {
+      let data_pagare = {
+        "numeroSolicitud": numeroSolicitud,
+      }
+      this._decisionesService.generarNumeroPagare(data_pagare)
+        .subscribe((res2) => {
+          let datoComprobacion = {
+            "numeroSolicitud": numeroSolicitud,
+            "unidadNegocio": unidadNegocio,
+            "tipoTercero": 'T'
+          }
+          this._decisionesService.comprobacionCampos(datoComprobacion)
+            .subscribe((res2) => {
+              this.correoDecision(numeroSolicitud, tipo)
+            })
+        })
+    } else {
+      this.correoDecision(numeroSolicitud, tipo)
+    }
+  }
+
   public correoDecision(numeroSolicitud, tipo): void {
+
     let data =
     {
       numeroSolicitud: numeroSolicitud,
@@ -152,6 +176,30 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
           }, 3000);
         }
 
+      } else {
+      }
+    });
+  }
+
+  public obtenerIntentosEvidente(identificacion): void {
+    let data =
+    {
+      identificacion: identificacion
+    }
+    Swal.fire({ title: 'Cargando', html: 'Actualizando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
+    this._agendaFirma.obtenerIntentosEvidente(data).pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe((res) => {
+      Swal.close();
+      if (res.data.length == 0) {
+        Swal.fire({
+          title: "Mensaje",
+          html: `No tiene intentos de evidente que mostrar`,
+          icon: 'warning'
+        }).then(result => {
+          if (result) {
+          }
+        })
       } else {
       }
     });
