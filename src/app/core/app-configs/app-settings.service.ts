@@ -58,6 +58,12 @@ export class AppSettingsService {
             baseUpdateConvenios: EndPoints.uri('/generic/update-convenio-finl')
         }
     };
+    public excepcionCredito = {
+        url: {
+            buscarPorSellect: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos')
+        }
+    }
+
     /**
      * @description: End-point asignacion de creditos
      */

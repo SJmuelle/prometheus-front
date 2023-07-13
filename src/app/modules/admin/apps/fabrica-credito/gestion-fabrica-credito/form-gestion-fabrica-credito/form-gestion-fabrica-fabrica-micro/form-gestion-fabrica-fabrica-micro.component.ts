@@ -35,6 +35,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public unidadNegocio: any;
     public dataGeneralIncial: any;
     public permisoEditar: boolean = false;
+    public permisoExcepcion: boolean = false;
     public dataInicial: any;
     public antiBucle: any;
     public ciudades: any;
@@ -129,6 +130,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if (this.permisoEditar) {
             this.form.disable();
         }
+        this.permisoExcepcion = this._permisosService.permisoExcepcionCredito()
         this.getSalarioMinimo();
 
     }

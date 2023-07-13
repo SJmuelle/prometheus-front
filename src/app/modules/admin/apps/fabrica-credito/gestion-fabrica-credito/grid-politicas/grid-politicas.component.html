@@ -22,6 +22,7 @@
                             <mat-icon
                               class="icon-xxs text-white"    [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
                             <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No cumple'}}</p>
+
                         </div>
                     </div>
                 </ng-container>
@@ -48,11 +49,12 @@
                             " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
-
+                            <div class="flex justify-center items-center w-full">
                                 <div class="py-0.5 text-xs px-2  text-center font-bold ">
                                     {{item.estadoAccion | titlecase}}
                                 </div>
-
+                                <mat-icon (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                            </div>
                             </td>
                         </tr>
                     </ng-container>
@@ -179,10 +181,10 @@
                             " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
-
                                 <div class="py-0.5 text-xs px-2  text-center font-bold ">
                                     {{item.estadoAccion | titlecase}}
                                 </div>
+
 
                             </td>
                         </tr>
