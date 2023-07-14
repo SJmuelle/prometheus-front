@@ -1,1 +1,9 @@
-<p>tabla-evidente works!</p>
+
+<h6>Evidente de {{data[0].identificacion}}</h6>
+<mat-list>
+        <mat-list-item  *ngFor="let item of data">
+            <mat-icon matListItemIcon>person</mat-icon>
+            <div matListItemTitle>{{item.fecha}}</div><br>
+        </mat-list-item>
+        <!-- <mat-divider></mat-divider> -->
+</mat-list>

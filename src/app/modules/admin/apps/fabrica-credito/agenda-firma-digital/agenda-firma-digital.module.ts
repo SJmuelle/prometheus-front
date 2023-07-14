@@ -28,6 +28,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormActualizarInfoComponent } from './form-actualizar-info/form-actualizar-info.component';
 import { FuseCardModule } from '@fuse/components/card';
 import { TablaEvidenteComponent } from './tabla-evidente/tabla-evidente.component';
+import { MatListModule } from '@angular/material/list';
 
 
 @NgModule({
@@ -62,7 +63,9 @@ import { TablaEvidenteComponent } from './tabla-evidente/tabla-evidente.componen
     MatMenuModule,
     MatButtonToggleModule,
     SharedModule,
-    FuseCardModule
+    FuseCardModule,
+    MatDividerModule,
+    MatListModule
   ]
 })
 export class AgendaFirmaDigitalModule { }
