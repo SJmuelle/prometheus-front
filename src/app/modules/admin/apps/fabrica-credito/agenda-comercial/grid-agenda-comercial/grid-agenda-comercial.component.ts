@@ -219,6 +219,10 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         })
     }
 
+    public changePageToOne(){
+        this.page = 1;
+    }
+
 
     ngOnDestroy(): void {
         this.unsubscribe$.next();
