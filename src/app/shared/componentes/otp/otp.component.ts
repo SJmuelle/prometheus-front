@@ -6,6 +6,7 @@ import moment from 'moment';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { fuseAnimations } from '@fuse/animations';
+import { LibranzaPublicaService } from 'app/core/services/libranza-publica.service';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class OTPComponent implements OnInit {
   @ViewChild('input5') input5!: ElementRef<HTMLInputElement>;
   @ViewChild('input6') input6!: ElementRef<HTMLInputElement>;
 
-  constructor(private _formularioCreditoService: FormularioCreditoService) { }
+  constructor(private _formularioCreditoService: FormularioCreditoService,
+    private _libranzaService: LibranzaPublicaService) { }
 
   ngOnInit(): void {
   }
@@ -150,6 +152,20 @@ public focusPreviusInput(currentInput: HTMLInputElement, previusInput: HTMLInput
             }, 100);
         }
     });
+}
+
+
+atualizarDatosOTP() {
+  const datos = { ...this.datosBasicos.getRawValue() }
+
+  if(datos.identificacion){
+    datos.documento = datos.identificacion;
+  }
+
+  this.actualizandoDatosOTP = true;
+  this._libranzaService.actualizarDatosBasicosOTP(datos).subscribe(rep => {
+      this.actualizandoDatosOTP = false;
+  })
 }
 
 }

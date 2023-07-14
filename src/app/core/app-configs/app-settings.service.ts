@@ -326,7 +326,8 @@ export class AppSettingsService {
      */
     public politicas = {
         url: {
-            base: EndPoints.uri('/generic/qry/cre-politicas-adm')
+            base: EndPoints.uri('/generic/qry/cre-politicas-adm'),
+            guardarExcepcion: EndPoints.uri('/generic/guardado-excepcion-creditos')
         }
     };
     /**

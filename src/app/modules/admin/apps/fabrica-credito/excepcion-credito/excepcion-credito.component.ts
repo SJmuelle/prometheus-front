@@ -121,7 +121,12 @@ export class ExcepcionCreditoComponent implements OnInit {
     // recibir por defecto las rechazadass
     transformData['details'].push({
         "tipo": "TIPO",
-        "buscar": "RE"
+        "buscar": "RE",
+    })
+
+    transformData['details'].push({
+        "tipo": "CODIGO-NEGOCIO",
+        "buscar": "1",
     })
 
     Object.keys(data).forEach((key,i) => {

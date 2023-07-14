@@ -11,10 +11,8 @@
                             <p class="border-b-2 m-0 ">{{item.nombre}}</p>
                         </div>
                         <div class="font-normal text-smx">{{item.descripcion}}</div>
-                        <div [ngClass]="
-                        item.estadoAccion !== 'CUMPLE'
-                        ? 'bg-red-400 '
-                        : 'bg-green-400 '"
+                        <div [ngClass]="getColorExcepcion(item)"
+                       
                             [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                             matTooltipTouchGestures="on"
                             #tooltip="matTooltip"
@@ -22,7 +20,7 @@
                             <mat-icon
                               class="icon-xxs text-white"    [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
                             <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No cumple'}}</p>
-                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"   class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                         </div>
                     </div>
                 </ng-container>
@@ -42,18 +40,15 @@
                         <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border min-w-30">{{item.nombre}}</td>
                             <td class="px-2 text-sm border min-w-100">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            <td class="px-2 text-sm border w-0" [ngClass]="getColorExcepcion(item)" [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
-                            <div class="flex justify-center items-center w-full">
-                                <div class="py-0.5 text-xs px-2  text-center font-bold ">
+                            <div class="flex justify-center items-center w-full whitespace-nowrap px-1">
+                                <div class="py-0.5 text-xs px-2  text-center font-bold"  [ngClass]="getColorTextExcepcion(item)">
                                     {{item.estadoAccion | titlecase}}
                                 </div>
-                                <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                                <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" [ngClass]="getColorTextExcepcion(item)" (click)="openExcepcion(item)"  
+                                 class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                             </div>
                             </td>
                         </tr>
@@ -79,10 +74,8 @@
                             <p class="border-b-2 m-0 ">{{item.nombre}}</p>
                         </div>
                         <div class="font-normal text-smx">{{item.descripcion}}</div>
-                        <div [ngClass]="
-                        item.estadoAccion !== 'CUMPLE'
-                        ? 'bg-red-400 '
-                        : 'bg-green-400 '"
+                        <div  [ngClass]="getColorExcepcion(item)"
+                       
                             [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                             matTooltipTouchGestures="on"
                             #tooltip="matTooltip"
@@ -90,7 +83,7 @@
                             <mat-icon
                               class="icon-xxs text-white"    [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
                             <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No cumple'}}</p>
-                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                         </div>
                     </div>
                 </ng-container>
@@ -110,19 +103,16 @@
                         <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border min-w-30">{{item.nombre}}</td>
                             <td class="px-2 text-sm border min-w-100">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            <td class="px-2 text-sm border w-0"  [ngClass]="getColorExcepcion(item)"
+                                 [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
 
-                                <div class="flex justify-center items-center w-full">
-                                    <div class="py-0.5 text-xs px-2  text-center font-bold ">
+                                <div class="flex justify-center items-center w-full whitespace-nowrap px-1">
+                                    <div class="py-0.5 text-xs px-2  text-center font-bold " [ngClass]="getColorTextExcepcion(item)">
                                         {{item.estadoAccion | titlecase}}
                                     </div>
-                                    <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                                    <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                                 </div>
 
                             </td>
@@ -148,10 +138,8 @@
                             <p class="border-b-2 m-0 ">{{item.nombre}}</p>
                         </div>
                         <div class="font-normal text-smx">{{item.descripcion}}</div>
-                        <div [ngClass]="
-                        item.estadoAccion !== 'CUMPLE'
-                        ? 'bg-red-400 '
-                        : 'bg-green-400 '"
+                        <div  [ngClass]="getColorExcepcion(item)"
+                       
                             [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                             matTooltipTouchGestures="on"
                             #tooltip="matTooltip"
@@ -159,7 +147,7 @@
                             <mat-icon
                               class="icon-xxs text-white"    [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
                             <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No cumple'}}</p>
-                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                         </div>
                     </div>
                 </ng-container>
@@ -179,18 +167,15 @@
                         <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            <td class="px-2 text-sm border w-0"  [ngClass]="getColorExcepcion(item)"
+                             [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
-                                <div class="flex justify-center items-center w-full">
-                                    <div class="py-0.5 text-xs px-2  text-center font-bold ">
+                                <div class="flex justify-center items-center w-full whitespace-nowrap px-1">
+                                    <div class="py-0.5 text-xs px-2  text-center font-bold " [ngClass]="getColorTextExcepcion(item)">
                                         {{item.estadoAccion | titlecase}}
                                     </div>
-                                    <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                                    <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                                 </div>
 
 
@@ -217,10 +202,7 @@
                             <p class="border-b-2 m-0 ">{{item.nombre}}</p>
                         </div>
                         <div class="font-normal text-smx">{{item.descripcion}}</div>
-                        <div [ngClass]="
-                        item.estadoAccion !== 'CUMPLE'
-                        ? 'bg-red-400 '
-                        : 'bg-green-400 '"
+                        <div  [ngClass]="getColorExcepcion(item)"
                             [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                             matTooltipTouchGestures="on"
                             #tooltip="matTooltip"
@@ -228,7 +210,7 @@
                             <mat-icon
                               class="icon-xxs text-white"    [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
                             <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No cumple'}}</p>
-                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                            <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer text-white icon-xxs" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                         </div>
                     </div>
                 </ng-container>
@@ -248,19 +230,16 @@
                         <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border">{{item.nombre}}</td>
                             <td class="px-2 text-sm border">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            <td class="px-2 text-sm border w-0"  [ngClass]="getColorExcepcion(item)"
+                             [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
 
-                                <div class="flex justify-center items-center w-full">
-                                    <div class="py-0.5 text-xs px-2  text-center font-bold ">
+                                <div class="flex justify-center items-center w-full whitespace-nowrap px-1">
+                                    <div class="py-0.5 text-xs px-2  text-center font-bold" [ngClass]="getColorTextExcepcion(item)">
                                         {{item.estadoAccion | titlecase}}
                                     </div>
-                                    <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE'" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
+                                    <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1" (click)="openExcepcion(item)"  class="icon-size-4 cursor-pointer" svgIcon="heroicons_solid:exclamation-circle"></mat-icon>
                                 </div>
 
                             </td>

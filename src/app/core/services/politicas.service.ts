@@ -19,4 +19,8 @@ export class PoliticasService {
       return this._http.get(`${this._appSettings.politicas.url.base}/${numeroSolicitud}`);
   }
 
+  public guardarExcepcionCredito(datos: any){
+    return this._http.post(this._appSettings.politicas.url.guardarExcepcion,datos);
+  }
+
 }

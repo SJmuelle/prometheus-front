@@ -5,6 +5,7 @@ import { ActivatedRoute } from "@angular/router";
 import { PermisosService } from 'app/core/services/permisos.service';
 import { ModalExcepcionCreditoComponent } from '../modal-excepcion-credito/modal-excepcion-credito.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { GenericasService } from 'app/core/services/genericas.service';
 @Component({
     selector: 'app-grid-politicas',
     templateUrl: './grid-politicas.component.html',
@@ -18,19 +19,26 @@ export class GridPoliticasComponent implements OnInit {
     public solidario: any[] = [];
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public permisoExcepcion: boolean = false;
+    public unidadNegocio: number;
     constructor(
         private politicasService: PoliticasService,
         private route: ActivatedRoute,
         public _permisosService: PermisosService,
         private _matDialog: MatDialog,
+        private _generica: GenericasService
     ) { }
 
     ngOnInit(): void {
         this.getPoliticas(this.numeroSolicitud);
+        this.getUnidadNegocio();
         this.permisoExcepcion = this._permisosService.permisoExcepcionCredito()
     }
 
     private getPoliticas(numeroSolicitud: string): void {
+        this.titular =[];
+        this.codeudor = []
+        this.representante = [];
+        this.solidario = [];
         this.politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
             data.data.forEach(element => {
                 if (element.tipoTercero === 'T') {
@@ -48,6 +56,12 @@ export class GridPoliticasComponent implements OnInit {
         });
     }
 
+    private getUnidadNegocio(){
+        this._generica.getUnidadNegocio(this.numeroSolicitud).subscribe(rep => {
+            this.unidadNegocio = rep.data[0].unidadNegocio
+        })
+    }
+
     // 21 corresponde a la politica de filtros duros
     hasIDPolitica(array: any[]){
         return array.find(item => item.idPolitica === 21)
@@ -61,36 +75,38 @@ export class GridPoliticasComponent implements OnInit {
         });
 
         dialogRef.afterClosed().subscribe((result) => {
+            if(result){
+                window.location.reload()
+            }else{
+                this.getPoliticas(this.numeroSolicitud);
+            }
         });
     }
 
-    public onGuardar(): void {
-        // if (this.form.valid) {
-        //     const data: any = this.form.getRawValue();
-        //     let valida=this.datoFabrica.agenda!='GC'&&this.datoFabrica.agenda!='CM';
-        //     let envioData = {
-        //         comentario: data.comentario,
-        //         numeroSolicitud: data.numeroSolicitud,
-        //         tipoComentario: valida?Number(data.tipoComentario):2,
-        //     }
-        //     let mensaje=envioData.tipoComentario==2?'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario será visible para todos los usuarios.':'¿Está seguro de agregar este comentario en la gestión del crédito?. Recuerde que este comentario no será visible para todos los usuarios';
-        //     Swal.fire({
-        //         title: 'Guardar información',
-        //         text: mensaje,
-        //         icon: 'warning',
-        //         showCancelButton: true,
-        //         confirmButtonColor: '#3085d6',
-        //         cancelButtonColor: '#a3a0a0',
-        //         confirmButtonText: 'Guardar',
-        //         cancelButtonText: 'Cancelar'
-        //     }).then((result) => {
-        //         if (result.isConfirmed) {
-        //             this.postComentario(envioData);
-        //         }
-        //     });
-        // } else {
-        //     this.form.markAllAsTouched();
-        // }
+    getColorExcepcion(item: any){
+        let color = 'bg-green-300'
 
+        if(item.estadoAccion !== 'CUMPLE'){
+            if(item.excepcion){
+                color = 'bg-yellowCustom'
+            }else{
+                color = 'bg-red-300'
+            }
+        }
+        return color;
     }
+
+    getColorTextExcepcion(item: any){
+        let color = 'text-gray-500'
+
+        if(item.estadoAccion !== 'CUMPLE'){
+            if(item.excepcion){
+                color = 'text-white'
+            }else{
+                color = 'text-red-900'
+            }
+        }
+        return color;
+    }
+
 }
