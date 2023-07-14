@@ -17,6 +17,7 @@ import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
 import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
 import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
 import { ExcepcionCreditoComponent } from './excepcion-credito/excepcion-credito.component';
+import { AsignacionBarriosModule } from './asignacion-barrios/asignacion-barrios.module';
 
 
 const routes: Routes = [
@@ -99,6 +100,10 @@ const routes: Routes = [
             {
                 path: 'excepcion-creditos',
                 component: ExcepcionCreditoComponent
+            },
+            {
+                path: 'asignacion-barrios',
+                loadChildren: () => AsignacionBarriosModule,
             }
         ]
     }
