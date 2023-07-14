@@ -172,7 +172,7 @@
                 <ng-container
                   *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
 
-                  <ng-container *ngIf="item.etapaFirma==filtrado">
+                  <ng-container *ngIf="item.etapaFirma===filtrado">
                     <tr class="text-gray-700 border-t border-b ">
                       <td rowspan="2" class="py-3 text-sm my-3">
                         <div class="text-gray-700 grid-cols-1 grid min-w-20 place-items-center">
@@ -197,8 +197,8 @@
                           </div>
 
                           <div class=" py-0 text-sm w-10">
-                            <button mat-icon-button
-                              matTooltip="Ver detalle evidente" (click)="obtenerIntentosEvidente(item.identificacion)">
+                            <button mat-icon-button matTooltip="Ver detalle evidente"
+                              (click)="obtenerIntentosEvidente(item.identificacion)">
                               <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
                             </button>
                           </div>
@@ -341,7 +341,8 @@
                           <div class="flex justify-between">
                             <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
                               [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                              <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó evidente'}}</small>
+                              <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó
+                                evidente'}}</small>
                               <span class="text-current">
                                 {{ item.intentosEvidente}}
                               </span>

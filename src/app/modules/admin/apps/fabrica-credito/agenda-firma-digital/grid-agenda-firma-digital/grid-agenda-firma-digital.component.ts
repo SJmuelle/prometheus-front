@@ -34,6 +34,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     Enviados: 'bg-blue-200 text-blue-500',
     Firmados: 'bg-green-200 text-green-500',
   }
+  public datacopy: any[] = []
   public activeFilter: any = { color: 'bg-red-200 text-red-500', active: 'Pendiente' };
   public estados: any[] = [{ state: 'Pendiente', count: 0, colorCheck: 'red' }, { state: 'Enviados', count: 0, colorCheck: 'blue' },
   { state: 'Firmados', count: 0, colorCheck: 'green' }]
@@ -77,8 +78,9 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       if (res.status === 200) {
         Swal.close();
         this.datos = res?.data || [];
+        this.datacopy = this.datos
         this.estados.forEach((item) => {
-          const count = this.datos.filter(value => value.etapaFirma === item.state?.charAt(0))
+          const count = this.datos.filter(value => value.etapaFirma?.toUpperCase() === item.state?.charAt(0)?.toUpperCase())
           item.count = count.length
         })
         this.mostrar = false;
@@ -371,8 +373,14 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   }
 
   public selectFilter(value: string): void {
+
+
     this.activeFilter = { color: this.colorState[value], active: value }
     this.filtrado = value?.charAt(0)
+
+    const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
+    this.datos = [...filter]
+
   }
 
 
