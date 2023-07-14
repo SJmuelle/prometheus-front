@@ -9,7 +9,6 @@ import { FormularioCreditoService } from 'app/core/services/formulario-credito.s
 import { LibranzaPublicaService } from 'app/core/services/libranza-publica.service';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalConfirmarDatosOTPComponent } from '../modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
 import { fuseAnimations } from '@fuse/animations';
 import { GenericasService } from 'app/core/services/genericas.service';
 import { MatStepper } from '@angular/material/stepper';
