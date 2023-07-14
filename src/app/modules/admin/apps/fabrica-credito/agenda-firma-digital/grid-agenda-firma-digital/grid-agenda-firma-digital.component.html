@@ -191,7 +191,7 @@
 
                           <div class=" py-0 text-sm w-10">
                             <button *ngIf="item.etapaFirma!='P'" mat-icon-button matTooltip="Reenviar firma"
-                              (click)="updateReenviarFirma(item.numeroSolicitud)">
+                              (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">
                               <mat-icon [svgIcon]="'send'"></mat-icon>
                             </button>
                           </div>

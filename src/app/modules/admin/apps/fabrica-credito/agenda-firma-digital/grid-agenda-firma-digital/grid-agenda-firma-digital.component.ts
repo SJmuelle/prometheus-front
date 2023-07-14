@@ -217,7 +217,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
-  public updateReenviarFirma(numeroSolicitud): void {
+  public updateReenviarFirma(numeroSolicitud,tipo): void {
     let data =
     {
       numeroSolicitud: numeroSolicitud,
@@ -229,18 +229,19 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       if (res.status === 200) {
         Swal.close();
         if (res.data.firma_interna_reenviar) {
-          Swal.fire({
-            title: "Se reenvio con exito",
-            html: `<p>Reenvio de firma con éxito</p>`,
-            icon: 'success'
-          }).then(result => {
-            if (result) {
-              this.getAgendaFirmaDigital();
-            }
-          })
-          setTimeout(() => {
-            this.getAgendaFirmaDigital();
-          }, 3000);
+          this.correoDecision(numeroSolicitud,tipo)
+          // Swal.fire({
+          //   title: "Se reenvio con exito",
+          //   html: `<p>Reenvio de firma con éxito</p>`,
+          //   icon: 'success'
+          // }).then(result => {
+          //   if (result) {
+          //     this.getAgendaFirmaDigital();
+          //   }
+          // })
+          // setTimeout(() => {
+          //   this.getAgendaFirmaDigital();
+          // }, 3000);
         }
 
       } else {

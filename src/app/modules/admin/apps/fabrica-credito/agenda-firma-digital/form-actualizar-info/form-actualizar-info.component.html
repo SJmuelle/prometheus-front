@@ -17,7 +17,7 @@
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Identificación</mat-label>
-                    <input matInput type="text" autocomplete="off" formControlName="identificacionTitular">
+                    <input matInput type="text"  autocomplete="off" formControlName="identificacionTitular">
                 </mat-form-field>
             </div>
             <div class="grid grid-cols-2 gap-2">
@@ -59,8 +59,14 @@
             </div>
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
-                    <mat-label>Correo</mat-label>
+                    <mat-label>Correo electrónico</mat-label>
                     <input matInput type="text" autocomplete="off" formControlName="emailTitular">
+                    <!-- <mat-error *ngIf="form.get('emailTitular').hasError('required')">
+                        El correo es requerido
+                     </mat-error>
+                     <mat-error *ngIf="form.get('emailTitular').hasError('email')">
+                         El correo es invalido
+                     </mat-error> -->
                 </mat-form-field>
             </div>
         </div>
@@ -122,7 +128,7 @@
                 </div>
                 <div class="w-full">
                     <mat-form-field class="w-full" appearance="fill">
-                        <mat-label>Correo</mat-label>
+                        <mat-label>Correo electrónico</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="emailCodeudor">
                     </mat-form-field>
                 </div>
@@ -186,8 +192,14 @@
                 </div>
                 <div class="w-full">
                     <mat-form-field class="w-full" appearance="fill">
-                        <mat-label>Correo</mat-label>
+                        <mat-label>Correo electrónico</mat-label>
                         <input matInput type="text" autocomplete="off" formControlName="emailDeudor">
+                        <!-- <mat-error *ngIf="form.get('emailDeudor').hasError('required')">
+                           El correo es requerido
+                        </mat-error>
+                        <mat-error *ngIf="form.get('emailDeudor').hasError('email')">
+                            El correo es requerido
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
             </div>

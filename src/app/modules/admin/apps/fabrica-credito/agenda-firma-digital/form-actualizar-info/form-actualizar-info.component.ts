@@ -26,11 +26,11 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
     this.form = fb.group({
       identificacionTitular:['', [Validators.required]],
       primerNombreTitular: ['', [Validators.required]],
-      segundoNombreTitular: ['', [Validators.required]],
+      segundoNombreTitular: [''],
       primerApellidoTitular: ['', [Validators.required]],
       segundoApellidoTitular: ['', [Validators.required]],
       nombreCompletoTitular: ['', [Validators.required]],
-      celularTitular: ['', [Validators.required]],
+      celularTitular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
       emailTitular: ['', [Validators.required]],
       fechaNacimientoTitular: ['', [Validators.required]],
       fechaExpedicionTitular: ['', [Validators.required]],
