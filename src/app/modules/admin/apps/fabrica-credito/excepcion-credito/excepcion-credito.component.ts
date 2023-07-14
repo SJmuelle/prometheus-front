@@ -31,6 +31,8 @@ export class ExcepcionCreditoComponent implements OnInit {
   public listadoCount = 0;
   public drawerMode: any;
 
+  public consultado: boolean = false;
+
   constructor(private fb: FormBuilder,
     private _excepcionCreditoService: ExcepcionCreditoService,
     private _libranzaService: LibranzaPublicaService,
@@ -51,7 +53,6 @@ export class ExcepcionCreditoComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  //  this.getBuscarPorSelect()
   this.cargueInicial()
 
   this._fuseMediaWatcherService.onMediaChange$
@@ -69,12 +70,7 @@ export class ExcepcionCreditoComponent implements OnInit {
             });
   }
 
-  getBuscarPorSelect(){
-    this._excepcionCreditoService.getBuscarPorSelect().pipe(takeUntil(this._unsubscribeAll)).subscribe(rep =>{
-        console.log('rep', rep);
 
-    })
-  }
 
   private cargueInicial() {
     let data = {
@@ -84,14 +80,12 @@ export class ExcepcionCreditoComponent implements OnInit {
     this._libranzaService.cargueInicialFormularioCorto(data).subscribe((resp: any) => {
         if (resp) {
             this.dataInicial = resp.data
-            console.log('data inicial', this.dataInicial);
         }
     })
 }
 
-  armarForm(){
-    console.log('form', this.form.getRawValue());
-
+  limpiarForm(){
+      this.form.reset()
   }
 
   consultaFiltro(){
@@ -106,9 +100,11 @@ export class ExcepcionCreditoComponent implements OnInit {
                 if (response) {
                     this.listados = response.data.trazabilidad;
                     this.listadoCount = this.listados.length;
+                    this.consultado = true;
                 } else {
                     this.listados = [];
                     this.listadoCount = this.listados.length;
+                    this.consultado = true;
                 }
             });
   }
@@ -129,14 +125,12 @@ export class ExcepcionCreditoComponent implements OnInit {
     })
 
     Object.keys(data).forEach((key,i) => {
-        console.log(`item ${key} i ${data[key]}`);
-        if(data[key] !== ''){
+        if(data[key] !== '' && data[key] !== null){
             transformData['details'].push({tipo: key.toUpperCase(), buscar:  data[key]})
         }
     })
 
     data = transformData
-    console.log('datos formateados', data);
     return data;
   }
 
