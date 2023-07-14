@@ -176,39 +176,65 @@
                     <tr class="text-gray-700 border-t border-b ">
                       <td rowspan="2" class="py-3 text-sm my-3">
                         <div class="text-gray-700 grid-cols-1 grid min-w-20 place-items-center">
-                          <div class=" py-0 text-sm w-10">
-                            <button *ngIf="item.etapaFirma=='P'" mat-icon-button matTooltip="Enviar correo decisión"
-                              (click)="generarNumeroPagare(item.unidadNegocioNegocio,item.numeroSolicitud,item.tipo)">
-                              <mat-icon [svgIcon]="'send'"></mat-icon>
-                            </button>
-                          </div>
-                          <div class=" py-0 text-sm w-10">
-                            <button *ngIf="item.etapaFirma=='E'" mat-icon-button matTooltip="Actualizar estado evidente"
-                              (click)="UpdateEstadoEvidente(item.numeroSolicitud,item.identificacion)">
-                              <mat-icon [svgIcon]="'update'"></mat-icon>
-                            </button>
-                          </div>
 
                           <div class=" py-0 text-sm w-10">
-                            <button *ngIf="item.etapaFirma!='P'" mat-icon-button matTooltip="Reenviar firma"
-                              (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">
-                              <mat-icon [svgIcon]="'send'"></mat-icon>
-                            </button>
+                            <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones">
+                              <mat-icon>format_list_bulleted</mat-icon></button>
                           </div>
 
-                          <div class=" py-0 text-sm w-10">
-                            <button mat-icon-button matTooltip="Ver detalle evidente"
-                              (click)="obtenerIntentosEvidente(item.identificacion)">
-                              <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
-                            </button>
-                          </div>
+                          <mat-menu #menuOpciones="matMenu">
 
-                          <div class=" py-0 text-sm w-10">
-                            <button *ngIf="item.etapaFirma=='E' || item.etapaFirma=='P' " mat-icon-button
-                              matTooltip="Edita información" (click)="openDetail(item.numeroSolicitud)">
-                              <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
-                            </button>
-                          </div>
+                            <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='P'" class="flex  items-center"
+                                matTooltip="Enviar correo decisión"
+                                (click)="generarNumeroPagare(item.unidadNegocioNegocio,item.numeroSolicitud,item.tipo)">
+                                <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Enviar correo decisión
+                              </button>
+
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='E'" class="flex  items-center"
+                                matTooltip="Actualizar estado evidente"
+                                (click)="UpdateEstadoEvidente(item.numeroSolicitud,item.identificacion)">
+                                <mat-icon [svgIcon]="'update'" class="mr-2"></mat-icon>Actualizar estado evidente
+                              </button>
+
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma!='P'" class="flex  items-center"
+                                matTooltip="Reenviar firma"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">
+                                <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
+                              </button>
+
+
+
+                              <button mat-menu-item class="flex  items-center" matTooltip="Ver detalle evidente"
+                                (click)="obtenerIntentosEvidente(item.identificacion)">
+                                <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle evidente
+                              </button>
+
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='E' || item.etapaFirma=='P' "
+                                class="flex  items-center" matTooltip="Edita información"
+                                (click)="openDetail(item.numeroSolicitud)">
+                                <mat-icon svgIcon="heroicons_outline:pencil" class="mr-2"></mat-icon>Edita información
+                              </button>
+
+
+
+                            </div>
+
+
+
+
+
+                          </mat-menu>
+
+
 
 
                         </div>
