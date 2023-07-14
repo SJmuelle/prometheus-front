@@ -11,6 +11,7 @@ import { PermisosService } from 'app/core/services/permisos.service';
 import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-dialog-devolver-fabrica/form-dialog-devolver-fabrica.component';
 import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
 import { DecisionesService } from 'app/core/services/decisiones.service';
+import { TablaEvidenteComponent } from '../tabla-evidente/tabla-evidente.component';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -43,6 +44,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     private _matDialog: MatDialog,
     private router: Router,
     public _decisionesService: DecisionesService,
+    public dialog: MatDialog,
     public _permisosService: PermisosService,
   ) {
 
@@ -91,23 +93,22 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
 
 
 
-  public generarNumeroPagare(unidadNegocio,numeroSolicitud, tipo) {
+  public generarNumeroPagare(unidadNegocio, numeroSolicitud, tipo) {
     if (unidadNegocio == 22) {
       let data_pagare = {
         "numeroSolicitud": numeroSolicitud,
       }
-      this._decisionesService.generarNumeroPagare(data_pagare)
+
+      let datoComprobacion = {
+        "numeroSolicitud": numeroSolicitud,
+        "unidadNegocio": unidadNegocio,
+        "tipoTercero": 'T'
+      }
+      this._decisionesService.comprobacionCampos(datoComprobacion)
         .subscribe((res2) => {
-          let datoComprobacion = {
-            "numeroSolicitud": numeroSolicitud,
-            "unidadNegocio": unidadNegocio,
-            "tipoTercero": 'T'
-          }
-          this._decisionesService.comprobacionCampos(datoComprobacion)
-            .subscribe((res2) => {
-              this.correoDecision(numeroSolicitud, tipo)
-            })
+          this.correoDecision(numeroSolicitud, tipo)
         })
+
     } else {
       this.correoDecision(numeroSolicitud, tipo)
     }
@@ -201,6 +202,15 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
           }
         })
       } else {
+        const dialogRef = this.dialog.open(TablaEvidenteComponent,
+          {
+            maxWidth: '90vw',
+            width: window.innerWidth < 600 ? '90%' : '60%',
+            data: res.data,
+            disableClose: false
+          });
+        dialogRef.afterClosed().subscribe(result => {
+        });
       }
     });
   }
