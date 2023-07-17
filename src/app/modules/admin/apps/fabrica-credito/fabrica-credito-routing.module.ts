@@ -18,6 +18,7 @@ import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-co
 import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
 import { ExcepcionCreditoComponent } from './excepcion-credito/excepcion-credito.component';
 import { AsignacionBarriosModule } from './asignacion-barrios/asignacion-barrios.module';
+import { HistoricoPoliticasModule } from './historico-politicas/historico-politicas.module';
 
 
 const routes: Routes = [
@@ -104,6 +105,10 @@ const routes: Routes = [
             {
                 path: 'asignacion-barrios',
                 loadChildren: () => AsignacionBarriosModule,
+            },
+            {
+                path: 'historico-politicas',
+                loadChildren: () => HistoricoPoliticasModule
             }
         ]
     }
