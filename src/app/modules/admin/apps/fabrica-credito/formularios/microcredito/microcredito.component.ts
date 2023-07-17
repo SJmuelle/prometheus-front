@@ -251,7 +251,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
                         icon: 'info',
                         text: rep.data.msg,
                     }).then(rep => {
-                        this.form.reset();
+                        this.datosBasicos.reset();
                     });
                 }
             })
