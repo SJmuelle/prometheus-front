@@ -140,17 +140,11 @@ export class HistoricoPoliticasComponent implements OnInit {
     return data;
   }
 
-
-     /**
-     * @description: abre la agenda
-     */
-     public onGetAgenda(data: any): void {
-        //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-        localStorage.setItem("trazabilidad", "si")
-        localStorage.setItem("excepcionCredito", "si")
-        const { numeroSolicitud, identificacion } = data;
-        this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
-    }
+  onGetAgendaHistoricoPoliticas(item){
+    console.log('agenda' , item);
+    const { numeroSolicitud, identificacion } = item;
+        this.router.navigate(['/credit-factory/historico-politicas/politicas-agendas', numeroSolicitud, identificacion]);
+  }
 
     public cambiarFecha(date) {
         moment.locale('es');
