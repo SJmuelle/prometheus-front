@@ -29,6 +29,7 @@ import { FormActualizarInfoComponent } from './form-actualizar-info/form-actuali
 import { FuseCardModule } from '@fuse/components/card';
 import { TablaEvidenteComponent } from './tabla-evidente/tabla-evidente.component';
 import { MatListModule } from '@angular/material/list';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -65,7 +66,9 @@ import { MatListModule } from '@angular/material/list';
     SharedModule,
     FuseCardModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    NgxMaskModule.forRoot(),
+
   ]
 })
 export class AgendaFirmaDigitalModule { }

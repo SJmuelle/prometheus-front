@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
 import moment from 'moment';
@@ -18,6 +18,8 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
   form: FormGroup;
   mostrar=1;
   numeroSolicitud
+  fechaActual: any = moment().locale('co');
+
   constructor(
     private _agendaFirma: AgendaFirmaService,
     private fb: FormBuilder,
@@ -31,9 +33,9 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
       segundoApellidoTitular: ['', [Validators.required]],
       nombreCompletoTitular: ['', [Validators.required]],
       celularTitular: ['', [Validators.required, Validators.pattern('^[3][0-9]{9}$')]],
-      emailTitular: ['', [Validators.required]],
-      fechaNacimientoTitular: ['', [Validators.required]],
-      fechaExpedicionTitular: ['', [Validators.required]],
+      emailTitular: ['', [Validators.required, Validators.email]],
+      fechaNacimientoTitular:['', [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
+      fechaExpedicionTitular: ['', [Validators.required, this.validatedDate.bind(this)]],
 
       identificacionCodeudor:[''],
       primerNombreCodeudor: [''],
@@ -42,7 +44,7 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
       segundoApellidoCodeudor: [''],
       nombreCompletoCodeudor: [''],
       celularCodeudor: [''],
-      emailCodeudor: [''],
+      emailCodeudor: ['',[ Validators.email]],
       fechaNacimientoCodeudor: [''],
       fechaExpedicionCodeudor: [''],
       
@@ -53,7 +55,7 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
       segundoApellidoDeudor: [''],
       nombreCompletoDeudor: [''],
       celularDeudor: [''],
-      emailDeudor: [''],
+      emailDeudor: ['' ,[ Validators.email]],
       fechaNacimientoDeudor: [''],
       fechaExpedicionDeudor: [''],
     });
@@ -61,6 +63,7 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
 
   ngOnInit(): void {
     this._agendaFirma.getNumeroSolicitud$.subscribe((numeroSolicitud) => {
+      this.mostrar=1;
       this.numeroSolicitud = numeroSolicitud;
       this.buscarInfor()
     })
@@ -75,7 +78,35 @@ export class FormActualizarInfoComponent implements OnInit , OnDestroy {
     })
   }
 
-  
+  private validatedDate(control: AbstractControl) {
+    const valueControl = control?.value ?? '';
+    const date = moment(valueControl).format('YYYY-MM-DD')
+    const errors = { dateError: true };
+    // Set the validation error on the matching control
+    if (this.fechaActual.isBefore(date)) {
+
+        return errors
+    } else {
+        return null
+    }
+}
+
+private validateMayorEdad(control: AbstractControl) {
+  const valueControl = control?.value ?? '';
+  const date = moment(valueControl).format('YYYY-MM-DD')
+  const errors = { dateMayor: true };
+
+  const fechaMayor = moment().locale('co')
+  fechaMayor.subtract(18, 'years');
+  // Set the validation error on the matching control
+
+  if (fechaMayor.isBefore(date)) {
+
+      return errors
+  } else {
+      return null
+  }
+}
 
 
   save(): void {

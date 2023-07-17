@@ -1,6 +1,6 @@
 <mat-drawer-container class="h-full h-screen overflow-auto w-full">
 
-  <mat-drawer mode="side" #drawer position="end" [(opened)]="opened">
+  <mat-drawer mode="over" #drawer position="end" [(opened)]="opened">
 
     <div class="w-120 min-w-120 pb-30 bg-gray-100 flex overflow-y-auto p-4 flex-col">
 
@@ -203,6 +203,13 @@
 
 
 
+                              <button mat-menu-item *ngIf="item.etapaFirma=='F'" class="flex  items-center"
+                                matTooltip="Reenviar firma"
+                                [matMenuTriggerFor]="matMenuEnviarCorreo">
+                                <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
+                              </button>
+
+
                               <button mat-menu-item *ngIf="item.etapaFirma!='P'" class="flex  items-center"
                                 matTooltip="Reenviar firma"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">
@@ -211,7 +218,8 @@
 
 
 
-                              <button mat-menu-item class="flex  items-center" matTooltip="Ver detalle evidente"
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.etapaFirma!='P'"
+                                matTooltip="Ver detalle evidente"
                                 (click)="obtenerIntentosEvidente(item.identificacion)">
                                 <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle evidente
                               </button>
@@ -234,8 +242,29 @@
 
                           </mat-menu>
 
+                          <mat-menu #matMenuEnviarCorreo="matMenu">
 
+                            <div class="w-auto flex flex-col gap-1 items-start p-2">
 
+                              <button mat-menu-item  class="flex  items-center"
+                                matTooltip="Enviar correo decisión"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">Titular
+                              </button>
+
+                              <button mat-menu-item class="flex  items-center"
+                                matTooltip="Enviar correo decisión"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor
+                              </button>
+         
+
+                              <button mat-menu-item  class="flex  items-center"
+                                matTooltip="Enviar correo decisión"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipodeudor)">Codeudor
+                              </button>
+
+                            </div>
+
+                          </mat-menu>
 
                         </div>
                       </td>
@@ -261,8 +290,9 @@
                       </td>
                       <td class="px-2 pb-0 pt-1">
                         <div class="flex flex-column ">
-                          <small class="text-accent-600 text-xs">Cliente: </small>
+
                           <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
+                          <small class="text-accent-600 text-xs">{{item.emailTitular}} </small>
                         </div>
                       </td>
                       <td class="px-2 pb-0 pt-1">

@@ -106,6 +106,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
         "unidadNegocio": unidadNegocio,
         "tipoTercero": 'T'
       }
+      Swal.fire({ title: 'Cargando', html: 'Enviado correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
+
       this._decisionesService.comprobacionCampos(datoComprobacion)
         .subscribe((res2) => {
           this.correoDecision(numeroSolicitud, tipo)
@@ -217,7 +219,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     });
   }
 
-  public updateReenviarFirma(numeroSolicitud,tipo): void {
+  public updateReenviarFirma(numeroSolicitud, tipo): void {
     let data =
     {
       numeroSolicitud: numeroSolicitud,
@@ -229,7 +231,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       if (res.status === 200) {
         Swal.close();
         if (res.data.firma_interna_reenviar) {
-          this.correoDecision(numeroSolicitud,tipo)
+          this.correoDecision(numeroSolicitud, tipo)
           // Swal.fire({
           //   title: "Se reenvio con exito",
           //   html: `<p>Reenvio de firma con éxito</p>`,

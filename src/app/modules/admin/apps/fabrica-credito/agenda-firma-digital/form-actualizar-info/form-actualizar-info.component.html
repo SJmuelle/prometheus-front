@@ -17,7 +17,7 @@
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Identificación</mat-label>
-                    <input matInput type="text"  autocomplete="off" formControlName="identificacionTitular">
+                    <input matInput type="text" readonly autocomplete="off" formControlName="identificacionTitular">
                 </mat-form-field>
             </div>
             <div class="grid grid-cols-2 gap-2">
@@ -54,13 +54,14 @@
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Celular</mat-label>
-                    <input matInput type="text" autocomplete="off" formControlName="celularTitular">
+                    <input matInput type="text" autocomplete="off" formControlName="celularTitular" prefix="+57 "
+                    mask="(000) 000 00 00">
                 </mat-form-field>
             </div>
             <div class="w-full">
                 <mat-form-field class="w-full" appearance="fill">
                     <mat-label>Correo electrónico</mat-label>
-                    <input matInput type="text" autocomplete="off" formControlName="emailTitular">
+                    <input matInput type="email" autocomplete="off" formControlName="emailTitular">
                     <!-- <mat-error *ngIf="form.get('emailTitular').hasError('required')">
                         El correo es requerido
                      </mat-error>
@@ -123,7 +124,8 @@
                 <div class="w-full">
                     <mat-form-field class="w-full" appearance="fill">
                         <mat-label>Celular</mat-label>
-                        <input matInput type="text" autocomplete="off" formControlName="celularCodeudor">
+                        <input matInput type="text" autocomplete="off" formControlName="celularCodeudor" prefix="+57 "
+                        mask="(000) 000 00 00">
                     </mat-form-field>
                 </div>
                 <div class="w-full">
@@ -187,7 +189,8 @@
                 <div class="w-full">
                     <mat-form-field class="w-full" appearance="fill">
                         <mat-label>Celular</mat-label>
-                        <input matInput type="text" autocomplete="off" formControlName="celularDeudor">
+                        <input matInput type="text" autocomplete="off" formControlName="celularDeudor" prefix="+57 "
+                        mask="(000) 000 00 00">
                     </mat-form-field>
                 </div>
                 <div class="w-full">
