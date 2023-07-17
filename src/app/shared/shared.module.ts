@@ -32,6 +32,7 @@ import { TableComponent } from './componentes/table/table.component';
 import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
 import { DataTablePipe } from './pipes/data-table.pipe';
 import { HeaderComponent } from './componentes/header/header.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -64,6 +65,7 @@ import { HeaderComponent } from './componentes/header/header.component'
         MatSidenavModule,
         MatExpansionModule,
         MatMenuModule,
+        MatProgressBarModule
         // FabricaCreditoModule
 
     ],
@@ -94,7 +96,8 @@ import { HeaderComponent } from './componentes/header/header.component'
         SmPaginatorPipe,
         DataTablePipe,
         TableComponent,
-        HeaderComponent
+        HeaderComponent,
+        MatProgressBarModule
     ],
     declarations: [
         DirectionsBasicComponent,

@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { AgendaComercialService } from '../../../../../../core/services/agenda-comercial.service';
@@ -29,6 +29,10 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public totales: any[];
   public opened: boolean = false;
   public filtrado = 'P'
+  public minuto: number = 0
+  public porcentaje: number = 0
+  public intervalVentaFima: any
+  public intervalProgressBar: any
   public colorState: any = {
     Pendiente: 'bg-red-200 text-red-500',
     Enviados: 'bg-blue-200 text-blue-500',
@@ -53,6 +57,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
 
   }
 
+
   ngOnInit(): void {
     this.getTotalesAgendaFirmaDigital();
     this.getAgendaFirmaDigital();
@@ -62,6 +67,10 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       this.opened = opened;
       this.getAgendaFirmaDigital();
     })
+
+
+
+
   }
 
 
@@ -384,12 +393,36 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
     this.datos = [...filter]
 
+    if (this.filtrado === "F") {
+
+      this.intervalVentaFima = setInterval(() => {
+        this.getAgendaFirmaDigital();
+        this.minuto = 0;
+        const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
+        this.datos = [...filter]
+      }, 30000);
+
+      this.intervalProgressBar = setInterval(() => {
+        this.minuto = this.minuto + 1;
+        this.porcentaje = (this.minuto * 100) / 30;
+      }, 1000);
+
+    } else {
+      this.porcentaje = 0;
+      this.minuto = 0;
+      clearInterval(this.intervalVentaFima);
+      clearInterval(this.intervalProgressBar)
+    }
+
   }
 
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    clearInterval(this.intervalVentaFima);
+    clearInterval(this.intervalProgressBar)
+
   }
 
 }

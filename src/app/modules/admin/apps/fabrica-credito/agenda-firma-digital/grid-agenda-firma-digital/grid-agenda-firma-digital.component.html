@@ -141,7 +141,12 @@
       </div>
 
       <div class="grid grid-cols-1 w-full px-5 pt-3">
-        <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
+
+
+        <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full relative">
+          <mat-progress-bar *ngIf="this.filtrado === 'F' " class="barra" mode="determinate"
+            [value]="porcentaje"></mat-progress-bar>
+
           <div class="flex items-center justify-between">
             <div class="flex flex-row gap-3">
               <!-- <div class="">
@@ -166,6 +171,10 @@
 
           </div>
           <div class="w-full  overflow-auto mt-2">
+
+
+
+
             <table class="p-0 ">
 
               <tbody class="bg-white">
@@ -204,8 +213,7 @@
 
 
                               <button mat-menu-item *ngIf="item.etapaFirma=='F'" class="flex  items-center"
-                                matTooltip="Reenviar firma"
-                                [matMenuTriggerFor]="matMenuEnviarCorreo">
+                                matTooltip="Reenviar firma" [matMenuTriggerFor]="matMenuEnviarCorreo">
                                 <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
                               </button>
 
@@ -246,19 +254,16 @@
 
                             <div class="w-auto flex flex-col gap-1 items-start p-2">
 
-                              <button mat-menu-item  class="flex  items-center"
-                                matTooltip="Enviar correo decisión"
+                              <button mat-menu-item class="flex  items-center" matTooltip="Enviar correo decisión"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">Titular
                               </button>
 
-                              <button mat-menu-item class="flex  items-center"
-                                matTooltip="Enviar correo decisión"
+                              <button mat-menu-item class="flex  items-center" matTooltip="Enviar correo decisión"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor
                               </button>
-         
 
-                              <button mat-menu-item  class="flex  items-center"
-                                matTooltip="Enviar correo decisión"
+
+                              <button mat-menu-item class="flex  items-center" matTooltip="Enviar correo decisión"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipodeudor)">Codeudor
                               </button>
 
