@@ -35,16 +35,13 @@ import { QuillModule } from 'ngx-quill';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
 import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.component';
 import { MatStepperModule } from '@angular/material/stepper';
-import { ModalConfirmarDatosOTPComponent } from './modal-confirmar-datos-otp/modal-confirmar-datos-otp.component';
 import { SharedModule } from 'app/shared/shared.module';
 
 
 @NgModule({
   declarations: [
     MicrocreditoComponent,
-    LibranzaPublicaComponent,
-    ModalConfirmarDatosOTPComponent,
-    
+    LibranzaPublicaComponent,  
   ],
   imports: [
     CommonModule,
