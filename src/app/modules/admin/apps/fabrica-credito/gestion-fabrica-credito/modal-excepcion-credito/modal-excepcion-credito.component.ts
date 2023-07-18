@@ -56,6 +56,7 @@ export class ModalExcepcionCreditoComponent implements OnInit {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
+          Swal.fire({ title: 'Cargando', html: 'Buscando información de detalles de la cartera', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
           this._politicasService.guardarExcepcionCredito(data).subscribe(rep => {
             // console.log('respuesta', rep)
             Swal.fire({

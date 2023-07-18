@@ -6,6 +6,7 @@ import { PermisosService } from 'app/core/services/permisos.service';
 import { ModalExcepcionCreditoComponent } from '../modal-excepcion-credito/modal-excepcion-credito.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GenericasService } from 'app/core/services/genericas.service';
+import Swal from 'sweetalert2';
 @Component({
     selector: 'app-grid-politicas',
     templateUrl: './grid-politicas.component.html',
@@ -21,7 +22,7 @@ export class GridPoliticasComponent implements OnInit {
     public permisoExcepcion: boolean = false;
     public unidadNegocio: number;
     constructor(
-        private politicasService: PoliticasService,
+        private _politicasService: PoliticasService,
         private route: ActivatedRoute,
         public _permisosService: PermisosService,
         private _matDialog: MatDialog,
@@ -39,7 +40,7 @@ export class GridPoliticasComponent implements OnInit {
         this.codeudor = []
         this.representante = [];
         this.solidario = [];
-        this.politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
+        this._politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
             data.data.forEach(element => {
                 if (element.tipoTercero === 'T') {
                     this.titular.push(element)
@@ -108,5 +109,33 @@ export class GridPoliticasComponent implements OnInit {
         }
         return color;
     }
-
+    
+    correrMotor(tipoTercero: string){
+        Swal.fire({
+            title: 'Guardar información',
+            text: '¿Está seguro de correr el motor?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#a3a0a0',
+            confirmButtonText: 'Guardar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const data = {
+                    numeroSolicitud: Number(this.numeroSolicitud),
+                    tipoTercero
+                }
+        
+                Swal.fire({ title: 'Cargando', html: 'Corriendo el motor...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+                this._politicasService.correrMotorlExcepcionPolitica(data).subscribe(rep => {
+                    Swal.fire('Recalculado','Ha sido recalculado con éxito','success').then(() => {
+                        if(rep['data'].ejecutoMotor){
+                            window.location.reload()
+                        }
+                    })
+                })
+            }
+        });
+    }
 }
