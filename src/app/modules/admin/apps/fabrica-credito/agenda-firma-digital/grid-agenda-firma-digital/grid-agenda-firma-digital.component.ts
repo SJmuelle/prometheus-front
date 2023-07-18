@@ -109,14 +109,15 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
 
   public openViewDocument(item: any): void {
 
+    this._sweetAlertService.startLoading({});
     this._agendaFirma.numeroSolicitud.next(item.numeroSolicitud)
 
     this.mode = "View-document"
-    this._sweetAlertService.startLoading({});
     const data = {
       id: item.idUnidadNegocio,
       negocio: item.numeroSolicitud
     }
+
     this._agendaFirma.verDocumentosFirmaDigital(data).subscribe({
       next: (resp) => {
         this._sweetAlertService.stopLoading();
@@ -130,12 +131,17 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
         })
 
         this.dataDocuments = [...valid]
-        console.log('document', this.dataDocuments)
-        if (!valid.length) {
-          this._sweetAlertService.alertInfo({});
-        } else {
-          this.opened = true;
-        }
+
+        setTimeout(() => {
+          if (!valid.length) {
+            this._sweetAlertService.alertInfo({ info: 'Lo sentimos, no se encontraron documentos en la consulta' });
+          } else {
+            this.opened = true;
+          }
+
+        }, 200);
+
+
 
       },
       error: (e) => {

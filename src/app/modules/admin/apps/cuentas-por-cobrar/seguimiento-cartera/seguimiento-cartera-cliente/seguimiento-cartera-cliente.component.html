@@ -6,12 +6,57 @@
 
     <div class="p-4 w-full h-full gap-4 flex flex-col">
 
-        <div class="w-full h-30 bg-blue-200">
+        <div class="w-full h-auto bg-white rounded-md border-2 p-2 flex flex-col">
+            <h4>Filtros</h4>
+            <div class="flex flex-row w-full gap-3 p-2">
+
+
+                <mat-form-field class="fuse-mat-dense w-56">
+                    <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                    <mat-select>
+                        <mat-option value="1">opcion 1</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="fuse-mat-dense w-56">
+                    <mat-label class="font-semibold text-md">Periodos fotos</mat-label>
+                    <mat-select>
+                        <mat-option value="1">opcion 1</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="fuse-mat-dense w-72">
+                    <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                    <mat-checkbox matPrefix>Al dia</mat-checkbox>
+                    <mat-checkbox matPrefix>Por vencer</mat-checkbox>
+                    <mat-checkbox matPrefix>Vencido</mat-checkbox>
+                    <input matInput readonly="true" class="w-0 max-w-0">
+                </mat-form-field>
+
+                <!-- <div class="flex flex-col">
+                    <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                    <div class="flex flex-row gap-2 mt-2">
+                        <mat-checkbox>Al dia</mat-checkbox>
+                        <mat-checkbox>Por vencer</mat-checkbox>
+                        <mat-checkbox>Vencido</mat-checkbox>
+
+                    </div>
+
+                </div> -->
+
+
+
+
+
+
+
+            </div>
+
 
         </div>
 
         <div>
-            <app-table></app-table>
+            <app-table [dataOptionTable]="optionsTable" [allDataRows]="dataRows"></app-table>
 
         </div>
 

@@ -28,13 +28,18 @@ export class Sweetalert2Service {
     Swal.fire({
       allowOutsideClick: false,
       title: '¿Estas seguro?',
-      text: "esta acción no se puede deshacer",
+      text: "Esta acción no se puede deshacer",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Confirmar',
-      cancelButtonText: 'Cancelar'
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        actions: 'flex-row-reverse gap-2',
+        cancelButton: 'rounded-full w-26 bg-gray-500',
+        confirmButton: 'rounded-full w-26 '
+      }
     }).then((result: any) => {
       if (result.isConfirmed) {
         callBack();
@@ -43,28 +48,44 @@ export class Sweetalert2Service {
   }
 
   public alertSuccess(): void {
-    Swal.fire(
-      'Correcto!',
-      'Solicitud realizada correctamente',
-      'success'
-    )
+
+
+    Swal.fire({
+      allowOutsideClick: true,
+      title: 'Correcto!',
+      text: "Solicitud realizada correctamente",
+      icon: 'success',
+      confirmButtonColor: '#3085d6',
+      customClass: {
+        confirmButton: 'rounded-full w-20 bg-blue-400 '
+      }
+    })
   }
 
   public alertError(): void {
+
     this.stopLoading();
-    Swal.fire(
-      'Error!',
-      'Su solicitud no pudo ser procesada, por favor intente nuevamente.',
-      'error'
-    )
+
+    Swal.fire({
+      allowOutsideClick: true,
+      title: 'Error!',
+      text: "Su solicitud no pudo ser procesada, por favor intente nuevamente",
+      icon: 'error',
+      customClass: {
+        confirmButton: 'rounded-full w-20 bg-gray-400 '
+      }
+    })
   }
 
   public alertInfo({ info = 'Lo sentimos, no se encontraron registros en la consulta' }): void {
-    Swal.fire(
-      'Información',
-      info,
-      'info'
-    )
+    Swal.fire({
+      allowOutsideClick: true,
+      text: info,
+      icon: 'info',
+      customClass: {
+        confirmButton: 'rounded-full w-20 bg-gray-400'
+      }
+    })
   }
 
 }

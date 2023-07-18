@@ -30,6 +30,10 @@ import { FuseCardModule } from '@fuse/components/card';
 import { TablaEvidenteComponent } from './tabla-evidente/tabla-evidente.component';
 import { MatListModule } from '@angular/material/list';
 import { NgxMaskModule } from 'ngx-mask';
+import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
+import { PdfViewerModule } from "ng2-pdf-viewer";
+
+
 
 
 @NgModule({
@@ -67,6 +71,8 @@ import { NgxMaskModule } from 'ngx-mask';
     FuseCardModule,
     MatDividerModule,
     MatListModule,
+    PdfViewerModule,
+    NgxExtendedPdfViewerModule,
     NgxMaskModule.forRoot(),
 
   ]

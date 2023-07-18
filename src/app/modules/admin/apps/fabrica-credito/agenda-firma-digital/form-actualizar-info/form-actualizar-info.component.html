@@ -224,79 +224,54 @@
 </ng-container>
 
 <ng-container *ngIf="mode==='View-document' ">
-
-
     <div class="flex justify-between my-2 ">
         <div class="text-2xl font-bold ">Ver documentos</div>
         <button mat-stroked-button (click)="cerrar()">
             <mat-icon svgIcon="close"></mat-icon>
         </button>
     </div>
-
-
     <h4>Indique documento a visualizar</h4>
-
-
-
-
     <mat-form-field class="w-full">
         <mat-label>Seleccione un documento</mat-label>
-        <mat-select (selectionChange)="selectDocument($event)">
-            <mat-option *ngFor="let item of dataDocuments" [value]="item.idArchivo">
+        <mat-select (selectionChange)="selectDocument($event)" [(ngModel)]="selectedDocument">
+            <mat-option *ngFor="let item of dataDocuments" [value]="item.idArchivoCargado">
                 {{item.nombreArchivo?.replaceAll("_"," ")?.toUpperCase()}}
             </mat-option>
         </mat-select>
     </mat-form-field>
-
-
-
-    <ng-container *ngFor="let item of datosDocumentosHistorico; let  i = index">
+    <ng-container *ngIf="datosDocumentosHistorico!==null">
         <div class="flex flex-col flex-auto p-6 md:p-6">
-
             <div class="flex flex-col items-start mt-1">
-                <div class="text-xl font-medium">{{item.nombreCategoria}}</div>
+                <div class="text-xl font-medium">{{datosDocumentosHistorico.nombreArchivo}}</div>
             </div>
             <div class="aspect-w-9 aspect-h-6 mt-1">
                 <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">
                     <!---->
-                    <ng-container *ngIf="item.extension === 'pdf'">
-                        <pdf-viewer [src]="item.base64" [render-text]="true" [original-size]="false" [show-all]="true"
-                            style="width: 98%; height: 98%">
+                    <ng-container *ngIf="datosDocumentosHistorico.extension === 'pdf'">
+                        <pdf-viewer [src]="datosDocumentosHistorico.base64" [render-text]="true" [original-size]="false"
+                            [show-all]="true" style="width: 98%; height: 98%">
                         </pdf-viewer>
                     </ng-container>
-
-
-
-
                 </div>
             </div>
             <div class="flex flex-col items-start mt-2">
-
-
-                <ng-container *ngIf="item.extension === 'pdf'">
+                <ng-container *ngIf="datosDocumentosHistorico.extension === 'pdf'">
                     <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600"> PDF
                     </div>
                 </ng-container>
 
             </div>
-            <div class="text-lg font-medium mt-3">Detalle</div>
+            <!-- <div class="text-lg font-medium mt-3">Detalle</div>
             <div class="flex flex-col mt-3 border-t border-b divide-y font-medium">
-
-
-
-
                 <div class="flex items-center justify-between py-1">
                     <div class="text-secondary">Fecha de anulación</div>
                     <div> {{ 'fecha' }}</div>
                 </div>
-
-            </div>
+            </div> -->
             <div class="grid grid-cols-2 gap-4 w-full mt-5">
-                <button mat-flat-button="" matTooltip="Descargar documento"
+                <button mat-flat-button="" (click)="getDownloadHistorico()" matTooltip="Descargar documento"
                     class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary">
                     <span class="mat-button-wrapper"> Descargar </span>
-                    <span matripple="" class="mat-ripple mat-button-ripple"></span>
-                    <span class="mat-button-focus-overlay"></span>
                 </button>
             </div>
             <hr>

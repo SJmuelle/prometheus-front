@@ -19,10 +19,11 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
   @Input() mode: string = ""
   @Input() dataDocuments: any = null
   public unsubscribe$: Subject<any> = new Subject();
+  public selectedDocument: any = null
   form: FormGroup;
   mostrar = 1;
   numeroSolicitud
-  public datosDocumentosHistorico: any[] = []
+  public datosDocumentosHistorico: any = null
   fechaActual: any = moment().locale('co');
 
   constructor(
@@ -73,6 +74,8 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
       this.mostrar = 1;
       this.numeroSolicitud = numeroSolicitud;
       this.buscarInfor()
+      this.selectedDocument = null
+      this.datosDocumentosHistorico = null
     })
   }
 
@@ -143,7 +146,7 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
   }
 
   public selectDocument(event: any): void {
-    console.log('event', event)
+
     this._sweetalertService.startLoading({});
 
     const datosHistorico = {
@@ -154,7 +157,8 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
     this._documentosServices.getDocumento(datosHistorico).subscribe({
       next: (resp) => {
         this._sweetalertService.stopLoading();
-        console.log('servicio documento', resp);
+        this.datosDocumentosHistorico = resp?.data || null
+
       },
       error: (e) => {
         this._sweetalertService.alertError();
@@ -162,8 +166,21 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
     })
 
 
-    this._sweetalertService.stopLoading();
+
   }
+
+  public getDownloadHistorico(): void {
+    const archivo = this.datosDocumentosHistorico.base64.split(',')[1];
+    const extension = this.datosDocumentosHistorico.nombreArchivo.split('.')[1];
+    // console.log(extension);
+    const link = document.createElement('a');
+    document.body.appendChild(link);
+    link.href = `data:application/${extension};base64,${archivo}`;
+    link.target = '_self';
+    link.download = this.datosDocumentosHistorico.nombreArchivo + '.' + this.datosDocumentosHistorico.extension;
+    link.click();
+  }
+
 
   cerrar(): void {
     this._agendaFirma.openDrawner.next(false)
