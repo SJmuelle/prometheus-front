@@ -433,6 +433,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
 
+                if (this.permisoEditar) {
+                    this.form.disable();
+                }
+
                 this.setConyugueNombreCompleto()
 
                 this.formatearDataInicial();

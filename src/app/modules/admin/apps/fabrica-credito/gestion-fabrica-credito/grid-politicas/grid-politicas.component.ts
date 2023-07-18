@@ -7,6 +7,7 @@ import { ModalExcepcionCreditoComponent } from '../modal-excepcion-credito/modal
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GenericasService } from 'app/core/services/genericas.service';
 import Swal from 'sweetalert2';
+import { CentralesService } from 'app/core/services/centrales.service';
 @Component({
     selector: 'app-grid-politicas',
     templateUrl: './grid-politicas.component.html',
@@ -26,7 +27,8 @@ export class GridPoliticasComponent implements OnInit {
         private route: ActivatedRoute,
         public _permisosService: PermisosService,
         private _matDialog: MatDialog,
-        private _generica: GenericasService
+        private _generica: GenericasService,
+        private _centralesService: CentralesService
     ) { }
 
     ngOnInit(): void {
@@ -36,7 +38,7 @@ export class GridPoliticasComponent implements OnInit {
     }
 
     private getPoliticas(numeroSolicitud: string): void {
-        this.titular =[];
+        this.titular = [];
         this.codeudor = []
         this.representante = [];
         this.solidario = [];
@@ -49,7 +51,7 @@ export class GridPoliticasComponent implements OnInit {
                     this.codeudor.push(element)
                 } else if (element.tipoTercero === 'S') {
                     this.solidario.push(element)
-                }else if(element.tipoTercero === 'R'){
+                } else if (element.tipoTercero === 'R') {
                     this.representante.push(element)
                 }
             });
@@ -57,60 +59,60 @@ export class GridPoliticasComponent implements OnInit {
         });
     }
 
-    private getUnidadNegocio(){
+    private getUnidadNegocio() {
         this._generica.getUnidadNegocio(this.numeroSolicitud).subscribe(rep => {
             this.unidadNegocio = rep.data[0].unidadNegocio
         })
     }
 
     // 21 corresponde a la politica de filtros duros
-    hasIDPolitica(array: any[]){
+    hasIDPolitica(array: any[]) {
         return array.find(item => item.idPolitica === 21)
     }
 
-    openExcepcion(item: any){
+    openExcepcion(item: any) {
         const dialogRef = this._matDialog.open(ModalExcepcionCreditoComponent, {
             width: '50vw',
             maxHeight: '550px',
-            data:  item ,
+            data: item,
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            if(result){
+            if (result) {
                 window.location.reload()
-            }else{
+            } else {
                 this.getPoliticas(this.numeroSolicitud);
             }
         });
     }
 
-    getColorExcepcion(item: any){
+    getColorExcepcion(item: any) {
         let color = 'bg-green-300'
 
-        if(item.estadoAccion !== 'CUMPLE'){
-            if(item.excepcion){
+        if (item.estadoAccion !== 'CUMPLE') {
+            if (item.excepcion) {
                 color = 'bg-yellowCustom'
-            }else{
+            } else {
                 color = 'bg-red-300'
             }
         }
         return color;
     }
 
-    getColorTextExcepcion(item: any){
+    getColorTextExcepcion(item: any) {
         let color = 'text-gray-500'
 
-        if(item.estadoAccion !== 'CUMPLE'){
-            if(item.excepcion){
+        if (item.estadoAccion !== 'CUMPLE') {
+            if (item.excepcion) {
                 color = 'text-white'
-            }else{
+            } else {
                 color = 'text-red-900'
             }
         }
         return color;
     }
-    
-    correrMotor(tipoTercero: string){
+
+    correrMotor(tipoTercero: string) {
         Swal.fire({
             title: 'Guardar información',
             text: '¿Está seguro de correr el motor?',
@@ -126,16 +128,23 @@ export class GridPoliticasComponent implements OnInit {
                     numeroSolicitud: Number(this.numeroSolicitud),
                     tipoTercero
                 }
-        
+
                 Swal.fire({ title: 'Cargando', html: 'Corriendo el motor...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
                 this._politicasService.correrMotorlExcepcionPolitica(data).subscribe(rep => {
-                    Swal.fire('Recalculado','Ha sido recalculado con éxito','success').then(() => {
-                        if(rep['data'].ejecutoMotor){
+                    console.log('respuesta', rep);
+                    if (rep['data'].resultado === 'OK') {
+                        Swal.fire('Guardado con éxito', 'Ha sido recalculado con éxito.', 'success').then(() => {
                             window.location.reload()
-                        }
-                    })
+                        })
+                    } else {
+                        Swal.fire('Ha ocurrido un error', 'Lo sentimos, en este momento presentamos inconvenientes en la comunicación con las centrales de riesgos. <br>', 'error')
+                    }
                 })
+
+
             }
         });
     }
+
+
 }

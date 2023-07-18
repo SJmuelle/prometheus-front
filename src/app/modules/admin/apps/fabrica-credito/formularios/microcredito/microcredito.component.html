@@ -330,7 +330,7 @@
 
         <mat-step [stepControl]="verificacionOTP">
             <div class="pt-6">
-                <ng-template matStepLabel>Verificacion</ng-template>
+                <ng-template matStepLabel>Verificación</ng-template>
 
                 <app-otp [numeroSolicitud]="numeroSolicitud ? numeroSolicitud : numeroSolicitudTemporal"
                     (otpValidado)="otpValidadoChange($event)" [datosBasicos]="datosBasicos"></app-otp>

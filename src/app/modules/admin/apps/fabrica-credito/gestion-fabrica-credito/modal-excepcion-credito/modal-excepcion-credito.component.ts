@@ -14,6 +14,7 @@ export class ModalExcepcionCreditoComponent implements OnInit {
 
   public form: FormGroup
 
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private _dialog: MatDialogRef<ModalExcepcionCreditoComponent>,
     private fb: FormBuilder,
@@ -29,6 +30,8 @@ export class ModalExcepcionCreditoComponent implements OnInit {
     // console.log('datos politica', this.data)
     this.form.controls.excepcionText.setValue(this.data.comentarioExcepcion)
     this.form.patchValue(this.data);
+    console.log('data', this.data);
+    
   }
 
   /**
@@ -72,4 +75,6 @@ export class ModalExcepcionCreditoComponent implements OnInit {
       });
     }
   }
+
+  
 }

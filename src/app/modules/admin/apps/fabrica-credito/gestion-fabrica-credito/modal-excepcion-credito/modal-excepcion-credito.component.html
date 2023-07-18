@@ -1,27 +1,23 @@
-<h2 mat-dialog-title>Detalle de la excepción</h2>
+<h2 mat-dialog-title class="mb-3">Detalle de la excepción</h2>
+<p class="font-semibold mb-0">{{data.nombre}}</p>
+<form [formGroup]="form">
+<div class="flex w-full py-2">
+     <section class="example-section">
+        <mat-checkbox class="example-margin" color="primary" formControlName="excepcion"></mat-checkbox>
+      </section> 
+    <P class="mb-1">{{data.descripcion}}</P>
+</div>
 
 <mat-dialog-content *ngIf="data" class="py-2">
     <div class="grid-cols-12 ">
         <div class="col-span-12">
-            <form [formGroup]="form">
+            
                 <div class="bg-white flex flex-col">
 
-                    <div class="flex justify-end items-center min-h-9 ">
-                        <div>Excepcionar</div>
-                        <div class="toggle-button-cover">
-                            <div class="button-cover">
-                                <div class="button r" id="button-1">
-                                    <input type="checkbox" class="checkbox" formControlName="excepcion">
-                                    <div class="knobs"></div>
-                                    <div class="layer"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="md:flex">
+                       
                         <mat-form-field class="w-full fuse-mat-dense">
-                            <mat-label>Comentario</mat-label>
-                            <textarea class="h-60" matInput [formControlName]="'excepcionText'"
+                            <textarea class="h-60" placeholder="Comentario" matInput [formControlName]="'excepcionText'"
                                 [readonly]="data.idComentario">
                             </textarea>
                             <mat-error *ngIf="form.controls.excepcionText.errors?.required">Este campo es
@@ -34,10 +30,11 @@
                     </div>
                     
                 </div>
-            </form>
+           
         </div>
     </div>
 </mat-dialog-content>
+</form>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
         <ng-container *ngIf="!data.idComentario">

@@ -343,7 +343,7 @@ export class LibranzaPublicaComponent implements OnInit, AfterViewInit {
 
             this._libranzaService.guardarDatosBasicos(datosAEnviar).subscribe(data => {
 
-                if(data.data.msg !== 'OK'){
+                if(data.data.resultado !== 'OK'){
                     Swal.fire({
                         icon: 'info',
                         text: data.data.msg,

@@ -277,7 +277,9 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
             historialCredit: EndPoints.uri('/credito/generic/info-historial-credit'),
-            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra')
+            consultaHistorialExcepcion: EndPoints.uri('/credito/microcredito/consultar-historial-credito-excepcion'),
+            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra'),
+            filtrosDurosMicro: EndPoints.uri('/generic/filtro-duros-microcredito')
         }
     };
     /**
@@ -328,7 +330,7 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/generic/qry/cre-politicas-adm'),
             guardarExcepcion: EndPoints.uri('/generic/guardado-excepcion-creditos'),
-            correrMotorExcepciones: EndPoints.uri('/generic/recalculo-excepcion-politicas-creditos')
+            correrMotorExcepciones: EndPoints.uri('/credito/microcredito/recalculo-excepcion-politicas-creditos')
         }
     };
     /**

@@ -100,7 +100,7 @@
 
 
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
-                        <mat-label>Genero</mat-label>
+                        <mat-label>Género</mat-label>
                         <mat-select formControlName="genero">
                             <mat-option *ngFor="let genero of dataInicial?.generos" [value]="genero.codigo">
                                 {{genero.nombre}}
@@ -293,7 +293,7 @@
                     </div>
 
                     <form [formGroup]="datosBasicos" class="col-span-1 flex h-full w-full justify-center items-center">
-                        <ng-template matStepLabel>Datos basicos</ng-template>
+                        <ng-template matStepLabel>Datos básicos</ng-template>
 
                         <div class="bg-white  rounded  flex flex-col w-full">
                             <mat-form-field class="w-full  fuse-mat-dense md:px-12 sm:px-0">
