@@ -3,9 +3,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecaudosModule } from './recaudos/recaudos.module';
 
 const routes: Routes = [{
-    path: 'recaudos',
-    loadChildren: ()=> RecaudosModule
-}];
+  path: 'recaudos',
+  loadChildren: () => RecaudosModule
+},
+{
+  path: 'seguimiento-cartera',
+  loadChildren: () => import('./seguimiento-cartera/seguimiento-cartera.module').then((m) => m.SeguimientoCarteraModule)
+}
+
+
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

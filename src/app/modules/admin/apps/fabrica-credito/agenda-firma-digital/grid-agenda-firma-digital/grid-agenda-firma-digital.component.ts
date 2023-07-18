@@ -12,6 +12,7 @@ import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-
 import { AgendaFirmaService } from 'app/core/services/agenda-firma.service';
 import { DecisionesService } from 'app/core/services/decisiones.service';
 import { TablaEvidenteComponent } from '../tabla-evidente/tabla-evidente.component';
+import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 
 @Component({
   selector: 'app-grid-agenda-firma-digital',
@@ -28,7 +29,9 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public mostrarTotales: boolean = true;
   public totales: any[];
   public opened: boolean = false;
+  public dataDocuments: any[] = []
   public filtrado = 'P'
+  public mode: string = "";
   public minuto: number = 0
   public porcentaje: number = 0
   public intervalVentaFima: any
@@ -51,6 +54,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
     public _decisionesService: DecisionesService,
     public dialog: MatDialog,
     public _permisosService: PermisosService,
+    public _sweetAlertService: Sweetalert2Service
   ) {
 
 
@@ -98,8 +102,49 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   }
 
   public openDetail(numeroSolicitud): void {
+    this.mode = "Edit-info"
     this._agendaFirma.numeroSolicitud.next(numeroSolicitud)
     this.opened = true;
+  }
+
+  public openViewDocument(item: any): void {
+
+    this._agendaFirma.numeroSolicitud.next(item.numeroSolicitud)
+
+    this.mode = "View-document"
+    this._sweetAlertService.startLoading({});
+    const data = {
+      id: item.idUnidadNegocio,
+      negocio: item.numeroSolicitud
+    }
+    this._agendaFirma.verDocumentosFirmaDigital(data).subscribe({
+      next: (resp) => {
+        this._sweetAlertService.stopLoading();
+
+        this.dataDocuments = resp?.data || []
+        const valid: any[] = []
+        this.dataDocuments.forEach((item) => {
+          if (item.archivoCargado !== 'N') {
+            valid.push({ ...item })
+          }
+        })
+
+        this.dataDocuments = [...valid]
+        console.log('document', this.dataDocuments)
+        if (!valid.length) {
+          this._sweetAlertService.alertInfo({});
+        } else {
+          this.opened = true;
+        }
+
+      },
+      error: (e) => {
+        this._sweetAlertService.alertError();
+      }
+    })
+
+
+
   }
 
 

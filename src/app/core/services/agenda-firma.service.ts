@@ -56,7 +56,7 @@ export class AgendaFirmaService {
  * @description: Listado de agendas de completacion
  */
   public obtenerIntentosEvidente(data): Observable<any> {
-    return this._http.post(`${this._appSettings.agendaFirmaDigital.url.obtenerIntentosEvidente}`,data);
+    return this._http.post(`${this._appSettings.agendaFirmaDigital.url.obtenerIntentosEvidente}`, data);
   }
 
 
@@ -65,6 +65,18 @@ export class AgendaFirmaService {
   */
   public guardarDatosBasicosFirma(data): Observable<any> {
     return this._http.post(`${this._appSettings.agendaFirmaDigital.url.guardarDatosBasicosFirma}`, data);
+  }
+
+
+  /**
+   * 
+   * @param data 
+   * @returns 
+   */
+  public verDocumentosFirmaDigital(data: any): Observable<any> {
+    const id = data.id
+    const negocio = data.negocio
+    return this._http.get<any>(`${this._appSettings.agendaFirmaDigital.url.verDocumentosFirmaDigital}/${id}/${negocio}`)
   }
 
 }

@@ -9,7 +9,7 @@
             <mat-icon svgIcon="close"></mat-icon>
           </button>
         </div> -->
-      <app-form-actualizar-info class=" pb-30"></app-form-actualizar-info>
+      <app-form-actualizar-info [mode]="mode" [dataDocuments]="dataDocuments" class=" pb-30"></app-form-actualizar-info>
     </div>
 
   </mat-drawer>
@@ -240,6 +240,12 @@
                                 <mat-icon svgIcon="heroicons_outline:pencil" class="mr-2"></mat-icon>Edita información
                               </button>
 
+                              <button mat-menu-item *ngIf="item.etapaFirma=='F' " class="flex  items-center"
+                                matTooltip="Ver documentos" (click)="openViewDocument(item)">
+                                <mat-icon svgIcon="heroicons_outline:document-text" class="mr-2"></mat-icon>Ver
+                                documentos
+                              </button>
+
 
 
                             </div>
@@ -297,7 +303,7 @@
                         <div class="flex flex-column ">
 
                           <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
-                          <small class="text-accent-600 text-xs">{{item.emailTitular}} </small>
+                          <span class="text-accent-600 text-sm">{{item.email }}</span>
                         </div>
                       </td>
                       <td class="px-2 pb-0 pt-1">

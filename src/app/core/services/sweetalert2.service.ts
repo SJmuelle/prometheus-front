@@ -59,5 +59,12 @@ export class Sweetalert2Service {
     )
   }
 
+  public alertInfo({ info = 'Lo sentimos, no se encontraron registros en la consulta' }): void {
+    Swal.fire(
+      'Información',
+      info,
+      'info'
+    )
+  }
 
 }
