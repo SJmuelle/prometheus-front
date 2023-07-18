@@ -146,7 +146,7 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
   }
 
   public selectDocument(event: any): void {
-
+    this.datosDocumentosHistorico = null
     this._sweetalertService.startLoading({});
 
     const datosHistorico = {
@@ -172,7 +172,6 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
   public getDownloadHistorico(): void {
     const archivo = this.datosDocumentosHistorico.base64.split(',')[1];
     const extension = this.datosDocumentosHistorico.nombreArchivo.split('.')[1];
-    // console.log(extension);
     const link = document.createElement('a');
     document.body.appendChild(link);
     link.href = `data:application/${extension};base64,${archivo}`;
