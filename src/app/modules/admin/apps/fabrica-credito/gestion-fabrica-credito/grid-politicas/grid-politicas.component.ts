@@ -9,6 +9,7 @@ import { GenericasService } from 'app/core/services/genericas.service';
 import Swal from 'sweetalert2';
 import { CentralesService } from 'app/core/services/centrales.service';
 import { DetalleExcepcionCreditoComponent } from '../detalle-excepcion-credito/detalle-excepcion-credito.component';
+import { KeyValue } from '@angular/common';
 @Component({
     selector: 'app-grid-politicas',
     templateUrl: './grid-politicas.component.html',
@@ -16,10 +17,7 @@ import { DetalleExcepcionCreditoComponent } from '../detalle-excepcion-credito/d
 })
 export class GridPoliticasComponent implements OnInit {
     public politicas$: Observable<any>;
-    public titular: any[] = [];
-    public codeudor: any[] = [];
-    public representante: any[] = [];
-    public solidario: any[] = [];
+    public politicas: any = {};
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public permisoExcepcion: boolean = false;
     public unidadNegocio: number;
@@ -39,23 +37,15 @@ export class GridPoliticasComponent implements OnInit {
     }
 
     private getPoliticas(numeroSolicitud: string): void {
-        this.titular = [];
-        this.codeudor = []
-        this.representante = [];
-        this.solidario = [];
+        this.politicas = {}
         this._politicasService.getPoliticas(numeroSolicitud).subscribe(data => {
             data.data.forEach(element => {
-                if (element.tipoTercero === 'T') {
-                    this.titular.push(element)
+                if(!this.politicas[element.tipoTercero]){
+                    this.politicas[element.tipoTercero] = []
                 }
-                else if (element.tipoTercero === 'C') {
-                    this.codeudor.push(element)
-                } else if (element.tipoTercero === 'S') {
-                    this.solidario.push(element)
-                } else if (element.tipoTercero === 'R') {
-                    this.representante.push(element)
-                }
+                this.politicas[element.tipoTercero].push(element)
             });
+            console.log('politicas', this.politicas);
 
         });
     }
@@ -153,6 +143,25 @@ export class GridPoliticasComponent implements OnInit {
 
             }
         });
+    }
+
+
+    getTituloPolitica(tipoTercero: string){
+        switch(tipoTercero){
+            case 'C':
+            return 'Políticas administrativas del codeudor'
+            case 'S':
+            return 'Políticas administrativas del deudor solidario'
+            case 'R':
+            return 'Políticas administrativas del representante'
+            default:
+                return 'Políticas administrativas del titular'
+        }
+    }
+
+      // Order by descending property key
+      keyDescOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+        return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
     }
 
 
