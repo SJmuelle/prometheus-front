@@ -85,6 +85,8 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
     this._agendaFirma.obtenerDatosBasicosFirma(this.numeroSolicitud).subscribe((res) => {
       Swal.close();
       this.form.patchValue(res.data);
+      this.form.controls['identificacionTitular'].disable();
+      this.form.controls['identificacionTitular'].updateValueAndValidity();
     })
   }
 
@@ -130,7 +132,7 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
       if (resp.data.respuesta == 'OK') {
         Swal.fire({
           title: 'Completado',
-          html: `Se actualizo con exito`,
+          html: `Se actualizó con exito`,
           icon: 'success'
         }).then(result => {
           if (result) {

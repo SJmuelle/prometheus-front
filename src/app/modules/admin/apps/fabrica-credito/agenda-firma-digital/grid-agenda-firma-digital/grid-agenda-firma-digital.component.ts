@@ -166,7 +166,7 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
         "unidadNegocio": unidadNegocio,
         "tipoTercero": 'T'
       }
-      Swal.fire({ title: 'Cargando', html: 'Enviado correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
+      Swal.fire({ title: 'Cargando', html: 'Enviando correo...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then(() => { });
 
       this._decisionesService.comprobacionCampos(datoComprobacion)
         .subscribe((res2) => {

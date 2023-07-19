@@ -1,6 +1,14 @@
 <div>
     <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl rounded-b-none">
+
+
+
+
+
+
         <div class="flex flex-col sm:hidden min-h-40  max-h-90 ">
+
+
             <div class="">
                 <div class="h-14 min-h-14 flex-col w-full flex z-99"
                     style="background: #E2E8F0; position: sticky; top: 0px; ">
@@ -9,7 +17,7 @@
                 </div>
 
                 <div class="text-center" *ngIf="!this.allDataRows.length">
-                    <div class="flex items-center content-center justify-center mt-7 gap-3">
+                    <div class="flex items-center content-center justify-center mt-7 gap-3 ">
                         <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                         <p class="text-5xl font-semibold tracking-tight">
                             {{ "Aviso" }}
@@ -42,9 +50,22 @@
                                 |dataTable:item.pipeName
                                 ||"text"}}</span>
                         </span>
+
+
+
+
+
                     </div>
+
+
+
+
+
                     <div *ngFor="let item of dataOptionTable" class="w-full flex-col"
                         [ngClass]="item.typeField ==! 'function' ?? 'hidden' ">
+
+
+
                         <button class="mt-2 w-full mb-2" *ngIf="item.typeField==='function'"
                             (click)="value[item.callback(value)]" mat-stroked-button>
                             <mat-icon *ngIf="item?.iconSGV" [svgIcon]="item?.iconSGV"></mat-icon>
@@ -52,6 +73,12 @@
                             <mat-icon *ngIf="!item?.iconSGV && !item?.iconAngularMaterial"
                                 svgIcon="heroicons_outline:eye"></mat-icon>
                         </button>
+
+
+
+
+
+
                     </div>
 
 

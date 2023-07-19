@@ -7,42 +7,42 @@ import { Injectable } from '@angular/core';
 })
 export class DetalleCreditoService {
 
-    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
+    private ruta = environment.apiUrl + 'api-fintra/api/generic/qry';
 
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) { }
 
     getInformacionPersonal(codigoNegocio: string) {
         return this._httpClient.get(
             this.ruta +
-                `/informacion-detalle-referencia-laboral/${codigoNegocio}`
+            `/informacion-detalle-referencia-laboral/${codigoNegocio}`
         );
     }
 
     getInformacionReferencias(codigoNegocio: string) {
         return this._httpClient.get(
             this.ruta +
-                `/informacion-detalle-referencias/${codigoNegocio}`
+            `/informacion-detalle-referencias/${codigoNegocio}`
         );
     }
 
     getInformacionCodeudor(codigoNegocio: string) {
         return this._httpClient.get(
             this.ruta +
-                `/informacion-detalle-codeudor/${codigoNegocio}`
+            `/informacion-detalle-codeudor/${codigoNegocio}`
         );
     }
 
     getInformacionNegocio(codigoNegocio: string) {
         return this._httpClient.get(
             this.ruta +
-                `/informacion-detalle-negocio-cliente/${codigoNegocio}`
+            `/informacion-detalle-negocio-cliente/${codigoNegocio}`
         );
     }
 
     getInformacionConyuge(codigoNegocio: string) {
         return this._httpClient.get(
             this.ruta +
-                `/informacion-detalle-conyugue/${codigoNegocio}`
+            `/informacion-detalle-conyugue/${codigoNegocio}`
         );
     }
 }

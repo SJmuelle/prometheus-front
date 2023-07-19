@@ -25,6 +25,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
   public dataCopy: any[] = [];
   public dataFilter: string = '';
   public dataOptionTable: any[] = [
+
     {
       name: 'identificacion',
       text: 'Identificación',
@@ -33,7 +34,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'cod_neg',
-      text: 'Cod negocio',
+      text: 'Negocio',
       typeField: 'text',
     },
     {
@@ -43,7 +44,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'capital',
-      text: 'Capital',
+      text: 'Capital total',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -54,8 +55,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       pipeName: 'number'
     },
     {
-      name: 'mora_actual',
-      text: 'Mora actual',
+      name: 'mora_actual_dias',
+      text: 'Dias de mora',
       typeField: 'text',
     },
     {
@@ -66,7 +67,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'debido_cobrar',
-      text: 'Valor debido',
+      text: 'Debido total',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -99,7 +100,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private _tableFilter: TableDataFilterService, private paginatorIntl: MatPaginatorIntl, private _negociacionCarteraServices: NegociacionCarteraService
   ) {
-    this.paginatorIntl.itemsPerPageLabel = 'Items por pagina : ';
+    this.paginatorIntl.itemsPerPageLabel = 'Items por página : ';
     // mat-paginator-range-label
 
   }
@@ -172,6 +173,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
 
 
+
   }
 
   public pageEvent(event: any): void {
@@ -213,7 +215,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       // },
       {
         name: 'capital',
-        text: 'Capital',
+        text: 'Capital total',
         typeField: 'text',
         pipeName: 'number'
       },
@@ -224,8 +226,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
         pipeName: 'number'
       },
       {
-        name: 'mora_actual',
-        text: 'Mora actual',
+        name: 'mora_actual_dias',
+        text: 'Dias de mora',
         typeField: 'text',
       },
       {
@@ -236,7 +238,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       },
       {
         name: 'debido_cobrar',
-        text: 'Valor debido',
+        text: 'Debido total',
         typeField: 'text',
         pipeName: 'number'
       },
@@ -284,7 +286,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   private listenObservable(): void {
     this.susbcription$ = this._negociacionCarteraServices.reloadData$.subscribe(resp => {
-      if (resp.fullTable === true) {
+      if (resp.fullTable) {
         this.dataOptionTable = [
           {
             name: 'identificacion',
@@ -294,7 +296,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
           },
           {
             name: 'cod_neg',
-            text: 'Cod negocio',
+            text: 'Negocio',
             typeField: 'text',
           },
           {
@@ -304,7 +306,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
           },
           {
             name: 'capital',
-            text: 'Capital',
+            text: 'Capital total',
             typeField: 'text',
             pipeName: 'number'
           },
@@ -315,8 +317,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             pipeName: 'number'
           },
           {
-            name: 'mora_actual',
-            text: 'Mora actual',
+            name: 'mora_actual_dias',
+            text: 'Dias de mora',
             typeField: 'text',
           },
           {
@@ -327,7 +329,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
           },
           {
             name: 'debido_cobrar',
-            text: 'Valor debido',
+            text: 'Debido total',
             typeField: 'text',
             pipeName: 'number'
           },
@@ -342,6 +344,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             text: 'Estado',
             typeField: 'statusStyle',
             styleCondition: (data): string => {
+              console.log('yeloww MC17223', data?.tiene_negociacion)
               const stateName = data?.tiene_negociacion
               if (stateName === 'Negociado') { return 'bg-green-400' } else {
                 return 'bg-red-400';

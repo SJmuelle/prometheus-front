@@ -3,32 +3,32 @@
         <h2 class="text-gray-900">Historial de PQRS</h2>
     </div>
     <div class="flex flex-row mb-3">
-        <div>
-            <input
-                class="border rounded p-2 bg-gray-100"
-                style="font-size: 10px; margin-right: 1em"
-                type="text"
-                autocomplete="off"
-                name="filtrarTabla"
-                [(ngModel)]="filtrarTabla"
-                (ngModelChange)="page = 1"
-                placeholder="Filtrar..." />
+        <div class="border rounded-full flex items-center w-full h-10 md:w-56 pl-2 ">
+
+            <input type="text" placeholder="Filtrar..." (keyup)="search()" class="w-full not-uppercase"
+                autocomplete="off" [(ngModel)]="filtrarTabla" name="filtrarTabla">
+
         </div>
-        <div>
-            <select
-                name="tamanoTabl"
-                id="tamanoTabl"
-                class="border rounded bg-gray-100"
-                (change)="page = 1"
-                [(ngModel)]="tamanoTabl"
-                style="font-size: 10px; color: #9aa8bc; padding: 7px">
+        <!-- <div>
+            <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em" type="text"
+                autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" (ngModelChange)="page = 1"
+                placeholder="Filtrar..." />
+        </div> -->
+        <!-- <div>
+            <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
+                [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
             </select>
-        </div>
+        </div> -->
     </div>
-    <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
+
+    <div>
+        <app-table [allDataRows]="listado" [dataOptionTable]="dataOptionsTable"></app-table>
+    </div>
+
+    <!-- <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
                 <tr class=" text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
@@ -67,5 +67,5 @@
             <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" class="justify-self-end"
                 nextLabel="Siguiente"></pagination-controls>
         </div>
-    </div>
+    </div> -->
 </div>

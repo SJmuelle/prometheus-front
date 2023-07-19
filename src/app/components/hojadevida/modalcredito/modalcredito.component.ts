@@ -7,6 +7,7 @@ import {
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { DetalleCreditoService } from 'app/resources/services/hojadevida/credito/detalle-credito.service';
 import Swal from 'sweetalert2';
+import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 
 @Component({
     selector: 'app-modalcredito',
@@ -14,18 +15,71 @@ import Swal from 'sweetalert2';
     styleUrls: ['./modalcredito.component.scss'],
 })
 export class ModalcreditoComponent implements OnInit {
-    infoInfoPerLab: any={} ;
-    infoRefePer: any =[];
-    infoRefFam: any =[];
-    infoCodeu: any =[];
-    infoNegocio: any={};
-    infoConyugue: any={};
+    infoInfoPerLab: any = {};
+    infoRefePer: any = [];
+    infoRefFam: any = [];
+    infoCodeu: any = [];
+    infoNegocio: any = {};
+    infoConyugue: any = {};
+    public dataOptionTable: any[] = [
+        {
+            name: 'primerNombre',
+            text: 'Nombre Completo',
+            typeField: 'text',
+
+        },
+        {
+            name: 'departamento',
+            text: 'Departamento',
+            typeField: 'text',
+
+        },
+        {
+            name: 'ciudad',
+            text: 'Ciudad',
+            typeField: 'text',
+
+        },
+        {
+            name: 'direccion',
+            text: 'Dirección',
+            typeField: 'text',
+
+        },
+        {
+            name: 'celular',
+            text: 'Celular',
+            typeField: 'text',
+
+        },
+        {
+            name: 'parentesco',
+            text: 'Parentesco',
+            typeField: 'text',
+
+        },
+        {
+            name: 'tipoReferencia',
+            text: 'Referencia',
+            typeField: 'statusStyle',
+            styleCondition: (data): string => {
+                const stateName = data?.tipoReferencia
+                if (stateName === 'PERSONAL') { return 'bg-pink-300' } else {
+                    return 'bg-green-400';
+                }
+            }
+
+        },
+    ]
+    public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name)];
+
 
     constructor(
         public dialogRef: MatDialogRef<ModalcreditoComponent>,
         @Inject(MAT_DIALOG_DATA) public data,
         private fb: FormBuilder,
-        private _detalleCredito: DetalleCreditoService
+        private _detalleCredito: DetalleCreditoService,
+        private _sweetAlert: Sweetalert2Service
     ) {
 
     }
@@ -40,6 +94,7 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     onTabChangedCredito(index): void {
+        this._sweetAlert.startLoading({});
         switch (index) {
             case 1:
                 this.getInformacionCodeudor(this.data.codigoNegocio);
@@ -48,7 +103,6 @@ export class ModalcreditoComponent implements OnInit {
             case 0:
                 this.getInformacionConyuge(this.data.codigoNegocio);
                 this.getInformacionPersonal(this.data.codigoNegocio);
-                break;
                 break;
             case 2:
                 this.getRefencias(this.data.codigoNegocio);
@@ -59,79 +113,97 @@ export class ModalcreditoComponent implements OnInit {
     }
 
     getInformacionPersonal(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        // this._sweetAlert.startLoading({ html: 'Buscando información de detalle del crédito' });
+        this._detalleCredito
             .getInformacionPersonal(data)
-            .subscribe((response: any) => {
-                Swal.close();
-                if (response.data) {
+            .subscribe({
+                next: (response: any) => {
+                    this._sweetAlert.stopLoading();
+                    this.infoInfoPerLab = response?.data || {};
+                },
+                error: () => {
+                    console.log('error getInformacionPersonal');
+                    this._sweetAlert.alertError();
 
-                    this.infoInfoPerLab=response.data;
-                }else{
-                    this.infoInfoPerLab={};
                 }
             });
     }
 
+
+
     getRefencias(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+        // this._sweetAlert.startLoading({});
+        this._detalleCredito
             .getInformacionReferencias(data)
             .subscribe((response: any) => {
                 // // console.log(response);
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
 
+                    this.infoRefePer = response?.data || []
                     // this.infore.patchValue(response.data);
-                    this.infoRefePer = response.data
-                }else{
-                    this.infoRefePer =[];
+                    this.infoRefePer.map((value) => {
+                        value.primerNombre = value.primerNombre + ' ' + value.primerApellido
+                    })
+                } else {
+                    this._sweetAlert.stopLoading();
+                    this.infoRefePer = [];
                 }
             });
     }
 
 
     getInformacionCodeudor(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
+        this._detalleCredito
             .getInformacionCodeudor(data)
             .subscribe((response: any) => {
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
-
-                    this.infoCodeu=response.data;
-                }else{
-                    this.infoRefePer =[];
+                    this.infoCodeu = response.data;
+                } else {
+                    this._sweetAlert.stopLoading();
+                    this.infoRefePer = [];
                 }
             });
     }
 
     getInformacionNegocio(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
+        // this._sweetAlert.startLoading({});
+        this._detalleCredito
             .getInformacionNegocio(data)
             .subscribe((response: any) => {
                 // // console.log(response);
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
-                    this.infoNegocio=response.data;
-                }else{
-                    this.infoNegocio={};
+                    this.infoNegocio = response.data;
+                } else {
+
+                    this._sweetAlert.stopLoading();
+                    this.infoNegocio = {};
                 }
             });
     }
 
     getInformacionConyuge(data: string) {
-        Swal.fire({ title: 'Cargando', html: 'Buscando información de reporte de las centrales', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
-        return this._detalleCredito
+        // Swal.fire({ title: 'Cargando', html: 'Buscando información de detalle del crédito', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { })
+
+        this._detalleCredito
             .getInformacionConyuge(data)
             .subscribe((response: any) => {
                 // // console.log(response);
-                Swal.close();
+                this._sweetAlert.stopLoading();
                 if (response.data) {
-                    this.infoConyugue=response.data;
-                }else{
-                    this.infoConyugue={};
+                    this.infoConyugue = response.data;
+                } else {
+
+                    this._sweetAlert.stopLoading();
+                    this.infoConyugue = {};
                 }
             });
     }

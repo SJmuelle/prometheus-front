@@ -34,6 +34,8 @@ import { DataTablePipe } from './pipes/data-table.pipe';
 import { HeaderComponent } from './componentes/header/header.component'
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NoDataComponent } from './componentes/no-data/no-data.component'
+
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
@@ -106,7 +108,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         SmPaginatorPipe,
         DataTablePipe,
         TableComponent,
-        HeaderComponent
+        HeaderComponent,
+        NoDataComponent
 
 
 

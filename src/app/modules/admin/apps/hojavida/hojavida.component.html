@@ -1,6 +1,4 @@
-<div
-    class="bg-white h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100"
->
+<div class="bg-white h-screen overflow-auto px-3 py-2 rounded-lg shadow w-100 y-100">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2 text-gray-900">Gestión del cliente</h2>
@@ -17,81 +15,41 @@
                             <mat-option value="1">Cédula</mat-option>
                             <mat-option value="2">Código negocio</mat-option>
                         </mat-select>
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:search'"
-                        >
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:search'">
                         </mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-12 col-lg-3" *ngIf="busqueda == '1'">
                     <mat-form-field class="flex-auto w-100">
                         <mat-label>Cédula</mat-label>
-                        <input
-                            matInput
-                            type="number"
-                            autocomplete="off"
-                            name="clienteID"
-                            [(ngModel)]="clienteID"
-                            (change)="getListadoCredito()"
-                        />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:user'"
-                        ></mat-icon>
+                        <input matInput type="number" autocomplete="off" name="clienteID" [(ngModel)]="clienteID"
+                            (change)="getListadoCredito()" />
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:user'"></mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-12 col-lg-3" *ngIf="busqueda == '2'">
                     <mat-form-field class="flex-auto w-100">
                         <mat-label>Código negocio</mat-label>
-                        <input
-                            matInput
-                            type="text"
-                            autocomplete="off"
-                            name="codigoNegocio"
-                            [(ngModel)]="codigoNegocio"
-                        />
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:clipboard'"
-                        ></mat-icon>
+                        <input matInput type="text" autocomplete="off" name="codigoNegocio"
+                            [(ngModel)]="codigoNegocio" />
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard'"></mat-icon>
                     </mat-form-field>
                 </div>
                 <div class="col-sm-12 col-lg-3" *ngIf="busqueda == '1'">
                     <mat-form-field class="flex-auto w-100">
                         <mat-label>Código negocio</mat-label>
-                        <mat-select
-                            name="codigoNegocio2"
-                            [(ngModel)]="codigoNegocio2"
-                        >
+                        <mat-select name="codigoNegocio2" [(ngModel)]="codigoNegocio2">
                             <mat-option value="">Todos</mat-option>
-                            <mat-option
-                                value="{{ i.codigoNegocio }}"
-                                *ngFor="let i of listCodigoNegocio"
-                            >
-                                {{ i.codigoNegocio }}</mat-option
-                            >
+                            <mat-option value="{{ i.codigoNegocio }}" *ngFor="let i of listCodigoNegocio">
+                                {{ i.codigoNegocio }}</mat-option>
                         </mat-select>
-                        <mat-icon
-                            class="icon-size-5"
-                            matPrefix
-                            [svgIcon]="'heroicons_solid:clipboard'"
-                        ></mat-icon>
+                        <mat-icon class="icon-size-5" matPrefix [svgIcon]="'heroicons_solid:clipboard'"></mat-icon>
                     </mat-form-field>
                 </div>
-                <div
-                    class="col-sm-12 col-lg-1 mb-3 justify-content-center flex"
-                    *ngIf="busqueda == '1' || busqueda == '2'"
-                >
-                    <button
-                        mat-button
-                        class="mt-7 bg-accent text-white"
-                        (click)="buscarClientes()"
-                        [disabled]="btnBuscar == true"
-                    >
+                <div class="col-sm-12 col-lg-1 mb-3 justify-content-center flex"
+                    *ngIf="busqueda == '1' || busqueda == '2'">
+                    <button mat-button class="mt-7 bg-accent text-white" (click)="buscarClientes()"
+                        [disabled]="btnBuscar == true">
                         Buscar
                     </button>
                 </div>
@@ -101,29 +59,25 @@
     <div class="row pl-3" *ngIf="mostrarDatoCliente == true">
         <div class="col-sm-12 col-lg-3 pb-3">
             <fuse-card class="card p-3 shadow capitalize row mr-3">
-                <div
-                    class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0"
-                >
+                <div class="mb-2 leading-tight titulo_tabs text-2xl font-semibold col-lg-12 col-sm-12 pl-0">
                     {{ info_cliente.primerNombre }}
                     {{ info_cliente.segundoNombre }}
                     {{ info_cliente.primerApellido }}
                     {{ info_cliente.segundoApellido }}
                 </div>
-                <span
-                    class="leading-none p-0"
-                    style="line-height: 1.3em !important; font-size: 13px"
-                >
+                <!-- <span class="leading-none p-0" style="line-height: 1.3em !important; font-size: 13px">
                     Identificación: {{ info_cliente.identificacion }}
-                </span>
+                </span> -->
+                <p class="font-medium">Identificación : <span>{{info_cliente.identificacion}}</span></p>
+
+                <p class="-mt-4 font-medium not-uppercase">Tipo de cliente : <span>{{info_cliente.tipoCliente}}</span>
+                </p>
                 <hr class="w-full border-t col-lg-12 col-sm-12" />
                 <div class="col-lg-12 col-sm-12">
-                    <div
-                        class="row items-center"
-                        style="
+                    <div class="row items-center" style="
                             border-left: 5px solid #b6ce1d;
                             padding-left: 3px;
-                        "
-                    >
+                        ">
                         <div class="col-lg-1 m-0 p-0 col-sm-2">
                             <mat-icon svgIcon="iconsmind:map_marker"></mat-icon>
                         </div>
@@ -131,13 +85,10 @@
                             Ubicación
                         </div>
 
-                        <span
-                            class="leading-none"
-                            style="
+                        <span class="leading-none" style="
                                 line-height: 1.3em !important;
                                 font-size: 13px;
-                            "
-                        >
+                            ">
                             {{ info_cliente.direccion }} <br />
                             {{ info_cliente.barrio
                             }}{{ info_cliente.barrio == "" ? "" : "," }}
@@ -145,13 +96,11 @@
                             {{ info_cliente.departamento }}
                         </span>
                     </div>
-                    <div
-                        class="row items-center mt-3 mb-3"
-                        style="
+
+                    <div class="row items-center mt-3 mb-3" style="
                             border-left: 5px solid #b6ce1d;
                             padding-left: 3px;
-                        "
-                    >
+                        ">
                         <div class="col-lg-1 col-sm-2 m-0 p-0">
                             <mat-icon svgIcon="iconsmind:phone"></mat-icon>
                         </div>
@@ -159,47 +108,37 @@
                             Contacto
                         </div>
 
-                        <span
-                            class="leading-none"
-                            style="
+                        <span class="leading-none" style="
                                 line-height: 1.3em !important;
                                 font-size: 13px;
-                            "
-                        >
+                            ">
                             {{ info_cliente.celular }}
                             {{ info_cliente.telefono == 0 ? "" : "-" }}
                             {{
-                                info_cliente.telefono == 0
-                                    ? ""
-                                    : info_cliente.telefono
+                            info_cliente.telefono == 0
+                            ? ""
+                            : info_cliente.telefono
                             }}
                             <br />
                             {{ info_cliente.email }}
                         </span>
                     </div>
-                    <div
-                        class="row items-center"
-                        style="
+
+                    <div class="row items-center" style="
                             border-left: 5px solid #b6ce1d;
                             padding-left: 3px;
-                        "
-                    >
+                        ">
                         <div class="col-lg-1 m-0 p-0 col-sm-2">
-                            <mat-icon
-                                svgIcon="iconsmind:network_window"
-                            ></mat-icon>
+                            <mat-icon svgIcon="iconsmind:network_window"></mat-icon>
                         </div>
                         <div class="font-titulo col-lg-11 m-0 p-0 col-sm-10">
                             Negociación
                         </div>
 
-                        <span
-                            class="leading-none lowercase"
-                            style="
+                        <span class="leading-none lowercase" style="
                                 line-height: 1.3em !important;
                                 font-size: 13px;
-                            "
-                        >
+                            ">
                             <text class="capitalize">Última</text> negociación:
                             {{ info_cliente.tipoNegociacion }}
                             <br />
@@ -207,6 +146,28 @@
                             {{ info_cliente.fechaNegociacion }}
                         </span>
                     </div>
+
+                    <div class="row items-center my-3" style="
+                            border-left: 5px solid #b6ce1d;
+                            padding-left: 3px;
+                        ">
+                        <div class="col-lg-1 m-0 p-0 col-sm-2">
+                            <mat-icon svgIcon="heroicons_outline:folder"></mat-icon>
+                        </div>
+                        <div class="font-titulo col-lg-11 col-sm-10 m-0 p-0">
+                            Segmentación
+                        </div>
+
+                        <span class="leading-none" style="
+                                line-height: 1.3em !important;
+                                font-size: 13px;
+                            ">
+                            Segmento : {{ info_cliente['segmento'] === '' ? 'Sin segmento' : info_cliente['segmento']}}
+
+                        </span>
+                    </div>
+
+
                 </div>
             </fuse-card>
         </div>
@@ -240,18 +201,10 @@
                                     Crédito
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarTablaCredito"
-                                    [(ngModel)]="filtrarTablaCredito"
-                                    placeholder="Filtrar..."
-                                />
+                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px" type="text"
+                                    autocomplete="off" name="filtrarTablaCredito" [(ngModel)]="filtrarTablaCredito"
+                                    placeholder="Filtrar..." />
                             </div>
                             <!-- <div class="leading-tight col-lg-2 col-sm-12 text-end"
                                 style="font-size: 10px; color: #9aa8bc;">
@@ -266,209 +219,140 @@
                         <hr style="margin-top: 1em; margin-bottom: 0em" />
                         <div class="row">
                             <div class="col-lg-12">
-                                <div
-                                    class="row border-card"
-                                    style="
+                                <div class="row border-card" style="
                                         font-size: 13px;
                                         font-size: 13px;
                                         border: 1px solid #eaeaea;
                                         margin: 15px 0px;
-                                    "
-                                    *ngFor="
+                                    " *ngFor="
                                         let data of listadoCredito
                                             | filter: filtrarTablaCredito
-                                    "
-                                >
-                                    <div
-                                        class="sm::w-100 lg:w-7 col-sm-12 p-0.5 col-lg-1 border-redondo-salmon {{
+                                    ">
+                                    <div class="sm::w-100 lg:w-7 col-sm-12 p-0.5 col-lg-1 border-redondo-salmon {{
                                             data.color
-                                        }}"
-                                        (click)="
+                                        }}" (click)="
                                             openDialogCredito(
                                                 data.codigoNegocio
                                             )
-                                        "
-                                    >
-                                        <mat-icon
-                                            class="material-icons-two-tone cursor-pointer"
-                                            style="
+                                        ">
+                                        <mat-icon class="material-icons-two-tone cursor-pointer" style="
                                                 color: #fff;
                                                 align-self: center;
                                                 height: 100%;
-                                            "
-                                            >description
+                                            ">description
                                         </mat-icon>
                                     </div>
                                     <div class="col-lg-11 border-card">
                                         <div class="row border-card pt-2 pb-3">
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Código negocio
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.codigoNegocio }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-5 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Tipo cliente
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.tipoCliente }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Tipo crédito
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.tipoCredito }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Agencia
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.agencia }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Solicitud
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.fechaSolicitud }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Unidad negocio
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.unidadNegocio }}
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Aprobación
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.fechaAprobacion }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Estado
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.estado }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Valor negocio
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{
-                                                        data.valorNegocio
-                                                            | currency
-                                                                : "$"
-                                                                : "symbol"
-                                                                : "0.0-0"
+                                                    data.valorNegocio
+                                                    | currency
+                                                    : "$"
+                                                    : "symbol"
+                                                    : "0.0-0"
                                                     }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Valor disponible
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{
-                                                        data.valorDisponible
-                                                            | currency
-                                                                : "$"
-                                                                : "symbol"
-                                                                : "0.0-0"
+                                                    data.valorDisponible
+                                                    | currency
+                                                    : "$"
+                                                    : "symbol"
+                                                    : "0.0-0"
                                                     }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-lg-2">
-                                                <div
-                                                    class="text-sm text-secondary font-bold"
-                                                >
+                                                <div class="text-sm text-secondary font-bold">
                                                     Plan pagos
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="
+                                                <div class="capitalize" style="
                                                         font-size: 16px;
                                                         margin-left: 20px;
-                                                    "
-                                                >
-                                                    <mat-icon
-                                                        class="material-icons-two-tone cursor-pointer"
-                                                        (click)="
+                                                    ">
+                                                    <mat-icon class="material-icons-two-tone cursor-pointer" (click)="
                                                             buscar_url(
                                                                 data.numeroSolicitud
                                                             )
-                                                        "
-                                                        style="
+                                                        " style="
                                                             align-self: center;
                                                             height: 100%;
-                                                        "
-                                                        >description
+                                                        ">description
                                                     </mat-icon>
                                                 </div>
                                             </div>
@@ -483,6 +367,19 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col-lg-12 mt-10 border">
+                            <fuse-card class="flex flex-row w-full h-100 shadow-md rounded-md justify-center"
+                                *ngIf="!listadoCredito.length">
+                                <div class="justify-center w-80 h-auto py-13">
+                                    <img src="assets/images/animaciones/nodata.gif" />
+
+                                    <p class="font-medium text-xl text-center w-full">No hay registros</p>
+                                </div>
+                            </fuse-card>
+                        </div>
+
+
                         <div class="m-5"></div>
                     </mat-tab>
                     <mat-tab label="Cartera">
@@ -492,18 +389,10 @@
                                     Cartera
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarTablaCartera"
-                                    [(ngModel)]="filtrarTablaCartera"
-                                    placeholder="Filtrar..."
-                                />
+                            <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px" type="text"
+                                    autocomplete="off" name="filtrarTablaCartera" [(ngModel)]="filtrarTablaCartera"
+                                    placeholder="Filtrar..." />
                             </div>
                             <!-- <div class="leading-tight col-lg-2 col-sm-12 text-end"
                                 style="font-size: 10px; color: #9aa8bc;">
@@ -518,30 +407,22 @@
                         <hr style="margin-top: 1em; margin-bottom: 0em" />
                         <div class="row">
                             <div class="col-lg-12">
-                                <div
-                                    class="row rounded shadow pl-4"
-                                    style="
+                                <div class="row rounded shadow pl-4" style="
                                         font-size: 13px;
                                         font-size: 13px;
                                         border: 1px solid #eaeaea;
                                         margin: 15px 0px;
-                                    "
-                                    *ngFor="
+                                    " *ngFor="
                                         let data of ListadoCartera
                                             | filter: filtrarTablaCartera
-                                    "
-                                >
+                                    ">
                                     <div class="col-lg-12">
 
                                         <div>
                                             <div class="bg-gray-200 rounded-2">
-                                                <div
-                                                    class="col-lg-12 justify-center text-center text-secondary"
-                                                >
-                                                    <div
-                                                        class="text-sm font-medium text-secondary"
-                                                    >
-                                                            Segmentación:
+                                                <div class="col-lg-12 justify-center text-center text-secondary">
+                                                    <div class="text-sm font-medium text-secondary">
+                                                        Segmentación:
                                                         <span class="font-bold">{{ data.segmentacion }}</span>
                                                     </div>
                                                 </div>
@@ -550,139 +431,86 @@
 
 
                                         <div class="row pt-2.5">
-                                            <div
-                                                class="col-sm-12 col-lg-2 m-0 p-0"
-                                            >
-                                                <div
-                                                    class="text-sm font-medium text-secondary"
-                                                >
+                                            <div class="col-sm-12 col-lg-2 m-0 p-0">
+                                                <div class="text-sm font-medium text-secondary">
                                                     Código negocio
                                                 </div>
-                                                <div
-                                                    class=""
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="" style="font-size: 16px">
                                                     {{ data.codigoNegocio }}
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-lg-2 m-0 p-0"
-                                            >
-                                                <div
-                                                    class="text-sm font-medium text-secondary"
-                                                >
+                                            <div class="col-sm-12 col-lg-2 m-0 p-0">
+                                                <div class="text-sm font-medium text-secondary">
                                                     Unidad negocio
                                                 </div>
-                                                <div
-                                                    class="capitalize"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="capitalize" style="font-size: 16px">
                                                     {{ data.unidadNegocio }}
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-lg-2 m-0 p-0"
-                                            >
-                                                <div
-                                                    class="text-sm font-medium text-secondary"
-                                                >
+                                            <div class="col-sm-12 col-lg-2 m-0 p-0">
+                                                <div class="text-sm font-medium text-secondary">
                                                     Altura mora
                                                 </div>
-                                                <div
-                                                    class="lowercase"
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="lowercase" style="font-size: 16px">
                                                     {{ data.edadMora }}
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-lg-1 m-0 p-0"
-                                            >
-                                                <div
-                                                    class="text-sm font-medium text-secondary"
-                                                >
+                                            <div class="col-sm-12 col-lg-1 m-0 p-0">
+                                                <div class="text-sm font-medium text-secondary">
                                                     Estado
                                                 </div>
-                                                <div
-                                                    class=""
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="" style="font-size: 16px">
                                                     {{ data.estado }}
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-lg-1 m-0 p-0"
-                                            >
-                                                <div
-                                                    class="text-sm font-medium text-secondary"
-                                                >
+                                            <div class="col-sm-12 col-lg-1 m-0 p-0">
+                                                <div class="text-sm font-medium text-secondary">
                                                     Tipo
                                                 </div>
-                                                <div
-                                                    class=""
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="" style="font-size: 16px">
                                                     {{ data.tipo }}
                                                 </div>
                                             </div>
-                                            <div
-                                                class="col-sm-12 col-lg-2 m-0 p-0"
-                                            >
-                                                <div
-                                                    class="text-sm font-medium text-secondary"
-                                                >
+                                            <div class="col-sm-12 col-lg-2 m-0 p-0">
+                                                <div class="text-sm font-medium text-secondary">
                                                     Tipo cuenta
                                                 </div>
-                                                <div
-                                                    class=""
-                                                    style="font-size: 16px"
-                                                >
+                                                <div class="" style="font-size: 16px">
                                                     {{ data.tipoCuenta }}
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1">
-                                                <div
-                                                    class="text-sm font-medium text-secondary text-center"
-                                                >
+                                                <div class="text-sm font-medium text-secondary text-center">
                                                     Detalle
                                                 </div>
                                                 <div class="text-center">
-                                                    <mat-icon
-                                                        class="material-icons-two-tone cursor-pointer text-center"
+                                                    <mat-icon class="material-icons-two-tone cursor-pointer text-center"
                                                         (click)="
                                                             openDialogCartera(
                                                                 data.codigoNegocio,
                                                                 data.saldoObligacio,
                                                                 data.idUnidadNegocio
                                                             )
-                                                        "
-                                                        style="
+                                                        " style="
                                                             align-self: center;
                                                             height: 100%;
-                                                        "
-                                                        >description
+                                                        ">description
                                                     </mat-icon>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-lg-1">
-                                                <div
-                                                    class="text-sm font-medium text-secondary text-center"
-                                                >
+                                                <div class="text-sm font-medium text-secondary text-center">
                                                     Ingreso
                                                 </div>
                                                 <div class="text-center">
-                                                    <mat-icon
-                                                        class="material-icons-two-tone cursor-pointer"
-                                                        (click)="
+                                                    <mat-icon class="material-icons-two-tone cursor-pointer" (click)="
                                                             openDialogIngreso(
                                                                 data.codigoNegocio
                                                             )
-                                                        "
-                                                        style="
+                                                        " style="
                                                             align-self: center;
                                                             height: 100%;
-                                                        "
-                                                        >description
+                                                        ">description
                                                     </mat-icon>
                                                 </div>
                                             </div>
@@ -690,44 +518,34 @@
                                         <div class="row mb-2 mt-3">
                                             <div class="col-lg-3 col-sm-0 pl-0">
                                                 <div
-                                                    class="relative flex flex-col flex-auto pr-3 pl-3 bg-card rounded shadow overflow-hidden"
-                                                >
+                                                    class="relative flex flex-col flex-auto pr-3 pl-3 bg-card rounded shadow overflow-hidden">
                                                     <div class="">
-                                                        <div
-                                                            [className]="
+                                                        <div [className]="
                                                                 data.color +
                                                                 ' row'
-                                                            "
-                                                        >
+                                                            ">
                                                             <div
-                                                                class="col-lg-12 justify-center text-center text-secondary"
-                                                            >
-                                                                <div
-                                                                    class="ml-1.5 text-lg font-semibold text-white"
-                                                                >
+                                                                class="col-lg-12 justify-center text-center text-secondary">
+                                                                <div class="ml-1.5 text-lg font-semibold text-white">
                                                                     Cuota del
                                                                     mes
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div
-                                                                class="col-lg-12 col-sm-12 my-3"
-                                                            >
+                                                            <div class="col-lg-12 col-sm-12 my-3">
                                                                 <div
-                                                                    class="text-sm font-medium leading-none text-secondary text-center"
-                                                                >
+                                                                    class="text-sm font-medium leading-none text-secondary text-center">
                                                                     Valor
                                                                 </div>
                                                                 <div
-                                                                    class="mt-2 font-medium text-3xl leading-none text-center"
-                                                                >
+                                                                    class="mt-2 font-medium text-3xl leading-none text-center">
                                                                     {{
-                                                                        data.valorCuotaMes
-                                                                            | currency
-                                                                                : "$"
-                                                                                : "symbol"
-                                                                                : "0.0-0"
+                                                                    data.valorCuotaMes
+                                                                    | currency
+                                                                    : "$"
+                                                                    : "symbol"
+                                                                    : "0.0-0"
                                                                     }}
                                                                 </div>
                                                             </div>
@@ -738,65 +556,49 @@
 
                                             <div class="col-lg-4 col-sm-0 pl-0">
                                                 <div
-                                                    class="relative flex flex-col flex-auto pr-3 pl-3 bg-card rounded shadow overflow-hidden"
-                                                >
+                                                    class="relative flex flex-col flex-auto pr-3 pl-3 bg-card rounded shadow overflow-hidden">
                                                     <div class="">
-                                                        <div
-                                                            [className]="
+                                                        <div [className]="
                                                                 data.color +
                                                                 ' row'
-                                                            "
-                                                        >
+                                                            ">
                                                             <div
-                                                                class="col-lg-12 justify-center text-center text-secondary"
-                                                            >
-                                                                <div
-                                                                    class="ml-1.5 text-lg font-semibold text-white"
-                                                                >
+                                                                class="col-lg-12 justify-center text-center text-secondary">
+                                                                <div class="ml-1.5 text-lg font-semibold text-white">
                                                                     Vencido
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div
-                                                                class="col-lg-8 col-sm-12 my-3"
-                                                            >
+                                                            <div class="col-lg-8 col-sm-12 my-3">
                                                                 <div
-                                                                    class="text-sm font-medium leading-none text-secondary text-center"
-                                                                >
+                                                                    class="text-sm font-medium leading-none text-secondary text-center">
                                                                     Saldo
                                                                 </div>
                                                                 <div
-                                                                    class="mt-2 font-medium text-3xl leading-none text-center"
-                                                                >
+                                                                    class="mt-2 font-medium text-3xl leading-none text-center">
                                                                     {{
-                                                                        data.saldoVencido
-                                                                            | currency
-                                                                                : "$"
-                                                                                : "symbol"
-                                                                                : "0.0-0"
+                                                                    data.saldoVencido
+                                                                    | currency
+                                                                    : "$"
+                                                                    : "symbol"
+                                                                    : "0.0-0"
                                                                     }}
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="col-lg-4 col-sm-12 my-3"
-                                                            >
-                                                                <div
-                                                                    [className]="
+                                                            <div class="col-lg-4 col-sm-12 my-3">
+                                                                <div [className]="
                                                                         data.color +
                                                                         '_border'
-                                                                    "
-                                                                >
+                                                                    ">
                                                                     <div
-                                                                        class="text-sm font-medium leading-none text-secondary text-center"
-                                                                    >
+                                                                        class="text-sm font-medium leading-none text-secondary text-center">
                                                                         Cuota
                                                                     </div>
                                                                     <div
-                                                                        class="mt-2 font-medium text-3xl leading-none text-center"
-                                                                    >
+                                                                        class="mt-2 font-medium text-3xl leading-none text-center">
                                                                         {{
-                                                                            data.cuotasVencidas
+                                                                        data.cuotasVencidas
                                                                         }}
                                                                     </div>
                                                                 </div>
@@ -807,67 +609,51 @@
                                             </div>
                                             <div class="col-lg-5 col-sm-0 pl-0">
                                                 <div
-                                                    class="relative flex flex-col flex-auto pr-3 pl-3 bg-card rounded shadow overflow-hidden"
-                                                >
+                                                    class="relative flex flex-col flex-auto pr-3 pl-3 bg-card rounded shadow overflow-hidden">
                                                     <div class="">
-                                                        <div
-                                                            class="row"
-                                                            [className]="
+                                                        <div class="row" [className]="
                                                                 data.color +
                                                                 ' row'
-                                                            "
-                                                        >
+                                                            ">
                                                             <div
-                                                                class="col-lg-12 justify-center text-center text-secondary"
-                                                            >
+                                                                class="col-lg-12 justify-center text-center text-secondary">
                                                                 <div
-                                                                    class="ml-1.5 text-lg font-semibold text-white text-center"
-                                                                >
+                                                                    class="ml-1.5 text-lg font-semibold text-white text-center">
                                                                     Obligación
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div
-                                                                class="col-lg-7 col-sm-12 my-3"
-                                                            >
+                                                            <div class="col-lg-7 col-sm-12 my-3">
                                                                 <div
-                                                                    class="text-sm font-medium leading-none text-secondary text-center"
-                                                                >
+                                                                    class="text-sm font-medium leading-none text-secondary text-center">
                                                                     Saldo
                                                                 </div>
                                                                 <div
-                                                                    class="mt-2 font-medium text-3xl leading-none text-center"
-                                                                >
+                                                                    class="mt-2 font-medium text-3xl leading-none text-center">
                                                                     {{
-                                                                        data.saldoObligacio
-                                                                            | currency
-                                                                                : "$"
-                                                                                : "symbol"
-                                                                                : "0.0-0"
+                                                                    data.saldoObligacio
+                                                                    | currency
+                                                                    : "$"
+                                                                    : "symbol"
+                                                                    : "0.0-0"
                                                                     }}
                                                                 </div>
                                                             </div>
-                                                            <div
-                                                                class="col-lg-5 col-sm-12 my-3"
-                                                            >
-                                                                <div
-                                                                    [className]="
+                                                            <div class="col-lg-5 col-sm-12 my-3">
+                                                                <div [className]="
                                                                         data.color +
                                                                         '_border'
-                                                                    "
-                                                                >
+                                                                    ">
                                                                     <div
-                                                                        class="text-sm font-medium leading-none text-secondary text-center"
-                                                                    >
+                                                                        class="text-sm font-medium leading-none text-secondary text-center">
                                                                         Cuotas
                                                                         pendiente
                                                                     </div>
                                                                     <div
-                                                                        class="mt-2 font-medium text-3xl leading-none text-center"
-                                                                    >
+                                                                        class="mt-2 font-medium text-3xl leading-none text-center">
                                                                         {{
-                                                                            data.cuotasPendientes
+                                                                        data.cuotasPendientes
                                                                         }}
                                                                     </div>
                                                                 </div>
@@ -881,60 +667,75 @@
                                 </div>
                             </div>
                         </div>
+
+
+
+
+                        <div class="col-lg-12 mt-10 border">
+                            <fuse-card class="flex flex-row w-full h-100 shadow-md rounded-md justify-center"
+                                *ngIf="!ListadoCartera.length">
+                                <div class="justify-center w-80 h-auto py-13">
+                                    <img src="assets/images/animaciones/nodata.gif" />
+                                    <p class="font-medium text-xl text-center w-full">No hay registros</p>
+                                </div>
+                            </fuse-card>
+                        </div>
+
+
+
                         <div class="m-5"></div>
                     </mat-tab>
                     <mat-tab label="Historial gestión">
-                        <div class="row items-center">
+                        <div class="flex flex-row items-center justify-between w-full">
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">
                                     Historial gestión
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px; margin-right: 1em"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarTablaHG"
-                                    [(ngModel)]="filtrarTablaHG"
-                                    placeholder="Filtrar..."
-                                />
+                            <div class="rounded-full h-9 items-center border-2 pt-1 pl-2">
+                                <input (keyup)="search(inputFiltrarTable.value)" #inputFiltrarTable type="text"
+                                    class="not-uppercase w-full" autocomplete="off" name="filtrarTablaHG"
+                                    [(ngModel)]="filtrarTablaHG" placeholder="Filtrar..." />
 
-                                <select
-                                    name="tamanoTablaHG"
-                                    id="tamanoTablaHG"
-                                    class="border rounded bg-gray-100"
-                                    (change)="pageHG = 1"
-                                    [(ngModel)]="tamanoTablaHG"
-                                    style="
+
+
+                            </div>
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
+                                    type="text" autocomplete="off" name="filtrarTablaHG" [(ngModel)]="filtrarTablaHG"
+                                    placeholder="Filtrar..." />
+
+                                <select name="tamanoTablaHG" id="tamanoTablaHG" class="border rounded bg-gray-100"
+                                    (change)="pageHG = 1" [(ngModel)]="tamanoTablaHG" style="
                                         font-size: 10px;
                                         color: #9aa8bc;
                                         padding: 7px;
-                                    "
-                                >
+                                    ">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <hr />
-                        <div class="row">
+
+                        <div class="mb-40">
+                            <app-table [allDataRows]="listaHistoria"
+                                [dataOptionTable]="dataOptionTableHistorial"></app-table>
+
+
+
+                        </div>
+                        <!-- <div class="row">
                             <div class="col-lg-12">
                                 <div class="row">
                                     <div class="col-lg-12 col-sm-12 p-0">
                                         <table class="w-full shadow p-0">
-                                            <thead
-                                                style="
+                                            <thead style="
                                                     background-color: #f9fafb;
-                                                "
-                                            >
+                                                ">
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600"
-                                                >
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">
                                                         Fecha gestión
                                                     </th>
@@ -956,9 +757,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
-                                                <tr
-                                                    class="text-gray-700"
-                                                    *ngFor="
+                                                <tr class="text-gray-700" *ngFor="
                                                         let item of listaHistoria
                                                             | filter
                                                                 : filtrarTablaHG
@@ -969,72 +768,52 @@
                                                                       currentPage:
                                                                           pageHG
                                                                   }
-                                                    "
-                                                >
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    ">
+                                                    <td class="px-2 text-sm border">
                                                         {{ item.fechaGestion }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{ item.gestor }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{ item.tipoGestion }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{ item.proximaAccion }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{
-                                                            item.fechaProxAccion
+                                                        item.fechaProxAccion
                                                         }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border text-center"
-                                                    >
-                                                        <mat-icon
-                                                            class="material-icons-two-tone cursor-pointer"
-                                                            style="
+                                                    <td class="px-2 text-sm border text-center">
+                                                        <mat-icon class="material-icons-two-tone cursor-pointer" style="
                                                                 color: #f7ae0c;
-                                                            "
-                                                            (click)="
+                                                            " (click)="
                                                                 mostrar_mensaje(
                                                                     item.tipoGestion,
                                                                     item.detalleGestion
                                                                 )
-                                                            "
-                                                        >
+                                                            ">
                                                             description
                                                         </mat-icon>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <!-- <div class="col-lg-12 col-sm-12 text-end">
+                                    </div> -->
+                        <!-- <div class="col-lg-12 col-sm-12 text-end">
                                         <pagination-controls (pageChange)="pageHG=$event" previousLabel="Anterior"
                                             nextLabel="Siguiente"></pagination-controls>
                                     </div> -->
-                                    <div class="col-lg-12 col-sm-12 text-end">
-                                        <pagination-controls
-                                            (pageChange)="pageHG = $event"
-                                            previousLabel="Anterior"
-                                            nextLabel="Siguiente"
-                                        ></pagination-controls>
+                        <!-- <div class="col-lg-12 col-sm-12 text-end">
+                                        <pagination-controls (pageChange)="pageHG = $event" previousLabel="Anterior"
+                                            nextLabel="Siguiente"></pagination-controls>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="m-5"></div>
+                        <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="Negociaciones">
                         <!-- <div class="flex items-center">
@@ -1055,35 +834,21 @@
                                     Negociaciones
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px; margin-right: 1em"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarTablaNeg"
-                                    [(ngModel)]="filtrarTablaNeg"
-                                    placeholder="Filtrar..."
-                                />
-                                <select
-                                    name="tamanoTablaNeg"
-                                    id="tamanoTablaNeg"
-                                    class="border rounded bg-gray-100"
-                                    (change)="pageNeg = 1"
-                                    [(ngModel)]="tamanoTablaNeg"
-                                    style="
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
+                                    type="text" autocomplete="off" name="filtrarTablaNeg" [(ngModel)]="filtrarTablaNeg"
+                                    placeholder="Filtrar..." />
+                                <select name="tamanoTablaNeg" id="tamanoTablaNeg" class="border rounded bg-gray-100"
+                                    (change)="pageNeg = 1" [(ngModel)]="tamanoTablaNeg" style="
                                         font-size: 10px;
                                         color: #9aa8bc;
                                         padding: 7px;
-                                    "
-                                >
+                                    ">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <!-- <div class="leading-tight col-lg-2 col-sm-12 text-end"
                                 style="font-size: 10px; color: #9aa8bc;">
                                 <select name="tamanoTablaNeg" id="tamanoTablaNeg" class="border rounded p-2 bg-gray-100"
@@ -1095,22 +860,21 @@
                             </div> -->
                         </div>
                         <hr />
-                        <div class="row">
-                            <div
-                                class="col-lg-12"
-                                *ngIf="listadoNegociaciones.length != 0"
-                            >
+
+                        <div>
+                            <app-table [allDataRows]="listadoNegociaciones"
+                                [dataOptionTable]="dataOptionTableNegociaciones"></app-table>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-lg-12" *ngIf="listadoNegociaciones.length != 0">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table class="w-full shadow p-1">
-                                            <thead
-                                                style="
+                                            <thead style="
                                                     background-color: #f9fafb;
-                                                "
-                                            >
+                                                ">
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600"
-                                                >
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">
                                                         Código negocio
                                                     </th>
@@ -1129,9 +893,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
-                                                <tr
-                                                    class="text-gray-700"
-                                                    *ngFor="
+                                                <tr class="text-gray-700" *ngFor="
                                                         let item of listadoNegociaciones
                                                             | filter
                                                                 : filtrarTablaNeg
@@ -1142,37 +904,26 @@
                                                                       currentPage:
                                                                           pageNeg
                                                                   }
-                                                    "
-                                                >
-                                                    <td
-                                                        class="px-2 text-sm border py-1"
-                                                    >
+                                                    ">
+                                                    <td class="px-2 text-sm border py-1">
                                                         {{ item.codigoNegocio }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{ item.fechaCreacion }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{
-                                                            item.usuarioCreacion
+                                                        item.usuarioCreacion
                                                         }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{
-                                                            item.tipoNegociacion
+                                                        item.tipoNegociacion
                                                         }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 text-sm border"
-                                                    >
+                                                    <td class="px-2 text-sm border">
                                                         {{
-                                                            item.fechaAplicacion
+                                                        item.fechaAplicacion
                                                         }}
                                                     </td>
                                                 </tr>
@@ -1180,28 +931,21 @@
                                         </table>
                                     </div>
                                     <div class="col-lg-12 col-sm-12 text-end">
-                                        <pagination-controls
-                                            (pageChange)="pageNeg = $event"
-                                            previousLabel="Anterior"
-                                            nextLabel="Siguiente"
-                                        ></pagination-controls>
+                                        <pagination-controls (pageChange)="pageNeg = $event" previousLabel="Anterior"
+                                            nextLabel="Siguiente"></pagination-controls>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <fuse-card
-                                    class="card p-3 shadow capitalize row mr-3 align-content-around"
-                                    *ngIf="listadoNegociaciones.length == 0"
-                                >
+                                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                    *ngIf="listadoNegociaciones.length == 0">
                                     <div class="w-3/12">
-                                        <img
-                                            src="assets/images/animaciones/nodata.gif"
-                                        />
+                                        <img src="assets/images/animaciones/nodata.gif" />
                                     </div>
                                 </fuse-card>
                             </div>
                         </div>
-                        <div class="m-5"></div>
+                        <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="Extractos">
                         <div class="row items-center">
@@ -1210,49 +954,38 @@
                                     Extractos
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px; margin-right: 1em"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarTablaExt"
-                                    [(ngModel)]="filtrarTablaExt"
-                                    placeholder="Filtrar..."
-                                />
-                                <select
-                                    name="tamanoTablaExt"
-                                    id="tamanoTablaExt"
-                                    class="border rounded bg-gray-100"
-                                    (change)="pageEXT = 1"
-                                    [(ngModel)]="tamanoTablaExt"
-                                    style="
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
+                                    type="text" autocomplete="off" name="filtrarTablaExt" [(ngModel)]="filtrarTablaExt"
+                                    placeholder="Filtrar..." />
+                                <select name="tamanoTablaExt" id="tamanoTablaExt" class="border rounded bg-gray-100"
+                                    (change)="pageEXT = 1" [(ngModel)]="tamanoTablaExt" style="
                                         font-size: 10px;
                                         color: #9aa8bc;
                                         padding: 7px;
-                                    "
-                                >
+                                    ">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
                         </div>
                         <hr />
-                        <div class="row">
-                            <div
-                                class="col-lg-12"
-                                *ngIf="listadoExtractos.length != 0"
-                            >
+
+                        <div class="mb-40">
+
+                            <app-table [allDataRows]="listadoExtractos"
+                                [dataOptionTable]="dataOptionExtratos"></app-table>
+
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-lg-12" *ngIf="listadoExtractos.length != 0">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table class="w-full shadow">
                                             <thead>
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600"
-                                                >
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">
                                                         Consecutivo
                                                     </th>
@@ -1268,9 +1001,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
-                                                <tr
-                                                    class="text-gray-700"
-                                                    *ngFor="
+                                                <tr class="text-gray-700" *ngFor="
                                                         let item of listadoExtractos
                                                             | filter
                                                                 : filtrarTablaExt
@@ -1281,44 +1012,32 @@
                                                                       currentPage:
                                                                           pageEXT
                                                                   }
-                                                    "
-                                                >
-                                                    <td
-                                                        class="px-4 py-1 text-sm border"
-                                                    >
+                                                    ">
+                                                    <td class="px-4 py-1 text-sm border">
                                                         {{ item.consecutivo }}
                                                     </td>
-                                                    <td
-                                                        class="px-4 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-4 py-1 text-sm border">
                                                         {{ item.fechaEnvio }}
                                                     </td>
-                                                    <td
-                                                        class="px-4 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-4 py-1 text-sm border">
                                                         {{ item.metodoEnvio }}
-                                                    </td>
-                                                    <!-- <td class="px-4 py-3 text-sm border"> <a href="{{item.extracto}}"
+                                                    </td> -->
+                        <!-- <td class="px-4 py-3 text-sm border"> <a href="{{item.extracto}}"
                                                             target="_blank">
                                                             <mat-icon class="material-icons-two-tone"
                                                                 style="    align-self: center; height: 100%;">
                                                                 description</mat-icon>
                                                         </a></td> -->
-                                                    <td
-                                                        class="px-2 text-sm border text-center"
-                                                    >
+                        <!-- <td class="px-2 text-sm border text-center">
                                                         <a class="sindec">
-                                                            <mat-icon
-                                                                class="material-icons-two-tone cursor-pointer"
+                                                            <mat-icon class="material-icons-two-tone cursor-pointer"
                                                                 style="
                                                                     color: #f7ae0c;
-                                                                "
-                                                                (click)="
+                                                                " (click)="
                                                                     busacar_url2(
                                                                         item.extracto
                                                                     )
-                                                                "
-                                                                >description
+                                                                ">description
                                                             </mat-icon>
                                                         </a>
                                                     </td>
@@ -1327,49 +1046,38 @@
                                         </table>
                                     </div>
                                     <div class="col-lg-12 col-sm-12 text-end">
-                                        <pagination-controls
-                                            (pageChange)="pageEXT = $event"
-                                            previousLabel="Anterior"
-                                            nextLabel="Siguiente"
-                                        ></pagination-controls>
+                                        <pagination-controls (pageChange)="pageEXT = $event" previousLabel="Anterior"
+                                            nextLabel="Siguiente"></pagination-controls>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <fuse-card
-                                    class="card p-3 shadow capitalize row mr-3 align-content-around"
-                                    *ngIf="listadoExtractos.length == 0"
-                                >
+                                <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                    *ngIf="listadoExtractos.length == 0">
                                     <div class="w-3/12">
-                                        <img
-                                            src="assets/images/animaciones/nodata.gif"
-                                        />
+                                        <img src="assets/images/animaciones/nodata.gif" />
                                     </div>
                                 </fuse-card>
                             </div>
                         </div>
-                        <div class="m-5"></div>
+                        <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="Reporte centrales">
-                        <div class="row items-center">
-                            <span class="leading-none col-lg-4 col-sm-12">
+
+
+                        <div class="flex flex-row items-center justify-between w-full">
+                            <span class="flex">
                                 <div class="leading-tight titulo_tabs">
                                     Reporte de las Centrales
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px; margin-right: 1em"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarReporteC"
-                                    [(ngModel)]="filtrarReporteC"
-                                    placeholder="Filtrar..."
-                                />
-                                <select
+                            <div class="rounded-full h-10 items-center border-2 pt-2 pl-2 ">
+                                <input (keyup)="search(inputReporteC.value)" #inputReporteC type="text"
+                                    class="not-uppercase w-full" autocomplete="off" name="filtrarReporteC"
+                                    [(ngModel)]="filtrarReporteC" placeholder="Filtrar..." />
+
+
+                                <!-- <select
                                     name="tamanoTablaRC"
                                     id="tamanoTablaRC"
                                     class="border rounded bg-gray-100"
@@ -1384,11 +1092,17 @@
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="20">20</option>
-                                </select>
+                                </select> -->
                             </div>
                         </div>
                         <hr />
-                        <div class="row">
+                        <div class="mb-40">
+
+                            <app-table [allDataRows]="listadoReporteCentrales"
+                                [dataOptionTable]="dataOptionTable"></app-table>
+                        </div>
+
+                        <!-- <div class="row">
                             <div
                                 class="col-lg-12"
                                 *ngIf="listadoReporteCentrales.length != 0"
@@ -1411,9 +1125,9 @@
                                                     </th>
                                                     <th class="px-4 py-3">
                                                         Dìas en mora
-                                                    </th>
-                                                    <!-- <th class="px-4 py-3">Estado de cuenta</th> -->
-                                                    <th class="px-4 py-3">
+                                                    </th> -->
+                        <!-- <th class="px-4 py-3">Estado de cuenta</th> -->
+                        <!-- <th class="px-4 py-3">
                                                         Valor
                                                     </th>
                                                     <th class="px-4 py-3">
@@ -1476,10 +1190,10 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
+                                    </div> -->
+                        <!-- </div>
+                            </div> -->
+                        <!-- <div
                                 class="col-lg-12 col-sm-12 text-end"
                                 *ngIf="listadoReporteCentrales.length != 0"
                             >
@@ -1489,8 +1203,8 @@
                                     nextLabel="Siguiente"
                                 ></pagination-controls>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
+                        </div> -->
+                        <!-- <div class="col-lg-12">
                             <fuse-card
                                 class="card p-3 shadow capitalize row mr-3 align-content-around"
                                 *ngIf="listadoReporteCentrales.length == 0"
@@ -1501,69 +1215,57 @@
                                     />
                                 </div>
                             </fuse-card>
-                        </div>
-                        <div class="m-5"></div>
+                        </div> -->
+                        <!-- <div class="m-5"></div> -->
                     </mat-tab>
                     <mat-tab label="PQRS">
                         <div class="row items-center">
                             <span class="leading-none col-lg-4 col-sm-12">
                                 <div class="leading-tight titulo_tabs">
-                                    <button
-                                        mat-button
-                                        class="color_fintra text-white"
-                                        (click)="abrirPQRS()"
-                                    >
-                                        <mat-icon
-                                            svgIcon="feather:file-plus"
-                                            class="text-white"
-                                        ></mat-icon>
+                                    <button mat-button class="color_fintra text-white" (click)="abrirPQRS()">
+                                        <mat-icon svgIcon="feather:file-plus" class="text-white"></mat-icon>
                                         Crear PQRS
                                     </button>
                                 </div>
                             </span>
-                            <div
-                                class="leading-tight col-lg-8 col-sm-12 text-end"
-                            >
-                                <input
-                                    class="border rounded p-2 bg-gray-100"
-                                    style="font-size: 10px; margin-right: 1em"
-                                    type="text"
-                                    autocomplete="off"
-                                    name="filtrarPQRS"
-                                    [(ngModel)]="filtrarPQRS"
-                                    placeholder="Filtrar..."
-                                />
-                                <select
-                                    name="tamanoPQRS"
-                                    id="tamanoPQRS"
-                                    class="border rounded bg-gray-100"
-                                    (change)="pagePQR = 1"
-                                    [(ngModel)]="tamanoPQRS"
-                                    style="
+
+
+
+
+
+                            <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end">
+                                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em"
+                                    type="text" autocomplete="off" name="filtrarPQRS" [(ngModel)]="filtrarPQRS"
+                                    placeholder="Filtrar..." />
+                                <select name="tamanoPQRS" id="tamanoPQRS" class="border rounded bg-gray-100"
+                                    (change)="pagePQR = 1" [(ngModel)]="tamanoPQRS" style="
                                         font-size: 10px;
                                         color: #9aa8bc;
                                         padding: 7px;
-                                    "
-                                >
+                                    ">
                                     <option value="5">5</option>
                                     <option value="10">10</option>
                                     <option value="20">20</option>
                                 </select>
-                            </div>
+                            </div> -->
+
                         </div>
                         <hr />
-                        <div class="row">
-                            <div
-                                class="col-lg-12"
-                                *ngIf="listadoPQRS.length != 0"
-                            >
+
+                        <div class="mb-40">
+
+                            <app-table [allDataRows]="listadoPQRS" [dataOptionTable]="dataOptionTablePQRS"></app-table>
+                        </div>
+
+                        <!-- <div class="row">
+
+                            <div class="col-lg-12" *ngIf="listadoPQRS.length != 0">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <table class="w-full shadow">
                                             <thead>
                                                 <tr
-                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600"
-                                                >
+                                                    class="text-md font-semibold tracking-wide text-left text-gray-400 border-b border-gray-600">
                                                     <th class="px-4 py-3">
                                                         Fecha
                                                     </th>
@@ -1588,9 +1290,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white">
-                                                <tr
-                                                    class="text-gray-700"
-                                                    *ngFor="
+                                                <tr class="text-gray-700" *ngFor="
                                                         let item of listadoPQRS
                                                             | filter
                                                                 : filtrarPQRS
@@ -1601,41 +1301,26 @@
                                                                       currentPage:
                                                                           pagePQR
                                                                   }
-                                                    "
-                                                >
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    ">
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.fechaCreacion }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.numeroPqrs }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.tipoPqrs }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.causalPqrs }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.estado }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.responsable }}
                                                     </td>
-                                                    <td
-                                                        class="px-2 py-1 text-sm border"
-                                                    >
+                                                    <td class="px-2 py-1 text-sm border">
                                                         {{ item.solucion }}
                                                     </td>
                                                 </tr>
@@ -1644,30 +1329,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="col-lg-12 col-sm-12 text-end"
-                                *ngIf="listadoPQRS.length != 0"
-                            >
-                                <pagination-controls
-                                    (pageChange)="pagePQR = $event"
-                                    previousLabel="Anterior"
-                                    nextLabel="Siguiente"
-                                ></pagination-controls>
+                            <div class="col-lg-12 col-sm-12 text-end" *ngIf="listadoPQRS.length != 0">
+                                <pagination-controls (pageChange)="pagePQR = $event" previousLabel="Anterior"
+                                    nextLabel="Siguiente"></pagination-controls>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <fuse-card
-                                class="card p-3 shadow capitalize row mr-3 align-content-around"
-                                *ngIf="listadoPQRS.length == 0"
-                            >
+                        </div> -->
+                        <!-- <div class="col-lg-12">
+                            <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around"
+                                *ngIf="listadoPQRS.length == 0">
                                 <div class="w-3/12">
-                                    <img
-                                        src="assets/images/animaciones/nodata.gif"
-                                    />
+                                    <img src="assets/images/animaciones/nodata.gif" />
                                 </div>
                             </fuse-card>
-                        </div>
-                        <div class="m-5"></div>
+                        </div> -->
+                        <!-- <div class="m-5"></div> -->
                     </mat-tab>
                 </mat-tab-group>
             </div>

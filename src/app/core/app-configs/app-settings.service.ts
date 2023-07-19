@@ -507,7 +507,8 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/negocios-cartera'),
             guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
             listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
-            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera')
+            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera'),
+            reversarNegociacion: EndPoints.uri('/generic/qry/anular-negociacion-cartera')
 
         }
     };
