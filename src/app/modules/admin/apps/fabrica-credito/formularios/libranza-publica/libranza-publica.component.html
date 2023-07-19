@@ -9,7 +9,7 @@
                 </div>
                 <div class="flex-1 mx-3">
                     <div class="text-3xl font-bold tracking-tight leading-8 text-gray-700">Formulario de libranza
-                        publica
+                        pública
                     </div>
                     <div class="flex items-center">
                         <mat-icon svgIcon="heroicons_solid:bell" class="text-gray-400"></mat-icon>
@@ -28,7 +28,7 @@
         (selectionChange)="onStepChange($event)">
         <mat-step [stepControl]="datosBasicos">
             <form [formGroup]="datosBasicos">
-                <ng-template matStepLabel>Datos basicos</ng-template>
+                <ng-template matStepLabel>Datos básicos</ng-template>
                 <div class="bg-white  rounded mt-4 pb-4 grid grid-cols-1  md:grid-cols-2">
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Tipo de documento</mat-label>
@@ -62,7 +62,7 @@
                             Este campo es requerido.
                         </mat-error>
                         <mat-error *ngIf="datosBasicos.controls.celular.errors?.pattern">
-                            Debe comenzar en 3 y tener 10 digitos
+                            Debe comenzar en 3 y tener 10 dígitos
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
@@ -111,7 +111,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense ">
-                        <mat-label>¿Cúando naciste?</mat-label>
+                        <mat-label>¿Cuándo naciste?</mat-label>
                         <input style="max-height: 18px !important;" matInput type="date" autocomplete="off"
                             formControlName="fechaNacimiento">
                         <mat-error *ngIf="datosBasicos.controls.fechaNacimiento.errors?.required">
@@ -146,7 +146,7 @@
             <form [formGroup]="datosLaborares">
                 <ng-template matStepLabel>Información laboral</ng-template>
                 <div class="bg-white  rounded  pt-6 grid grid-cols-1   md:grid-cols-2">
- 
+
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
                         <mat-label>Ocupación</mat-label>
                         <mat-select formControlName="ocupacion">
@@ -171,7 +171,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="w-full px-3 fuse-mat-dense">
-                        <mat-label>¿ En cúal empresa trabajas o fuiste pensionado?</mat-label>
+                        <mat-label>¿En cuál empresa trabajas o fuiste pensionado?</mat-label>
                         <mat-select formControlName="pagaduria">
                             <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias" [value]="pagaduria.codigo">
                                 {{pagaduria.nombre}}
@@ -360,7 +360,7 @@
                                 </div>
 
 
-                                
+
                                 <div class="w-full grid grid-cols-1 gap-4">
 
                                     <div class="flex flex-row justify-between w-full gap-2">
@@ -443,7 +443,7 @@
             <!-- <app-otp [contador]="contador" [actualizandoDatosOTP]="actualizandoDatosOTP" [changeTextOTP]="changeTextOTP" [datosBasicos]="datosBasicos"
             [otpNumber]="numeroOTP" [changeTextOTP]="changeTextOTP" [otpValidado]="otpValidado" [validandoOTPLoading]="validandoOTPLoading"
             ></app-otp> -->
- 
+
 
             <div class="flex bg-white rounded  pt-6 pb-8  sm:flex sm:justify-center md:justify-end gap-4 justify-center">
                 <button mat-raised-button color="primary" type="button" [disabled]="!otpValidado && datosBasicos && datosLaborares"
