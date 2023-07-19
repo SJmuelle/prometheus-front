@@ -6,34 +6,55 @@
 
     <div class="p-4 w-full h-full gap-4 flex flex-col">
 
-        <div class="w-full h-auto bg-white rounded-md border-2 p-2 flex flex-col">
-            <h4>Filtros</h4>
-            <div class="flex flex-row w-full gap-3 p-2">
+        <mat-accordion class="w-full h-auto gap-4 flex flex-col">
+
+            <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header class="h-15">
+                    <mat-panel-title class="h-15">
+                        <h4 class="mt-3">Filtros</h4>
+                    </mat-panel-title>
+                    <mat-panel-description>
 
 
-                <mat-form-field class="fuse-mat-dense w-56">
-                    <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
-                    <mat-select>
-                        <mat-option value="1">opcion 1</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="w-full h-auto bg-white rounded-md border-2 p-2 flex flex-col">
 
-                <mat-form-field class="fuse-mat-dense w-56">
-                    <mat-label class="font-semibold text-md">Periodos fotos</mat-label>
-                    <mat-select>
-                        <mat-option value="1">opcion 1</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                    <div class="grid grid-cols-1 sm:flex sm:flex-row sm:flex-wrap w-full sm:gap-3 p-2 items-center">
 
-                <mat-form-field class="fuse-mat-dense w-72">
-                    <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
-                    <mat-checkbox matPrefix>Al dia</mat-checkbox>
-                    <mat-checkbox matPrefix>Por vencer</mat-checkbox>
-                    <mat-checkbox matPrefix>Vencido</mat-checkbox>
-                    <input matInput readonly="true" class="w-0 max-w-0">
-                </mat-form-field>
 
-                <!-- <div class="flex flex-col">
+                        <mat-form-field class="fuse-mat-dense w-full sm:w-56">
+                            <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                            <mat-select>
+                                <mat-option value="1">opcion 1</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="fuse-mat-dense w-full sm:w-56">
+                            <mat-label class="font-semibold text-md">Periodos fotos</mat-label>
+                            <mat-select>
+                                <mat-option value="1">opcion 1</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field class="fuse-mat-dense w-full sm:w-72">
+                            <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                            <mat-checkbox matPrefix>Al dia</mat-checkbox>
+                            <mat-checkbox matPrefix>Por vencer</mat-checkbox>
+                            <mat-checkbox matPrefix>Vencido</mat-checkbox>
+                            <input matInput readonly="true" class="w-0 max-w-0">
+                        </mat-form-field>
+
+                        <mat-form-field class="fuse-mat-dense w-full sm:w-72">
+                            <mat-label class="font-semibold text-md">Numero de documento</mat-label>
+                            <mat-icon matPrefix>search</mat-icon>
+                            <input matInput type="text">
+                        </mat-form-field>
+
+                        <button mat-stroked-button class="bg-fintra-blue text-white mt-1"><mat-icon
+                                style="color: white;">search</mat-icon>Buscar</button>
+
+                        <!-- <div class="flex flex-col">
                     <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
                     <div class="flex flex-row gap-2 mt-2">
                         <mat-checkbox>Al dia</mat-checkbox>
@@ -50,10 +71,18 @@
 
 
 
-            </div>
+                    </div>
 
 
-        </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+
+
+
 
         <div>
             <app-table [dataOptionTable]="optionsTable" [allDataRows]="dataRows"></app-table>

@@ -212,14 +212,14 @@
 
 
 
-                              <button mat-menu-item *ngIf="item.etapaFirma=='F'" class="flex  items-center"
+                              <!-- <button mat-menu-item *ngIf="item.etapaFirma=='F'" class="flex  items-center"
                                 matTooltip="Reenviar firma" [matMenuTriggerFor]="matMenuEnviarCorreo">
                                 <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
-                              </button>
+                              </button> -->
 
 
-                              <button mat-menu-item *ngIf="item.etapaFirma!='P'" class="flex  items-center"
-                                matTooltip="Reenviar firma"
+                              <button [matMenuTriggerFor]="matMenuEnviarCorreo" mat-menu-item
+                                *ngIf="item.etapaFirma!='P'" class="flex  items-center" matTooltip="Reenviar firma"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">
                                 <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
                               </button>
