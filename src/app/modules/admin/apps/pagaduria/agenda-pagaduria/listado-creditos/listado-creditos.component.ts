@@ -26,6 +26,7 @@ export class ListadoCreditosComponent implements OnInit, OnDestroy {
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
+  estadoPagaduria: any;
 
   constructor(private agendaComercialService: AgendaComercialService,
     private _matDialog: MatDialog,
@@ -36,6 +37,8 @@ export class ListadoCreditosComponent implements OnInit, OnDestroy {
     this.cambiarEstado(true);
     this.getAgendaComercial('P');
     this.getTotalesAgendaComercial();
+    localStorage.setItem('data', '')
+
   }
 
 
@@ -45,6 +48,7 @@ export class ListadoCreditosComponent implements OnInit, OnDestroy {
      * @description: Obtiene el listado de agenda de completacion
     */
   public getAgendaComercial(estado): void {
+    this.estadoPagaduria=estado;
     let dato = { "estadoPagaduria": estado }
     this.agendaComercialService.getAgendaPagaduria(dato).pipe(
       takeUntil(this.unsubscribe$)
@@ -94,7 +98,7 @@ export class ListadoCreditosComponent implements OnInit, OnDestroy {
   public onGetAgenda(data: any): void {
     //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
     const { numeroSolicitud, identificacion } = data;
-    this.router.navigate(['/pagaduria/agenda-pagaduria/detalleCreditoPagaduria', numeroSolicitud, identificacion]);
+    this.router.navigate(['/pagaduria/agenda-pagaduria/detalleCreditoPagaduria', numeroSolicitud, identificacion, this.estadoPagaduria]);
   }
 
   /**

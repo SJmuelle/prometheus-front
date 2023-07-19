@@ -14,10 +14,12 @@
                     <mat-icon svgIcon="heroicons_outline:arrow-left"></mat-icon>
                 </button>
 
-                <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
-                    (click)="abrirDecision()" [ngClass]="animacionVer==true?'show':'hidden'">
-                    <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
-                </button>
+                <ng-container *ngIf="estado=='P'">
+                    <button mat-fab class="mx-1 bg-red-500 roll-in-blurred-right" matTooltip="Decision"
+                        (click)="abrirDecision()" [ngClass]="animacionVer==true?'show':'hidden'">
+                        <mat-icon svgIcon="heroicons_outline:scale"></mat-icon>
+                    </button>
+                </ng-container>
             </div>
 
             <div *ngSwitchCase="'pagaduria'">

@@ -18,6 +18,8 @@ export class DetalleCreditoComponent implements OnInit {
   public dataResumenTrazabilidad: any = [];
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
+  public estado: string = this.route.snapshot.paramMap.get('estado');
+
   dataPolicitasAdmin: any = {};
   datos2: any[];
   apiData: any;
@@ -128,7 +130,7 @@ export class DetalleCreditoComponent implements OnInit {
           {
             icono: "heroicons_outline:document-text",
             color: "bg-purple-100 text-purple-800",
-            valor3: "<span class='text-sm font-medium text-secondary'>Tipo contrato: </span>" + data.resumenLaboral.tipoContrato,
+            valor3: "<span class='text-sm font-medium text-secondary'>Tipo contrato: </span>" + data.resumenLaboral.tipoContratoDescripcion,
             valor2: "<span class='text-sm font-medium text-secondary'>Cargo: </span>" + data.resumenLaboral.cargo,
           },
           {
@@ -136,7 +138,7 @@ export class DetalleCreditoComponent implements OnInit {
             color: "bg-pink-100 text-pink-800",
             label: "Fechas de contrato",
             valor2: "<span class='text-sm font-medium text-secondary'>Vinculación: </span>" + data.resumenLaboral.fechaVinculacion,
-            valor3: "<span class='text-sm font-medium text-secondary'>Finalización: </span>" + data.resumenLaboral.fechaFinalizacion
+            valor3: data.resumenLaboral.tipoContrato=='F'?"<span class='text-sm font-medium text-secondary'>Finalización: </span>" + data.resumenLaboral.fechaFinalizacion:''
           },
           {
             icono: "feather:dollar-sign",
@@ -172,7 +174,7 @@ export class DetalleCreditoComponent implements OnInit {
             icono: "heroicons_outline:document-text",
             color: "bg-purple-100 text-purple-800",
             label: "Plazo",
-            valor:  data.resumenCapacidad.plazo,
+            valor:  data.resumenCapacidad.plazo + " meses",
           },
           {
             icono: "heroicons_outline:calendar",
@@ -193,8 +195,8 @@ export class DetalleCreditoComponent implements OnInit {
 
 
     this.datos = DatosCredito;
-
-
+    localStorage.setItem('data', JSON.stringify(data.resumenLaboral))
+    // this.estado=this.datos.resumenCliente.estadoPagaduria;
 
   }
 

@@ -112,41 +112,7 @@
                                     </td>
                                 </tr>
                                 <tr class="text-gray-700 border-t border-b ">
-                                    <td class="px-2  pb-1 pt-1">
-                                        <div class="flex flex-column ">
-
-                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                matTooltip="Agencia">
-                                                <mat-icon class="icon-size-3"
-                                                    svgIcon="heroicons_outline:location-marker"></mat-icon>
-                                                {{ item.agencia}}
-                                            </span>
-                                            <ng-container>
-                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                    matTooltip="Asesor Comercial">
-                                                    <mat-icon class="icon-size-3 "
-                                                        svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
-                                                </span>
-                                            </ng-container>
-                                            <ng-container>
-                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                    matTooltip="Asesor fábrica">
-                                                    <mat-icon class="icon-size-3 text-blue-500"
-                                                        svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
-                                                </span>
-                                            </ng-container>
-                                            <ng-container *ngIf="item.unidadNegocioFabrica === 1">
-                                                <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                                    matTooltip="Asesor micro">
-                                                    <mat-icon class="icon-size-3 text-green-500"
-                                                        svgIcon="heroicons_solid:user"></mat-icon>
-                                                    {{ item.asesorMicro==''?'No registra':item.asesorMicro}}
-                                                </span>
-                                            </ng-container>
-                                        </div>
-                                    </td>
+                                
                                     <td class="px-2 pb-1 pt-1">
                                         <div class="flex">
                                             <div class="flex flex-column ">
@@ -156,7 +122,7 @@
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
                                                     </mat-icon>
-                                                    <strong>Plazo:</strong> {{ item.plazo}}
+                                                    <strong>Plazo:</strong> {{ item.plazo}} meses
                                                 </span>
                                                 <span class="text-xs text-black font-medium">
                                                     <mat-icon class="icon-size-3"
@@ -174,7 +140,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="px-2 pb-1 pt-1">
+                                    <td class="px-2 pb-1 pt-1" colspan="2">
                                         <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
@@ -202,7 +168,7 @@
                                     </td>
 
 
-                                    <td class="px-2 pb-1 pt-1">
+                                    <td class="px-2 pb-1 pt-1" colspan="2">
                                         <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">

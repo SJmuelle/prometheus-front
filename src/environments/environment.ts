@@ -6,8 +6,8 @@ export const environment = {
     production: false,
     userName: "APPWEB",
     password: btoa("123456"),
-    apiUrl: "http://localhost:8084/",
-    //apiUrl:"http://demo.fintra.co:8084/",
+    // apiUrl: "http://localhost:8084/",
+    apiUrl:"http://demo.fintra.co:8084/",
     // apiUrl:"https://prometheus.fintra.co:8443/",
     // apiUrl: "http://dev.fintra.co:8085/",
 

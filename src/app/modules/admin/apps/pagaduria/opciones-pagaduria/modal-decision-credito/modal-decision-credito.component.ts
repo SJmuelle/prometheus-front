@@ -31,6 +31,8 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
   listadoAgenda: any;
   public salarioMinimo: number = 0;
   tipoContrato$: Observable<any>;
+  dataLaboral: any;
+
 
   constructor(
     private fb: FormBuilder,
@@ -44,10 +46,14 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     private router: Router,
     private genericaServices: GenericasService,
     private _formularioCreditoService: FormularioCreditoService,
-    
+
   ) {
     this.crearFormulario();
+    this.dataLaboral=JSON.parse(localStorage.getItem("data"))
+    
   }
+
+
 
   ngOnInit(): void {
     this.getDecision();
@@ -153,34 +159,35 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
           break;
         case 'R':
-          this.form.controls['cargo'].setValue("");
-          this.form.controls['cargo'].setValidators(Validators.required);
-          this.form.controls['cargo'].updateValueAndValidity();
+          if (this.form.value.causal == '18') {
+            this.form.controls['cargo'].setValue("");
+            this.form.controls['cargo'].setValidators(Validators.required);
+            this.form.controls['cargo'].updateValueAndValidity();
 
-          this.form.controls['tipoContrato'].setValue("");
-          this.form.controls['tipoContrato'].setValidators(Validators.required);
-          this.form.controls['tipoContrato'].updateValueAndValidity();
+            this.form.controls['tipoContrato'].setValue("");
+            this.form.controls['tipoContrato'].setValidators(Validators.required);
+            this.form.controls['tipoContrato'].updateValueAndValidity();
 
-          this.form.controls['salario'].setValue("");
-          this.form.controls['salario'].setValidators(Validators.required);
-          this.form.controls['salario'].updateValueAndValidity();
+            this.form.controls['salario'].setValue("");
+            this.form.controls['salario'].setValidators(Validators.required);
+            this.form.controls['salario'].updateValueAndValidity();
 
-          this.form.controls['fechaVinculacion'].setValue("");
-          this.form.controls['fechaVinculacion'].setValidators(Validators.required);
-          this.form.controls['fechaVinculacion'].updateValueAndValidity();
+            this.form.controls['fechaVinculacion'].setValue("");
+            this.form.controls['fechaVinculacion'].setValidators(Validators.required);
+            this.form.controls['fechaVinculacion'].updateValueAndValidity();
 
-          this.form.controls['fechaFinalizacion'].setValue("");
-          this.form.controls['fechaFinalizacion'].setValidators(Validators.required);
-          this.form.controls['fechaFinalizacion'].updateValueAndValidity();
+            this.form.controls['fechaFinalizacion'].setValue("");
+            this.form.controls['fechaFinalizacion'].setValidators(Validators.required);
+            this.form.controls['fechaFinalizacion'].updateValueAndValidity();
 
-          this.form.controls['descuentos'].setValue("");
-          this.form.controls['descuentos'].setValidators(Validators.required);
-          this.form.controls['descuentos'].updateValueAndValidity();
+            this.form.controls['descuentos'].setValue("");
+            this.form.controls['descuentos'].setValidators(Validators.required);
+            this.form.controls['descuentos'].updateValueAndValidity();
 
-          this.form.controls['comisiones'].setValue("");
-          this.form.controls['comisiones'].setValidators(Validators.required);
-          this.form.controls['comisiones'].updateValueAndValidity();
-
+            this.form.controls['comisiones'].setValue("");
+            this.form.controls['comisiones'].setValidators(Validators.required);
+            this.form.controls['comisiones'].updateValueAndValidity();
+          }
           break;
         default:
           break;
@@ -188,10 +195,11 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
     });
 
-    this.form.controls.causal.valueChanges.subscribe((causal) => {
 
+    this.form.controls.causal.valueChanges.subscribe((causal) => {
+      causal=parseInt(causal)
       switch (causal) {
-        case '19':
+        case 19:
           this.form.controls['cargo'].setValue("");
           this.form.controls['cargo'].clearValidators();
           this.form.controls['cargo'].updateValueAndValidity();
@@ -221,7 +229,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           this.form.controls['comisiones'].updateValueAndValidity();
 
           break;
-        case '18':
+        case 18:
           this.form.controls['cargo'].setValue("");
           this.form.controls['cargo'].setValidators(Validators.required);
           this.form.controls['cargo'].updateValueAndValidity();
@@ -250,7 +258,9 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           this.form.controls['comisiones'].setValidators(Validators.required);
           this.form.controls['comisiones'].updateValueAndValidity();
           this.dataCreditoRechazo();
-
+          debugger
+          this.asignarValor();
+          
           break;
         default:
           break;
@@ -282,6 +292,17 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     });
   }
 
+  
+  asignarValor():void{
+    debugger
+    this.form.controls['cargo'].setValue(this.dataLaboral.cargo);
+    this.form.controls['tipoContrato'].setValue(this.dataLaboral.tipoContrato);
+    this.form.controls['salario'].setValue(this.dataLaboral.salarioBasico);
+    this.form.controls['comisiones'].setValue(this.dataLaboral.comisiones);
+    this.form.controls['descuentos'].setValue(this.dataLaboral.descuentoNomina);
+    this.form.controls['fechaVinculacion'].setValue(this.dataLaboral.fechaFinalizacion);
+    this.form.controls['fechaFinalizacion'].setValue(this.dataLaboral.fechaFinalizacion);
+  }
 
   /**
    * @description: Obtiene el listado de opciones

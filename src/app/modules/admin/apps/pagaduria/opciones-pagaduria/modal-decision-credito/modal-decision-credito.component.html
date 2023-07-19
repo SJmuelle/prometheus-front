@@ -94,13 +94,16 @@
                                     <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
-                                <mat-form-field>
-                                    <mat-label>Fecha finalización</mat-label>
-                                    <input matInput [matDatepicker]="picker2" [formControlName]="'fechaFinalizacion'">
-                                    <mat-hint>MM/DD/YYYY</mat-hint>
-                                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker2></mat-datepicker>
-                                </mat-form-field>
+                                <ng-container *ngIf="form.value.tipoContrato=='F'">
+                                    <mat-form-field>
+                                        <mat-label>Fecha finalización</mat-label>
+                                        <input matInput [matDatepicker]="picker2"
+                                            [formControlName]="'fechaFinalizacion'">
+                                        <mat-hint>MM/DD/YYYY</mat-hint>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </ng-container>
                             </div>
                         </ng-container>
                     </ng-container>

@@ -9,7 +9,7 @@ const routes: Routes = [
     component:ListadoCreditosComponent
   },
   {
-    path: 'detalleCreditoPagaduria/:num/:id',
+    path: 'detalleCreditoPagaduria/:num/:id/:estado',
     component: DetalleCreditoComponent
   }
 ];

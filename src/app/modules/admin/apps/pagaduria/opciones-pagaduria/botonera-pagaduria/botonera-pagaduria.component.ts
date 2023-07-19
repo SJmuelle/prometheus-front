@@ -13,6 +13,7 @@ import { ModalDecisionCreditoComponent } from '../modal-decision-credito/modal-d
 export class BotoneraPagaduriaComponent implements OnInit, OnDestroy {
   public animacionVer: boolean = true;
   @Input() apiData: any;
+  @Input() estado: any;
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
   constructor(
