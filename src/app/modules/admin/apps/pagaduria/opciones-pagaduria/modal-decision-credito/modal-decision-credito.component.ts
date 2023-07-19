@@ -315,7 +315,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
         let respuesta: any = {};
         switch (res.status) {
           case 200:
-            if (res.data.resultado == 'OK') {
+            if (res.data.respuesta == 'OK') {
               respuesta = {
                 icon: 'success',
                 title: 'Mensaje',
