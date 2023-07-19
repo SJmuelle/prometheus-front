@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { PoliticasService } from 'app/core/services/politicas.service';
 import Swal from 'sweetalert2';
 
@@ -22,7 +22,7 @@ export class ModalExcepcionCreditoComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       excepcionText: ['', [Validators.required, Validators.maxLength(1000)]],
-      excepcion: [],
+      excepcion: [false, Validators.requiredTrue],
     })
   }
 
@@ -31,7 +31,7 @@ export class ModalExcepcionCreditoComponent implements OnInit {
     this.form.controls.excepcionText.setValue(this.data.comentarioExcepcion)
     this.form.patchValue(this.data);
     console.log('data', this.data);
-    
+
   }
 
   /**
@@ -68,7 +68,7 @@ export class ModalExcepcionCreditoComponent implements OnInit {
               icon: 'success',
               allowOutsideClick: false
             }).then((result)=>{
-              this._dialog.close(rep['data'].ejecutoMotor)
+                this._dialog.close();
             })
           })
         }
@@ -76,5 +76,5 @@ export class ModalExcepcionCreditoComponent implements OnInit {
     }
   }
 
-  
+
 }

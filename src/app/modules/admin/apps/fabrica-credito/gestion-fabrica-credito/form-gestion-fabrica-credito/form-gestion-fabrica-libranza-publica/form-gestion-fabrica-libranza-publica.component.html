@@ -4,7 +4,7 @@
         <mat-expansion-panel expanded>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    <strong class="mr-2">Datos de la solicitud de libranza publica
+                    <strong class="mr-2">Datos de la solicitud de libranza pública
                     </strong>
                     | {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
@@ -930,13 +930,13 @@
                                             .errors?.minlength
                                     ">
 
-                                    No puede ser menor a {{tipoDocumentoConyuge?.value === 'CE' ? 6 : 5}} digitos
+                                    No puede ser menor a {{tipoDocumentoConyuge?.value === 'CE' ? 6 : 5}} dígitos
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.identificacionConyuge
                                             .errors?.maxlength
                                     ">
-                                    No puede ser menor a {{tipoDocumentoConyuge?.value === 'CE' ? 7 : 10}} digitos
+                                    No puede ser menor a {{tipoDocumentoConyuge?.value === 'CE' ? 7 : 10}} dígitos
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>
@@ -1031,7 +1031,7 @@
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field class="w-full">
-                                <mat-label>¿ En cúal empresa trabajas o fuiste pensionado?</mat-label>
+                                <mat-label>¿ En cuál empresa trabajas o fuiste pensionado?</mat-label>
                                 <mat-select formControlName="pagaduria">
                                     <mat-option *ngFor="let pagaduria of dataInicial?.pagadurias"
                                         [value]="pagaduria.codigo">
@@ -1104,7 +1104,7 @@
                                         form.controls.claveVolante.errors
                                             ?.pattern
                                     ">
-                                    Solo se permiten caracteres alfanumericos.
+                                    Solo se permiten caracteres alfanuméricos.
                                 </mat-error>
                                 <mat-error *ngIf="
                                         form.controls.claveVolante.errors
@@ -1455,13 +1455,13 @@
                                                                                                         .errors?.minlength
                                                                                                 ">
 
-                                    No puede ser menor a {{identificacionExpuesta?.value === 'CE' ? 6 : 5}} digitos
+                                    No puede ser menor a {{identificacionExpuesta?.value === 'CE' ? 6 : 5}} dígitos
                                 </mat-error>
                                 <mat-error *ngIf="
                                                                                                     form.controls.identificacionExpuesta
                                                                                                         .errors?.maxlength
                                                                                                 ">
-                                    No puede ser menor a {{identificacionExpuesta?.value === 'CE' ? 7 : 10}} digitos
+                                    No puede ser menor a {{identificacionExpuesta?.value === 'CE' ? 7 : 10}} dígitos
                                 </mat-error>
                             </mat-form-field>
                             <mat-form-field>

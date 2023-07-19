@@ -1,9 +1,10 @@
 <div class="grid grid-cols-12">
-    <div class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-3 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
+    <div
+        class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-3 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
         <strong class="md:w-3/6 sm:w-full p-1.5 rounded-1">Políticas administrativas del titular</strong>
         <div *ngIf="permisoExcepcion" class="flex customDivButton  items-center py-2">
             <button color="primary" class="customBTM" type="button" (click)="correrMotor('T')">
-                Correr motor
+                Evaluar motor
             </button>
         </div>
     </div>
@@ -19,17 +20,45 @@
                         </div>
                         <div class="font-normal text-smx">{{item.descripcion}}</div>
                         <div [ngClass]="getColorExcepcion(item)"
-                            [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
-                            matTooltipTouchGestures="on" #tooltip="matTooltip"
+
                             class="w-full flex justify-center items-center rounded-full gap-1"
-                            (click)="tooltip.toggle()">
+                            >
                             <mat-icon class="icon-xxs text-white"
                                 [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
-                            <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No
-                                cumple'}}</p>
+                            <p (click)="tooltip.toggle()"  [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            matTooltipTouchGestures="on" #tooltip="matTooltip" class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple':
+                                'No cumple'}}</p>
                             <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"
                                 (click)="openExcepcion(item)" class="icon-size-4 cursor-pointer text-white icon-xxs"
                                 svgIcon="heroicons_solid:pencil"></mat-icon>
+
+                            <div *ngIf="item.estadoAccion !== 'CUMPLE'"
+                                class="py-0 text-sm md:w-full sm:w-auto flex justify-center items-center">
+                                <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones"
+                                    class="customBTNSize">
+                                    <mat-icon class="icon-sizeC text-white">format_list_bulleted</mat-icon></button>
+                            </div>
+                            <mat-menu #menuOpciones="matMenu">
+
+                                <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                                    <button *ngIf="permisoExcepcion" mat-menu-item class="flex  items-center"
+                                        matTooltip="Excepcionar" (click)="openExcepcion(item)">
+                                        <mat-icon [svgIcon]="'heroicons_solid:pencil'"
+                                            class="mr-2"></mat-icon>Excepcionar
+                                    </button>
+
+
+
+                                    <button (click)="openDetalleExcepcion(item)" mat-menu-item
+                                        class="flex  items-center" matTooltip="Ver detalle excepción">
+                                        <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle
+                                        excepción
+                                    </button>
+
+
+                                </div>
+                            </mat-menu>
                         </div>
                     </div>
                 </ng-container>
@@ -41,7 +70,7 @@
                     <th class="px-4 py-3">Nombre de la política</th>
                     <th class="px-4 py-3">Descripción de la política</th>
                     <th class="px-4 py-3">Estado</th>
-                    <th *ngIf="permisoExcepcion" class="px-4 py-3">Acción</th>
+                    <th *ngIf="unidadNegocio === 1" class="px-4 py-3">Acción</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
@@ -61,15 +90,48 @@
                                     </div>
                                 </div>
                             </td>
-                            <td *ngIf="permisoExcepcion" class="px-2 text-sm border w-0">
-                                <div class="flex justify-center items-center w-full h-full">
-                                    <button mat-icon-button class="icon-size-5" *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"   (click)="openExcepcion(item)"> 
+                            <td *ngIf="unidadNegocio === 1" class="px-2 text-sm border w-0">
+                                <div *ngIf="item.estadoAccion !== 'CUMPLE'"
+                                    class=" py-0 text-sm w-full flex justify-center h-6 items-center">
+                                    <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones"
+                                        class="customBTNSize">
+                                        <mat-icon class="icon-size-4">format_list_bulleted</mat-icon></button>
+                                </div>
+
+                                <mat-menu #menuOpciones="matMenu">
+
+                                    <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                                        <button *ngIf="permisoExcepcion" mat-menu-item class="flex  items-center"
+                                            matTooltip="Excepcionar" (click)="openExcepcion(item)">
+                                            <mat-icon [svgIcon]="'heroicons_solid:pencil'"
+                                                class="mr-2"></mat-icon>Excepcionar
+                                        </button>
+
+
+
+                                        <button (click)="openDetalleExcepcion(item)" mat-menu-item
+                                            class="flex  items-center" matTooltip="Ver detalle excepción">
+                                            <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver
+                                            detalle excepción
+                                        </button>
+
+
+                                    </div>
+
+
+
+
+
+                                </mat-menu>
+                                <!-- <div class="flex justify-center items-center w-full h-full">
+                                    <button mat-icon-button class="icon-size-5"    >
                                         <mat-icon
                                        class="icon-size-4 cursor-pointer "
                                         svgIcon="heroicons_solid:pencil"></mat-icon>
                                     </button>
-                                
-                                </div>
+
+                                </div> -->
                             </td>
                         </tr>
                     </ng-container>
@@ -82,11 +144,12 @@
 
 
 <div *ngIf="representante.length" class="grid grid-cols-12">
-    <div class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-2 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
+    <div
+        class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-2 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
         <strong class="md:w-3/6 sm:w-full p-1.5 rounded-1">Políticas administrativas del representante</strong>
         <div *ngIf="permisoExcepcion" class="flex customDivButton  items-center py-2">
             <button color="primary" class="customBTM" type="button" (click)="correrMotor('R')">
-                Correr motor
+                Evaluar motor
             </button>
         </div>
     </div>
@@ -108,8 +171,8 @@
                             (click)="tooltip.toggle()">
                             <mat-icon class="icon-xxs text-white"
                                 [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
-                            <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple': 'No
-                                cumple'}}</p>
+                            <p class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple':
+                                'Nocumple'}}</p>
                             <mat-icon *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"
                                 (click)="openExcepcion(item)" class="icon-size-4 cursor-pointer text-white icon-xxs"
                                 svgIcon="heroicons_solid:pencil"></mat-icon>
@@ -148,12 +211,13 @@
                             </td>
                             <td *ngIf="permisoExcepcion" class="px-2 text-sm border w-0">
                                 <div class="flex justify-center items-center w-full h-full">
-                                    <button mat-icon-button class="icon-size-5" *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"   (click)="openExcepcion(item)"> 
-                                        <mat-icon
-                                       class="icon-size-4 cursor-pointer "
-                                        svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    <button mat-icon-button class="icon-size-5"
+                                        *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"
+                                        (click)="openExcepcion(item)">
+                                        <mat-icon class="icon-size-4 cursor-pointer "
+                                            svgIcon="heroicons_solid:pencil"></mat-icon>
                                     </button>
-                                
+
                                 </div>
                             </td>
                         </tr>
@@ -166,11 +230,12 @@
 </div>
 
 <div *ngIf="codeudor.length" class="grid grid-cols-12">
-    <div class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-2 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
+    <div
+        class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-2 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
         <strong class="md:w-3/6 sm:w-full p-1.5 rounded-1">Políticas administrativas del codeudor</strong>
         <div *ngIf="permisoExcepcion" class="flex customDivButton  items-center py-2">
             <button color="primary" class="customBTM" type="button" (click)="correrMotor('C')">
-                Correr motor
+                Evaluar motor
             </button>
         </div>
     </div>
@@ -232,12 +297,13 @@
 
                             <td *ngIf="permisoExcepcion" class="px-2 text-sm border w-0">
                                 <div class="flex justify-center items-center w-full h-full">
-                                    <button mat-icon-button class="icon-size-5" *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"   (click)="openExcepcion(item)"> 
-                                        <mat-icon
-                                       class="icon-size-4 cursor-pointer "
-                                        svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    <button mat-icon-button class="icon-size-5"
+                                        *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"
+                                        (click)="openExcepcion(item)">
+                                        <mat-icon class="icon-size-4 cursor-pointer "
+                                            svgIcon="heroicons_solid:pencil"></mat-icon>
                                     </button>
-                                
+
                                 </div>
                             </td>
                         </tr>
@@ -250,11 +316,12 @@
 </div>
 
 <div *ngIf="solidario.length" class="grid grid-cols-12">
-    <div class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-2 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
+    <div
+        class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-2 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
         <strong class="md:w-3/6 sm:w-full p-1.5 rounded-1">Políticas administrativas del deudor solidario</strong>
         <div *ngIf="permisoExcepcion" class="flex customDivButton  items-center py-2">
             <button color="primary" class="customBTM" type="button" (click)="correrMotor('S')">
-                Correr motor
+                Evaluar motor
             </button>
         </div>
     </div>
@@ -320,12 +387,13 @@
                             </td>
                             <td *ngIf="permisoExcepcion" class="px-2 text-sm border w-0">
                                 <div class="flex justify-center items-center w-full h-full">
-                                    <button mat-icon-button class="icon-size-5" *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"   (click)="openExcepcion(item)"> 
-                                        <mat-icon
-                                       class="icon-size-4 cursor-pointer "
-                                        svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    <button mat-icon-button class="icon-size-5"
+                                        *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1"
+                                        (click)="openExcepcion(item)">
+                                        <mat-icon class="icon-size-4 cursor-pointer "
+                                            svgIcon="heroicons_solid:pencil"></mat-icon>
                                     </button>
-                                
+
                                 </div>
                             </td>
                         </tr>

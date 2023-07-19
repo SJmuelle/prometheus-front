@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { GenericasService } from 'app/core/services/genericas.service';
 import Swal from 'sweetalert2';
 import { CentralesService } from 'app/core/services/centrales.service';
+import { DetalleExcepcionCreditoComponent } from '../detalle-excepcion-credito/detalle-excepcion-credito.component';
 @Component({
     selector: 'app-grid-politicas',
     templateUrl: './grid-politicas.component.html',
@@ -73,7 +74,7 @@ export class GridPoliticasComponent implements OnInit {
     openExcepcion(item: any) {
         const dialogRef = this._matDialog.open(ModalExcepcionCreditoComponent, {
             width: '50vw',
-            maxHeight: '550px',
+            maxHeight: '650px',
             data: item,
         });
 
@@ -83,6 +84,14 @@ export class GridPoliticasComponent implements OnInit {
             } else {
                 this.getPoliticas(this.numeroSolicitud);
             }
+        });
+    }
+
+    openDetalleExcepcion(item: any) {
+        this._matDialog.open(DetalleExcepcionCreditoComponent, {
+            width: '50vw',
+            maxHeight: '650px',
+            data: item,
         });
     }
 
@@ -129,7 +138,7 @@ export class GridPoliticasComponent implements OnInit {
                     tipoTercero
                 }
 
-                Swal.fire({ title: 'Cargando', html: 'Corriendo el motor...', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
+                Swal.fire({ title: 'Cargando', html: 'Evaluando motor de decisión (Políticas)', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
                 this._politicasService.correrMotorlExcepcionPolitica(data).subscribe(rep => {
                     console.log('respuesta', rep);
                     if (rep['data'].resultado === 'OK') {

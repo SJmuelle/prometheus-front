@@ -81,6 +81,7 @@ import { RecalcularOfertaMicroComponent } from './recalcular-oferta-micro/recalc
 import { GridFiltrosDurosComponent } from './grid-filtros-duros/grid-filtros-duros.component';
 import { FormGestionFabricaLibranzaPublicaComponent } from './form-gestion-fabrica-credito/form-gestion-fabrica-libranza-publica/form-gestion-fabrica-libranza-publica.component';
 import { ModalExcepcionCreditoComponent } from './modal-excepcion-credito/modal-excepcion-credito.component';
+import { DetalleExcepcionCreditoComponent } from './detalle-excepcion-credito/detalle-excepcion-credito.component';
 
 
 
@@ -131,7 +132,8 @@ import { ModalExcepcionCreditoComponent } from './modal-excepcion-credito/modal-
         RecalcularOfertaMicroComponent,
         GridFiltrosDurosComponent,
         FormGestionFabricaLibranzaPublicaComponent,
-        ModalExcepcionCreditoComponent
+        ModalExcepcionCreditoComponent,
+        DetalleExcepcionCreditoComponent
     ],
     imports: [
         CommonModule,

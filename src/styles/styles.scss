@@ -220,3 +220,8 @@ input::-webkit-inner-spin-button {
         background-color: rgb(129, 231, 142) !important;
     }
 }
+
+mat-form-field.dltMB .mat-form-field-wrapper{
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}

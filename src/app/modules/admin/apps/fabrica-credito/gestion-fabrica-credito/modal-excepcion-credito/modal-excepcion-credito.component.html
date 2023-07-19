@@ -1,21 +1,21 @@
-<h2 mat-dialog-title class="mb-3">Detalle de la excepción</h2>
+<h2 mat-dialog-title class="mb-3">Excepción</h2>
 <p class="font-semibold mb-0">{{data.nombre}}</p>
 <form [formGroup]="form">
 <div class="flex w-full py-2">
      <section class="example-section">
         <mat-checkbox class="example-margin" color="primary" formControlName="excepcion"></mat-checkbox>
-      </section> 
+      </section>
     <P class="mb-1">{{data.descripcion}}</P>
 </div>
 
 <mat-dialog-content *ngIf="data" class="py-2">
     <div class="grid-cols-12 ">
         <div class="col-span-12">
-            
+
                 <div class="bg-white flex flex-col">
 
                     <div class="md:flex">
-                       
+
                         <mat-form-field class="w-full fuse-mat-dense">
                             <textarea class="h-60" placeholder="Comentario" matInput [formControlName]="'excepcionText'"
                                 [readonly]="data.idComentario">
@@ -28,9 +28,9 @@
 
 
                     </div>
-                    
+
                 </div>
-           
+
         </div>
     </div>
 </mat-dialog-content>

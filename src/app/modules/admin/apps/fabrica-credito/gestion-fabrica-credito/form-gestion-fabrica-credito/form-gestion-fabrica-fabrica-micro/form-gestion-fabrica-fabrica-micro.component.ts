@@ -52,6 +52,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public descripcionScore: any;
     public decisionFiltrosDuros: any;
     public agendaActual: string;
+    public creditoExcepcion: boolean = false;
     public currentScoreColor: 'red' | 'orange' | 'yellow' | 'light-green' | 'green';
 
     markers: any[] = [];
@@ -433,6 +434,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
 
+
                 if (this.permisoEditar) {
                     this.form.disable();
                 }
@@ -494,9 +496,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.patchValue({
                     descripcionTipo: data.descripcionTipo,
                     codigoBarrio: data.codigoBarrio,
-                    score: data.score
+                    score: data.score,
                 });
 
+                this.creditoExcepcion = data.creditoExcepcion;
                 this.agendaActual = data.agenda
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;

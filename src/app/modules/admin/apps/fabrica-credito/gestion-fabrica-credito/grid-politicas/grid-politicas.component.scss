@@ -55,3 +55,36 @@
         justify-content: center;
     }
 }
+
+.customBTNSize{
+    min-width: 25px !important;
+    min-height: 25px !important;
+
+    width: 25px !important;
+    height: 25px !important;
+    @media screen and (max-width: 600px) {
+        min-width: 15px !important;
+        min-height: 15px !important;
+
+        width: 15px !important;
+        height: 15px !important;
+    }
+}
+
+.icon-sizeC{
+    width: 1rem/* 16px */;
+    height: 1rem/* 16px */;
+    min-width: 1rem/* 16px */;
+    min-height: 1rem/* 16px */;
+    font-size: 1rem/* 16px */;
+    line-height: 1rem/* 16px */;
+
+    @media screen and (max-width: 600px) {
+        width: 0.8rem/* 16px */;
+        height: 0.8rem/* 16px */;
+        min-width: 0.8rem/* 16px */;
+        min-height: 0.8rem/* 16px */;
+        font-size: 0.8rem/* 16px */;
+        line-height: 0.8rem/* 16px */;
+    }
+}
