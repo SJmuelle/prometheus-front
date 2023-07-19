@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { FormDecisionComponent } from '../form-decision/form-decision.component';
 import { KeyValue } from '@angular/common';
 import { GenericasService } from 'app/core/services/genericas.service';
+import { DetalleExcepcionCreditoComponent } from '../../gestion-fabrica-credito/detalle-excepcion-credito/detalle-excepcion-credito.component';
 
 @Component({
     selector: 'app-resumen',
@@ -35,6 +36,7 @@ export class ResumenComponent implements OnInit {
         private router: Router,
         private _dialog: MatDialog,
         private genericaService: GenericasService,
+        private _matDialog: MatDialog
     ) {
         this.getUnidadDeNegocio()
         this.getResumen();
@@ -43,7 +45,7 @@ export class ResumenComponent implements OnInit {
     ngOnInit(): void {
         // this.openModalNegocio()
         this.getResumenCliente()
-       
+
     }
 
     private getUnidadDeNegocio(){
@@ -969,4 +971,11 @@ export class ResumenComponent implements OnInit {
         return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
     }
 
+    openDetalleExcepcion(item: any) {
+        this._matDialog.open(DetalleExcepcionCreditoComponent, {
+            width: '50vw',
+            maxHeight: '650px',
+            data: item,
+        });
+    }
 }
