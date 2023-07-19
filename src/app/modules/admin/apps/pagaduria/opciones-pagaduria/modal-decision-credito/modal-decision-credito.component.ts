@@ -258,7 +258,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           this.form.controls['comisiones'].setValidators(Validators.required);
           this.form.controls['comisiones'].updateValueAndValidity();
           this.dataCreditoRechazo();
-          debugger
+          
           this.asignarValor();
           
           break;
@@ -294,7 +294,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
   
   asignarValor():void{
-    debugger
+    
     this.form.controls['cargo'].setValue(this.dataLaboral.cargo);
     this.form.controls['tipoContrato'].setValue(this.dataLaboral.tipoContrato);
     this.form.controls['salario'].setValue(this.dataLaboral.salarioBasico);
