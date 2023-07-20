@@ -508,7 +508,19 @@ export class AppSettingsService {
             guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
             listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
             negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera'),
-            reversarNegociacion: EndPoints.uri('/generic/qry/anular-negociacion-cartera')
+            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera')
+
+        }
+    };
+
+    /**
+     * @description: End-Point
+     */
+    public seguimientoCarteraClientes = {
+        url: {
+            listarUnidad: EndPoints.uri('/generic/qry/cartera-listar-unidad-negocio'),
+            periodoFotos: EndPoints.uri('/generic/qry/cartera-listar-periodo-foto'),
+            buscarCliente: EndPoints.uri('/generic/cartera-buscar-cliente')
 
         }
     };

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CarteraClientesService } from 'app/core/services/cartera-clientes.service';
+import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
+import { IoptionTable } from 'app/shared/componentes/table/table.component';
 
 @Component({
   selector: 'app-seguimiento-cartera-cliente',
@@ -9,55 +13,90 @@ import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 export class SeguimientoCarteraClienteComponent implements OnInit {
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
   public dataRows: any[] = []
-  public optionsTable: any[] = [
+  public formSearch: FormGroup;
+  public openSearch: boolean = true
+  public unidadesNegocio: any[] = []
+  public periodosFotos: any[] = []
+  public optionsTable: IoptionTable[] = [
     {
-      name: 'Cedula',
-      text: 'Cedula',
-      typeField: 'text',
-      // pipeName: 'number'
+      name: 'Opciones',
+      text: 'Opciones',
+      typeField: 'mat-menu',
+      MenuFunctions: [
+        {
+          nameFunction: 'prueba',
+          callback: (data) => {
+            // console.log('prueba 1')
+            this.prueba(data)
+          },
+          iconFuseTemplate: 'search'
+        },
+        {
+          nameFunction: 'prueba 2',
+          callback: (data) => {
+            // console.log('prueba 2')
+            this.prueba(2)
+          },
+          iconFuseTemplate: 'search'
+        },
+        {
+          nameFunction: 'prueba 3',
+          callback: (data) => {
+            // console.log('prueba 3')
+            this.prueba(3)
+          },
+          iconFuseTemplate: 'search'
+        },
+
+      ]
     },
     {
-      name: 'Nombre cliente',
+      name: 'cedula',
+      text: 'Cedula',
+      typeField: 'text',
+    },
+    {
+      name: 'nombreCliente',
       text: 'Nombre cliente',
       typeField: 'text',
     },
     {
-      name: 'Direccion',
+      name: 'direccion',
       text: 'Direccion',
       typeField: 'text',
     },
     {
-      name: 'Barrio',
+      name: 'barrio',
       text: 'Barrio',
       typeField: 'text',
     },
     {
-      name: 'Ciudad',
+      name: 'ciudad',
       text: 'Ciudad',
       typeField: 'text',
     },
     {
-      name: 'Telefono',
+      name: 'telcontacto',
       text: 'Telefono',
       typeField: 'text',
     },
     {
-      name: 'Celular',
+      name: 'telefono',
       text: 'Celular',
       typeField: 'text',
     },
     {
-      name: 'Negocio',
+      name: 'negocio',
       text: 'Negocio',
       typeField: 'text',
     },
     {
-      name: 'U. Negocio',
+      name: 'nombreConvenio',
       text: 'U. Negocio',
       typeField: 'text',
     },
     {
-      name: 'Vencimiento mayor',
+      name: 'vencimientoMayor',
       text: 'Vencimiento mayor',
       typeField: 'text',
     },
@@ -72,49 +111,133 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       typeField: 'text',
     },
     {
-      name: 'Debido cobrar',
+      name: 'debidoCobrar',
       text: 'Debido cobrar',
       typeField: 'text',
     },
     {
-      name: 'Recaudo',
+      name: 'recaudosxCuota',
       text: 'Recaudo',
       typeField: 'text',
     },
     {
-      name: '% cumplimiento',
+      name: 'cumplimiento',
       text: '% cumplimiento',
       typeField: 'text',
     },
     {
-      name: 'Valor a pagar',
+      name: 'valoraPagar',
       text: 'Valor a pagar',
       typeField: 'text',
     },
     {
-      name: 'Fecha ultimo compromiso',
+      name: 'fechaultCompromiso',
       text: 'Fecha ultimo compromiso',
       typeField: 'text',
     },
     {
-      name: 'Reest',
+      name: 'reestructuracion',
       text: 'Reest',
       typeField: 'text',
     },
     {
-      name: 'Juridico',
+      name: 'juridica',
       text: 'Juridico',
       typeField: 'text',
     },
     {
-      name: 'Negociacion',
+      name: 'agente',
       text: 'Negociacion',
       typeField: 'text',
     },
   ]
-  constructor() { }
+  constructor(
+    private _carteraClienteServices: CarteraClientesService,
+    private fb: FormBuilder,
+    private _sweetAlerService: Sweetalert2Service) { }
 
   ngOnInit(): void {
+    this.loadsearch()
+    this.formSearchBuilder();
+  }
+
+  public prueba(data): void {
+    console.log('prueba', data)
+  }
+
+  public loadsearch(): void {
+    this._carteraClienteServices.listarUnidadNEgocio().subscribe({
+      next: (resp) => {
+        this.unidadesNegocio = resp?.data || []
+
+      },
+      error: (e) => {
+        console.log(e)
+      }
+    })
+
+    this._carteraClienteServices.listarPeriodosFotos().subscribe({
+      next: (resp) => {
+        this.periodosFotos = resp?.data || []
+
+      },
+      error: (e) => {
+        console.log(e)
+      }
+    })
+
+
+  }
+
+
+
+
+  public searchClient(): void {
+    this._sweetAlerService.startLoading({});
+
+    const { periodo, unidadNegocio, identificacion, ...values } = this.formSearch.getRawValue();
+
+    const data = {
+      periodo,
+      unidadNegocio,
+      identificacion,
+      details: [
+        { estadoCartera: values.alDia ? 'Al dia' : '' },
+        { estadoCartera: values.porVencer ? 'Por vencer' : '' },
+        { estadoCartera: values.vencido ? 'Vencido' : '' }
+      ]
+    }
+
+
+    this._carteraClienteServices.buscarClienteCartera(data).subscribe({
+      next: (resp) => {
+        if (!resp.data.length) {
+          this._sweetAlerService.alertInfo({});
+        } else {
+          this.openSearch = false
+          this._sweetAlerService.stopLoading();
+          this.dataRows = resp?.data || []
+        }
+
+      },
+      error: (e) => {
+        this._sweetAlerService.alertError();
+        console.log(e)
+      }
+    })
+
+
+  }
+
+  private formSearchBuilder(): void {
+    this.formSearch = this.fb.group({
+      periodo: ['202307', [Validators.required]],
+      unidadNegocio: ['1', [Validators.required]],
+      identificacion: ['72187427', [Validators.required]],
+      alDia: [false],
+      porVencer: [true],
+      vencido: [true]
+    })
   }
 
 }

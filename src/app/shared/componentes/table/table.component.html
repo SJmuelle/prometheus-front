@@ -1,5 +1,5 @@
 <div>
-    <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl rounded-b-none">
+    <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl rounded-b-none bg-white">
 
 
 
@@ -35,7 +35,7 @@
 
                     <div *ngFor="let item of dataOptionTable" class="w-full flex-row my-0.5">
 
-                        <span class="w-full " *ngIf="item.typeField!=='function'"
+                        <span class="w-full " *ngIf="item.typeField!=='function' || item.typeField!=='mat-menu'"
                             [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
 
                             <span class=" font-semibold">{{item.text}} : </span>
@@ -73,6 +73,49 @@
                             <mat-icon *ngIf="!item?.iconSGV && !item?.iconAngularMaterial"
                                 svgIcon="heroicons_outline:eye"></mat-icon>
                         </button>
+
+
+
+
+
+
+                    </div>
+
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-col"
+                        [ngClass]="item.typeField ==! 'mat-menu' ?? 'hidden' ">
+
+
+
+                        <button [matMenuTriggerFor]="menuOptionMobil" class="mt-2 w-full mb-2"
+                            *ngIf="item.typeField==='mat-menu'" mat-stroked-button>
+                            <mat-icon>format_list_bulleted</mat-icon>
+                            <!-- <mat-icon *ngIf="item?.iconSGV" [svgIcon]="item?.iconSGV"></mat-icon>
+                        <mat-icon *ngIf="item?.iconAngularMaterial">{{item?.iconAngularMaterial}}</mat-icon>
+                        <mat-icon *ngIf="!item?.iconSGV && !item?.iconAngularMaterial"
+                            svgIcon="heroicons_outline:eye"></mat-icon> -->
+                        </button>
+
+
+
+
+
+
+                        <mat-menu #menuOptionMobil="matMenu">
+                            <div *ngFor="let valuemenu of item.MenuFunctions">
+
+                                <button mat-menu-item (click)="valuemenu.callback(value)">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                            </div>
+
+
+                        </mat-menu>
+
+
+
+
+
 
 
 
@@ -227,6 +270,31 @@
                                 </div>
                             </td>
                         </ng-container>
+
+                        <ng-container *ngSwitchCase="'mat-menu'">
+                            <td mat-cell *matCellDef="let rowFunction">
+                                <button [matMenuTriggerFor]="menuOption" class="" mat-icon-button>
+                                    <mat-icon>format_list_bulleted</mat-icon></button>
+                                <mat-menu #menuOption="matMenu">
+                                    <div *ngFor="let value of dataOption.MenuFunctions">
+
+                                        <button mat-menu-item (click)="value.callback(rowFunction)">
+                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            {{value.nameFunction}}</button>
+
+                                    </div>
+
+
+                                </mat-menu>
+                            </td>
+
+
+
+                        </ng-container>
+
+
+
+
 
                         <!-- <ng-container *ngSwitchCase="'checked'">
                             <td class="cursor-pointer" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">

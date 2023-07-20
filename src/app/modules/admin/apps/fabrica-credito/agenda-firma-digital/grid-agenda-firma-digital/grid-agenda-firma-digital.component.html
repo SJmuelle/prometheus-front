@@ -235,9 +235,9 @@
 
 
                               <button mat-menu-item *ngIf="item.etapaFirma=='E' || item.etapaFirma=='P' "
-                                class="flex  items-center" matTooltip="Edita información"
+                                class="flex  items-center" matTooltip="Editar información"
                                 (click)="openDetail(item.numeroSolicitud)">
-                                <mat-icon svgIcon="heroicons_outline:pencil" class="mr-2"></mat-icon>Edita información
+                                <mat-icon svgIcon="heroicons_outline:pencil" class="mr-2"></mat-icon>Editar información
                               </button>
 
                               <button mat-menu-item *ngIf="item.etapaFirma=='F' " class="flex  items-center"
@@ -260,16 +260,19 @@
 
                             <div class="w-auto flex flex-col gap-1 items-start p-2">
 
-                              <button mat-menu-item class="flex  items-center" matTooltip="Enviar correo decisión"
+                              <button mat-menu-item class="flex  items-center"
+                                matTooltip="Enviar correo decisión Titular"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">Titular
                               </button>
 
-                              <button mat-menu-item class="flex  items-center" matTooltip="Enviar correo decisión"
-                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor
+                              <button mat-menu-item class="flex  items-center"
+                                matTooltip="Enviar correo decisión Deudor solidario"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor solidario
                               </button>
 
 
-                              <button mat-menu-item class="flex  items-center" matTooltip="Enviar correo decisión"
+                              <button mat-menu-item class="flex  items-center"
+                                matTooltip="Enviar correo decisión Codeudor"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipodeudor)">Codeudor
                               </button>
 
@@ -419,6 +422,20 @@
                             </div>
                           </div>
                         </td>
+
+                        <td class="px-2 pb-1 pt-1">
+                          <div class="flex justify-between">
+                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                              [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                              <small class="text-xs">Firma interna pagaré </small>
+                              <span class="text-xs">
+                                {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
+                              </span>
+                              <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
+                            </div>
+                          </div>
+                        </td>
+
                         <td class="px-2 pb-1 pt-1">
                           <div class="flex justify-between">
                             <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
@@ -431,18 +448,7 @@
                             </div>
                           </div>
                         </td>
-                        <td class="px-2 pb-1 pt-1">
-                          <div class="flex justify-between">
-                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
-                              [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                              <small class="text-xs">Firma interna pagare </small>
-                              <span class="text-xs">
-                                {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
-                              </span>
-                              <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
-                            </div>
-                          </div>
-                        </td>
+
                       </ng-container>
                     </tr>
 

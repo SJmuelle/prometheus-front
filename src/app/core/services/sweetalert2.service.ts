@@ -20,7 +20,6 @@ export class Sweetalert2Service {
 
   public stopLoading(): void {
     Swal.close();
-
   }
 
   /**
@@ -66,7 +65,7 @@ export class Sweetalert2Service {
 
   public alertError(): void {
 
-    this.stopLoading();
+    // this.stopLoading();
 
     Swal.fire({
       allowOutsideClick: true,

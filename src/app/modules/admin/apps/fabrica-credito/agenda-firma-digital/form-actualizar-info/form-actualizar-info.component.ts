@@ -86,7 +86,9 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
       Swal.close();
       this.form.patchValue(res.data);
       this.form.controls['identificacionTitular'].disable();
+      this.form.controls['fechaNacimientoTitular'].disable();
       this.form.controls['identificacionTitular'].updateValueAndValidity();
+      this.form.controls['fechaNacimientoTitular'].updateValueAndValidity();
     })
   }
 

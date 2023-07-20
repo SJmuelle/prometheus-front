@@ -174,7 +174,9 @@ export class DataModalComponent implements OnInit, OnChanges, OnDestroy {
                 por_descuento_gac: data.gastoCobranza,
                 tneg: data.tipoNegociacion
             }
+
             this._sweetAlert.startLoading({});
+
             this._negociacionCarteraService.guardarNegociacionCartera(json).pipe(takeUntil(this.unsuscribe$)).subscribe({
                 next: (resp) => {
                     this._negociacionCarteraService.reloadData$.next({ reload: true })
@@ -184,6 +186,8 @@ export class DataModalComponent implements OnInit, OnChanges, OnDestroy {
                     this._sweetAlert.alertError();
                 }
             });
+
+
 
 
         }
@@ -225,6 +229,7 @@ export class DataModalComponent implements OnInit, OnChanges, OnDestroy {
 
             const negocio = this.dataRow.cod_neg;
             this._sweetAlert.startLoading({});
+
             this._negociacionCarteraService.reversarNegociacionRealizada(negocio).subscribe({
                 next: (data) => {
                     this._negociacionCarteraService.reloadData$.next({ reload: true })

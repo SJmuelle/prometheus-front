@@ -20,6 +20,14 @@ interface IFuntions {
   callback?: Function
 }
 
+interface IMenuFunctions {
+  nameFunction: string,
+  callback: Function,
+  iconFuseTemplate?: string
+  iconAngularMateriañ?: string
+}
+
+
 export type OptionTableArray = IoptionTable[]
 
 /** @description se muestras todos los registros de la lista 
@@ -43,7 +51,7 @@ export interface IoptionTable {
   /**
    * se especifica si es de tipo texto o llama una funcion 
    */
-  typeField: 'text' | 'function' | 'statusStyle',
+  typeField: 'text' | 'function' | 'statusStyle' | 'mat-menu',
   /**
    * se utiliza en caso de querer formatear el texto
    */
@@ -66,6 +74,11 @@ export interface IoptionTable {
    */
 
   styleCondition?: Function
+
+  /**
+   * Se utiliza para llamar varias funciones en un mat menu
+   */
+  MenuFunctions?: IMenuFunctions[]
 }
 
 @Component({
@@ -77,7 +90,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @Input() allDataRows: any[] = []
-  @Input() dataOptionTable: any[] = []
+  @Input() dataOptionTable: IoptionTable[] = []
   @Input() Options: Ioptions = { modeMobil: false, multifunction: false, function: false }
   @Input() Funtions: IFuntions[] = []
   @Output() dataRowSelect: EventEmitter<any> = new EventEmitter<any>();
@@ -89,6 +102,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   public page_size: number = 5
   public dataFilter: string = '';
   public dataCopy: any[] = [];
+  public dataFunctions: any[] = []
   private susbcripcion$: Subscription = new Subscription();
   private unsuscribre$: Subject<void> = new Subject<void>();
 
@@ -108,6 +122,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
     this.dataSource = new MatTableDataSource(this.allDataRows);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataFunctions = this.dataOptionTable
   }
 
   ngOnInit(): void {
@@ -121,7 +136,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   public actionSelectRow(row): void {
-    console.log(row);
+    // console.log(row);
 
   }
 

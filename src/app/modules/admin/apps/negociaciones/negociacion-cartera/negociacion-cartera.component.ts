@@ -73,7 +73,7 @@ export class NegociacionCarteraComponent implements OnInit, OnDestroy {
       //   {
       //     identificacion: '123123',
       //     nombre: 'Leonardo Arape',
-      //     cod_neg: 'MC17223',
+      //     cod_neg: 'MC172235555',
       //     mora_actual_dias: '1356',
       //     mora_actual: '14- MAYOR A 1 ANIO',
       //     interes_mora: 13153659,
@@ -86,7 +86,7 @@ export class NegociacionCarteraComponent implements OnInit, OnDestroy {
       //   {
       //     identificacion: '1231213',
       //     nombre: 'Juancho perez',
-      //     cod_neg: 'MC17223',
+      //     cod_neg: 'MC17223555',
       //     mora_actual_dias: '1356',
       //     mora_actual: '14- MAYOR A 1 ANIO',
       //     interes_mora: 88888,
