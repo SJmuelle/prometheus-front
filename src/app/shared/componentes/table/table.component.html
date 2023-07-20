@@ -38,7 +38,8 @@
                         <span class="w-full " *ngIf="item.typeField!=='function' || item.typeField!=='mat-menu'"
                             [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
 
-                            <span class=" font-semibold">{{item.text}} : </span>
+                            <span *ngIf="item.typeField === 'text' || item.typeField === 'statusStyle' "
+                                class=" font-semibold">{{item.text}} :</span>
 
                             <span *ngIf="item.typeField === 'text'"> {{value[item.name]
                                 |dataTable:item.pipeName
