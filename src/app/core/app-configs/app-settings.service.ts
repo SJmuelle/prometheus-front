@@ -58,6 +58,12 @@ export class AppSettingsService {
             baseUpdateConvenios: EndPoints.uri('/generic/update-convenio-finl')
         }
     };
+    public excepcionCredito = {
+        url: {
+            buscarPorSellect: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos')
+        }
+    }
+
     /**
      * @description: End-point asignacion de creditos
      */
@@ -141,9 +147,21 @@ export class AppSettingsService {
             trazabilidad: EndPoints.uri('/credito/tk/array-padre-hija/recursos-consulta-trazabilidad'),
             trazabilidadBusqueda: EndPoints.uri('/generic/agendas-credito-trazabilidad'),
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
-            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
+            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp'),
+            getRolID: EndPoints.uri('/generic/qry/tk/obtener-rol-id-usuario')
         }
     };
+
+    public libranzaPublica = {
+        url: {
+            guardeBasico: EndPoints.uri('/generic/lp-guardar-datos-basico'),
+            cargueInicialFormularioCorto: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
+            reCalcularDatosOTP: EndPoints.uri('/generic/guardado-datos-basicos-otp'),
+            consultaIdentificacionSolicitud: EndPoints.uri('/generic/qry/consulta-identificacion-solicitud'),
+            guardarFormularioCorto: EndPoints.uri('/credito/libranzap/guardar-solicitud-libranza-publica'),
+            guardarTitular: EndPoints.uri('/generic/lp-tab-titular')
+        }
+    }
     /**
      * http://demo.fintra.co:8011//api-fintra/api/credito/tk/property/cards-informacion-decision
      * @description: End-point departamentos
@@ -259,7 +277,9 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
             historialCredit: EndPoints.uri('/credito/generic/info-historial-credit'),
-            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra')
+            consultaHistorialExcepcion: EndPoints.uri('/credito/microcredito/consultar-historial-credito-excepcion'),
+            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra'),
+            filtrosDurosMicro: EndPoints.uri('/generic/filtro-duros-microcredito')
         }
     };
     /**
@@ -308,7 +328,9 @@ export class AppSettingsService {
      */
     public politicas = {
         url: {
-            base: EndPoints.uri('/generic/qry/cre-politicas-adm')
+            base: EndPoints.uri('/generic/qry/cre-politicas-adm'),
+            guardarExcepcion: EndPoints.uri('/generic/guardado-excepcion-creditos'),
+            correrMotorExcepciones: EndPoints.uri('/credito/microcredito/recalculo-excepcion-politicas-creditos')
         }
     };
     /**

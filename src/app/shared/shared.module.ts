@@ -31,7 +31,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableComponent } from './componentes/table/table.component';
 import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
 import { DataTablePipe } from './pipes/data-table.pipe';
-import { HeaderComponent } from './componentes/header/header.component'
+import { HeaderComponent } from './componentes/header/header.component';
+import { OTPComponent } from './componentes/otp/otp.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -64,6 +67,8 @@ import { HeaderComponent } from './componentes/header/header.component'
         MatSidenavModule,
         MatExpansionModule,
         MatMenuModule,
+        MatProgressBarModule,
+        NgxMaskModule.forRoot(),
         // FabricaCreditoModule
 
     ],
@@ -94,17 +99,16 @@ import { HeaderComponent } from './componentes/header/header.component'
         SmPaginatorPipe,
         DataTablePipe,
         TableComponent,
-        HeaderComponent
+        HeaderComponent,
+        OTPComponent
     ],
     declarations: [
         DirectionsBasicComponent,
         SmPaginatorPipe,
         DataTablePipe,
         TableComponent,
-        HeaderComponent
-
-
-
+        HeaderComponent,
+        OTPComponent
     ],
 })
 export class SharedModule { }

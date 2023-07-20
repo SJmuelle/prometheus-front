@@ -16,6 +16,9 @@ import { FormulariosModule } from './formularios/formularios.module';
 import { AgendaVentaModule } from './agenda-venta/agenda-venta.module';
 import { AgendaComiteComercialModule } from './agenda-comite-comercial/agenda-comite-comercial.module';
 import { AgendaVisitasModule } from './agenda-visitas/agenda-visitas.module';
+import { ExcepcionCreditoComponent } from './excepcion-credito/excepcion-credito.component';
+import { AsignacionBarriosModule } from './asignacion-barrios/asignacion-barrios.module';
+import { HistoricoPoliticasModule } from './historico-politicas/historico-politicas.module';
 
 
 const routes: Routes = [
@@ -94,6 +97,18 @@ const routes: Routes = [
                 path: 'agenda-visitas',
                 loadChildren: () => AgendaVisitasModule,
                 resolve  : {EdicionTrazabilidadResolver}
+            },
+            {
+                path: 'excepcion-creditos',
+                component: ExcepcionCreditoComponent
+            },
+            {
+                path: 'asignacion-barrios',
+                loadChildren: () => AsignacionBarriosModule,
+            },
+            {
+                path: 'historico-politicas',
+                loadChildren: () => HistoricoPoliticasModule
             }
         ]
     }

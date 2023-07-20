@@ -191,3 +191,37 @@ mat-tab-group>.mat-tab-body-wrapper {
 .text-centerTable > thead > tr > th > .mat-sort-header-container {
     justify-content: center;
 }
+
+.mat-vertical-content-container{
+ margin-left: 0px !important;
+}
+
+mat-step-header.mat-focus-indicator{
+    border-radius: 15px;
+
+}
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  :ng-deep .mat-checkbox-checked.mat-accent {
+    .mat-checkbox-ripple .mat-ripple-element {
+        background-color: rgb(129, 231, 142) !important;
+    }
+
+    .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+        background-color: rgb(129, 231, 142);
+     }
+}
+
+::ng-deep .mat-checkbox.mat-accent {
+    .mat-checkbox-ripple .mat-ripple-element {
+        background-color: rgb(129, 231, 142) !important;
+    }
+}
+
+mat-form-field.dltMB .mat-form-field-wrapper{
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
