@@ -153,11 +153,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span
-                                            class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
-                                            [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
-                                                class="leading-relaxed whitespace-nowrap" matTooltipClass="text-sm"
-                                                [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
+                                        <div class="flex justify-center items-center gap-1">
+
+                                            <span
+                                                class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
+                                                [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800': item.excepcion ? 'bg-yellowCustom'  : 'bg-red-200 text-red-800'"><span
+                                                    class="leading-relaxed whitespace-nowrap" matTooltipClass="text-sm"
+                                                    [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
+                                            <button *ngIf="item.excepcion" mat-icon-button
+                                                (click)="openDetalleExcepcion(item)" class="flex  items-center"
+                                                matTooltip="Ver detalle excepción">
+                                                <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
+                                            </button>
+                                        </div>
+
                                     </div>
                                 </ng-container>
                             </mat-tab>
@@ -225,7 +234,8 @@
                                     <span class="text-sm text-blue-600 font-bold leading-3">{{item.tipoCredito}}</span>
                                     <span class="text-xs text-gray-400">{{item.codigoNegocio}} -
                                         {{item.unidadNegocio}}</span>
-                                    <span class="text-gray-600 font-bold text-2xl leading-5 tracking-tight my-1">$ {{item.monto |
+                                    <span class="text-gray-600 font-bold text-2xl leading-5 tracking-tight my-1">$
+                                        {{item.monto |
                                         number}}</span>
                                     <span class="text-sm text-gray-400 leading-tight border-b-2">{{'Tasa: ' + item.tasa
                                         + '%

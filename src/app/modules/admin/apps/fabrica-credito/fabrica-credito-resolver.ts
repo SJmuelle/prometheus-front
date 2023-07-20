@@ -24,6 +24,7 @@ export class EdicionTrazabilidadResolver implements Resolve<any>
     resolve()
     {
         localStorage.setItem("trazabilidad","no")
+        localStorage.setItem("excepcionCredito", "no")
     }
 
 }

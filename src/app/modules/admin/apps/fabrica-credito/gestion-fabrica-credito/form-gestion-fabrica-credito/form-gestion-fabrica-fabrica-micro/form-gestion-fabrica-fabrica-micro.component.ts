@@ -35,6 +35,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public unidadNegocio: any;
     public dataGeneralIncial: any;
     public permisoEditar: boolean = false;
+    public permisoExcepcion: boolean = false;
     public dataInicial: any;
     public antiBucle: any;
     public ciudades: any;
@@ -51,6 +52,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
     public descripcionScore: any;
     public decisionFiltrosDuros: any;
     public agendaActual: string;
+    public creditoExcepcion: boolean = false;
     public currentScoreColor: 'red' | 'orange' | 'yellow' | 'light-green' | 'green';
 
     markers: any[] = [];
@@ -129,6 +131,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         if (this.permisoEditar) {
             this.form.disable();
         }
+        this.permisoExcepcion = this._permisosService.permisoExcepcionCredito()
         this.getSalarioMinimo();
 
     }
@@ -431,6 +434,11 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.dataGeneralIncial = data;
                 this.form.patchValue(data);
 
+
+                if (this.permisoEditar) {
+                    this.form.disable();
+                }
+
                 this.setConyugueNombreCompleto()
 
                 this.formatearDataInicial();
@@ -488,9 +496,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
                 this.form.patchValue({
                     descripcionTipo: data.descripcionTipo,
                     codigoBarrio: data.codigoBarrio,
-                    score: data.score
+                    score: data.score,
                 });
 
+                this.creditoExcepcion = data.creditoExcepcion;
                 this.agendaActual = data.agenda
                 this.descripcionScore = data.descripcionScore;
                 this.score = data.score;

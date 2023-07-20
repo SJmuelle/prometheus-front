@@ -10,7 +10,7 @@ export class PermisosService {
 
   permisoPorModuleTrazxabilidad(ruta: any){
     let valor=  ruta.includes('trazabilidad')|| this.permisoPorModuleTrazabilidad();
-    
+
     return valor
   }
 
@@ -34,6 +34,12 @@ export class PermisosService {
     let trazabilidad = localStorage.getItem("trazabilidad");
 
     return  trazabilidad=='si';
+  }
+
+  permisoExcepcionCredito(){
+    let excepcion = localStorage.getItem("excepcionCredito");
+
+    return  excepcion=='si';
   }
 
 }

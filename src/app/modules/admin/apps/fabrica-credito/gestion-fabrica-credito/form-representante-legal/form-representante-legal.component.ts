@@ -14,6 +14,7 @@ import {
 import * as moment from "moment";
 import { MatDialog } from "@angular/material/dialog";
 import { DirectionsComponent } from "../../../../../../shared/modal/directions/directions.component";
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-form-representante-legal',
@@ -32,6 +33,8 @@ export class FormRepresentanteLegalComponent implements OnInit {
     public generos$: Observable<any>;
     public subscription$: Subscription;
     public fabricaDatos: any;
+    public permisoEditar: boolean = false;
+
     constructor(
         private fb: FormBuilder,
         private fabricaCreditoService: FabricaCreditoService,
@@ -40,6 +43,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
         private genericaServices: GenericasService,
         private router: Router,
         private _dialog: MatDialog,
+        public _permisosService: PermisosService
     ) {
         const numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
         if (numeroSolicitud) {
@@ -50,7 +54,7 @@ export class FormRepresentanteLegalComponent implements OnInit {
                     this.fabricaDatos = data
                     this.form.patchValue(data);
                     if (data.codigoDepartamentoExpedicion) {
-                        this.getCiudades(data.codigoDepartamento);
+                        this.getCiudades(data.codigoDepartamentoExpedicion);
                     }
 
                 });
@@ -65,6 +69,11 @@ export class FormRepresentanteLegalComponent implements OnInit {
         this.getNivelEstudio();
         this.getViveNegocio();
         this.getGeneros();
+
+        this.permisoEditar = this._permisosService.permisoPorModuleTrazabilidad()
+        if (this.permisoEditar) {
+            this.form.disable();
+        }
     }
     /**
     * @description:
