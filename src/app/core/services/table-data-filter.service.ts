@@ -16,6 +16,6 @@ export class TableDataFilterService {
 
 
   public sendFilterData(dataFilter: string): void {
-    this.filterData.next(dataFilter);
+    this.filterData.next(dataFilter.toUpperCase().trim());
   }
 }

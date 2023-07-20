@@ -47,7 +47,7 @@
                         <div class="w-full sm:w-auto flex flex-row flex-wrap gap-2 ">
                             <div class=" w-full sm:w-64  rounded-full h-10 items-center flex flex-row border-2">
                                 <mat-icon svgIcon="heroicons_outline:identification" class="ml-2 mr-2"></mat-icon>
-                                <input matInput [(ngModel)]="valueSearch" type="text">
+                                <input (keyup.enter)="search()" matInput [(ngModel)]="valueSearch" type="text">
 
                             </div>
 

@@ -17,14 +17,20 @@ export class DataTablePipe implements PipeTransform {
 
   private pipeDataTable: PipeDataTable = {
     text: (value: any = '---') => value,
-    number: (value: any = 0.00) => `$ ${Intl.NumberFormat('es-ES',).format(value)}`,
+    number: (value: any = 0.00) => `$ ${Intl.NumberFormat('es-ES').format(Math.trunc(value))}`,
     percentage: (value: any) => `${value}%`,
     date: (value: any) => value ? this.convertDateAlert(value) : '---',
     titleCase: (value: any) => {
       if (value) {
-        const firstCaracter = (value as string).charAt(0).toUpperCase();
-        const word = (value as string).substring(1);
+        const firstCaracter = (value as string)?.charAt(0)?.toUpperCase();
+        const word = (value as string)?.substring(1)?.toLowerCase();
         return `${firstCaracter}${word}`;
+      }
+    },
+    upperCase: (value: any) => {
+      if (value) {
+        const valueString = (value as string)?.toUpperCase();
+        return `${valueString}`;
       }
     }
   };
