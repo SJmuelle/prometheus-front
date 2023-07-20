@@ -46,7 +46,7 @@
 
 
 
-                                    <button (click)="openDetalleExcepcion(item)" mat-menu-item
+                                    <button *ngIf="item.excepcion" (click)="openDetalleExcepcion(item)" mat-menu-item
                                         class="flex  items-center" matTooltip="Ver detalle excepción">
                                         <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle
                                         excepción
