@@ -1,4 +1,4 @@
-<div class="h-full h-screen overflow-auto w-full pb-40">
+<div class="h-screen overflow-auto w-full pb-40">
     <div class="flex flex-col flex-auto">
 
         <div class="flex relative flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
@@ -54,12 +54,18 @@
                     </div>
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item (click)="onGetAgendaDigital(null,'microcredito')">
-                            <img alt="linea de negocio microcredito" class="w-11 mr-3" src="assets/images/logo/logo-microcredito.png">
+                            <img alt="linea de negocio microcredito" class="w-11 mr-3"
+                                src="assets/images/logo/logo-microcredito.png">
                             <span>Microcrédito</span>
                         </button>
                         <button mat-menu-item (click)="onGetAgendaDigital(null,'libranza')">
-                            <img alt="linea de negocio libranza" class="w-11 mr-3" src="https://fintra.co/AssetsTic/LOGO_LIBRANZA.png">
+                            <img alt="linea de negocio libranza" class="w-11 mr-3"
+                                src="https://fintra.co/AssetsTic/LOGO_LIBRANZA.png">
                             <span>Libranza</span>
+                        </button>
+                        <button *ngIf="rolID === 1" mat-menu-item (click)="navigateToLibranzaPublica()">
+                            <img alt="linea de negocio" class="w-11 mr-3" src="assets/images/logo/LibranzaPublica.png">
+                            <span>Libranza pública</span>
                         </button>
                     </mat-menu>
                 </div>
@@ -82,8 +88,7 @@
                     <mat-icon svgIcon="heroicons_solid:chevron-down"></mat-icon>
                 </div>
 
-                <div class=" items-center justify-center pl-2" *ngIf="!mostrarTotales"
-                    (click)="cambiarEstado(true)">
+                <div class=" items-center justify-center pl-2" *ngIf="!mostrarTotales" (click)="cambiarEstado(true)">
                     <mat-icon svgIcon="heroicons_solid:chevron-right"></mat-icon>
                 </div>
 
@@ -143,9 +148,9 @@
                 <div class="flex items-center justify-between">
 
                     <div class="text-secondary font-medium"> <input
-                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
                             autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
-                            placeholder="Filtrar..."></div>
+                            (keydown)="changePageToOne()" placeholder="Filtrar..."></div>
 
                     <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
                         (change)="page=1">
@@ -228,6 +233,14 @@
                                             <span class="text-lg text-black font-medium">
                                                 ${{ item.monto | number:0}}
                                             </span>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="item.creditoExcepcion" class="px-2 pb-0 pt-1">
+                                        <div class="flex justify-center items-center">
+                                            <div
+                                                class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest">
+                                                Crédito con excepción
+                                            </div>
                                         </div>
                                     </td>
 
@@ -436,7 +449,8 @@
                                                     </div>
 
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto"
+                                                        style="display: inline !important">
                                                         <span class="mr-2 font-semibold truncate">Observación: </span>
                                                         {{item.observacionDevolucion}}
                                                     </div>
@@ -476,7 +490,8 @@
                                                         </span>
                                                     </div>
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto"
+                                                        style="display: inline !important">
                                                         <span class="mr-2 font-semibold truncate">Observación: </span>
                                                         {{item.observacionReintegroDevolucion}}
                                                     </div>

@@ -120,7 +120,7 @@
                 <div class="flex items-center justify-between">
 
                     <div class="text-secondary font-medium"> <input
-                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
                             autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
                             placeholder="Filtrar..."></div>
 
@@ -164,6 +164,13 @@
                                             <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
                                             <span class="text-md text-black font-medium line-clamp-1"> {{
                                                 item.nombreCompleto}}</span>
+                                        </div>
+                                    </td>
+                                    <td *ngIf="item.creditoExcepcion" class="px-2 pb-0 pt-1">
+                                        <div class="flex justify-center items-center">
+                                            <div class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest" >
+                                                Crédito con excepción
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="px-2 py-3">

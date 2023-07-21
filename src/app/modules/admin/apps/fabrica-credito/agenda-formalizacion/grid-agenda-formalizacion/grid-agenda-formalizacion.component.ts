@@ -100,6 +100,10 @@ export class GridAgendaFormalizacionComponent implements OnInit, OnDestroy {
         this.router.navigate(['/credit-factory/agenda-decision/resumen/', numeroSolicitud, identificacion]);
     }
 
+    public changePageToOne(){
+        this.page = 1;
+    }
+
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();
     }

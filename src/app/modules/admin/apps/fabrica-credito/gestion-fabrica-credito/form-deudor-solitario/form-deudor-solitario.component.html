@@ -1,5 +1,5 @@
 <form [formGroup]="formDeudorSolidario">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+    <div class="bg-white sm:shadow-none md:shadow-md  sm:px-0 md:px-8 rounded  pt-6 pb-8 mb-4 flex flex-col">
         <div class="-mx-3 md:flex mb-2 flex-wrap">
             <mat-form-field class="w-full px-2 md:w-1/2">
                 <mat-label>Tipo de solicitante:</mat-label>
@@ -679,7 +679,7 @@
                 </div>
             </div>
         </ng-container>
-        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
+        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end" *ngIf="!permisoEditar">
             <button mat-raised-button color="primary" type="button" (click)="validationPost()">
                 Guardar
             </button>

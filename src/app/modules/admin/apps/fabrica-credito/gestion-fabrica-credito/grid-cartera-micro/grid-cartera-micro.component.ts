@@ -20,7 +20,7 @@ import { PermisosService } from 'app/core/services/permisos.service';
 export class GridCarteraMicroComponent implements OnInit {
   public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
   public identificacion: string = this.route.snapshot.paramMap.get('id');
-  public permisoEditar:boolean=false;
+  public permisoEditar: boolean = false;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   public listadoCartera$: Observable<any>;
@@ -37,7 +37,7 @@ export class GridCarteraMicroComponent implements OnInit {
     valorSolicitado: number;
     verificacion: string;
   };
-  informacionCompra: { idMostrar: number;  };
+  informacionCompra: { idMostrar: number; };
 
   externaTitularCartera: any[] = [];
   externaCodeudorCartera: any[] = [];
@@ -71,66 +71,66 @@ export class GridCarteraMicroComponent implements OnInit {
     this.externaTitularCartera = [];
     this.externaCodeudorCartera = [];
     this.externaSolidarioCartera = [];
-  
+
     this.internoTitularCartera = [];
     this.internoCodeudorCartera = [];
     this.internoSolidarioCartera = [];
-    
+
     this._listadoCarteraService.getListadoCartera(numeroSolicitud).subscribe(data => {
       data.data.forEach(item => {
-        switch(item.carteraInterna){
+        switch (item.carteraInterna) {
           case 'N':
-            switch(item.tipoTercero){
+            switch (item.tipoTercero) {
               case 'T':
-                if(item.alDia === 'f'){
+                if (item.alDia === 'f') {
                   this.externaTitularCartera.push(item);
-                }else{
+                } else {
                   this.externaTitularCartera.unshift(item)
                 }
-              break;
+                break;
               case 'C':
-                if(item.alDia === 'f'){
+                if (item.alDia === 'f') {
                   this.externaCodeudorCartera.push(item)
-                }else{
+                } else {
                   this.externaCodeudorCartera.unshift(item)
                 }
-              break;
+                break;
               case 'S':
-                if(item.alDia === 'f'){
+                if (item.alDia === 'f') {
                   this.externaSolidarioCartera.push(item);
-                }else{
+                } else {
                   this.externaSolidarioCartera.unshift(item);
                 }
-              break;
+                break;
             }
             break;
           case 'S':
-            switch(item.tipoTercero){
+            switch (item.tipoTercero) {
               case 'T':
-                if(item.alDia === 'f'){
+                if (item.alDia === 'f') {
                   this.internoTitularCartera.push(item);
-                }else{
+                } else {
                   this.internoTitularCartera.unshift(item);
                 }
-              break;
+                break;
               case 'C':
-                if(item.alDia === 'f'){
+                if (item.alDia === 'f') {
                   this.internoCodeudorCartera.push(item)
-                }else{
+                } else {
                   this.internoCodeudorCartera.unshift(item)
                 }
-              break;
+                break;
               case 'S':
-                if(item.alDia === 'f'){
+                if (item.alDia === 'f') {
                   this.internoSolidarioCartera.push(item);
-                }else{
+                } else {
                   this.internoSolidarioCartera.unshift(item);
                 }
-              break;
+                break;
             }
         }
       })
-      
+
     })
 
     this.validadorTotalLibranza();
@@ -153,46 +153,46 @@ export class GridCarteraMicroComponent implements OnInit {
       .validadorTotalLibranza(data)
       .subscribe((res) => {
         Swal.close();
-        
+
         this.totales = res.data
 
       });
 
   }
 
-  public liquidacionSaldos(item){
-    
+  public liquidacionSaldos(item) {
+
     const data = {
       numeroSolicitud: item.numeroSolicitud,
       codigoNegocio: item.numeroCuenta,
       idObligacion: item.id,
       gestionCartera: item.gestionCartera,
     }
-    
-     this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
-      if(rep.data.resultado ===  'OK'){
+
+    this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      if (rep.data.resultado === 'OK') {
         Swal.fire('Guardado', 'Retanqueo realizado de forma exitosa', 'success')
-      }else{
+      } else {
         Swal.fire('Error en el retanqueo', rep.data.resultado, 'error')
       }
-     })
+    })
   }
 
-  public revertirRetanqueo(item){
+  public revertirRetanqueo(item) {
     const data = {
       numeroSolicitud: item.numeroSolicitud,
       codigoNegocio: item.numeroCuenta,
       idObligacion: item.id,
       gestionCartera: item.gestionCartera,
     }
-    
-     this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
-      if(rep.data.resultado ===  'OK'){
+
+    this._listadoCarteraService.agregarLiquidacionSaldos(data).pipe(takeUntil(this._unsubscribeAll)).subscribe(rep => {
+      if (rep.data.resultado === 'OK') {
         Swal.fire('Guardado', 'Retanqueo revertido de forma exitosa', 'success')
-      }else{
+      } else {
         Swal.fire('Error en al revertir retanqueo', rep.data.resultado, 'error')
       }
-     })
+    })
   }
 
   public cambioEstado(event, item) {
@@ -301,32 +301,40 @@ export class GridCarteraMicroComponent implements OnInit {
 
     this._listadoCarteraService.getListadoCarteraDetalleCompra(Number(this.numeroSolicitud), Number(item.idPadre)).subscribe((res) => {
 
-      this.informacionCompra=res.data;
+      this.informacionCompra = res.data;
       return res.data;
     });
   }
 
-
-  public transformTipoTercero(tipo: string){
-    switch(tipo){
+  /**
+  * retorna el titulo del tipo tercerdo dependiendo lo que mande el backend
+  */
+  public transformTipoTercero(tipo: string) {
+    switch (tipo) {
       case 'T':
-      return 'Titular'
+        return 'Titular'
       case 'C':
-      return 'Codeudor'
+        return 'Codeudor'
       case 'S':
-      return 'Dedudor solidario'
+        return 'Dedudor solidario'
       case 'R':
         return 'Representante'
     }
   }
 
-      /**
-     * On destroy
-     */
-      ngOnDestroy(): void
-      {
-          // Unsubscribe from all subscriptions
-          this._unsubscribeAll.next();
-          this._unsubscribeAll.complete();
-      }
+  /**
+ * On destroy
+ */
+  ngOnDestroy(): void {
+    // Unsubscribe from all subscriptions
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
+  /**
+  * Funcion que retorna True o false si el titular interno tiene retanqueo marcado
+  */
+  public tieneRetanqueoArray(titularInterno):boolean {
+    return !!this.internoTitularCartera.find(titular => titular.gestionCartera === 'RET')
+  }
 }

@@ -25,7 +25,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     valorNum: number; // almacenar el valor digitado en el input de valor
     listadoDeciones: any = [];// listado de decisiones
     listadoCausales: any = [];// listado de causales
-
+    bloquearDecision: boolean = false;
 
 
     constructor(
@@ -53,7 +53,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     consultaDecisiones() {
         this.fabricaDatos.agenda
         let agenda;
-        
+
         switch (this.fabricaDatos.agenda) {
             case 'DE':
                 agenda = 'DECISION';
@@ -111,7 +111,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
         })
     }
 
-    private consultarCausalesAnulacion(){
+    private consultarCausalesAnulacion() {
         this._decisionesService.getCausalesAnulacion(this.fabricaDatos.numeroSolicitud, this.form.value.decision).subscribe((response: any) => {
             if (response) {
                 this.listadoCausales = response.data;
@@ -120,7 +120,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
     }
 
     public getlistadoCausales() {
-        
+
         switch (this.form.value.decision) {
             case 'R':
                 this.consultaCausalesRechazo();
@@ -149,8 +149,8 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             return
         }
 
-        
-        if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D') || (this.form.value.decision == 'AN') ) {
+        this.bloquearDecision = true;
+        if ((this.form.value.decision == 'R') || (this.form.value.decision == 'D') || (this.form.value.decision == 'AN')) {
             this.postDecicion();
         } else {
             if (this.fabricaDatos.unidadNegocio == 22) {
@@ -164,10 +164,11 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
                             "unidadNegocio": this.fabricaDatos.unidadNegocio,
                             "tipoTercero": 'T'
                         }
-                        this._decisionesService.comprobacionCampos(datoComprobacion)
-                            .subscribe((res2) => {
-                                this.postDecicion()
-                            })
+                        this.postDecicion();
+                        // this._decisionesService.comprobacionCampos(datoComprobacion)
+                        //     .subscribe((res2) => {
+                        //         this.postDecicion()
+                        //     })
                     })
             } else {
                 this.postDecicion();
@@ -185,6 +186,7 @@ export class FormDecisionComponent implements OnInit, OnDestroy {
             causal: Number(this.form.value.causal),
             unidadNegocio: this.fabricaDatos.unidadNegocio,
         }
+
         this._decisionesService.postGuardado(datos).subscribe((response: any) => {
             Swal.close()
             if (response) {

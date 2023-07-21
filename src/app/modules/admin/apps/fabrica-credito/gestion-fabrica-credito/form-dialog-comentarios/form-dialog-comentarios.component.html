@@ -11,7 +11,7 @@
                 <div class="bg-white flex flex-col">
                     <div class="flex">
                         <mat-form-field class="w-full" appearance="fill"
-                            *ngIf="datoFabrica.agenda!='CM'&&datoFabrica.agenda!='GC'">
+                            *ngIf="datoFabrica.agenda!='CM'&&datoFabrica.agenda!='GC' && datoFabrica.agenda!= 'VD'">
                             <mat-label>Tipo de comentario </mat-label>
                             <!-- lo mando el jefe lucho Tipo de visibilidad a tipo de comentario -->
                             <mat-select formControlName="tipoComentario">

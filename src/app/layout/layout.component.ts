@@ -11,13 +11,12 @@ import { Layout } from 'app/layout/layout.types';
 import { AppConfig, Scheme, Theme } from 'app/core/config/app.config';
 
 @Component({
-    selector     : 'layout',
-    templateUrl  : './layout.component.html',
-    styleUrls    : ['./layout.component.scss'],
+    selector: 'layout',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-export class LayoutComponent implements OnInit, OnDestroy
-{
+export class LayoutComponent implements OnInit, OnDestroy {
     config: AppConfig;
     layout: Layout;
     scheme: 'dark' | 'light';
@@ -36,8 +35,7 @@ export class LayoutComponent implements OnInit, OnDestroy
         private _fuseConfigService: FuseConfigService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseTailwindConfigService: FuseTailwindService
-    )
-    {
+    ) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -47,8 +45,7 @@ export class LayoutComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Get the themes
         this._fuseTailwindConfigService.tailwindConfig$.subscribe((config) => {
             this.themes = Object.entries(config.themes);
@@ -64,12 +61,11 @@ export class LayoutComponent implements OnInit, OnDestroy
 
                 const options = {
                     scheme: config.scheme,
-                    theme : config.theme
+                    theme: config.theme
                 };
 
                 // If the scheme is set to 'auto'...
-                if ( config.scheme === 'auto' )
-                {
+                if (config.scheme === 'auto') {
                     // Decide the scheme using the media query
                     options.scheme = mql.breakpoints['(prefers-color-scheme: dark)'] ? 'dark' : 'light';
                 }
@@ -116,8 +112,7 @@ export class LayoutComponent implements OnInit, OnDestroy
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -132,18 +127,17 @@ export class LayoutComponent implements OnInit, OnDestroy
      *
      * @param layout
      */
-    setLayout(layout: string): void
-    {
+    setLayout(layout: string): void {
         // Clear the 'layout' query param to allow layout changes
         this._router.navigate([], {
-            queryParams        : {
+            queryParams: {
                 layout: null
             },
             queryParamsHandling: 'merge'
         }).then(() => {
 
             // Set the config
-            this._fuseConfigService.config = {layout};
+            this._fuseConfigService.config = { layout };
         });
     }
 
@@ -152,9 +146,8 @@ export class LayoutComponent implements OnInit, OnDestroy
      *
      * @param scheme
      */
-    setScheme(scheme: Scheme): void
-    {
-        this._fuseConfigService.config = {scheme};
+    setScheme(scheme: Scheme): void {
+        this._fuseConfigService.config = { scheme };
     }
 
     /**
@@ -162,9 +155,8 @@ export class LayoutComponent implements OnInit, OnDestroy
      *
      * @param theme
      */
-    setTheme(theme: Theme): void
-    {
-        this._fuseConfigService.config = {theme};
+    setTheme(theme: Theme): void {
+        this._fuseConfigService.config = { theme };
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -174,12 +166,10 @@ export class LayoutComponent implements OnInit, OnDestroy
     /**
      * Update the selected layout
      */
-    private _updateLayout(): void
-    {
+    private _updateLayout(): void {
         // Get the current activated route
         let route = this._activatedRoute;
-        while ( route.firstChild )
-        {
+        while (route.firstChild) {
             route = route.firstChild;
         }
 
@@ -189,11 +179,9 @@ export class LayoutComponent implements OnInit, OnDestroy
         // 2. Get the query parameter from the current route and
         // set the layout and save the layout to the config
         const layoutFromQueryParam = (route.snapshot.queryParamMap.get('layout') as Layout);
-        if ( layoutFromQueryParam )
-        {
+        if (layoutFromQueryParam) {
             this.layout = layoutFromQueryParam;
-            if ( this.config )
-            {
+            if (this.config) {
                 this.config.layout = layoutFromQueryParam;
             }
         }
@@ -218,8 +206,7 @@ export class LayoutComponent implements OnInit, OnDestroy
         paths.forEach((path) => {
 
             // Check if there is a 'layout' mock-api
-            if ( path.routeConfig && path.routeConfig.data && path.routeConfig.data.layout )
-            {
+            if (path.routeConfig && path.routeConfig.data && path.routeConfig.data.layout) {
                 // Set the layout
                 this.layout = path.routeConfig.data.layout;
             }
@@ -231,8 +218,7 @@ export class LayoutComponent implements OnInit, OnDestroy
      *
      * @private
      */
-    private _updateScheme(): void
-    {
+    private _updateScheme(): void {
         // Remove class names for all schemes
         this._document.body.classList.remove('light', 'dark');
 
@@ -245,12 +231,10 @@ export class LayoutComponent implements OnInit, OnDestroy
      *
      * @private
      */
-    private _updateTheme(): void
-    {
+    private _updateTheme(): void {
         // Find the class name for the previously selected theme and remove it
         this._document.body.classList.forEach((className: string) => {
-            if ( className.startsWith('theme-') )
-            {
+            if (className.startsWith('theme-')) {
                 this._document.body.classList.remove(className, className.split('-')[1]);
             }
         });

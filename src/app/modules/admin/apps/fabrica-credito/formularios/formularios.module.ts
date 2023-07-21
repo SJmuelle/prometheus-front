@@ -34,12 +34,16 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
 import { GestionFabricaCreditoModule } from '../gestion-fabrica-credito/gestion-fabrica-credito.module';
 import { LibranzaComponent } from './libranza/libranza.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { SharedModule } from 'app/shared/shared.module';
+import { LibranzaPublicaComponent } from './libranza-publica/libranza-publica.component';
 
 
 @NgModule({
   declarations: [
     MicrocreditoComponent,
-    LibranzaComponent
+    LibranzaComponent,
+    LibranzaPublicaComponent,  
   ],
   imports: [
     CommonModule,
@@ -75,7 +79,9 @@ import { LibranzaComponent } from './libranza/libranza.component';
         MatSliderModule,
         NgxMaskModule.forRoot(),
         MatProgressBarModule,
-        GestionFabricaCreditoModule
+        GestionFabricaCreditoModule,
+        MatStepperModule,
+        SharedModule
   ]
 })
 export class FormulariosModule { }

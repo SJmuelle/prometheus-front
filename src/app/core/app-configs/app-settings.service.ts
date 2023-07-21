@@ -58,6 +58,12 @@ export class AppSettingsService {
             baseUpdateConvenios: EndPoints.uri('/generic/update-convenio-finl')
         }
     };
+    public excepcionCredito = {
+        url: {
+            buscarPorSellect: EndPoints.uri('/credito/tk/property/asignacion-solicitudes-creditos')
+        }
+    }
+
     /**
      * @description: End-point asignacion de creditos
      */
@@ -147,9 +153,21 @@ export class AppSettingsService {
             trazabilidadBusquedaFiltro: EndPoints.uri('/credito/tk/property/trazabilidad-solicitudes-creditos'),
             validacionMonto: EndPoints.uri('/generic/cre-lib-monto'),
             validacionPlazo: EndPoints.uri('/generic/cre-lib-plazo'),
-            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp')
+            autorizarConsultaOTP: EndPoints.uri('/generic/autoriza-consultas-otp'),
+            getRolID: EndPoints.uri('/generic/qry/tk/obtener-rol-id-usuario')
         }
     };
+
+    public libranzaPublica = {
+        url: {
+            guardeBasico: EndPoints.uri('/generic/lp-guardar-datos-basico'),
+            cargueInicialFormularioCorto: EndPoints.uri('/credito/tk/property/libranza-cargue-inicial'),
+            reCalcularDatosOTP: EndPoints.uri('/generic/guardado-datos-basicos-otp'),
+            consultaIdentificacionSolicitud: EndPoints.uri('/generic/qry/consulta-identificacion-solicitud'),
+            guardarFormularioCorto: EndPoints.uri('/credito/libranzap/guardar-solicitud-libranza-publica'),
+            guardarTitular: EndPoints.uri('/generic/lp-tab-titular')
+        }
+    }
     /**
      * http://demo.fintra.co:8011//api-fintra/api/credito/tk/property/cards-informacion-decision
      * @description: End-point departamentos
@@ -266,7 +284,9 @@ export class AppSettingsService {
         url: {
             base: EndPoints.uri('/credito/historico-centrales-api-fintra'),
             historialCredit: EndPoints.uri('/credito/generic/info-historial-credit'),
-            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra')
+            consultaHistorialExcepcion: EndPoints.uri('/credito/microcredito/consultar-historial-credito-excepcion'),
+            renovarConsultaCredit: EndPoints.uri('fintracredit/webresources/hdc/credit_history_fintra'),
+            filtrosDurosMicro: EndPoints.uri('/generic/filtro-duros-microcredito')
         }
     };
     /**
@@ -300,6 +320,7 @@ export class AppSettingsService {
             baseDecision: EndPoints.uri('/credito/cre-decision'),
             baseDecisionNoVisado: EndPoints.uri('/generic/cre-lib-no-visar'),
             dataCreditoRechazo: EndPoints.uri('/generic/cre-lib-actu-rechazo'),
+            smsUnidades: EndPoints.uri('/credito/info-sms-unidades'),
             baseAprobado: EndPoints.uri('/generic/cre-decision-micro'),
             cambioEstado: EndPoints.uri('/generic/cre-cambio-estado-agenda'),
             baseCausalRechazo: EndPoints.uri('/generic/cau-rechazo'),
@@ -317,7 +338,9 @@ export class AppSettingsService {
      */
     public politicas = {
         url: {
-            base: EndPoints.uri('/generic/qry/cre-politicas-adm')
+            base: EndPoints.uri('/generic/qry/cre-politicas-adm'),
+            guardarExcepcion: EndPoints.uri('/generic/guardado-excepcion-creditos'),
+            correrMotorExcepciones: EndPoints.uri('/credito/microcredito/recalculo-excepcion-politicas-creditos')
         }
     };
     /**
@@ -400,6 +423,27 @@ export class AppSettingsService {
     public agendaPagadura = {
         url: {
             base: EndPoints.uri('/generic/solicitudes-pagaduria')
+        }
+    }
+    /*
+     * @description: End-point agenda firma digital
+     */
+    public agendaFirmaDigital = {
+        url: {
+            // https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/agenda-firma
+            // ESTA ES LA API : http://localhost:8084/api-fintra/api/generic/update-estado-evidente
+            // http://localhost:8084/api-fintra/api/generic/update-reenviar-firma
+            base: EndPoints.uri('/generic/qry/agenda-firma'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FI'),
+            correoDecision: EndPoints.uri('/credito/sendmail/correo-decision'),
+            updateEstadoEvidente: EndPoints.uri('/generic/update-estado-evidente'),
+            updateReenviarFirma: EndPoints.uri('/generic/update-reenviar-firma'),
+            obtenerDatosBasicosFirma: EndPoints.uri('/generic/qry/obtener-datosbasicos-firma'),
+            obtenerIntentosEvidente: EndPoints.uri('/generic/obtener-intentos_evidente'),
+            guardarDatosBasicosFirma: EndPoints.uri('/generic/guardar-datos-basicos-firma'),
+            verDocumentosFirmaDigital: EndPoints.uri('/generic/qry/documentos-requeridos-firma'),
+
+
         }
     };
 
@@ -501,4 +545,41 @@ export class AppSettingsService {
 
         }
     }
+
+    /**
+ * @description: End-Point
+ */
+    public rdStation = {
+        url: {
+            info_rd: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo'),
+            listaLote: EndPoints.uri('/generic/qry/obtener-select-lote'),
+            dataLotes: EndPoints.uri('/generic/qry/informacion-reporterd-mercadeo-lotes')
+        }
+    };
+    /**
+     * @description: End-Point
+     */
+    public negociacionCartera = {
+        url: {
+            base: EndPoints.uri('/generic/qry/negocios-cartera'),
+            guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
+            listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
+            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera'),
+            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera')
+
+        }
+    };
+
+    /**
+     * @description: End-Point
+     */
+    public seguimientoCarteraClientes = {
+        url: {
+            listarUnidad: EndPoints.uri('/generic/qry/cartera-listar-unidad-negocio'),
+            periodoFotos: EndPoints.uri('/generic/qry/cartera-listar-periodo-foto'),
+            buscarCliente: EndPoints.uri('/generic/cartera-buscar-cliente')
+
+        }
+    };
 }
+
