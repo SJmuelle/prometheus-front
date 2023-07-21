@@ -75,6 +75,7 @@
                                         <th class="px-4 py-3 text-center w-0">Identificación</th>
                                         <th class="px-4 py-3 text-center">Nombre completo</th>
                                         <th class="px-4 py-3 text-center">Línea de negocio</th>
+                                        <th class="px-4 py-3 text-center">Código de negocio</th>
                                         <th class="px-4 py-3 text-center w-0">Tipo</th>
                                         <th class="px-4 py-3 text-center">Causal</th>
                                         <th class="px-4 py-3 text-center">Responsable</th>
@@ -86,6 +87,7 @@
                                         <th class="px-4 py-3 text-center w-0">N° rechazos</th>
                                         <th class="px-4 py-3 text-center w-0">Último rechazo</th>
                                         <th class="px-4 py-3 text-center w-0">Usuario Creación</th>
+                                        <th class="px-4 py-3 text-center w-0">Fecha Creación</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -96,8 +98,12 @@
                                         </td>
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.identificacion }}</td>
-                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{ item.apellidosCliente }}</td>
-                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}</td>
+                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{
+                                            item.apellidosCliente }}</td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}
+                                        </td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.codigonegocio }}
+                                        </td>
                                         <td class="px-2 text-sm border text-center">{{ item.tipoPqrs }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.causalPqrs }}</td>
                                         <td class="px-1 text-sm border text-center">{{ item.responsable }}</td>
@@ -109,6 +115,7 @@
                                         <td class="px-2 text-sm border text-center">{{ item.numeroRechazados }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.fechaRechazo }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.usuario_creacion }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.fecha_creacion }}</td>
                                     </tr>
                                 </tbody>
                             </table>
