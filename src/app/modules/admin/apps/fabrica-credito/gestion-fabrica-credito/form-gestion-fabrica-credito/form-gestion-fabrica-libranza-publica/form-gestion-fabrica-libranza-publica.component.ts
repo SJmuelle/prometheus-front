@@ -237,7 +237,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.fabricaCreditoService.getInformacionTipoTercero(numeroSolicitud, 'T').pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 this.dataGeneralIncial = data;
-                console.log('datos form', data);
+
 
                 this.form.patchValue(data);
                 this.getTotalIngresos();
@@ -286,7 +286,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.fabricaCreditoService.getDatosFabricaAgenda(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
                     .subscribe(({ data }) => {
                         Swal.close();
-                        console.log('datos fabrica', data);
 
                         this.form.patchValue({
                             descripcionTipo: data.descripcionTipo,
@@ -385,7 +384,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         }
         this.departamentosCiudadesService.getCiudades(cod).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
             this.ciudadesNacimiento = rep;
-            console.log('ress', rep);
         })
         if(clean){
             this.form.get('codigoCiudadNacimiento').setValue('')
@@ -467,7 +465,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         // boolean
         datos.estrato = Number(datos.estrato);
         datos.totalIngresosLaborales = Number(datos.totalIngresosLaborales);
-        console.log('datos a enviar ', datos);
 
         Swal.fire({
             title: 'Guardar información',
@@ -522,8 +519,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.form.controls.fechaNacimiento.value === '0099-01-01' && this.form.controls.fechaNacimiento.setValue('');
         this.form.controls.fechaExpedicion.value === '0099-01-01' && this.form.controls.fechaExpedicion.setValue('');
         this.form.controls.fechaVinculacion.value === '0099-01-01' && this.form.controls.fechaVinculacion.setValue('');
-
-        console.log(this.form.controls.fechaVinculacion.value === '0099-01-01' + this.form.controls.fechaVinculacion.value);
 
     }
 
@@ -781,7 +776,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
         this.form.get('estadoCivil').valueChanges.subscribe((e: string) => {
             this.marginTopInputDynamic()
             if (e === 'CA' || e === 'UL') {
-                console.log('enabled');
+
                 this.form.get('primerNombreConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
                 this.form.get('primerNombreConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('primerApellidoConyuge')?.setValidators([Validators.required, Validators.pattern(/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)])
@@ -802,7 +797,7 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('tipoEmpleoConyuge')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
-                console.log('disabled');
+
 
                 this.form.get('primerNombreConyuge')?.setValidators(null)
                 this.form.get('primerNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
