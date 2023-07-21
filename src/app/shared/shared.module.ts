@@ -31,84 +31,91 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TableComponent } from './componentes/table/table.component';
 import { SmPaginatorPipe } from './pipes/sm-paginator.pipe'
 import { DataTablePipe } from './pipes/data-table.pipe';
-import { HeaderComponent } from './componentes/header/header.component';
+import { HeaderComponent } from './componentes/header/header.component'
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-        MatDividerModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatMomentDateModule,
-        MatButtonModule,
-        MatTabsModule,
-        MatTableModule,
-        MatProgressSpinnerModule,
-        MatPaginatorModule,
-        MatIconModule,
-        MatDialogModule,
-        MatRadioModule,
-        MatFormFieldModule,
-        MatCardModule,
-        FuseDrawerModule,
-        FuseCardModule,
-        MatTooltipModule,
-        MatSortModule,
-        MatSliderModule,
-        MatSidenavModule,
-        MatExpansionModule,
-        MatMenuModule,
-        MatProgressBarModule,
-        NgxMaskModule.forRoot(),
-        // FabricaCreditoModule
+        imports: [
+                CommonModule,
+                FormsModule,
+                ReactiveFormsModule,
+                MatSelectModule,
+                MatDividerModule,
+                MatInputModule,
+                MatDatepickerModule,
+                MatMomentDateModule,
+                MatButtonModule,
+                MatTabsModule,
+                MatTableModule,
+                MatProgressSpinnerModule,
+                MatPaginatorModule,
+                MatIconModule,
+                MatDialogModule,
+                MatRadioModule,
+                MatFormFieldModule,
+                MatCardModule,
+                FuseDrawerModule,
+                FuseCardModule,
+                MatTooltipModule,
+                MatSortModule,
+                MatSliderModule,
+                MatSidenavModule,
+                MatExpansionModule,
+                MatMenuModule,
+                MatProgressBarModule,
+                // FabricaCreditoModule,
+                MatCheckboxModule,
+                NgxMaskModule.forRoot(),
+                // FabricaCreditoModule
 
-    ],
-    exports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatSelectModule,
-        MatDividerModule,
-        MatInputModule,
-        MatDatepickerModule,
-        MatMomentDateModule,
-        MatButtonModule,
-        MatTabsModule,
-        MatTableModule,
-        MatProgressSpinnerModule,
-        MatPaginatorModule,
-        MatIconModule,
-        MatDialogModule,
-        MatRadioModule,
-        MatFormFieldModule,
-        MatCardModule,
-        MatSortModule,
-        MatSliderModule,
-        MatSidenavModule,
-        MatExpansionModule,
-        MatMenuModule,
-        SmPaginatorPipe,
-        DataTablePipe,
-        TableComponent,
-        HeaderComponent,
-        OTPComponent
-    ],
-    declarations: [
-        DirectionsBasicComponent,
-        SmPaginatorPipe,
-        DataTablePipe,
-        TableComponent,
-        HeaderComponent,
-        OTPComponent
-    ],
+        ],
+        exports: [
+                CommonModule,
+                FormsModule,
+                ReactiveFormsModule,
+                MatSelectModule,
+                MatDividerModule,
+                MatInputModule,
+                MatDatepickerModule,
+                MatMomentDateModule,
+                MatButtonModule,
+                MatTabsModule,
+                MatTableModule,
+                MatProgressSpinnerModule,
+                MatPaginatorModule,
+                MatIconModule,
+                MatDialogModule,
+                MatRadioModule,
+                MatFormFieldModule,
+                MatCardModule,
+                MatSortModule,
+                MatSliderModule,
+                MatSidenavModule,
+                MatExpansionModule,
+                MatMenuModule,
+                SmPaginatorPipe,
+                DataTablePipe,
+                TableComponent,
+                HeaderComponent,
+                MatProgressBarModule,
+                MatCheckboxModule,
+                OTPComponent
+        ],
+        declarations: [
+                DirectionsBasicComponent,
+                SmPaginatorPipe,
+                DataTablePipe,
+                TableComponent,
+                HeaderComponent,
+                NoDataComponent,
+                OTPComponent
+        ],
 })
 export class SharedModule { }

@@ -407,6 +407,28 @@ export class AppSettingsService {
     };
 
     /**
+     * @description: End-point agenda firma digital
+     */
+    public agendaFirmaDigital = {
+        url: {
+            // https://prometheus.fintra.co:8443/api-fintra/api/generic/qry/agenda-firma
+            // ESTA ES LA API : http://localhost:8084/api-fintra/api/generic/update-estado-evidente
+            // http://localhost:8084/api-fintra/api/generic/update-reenviar-firma
+            base: EndPoints.uri('/generic/qry/agenda-firma'),
+            totales: EndPoints.uri('/generic/qry/obtener-informacion-cards-agendas/FI'),
+            correoDecision: EndPoints.uri('/credito/sendmail/correo-decision'),
+            updateEstadoEvidente: EndPoints.uri('/generic/update-estado-evidente'),
+            updateReenviarFirma: EndPoints.uri('/generic/update-reenviar-firma'),
+            obtenerDatosBasicosFirma: EndPoints.uri('/generic/qry/obtener-datosbasicos-firma'),
+            obtenerIntentosEvidente: EndPoints.uri('/generic/obtener-intentos_evidente'),
+            guardarDatosBasicosFirma: EndPoints.uri('/generic/guardar-datos-basicos-firma'),
+            verDocumentosFirmaDigital: EndPoints.uri('/generic/qry/documentos-requeridos-firma'),
+
+
+        }
+    };
+
+    /**
     * @description: End-point agenda decision
     */
     public agendaDecision = {
@@ -488,6 +510,7 @@ export class AppSettingsService {
         }
     };
 
+
     /**
  * @description: End-Point
  */
@@ -506,7 +529,20 @@ export class AppSettingsService {
             base: EndPoints.uri('/generic/qry/negocios-cartera'),
             guardado: EndPoints.uri('/generic/insertar-negociacion-cartera'),
             listadoNegociaciones: EndPoints.uri('/generic/qry/consulta-lista-negociaciones'),
-            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera')
+            negociacionRealizada: EndPoints.uri('/generic/qry/negociaciones-cartera'),
+            reversarNegociacion: EndPoints.uri('/generic/anular-negociacion-cartera')
+
+        }
+    };
+
+    /**
+     * @description: End-Point
+     */
+    public seguimientoCarteraClientes = {
+        url: {
+            listarUnidad: EndPoints.uri('/generic/qry/cartera-listar-unidad-negocio'),
+            periodoFotos: EndPoints.uri('/generic/qry/cartera-listar-periodo-foto'),
+            buscarCliente: EndPoints.uri('/generic/cartera-buscar-cliente')
 
         }
     };

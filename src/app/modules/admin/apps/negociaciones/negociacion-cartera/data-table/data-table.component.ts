@@ -3,6 +3,7 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NegociacionCarteraService } from 'app/core/services/negociacion-cartera.service';
+import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -25,6 +26,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
   public dataCopy: any[] = [];
   public dataFilter: string = '';
   public dataOptionTable: any[] = [
+
     {
       name: 'identificacion',
       text: 'Identificación',
@@ -33,7 +35,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'cod_neg',
-      text: 'Cod negocio',
+      text: 'Negocio',
       typeField: 'text',
     },
     {
@@ -43,7 +45,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'capital',
-      text: 'Capital',
+      text: 'Capital total',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -54,8 +56,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       pipeName: 'number'
     },
     {
-      name: 'mora_actual',
-      text: 'Mora actual',
+      name: 'mora_actual_dias',
+      text: 'Dias de mora',
       typeField: 'text',
     },
     {
@@ -66,7 +68,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
     },
     {
       name: 'debido_cobrar',
-      text: 'Valor debido',
+      text: 'Debido total',
       typeField: 'text',
       pipeName: 'number'
     },
@@ -97,9 +99,11 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   private susbcription$: Subscription = new Subscription();
 
-  constructor(private _tableFilter: TableDataFilterService, private paginatorIntl: MatPaginatorIntl, private _negociacionCarteraServices: NegociacionCarteraService
+  constructor(private _tableFilter: TableDataFilterService, private paginatorIntl: MatPaginatorIntl,
+    private _negociacionCarteraServices: NegociacionCarteraService,
+    private _sweetAlertService: Sweetalert2Service
   ) {
-    this.paginatorIntl.itemsPerPageLabel = 'Items por pagina : ';
+    this.paginatorIntl.itemsPerPageLabel = 'Items por página : ';
     // mat-paginator-range-label
 
   }
@@ -172,6 +176,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
 
 
+
   }
 
   public pageEvent(event: any): void {
@@ -182,13 +187,20 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
 
   public createNegociacion(): void {
-    this.tableResume();
-    this.selectRow.emit(this.dataReport)
+
     this._negociacionCarteraServices.ObtenerListadoNegociaciones(this.dataReport.mora_actual_dias).subscribe({
       next: (resp) => {
-        this.selectListaOpciones.emit(resp.data || []);
+        if (!resp?.data) {
+          this._sweetAlertService.alertInfo({});
+        } else {
+          this.tableResume();
+          this.selectRow.emit(this.dataReport)
+          this.selectListaOpciones.emit(resp.data || []);
+        }
       },
-      error: (err) => { }
+      error: (err) => {
+        this._sweetAlertService.alertError();
+      }
     })
     // this.dataReport = null;
   }
@@ -213,7 +225,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       // },
       {
         name: 'capital',
-        text: 'Capital',
+        text: 'Capital total',
         typeField: 'text',
         pipeName: 'number'
       },
@@ -224,8 +236,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
         pipeName: 'number'
       },
       {
-        name: 'mora_actual',
-        text: 'Mora actual',
+        name: 'mora_actual_dias',
+        text: 'Dias de mora',
         typeField: 'text',
       },
       {
@@ -236,7 +248,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
       },
       {
         name: 'debido_cobrar',
-        text: 'Valor debido',
+        text: 'Debido total',
         typeField: 'text',
         pipeName: 'number'
       },
@@ -260,7 +272,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
     ];
 
-    this.dataColumn = ['action', ...this.dataOptionTable.map(({ name }) => name)];
+
   }
 
   public openNegociacion(): void {
@@ -284,7 +296,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
 
   private listenObservable(): void {
     this.susbcription$ = this._negociacionCarteraServices.reloadData$.subscribe(resp => {
-      if (resp.fullTable === true) {
+      if (resp.fullTable) {
         this.dataOptionTable = [
           {
             name: 'identificacion',
@@ -294,7 +306,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
           },
           {
             name: 'cod_neg',
-            text: 'Cod negocio',
+            text: 'Negocio',
             typeField: 'text',
           },
           {
@@ -304,7 +316,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
           },
           {
             name: 'capital',
-            text: 'Capital',
+            text: 'Capital total',
             typeField: 'text',
             pipeName: 'number'
           },
@@ -315,8 +327,8 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             pipeName: 'number'
           },
           {
-            name: 'mora_actual',
-            text: 'Mora actual',
+            name: 'mora_actual_dias',
+            text: 'Dias de mora',
             typeField: 'text',
           },
           {
@@ -327,7 +339,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
           },
           {
             name: 'debido_cobrar',
-            text: 'Valor debido',
+            text: 'Debido total',
             typeField: 'text',
             pipeName: 'number'
           },
@@ -342,6 +354,7 @@ export class DataTableComponent implements OnInit, OnChanges, OnDestroy {
             text: 'Estado',
             typeField: 'statusStyle',
             styleCondition: (data): string => {
+              // console.log('yeloww MC17223', data?.tiene_negociacion)
               const stateName = data?.tiene_negociacion
               if (stateName === 'Negociado') { return 'bg-green-400' } else {
                 return 'bg-red-400';

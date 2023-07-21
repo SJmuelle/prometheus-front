@@ -16,25 +16,32 @@
                         <div class="row items-center" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
                             <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
                                 Datos crédito
-                             </div>
+                            </div>
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
-                                <strong class="text-sm font-medium text-secondary font-bold">Afiliado: </strong> {{infoInfoPerLab.afiliado}}
+                                <strong class="text-sm  text-secondary font-bold">Afiliado: </strong>
+                                {{infoInfoPerLab.afiliado}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold">Asesor: </strong> {{infoInfoPerLab.asesorColocacion}}
+                                <strong class="text-sm  text-secondary font-bold">Asesor: </strong>
+                                {{infoInfoPerLab.asesorColocacion}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold">Cuota: </strong> {{infoInfoPerLab.cuotaMensual | currency:'$':'symbol':'0.0-0'}}
+                                <strong class="text-sm  text-secondary font-bold">Cuota: </strong>
+                                {{infoInfoPerLab.cuotaMensual | dataTable:'number'}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold">Plazo: </strong>{{infoInfoPerLab.plazo}}
+                                <strong class="text-sm  text-secondary font-bold">Plazo:
+                                </strong>{{infoInfoPerLab.plazo}}
                             </span>
                         </div>
                         <div class="row items-center mt-2" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
                             <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
                                 Datos Laboral
-                             </div>
+                            </div>
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
-                                <strong class="text-sm font-medium text-secondary font-bold">Ocupación:</strong> {{infoInfoPerLab.ocupacion}}
+                                <strong class="text-sm  text-secondary font-bold">Ocupación:</strong>
+                                {{infoInfoPerLab.ocupacion}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold lowercase"> <text class="capitalize">Actividad</text>  económica:</strong> {{infoInfoPerLab.actividadEconomica}}
+                                <strong class="text-sm  text-secondary font-bold lowercase"> <text
+                                        class="capitalize">Actividad</text> económica:</strong>
+                                {{infoInfoPerLab.actividadEconomica}}
                             </span>
                         </div>
                     </div>
@@ -56,24 +63,29 @@
                             </div> -->
                             <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
                                 Datos básicos
-                             </div>
-                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
-                                 <strong class="text-sm font-medium text-secondary font-bold">Nombres:</strong> {{infoConyugue.primerNombreCony}}  {{infoConyugue.segundoNombreCony}}
-                                 <br>
-                                 <strong class="text-sm font-medium text-secondary font-bold">Apellidos:</strong> {{infoConyugue.primerApellidoCony}} {{infoConyugue.segundoApellidoCony}}
-                                 <br>
-                                 <strong class="text-sm font-medium text-secondary font-bold">Identificación:</strong> {{infoConyugue.identificacionCony}}
-                             </span>
+                            </div>
+                            <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
+                                <strong class="text-sm text-secondary font-bold">Nombres:</strong>
+                                {{infoConyugue.primerNombreCony}} {{infoConyugue.segundoNombreCony}}
+                                <br>
+                                <strong class="text-sm  text-secondary font-bold">Apellidos:</strong>
+                                {{infoConyugue.primerApellidoCony}} {{infoConyugue.segundoApellidoCony}}
+                                <br>
+                                <strong class="text-sm  text-secondary font-bold">Identificación:</strong>
+                                {{infoConyugue.identificacionCony}}
+                            </span>
                         </div>
 
                         <div class="row items-center mt-2" style="border-left: 5px solid #b6ce1d; padding-left: 3px;">
                             <div class="font-titulo col-lg-12 m-0 col-sm-12 font-bold">
-                               Contacto
+                                Contacto
                             </div>
                             <span class="leading-none" style="line-height: 1.3em !important;font-size: 13px;">
-                                <strong class="text-sm font-medium text-secondary font-bold">Celular:</strong> {{infoConyugue.celularCony}}
+                                <strong class="text-sm  text-secondary font-bold">Celular:</strong>
+                                {{infoConyugue.celularCony}}
                                 <br>
-                                <strong class="text-sm font-medium text-secondary font-bold">Correo electrónico:</strong> {{infoConyugue.emailCony}}
+                                <strong class="text-sm  text-secondary font-bold">Correo electrónico:</strong>
+                                {{infoConyugue.emailCony}}
                             </span>
                         </div>
                     </div>
@@ -172,39 +184,39 @@
                             <div class="col-lg-12  border-card">
                                 <div class="row border-card">
                                     <div class="col-sm-12 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold">Nombre
+                                        <div class="text-sm  text-secondary font-bold">Nombre
                                         </div>
                                         <div class="capitalize tamaño_texto">{{data.primerNombre}}
                                             {{data.primerApellido}}</div>
                                     </div>
                                     <div class="col-sm-12 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold pl-0">Identificación
+                                        <div class="text-sm  text-secondary font-bold pl-0">Identificación
                                         </div>
                                         <div class="tamaño_texto">{{data.identificacion }}</div>
                                     </div>
                                     <div class="col-sm-12 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold">Número solicítud</div>
+                                        <div class="text-sm  text-secondary font-bold">Número solicítud</div>
                                         <div class="tamaño_texto">{{data.numeroSolicitud}}</div>
                                     </div>
 
                                     <div class="col-sm-6 col-lg-12">
-                                        <div class="text-sm font-medium text-secondary font-bold">Ubicación</div>
+                                        <div class="text-sm  text-secondary font-bold">Ubicación</div>
                                         <div class="capitalize tamaño_texto">{{data.direccion}} {{data.barrio}}
                                             {{data.ciudad}} {{data.departamento}} </div>
                                     </div>
                                     <div class="col-sm-6 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold ">Celular
+                                        <div class="text-sm  text-secondary font-bold ">Celular
                                         </div>
                                         <div class="tamaño_texto">{{data.celular}}</div>
                                     </div>
                                     <div class="col-sm-6 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold">Correo electrónico
+                                        <div class="text-sm  text-secondary font-bold">Correo electrónico
                                         </div>
                                         <div class="tamaño_texto">{{data.email}}</div>
                                     </div>
 
                                     <div class="col-sm-6 col-lg-4">
-                                        <div class="text-sm font-medium text-secondary font-bold">Profesión
+                                        <div class="text-sm  text-secondary font-bold">Profesión
                                         </div>
                                         <div class="capitalize tamaño_texto">{{data.profesion}}</div>
                                     </div>
@@ -227,9 +239,13 @@
 
     <mat-tab>
         <ng-template mat-tab-label>Referencias</ng-template>
-        <div class="w-full mb-8  shadow">
+        <div class="w-full mb-8  shadow rounded-2xl">
             <div class="w-full">
-                <table class="w-full">
+
+
+                <app-table [allDataRows]="infoRefePer || []" [dataOptionTable]="dataOptionTable"></app-table>
+
+                <!-- <table class="w-full">
                     <thead style="background-color: #F9FAFB;">
                         <tr
                             class="text-md font-semibold tracking-wide text-left text-gray-400  capitalize border-b border-gray-600">
@@ -250,9 +266,11 @@
                             <td class="px-2 text-sm border capitalize">{{ item.ciudad}}</td>
                             <td class="px-2 text-sm border capitalize">{{ item.direccion}}</td>
                             <td class="px-2 text-sm border">{{ item.celular}}</td>
-                            <td class="px-2 text-sm border text-center capitalize">{{ item.parentesco}}</td>
-                            <!-- <td class="px-2 text-sm border">{{ item.tipoReferencia}}</td> -->
-                            <td class="px-2  border text-xs text-center">
+                            <td class="px-2 text-sm border text-center capitalize">{{ item.parentesco}}</td> -->
+
+                <!-- <td class="px-2 text-sm border">{{ item.tipoReferencia}}</td> -->
+
+                <!-- <td class="px-2  border text-xs text-center">
                                 <div style="width: 77px;    margin-left: 1em;"
                                     [ngClass]="item.tipoReferencia=='PERSONAL'?'bg-pink-300':'bg-green-300'">
                                     <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm">
@@ -262,11 +280,11 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
         </div>
     </mat-tab>
 </mat-tab-group>
 <mat-dialog-actions align="end">
-    <button  mat-dialog-close class=" btn bg-accent text-white">Cerrar </button>
+    <button mat-dialog-close class=" btn bg-accent text-white">Cerrar </button>
 </mat-dialog-actions>

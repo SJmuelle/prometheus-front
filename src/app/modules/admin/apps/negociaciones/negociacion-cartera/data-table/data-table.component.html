@@ -12,7 +12,7 @@
             <div>
                 <div class="h-14 min-h-14 flex-col w-full flex z-999"
                     style="background: #E2E8F0; position: sticky; top: 0px; ">
-                    <span class="pl-6 pt-3 flex-col font-semibold text-lg">Negociaciones</span>
+                    <span class="pl-6 pt-3 flex-col font-semibold text-lg"></span>
                 </div>
 
                 <div class="text-center" *ngIf="!this.dataRow.length">
@@ -34,13 +34,12 @@
                             <span class=" font-semibold">{{item.text}} : </span>
 
                             <span *ngIf="item.typeField === 'text'"> {{value[item.name]
-                                |dataTable:item.pipeName
-                                ||"text"}}</span>
+                                |dataTable:item.pipeName || 'text'}}</span>
 
                             <span *ngIf="item.typeField === 'statusStyle'" class="flex items-center"> <span
-                                    class="w-4 h-4 rounded-full bg-gray-600 mr-2 ml-2 "></span>{{value[item.name]
-                                |dataTable:item.pipeName
-                                ||"text"}}</span>
+                                    class="w-4 h-4 rounded-full mr-2 ml-2 "
+                                    [ngClass]="item.styleCondition(value)"></span>{{value[item.name]
+                                |dataTable:item.pipeName || 'text'}}</span>
 
 
                         </span>
@@ -50,13 +49,13 @@
 
                     </div>
 
-                    <div class="w-full h-10 -mb-3 mt-1 flex justify-end">
+                    <div class="w-full h-10 -mb-3 mt-2 flex justify-start">
 
                         <button [matMenuTriggerFor]="menu1" (click)="dataReport = value" mat-stroked-button>
-                            <mat-icon>format_list_bulleted</mat-icon>Opciones</button>
+                            <mat-icon>format_list_bulleted</mat-icon></button>
 
 
-                        <mat-menu #menu1="matMenu" class="ml-24">
+                        <mat-menu #menu1="matMenu" class="ml-10">
                             <button mat-menu-item [disabled]="dataReport?.tiene_negociacion==='Negociado'"
                                 (click)="createNegociacion()">
                                 <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> Realizar
@@ -84,7 +83,7 @@
             <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 ">
 
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
+                    <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;"></th>
                     <td mat-cell *matCellDef="let row">
                         <button (click)="dataReport = row" [matMenuTriggerFor]="menu" class="" mat-icon-button>
                             <mat-icon>format_list_bulleted</mat-icon>
@@ -106,11 +105,12 @@
 
                 <ng-container [matColumnDef]="dataOption.name" *ngFor="let dataOption of this.dataOptionTable">
 
-                    <th class=" " style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <th class="" style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef mat-sort-header>
                         {{ dataOption.text }}
                     </th>
 
                     <ng-container [ngSwitch]="dataOption.typeField">
+
                         <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
                             <td class="cursor-pointer text-center -mr-2" mat-cell *matCellDef="let row"
                                 (click)="actionSelectRow(row)">
