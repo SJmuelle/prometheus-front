@@ -67,6 +67,7 @@
                                     <mat-label>Salario</mat-label>
                                     <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
                                         autocomplete="off" [formControlName]="'salario'">
+                                    <span matPrefix>$&nbsp;</span>
                                     <mat-error *ngIf="form.controls.salario.errors?.required">
                                         Este campo es requerido.
                                     </mat-error>
@@ -75,6 +76,7 @@
                                     <mat-label>Descuentos</mat-label>
                                     <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
                                         autocomplete="off" [formControlName]="'descuentos'">
+                                    <span matPrefix>$&nbsp;</span>
                                     <mat-error *ngIf="form.controls.descuentos.errors?.required">
                                         Este campo es requerido.
                                     </mat-error>
@@ -83,6 +85,7 @@
                                     <mat-label>Comisiones</mat-label>
                                     <input [mask]="'separator.0'" [thousandSeparator]="'.'" matInput type="text"
                                         autocomplete="off" [formControlName]="'comisiones'">
+                                    <span matPrefix>$&nbsp;</span>
                                     <mat-error *ngIf="form.controls.comisiones.errors?.required">
                                         Este campo es requerido.
                                     </mat-error>
@@ -90,7 +93,7 @@
                                 <mat-form-field>
                                     <mat-label>Fecha vinculación</mat-label>
                                     <input matInput [matDatepicker]="picker1" [formControlName]="'fechaVinculacion'">
-                                    <mat-hint>MM/DD/YYYY</mat-hint>
+
                                     <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
                                 </mat-form-field>
@@ -99,7 +102,7 @@
                                         <mat-label>Fecha finalización</mat-label>
                                         <input matInput [matDatepicker]="picker2"
                                             [formControlName]="'fechaFinalizacion'">
-                                        <mat-hint>MM/DD/YYYY</mat-hint>
+
                                         <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                                         <mat-datepicker #picker2></mat-datepicker>
                                     </mat-form-field>
