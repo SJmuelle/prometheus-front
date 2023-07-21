@@ -1,13 +1,13 @@
 <mat-tab-group class="fuse-mat-no-header" [animationDuration]="'200'">
     <ng-container *ngIf="dataNecesaria">
         <ng-container [ngSwitch]="currentStep">
-            <ng-container *ngFor="let item of dataNecesaria.session">
+            <ng-container *ngFor="let item of dataNecesaria.session; index as i">
                 <mat-tab *ngIf="currentStep==item.id">
                     <div
                         class="prose prose-sm min-w-11/12 max-w-11/12 mx-auto sm:my-2 lg:mt-4 p-6 sm:p-10 sm:py-12 rounded-2xl shadow overflow-hidden bg-card">
                         <!-- titulo -->
                         <h2 class="ml-2.5 text-md sm:text-xl  tracking-tight truncate font-bold">
-                            {{ item.titulo}}
+                            {{ steps[i]?.title }}
                         </h2>
                         <!-- fin titulo -->
 
@@ -70,7 +70,7 @@
                                                     <div class="toggle-button-cover"
                                                         (click)="pregunta.objHtml.switch.value='S';pregunta.objHtml.switch.valueBoleean=true;recorrerPregunta();">
                                                         <div class="button-cover">
-                                                            <div class="button r" id="button-1">
+                                                            <div class="button r" id="button-2">
                                                                 <input [matTooltip]="pregunta.descripcionTooltip" type="checkbox" class="checkbox" >
                                                                 <div class="knobs"></div>
                                                                 <div class="layer layer2"></div>
@@ -120,15 +120,17 @@
                                         <div *ngSwitchDefault>
                                             <!-- preguntas tipo text sin hijos   -->
                                                 <!-- {{pregunta.objHtml | json}} -->
-                                                <div class="grid grid-cols-2 gap-2 mt-4">
+                                                <div class="grid grid-cols-1 gap-2 mt-4">
                                                     <mat-form-field class="w-full fuse-mat-dense">
                                                         <mat-label> {{pregunta.pregunta}} </mat-label>
-                                                        <input [matTooltip]="pregunta.descripcionTooltip" matInput [type]="pregunta.tipoDato === 'numeric' ? 'number' : 'text'"
-                                                        autocomplete="off"
+                                                        <span *ngIf="pregunta.objHtml.input.mascaraInput === 'moneda'" matPrefix>$</span>
+                                                        <input matPrefix [mask]="pregunta.objHtml.input.mascaraInput === 'moneda' ? 'separator.0': '' " [thousandSeparator]="pregunta.objHtml.input.mascaraInput === 'moneda' ? '.': '' " [maxlength]="pregunta.objHtml.input.maxLength" [matTooltip]="pregunta.descripcionTooltip" matInput [type]="pregunta.tipoDato === 'numeric' && pregunta.objHtml.input.mascaraInput !== 'moneda' ? 'number' : 'text'"
+                                                        autocomplete="off" 
                                                             [(ngModel)]="pregunta.objHtml.input.value">
                                                         <mat-icon class="icon-size-5" matSuffix
                                                             [svgIcon]="'mat_outline:edit'">
                                                         </mat-icon>
+                                                        
                                                     </mat-form-field>
                                                 </div>
                                             <!-- fin preguntas tipo text sin hijos   -->
@@ -144,7 +146,7 @@
 
 
                         <!-- guardado -->
-                        <ng-container *ngIf="item.id==(dataNecesaria.session.length-1)">
+                        <ng-container *ngIf="getMaxStep(currentStep)">
                             <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
                                 <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
                                     Guardar
@@ -154,6 +156,9 @@
                         <!-- fin guardado -->
 
                     </div>
+                </mat-tab>
+                <mat-tab *ngIf="currentStep===4">
+                    <app-calculo-credito-micro [data]="steps[4]" [numeroSolicitud]="numeroSolicitud" [idNumber]="identificacion"></app-calculo-credito-micro>
                 </mat-tab>
             </ng-container>
         </ng-container>

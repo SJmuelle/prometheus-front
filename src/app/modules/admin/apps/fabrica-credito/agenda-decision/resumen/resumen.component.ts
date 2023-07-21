@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDecisionComponent } from '../form-decision/form-decision.component';
 import { KeyValue } from '@angular/common';
+import { GenericasService } from 'app/core/services/genericas.service';
+import { DetalleExcepcionCreditoComponent } from '../../gestion-fabrica-credito/detalle-excepcion-credito/detalle-excepcion-credito.component';
 
 @Component({
     selector: 'app-resumen',
@@ -18,8 +20,12 @@ export class ResumenComponent implements OnInit {
     public dataResumenTrazabilidad: any = [];
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
+    public politicas: boolean = true;
+    public unidadNegocio: any;
     dataPolicitasAdmin: any = {};
+    datosGeneral:any[]=[]
     datos2: any[];
+    apiData: any;
     verComentarios: boolean = false;
     resumenCuentasMora: any[] = [];
     formaterMoneda = Intl.NumberFormat('es-co', { style: 'currency', currency: 'COP' })
@@ -29,14 +35,24 @@ export class ResumenComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private _dialog: MatDialog,
+        private genericaService: GenericasService,
+        private _matDialog: MatDialog
     ) {
+        this.getUnidadDeNegocio()
         this.getResumen();
     }
 
     ngOnInit(): void {
         // this.openModalNegocio()
+        this.getResumenCliente()
+
     }
 
+    private getUnidadDeNegocio(){
+        this.genericaService.getUnidadNegocio(this.numeroSolicitud).subscribe(rep => {
+            this.unidadNegocio = rep.data[0].unidadNegocio;
+        })
+    }
     /**
    * @description: Obtiene los datos del resumen
    */
@@ -51,6 +67,7 @@ export class ResumenComponent implements OnInit {
 
         ).subscribe((res) => {
             if (res.status === 200) {
+                this.apiData = res.data;
                 this.getDatos(res.data);
                 Swal.close();
             } else {
@@ -63,11 +80,11 @@ export class ResumenComponent implements OnInit {
     private getDatos(data): void {
 
         //general
-        console.log("data", data);
 
         let DatosCredito = [], DatosCredito2 = [];
         switch (data.resumenGeneral.unidadNegocio) {
             case 1:
+
                 DatosCredito.push(
                     {
                         titulo: "Información del cliente:",
@@ -79,32 +96,32 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:user-circle",
                                 color: "bg-blue-100 text-blue-800",
-                                valor2: data.resumenGeneral.nombreCompleto,
-                                valor: data.resumenCredito.tipoDocumento + '-' + data.resumenCredito.identificacion,
-                                valor3: data.resumenCredito.email,
+                                valor2: this.capitalizeText(data.resumenGeneral.nombreCompleto),
+                                valor: "<span class='text-sm font-medium text-secondary'>" + data.resumenCredito.tipoDocumento + '</span>: ' + data.resumenCredito.identificacion,
+                                valor3: "<span class='text-sm font-medium text-secondary'>Email</span>: " + this.capitalize(data.resumenCredito.email),
                                 valor4: "<span class='text-sm font-medium text-secondary'> Edad: </span>" + data.resumenGeneral.edad + ' Años',
                             },
                             {
                                 icono: "heroicons_outline:home",
                                 color: "bg-orange-100 text-orange-800",
-                                valor2: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + data.resumenGeneral.descripcionDepartamento,
-                                valor: "<span class='text-sm font-medium text-secondary'> Municipio: </span>" + data.resumenGeneral.descripcionCiudad,
-                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo vivienda: </span>" + data.resumenGeneral.tipoVivienda,
+                                valor2: "<span class='text-sm font-medium text-secondary'> Departamento: </span>" + this.capitalize(data.resumenGeneral.descripcionDepartamento),
+                                valor: "<span class='text-sm font-medium text-secondary'> Municipio: </span>" + this.capitalize(data.resumenGeneral.descripcionCiudad),
+                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo vivienda: </span>" + this.capitalize(data.resumenGeneral.tipoVivienda),
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
                                 color: "bg-yellow-100 text-yellow-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Tipo de cliente: </span>" + data.resumenGeneral.tipoSolicitante,
-                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + data.resumenGeneral.tipoCreditoMicro,
+                                valor: "<span class='text-sm font-medium text-secondary'> Tipo de cliente: </span>" + this.capitalize(data.resumenGeneral.tipoSolicitante),
+                                valor3: "<span class='text-sm font-medium text-secondary'> Tipo de crédito: </span>" + this.capitalize(data.resumenGeneral.tipoCreditoMicro),
                                 valor2: "<span class='text-sm font-medium text-secondary'> Personas a cargo:</span> " + data.resumenGeneral.numeroPersonasACargo,
 
                             },
                             {
                                 icono: "mat_outline:location_on",
                                 color: "bg-purple-100 text-purple-800",
-                                valor: "<span class='text-sm font-medium text-secondary'> Tercero: </span>" + data.resumenGeneral.tipoDeudorMicro,
-                                valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + data.resumenGeneral.segmento,
-                                valor2: "<span class='text-sm font-medium text-secondary'> Agenda: </span>" + data.resumenGeneral.agencia
+                                valor: "<span class='text-sm font-medium text-secondary'> Tercero: </span>" + this.capitalize(data.resumenGeneral.tipoDeudorMicro),
+                                valor3: "<span class='text-sm font-medium text-secondary'> Segmento: </span>" + this.capitalize(data.resumenGeneral.segmento),
+                                valor2: "<span class='text-sm font-medium text-secondary'> Agenda: </span>" + this.capitalize(data.resumenGeneral.agencia)
                             },
                             {
                                 icono: "heroicons_outline:currency-dollar",
@@ -228,15 +245,15 @@ export class ResumenComponent implements OnInit {
                             {
                                 icono: "heroicons_outline:briefcase",
                                 color: "bg-blue-100 text-blue-800",
-                                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + data.resumenCredito.descripcionOcupacion,
-                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + data.resumenCredito.descripcionActividadEconomica,
-                                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + data.resumenCredito.actividadEspecifica
+                                valor2: "<span class='text-sm font-medium text-secondary'>Ocupación: </span> " + this.capitalize(data.resumenCredito.descripcionOcupacion),
+                                valor: "<span class='text-sm font-medium text-secondary'>Actividad económica: </span>" + this.capitalize(data.resumenCredito.descripcionActividadEconomica),
+                                valor3: "<span class='text-sm font-medium text-secondary'>Actividad especifica: </span>" + this.capitalize(data.resumenCredito.actividadEspecifica)
                             },
                             {
                                 icono: "heroicons_outline:library",
                                 color: "bg-green-100 text-green-800",
-                                valor: "<span class='text-sm font-medium text-secondary'>Tipo ubicación: </span>" + data.resumenCredito.tipoUbicacionNegocio,
-                                valor2: "<span class='text-sm font-medium text-secondary'>Tipo local: </span>" + data.resumenCredito.tipoLocalNegocio,
+                                valor: "<span class='text-sm font-medium text-secondary'>Tipo ubicación: </span>" + this.capitalize(data.resumenCredito.tipoUbicacionNegocio),
+                                valor2: "<span class='text-sm font-medium text-secondary'>Tipo local: </span>" + this.capitalize(data.resumenCredito.tipoLocalNegocio),
 
                             },
 
@@ -244,11 +261,11 @@ export class ResumenComponent implements OnInit {
                                 icono: "heroicons_outline:presentation-chart-line",
                                 color: "bg-pink-100 text-pink-800",
                                 valor: "<span class='text-sm font-medium text-secondary'>Destino crédito: </span>" + data.resumenGeneral.destinoCredito,
-                                valor2: "<span class='text-sm font-medium text-secondary'>Valor ventas: </span>" + data.resumenCredito.ventasMensuales,
+                                valor2: "<span class='text-sm font-medium text-secondary'>Valor ventas: </span>" + this.formaterMoneda.format(data.resumenCredito.ventasMensuales),
                                 valor3: "<span class='text-sm font-medium text-secondary'>Cuota máx a pagar:: </span>" + data.resumenCredito.valorCuotasCredito,
                             },
                             {
-                                icono: "heroicons_outline:library",
+                                icono: "heroicons_outline:office-building",
                                 color: "bg-green-100 text-green-800",
                                 valor3: "<span class='text-sm font-medium text-secondary'>N° empleados: </span>" + data.resumenCredito.numeroEmpleados,
                                 valor4: "<span class='text-sm font-medium text-secondary'>Antiguedad negocio: </span>" + data.resumenCredito.antiguedadNegocio + " Meses",
@@ -577,15 +594,29 @@ export class ResumenComponent implements OnInit {
                             icono: "heroicons_outline:academic-cap",
                             clase: "bg-blue-100",
                             color: "bg-blue-100 text-blue-800",
-                            label: "Mora máx actual",
-                            valor: data.resumenHdc.maximaMoraActual
+                            label: "Cuotas",
+                            valor: "$" + data.resumenHdc.cuota
                         },
                         {
                             icono: "heroicons_outline:academic-cap",
                             clase: "bg-blue-100",
                             color: "bg-blue-100 text-blue-800",
-                            label: "Mayor calificación",
-                            valor: data.resumenHdc.calificacion
+                            label: "Cupo inicial",
+                            valor: "$" + data.resumenHdc.cupoInicial
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Saldo obligaciones",
+                            valor: "$" + data.resumenHdc.saldoObligaciones
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Mora máx actual",
+                            valor: data.resumenHdc.maximaMoraActual
                         },
                         {
                             icono: "heroicons_outline:academic-cap",
@@ -614,6 +645,34 @@ export class ResumenComponent implements OnInit {
                             color: "bg-blue-100 text-blue-800",
                             label: "Saldo en mora",
                             valor: "$" + this.separatos(data.resumenHdc.maximaMoraActual)
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Contador gestiones",
+                            valor: data.resumenHdc.contadorGestiones
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Sumatoria embargos",
+                            valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Score",
+                            valor: this.apiData?.resumenGeneral.score
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Nivel de riesgo",
+                            valor: this.apiData?.resumenGeneral.nivelRiesgo.toLocaleLowerCase()
                         },
                     ]
                 },
@@ -816,10 +875,39 @@ export class ResumenComponent implements OnInit {
             }
             data[politica.tipo].push(politica)
         })
-        console.log("politicas", data);
 
         return data
     }
+
+    public hasFiltrosDuros(politicas: any[]): boolean{
+        return politicas.find(politica => politica.idPolitica === 21)
+    }
+
+     /**
+* @description: Obtiene los datos del resumen
+*/
+  private getResumenCliente(): void {
+
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    let data = {
+      "numeroSolicitud": this.numeroSolicitud,
+      "identificacion": this.identificacion
+    }
+
+    this._fabricaCreditoService.getHistoricoCliente(data).pipe(
+
+    ).subscribe((res) => {
+      Swal.close();
+      if (res.status === 200) {
+        this.datosGeneral=res.data;
+
+
+      } else {
+        this.datosGeneral = []
+      }
+
+    });
+  }
 
     /**
    * @description: Direcciona al componente comentarios
@@ -838,6 +926,17 @@ export class ResumenComponent implements OnInit {
 
     capitalize(text: string) {
         return text.charAt(0).toUpperCase() + text.slice(1).toLocaleLowerCase();
+    }
+
+    capitalizeText(text: string) {
+        text = text.toLowerCase()
+        let chars = text.split(' ')
+
+        chars = chars.map(char => {
+            return this.capitalize(char)
+        })
+
+        return chars.join(' ')
     }
 
     separatos(numb) {
@@ -872,4 +971,11 @@ export class ResumenComponent implements OnInit {
         return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
     }
 
+    openDetalleExcepcion(item: any) {
+        this._matDialog.open(DetalleExcepcionCreditoComponent, {
+            width: '50vw',
+            maxHeight: '650px',
+            data: item,
+        });
+    }
 }

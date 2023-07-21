@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UtilityService } from 'app/resources/services/utility.service';
 import Swal from 'sweetalert2';
 import { ListadoChequeoFormComponent } from './listado-chequeo-form/listado-chequeo-form.component';
+import { MatPaginator } from '@angular/material/paginator';
+import {MatSort,Sort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-listado-chequeo',
@@ -10,7 +13,8 @@ import { ListadoChequeoFormComponent } from './listado-chequeo-form/listado-cheq
   styleUrls: ['./listado-chequeo.component.scss']
 })
 export class ListadoChequeoComponent implements OnInit {
-
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   listado: any = [];
   page: number = 1;
@@ -19,6 +23,48 @@ export class ListadoChequeoComponent implements OnInit {
   mostrar_form: boolean = true;
   datos: any = {};
 
+  public dataOptionTable: any[] = [
+    {
+      name: 'editar',
+      text: 'Editar',
+      typeField: 'button',
+    },
+    {
+      name: 'id',
+      text: 'ID',
+      typeField: 'text',
+    },
+    {
+      name: 'agenda',
+      text: 'Agenda',
+      typeField: 'text',
+    },
+    {
+      name: 'tipoIdentificacion',
+      text: 'Tipo de persona',
+      typeField: 'text',
+    },
+    {
+      name: 'unidadNegocio',
+      text: 'Unidad negocio',
+      typeField: 'text',
+    },
+    {
+      name: 'nombre',
+      text: 'Descripción',
+      typeField: 'text',
+    },
+    {
+      name: 'estado',
+      text: 'Estado',
+      typeField: 'estado',
+    },
+  ];
+
+  public dataSource: MatTableDataSource<any>;
+  public dataColumn: string[] = [...this.dataOptionTable.map(({ name }) => name),];
+  public dataRow: any[] = []
+  public whitEspace: boolean = false
 
   constructor(
     public dialog: MatDialog,
@@ -35,6 +81,9 @@ export class ListadoChequeoComponent implements OnInit {
         Swal.close();
         if (response) {
           this.listado = response.data;
+          this.dataSource = new MatTableDataSource(this.listado)
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         } else {
           this.listado = [];
         }
@@ -61,13 +110,15 @@ export class ListadoChequeoComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
 
       this.consulta();
 
     });
 
+  }
+
+  filtrar(){
+    this.dataSource.filter = this.filtrarTabla.trim().toUpperCase()
   }
 
 }

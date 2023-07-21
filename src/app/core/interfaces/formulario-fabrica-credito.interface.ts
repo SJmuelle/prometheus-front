@@ -238,7 +238,7 @@ export interface FormularioCreditoMicro {
     direccionNegocioCompleto: String;
     telefonoNegocio: String;
     tipoLocal: String;
-    antiguedadLocal: String;
+    antiguedadLocal: number;
     nombreArrendador: String;
     celularArrendador: String;
     tipoUbicacionNegocio: String;
@@ -295,7 +295,9 @@ export interface FormularioCreditoMicro {
     valorSolicitado: Number;
     destinoCredito: String;
     declaraRenta: String;
-    actividadNoDesignada: String
+    actividadNoDesignada: String;
+    latitudNegocio: String;
+    longitudNegocio: String
 }
 
 export interface FormularioDatosTitularInterface {
@@ -419,4 +421,10 @@ export interface FormularioDeudorSolidarioInterface {
     direccionComplemento?: string;
     tipoVivienda?: string;
     parentesco?: string;
+}
+
+export interface geoCodingAddress {
+    direccion: String;
+    departamento: string;
+    ciudad: string;
 }

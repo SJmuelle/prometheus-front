@@ -201,7 +201,7 @@
         <div class="-mx-3 md:flex mt-3 mb-2">
             <mat-form-field class="w-1/2 px-3 fuse-mat-dense">
                 <mat-label>Fecha de expedición </mat-label>
-                <input matInput [matDatepicker]="fechaExpedicionDocumento" 
+                <input matInput [matDatepicker]="fechaExpedicionDocumento"
                     [formControlName]="'fechaExpedicionDocumento'" [readonly]="true">
                 <mat-datepicker-toggle matSuffix [for]="fechaExpedicionDocumento"></mat-datepicker-toggle>
                 <mat-datepicker #fechaExpedicionDocumento readonly></mat-datepicker>
@@ -258,8 +258,8 @@
                 </mat-form-field>
             </ng-container>
         </div>
-        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end">
-            <button mat-raised-button color="primary" type="button" (click)="onPostDatos()">
+        <div class="-mx-3 md:flex mt-3 mb-2 mr-1 justify-end" *ngIf="!permisoEditar">
+            <button mat-raised-button color="primary" type="button"  (click)="onPostDatos()">
                 Guardar
             </button>
         </div>

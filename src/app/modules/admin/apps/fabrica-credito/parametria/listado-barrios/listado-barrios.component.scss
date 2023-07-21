@@ -3,3 +3,33 @@
     color: #9aa8bc;
     padding: 7px;
 }
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.sombra{
+    box-shadow: 0px 1px 20px 1px rgba(106, 106, 106, 0.277)
+}
+
+.bg-table{
+    background-color:  #F9FAFB !important;
+}
+
+.cardComentarios{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px !important;
+}

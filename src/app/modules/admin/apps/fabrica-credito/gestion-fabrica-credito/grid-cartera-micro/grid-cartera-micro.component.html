@@ -1,13 +1,13 @@
 <div class="min-h-60" *ngIf="agenda_fabrica">
     <div class="grid grid-cols-6 sm:gap-2 gap-4">
-        <fuse-card class="flex border-1 items-center justify-center  p-6 filter-info col-span-6 sm:col-span-5">
-            <mat-icon class="icon-size-12 mr-6 text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
-            <div class="flex flex-col">
-                <div class="text-2xl  font-semibold leading-tight text-center"> Resumen de obligaciones HDC </div>
-                <div class="text-1xl font-semibold leading-tight text-center mt-1.5 capitalize">
+        <fuse-card class="flex flex-col border-1 items-center justify-center  p-6 filter-info col-span-6 sm:col-span-5 md:gap-2 sm:gap-0">
+            <mat-icon class="icon-size-12  text-center" svgIcon="heroicons_outline:user-circle"></mat-icon>
+            <div class="flex flex-col max-w-full gap-1">
+                <div class="text-2xl  font-semibold leading-tight text-center max-w-full"> Resumen de obligaciones HDC </div>
+                <div class="text-1xl font-semibold leading-tight text-center mt-1.5 capitalize max-w-full">
                     {{agenda_fabrica.nombreCompleto}}
                 </div>
-                <div class="text-1xl  text-secondary text-center"> {{agenda_fabrica.email}}</div>
+                <div class="text-1xl  text-secondary text-center whitespace-normal break-words"> {{agenda_fabrica.email}}</div>
                 <div class="text-1xl  text-green-600 text-center">{{agenda_fabrica.descripcionTipoCredito}}</div>
             </div>
         </fuse-card>
@@ -29,9 +29,9 @@
                     </div>
                     <div class="text-md font-medium truncate">Total en obligaciones</div>
                     <div class="text-2xl font-bold tracking-tight leading-none mt-2">
-                        ${{totales.valorDisponible|number}}
+                        ${{totales.valorSolicitado|number}}
                     </div>
-                    <div class="text-md font-medium truncate">Valor disponible</div>
+                    <div class="text-md font-medium truncate">Valor solicitado</div>
                 </div>
                 <div class="flex items-center justify-center w-full text-secondary mt-1">
                 </div>
@@ -423,9 +423,7 @@
                         <th class="px-2 py-3 text-center w-1/12">Nit</th>
                         <th class="px-2 py-3 text-center w-2/12">Entidad</th>
                         <th class="px-2 py-3 text-center w-1/12">N° de obligación</th>
-                        <th class="px-2 py-3 text-center w-2/12">Saldo HDC</th>
                         <th class="px-2 py-3 text-center w-2/12">Saldo real</th>
-                        <th class="px-2 py-3 text-center w-1/12">Altura de mora</th>
                         <th class="px-4 py-3 text-center w-1/12">Estado</th>
                     </tr>
                 </thead>
@@ -437,9 +435,9 @@
                                     <mat-form-field class="p-0 w-full mt-0 deleteMB marginInput"
                                         *ngIf="item.entidad!='CONSULTORES DE CREDITO'">
                                         <mat-select class="m-0 sinB" [(ngModel)]="item.gestionCartera"
-                                            [disabled]="permisoEditar" (ngModelChange)="cambioEstado($event,item,'D')">
-                                            <mat-option value="">Sin gestión</mat-option>
-                                            <mat-option value="COM">Comprar</mat-option>
+                                            [disabled]="permisoEditar">
+                                            <mat-option value="" (click)="item.aplicaRetanqueo && revertirRetanqueo(item)">Sin gestión</mat-option>
+                                            <mat-option (click)="item.aplicaRetanqueo && liquidacionSaldos(item)" value="RET" [disabled]="!item.aplicaRetanqueo && !tieneRetanqueoArray()">Retanqueo</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </td>
@@ -448,9 +446,7 @@
                                 <td class="px-2 text-sm border uppercase text-center h-12">{{item.nit }}</td>
                                 <td class="px-2 text-sm border uppercase text-center h-12">{{item.entidad }}</td>
                                 <td class="px-2 text-sm border text-center">{{item.numeroCuenta}}</td>
-                                <td class="px-2 text-sm border text-center">${{item.saldoActual | number}}</td>
                                 <td class="px-2 text-sm border text-center">${{item.saldoValidado | number}}</td>
-                                <td class="px-2 text-sm border text-center">{{item.maximaMora }}</td>
                                 <td class="text-sm border text-center" [ngClass]="
                         item.alDia === 'f'
                             ? 'bg-red-300  text-red-900'
@@ -460,14 +456,14 @@
                                         {{item.estadoCuenta==''?'MORA':item.estadoCuenta }}
                                     </span>
                                 </td>
-                                <td class="text-sm border w-0">
+                                <!-- <td class="text-sm border w-0">
                                     <button mat-icon-button matTooltip="ver detalles" *ngIf="item.mostrarDetalle!='N'"
                                         (click)="item.mostrarEstado=item.mostrarEstado=='f'?'v':'f'">
                                         <mat-icon
                                             [svgIcon]="item.mostrarEstado=='f'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                         </mat-icon>
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                             <ng-container *ngIf="item.mostrarEstado=='v'">
                                 <tr>

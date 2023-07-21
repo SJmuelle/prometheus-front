@@ -5,11 +5,12 @@ import { Injectable } from '@angular/core';
 })
 export class PermisosService {
 
+  ruta: string;
   constructor() { }
 
   permisoPorModuleTrazxabilidad(ruta: any){
     let valor=  ruta.includes('trazabilidad')|| this.permisoPorModuleTrazabilidad();
-    
+
     return valor
   }
 
@@ -25,10 +26,20 @@ export class PermisosService {
     return rutaAnterior;
   }
 
+  anteriorRuta(ruta: string){
+    this.ruta = ruta;
+  }
+
   permisoPorModuleTrazabilidad(){
     let trazabilidad = localStorage.getItem("trazabilidad");
 
     return  trazabilidad=='si';
+  }
+
+  permisoExcepcionCredito(){
+    let excepcion = localStorage.getItem("excepcionCredito");
+
+    return  excepcion=='si';
   }
 
 }

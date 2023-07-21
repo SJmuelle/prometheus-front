@@ -45,6 +45,14 @@ export class AgendaComercialService {
   }
 
   /**
+ * @description: Listado de agenda firma digital
+ */
+  public getAgendaFirmaDigital(): Observable<any> {
+    return this._http.get(this._appSettings.agendaFirmaDigital.url.base);
+  }
+
+
+  /**
    * @description: Establece por defecto el observable behaviorSubject
    */
   public resetSeleccionAgenda(): void {
@@ -56,6 +64,13 @@ export class AgendaComercialService {
    */
   public getTotalesAgendaComercial(): Observable<any> {
     return this._http.get(this._appSettings.agendaComercial.url.totales);
+  }
+
+  /**
+   * @description: totales de agendas de completacion
+   */
+  public getTotalesAgendaFirmaDigital(): Observable<any> {
+    return this._http.get(this._appSettings.agendaFirmaDigital.url.totales);
   }
 
     /**

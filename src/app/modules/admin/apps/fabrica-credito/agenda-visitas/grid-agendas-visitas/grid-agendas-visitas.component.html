@@ -121,7 +121,7 @@
                 <div class="flex items-center justify-between">
 
                     <div class="text-secondary font-medium"> <input
-                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text"
+                            class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
                             autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
                             placeholder="Filtrar..."></div>
 
@@ -369,7 +369,7 @@
                                             </div>
                                             <button mat-icon-button matTooltip="ver devolución"
                                                 *ngIf="item.cantidadDevolucion>0"
-                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='f'?'v':'f'">
+                                                (click)="item.mostrarDevolucion=item.mostrarDevolucion=='v'?'f':'v'">
                                                 <mat-icon
                                                     [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
                                                 </mat-icon>
@@ -416,7 +416,7 @@
                                                     </div>
 
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
                                                         <span class="mr-2 font-semibold truncate">Observación: </span>
                                                         {{item.observacionDevolucion}}
                                                     </div>
@@ -456,7 +456,7 @@
                                                         </span>
                                                     </div>
                                                     <!-- observacion -->
-                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary">
+                                                    <div class="mt-2 leading-normal line-clamp-2 text-secondary h-auto" style="display: inline !important">
                                                         <span class="mr-2 font-semibold truncate">Observación: </span>
                                                         {{item.observacionReintegroDevolucion}}
                                                     </div>

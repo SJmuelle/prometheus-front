@@ -47,6 +47,8 @@ import { PersonalConsumoPlexaComponent } from './tab-agenda-referenciacion/consu
 import { TitularConsumoPlexaComponent } from './tab-agenda-referenciacion/consumo/plexa/persona-natural/titular/titular.component';
 import { FormGenericoComponent } from './tab-agenda-referenciacion/form-generico-modal/form-generico.component';
 import { FormGenericoTabComponent } from './tab-agenda-referenciacion/form-generico-tab/form-generico-tab.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { CalculoCreditoMicroComponent } from './calculo-credito-micro/calculo-credito-micro.component';
 
 
 @NgModule({
@@ -69,6 +71,7 @@ import { FormGenericoTabComponent } from './tab-agenda-referenciacion/form-gener
     PersonalConsumoPlexaComponent,
     FormGenericoComponent,
     FormGenericoTabComponent,
+    CalculoCreditoMicroComponent,
   ],
     imports: [
         CommonModule,
@@ -99,7 +102,7 @@ import { FormGenericoTabComponent } from './tab-agenda-referenciacion/form-gener
         SharedModule,
         MatRadioModule,
         QuillModule.forRoot(),
-
+        NgxMaskModule.forRoot(),
     ],
     exports:[
       FormGenericoComponent

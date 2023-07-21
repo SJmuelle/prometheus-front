@@ -15,6 +15,7 @@ import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ci
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 import moment from 'moment';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,12 +36,22 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public tipoVivienda$: Observable<any>;
     public subscription$: Subscription;
     public dataInicial: any;
+    public permisoEditar: boolean = false;
     public unSubscribe$: Subject<any> = new Subject<any>();
     //variables iniciales
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
     public formDeudorSolidario: FormGroup;
     fechaActual: any = moment().locale('co');
+    public contador: number = 180;
+    public validandoOTPLoading: boolean = false;
+    public changeTextOTP: boolean = false;
+    timerInterval: any;
+    public otpValidado: boolean = false;
+    public numeroOTP: number = 0;
+    public mostrarOTP: boolean = false;
+    public dataGeneralIncial: any;
+
     constructor(
         private fb: FormBuilder,
         private genericaServices: GenericasService,
@@ -48,7 +59,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private fabricaCreditoService: FabricaCreditoService,
         private _formularioCreditoService: FormularioCreditoService,
-        private el: ElementRef
+        private el: ElementRef,
+        public _permisosService: PermisosService
     ) {
         if (!this.numeroSolicitud) {
             return;
@@ -72,6 +84,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.cargueInicial();
 
         this.addValidation();
+        this.marginTopInputDynamic();
+        
+        this.permisoEditar =
+            this._permisosService.permisoPorModuleTrazabilidad();
+        if (this.permisoEditar) {
+            this.formDeudorSolidario.disable();
+        }
     }
 
     ngOnDestroy(): void {
@@ -245,8 +264,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
 
             // datos posibles para el creado
             tipoSolicitante: ['Deudor solidario'],
-            autoricacionDatosPersonalClaracionAuto: [false, [Validators.requiredTrue]],
-            clausulaAnticurrupcionClaracionAuto: [false, [Validators.requiredTrue]],
+            autoricacionDatosPersonalClaracionAuto: [''],
+            clausulaAnticurrupcionClaracionAuto: [''],
+            numeroOTP: ['']
         });
     }
 
@@ -266,6 +286,12 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.unSubscribe$))
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
+                this.mostrarOTP = data?.autorizacionesValidadas === 'N'
+                this.formDeudorSolidario.controls['nombreCompleto'].setValue(this.getNombreCompleto())
+
+
+                this.dataGeneralIncial = data;
+               // this.mostrarOTP = !!data?.autorizacionesValidadas
                 this.formatearDataInicial();
                 if (data?.codigoDepartamento) {
                     this.getCiudades(data.codigoDepartamento);
@@ -274,6 +300,66 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                     this.getBarrios(data.codigoCiudad);
                 }
             });
+    }
+
+
+    solicitarCodigo(): void {
+            const data = {
+                numeroSolicitud: this.numeroSolicitud,
+                tipo: 'S',
+                tipoOTP : "AUTORIZACION"
+            }
+            this.validandoOTPLoading = true;
+            this._formularioCreditoService.solicitarOTP(data).subscribe(rep => {
+                this.startTimer();
+                this.validandoOTPLoading = false;
+
+            })
+    }
+
+    startTimer() {
+        this.contador = 0;
+        this.changeTextOTP = true;
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+        }
+        this.timerInterval = setInterval(() => {
+            if (this.contador < 180) {
+                this.contador++;
+            }
+        }, 1000)
+    }
+
+    validarCodigo(): void {
+        const numero = this.formDeudorSolidario.controls['numeroOTP'].value
+
+        if (numero.length === 6 && !this.otpValidado) {
+            const data = {
+                numeroSolicitud: Number(this.numeroSolicitud),
+                numeroOTP: numero,
+                tipoTercero: 'S'
+            }
+
+            this._formularioCreditoService.validatarOTP(data).pipe(takeUntil(this.unSubscribe$)).subscribe(rep => {
+                this.otpValidado = rep.data.resultado === 'OK'
+
+                if(rep.data.resultado === 'OK'){
+                    const dataEnvio = {
+                        numeroSolicitud: Number(this.numeroSolicitud),
+                        tipo: 'S',
+                        identificacion: this.dataGeneralIncial.identificacion
+                    }
+                    this.fabricaCreditoService.postConfirmarOTP(dataEnvio).subscribe(rep =>{
+                        if(rep.status === 200){
+                            Swal.fire('OTP validado','Autorizaciones guardadas con éxito', 'success')
+                        }
+                    })
+                }
+            }, err => {
+                this.formDeudorSolidario.get('numeroOTP').setValue('');
+            })
+        }
+
     }
 
     private cargueInicial() {
@@ -297,6 +383,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
+
+        this.formDeudorSolidario.get('codigoCiudad').setValue('')
+        this.formDeudorSolidario.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -306,6 +395,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public seleccionCiudad(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getBarrios(codigo);
+
+        this.formDeudorSolidario.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -403,7 +494,6 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             autoricacionDatosPersonalClaracionAuto: 'S',
         };
 
-
         Swal.fire({
             title: 'Guardar información',
             text: '¿Está seguro de guardar información?',
@@ -418,6 +508,32 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
                 this.postFormularioDeudorSolidario(data);
             }
         });
+    }
+
+    marginTopInputDynamic() {
+        if (window.innerWidth < 600) {
+            setTimeout(() => {
+                let elementToMargin = this.el.nativeElement.querySelectorAll('.mat-form-field-flex');
+
+                elementToMargin.forEach((element: HTMLElement) => {
+
+                    let titleSpan: HTMLElement = element?.querySelector('.mat-form-field-infix').querySelector('.mat-form-field-label-wrapper');
+                    titleSpan = titleSpan ? titleSpan : element?.querySelector('.mat-form-field-infix')?.querySelector('.mat-form-field-infix')
+
+                    let titleSpanHeigth = titleSpan?.clientHeight
+                    element.style.width = '20px' + ' !important';
+                    element.style['marginTop'] = '20px !important'
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
+                    if (titleSpanHeigth > 30) {
+                        if (titleSpanHeigth > 50) {
+                            titleSpan.style.top = '-60px'
+                        } else {
+                            titleSpan.style.top = '-42px'
+                        }
+                    }
+                });
+            }, 1000);
+        }
     }
 
     /**
@@ -475,7 +591,10 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             }
         }
 
-        firstInvalidControl?.focus(); //without smooth behavior
+        firstInvalidControl.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
     }
 
     public formatearDataInicial(): void {
@@ -508,6 +627,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('legalOperacionExtranjera')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'S') {
                     this.formDeudorSolidario
                         .get('tipoOperacionExtranjera')
@@ -550,6 +670,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('legalPersonalExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'S') {
                     this.formDeudorSolidario
                         .get('vinculacionExpuesta')
@@ -670,6 +791,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('vinculadoActualExpuesta')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'N') {
                     this.formDeudorSolidario
                         .get('fechaDesvinculacionExpuesta')
@@ -694,6 +816,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('legalCargoPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'S') {
                     this.formDeudorSolidario
                         .get('cargoPublico')
@@ -743,6 +866,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.formDeudorSolidario
             .get('vinculadoActualPublico')
             .valueChanges.subscribe((e: string) => {
+                this.marginTopInputDynamic();
                 if (e === 'N') {
                     this.formDeudorSolidario
                         .get('fechaDesvinculacionPublico')
@@ -781,5 +905,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         } else {
             return null;
         }
+    }
+
+    public getNombreCompleto(): string {
+        return [
+        this.formDeudorSolidario.controls['primerNombre'].value,
+        this.formDeudorSolidario.controls['segundoNombre'].value,
+        this.formDeudorSolidario.controls['primerApellido'].value,
+        this.formDeudorSolidario.controls['segundoApellido'].value].filter(text => text !== '').join(' ')
     }
 }

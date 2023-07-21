@@ -169,4 +169,20 @@ export class FabricaCreditoService {
     public postDatosDeudorSolidario(data: any): Observable<any> {
         return this._http.post(this._appSettings.fabricaDatos.url.baseCredito, data);
     }
+
+    /**
+      * @description: Enviar confirmacion codigo OTP validado
+      */
+    public postConfirmarOTP(data: any): Observable<any> {
+        return this._http.post(this._appSettings.fabricaDatos.url.autorizarConsultaOTP, data);
+    }
+
+    /**
+         * @description: Get rol ID
+         */
+    public getRolId(): Observable<any> {
+        return this._http.get(`${this._appSettings.fabricaDatos.url.getRolID}`);
+
+
+    }
 }

@@ -12,6 +12,7 @@ import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form
 import { AgendaVentaService } from 'app/core/services/agenda-venta.service';
 import { FormDecisionComponent } from '../../agenda-decision/form-decision/form-decision.component';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
     selector: 'app-grid-agenda-venta',
@@ -39,7 +40,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
         private router: Router,
         private _dialog: MatDialog,
         private fabricaCreditoService: FabricaCreditoService,
-
+        public _permisosService: PermisosService
     ) { }
 
     ngOnInit(): void {
@@ -91,6 +92,7 @@ export class GridAgendaVentaComponent implements OnInit, OnDestroy {
         } else {
             //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
 
+            this._permisosService.ruta = 'venta-digital'
             this.router.navigate([`/credit-factory/formularios/microcredito`]);
         }
     }

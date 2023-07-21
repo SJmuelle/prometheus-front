@@ -1,0 +1,494 @@
+<div>
+    <div class="flex flex-col flex-auto overflow-y-auto rounded-2xl rounded-b-none bg-white">
+
+
+
+
+
+
+        <div class="flex flex-col sm:hidden min-h-40  max-h-90 ">
+
+
+            <div class="">
+                <div class="h-14 min-h-14 flex-col w-full flex z-99"
+                    style="background: #E2E8F0; position: sticky; top: 0px; ">
+                    <span class="pl-6 pt-3 flex-col font-semibold text-lg"></span>
+                    <!-- titulo de la version movil tabla -->
+                </div>
+
+                <div class="text-center" *ngIf="!this.allDataRows.length">
+                    <div class="flex items-center content-center justify-center mt-7 gap-3 ">
+                        <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+                        <p class="text-5xl font-semibold tracking-tight">
+                            {{ "Aviso" }}
+                        </p>
+                    </div>
+                    <p class="text-lg mb-8">
+                        {{ "Lo sentimos, no se encontraron datos " }}
+                    </p>
+                </div>
+
+                <div *ngFor="let value of allDataRows | smPaginator:page_size:page_number"
+                    class="border-1 p-4 flex flex-col">
+
+
+
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-row my-0.5">
+
+                        <span class="w-full "
+                            *ngIf="(item.typeField!=='function' || item.typeField!=='mat-menu') && item.view"
+                            [ngClass]="item.typeField==='statusStyle'? ' flex items-center' : '' ">
+
+                            <span *ngIf="item.typeField === 'text' || item.typeField === 'statusStyle' "
+                                class=" font-semibold">{{item.text}} :</span>
+
+                            <span *ngIf="item.typeField === 'text'"> {{value[item.name]
+                                |dataTable:item.pipeName
+                                ||"text"}}</span>
+
+                            <span *ngIf="item.typeField === 'statusStyle'" class="flex items-center">
+                                <span class="w-4 h-4 rounded-full mr-2 ml-2 "
+                                    [ngClass]="item.styleCondition(value)"></span>{{value[item.name]
+                                |dataTable:item.pipeName
+                                ||"text"}}</span>
+                        </span>
+
+
+
+
+
+                    </div>
+
+
+
+
+
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-col"
+                        [ngClass]="item.typeField ==! 'function' ?? 'hidden' ">
+
+
+
+                        <button class="mt-2 w-full mb-2" *ngIf="item.typeField==='function'"
+                            (click)="value[item.callback(value)]" mat-stroked-button>
+                            <mat-icon *ngIf="item?.iconSGV" [svgIcon]="item?.iconSGV"></mat-icon>
+                            <mat-icon *ngIf="item?.iconAngularMaterial">{{item?.iconAngularMaterial}}</mat-icon>
+                            <mat-icon *ngIf="!item?.iconSGV && !item?.iconAngularMaterial"
+                                svgIcon="heroicons_outline:eye"></mat-icon>
+                        </button>
+
+
+
+
+
+
+                    </div>
+
+                    <div *ngFor="let item of dataOptionTable" class="w-full flex-col"
+                        [ngClass]="item.typeField ==! 'mat-menu' ?? 'hidden' ">
+
+
+
+                        <button [matMenuTriggerFor]="menuOptionMobil" class="mt-2 w-full mb-2"
+                            *ngIf="item.typeField==='mat-menu'" mat-stroked-button>
+                            <mat-icon>format_list_bulleted</mat-icon>
+                            <!-- <mat-icon *ngIf="item?.iconSGV" [svgIcon]="item?.iconSGV"></mat-icon>
+                        <mat-icon *ngIf="item?.iconAngularMaterial">{{item?.iconAngularMaterial}}</mat-icon>
+                        <mat-icon *ngIf="!item?.iconSGV && !item?.iconAngularMaterial"
+                            svgIcon="heroicons_outline:eye"></mat-icon> -->
+                        </button>
+
+
+
+
+
+                        <mat-menu #menuOptionMobil="matMenu">
+                            <div *ngFor="let valuemenu of item.MenuFunctions">
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu1'"
+                                    [matMenuTriggerFor]="indexMatMenu1">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu2'"
+                                    [matMenuTriggerFor]="indexMatMenu2">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu3'"
+                                    [matMenuTriggerFor]="indexMatMenu3">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu4'"
+                                    [matMenuTriggerFor]="indexMatMenu4">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item *ngIf="!valuemenu.children" (click)="valuemenu.callback(value)">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <!-- <button mat-menu-item (click)="valuemenu.callback(value)">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                    <button mat-menu-item (click)="valuemenu.callback(value)">
+                                        <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                        {{valuemenu.nameFunction}}</button> -->
+
+                            </div>
+
+
+                        </mat-menu>
+
+                        <mat-menu #indexMatMenu1="matMenu">
+                            <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+                                
+                            </div> -->
+
+                            <button (click)="menu.callback(value)" *ngFor="let menu of dataFunctions" mat-menu-item>
+                                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>{{menu.nameFunction}}</button>
+
+
+                        </mat-menu>
+
+                        <!-- <mat-menu #indexMatMenu1="matMenu"> -->
+                        <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+                                
+                            </div> -->
+
+                        <!-- <button (click)="menu.callback(rowFunction)" *ngFor="let menu of dataFunctions"
+                                mat-menu-item> <mat-icon
+                                    svgIcon="heroicons_outline:pencil"></mat-icon>{{menu.nameFunction}}</button> -->
+
+
+                        <!-- </mat-menu> -->
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <!-- <div class="w-full h-10 -mb-3 mt-1 flex justify-end" *ngIf="Options.function"> -->
+
+                    <!-- <button [matMenuTriggerFor]="menu1" (click)="dataReport = value" mat-stroked-button>
+                            <mat-icon>format_list_bulleted</mat-icon>Opciones</button> -->
+
+
+                    <!-- <mat-menu #menu1="matMenu" class="ml-24">
+                            <button mat-menu-item [disabled]="dataReport?.tiene_negociacion==='Negociado'"
+                                (click)="createNegociacion()">
+                                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> Realizar
+                                negociación</button>
+                            <button [disabled]="dataReport?.tiene_negociacion!=='Negociado'" mat-menu-item
+                                (click)="openNegociacion()"><mat-icon
+                                    svgIcon="heroicons_outline:document-text"></mat-icon>
+                                Ver
+                                detalle negociación</button>
+                        </mat-menu> -->
+
+                    <!-- </div> -->
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="hidden sm:flex flex-col">
+
+            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 ">
+
+                <!-- <ng-container matColumnDef="action" *ngIf="Options.function">
+                    <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button *ngIf="Options.multifunction" (click)="dataReport = row" [matMenuTriggerFor]="menu"
+                            class="" mat-icon-button>
+                            <mat-icon>format_list_bulleted</mat-icon>
+                        </button>
+                        <button *ngIf="!Options.multifunction" (click)="dataReport = row" class="" mat-icon-button>
+                            <mat-icon>format_list_bulleted</mat-icon>
+                        </button>
+                    </td>
+                </ng-container> -->
+
+                <!-- [disabled]="dataReport.tiene_negociacion==='SI'" -->
+                <!-- <mat-menu #menu="matMenu" *ngIf="Options.multifunction">
+                    <button mat-menu-item [disabled]="dataReport?.tiene_negociacion==='Negociado'"
+                        (click)="createNegociacion()">
+                        <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon> Realizar
+                        negociación</button>
+                    <button [disabled]="dataReport?.tiene_negociacion!=='Negociado'" mat-menu-item
+                        (click)="openNegociacion()"><mat-icon svgIcon="heroicons_outline:document-text"></mat-icon> Ver
+                        detalle negociación</button>
+                </mat-menu> -->
+                <!-- (click)="this.buttonTable.action(row) -->
+
+                <ng-container [matColumnDef]="dataOption.name" *ngFor="let dataOption of this.dataOptionTable">
+
+                    <th class=" sticky top-0" style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef
+                        mat-sort-header>
+                        {{ dataOption.text }}
+                    </th>
+
+
+
+
+
+
+
+
+
+                    <ng-container [ngSwitch]="dataOption.typeField">
+
+
+                        <ng-container *ngSwitchCase="'text'" style="white-space:normal;">
+                            <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row"
+                                (click)="actionSelectRow(row)">
+                                <span [ngStyle]="{'white-space': !!whitEspace? 'nowrap' : 'normal'}"
+                                    [ngClass]="dataOption.classTailwind"> {{(row[dataOption.name] ) | dataTable:
+                                    dataOption.pipeName || "text" }}
+                                </span>
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container *ngSwitchCase="'function'" style="white-space:normal;">
+                            <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;"></th>
+                            <td mat-cell *matCellDef="let row" class="w-11 pr-2">
+                                <button (click)="row[dataOption.callback(row)]" class="mx-auto" mat-icon-button>
+                                    <mat-icon *ngIf="dataOption?.iconSGV" [svgIcon]="dataOption?.iconSGV"></mat-icon>
+                                    <mat-icon
+                                        *ngIf="dataOption?.iconAngularMaterial">{{dataOption?.iconAngularMaterial}}</mat-icon>
+                                    <mat-icon *ngIf="!dataOption?.iconSGV && !dataOption?.iconAngularMaterial"
+                                        svgIcon="heroicons_outline:eye"></mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+
+                        <!-- <ng-container *ngSwitchCase="'switch'">
+                            <td mat-cell *matCellDef="let row">
+                                <span class="w-full h-full">
+                                    <mat-slide-toggle (change)="actionSwitch($event, row)" color="primary"
+                                        [checked]="row[dataOption.name]" [value]="row[dataOption.name]">
+                                    </mat-slide-toggle>
+                                </span>
+                            </td>
+                        </ng-container> -->
+
+                        <!-- <ng-container *ngSwitchCase="'circleColor'">
+                            <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                                <p [ngClass]="dataOption.classTailwind + ' ' + dataOption.styleCondition(row) + ' whitespace-nowrap'"
+                                    [ngStyle]="{backgroundColor:dataOption.styleCondition(row)}">
+                                </p>
+                            </td>
+                        </ng-container> -->
+
+                        <ng-container *ngSwitchCase="'statusStyle'">
+                            <td class="cursor-pointer pl-4" mat-cell *matCellDef="let row"
+                                (click)="actionSelectRow(row)">
+                                <div class="flex gap-2 items-center pt-3">
+                                    <p class="w-4 h-4 rounded-full" [ngClass]="dataOption.styleCondition(row)"></p>
+                                    <p class="whitespace-nowrap">
+                                        {{ row[dataOption.name] | dataTable:
+                                        dataOption.pipeName || "text" }}
+                                    </p>
+                                </div>
+                            </td>
+                        </ng-container>
+
+                        <ng-container *ngSwitchCase="'mat-menu'">
+                            <td mat-cell *matCellDef="let rowFunction">
+                                <button [matMenuTriggerFor]="menuOption" class="" mat-icon-button>
+                                    <mat-icon>format_list_bulleted</mat-icon></button>
+                                <mat-menu #menuOption="matMenu" class="p-2 flex flex-col">
+                                    <div *ngFor="let value of dataOption.MenuFunctions">
+                                        <!-- value.arrayChildren.nameChildren -->
+                                        <button mat-menu-item
+                                            *ngIf="value.children && value?.arrayChildren?.nameChildren==='indexMatMenu1'"
+                                            [matMenuTriggerFor]="indexMatMenu1">
+                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            {{value.nameFunction}}</button>
+
+                                        <button mat-menu-item
+                                            *ngIf="value.children && value?.arrayChildren?.nameChildren==='indexMatMenu2'"
+                                            [matMenuTriggerFor]="indexMatMenu1">
+                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            {{value.nameFunction}}</button>
+
+                                        <button mat-menu-item
+                                            *ngIf="value.children && value?.arrayChildren?.nameChildren==='indexMatMenu3'"
+                                            [matMenuTriggerFor]="indexMatMenu1">
+                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            {{value.nameFunction}}</button>
+
+                                        <button mat-menu-item
+                                            *ngIf="value.children && value?.arrayChildren?.nameChildren==='indexMatMenu4'"
+                                            [matMenuTriggerFor]="indexMatMenu1">
+                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            {{value.nameFunction}}</button>
+
+                                        <button mat-menu-item *ngIf="!value.children"
+                                            (click)="value.callback(rowFunction)">
+                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            {{value.nameFunction}}</button>
+                                    </div>
+                                </mat-menu>
+
+
+                                <mat-menu #indexMatMenu1="matMenu">
+                                    <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+                                        
+                                    </div> -->
+
+                                    <button (click)="menu.callback(rowFunction)" *ngFor="let menu of dataFunctions"
+                                        mat-menu-item> <mat-icon
+                                            svgIcon="heroicons_outline:pencil"></mat-icon>{{menu.nameFunction}}</button>
+
+
+                                </mat-menu>
+
+                                <mat-menu #indexMatMenu2="matMenu">
+                                    <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+    
+                                            <button mat-menu-item [matMenuTriggerFor]="fish">pescado</button>
+                                        </div> -->
+                                </mat-menu>
+
+
+
+
+                                <mat-menu #indexMatMenu3="matMenu">
+                                    <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+
+                                        <button mat-menu-item [matMenuTriggerFor]="fish">fruta</button>
+                                    </div> -->
+                                </mat-menu>
+
+                                <mat-menu #indexMatMenu4="matMenu">
+                                    <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+
+                                        <button mat-menu-item [matMenuTriggerFor]="fish">verdura</button>
+                                    </div> -->
+                                </mat-menu>
+
+
+
+
+                            </td>
+
+
+
+                        </ng-container>
+
+
+
+
+
+                        <!-- <ng-container *ngSwitchCase="'checked'">
+                            <td class="cursor-pointer" mat-cell *matCellDef="let row" (click)="actionSelectRow(row)">
+                                <mat-checkbox readonly disabled type="checkbox" [checked]="row[dataOption.name]"
+                                    class="flex items-center justify-center" [ngClass]="dataOption.classTailwind">
+                                </mat-checkbox>
+                            </td>
+                        </ng-container> -->
+                    </ng-container>
+
+
+
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="this.dataColumn"></tr>
+                <tr mat-row *matRowDef="let row; columns: this.dataColumn"></tr>
+
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell text-center" colspan="20" *ngIf="!this.allDataRows.length">
+                        <div class="flex items-center content-center justify-center mt-7 gap-3">
+                            <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+                            <p class="text-5xl font-semibold tracking-tight">
+                                {{ "Aviso" }}
+                            </p>
+                        </div>
+                        <p class="text-lg mb-8">
+                            {{ "Lo sentimos, no se encontraron datos " }}
+                        </p>
+                    </td>
+                    <!-- <td class="mat-cell text-center" colspan="20" *ngIf="this.allDataRows.length"> -->
+                    <div *ngIf="this.allDataRows.length"
+                        class="flex items-center content-center justify-center mt-7 gap-3 text-center w-full">
+                        <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
+                        <p class="text-xl font-semibold tracking-tight">
+                            {{ "No se encontraron datos con el termino :" }}
+                        </p>
+                        <p class="mb-8 mt-2 text-lg text-red-600 font-medium">
+                            "{{ this.dataFilter }}"
+                        </p>
+                    </div>
+                    <!-- </td> -->
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="relative">
+        <mat-paginator (page)="pageEvent($event)" class="border-t border-b rounded-t-none rounded-xl"
+            style="background-color: #E2E8F0;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
+            [pageSize]="5" [pageSizeOptions]="[5,10]">
+        </mat-paginator>
+
+        <button #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button
+            class="absolute buttonSettings"><mat-icon>settings</mat-icon></button>
+
+
+
+        <mat-menu #optionsMenu="matMenu" class="flex flex-col max-h-50 overflow-y-auto overflow-x-hidden pl-2">
+            <div class="hover:bg-gray-200 my-2 flex flex-row items-center min-h-10 pl-3"
+                (click)="$event.stopPropagation()" *ngFor="let column of dataOptionTable; let i = index;">
+
+                <mat-checkbox [disabled]="column.disable" #menuItems (change)="configColumns(column.name, $event)"
+                    [(ngModel)]="column.view"><span class="">{{column.text}} </span> </mat-checkbox>
+
+            </div>
+
+        </mat-menu>
+        <!-- (change)="onVehicleSelect()"
+              (keydown)="onMenuKeyDown($event, i)" -->
+
+
+    </div>
+
+
+</div>
