@@ -25,6 +25,7 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
   numeroSolicitud
   public datosDocumentosHistorico: any = null
   fechaActual: any = moment().locale('co');
+  info: any;
 
   constructor(
     private _agendaFirma: AgendaFirmaService,
@@ -85,6 +86,7 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
     this._agendaFirma.obtenerDatosBasicosFirma(this.numeroSolicitud).subscribe((res) => {
       Swal.close();
       this.form.patchValue(res.data);
+      this.info=res.data
       this.form.controls['identificacionTitular'].disable();
       this.form.controls['fechaNacimientoTitular'].disable();
       this.form.controls['identificacionTitular'].updateValueAndValidity();
@@ -129,6 +131,8 @@ export class FormActualizarInfoComponent implements OnInit, OnDestroy {
       return;
     }
     let data = this.form.value;
+    data.identificacionTitular=this.info.identificacionTitular
+    data.fechaNacimientoTitular=this.info.fechaNacimientoTitular
     data.nombreCompletoTitular = `${data.primerNombreTitular} ${data.segundoNombreTitular} ${data.primerApellidoTitular} ${data.segundoApellidoTitular}`
     this._agendaFirma.guardarDatosBasicosFirma(data).subscribe((resp) => {
       if (resp.data.respuesta == 'OK') {
