@@ -25,7 +25,7 @@ export class PqrService {
         const data: Blob = new Blob([buffer], {
           type: EXCEL_TYPE
         });
-        FileSaver.saveAs(data, fileName + '_gestion'+ EXCEL_EXTENSION);
+        FileSaver.saveAs(data, fileName + ''+ EXCEL_EXTENSION);
     }
 
     // parametrizacion

@@ -38,18 +38,16 @@ export class CreditoComponent implements OnInit, AfterViewInit {
         'detalle',
     ];
 
-    constructor(public dialog: MatDialog) {}
+    constructor(public dialog: MatDialog) { }
 
     openDialog(codigoNegocio): void {
         const dialogRef = this.dialog.open(ModalcreditoComponent, {
-            width: '1080px',
-            maxHeight: '550px',
+            maxWidth: '1080px',
+            maxHeight: '80%',
             data: { codigoNegocio },
         });
 
         dialogRef.afterClosed().subscribe((result) => {
-            // // console.log('The dialog was closed');
-            // // console.log(result);
         });
     }
 

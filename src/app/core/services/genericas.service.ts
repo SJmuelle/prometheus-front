@@ -289,7 +289,7 @@ export class GenericasService {
 
         return this._http.post(this._appSettings.agendaReferenciacion.url.reCalcularSolicitudMicro, data);
     }
-    
+
     /**
   * @description: Obtiene unidades de negocio
   */
@@ -318,5 +318,34 @@ export class GenericasService {
     public getUnidadNegocio(numSolicitud: string): Observable<any> {
         return this._http.get(`${this._appSettings.genericas.url.unidadNegocio}/${numSolicitud}`);
     }
+    /**
+   * @description: Obtiene REPORTE RD
+   */
+    public getReporteRd(): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.info_rd}`);
+    }
+
+    /**
+     * 
+     * @returns obtiene lista select de lotes  
+     */
+    public getLotes(): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.listaLote}`);
+    }
+
+    /**
+    * 
+    * @returns ACTUALIZA LISTADO DE MERCADEO RD
+    */
+    public getDataLotes(idLote: string): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.dataLotes}/${idLote}`);
+    }
+
+
+
+
+
+
+
 
 }

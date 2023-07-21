@@ -1,0 +1,225 @@
+strong{
+    text-transform: uppercase !important;
+}
+
+.toggle-button-cover
+{
+   
+    position: relative;
+    width: 100px;
+    // height: 140px;
+}
+
+.button-cover
+{
+    background-color: #fff;
+    // box-shadow: 0 10px 20px -8px #c5d6d6;
+    border-radius: 4px;
+}
+
+.button-cover:before
+{
+    counter-increment: button-counter;
+    // content: counter(button-counter);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #d7e3e3;
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px;
+}
+
+.button-cover, .knobs, .layer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.button
+{
+    position: relative;
+    top: 50%;
+    width: 74px;
+    height: 26px;
+    margin: -20px auto 0 auto;
+    overflow: hidden;
+}
+
+.button.r, .button.r .layer
+{
+    border-radius: 100px;
+}
+
+.button.b2
+{
+    border-radius: 2px;
+}
+
+.checkbox
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.knobs
+{
+    z-index: 2;
+}
+
+.layer
+{
+    width: 100%;
+    background-color: #fbe1e1;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
+
+/* Button 1 */
+#button-1 .knobs:before
+{
+    content: 'NO';
+    position: absolute;
+    top: 3px;
+    left: 5px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 1em;
+    background-color: #f44336;
+    border-radius: 50%;
+    transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+
+#button-1 .checkbox:checked + .knobs:before
+{
+    content: 'SI';
+    right: 5px;
+    left: auto;
+    background-color: #03A9F4;
+}
+
+#button-1 .checkbox:checked ~ .layer
+{
+    background-color: #ebf0fc;
+}
+
+#button-1 .knobs, #button-1 .knobs:before, #button-1 .layer
+{
+    transition: 0.3s ease all;
+}
+
+.labelTxt{
+    color: #727a85;
+    line-height: 18px;
+    height: 25px;
+    font-weight: 600;
+}
+
+
+.label__checkbox {
+    display: none;
+  }
+  
+  .label__check {
+    display: inline-block;
+    border-radius: 50%;
+    border: 5px solid rgba(0,0,0,0.1);
+    background: white;
+    vertical-align: middle;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border .3s ease;
+    
+    i.icon {
+      opacity: 0.2;
+      color: transparent;
+      transition: opacity .3s .1s ease;
+      -webkit-text-stroke: 3px rgba(0,0,0,.5);
+    }
+    
+    &:hover {
+      border: 5px solid rgba(0,0,0,0.2);
+    }
+  }
+  
+  .label__checkbox:checked + .label__text .label__check {
+    animation: check .5s cubic-bezier(0.895, 0.030, 0.685, 0.220) forwards;
+    
+    .icon {
+      opacity: 1;
+      transform: scale(0);
+      color: white;
+      -webkit-text-stroke: 0;
+      animation: icon .3s cubic-bezier(1.000, 0.008, 0.565, 1.650) .1s 1 forwards;
+    }
+  }
+  
+  .center {
+    // position: absolute;
+    // top: 50%; left: 50%;
+    // transform: translate(-50%,-50%);
+    width: 40px;
+  }
+  
+  @keyframes icon {
+    from {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1)
+    }
+  }
+  
+  @keyframes check {
+    0% {
+      width: 2em;
+      height: 2em;
+      border-width: 5px;
+    }
+    10% {
+      width: 2em;
+      height: 2em;
+      opacity: 0.1;
+      background: rgba(0,0,0,0.2);
+      border-width: 15px;
+    }
+    12% {
+      width: 2em;
+      height: 2em;
+      opacity: 0.4;
+      background: rgba(0,0,0,0.1);
+      border-width: 0;
+    }
+    50% {
+      width: 2em;
+      height: 2em;
+      background: #00d478;
+      border: 0;
+      opacity: 0.6;
+    }
+    100% {
+      width: 2em;
+      height: 2em;
+      background: #00d478;
+      border: 0;
+      opacity: 1;
+    }
+  }

@@ -95,15 +95,8 @@ export class FormCodeudorComponent implements OnInit {
 
                     let titleSpanHeigth = titleSpan?.clientHeight
                     element.style.width = '20px' + ' !important';
-                    element.style['marginTop'] = '20px !important'
-                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth > 35 ? titleSpanHeigth + 10 + 'px' : titleSpanHeigth + 'px') : '30px'), 'important')
-                    if (titleSpanHeigth > 30) {
-                        if (titleSpanHeigth > 50) {
-                            titleSpan.style.top = '-60px'
-                        } else {
-                            titleSpan.style.top = '-42px'
-                        }
-                    }
+                    element.style.setProperty('margin-top', (titleSpanHeigth ? (titleSpanHeigth + 'px') : '30px'), 'important')
+                    titleSpan.style.top = '-'+(titleSpanHeigth + 6) +'px'
                 });
             }, 1000);
         }
@@ -485,6 +478,10 @@ export class FormCodeudorComponent implements OnInit {
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
+
+        // resetear barrio y ciudad al cambiar departamento
+        this.form.get('codigoCiudad').setValue('')
+        this.form.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -501,6 +498,10 @@ export class FormCodeudorComponent implements OnInit {
     public seleccionDepartamentoNegocio(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesNegocio(codigo);
+
+        // resetear barrio y ciudad al cambiar departamento
+        this.form.get('codigoCiudadNegocio').setValue('')
+        this.form.get('codigoBarrioNegocio').setValue('')
     }
 
     /**
@@ -509,6 +510,9 @@ export class FormCodeudorComponent implements OnInit {
     public seleccionDepartamentoExpedicion(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudadesExpedicion(codigo);
+
+         // resetear  ciudad al cambiar departamento
+         this.form.get('codigoCiudadExpedicion').setValue('')
     }
 
     /**
@@ -519,6 +523,7 @@ export class FormCodeudorComponent implements OnInit {
         const codigo: string = event.value;
 
         this.getBarrios(codigo);
+        this.form.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -534,7 +539,7 @@ export class FormCodeudorComponent implements OnInit {
      * @description: Obtiene el listado de ciudades
      */
     private getCiudades(codigo: string): void {
-        this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo);
+        this.ciudades$ = this.departamentosCiudadesService.getCiudades(codigo)
     }
 
     /**
@@ -633,9 +638,8 @@ export class FormCodeudorComponent implements OnInit {
                     .get('nitNegocio')
                     ?.setValidators([
                         Validators.required,
+                        Validators.minLength(5),
                         Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/),
-                        Validators.minLength(9),
-                        Validators.maxLength(10),
                     ]);
                 this.form
                     .get('nitNegocio')
@@ -1521,5 +1525,13 @@ export class FormCodeudorComponent implements OnInit {
         } else {
             return null
         }
+    }
+
+    public getNombreCompleto(): string {
+        return [
+        this.form.controls['primerNombre'].value,
+        this.form.controls['segundoNombre'].value,
+        this.form.controls['primerApellido'].value,
+        this.form.controls['segundoApellido'].value].filter(text => text !== '').join(' ')
     }
 }

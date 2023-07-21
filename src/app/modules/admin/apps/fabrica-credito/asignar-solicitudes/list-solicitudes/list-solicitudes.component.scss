@@ -65,3 +65,48 @@
     background-color: white !important;
     border: 1px solid rgb(212, 212, 212) !important;
 }
+
+.leftScrollButton{
+    left: -25px;
+    height: 20px;
+    bottom: calc(50% - 10px);
+    z-index: 100;
+}
+
+// .leftScrollButton > mat-icon{
+//     position: sticky;
+// }
+
+.rigthScrollButton{
+    right: -25px;
+    height: 20px;
+    bottom: calc(50% - 10px);
+    z-index: 100;
+}
+
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+  .w-97P{
+ width: 97%;
+  }
+
+.scaleHover{
+    transition:  0.2s;
+}
+
+.scaleHover:hover{
+    transform: scale(1.2);
+    transition:  0.2s;
+}
+

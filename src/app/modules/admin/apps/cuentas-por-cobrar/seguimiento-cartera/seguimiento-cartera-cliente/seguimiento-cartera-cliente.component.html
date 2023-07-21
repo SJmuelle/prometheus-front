@@ -1,0 +1,111 @@
+<div class="flex flex-col w-screen h-screen">
+
+    <div class="w-full flex flex-col">
+        <app-header [infoTitulo]="infoTitulo"></app-header>
+    </div>
+
+    <div class="p-4 w-full h-full gap-4 flex flex-col overflow-y-scroll">
+
+        <mat-accordion class="w-full h-auto gap-4 flex flex-col">
+
+            <mat-expansion-panel [expanded]="openSearch">
+                <mat-expansion-panel-header class="h-15">
+                    <mat-panel-title class="h-15">
+                        <h4 class="mt-3">Filtros</h4>
+                    </mat-panel-title>
+                    <mat-panel-description>
+
+
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="w-full h-auto bg-white rounded-md border-2 p-2 flex flex-col">
+
+                    <form [formGroup]="formSearch" (ngSubmit)="searchClient()">
+                        <div class="grid grid-cols-1 sm:flex sm:flex-row sm:flex-wrap w-full sm:gap-3 p-2 items-center">
+
+
+
+
+                            <mat-form-field class="fuse-mat-dense w-full sm:w-56">
+                                <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                                <mat-select formControlName="unidadNegocio">
+                                    <mat-option>Seleccione una unidad</mat-option>
+                                    <mat-option *ngFor="let item of unidadesNegocio"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense w-full sm:w-56">
+                                <mat-label class="font-semibold text-md">Periodos fotos</mat-label>
+                                <mat-select formControlName="periodo">
+                                    <mat-option>Seleccione un periodo</mat-option>
+                                    <mat-option *ngFor="let item of periodosFotos"
+                                        [value]="item.id">{{item.descripcion}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense w-full sm:w-80">
+                                <mat-label class="font-semibold text-md">Estado cartera</mat-label>
+                                <div class="flex-wrap flex flex-row gap-3 py-2 sm:py-0 sm:gap-0 sm:flex-nowrap">
+                                    <mat-checkbox formControlName='alDia' matPrefix>Al
+                                        dia</mat-checkbox>
+                                    <mat-checkbox formControlName='porVencer' matPrefix>Por
+                                        vencer</mat-checkbox>
+                                    <mat-checkbox formControlName='vencido' matPrefix>Vencido</mat-checkbox>
+                                </div>
+
+                                <input matInput readonly="true" class="w-0 max-w-0">
+                            </mat-form-field>
+
+                            <mat-form-field class="fuse-mat-dense w-full sm:w-72">
+                                <mat-label class="font-semibold text-md">Numero de documento</mat-label>
+                                <mat-icon matPrefix>search</mat-icon>
+                                <input matInput type="text" formControlName="identificacion">
+                            </mat-form-field>
+
+                            <button
+                                [ngClass]="formSearch.invalid? ' text-black bg-gray-200 ' : ' text-white bg-fintra-blue'"
+                                [disabled]="formSearch.invalid" type="submit" mat-button class=" mt-1"><mat-icon
+                                    [ngStyle]="{color:'white'}">search</mat-icon>Buscar</button>
+
+                            <!-- <div class="flex flex-col">
+                    <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
+                    <div class="flex flex-row gap-2 mt-2">
+                        <mat-checkbox>Al dia</mat-checkbox>
+                        <mat-checkbox>Por vencer</mat-checkbox>
+                        <mat-checkbox>Vencido</mat-checkbox>
+
+                    </div>
+
+                </div> -->
+
+
+
+
+
+
+                        </div>
+                    </form>
+
+
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+
+
+
+
+        <div class="mb-40">
+            <app-table [dataOptionTable]="optionsTable" [allDataRows]="dataRows"></app-table>
+
+        </div>
+
+
+    </div>
+
+
+
+</div>

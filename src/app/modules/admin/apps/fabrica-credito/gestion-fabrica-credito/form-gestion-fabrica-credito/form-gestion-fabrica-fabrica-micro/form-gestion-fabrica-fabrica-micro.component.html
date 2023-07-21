@@ -9,7 +9,7 @@
                     | {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+            <div class="bg-white sm:shadow-none md:shadow-md  sm:px-0 md:px-8 rounded  pt-6 pb-8 mb-4 flex flex-col">
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field class="mat-form-field-disabled">
                         <mat-label>No. de solicitud</mat-label>
@@ -31,6 +31,12 @@
                         <mat-label>Subestado</mat-label>
                         <input matInput type="text" [formControlName]="'descripcionSubestado'" [readonly]="true" />
                     </mat-form-field>
+                    <div *ngIf="creditoExcepcion" class="flex justify-center items-center">
+                        <div
+                            class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest">
+                            Crédito con excepción
+                        </div>
+                    </div>
                 </div>
                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del crédito</span>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
@@ -40,7 +46,7 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
-                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'" >
+                        <mat-select [value]="'seleccione'" [formControlName]="'destinoCredito'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option *ngFor="
@@ -67,7 +73,7 @@
                     <mat-form-field>
                         <mat-label>Monto crédito</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
-                            [formControlName]="'valorSolicitado'"  />
+                            [formControlName]="'valorSolicitado'" />
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.required">
                             Este campo es requerido.
                         </mat-error>
@@ -114,6 +120,7 @@
                     </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
+
                     <mat-form-field>
                         <mat-label>Titular en micro</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'titularMicro'">
@@ -155,22 +162,108 @@
                         <input matInput type="text" [formControlName]="'segmento'" [readonly]="true" />
                     </mat-form-field>
                 </div>
+
+                <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información de riesgo</span>
+                <div class="flex justify-start gap-6 sm:flex-row flex-col">
+                    <div *ngIf="verScorePermiso()"
+                        class="flex sm:w-full md:w-4/12 items-center justify-center fixheigh">
+                        <div class="container scale-50 ">
+                            <svg height="500px" width="500px">
+                                <circle id="red" fill="none" stroke="#bd2727" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="597" />
+                                <circle class="grey greyRed" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="597" />
+
+                                <circle id="orange" fill="none" stroke="#f79a38" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="447" />
+                                <circle class="grey greyOrange" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="447" />
+
+                                <circle id="yellow" fill="none" stroke="#fadd00" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="297" />
+                                <circle class="grey greyYellow" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="297" />
+
+                                <circle id="light-green" fill="none" stroke="#91c738" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="147" />
+                                <circle class="grey greyLightGreen" fill="none" stroke="#F1F1F1" stroke-width="30"
+                                    cx="200" cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="147" />
+
+                                <circle id="green" fill="none" stroke="#1f9c4c" stroke-width="30" cx="200" cy="200"
+                                    r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
+                                <circle class="grey greyGreen" fill="none" stroke="#F1F1F1" stroke-width="30" cx="200"
+                                    cy="200" r="140" stroke-dasharray="150, 747" stroke-dashoffset="0" />
+                                <circle cx="200" cy="200" r="12" fill="none" stroke="#823b8a" stroke-width="3"
+                                    class="punteroPo" />
+                                <circle cx="200" cy="200" r="25" fill="none" stroke="#823b8a" stroke-width="3"
+                                    class="punteroPoGrande" />
+                                <circle cx="200" cy="200" r="25" fill="none" stroke="#823b8a" stroke-width="3"
+                                    class="punteroPoGrandeSegundo" />
+                            </svg>
+                            <div class="score-band-wrapper flex justify-center items-center flex-col gap-4">
+                                <small class="text-xl font-bold">Tu score es</small>
+                                <p class="score-band-label">{{score}}</p>
+                            </div>
+                        </div>
+                        <!-- <div class="barContainer mt-4 relative">
+                            <div class="marker"></div>
+                            <span class="beacon"></span>
+                            <div class="bordersScore">
+                                <span class="border0"></span>
+                                <span class="border1"></span>
+                                <span class="border2"></span>
+                                <span class="border3"></span>
+                                <span class="border4"></span>
+                                <span class="border5"></span>
+                                <span class="border6"></span>
+                                <span class="border7"></span>
+                                <span class="border8"></span>
+                                <span class="border9"></span>
+                            </div>
+                            <div class="barDataCredito">
+                                <div class="currentScore"></div>
+                                <div class="bar0">0</div>
+                                <div class="bar1">150</div>
+                                <div class="bar2">250</div>
+                                <div class="bar3">350</div>
+                                <div class="bar4">450</div>
+                                <div class="bar5">550</div>
+                                <div class="bar6">650</div>
+                                <div class="bar7">750</div>
+                                <div class="bar8">850</div>
+                                <div class="bar9">950</div>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="sm:w-8/12 w-full  flex flex-col justify-center items-center flex-wrap">
+                        <mat-form-field *ngIf="verScorePermiso()" class="mat-form-field-disabled w-full">
+                            <mat-label>Resultados filtro duros</mat-label>
+                            <input matInput type="text" [value]="decisionFiltrosDuros" [readonly]="true" />
+                        </mat-form-field>
+                        <mat-form-field class="mat-form-field-disabled w-full">
+                            <mat-label>Descripción del score</mat-label>
+                            <input matInput type="text" [value]="descripcionScore" [readonly]="true" />
+                        </mat-form-field>
+                    </div>
+                </div>
             </div>
         </mat-expansion-panel>
         <!--Panel datos de riesgo-->
 
         <!--Panel informacion del titular-->
-        <mat-expansion-panel expanded>
+        <mat-expansion-panel expanded class="mb-36 sm:mb-0">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <strong class="mr-2">Descripción del crédito </strong> |
                     {{ fabricaDatos.nombreAgenda }}
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <mat-tab-group (selectedTabChange)="marginTopInputDynamic()" [animationDuration]="'0'" class="sm:mt-5 mt-10">
+            <mat-tab-group (selectedTabChange)="marginTopInputDynamic()" [animationDuration]="'0'"
+                class="sm:mt-5 mt-10">
                 <mat-tab>
                     <ng-template matTabLabel>Datos del titular</ng-template>
-                    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+                    <div
+                        class="bg-white sm:shadow-none md:shadow-md  sm:px-0 md:px-8 rounded pt-6 pb-8 mb-4 flex flex-col">
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field class="mat-form-field-disabled">
                                 <mat-label>Tipo de solicitante</mat-label>
@@ -575,7 +668,8 @@
                                         ">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
-                                        <mat-option *ngFor="let ciudad of ciudadesExpedicion.data" [value]="ciudad.codigo">
+                                        <mat-option *ngFor="let ciudad of ciudadesExpedicion.data"
+                                            [value]="ciudad.codigo">
                                             {{ ciudad.nombre }}
                                         </mat-option>
                                     </mat-select>
@@ -942,7 +1036,7 @@
 
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del
                             negocio</span>
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div class="grid gap-3  grid-cols-1 md:grid-cols-2">
                             <mat-form-field>
                                 <mat-label>¿Comercializas productos o servicios?
                                 </mat-label>
@@ -1033,7 +1127,7 @@
                             </mat-form-field>
                         </div>
 
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
                                 <mat-label>¿El negocio está registrado en cámara de
                                     comercio?
@@ -1087,8 +1181,8 @@
                                 </mat-label>
                                 <input autocomplete="off"
                                     matTooltip="Se deberá ingresar sin digito de verificación ni caracteres especiales."
-                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="11"
-                                    mask="separator.0" thousandSeparator="." maxLength="13" />
+                                    matInput type="text" [formControlName]="'nitNegocio'" minLength="5"
+                                    mask="separator.0" thousandSeparator="." />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                                 <mat-error *ngIf="
                                         form.controls.nitNegocio.errors
@@ -1103,10 +1197,7 @@
                                     Solo se aceptan números
                                 </mat-error>
                                 <mat-error *ngIf="form.controls.nitNegocio.errors?.minlength">
-                                    Longitud mínima de 9 dígitos
-                                </mat-error>
-                                <mat-error *ngIf="form.controls.nitNegocio.errors?.maxLength">
-                                    Longitud máxima de 10 dígitos
+                                    Longitud mínima de 5 dígitos
                                 </mat-error>
                             </mat-form-field>
                         </div>
@@ -1421,10 +1512,25 @@
                             <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                             </mat-icon>
                         </mat-form-field>
-                        <mat-form-field class="md:col-span-1 sm:grid-cols-1 mat-form-field-disabled">
-                            <mat-label>Dirección negocio</mat-label>
-                            <input matInput type="text" [formControlName]="'direccionNegocio'" readonly="true" />
-                        </mat-form-field>
+                        <div class="md:col-span-1  grid grid-cols-12 relative">
+                            <mat-form-field class="col-span-12 mat-form-field-disabled">
+
+                                <mat-label>Dirección negocio</mat-label>
+                                <input matInput type="text" [formControlName]="'direccionNegocio'" readonly="true" />
+                            </mat-form-field>
+                            <div class="absolute positionMapButton">
+                                <div class="cursor-pointer flex h-8 items-center justify-center mt-2 rounded-3xl w-8"
+                                    (click)="cargarMap()">
+                                    <mat-icon class="icon-size-5 hover:text-gray-700" style="color: rgb(148,163,184)"
+                                        svgIcon="heroicons_outline:map"></mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid-cols-1 pading" [ngClass]="{'hidden': !mostrarMapaPreview}">
+                            <div #map id="map" class="heigthDinamico max-w-full rounded-xl">
+
+                            </div>
+                        </div>
 
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1">
                             <mat-form-field>
@@ -1579,7 +1685,7 @@
 
                         </div>
 
-                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
+                        <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-2">
                             <mat-form-field>
                                 <mat-label>Tipo de ubicación del negocio</mat-label>
                                 <mat-select [value]="'seleccione'" [formControlName]="'tipoUbicacionNegocio'"
@@ -1669,20 +1775,7 @@
                             " class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
                             <mat-form-field>
                                 <mat-label>Primer nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'primerNombreConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'primerNombreConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1694,39 +1787,13 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo nombre</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoNombreConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'segundoNombreConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Primer apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'primerApellidoConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'primerApellidoConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                                 <mat-error *ngIf="
@@ -1738,20 +1805,7 @@
                             </mat-form-field>
                             <mat-form-field>
                                 <mat-label>Segundo apellido</mat-label>
-                                <input matInput type="text" [formControlName]="'segundoApellidoConyuge'" (keyup)="
-                                        form.controls.nombreCompleto.setValue(
-                                            form.controls.primerNombre.value +
-                                                ' ' +
-                                                form.controls.segundoNombre
-                                                    .value +
-                                                ' ' +
-                                                form.controls.primerApellido
-                                                    .value +
-                                                ' ' +
-                                                form.controls.segundoApellido
-                                                    .value
-                                        )
-                                    " />
+                                <input matInput type="text" [formControlName]="'segundoApellidoConyuge'" />
                                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'">
                                 </mat-icon>
                             </mat-form-field>
@@ -2551,17 +2605,17 @@
                         </div>
                     </div>
                 </mat-tab>
-                <mat-tab  *ngIf="form.controls['tipoDeudor'].value === '1' || form.controls['tipoDeudor'].value === '3'">
-                    <ng-template matTabLabel >
+                <mat-tab *ngIf="form.controls['tipoDeudor'].value === '1' || form.controls['tipoDeudor'].value === '3'">
+                    <ng-template matTabLabel>
                         Codeudor
                     </ng-template>
-                    <form-codeudor ></form-codeudor>
+                    <form-codeudor></form-codeudor>
                 </mat-tab>
                 <mat-tab *ngIf="form.controls['tipoDeudor'].value === '2' || form.controls['tipoDeudor'].value === '3'">
-                    <ng-template matTabLabel >
+                    <ng-template matTabLabel>
                         Deudor solidario
                     </ng-template>
-                    <form-deudor-solitario ></form-deudor-solitario>
+                    <form-deudor-solitario></form-deudor-solitario>
                 </mat-tab>
                 <mat-tab>
                     <ng-template matTabLabel>Documentación</ng-template>
@@ -2577,7 +2631,13 @@
                         <app-grid-politicas></app-grid-politicas>
                     </mat-tab>
                 </ng-container>
-                <mat-tab *ngIf="form.controls['destinoCredito'].value === 'CC'">
+                <ng-container *ngIf="verScorePermiso()">
+                    <mat-tab>
+                        <ng-template matTabLabel>Filtros duros</ng-template>
+                        <app-grid-filtros-duros></app-grid-filtros-duros>
+                    </mat-tab>
+                </ng-container>
+                <mat-tab>
                     <ng-template matTabLabel>Listado de carteras</ng-template>
                     <app-grid-cartera-micro></app-grid-cartera-micro>
                 </mat-tab>

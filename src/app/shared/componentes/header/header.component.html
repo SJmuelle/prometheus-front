@@ -1,0 +1,18 @@
+<div class="flex items-center pl-16 pt-6 pb-5 bg-white w-full">
+    <div class="flex-0 w-16 h-16  overflow-hidden">
+        <img [src]="infoTitulo.icon? infoTitulo.icon : 'assets/images/agendas/Asignacion.png'"
+            class="w-full h-full object-cover">
+    </div>
+    <div class="flex-1 mx-3">
+        <div class="text-3xl font-semibold tracking-tight leading-8">
+            {{infoTitulo.titulo}}
+        </div>
+        <div class="flex items-center">
+            <mat-icon class="mr-2" svgIcon="heroicons_solid:bell"></mat-icon>
+            <div class="font-medium tracking-tight text-secondary">
+                {{infoTitulo.subtitulo}}
+            </div>
+        </div>
+    </div>
+
+</div>

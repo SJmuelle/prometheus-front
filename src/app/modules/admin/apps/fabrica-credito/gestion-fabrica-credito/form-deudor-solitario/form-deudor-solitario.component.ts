@@ -15,6 +15,7 @@ import { DepartamentosCiudadesService } from 'app/core/services/departamentos-ci
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 import { FormularioCreditoService } from 'app/core/services/formulario-credito.service';
 import { GenericasService } from 'app/core/services/genericas.service';
+import { PermisosService } from 'app/core/services/permisos.service';
 import moment from 'moment';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -35,6 +36,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public tipoVivienda$: Observable<any>;
     public subscription$: Subscription;
     public dataInicial: any;
+    public permisoEditar: boolean = false;
     public unSubscribe$: Subject<any> = new Subject<any>();
     //variables iniciales
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
@@ -57,7 +59,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private fabricaCreditoService: FabricaCreditoService,
         private _formularioCreditoService: FormularioCreditoService,
-        private el: ElementRef
+        private el: ElementRef,
+        public _permisosService: PermisosService
     ) {
         if (!this.numeroSolicitud) {
             return;
@@ -81,7 +84,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         this.cargueInicial();
 
         this.addValidation();
-        this.marginTopInputDynamic()
+        this.marginTopInputDynamic();
+        
+        this.permisoEditar =
+            this._permisosService.permisoPorModuleTrazabilidad();
+        if (this.permisoEditar) {
+            this.formDeudorSolidario.disable();
+        }
     }
 
     ngOnDestroy(): void {
@@ -278,6 +287,7 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             .subscribe(({ data }) => {
                 this.formDeudorSolidario.patchValue(data);
                 this.mostrarOTP = data?.autorizacionesValidadas === 'N'
+                this.formDeudorSolidario.controls['nombreCompleto'].setValue(this.getNombreCompleto())
 
 
                 this.dataGeneralIncial = data;
@@ -373,6 +383,9 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public seleccionDepartamento(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getCiudades(codigo);
+
+        this.formDeudorSolidario.get('codigoCiudad').setValue('')
+        this.formDeudorSolidario.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -382,6 +395,8 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
     public seleccionCiudad(event: MatSelectChange): void {
         const codigo: string = event.value;
         this.getBarrios(codigo);
+
+        this.formDeudorSolidario.get('barrioResidencia').setValue('')
     }
 
     /**
@@ -478,7 +493,6 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
             clausulaAnticurrupcionClaracionAuto: 'S',
             autoricacionDatosPersonalClaracionAuto: 'S',
         };
-
 
         Swal.fire({
             title: 'Guardar información',
@@ -891,5 +905,13 @@ export class FormDeudorSolitarioComponent implements OnInit, OnDestroy {
         } else {
             return null;
         }
+    }
+
+    public getNombreCompleto(): string {
+        return [
+        this.formDeudorSolidario.controls['primerNombre'].value,
+        this.formDeudorSolidario.controls['segundoNombre'].value,
+        this.formDeudorSolidario.controls['primerApellido'].value,
+        this.formDeudorSolidario.controls['segundoApellido'].value].filter(text => text !== '').join(' ')
     }
 }

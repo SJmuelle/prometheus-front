@@ -9,7 +9,7 @@ import { environment } from 'environments/environment';
 @Injectable()
 export class AuthService {
     private _authenticated: boolean = false;
-    private ruta:string=environment.apiUrl+'api-fintra/api';
+    private ruta: string = environment.apiUrl + 'api-fintra/api';
     /**
      * Constructor
      */
@@ -17,6 +17,7 @@ export class AuthService {
         private _httpClient: HttpClient,
         private _userService: UserService
     ) {
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -61,7 +62,7 @@ export class AuthService {
      *
      * @param credentials
      */
-    signSagicc(credentials: { userName: string;}): Observable<any> {
+    signSagicc(credentials: { userName: string; }): Observable<any> {
         // Throw error, if the user is already logged in
         if (this._authenticated) {
             return throwError('User is already logged in.');
@@ -69,6 +70,7 @@ export class AuthService {
 
         return this._httpClient.post(this.ruta + '/private/iniciar-sesion-sagicc', credentials).pipe(
             switchMap((response: any) => {
+                localStorage.clear();
                 // Store the access token in the local storage
                 this.accessToken = response.data.token;
                 // this.accessToken = response.accessToken;
@@ -88,7 +90,7 @@ export class AuthService {
                     email: response.data.email,
                     status: 'online',
                     user: response.data.idusuario,
-                    rol:response.data.rol_id
+                    rol: response.data.rol_id
 
                 });
                 localStorage.setItem("usuario", user);
@@ -131,7 +133,7 @@ export class AuthService {
                     email: response.data.email,
                     status: 'online',
                     user: response.data.idusuario,
-                    rol:response.data.rol_id
+                    rol: response.data.rol_id
                 });
                 localStorage.setItem("usuario", user);
                 // Return a new observable with the response

@@ -1,16 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PagoMasivoRoutingModule } from './pago-masivo-routing.module';
-import { ImportFileComponent } from './import-file/import-file.component';
-
-import { FuseAlertModule } from '@fuse/components/alert';
-import { Ng2SearchPipeModule } from "ng2-search-filter";
-
+import { MercadeoRoutingModule } from './mercadeo-routing.module';
+import { ReporterdMercadeoComponent } from './reporterd-mercadeo/reporterd-mercadeo.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
-
-import { FuseCardModule } from '../../../../../@fuse/components/card/card.module';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -24,24 +17,23 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { ConveniosComponent } from './import-file/convenios/convenios.component';
-import { ActualizarTasaComponent } from './import-file/convenios/actualizar-tasa/actualizar-tasa.component';
-
-
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { MaterialLayoutModule } from 'app/layout/layouts/horizontal/material/material.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    ImportFileComponent,
-    ConveniosComponent,
-    ActualizarTasaComponent
+    ReporterdMercadeoComponent,
   ],
   imports: [
     CommonModule,
-    HttpClientModule,
     FormsModule,
+    Ng2SearchPipeModule,
+    MercadeoRoutingModule,
     ReactiveFormsModule,
-    PagoMasivoRoutingModule,
-    FuseCardModule,
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -54,8 +46,22 @@ import { ActualizarTasaComponent } from './import-file/convenios/actualizar-tasa
     MatExpansionModule,
     MatTooltipModule,
     MatButtonToggleModule,
-    FuseAlertModule,
-    Ng2SearchPipeModule
-  ]
+    MatButtonModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    NgxPaginationModule,
+    MaterialLayoutModule,
+    MatDatepickerModule,
+    SharedModule
+  ],
+
 })
-export class PagoMasivoModule { }
+export class MercadeoModule { }

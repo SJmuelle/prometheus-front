@@ -52,7 +52,49 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-panel-description class="overflow-scroll scrollbar-hide">
-                <table class="p-0">
+                <div class="sm:hidden flex py-4 w-full flex-col gap-2">
+                    <div *ngFor="let item of documentos"
+                        class="rounded-2xl bg-gray-100 flex min-h-15 p-2 text-smx text-gray-700 font-semibold">
+                        <div class="w-10/12 flex flex-col justify-center">
+                            <div class="leading-3 my-1" (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()">{{item.descripcion}}</div>
+                            <div class="text-xxs font-light leading-none" *ngIf="item.requerido === 'S'">Requerido</div>
+                            <div class="text-xxs font-light flex gap-1 items-center"
+                                *ngIf="item.archivoCargado !== 'N'">
+                                <div class="w-2 h-2 rounded-3xl bg-green-300 justify-center ">
+                                </div>
+                                <div>
+                                    Cargado por: <strong>{{item.usuarioCreacion}}</strong>
+                                </div>
+                            </div>
+                            <div class="text-xxs font-light leading-none" *ngIf="item.fechaCargue"><strong>En el dia: </strong>{{item.fechaCargue}}</div>
+                            <div class="text-xxs font-light leading-none w-full flex justify-center items-center gap-1 mt-1"
+                                *ngIf="item.historico !== 'N'" (click)="onHistorico(item);settingsDrawer.toggle()">
+                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                <div>Ver histórico de documentos</div>
+                            </div>
+                        </div>
+                        <div class="w-2/12 flex justify-center items-center">
+                            <div class="">
+                                <ng-container *ngIf="item.archivoCargado === 'N'">
+                                    <input type="file" #fileInputMobil multiple (change)="subirArchivo($event, item)"
+                                        class="d-none"
+                                        [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
+                                    <button (click)="fileInputMobil.click()" mat-icon-button
+                                        matTooltip="Cargar documento">
+                                        <mat-icon class="rounded-full bg-gray-400 text-white p-1"
+                                            svgIcon="heroicons_outline:paper-clip"></mat-icon>
+                                    </button>
+                                </ng-container>
+                                <button *ngIf="item.archivoCargado !== 'N'" mat-icon-button
+                                    matTooltip="Eliminar documento" (click)="onEliminarDocumento(item)">
+                                    <mat-icon class="rounded-full bg-gray-400 text-white p-1"
+                                        svgIcon="heroicons_outline:trash"></mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="p-0 sm:table hidden">
                     <thead class="bg-accent-50">
                         <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                             <th class="px-4 py-3"></th>
@@ -81,7 +123,10 @@
                                         [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                <td class="px-2 text-sm border" [ngClass]="item.archivoCargado !== 'N' ? 'hover:text-gray-900 cursor-pointer boldText' : ''" (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()" [matTooltip]="item.descripcionTooltip">{{
+                                <td class="px-2 text-sm border"
+                                    [ngClass]="item.archivoCargado !== 'N' ? 'hover:text-gray-900 cursor-pointer boldText' : ''"
+                                    (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()"
+                                    [matTooltip]="item.descripcionTooltip">{{
                                     item.descripcion}}
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
@@ -93,7 +138,6 @@
                                 <td class="px-2 text-sm border text-center" *ngIf="!permisoEditar">
                                     <ng-container *ngIf="item.archivoCargado === 'N'">
                                         <input type="file" #fileInput multiple (change)="subirArchivo($event, item)"
-
                                             class="d-none"
                                             [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
                                         <button mat-icon-button matTooltip="Cargar documento"
@@ -112,8 +156,7 @@
                                 <td class="px-2 text-sm border text-center">
                                     <ng-container *ngIf="item.archivoCargado !== 'N'">
                                         <button mat-icon-button matTooltip="Descargar documento"
-                                            (click)="getDocumentoPreView(item);onDescargar(item)"
-                                            >
+                                            (click)="getDocumentoPreView(item);onDescargar(item)">
                                             <mat-icon [svgIcon]="'mat_outline:download'"></mat-icon>
                                         </button>
                                     </ng-container>
@@ -141,7 +184,49 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <mat-panel-description class="overflow-scroll scrollbar-hide">
-                <table class="p-0">
+                <div class="sm:hidden flex py-4 w-full flex-col gap-2">
+                    <div *ngFor="let item of documentosCodeudor"
+                        class="rounded-2xl bg-gray-100 flex min-h-15 p-2 text-smx text-gray-700 font-semibold">
+                        <div class="w-10/12 flex flex-col justify-center">
+                            <div class="leading-3 my-1" (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()">{{item.descripcion}}</div>
+                            <div class="text-xxs font-light leading-none" *ngIf="item.requerido === 'S'">Requerido</div>
+                            <div class="text-xxs font-light flex gap-1 items-center"
+                                *ngIf="item.archivoCargado !== 'N'">
+                                <div class="w-2 h-2 rounded-3xl bg-green-300 justify-center ">
+                                </div>
+                                <div>
+                                    Cargado por: <strong>{{item.usuarioCreacion}}</strong>
+                                </div>
+                            </div>
+                            <div class="text-xxs font-light leading-none" *ngIf="item.fechaCargue"><strong>En el dia: </strong>{{item.fechaCargue}}</div>
+                            <div class="text-xxs font-light leading-none w-full flex justify-center items-center gap-1 mt-1"
+                                *ngIf="item.historico !== 'N'" (click)="onHistorico(item);settingsDrawer.toggle()">
+                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                <div>Ver histórico de documentos</div>
+                            </div>
+                        </div>
+                        <div class="w-2/12 flex justify-center items-center">
+                            <div class="">
+                                <ng-container *ngIf="item.archivoCargado === 'N'">
+                                    <input type="file" #fileInputMobil multiple (change)="subirArchivo($event, item)"
+                                        class="d-none"
+                                        [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
+                                    <button (click)="fileInputMobil.click()" mat-icon-button
+                                        matTooltip="Cargar documento">
+                                        <mat-icon class="rounded-full bg-gray-400 text-white p-1"
+                                            svgIcon="heroicons_outline:paper-clip"></mat-icon>
+                                    </button>
+                                </ng-container>
+                                <button *ngIf="item.archivoCargado !== 'N'" mat-icon-button
+                                    matTooltip="Eliminar documento" (click)="onEliminarDocumento(item)">
+                                    <mat-icon class="rounded-full bg-gray-400 text-white p-1"
+                                        svgIcon="heroicons_outline:trash"></mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="p-0 sm:table hidden">
                     <thead class="bg-accent-50">
                         <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                             <th class="px-4 py-3"></th>
@@ -169,7 +254,10 @@
                                         [(ngModel)]="item.selected"></mat-checkbox>
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                <td class="px-2 text-sm border" [ngClass]="item.archivoCargado !== 'N' ? 'hover:text-gray-900 cursor-pointer boldText' : ''" (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()" [matTooltip]="item.descripcionTooltip">{{
+                                <td class="px-2 text-sm border"
+                                    [ngClass]="item.archivoCargado !== 'N' ? 'hover:text-gray-900 cursor-pointer boldText' : ''"
+                                    (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()"
+                                    [matTooltip]="item.descripcionTooltip">{{
                                     item.descripcion}}
                                 </td>
                                 <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
@@ -227,7 +315,49 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <mat-panel-description class="overflow-scroll scrollbar-hide">
-                    <table class="p-0">
+                    <div class="sm:hidden flex py-4 w-full flex-col gap-2">
+                        <div *ngFor="let item of documentosDeudor"
+                            class="rounded-2xl bg-gray-100 flex min-h-15 p-2 text-smx text-gray-700 font-semibold">
+                            <div class="w-10/12 flex flex-col justify-center">
+                                <div class="leading-3 my-1" (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()">{{item.descripcion}}</div>
+                                <div class="text-xxs font-light leading-none" *ngIf="item.requerido === 'S'">Requerido</div>
+                                <div class="text-xxs font-light flex gap-1 items-center"
+                                    *ngIf="item.archivoCargado !== 'N'">
+                                    <div class="w-2 h-2 rounded-3xl bg-green-300 justify-center ">
+                                    </div>
+                                    <div>
+                                        Cargado por: <strong>{{item.usuarioCreacion}}</strong>
+                                    </div>
+                                </div>
+                                <div class="text-xxs font-light leading-none" *ngIf="item.fechaCargue"><strong>En el dia: </strong>{{item.fechaCargue}}</div>
+                                <div class="text-xxs font-light leading-none w-full flex justify-center items-center gap-1 mt-1"
+                                    *ngIf="item.historico !== 'N'" (click)="onHistorico(item);settingsDrawer.toggle()">
+                                    <mat-icon class="icon-size-3" svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                    <div>Ver histórico de documentos</div>
+                                </div>
+                            </div>
+                            <div class="w-2/12 flex justify-center items-center">
+                                <div class="">
+                                    <ng-container *ngIf="item.archivoCargado === 'N'">
+                                        <input type="file" #fileInputMobil multiple (change)="subirArchivo($event, item)"
+                                            class="d-none"
+                                            [accept]="'image/jpeg,image/png,application/pdf,audio/ogg,audio/agg,.xlsx'">
+                                        <button (click)="fileInputMobil.click()" mat-icon-button
+                                            matTooltip="Cargar documento">
+                                            <mat-icon class="rounded-full bg-gray-400 text-white p-1"
+                                                svgIcon="heroicons_outline:paper-clip"></mat-icon>
+                                        </button>
+                                    </ng-container>
+                                    <button *ngIf="item.archivoCargado !== 'N'" mat-icon-button
+                                        matTooltip="Eliminar documento" (click)="onEliminarDocumento(item)">
+                                        <mat-icon class="rounded-full bg-gray-400 text-white p-1"
+                                            svgIcon="heroicons_outline:trash"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="p-0 sm:table hidden">
                         <thead class="bg-accent-50">
                             <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                                 <th class="px-4 py-3"></th>
@@ -255,7 +385,10 @@
                                             [(ngModel)]="item.selected"></mat-checkbox>
                                     </td>
                                     <td class="px-2 text-sm border text-center">{{ item.idArchivo}}</td>
-                                    <td class="px-2 text-sm border" [ngClass]="item.archivoCargado !== 'N' ? 'hover:text-gray-900 cursor-pointer boldText' : ''" (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()" [matTooltip]="item.descripcionTooltip">{{
+                                    <td class="px-2 text-sm border"
+                                        [ngClass]="item.archivoCargado !== 'N' ? 'hover:text-gray-900 cursor-pointer boldText' : ''"
+                                        (click)="item.archivoCargado !== 'N' && getDocumentoPreView(item) && verArchivoActual.toggle()"
+                                        [matTooltip]="item.descripcionTooltip">{{
                                         item.descripcion}}
                                     </td>
                                     <td class="px-2 text-sm border text-center">{{ item.usuarioCreacion}}</td>
@@ -316,10 +449,10 @@
 
 
 
-<fuse-drawer class="w-100 min-w-100" fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
+<fuse-drawer class="w-100 min-w-100 " fixed transparentOverlay [mode]="'over'" [name]="'settingsDrawer'"
     [position]="'right'" #settingsDrawer>
 
-    <div class="flex flex-col w-full overflow-auto bg-card pt-20">
+    <div class="flex flex-col w-full overflow-auto bg-card pt-20 z-99999">
         <div cdkscrollable="" class="mat-drawer-inner-container ng-tns-c126-23">
             <router-outlet class="ng-tns-c126-23"></router-outlet>
             <!-- <file-manager-details class="ng-star-inserted" style=""> -->
@@ -406,8 +539,9 @@
                                         </svg>
 
                                     </mat-icon>
-                                    <audio controls="controls" autobuffer="autobuffer" >
-                                        <source [src]="item.base64" [type]="'audio/ogg'">
+                                    <audio controls="controls" autobuffer="autobuffer">
+                                        <source [src]="sanitizer.bypassSecurityTrustResourceUrl(item.base64)"
+                                            [type]="'audio/ogg'" [autoplay]="false">
 
                                         Your browser does not support the audio element.
                                     </audio>
@@ -516,7 +650,7 @@
                     <span class="mat-button-focus-overlay"></span>
                 </button>
             </div>
-            <ng-container >
+            <ng-container>
                 <div *ngIf="datoPreview" class="flex flex-col flex-auto p-6 md:p-6">
 
                     <div class="flex flex-col items-start mt-1">
@@ -581,8 +715,9 @@
                                         </svg>
 
                                     </mat-icon>
-                                    <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay">
-                                        <source [src]="datoPreview.base64" [type]="'audio/ogg'">
+                                    <audio controls="controls" autobuffer="autobuffer" [autoplay]="false">
+                                        <source [src]="sanitizer.bypassSecurityTrustResourceUrl(datoPreview.base64)"
+                                            [type]="'audio/ogg'">
 
                                         Your browser does not support the audio element.
                                     </audio>

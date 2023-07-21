@@ -20,6 +20,7 @@ import { ListadoBarriosComponent } from './listado-barrios/listado-barrios.compo
 import { ListadoBarriosFormComponent } from './listado-barrios/listado-barrios-form/listado-barrios-form.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { TipoCombustibleComponent } from './tipo-combustible/tipo-combustible.component';
+import { AsignacionAsesorMicroComponent } from './asignacion-asesor-micro/asignacion-asesor-micro.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TipoCombustibleComponent } from './tipo-combustible/tipo-combustible.co
     ListadoTiposComentariosFormComponent,
     ListadoBarriosComponent,
     ListadoBarriosFormComponent,
-    TipoCombustibleComponent
+    TipoCombustibleComponent,
+    AsignacionAsesorMicroComponent
   ],
   imports: [
     CommonModule,

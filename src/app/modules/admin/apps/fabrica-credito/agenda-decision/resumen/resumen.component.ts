@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDecisionComponent } from '../form-decision/form-decision.component';
 import { KeyValue } from '@angular/common';
+import { GenericasService } from 'app/core/services/genericas.service';
+import { DetalleExcepcionCreditoComponent } from '../../gestion-fabrica-credito/detalle-excepcion-credito/detalle-excepcion-credito.component';
 
 @Component({
     selector: 'app-resumen',
@@ -18,7 +20,10 @@ export class ResumenComponent implements OnInit {
     public dataResumenTrazabilidad: any = [];
     public numeroSolicitud: string = this.route.snapshot.paramMap.get('num');
     public identificacion: string = this.route.snapshot.paramMap.get('id');
+    public politicas: boolean = true;
+    public unidadNegocio: any;
     dataPolicitasAdmin: any = {};
+    datosGeneral:any[]=[]
     datos2: any[];
     apiData: any;
     verComentarios: boolean = false;
@@ -30,14 +35,24 @@ export class ResumenComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private _dialog: MatDialog,
+        private genericaService: GenericasService,
+        private _matDialog: MatDialog
     ) {
+        this.getUnidadDeNegocio()
         this.getResumen();
     }
 
     ngOnInit(): void {
         // this.openModalNegocio()
+        this.getResumenCliente()
+
     }
 
+    private getUnidadDeNegocio(){
+        this.genericaService.getUnidadNegocio(this.numeroSolicitud).subscribe(rep => {
+            this.unidadNegocio = rep.data[0].unidadNegocio;
+        })
+    }
     /**
    * @description: Obtiene los datos del resumen
    */
@@ -52,8 +67,8 @@ export class ResumenComponent implements OnInit {
 
         ).subscribe((res) => {
             if (res.status === 200) {
-                this.getDatos(res.data);
                 this.apiData = res.data;
+                this.getDatos(res.data);
                 Swal.close();
             } else {
                 Swal.close();
@@ -69,7 +84,7 @@ export class ResumenComponent implements OnInit {
         let DatosCredito = [], DatosCredito2 = [];
         switch (data.resumenGeneral.unidadNegocio) {
             case 1:
-                
+
                 DatosCredito.push(
                     {
                         titulo: "Información del cliente:",
@@ -579,15 +594,29 @@ export class ResumenComponent implements OnInit {
                             icono: "heroicons_outline:academic-cap",
                             clase: "bg-blue-100",
                             color: "bg-blue-100 text-blue-800",
-                            label: "Mora máx actual",
-                            valor: data.resumenHdc.maximaMoraActual
+                            label: "Cuotas",
+                            valor: "$" + data.resumenHdc.cuota
                         },
                         {
                             icono: "heroicons_outline:academic-cap",
                             clase: "bg-blue-100",
                             color: "bg-blue-100 text-blue-800",
-                            label: "Mayor calificación",
-                            valor: data.resumenHdc.calificacion
+                            label: "Cupo inicial",
+                            valor: "$" + data.resumenHdc.cupoInicial
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Saldo obligaciones",
+                            valor: "$" + data.resumenHdc.saldoObligaciones
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Mora máx actual",
+                            valor: data.resumenHdc.maximaMoraActual
                         },
                         {
                             icono: "heroicons_outline:academic-cap",
@@ -616,6 +645,34 @@ export class ResumenComponent implements OnInit {
                             color: "bg-blue-100 text-blue-800",
                             label: "Saldo en mora",
                             valor: "$" + this.separatos(data.resumenHdc.maximaMoraActual)
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Contador gestiones",
+                            valor: data.resumenHdc.contadorGestiones
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Sumatoria embargos",
+                            valor: "$" + this.separatos(data.resumenHdc.sumatoriaEmbargos)
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Score",
+                            valor: this.apiData?.resumenGeneral.score
+                        },
+                        {
+                            icono: "heroicons_outline:academic-cap",
+                            clase: "bg-blue-100",
+                            color: "bg-blue-100 text-blue-800",
+                            label: "Nivel de riesgo",
+                            valor: this.apiData?.resumenGeneral.nivelRiesgo.toLocaleLowerCase()
                         },
                     ]
                 },
@@ -822,6 +879,36 @@ export class ResumenComponent implements OnInit {
         return data
     }
 
+    public hasFiltrosDuros(politicas: any[]): boolean{
+        return politicas.find(politica => politica.idPolitica === 21)
+    }
+
+     /**
+* @description: Obtiene los datos del resumen
+*/
+  private getResumenCliente(): void {
+
+    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+    let data = {
+      "numeroSolicitud": this.numeroSolicitud,
+      "identificacion": this.identificacion
+    }
+
+    this._fabricaCreditoService.getHistoricoCliente(data).pipe(
+
+    ).subscribe((res) => {
+      Swal.close();
+      if (res.status === 200) {
+        this.datosGeneral=res.data;
+
+
+      } else {
+        this.datosGeneral = []
+      }
+
+    });
+  }
+
     /**
    * @description: Direcciona al componente comentarios
    */
@@ -884,4 +971,11 @@ export class ResumenComponent implements OnInit {
         return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
     }
 
+    openDetalleExcepcion(item: any) {
+        this._matDialog.open(DetalleExcepcionCreditoComponent, {
+            width: '50vw',
+            maxHeight: '650px',
+            data: item,
+        });
+    }
 }

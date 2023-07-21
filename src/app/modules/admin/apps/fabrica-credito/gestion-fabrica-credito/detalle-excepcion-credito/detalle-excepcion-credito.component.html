@@ -1,0 +1,18 @@
+<h2 mat-dialog-title class="mb-3 w-full flex justify-center items-center">Detalle de la excepción</h2>
+<p class="font-semibold mb-0">{{data.nombre}}</p>
+<P class="mb-1">{{data.descripcion}}</P>
+
+<mat-form-field class="w-full fuse-mat-dense mt-2 dltMB">
+    <textarea class="h-60" placeholder="Comentario" matInput [value]="data.comentarioExcepcion" [readonly]="true">
+</textarea>
+</mat-form-field>
+<div class="w-full flex justify-end items-center">
+    <p class="font-semibold m-0 text-gray-500 text-sm">{{data.usuarioExcepcion + ' / ' + data.fechaExcepcion}}</p>
+</div>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <button mat-raised-button class="bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

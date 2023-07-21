@@ -1,32 +1,133 @@
-<div class="grid grid-cols-12">
-    <strong class="col-span-12 p-1.5 rounded-1 mb-3">Políticas administrativas del titular</strong>
-    <div class="col-span-12 overflow-scroll scrollbar-hide">
-        <table class="shadow p-0">
+<div class="grid grid-cols-12" *ngFor="let politica of politicas | keyvalue: keyDescOrder">
+    <div
+        class="col-span-12 flex md:flex-row sm:flex-col border-1 rounded-md py-1 px-2 my-3 flexWrapCustom  sm:justify-center md:justify-between items-center gap-2">
+        <strong class="md:w-3/6 sm:w-full p-1.5 rounded-1">{{getTituloPolitica(politica.key)}}</strong>
+        <div *ngIf="permisoExcepcion && politica.key === 'T'" class="flex customDivButton  items-center py-2">
+            <button color="primary" class="customBTM" type="button" (click)="correrMotor(politica.key)">
+                Evaluar motor
+            </button>
+        </div>
+    </div>
+    <div class="col-span-12">
+        <div class="sm:hidden flex py-4 w-full flex-col gap-3">
+            <ng-container *ngFor="let item of politica.value">
+                <ng-container *ngIf="item.idPolitica !== 21">
+                    <div
+                        class="rounded-2xl bg-gray-100 gap-3 flex flex-col min-h-15 p-2 text-smx text-gray-700 font-semibold">
+
+                        <div class="w-full flex justify-center items-center">
+                            <p class="border-b-2 m-0 ">{{item.nombre}}</p>
+                        </div>
+                        <div class="font-normal text-smx">{{item.descripcion}}</div>
+                        <div [ngClass]="getColorExcepcion(item)"
+
+                            class="w-full flex justify-center items-center rounded-full gap-1"
+                            >
+                            <mat-icon class="icon-xxs text-white"
+                                [svgIcon]="item.estadoAccion === 'CUMPLE' ? 'heroicons_outline:check-circle' : 'heroicons_outline:x-circle'"></mat-icon>
+                            <p (click)="tooltip.toggle()"  [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            matTooltipTouchGestures="on" #tooltip="matTooltip" class=" m-0 text-smx text-white">{{item.estadoAccion === 'CUMPLE' ? 'Cumple':
+                                'No cumple'}}</p>
+                            <div *ngIf="permisoExcepcion && item.estadoAccion !== 'CUMPLE' && unidadNegocio === 1 && politica.key === 'T'"
+                                class="py-0 text-sm md:w-full sm:w-auto flex justify-center items-center">
+                                <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones"
+                                    class="customBTNSize">
+                                    <mat-icon class="icon-sizeC text-white">format_list_bulleted</mat-icon></button>
+                            </div>
+                            <mat-menu #menuOpciones="matMenu">
+
+                                <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                                    <button *ngIf="permisoExcepcion" mat-menu-item class="flex  items-center"
+                                        matTooltip="Excepcionar" (click)="openExcepcion(item)">
+                                        <mat-icon [svgIcon]="'heroicons_solid:pencil'"
+                                            class="mr-2"></mat-icon>Excepcionar
+                                    </button>
+
+
+
+                                    <button (click)="openDetalleExcepcion(item)" mat-menu-item
+                                        class="flex  items-center" matTooltip="Ver detalle excepción">
+                                        <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle
+                                        excepción
+                                    </button>
+
+
+                                </div>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <table class="shadow p-0 sm:table hidden">
             <thead class="bg-accent-50">
                 <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
                     <th class="px-4 py-3">Nombre de la política</th>
                     <th class="px-4 py-3">Descripción de la política</th>
                     <th class="px-4 py-3">Estado</th>
+                    <th *ngIf="unidadNegocio === 1 && politica.key === 'T'" class="px-4 py-3">Acción</th>
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <ng-container *ngIf="titular.length">
-                    <ng-container *ngFor="let item of titular">
-                        <tr>
+                <ng-container >
+                    <ng-container *ngFor="let item of politica.value">
+                        <tr *ngIf="item.idPolitica !== 21">
                             <td class="px-2 text-sm border min-w-30">{{item.nombre}}</td>
                             <td class="px-2 text-sm border min-w-100">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
+                            <td class="px-2 text-sm border w-0" [ngClass]="getColorExcepcion(item)"
+                                [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
                                 matTooltipPosition="left">
 
-
-                                <div class="py-0.5 text-xs px-2  text-center font-bold ">
-                                    {{item.estadoAccion | titlecase}}
+                                <div class="flex justify-center items-center w-full whitespace-nowrap px-1">
+                                    <div class="py-0.5 text-xs px-2  text-center font-bold"
+                                        [ngClass]="getColorTextExcepcion(item)">
+                                        {{item.estadoAccion | titlecase}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td *ngIf="unidadNegocio === 1 && politica.key === 'T'" class="px-2 text-sm border w-0">
+                                <div *ngIf="item.estadoAccion !== 'CUMPLE'"
+                                    class=" py-0 text-sm w-full flex justify-center h-6 items-center">
+                                    <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones"
+                                        class="customBTNSize">
+                                        <mat-icon class="icon-size-4">format_list_bulleted</mat-icon></button>
                                 </div>
 
+                                <mat-menu #menuOpciones="matMenu">
+
+                                    <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                                        <button *ngIf="permisoExcepcion" mat-menu-item class="flex  items-center"
+                                            matTooltip="Excepcionar" (click)="openExcepcion(item)">
+                                            <mat-icon [svgIcon]="'heroicons_solid:pencil'"
+                                                class="mr-2"></mat-icon>Excepcionar
+                                        </button>
+
+
+
+                                        <button (click)="openDetalleExcepcion(item)" mat-menu-item
+                                            class="flex  items-center" matTooltip="Ver detalle excepción">
+                                            <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver
+                                            detalle excepción
+                                        </button>
+
+
+                                    </div>
+
+
+
+
+
+                                </mat-menu>
+                                <!-- <div class="flex justify-center items-center w-full h-full">
+                                    <button mat-icon-button class="icon-size-5"    >
+                                        <mat-icon
+                                       class="icon-size-4 cursor-pointer "
+                                        svgIcon="heroicons_solid:pencil"></mat-icon>
+                                    </button>
+
+                                </div> -->
                             </td>
                         </tr>
                     </ng-container>
@@ -37,119 +138,3 @@
     <div class="mt-13 sm:mt-13"></div>
 </div>
 
-<div *ngIf="representante.length" class="grid grid-cols-12">
-    <strong class="col-span-12 p-1.5 rounded-1 mb-3">Políticas administrativas del representante</strong>
-    <div class="col-span-12 overflow-scroll scrollbar-hide">
-        <table class="shadow p-0">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3">Nombre de la política</th>
-                    <th class="px-4 py-3">Descripción de la política</th>
-                    <th class="px-4 py-3">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="representante.length">
-                    <ng-container *ngFor="let item of representante">
-                        <tr>
-                            <td class="px-2 text-sm border min-w-30">{{item.nombre}}</td>
-                            <td class="px-2 text-sm border min-w-100">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
-                                matTooltipPosition="left">
-
-
-                                <div class="py-0.5 text-xs px-2  text-center font-bold ">
-                                    {{item.estadoAccion | titlecase}}
-                                </div>
-
-                            </td>
-                        </tr>
-                    </ng-container>
-                </ng-container>
-            </tbody>
-        </table>
-    </div>
-    <div class="mt-13 sm:mt-13"></div>
-</div>
-
-<div *ngIf="codeudor.length" class="grid grid-cols-12">
-    <strong class="col-span-12 p-1.5 rounded-1 mb-3">Políticas administrativas del codeudor</strong>
-    <div class="col-span-12 overflow-scroll scrollbar-hide">
-        <table class="shadow p-0">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3  min-w-30">Nombre de la política</th>
-                    <th class="px-4 py-3  min-w-100">Descripción de la política</th>
-                    <th class="px-4 py-3">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="codeudor.length">
-                    <ng-container *ngFor="let item of codeudor">
-                        <tr>
-                            <td class="px-2 text-sm border">{{item.nombre}}</td>
-                            <td class="px-2 text-sm border">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
-                                matTooltipPosition="left">
-
-
-                                <div class="py-0.5 text-xs px-2  text-center font-bold ">
-                                    {{item.estadoAccion | titlecase}}
-                                </div>
-
-                            </td>
-                        </tr>
-                    </ng-container>
-                </ng-container>
-            </tbody>
-        </table>
-    </div>
-    <div class="mt-13 sm:mt-13"></div>
-</div>
-
-<div *ngIf="solidario.length" class="grid grid-cols-12">
-    <strong class="col-span-12 p-1.5 rounded-1 mb-3">Políticas administrativas del deudor solidario</strong>
-    <div class="col-span-12 overflow-scroll scrollbar-hide">
-        <table class="shadow p-0">
-            <thead class="bg-accent-50">
-                <tr class="text-md font-semibold tracking-wide text-left text-gray-400  border-b">
-                    <th class="px-4 py-3  min-w-30">Nombre de la política</th>
-                    <th class="px-4 py-3  min-w-100">Descripción de la política</th>
-                    <th class="px-4 py-3">Estado</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <ng-container *ngIf="solidario.length">
-                    <ng-container *ngFor="let item of solidario">
-                        <tr>
-                            <td class="px-2 text-sm border">{{item.nombre}}</td>
-                            <td class="px-2 text-sm border">{{item.descripcion}}</td>
-                            <td class="px-2 text-sm border w-0" [ngClass]="
-                            item.estadoAccion !== 'CUMPLE'
-                            ? 'bg-red-300  text-red-900'
-                            : 'bg-green-300 text-green-900'
-                            " [matTooltip]="item.resultadoEvaluado !== '' ? 'Valor evaluado: ' + item.resultadoEvaluado : ''"
-                                matTooltipPosition="left">
-
-
-                                <div class="py-0.5 text-xs px-2  text-center font-bold ">
-                                    {{item.estadoAccion | titlecase}}
-                                </div>
-
-                            </td>
-                        </tr>
-                    </ng-container>
-                </ng-container>
-            </tbody>
-        </table>
-    </div>
-    <div class="mt-13 sm:mt-13"></div>
-</div>
