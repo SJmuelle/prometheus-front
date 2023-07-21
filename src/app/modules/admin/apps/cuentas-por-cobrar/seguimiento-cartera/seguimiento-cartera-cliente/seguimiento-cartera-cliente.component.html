@@ -8,8 +8,8 @@
 
         <mat-accordion class="w-full h-auto gap-4 flex flex-col">
 
-            <mat-expansion-panel [expanded]="openSearch">
-                <mat-expansion-panel-header class="h-15">
+            <mat-expansion-panel [(expanded)]="openSearch">
+                <mat-expansion-panel-header class="h-15" (opened)="openSearch = true" (closed)="openSearch = false">
                     <mat-panel-title class="h-15">
                         <h4 class="mt-3">Filtros</h4>
                     </mat-panel-title>
@@ -60,7 +60,7 @@
                             <mat-form-field class="fuse-mat-dense w-full sm:w-72">
                                 <mat-label class="font-semibold text-md">Numero de documento</mat-label>
                                 <mat-icon matPrefix>search</mat-icon>
-                                <input matInput type="text" formControlName="identificacion">
+                                <input matInput type="text" autocomplete="off" formControlName="identificacion">
                             </mat-form-field>
 
                             <button
