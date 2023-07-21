@@ -37,6 +37,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { MatListModule } from '@angular/material/list';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -73,7 +74,8 @@ import { NgxMaskModule } from 'ngx-mask';
                 // FabricaCreditoModule,
                 MatCheckboxModule,
                 NgxMaskModule.forRoot(),
-                // FabricaCreditoModule
+                // FabricaCreditoModule,
+                MatListModule
 
         ],
         exports: [
@@ -106,7 +108,8 @@ import { NgxMaskModule } from 'ngx-mask';
                 HeaderComponent,
                 MatProgressBarModule,
                 MatCheckboxModule,
-                OTPComponent
+                OTPComponent,
+                MatListModule
         ],
         declarations: [
                 DirectionsBasicComponent,

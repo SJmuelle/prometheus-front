@@ -220,7 +220,7 @@
 
                               <button [matMenuTriggerFor]="matMenuEnviarCorreo" mat-menu-item
                                 *ngIf="item.etapaFirma!='P'" class="flex  items-center" matTooltip="Reenviar firma"
-                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">
+                                >
                                 <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
                               </button>
 
@@ -265,13 +265,13 @@
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">Titular
                               </button>
 
-                              <button mat-menu-item class="flex  items-center"
+                              <button mat-menu-item class="flex  items-center"  *ngIf="item.tipoDeudor!=''"
                                 matTooltip="Enviar correo decisión Deudor solidario"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor solidario
                               </button>
 
 
-                              <button mat-menu-item class="flex  items-center"
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoCodeudor!=''"
                                 matTooltip="Enviar correo decisión Codeudor"
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipodeudor)">Codeudor
                               </button>
@@ -411,8 +411,7 @@
                           <div class="flex justify-between">
                             <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
                               [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                              <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó
-                                evidente'}}</small>
+                              <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó evidente'}}</small>
                               <span class="text-current">
                                 {{ item.intentosEvidente}}
                               </span>
@@ -442,7 +441,7 @@
                               [ngClass]="item.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
                               <small class="text-xs">Firma Thomas </small>
                               <span class="text-xs">
-                                {{item.evidente?'Se realizó':'No se realizó'}}
+                                {{item.thomas?'Se realizó':'No se realizó'}}
                               </span>
                               <small class="text-xs">{{ cambiarFecha(item.thomasFecha)}}</small>
                             </div>
