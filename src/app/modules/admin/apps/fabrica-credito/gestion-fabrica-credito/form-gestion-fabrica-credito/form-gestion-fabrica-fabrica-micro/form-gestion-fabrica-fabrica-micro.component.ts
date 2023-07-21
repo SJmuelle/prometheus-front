@@ -240,6 +240,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
+                console.log('data inicial', this.dataInicial)
                 this.antiBucle = resp.data
                 this.subscribeInput();
             }
@@ -865,7 +866,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
-            tipoCredito: [''],
+            tipoCredito: ['', Validators.required],
             emision: [''],
             tipoDocumento: [''],
             identificacion: [''],
