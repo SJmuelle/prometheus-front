@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,9 +23,16 @@ interface IFuntions {
 
 interface IMenuFunctions {
   nameFunction: string,
-  callback: Function,
+  callback?: Function,
   iconFuseTemplate?: string
   iconAngularMateriañ?: string
+  children: boolean
+  arrayChildren?: Ichildren
+}
+
+interface Ichildren {
+  nameChildren: 'indexMatMenu1' | 'indexMatMenu2' | 'indexMatMenu3' | 'indexMatMenu4'
+  values: IMenuFunctions[]
 }
 
 
@@ -48,6 +56,15 @@ export interface IoptionTable {
    * Texto que quiero mostrar en el header de la table
    */
   text: string,
+
+  /**
+   * propiedad generada automaticamente
+   */
+  view?: boolean
+  /**
+   * propiedad generada automaticamente
+   */
+  disable?: boolean
   /**
    * se especifica si es de tipo texto o llama una funcion 
    */
@@ -103,6 +120,9 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
   public dataFilter: string = '';
   public dataCopy: any[] = [];
   public dataFunctions: any[] = []
+  public openlist: boolean = false
+  public optionColumns: any[] = []
+  public copyTableOptions: any[] = []
   private susbcripcion$: Subscription = new Subscription();
   private unsuscribre$: Subject<void> = new Subject<void>();
 
@@ -117,28 +137,105 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.dataColumn = [...this.dataOptionTable.map(({ name }) => name)]
+
+    const values: string[] = [...this.dataOptionTable.map((item) => {
+      item.view = true
+      item.disable = false
+
+      if (item.typeField !== 'text') {
+        item.disable = true
+      }
+      if (item.view) {
+        return item.name
+      }
+    })]
+    this.dataColumn = [...values]
+
+
+
+
     this.dataCopy = this.allDataRows;
     this.dataSource = new MatTableDataSource(this.allDataRows);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.dataFunctions = this.dataOptionTable
+
+    this.copyTableOptions = this.dataOptionTable
+
+
   }
 
   ngOnInit(): void {
-    this.dataColumn = [...this.dataOptionTable.map(({ name }) => name)]
+    // this.dataColumn = [...this.dataOptionTable.map(({ name }) => name)]
+    const values: string[] = [...this.dataOptionTable.map((item) => {
+      item.view = true
+      item.disable = false
+
+      if (item.typeField !== 'text') {
+        item.disable = true
+      }
+      if (item.view) {
+        return item.name
+      }
+    })]
+    this.dataColumn = [...values]
     this.listenObservable();
     this.dataCopy = this.allDataRows;
     this.dataSource = new MatTableDataSource(this.allDataRows);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.copyTableOptions = this.dataOptionTable
 
+    const valuesmenus = []
+
+    const x = (this.dataOptionTable || []).map((item) => {
+      if (item.typeField === 'mat-menu') {
+        (item.MenuFunctions || []).map((menus) => {
+          if (menus.children) {
+            (menus.arrayChildren.values || []).map((submenu) => {
+
+              valuesmenus.push({ ...submenu })
+            })
+          }
+        })
+      }
+    })
+
+    this.dataFunctions = [...valuesmenus]
+
+
+
+
+
+
+
+  }
+
+  public configColumns(name, evento): void {
+
+
+    const values: string[] = [...this.dataOptionTable.map((item) => {
+      if (item.view) {
+        return item.name
+      }
+    })]
+    const arregloFiltrado: string[] = values.filter((elemento: string | undefined) => elemento !== undefined);
+    this.dataColumn = [...arregloFiltrado]
+
+
+    // console.log(this.dataOptionTable)
+  }
+
+  public getMatMenu(value: string): string {
+    console.log(value)
+    return 'indexMatMenu1'
   }
 
   public actionSelectRow(row): void {
     // console.log(row);
 
   }
+
+
 
   public action(row): void {
     this.Funtions[0].callback();

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { CarteraClientesService } from 'app/core/services/cartera-clientes.service';
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
@@ -24,28 +25,69 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       typeField: 'mat-menu',
       MenuFunctions: [
         {
-          nameFunction: 'prueba',
+          nameFunction: 'Detalle cartera',
           callback: (data) => {
-            // console.log('prueba 1')
             this.prueba(data)
           },
-          iconFuseTemplate: 'search'
+          iconFuseTemplate: 'search',
+          children: false
         },
         {
-          nameFunction: 'prueba 2',
-          callback: (data) => {
-            // console.log('prueba 2')
-            this.prueba(2)
-          },
-          iconFuseTemplate: 'search'
+          nameFunction: 'Visualizar',
+          iconFuseTemplate: 'search',
+          children: true,
+          arrayChildren: {
+            nameChildren: 'indexMatMenu1', values: [
+              {
+                nameFunction: 'Visualizar pagos',
+                callback: (data) => {
+                  console.log('Visualizar pagos', data)
+                  // this.prueba(3)
+                },
+                iconFuseTemplate: 'search',
+                children: false
+              }, {
+                nameFunction: 'Visualizar gestiones',
+                callback: (data) => {
+                  console.log('Visualizar gestiones', data)
+                  // this.prueba(3)
+                },
+                iconFuseTemplate: 'search',
+                children: false
+              }, {
+                nameFunction: 'Visualizar Compromisos de pago',
+                callback: (data) => {
+                  console.log('Visualizar Compromisos de pago', data)
+                  // this.prueba(3)
+                },
+                iconFuseTemplate: 'search',
+                children: false
+              }]
+          }
         },
         {
-          nameFunction: 'prueba 3',
+          nameFunction: 'Estado cuenta Geotech',
           callback: (data) => {
-            // console.log('prueba 3')
             this.prueba(3)
           },
-          iconFuseTemplate: 'search'
+          iconFuseTemplate: 'search',
+          children: false
+        },
+        {
+          nameFunction: 'Agregar gestiones',
+          callback: (data) => {
+            this.prueba(3)
+          },
+          iconFuseTemplate: 'search',
+          children: false
+        },
+        {
+          nameFunction: 'Editar información',
+          callback: (data) => {
+            this.prueba(3)
+          },
+          iconFuseTemplate: 'search',
+          children: false
         },
 
       ]
@@ -154,7 +196,8 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
   constructor(
     private _carteraClienteServices: CarteraClientesService,
     private fb: FormBuilder,
-    private _sweetAlerService: Sweetalert2Service) { }
+    private _sweetAlerService: Sweetalert2Service,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadsearch()
@@ -162,7 +205,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
   }
 
   public prueba(data): void {
-    console.log('prueba', data)
+    // const dialogRef = this.dialog.open(,
+    //   {
+    //     maxWidth: '90vw',
+    //     width: window.innerWidth < 600 ? '90%' : '60%',
+    //     data: data,
+    //     disableClose: false
+    //   });
+    // dialogRef.afterClosed().subscribe(result => {
+    // });
   }
 
   public loadsearch(): void {
@@ -208,11 +259,17 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       ]
     }
 
+    //PRUEBA
+    // this._sweetAlerService.stopLoading();
+    // this.dataRows = [{ cedula: '104736' }, { cedula: '104755' }, { cedula: '104766' }]
+    // this.openSearch = false
 
     this._carteraClienteServices.buscarClienteCartera(data).subscribe({
       next: (resp) => {
         if (!resp.data.length) {
           this._sweetAlerService.alertInfo({});
+          this.dataRows = []
+
         } else {
           this.openSearch = false
           this._sweetAlerService.stopLoading();
@@ -233,7 +290,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
     this.formSearch = this.fb.group({
       periodo: ['202307', [Validators.required]],
       unidadNegocio: ['1', [Validators.required]],
-      identificacion: ['72187427', [Validators.required]],
+      identificacion: ['1099991583', [Validators.required]],
       alDia: [false],
       porVencer: [true],
       vencido: [true]
