@@ -545,7 +545,7 @@ export class AppSettingsService {
             buscarCliente: EndPoints.uri('/generic/cartera-buscar-cliente'),
             cargarCliente: EndPoints.uri('/generic/cartera-cargar-detalle-cliente'),
             visualizarPagos: EndPoints.uri('/generic/cartera-visualizar-pagos-cliente'),
-            visualizarGestiones: EndPoints.uri('/generic/cartera-visualizar-gestiones-cliente'),
+            visualizarGestiones: EndPoints.uri('/generic/qry/cartera-visualizar-gestiones-cliente'),
             visualizarCompromisos: EndPoints.uri('/generic/cartera-visualizar-compromiso-pago-cliente'),
         }
     };

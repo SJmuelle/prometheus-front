@@ -42,6 +42,15 @@ export class ModalDetailsCarteraClienteComponent implements OnInit {
     { name: 'branchCode', text: 'Codigo banco', typeField: 'text' },
   ]
 
+  public visualizarGestiones: IoptionTable[] = [
+    { name: 'negocio', text: 'Observacion', typeField: 'text' },
+    { name: 'cedula', text: 'Tipo de Gestion', typeField: 'text' },
+    { name: 'nombreCliente', text: 'Proxima Accion', typeField: 'text' },
+    { name: 'descripcionIngreso', text: 'Fecha Proxima Accion', typeField: 'text' },
+    { name: 'valorIngreso', text: 'Fecha Creacion', typeField: 'text', },
+    { name: 'ingreso', text: 'Usuario Creador', typeField: 'text' },
+  ]
+
   public prueba: IoptionTable[] = [
     { name: '', text: '', typeField: 'text' },
     { name: '', text: '', typeField: 'text' },
@@ -74,7 +83,7 @@ export class ModalDetailsCarteraClienteComponent implements OnInit {
     const dataOptionTable = {
       detalleCartera: this.detalleCartera,
       visualizarPagos: this.visualizarPagos,
-      visualizarGestiones: '',
+      visualizarGestiones: this.visualizarGestiones,
       visualizarCompromisosPago: '',
       estadoCuentaGeotech: '',
       agregarGestiones: '',
@@ -82,7 +91,7 @@ export class ModalDetailsCarteraClienteComponent implements OnInit {
     }
 
 
-    this.tittleModal = tittle[this.data.viewModal] || []
+    this.tittleModal = tittle[this.data.viewModal] || ''
     this.dataOptions = dataOptionTable[this.data.viewModal] || []
     console.log('modal', this.data)
   }
