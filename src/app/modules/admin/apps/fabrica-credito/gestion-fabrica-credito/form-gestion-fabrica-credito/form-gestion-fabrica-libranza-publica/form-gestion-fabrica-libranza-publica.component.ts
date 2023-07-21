@@ -576,6 +576,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('otraPagaduria')?.setValidators(null)
                 this.form.get('otraPagaduria')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['otraPagaduria'].setValue('')
             }
         })
 
@@ -590,6 +592,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
 
                 this.form.get('tipoPension')?.setValidators(null)
                 this.form.get('tipoPension')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['tipoPension'].setValue('')
             }
             else {
                 if (e === 'PENSI') {
@@ -603,6 +607,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                     this.form.get('fechaVinculacion')?.disable({ emitEvent: true, onlySelf: true })
                     this.form.get('cargo')?.setValidators(null)
                     this.form.get('cargo')?.disable({ emitEvent: true, onlySelf: true })
+
+                    this.form.controls['cargo'].setValue('')
+                    this.form.controls['fechaVinculacion'].setValue('')
+                    this.form.controls['tipoContrato'].setValue('')
                 }
             }
 
@@ -617,6 +625,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('otrosIngresos')?.setValidators(null)
                 this.form.get('otrosIngresos')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['otrosIngresos'].setValue('')
             }
         })
 
@@ -638,6 +648,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('tipoCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('numeroCuentaBancaria')?.setValidators(null)
                 this.form.get('numeroCuentaBancaria')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['entidadBancaria'].setValue('')
+                this.form.controls['tipoCuentaBancaria'].setValue('')
+                this.form.controls['numeroCuentaBancaria'].setValue('')
             }
 
             if (e === 'N') {
@@ -646,6 +660,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             } else {
                 this.form.get('autorizacionBanco')?.setValidators(null)
                 this.form.get('autorizacionBanco')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['autorizacionBanco'].setValue(false)
             }
         })
 
@@ -659,6 +675,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('tipoOperacionExtranjera')?.setValidators(null)
                 this.form.get('tipoOperacionExtranjera')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['tipoOperacionExtranjera'].setValue('')
             }
         })
 
@@ -672,6 +690,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('tipoOperacionCriptomoneda')?.setValidators(null)
                 this.form.get('tipoOperacionCriptomoneda')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['tipoOperacionCriptomoneda'].setValue('')
             }
         })
 
@@ -693,6 +713,10 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('entidadPublico')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('vinculadoActualPublico')?.setValidators(null)
                 this.form.get('vinculadoActualPublico')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['cargoPublico'].setValue('')
+                this.form.controls['entidadPublico'].setValue('')
+                this.form.controls['vinculadoActualPublico'].setValue('')
             }
         })
         this.form.get('vinculadoActualPublico').valueChanges.subscribe((e: string) => {
@@ -704,6 +728,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('fechaDesvinculacionPublico')?.setValidators(null)
                 this.form.get('fechaDesvinculacionPublico')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['fechaDesvinculacionPublico'].setValue('')
             }
         })
 
@@ -745,6 +771,15 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('cargoExpuesta')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('vinculadoActualExpuesta')?.setValidators(null)
                 this.form.get('vinculadoActualExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['vinculacionExpuesta'].setValue('')
+                this.form.controls['nombreExpuesta'].setValue('')
+                this.form.controls['tipoIdentificacionExpuesta'].setValue('')
+                this.form.controls['identificacionExpuesta'].setValue('')
+                this.form.controls['nacionalidadExpuesta'].setValue('')
+                this.form.controls['entidadExpuesta'].setValue('')
+                this.form.controls['cargoExpuesta'].setValue('')
+                this.form.controls['vinculadoActualExpuesta'].setValue('')
             }
         })
         this.form.get('vinculadoActualExpuesta').valueChanges.subscribe((e: string) => {
@@ -756,6 +791,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('fechaDesvinculacionExpuesta')?.setValidators(null)
                 this.form.get('fechaDesvinculacionExpuesta')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['fechaDesvinculacionExpuesta'].setValue('')
             }
         })
 
@@ -769,6 +806,8 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
             else {
                 this.form.get('otroIngresoDeclaracionAuto')?.setValidators(null)
                 this.form.get('otroIngresoDeclaracionAuto')?.disable({ emitEvent: true, onlySelf: true })
+
+                this.form.controls['otroIngresoDeclaracionAuto'].setValue('')
             }
         })
 
@@ -793,8 +832,6 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('identificacionConyuge')?.enable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularConyuge')?.setValidators([Validators.required, Validators.minLength(7), Validators.maxLength(10), Validators.pattern(/^[0-9]+(\.?[0-9]+)?$/)])
                 this.form.get('celularConyuge')?.enable({ emitEvent: true, onlySelf: true })
-                this.form.get('tipoEmpleoConyuge')?.setValidators([Validators.required])
-                this.form.get('tipoEmpleoConyuge')?.enable({ emitEvent: true, onlySelf: true })
             }
             else {
 
@@ -809,12 +846,19 @@ export class FormGestionFabricaLibranzaPublicaComponent implements OnInit {
                 this.form.get('identificacionConyuge')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('celularConyuge')?.setValidators(null)
                 this.form.get('celularConyuge')?.disable({ emitEvent: true, onlySelf: true })
-                this.form.get('tipoEmpleoConyuge')?.setValidators(null)
-                this.form.get('tipoEmpleoConyuge')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('segundoNombreConyuge')?.setValidators(null)
                 this.form.get('segundoApellidoConyuge')?.setValidators(null)
                 this.form.get('segundoNombreConyuge')?.disable({ emitEvent: true, onlySelf: true })
                 this.form.get('segundoApellidoConyuge')?.disable({ emitEvent: true, onlySelf: true })
+
+
+                this.form.controls['primerNombreConyuge'].setValue('')
+                this.form.controls['primerApellidoConyuge'].setValue('')
+                this.form.controls['tipoDocumentoConyuge'].setValue('')
+                this.form.controls['identificacionConyuge'].setValue('')
+                this.form.controls['celularConyuge'].setValue('')
+                this.form.controls['segundoNombreConyuge'].setValue('')
+                this.form.controls['segundoApellidoConyuge'].setValue('')
             }
         })
 
