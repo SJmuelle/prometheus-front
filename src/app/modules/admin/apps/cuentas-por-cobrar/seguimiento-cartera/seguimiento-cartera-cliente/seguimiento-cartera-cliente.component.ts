@@ -5,6 +5,7 @@ import { CarteraClientesService } from 'app/core/services/cartera-clientes.servi
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
+import { ModalDetailsCarteraClienteComponent } from '../modal-details-cartera-cliente/modal-details-cartera-cliente/modal-details-cartera-cliente.component';
 
 @Component({
   selector: 'app-seguimiento-cartera-cliente',
@@ -205,15 +206,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
   }
 
   public prueba(data): void {
-    // const dialogRef = this.dialog.open(,
-    //   {
-    //     maxWidth: '90vw',
-    //     width: window.innerWidth < 600 ? '90%' : '60%',
-    //     data: data,
-    //     disableClose: false
-    //   });
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
+    const dialogRef = this.dialog.open(ModalDetailsCarteraClienteComponent,
+      {
+        maxWidth: '90vw',
+        width: window.innerWidth < 600 ? '90%' : '60%',
+        data: data,
+        disableClose: false
+      });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   public loadsearch(): void {
@@ -254,7 +255,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       identificacion,
       details: [
         { estadoCartera: values.alDia ? 'Al dia' : '' },
-        { estadoCartera: values.porVencer ? 'Por vencer' : '' },
+        { estadoCartera: values.porVencer ? 'A vencer' : '' },
         { estadoCartera: values.vencido ? 'Vencido' : '' }
       ]
     }

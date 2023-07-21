@@ -101,18 +101,72 @@
 
 
 
-
                         <mat-menu #menuOptionMobil="matMenu">
                             <div *ngFor="let valuemenu of item.MenuFunctions">
 
-                                <button mat-menu-item (click)="valuemenu.callback(value)">
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu1'"
+                                    [matMenuTriggerFor]="indexMatMenu1">
                                     <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
                                     {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu2'"
+                                    [matMenuTriggerFor]="indexMatMenu2">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu3'"
+                                    [matMenuTriggerFor]="indexMatMenu3">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item
+                                    *ngIf="valuemenu.children && valuemenu?.arrayChildren?.nameChildren==='indexMatMenu4'"
+                                    [matMenuTriggerFor]="indexMatMenu4">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <button mat-menu-item *ngIf="!valuemenu.children" (click)="valuemenu.callback(value)">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                <!-- <button mat-menu-item (click)="valuemenu.callback(value)">
+                                    <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                    {{valuemenu.nameFunction}}</button>
+
+                                    <button mat-menu-item (click)="valuemenu.callback(value)">
+                                        <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                        {{valuemenu.nameFunction}}</button> -->
 
                             </div>
 
 
                         </mat-menu>
+
+                        <mat-menu #indexMatMenu1="matMenu">
+                            <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+                                
+                            </div> -->
+
+                            <button (click)="menu.callback(value)" *ngFor="let menu of dataFunctions" mat-menu-item>
+                                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>{{menu.nameFunction}}</button>
+
+
+                        </mat-menu>
+
+                        <!-- <mat-menu #indexMatMenu1="matMenu"> -->
+                        <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+                                
+                            </div> -->
+
+                        <!-- <button (click)="menu.callback(rowFunction)" *ngFor="let menu of dataFunctions"
+                                mat-menu-item> <mat-icon
+                                    svgIcon="heroicons_outline:pencil"></mat-icon>{{menu.nameFunction}}</button> -->
+
+
+                        <!-- </mat-menu> -->
 
 
 
@@ -324,12 +378,12 @@
 
                                 </mat-menu>
 
-                                <!-- <mat-menu #indexMatMenu2="matMenu"> -->
-                                <!-- <div *ngFor="let value of dataOption.MenuFunctions">
+                                <mat-menu #indexMatMenu2="matMenu">
+                                    <!-- <div *ngFor="let value of dataOption.MenuFunctions">
     
                                             <button mat-menu-item [matMenuTriggerFor]="fish">pescado</button>
                                         </div> -->
-                                <!-- </mat-menu> -->
+                                </mat-menu>
 
 
 
