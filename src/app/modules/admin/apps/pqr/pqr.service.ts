@@ -25,12 +25,39 @@ export class PqrService {
         const data: Blob = new Blob([buffer], {
           type: EXCEL_TYPE
         });
-        FileSaver.saveAs(data, fileName + '_gestion'+ EXCEL_EXTENSION);
+        FileSaver.saveAs(data, fileName + ''+ EXCEL_EXTENSION);
     }
 
     // parametrizacion
     setTipo() {
         let url: string = `tk/informacion-tipo-pqrs`;
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
+    setMotivos() {
+        let url: string = `select-pqrs-motivos`;
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
+    setCausalesMotivos() {
+        let url: string = `select-causales-pqrs`;
+        return this._utility.getQuery(url, true).pipe(
+            map((res: any) => {
+                return res.data;
+            })
+        );
+    }
+
+    setCausalesMotivosId(id: number) {
+        let url: string = `select-causales-motivos/${id}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {
                 return res.data;
@@ -94,6 +121,14 @@ export class PqrService {
 
     Create(url: string, data: any): Observable<any> {
         return this._utility.postQuery(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
+    postFiltro(url: string, data: any): Observable<any> {
+        return this._utility.postQueryServer1(url, data).pipe(
             map((result: any) => {
                 return result;
             })
@@ -199,6 +234,14 @@ export class PqrService {
 
     postFile(url: string, data: any): Observable<any> {
         return this._utility.postFile(url, data).pipe(
+            map((result: any) => {
+                return result;
+            })
+        );
+    }
+
+    saveMotivoPQRS(url: string, data: any): Observable<any> {
+        return this._utility.postQuery(url, data).pipe(
             map((result: any) => {
                 return result;
             })

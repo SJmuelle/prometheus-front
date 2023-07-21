@@ -39,6 +39,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
     unreadCount: number = 0;
     private _overlayRef: OverlayRef;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    private audio = new Audio('assets/audios/notificacion.mpeg');
 
     /**
      * Constructor
@@ -75,14 +76,14 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        this.consulta();
+
+        this.consulta(true);
         setTimeout(() => {
-            this.consulta();
+            this.consulta(true);
         }, 1000);
-        console.log(this.consulta())
     }
 
-    consulta() {
+    consulta(sonar: boolean) {
         let usuario = JSON.parse(localStorage.getItem('usuario'));
         let url = `tk/cre-select-notificaciones-fabrica`;
         this._utility
@@ -90,8 +91,12 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: any) => {
 
+                if(sonar && this.notificacionesActivas(notifications.data) > 0){
+                    this.audio.autoplay = true;
+                    this.audio.play()
+                }
                 this.notifications = notifications.data;
-                console.log(this.notifications);
+
                 this._calculateUnreadCount();
                 this._changeDetectorRef.markForCheck();
             });
@@ -108,6 +113,10 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         if (this._overlayRef) {
             this._overlayRef.dispose();
         }
+    }
+
+    notificacionesActivas(notificaciones: Notification[]){
+        return notificaciones.filter(noti =>!noti.read).length
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -154,18 +163,18 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
      */
     toggleRead(notification: Notification): void {
         // Toggle the read status
-        notification.read = notification.read=='f'?'t':'f';
 
-        let url = `update-notificacion-leida`;
+        let url = `/update-notificacion-leida`;
         let data={
             id:Number(notification.id),
-            valorLeido:notification.read=='f'?false:true
+            valorLeido:!notification.read
         }
+
         this._utility
             .postQuery(url, data)
             .pipe(takeUntil(this._unsubscribeAll))
             .subscribe((notifications: any) => {
-                this.consulta();
+                this.consulta(false);
 
             });
     }
@@ -241,7 +250,7 @@ export class NotificationsComponent implements OnChanges, OnInit, OnDestroy {
         let count = 0;
                 if (this.notifications && this.notifications.length) {
             count = this.notifications.filter(
-                (notification) => (notification.read =='f')
+                (notification) => (!notification.read)
             ).length;
         }
 

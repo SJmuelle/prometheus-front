@@ -8,22 +8,11 @@
                 </button>
             </div>
             <div class="col-span-6 justify-self-end">
-                <input
-                    class="border rounded p-2 bg-gray-100"
-                    style="font-size: 10px; margin-right: 1em"
-                    type="text"
-                    autocomplete="off"
-                    name="filtrarTabla"
-                    [(ngModel)]="filtrarTabla"
-                    (ngModelChange)="page = 1"
+                <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em" type="text"
+                    autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla" (ngModelChange)="page = 1"
                     placeholder="Filtrar..." />
-                <select
-                    name="tamanoTabl"
-                    id="tamanoTabl"
-                    class="border rounded bg-gray-100"
-                    (change)="page = 1"
-                    [(ngModel)]="tamanoTabl"
-                    style="font-size: 10px; color: #9aa8bc; padding: 7px">
+                <select name="tamanoTabl" id="tamanoTabl" class="border rounded bg-gray-100" (change)="page = 1"
+                    [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -35,8 +24,7 @@
     <div class="h-60 md:overflow-x-hidden overflow-x-scroll overflow-y-scroll sm:h-80 xl:h-160 xl:overflow-x-hidden">
         <table class="w-full shadow p-1">
             <thead style="background-color: #F9FAFB;">
-                <tr
-                    class=" text-md font-semibold
+                <tr class=" text-md font-semibold
                         tracking-wide text-left text-gray-400
                         capitalize border-b border-gray-600">
                     <th class="px-4 py-3 text-center">Editar</th>
@@ -47,19 +35,18 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                <tr
-                    class="text-gray-700"
+                <tr class="text-gray-700"
                     *ngFor=" let item of listado | filter: filtrarTabla | paginate : { itemsPerPage: tamanoTabl, currentPage: page }">
-                    <td class="px-2 text-sm border text-center w-0" (click)="abrirModal(item,'A')" ><mat-icon svgIcon="heroicons_outline:pencil-alt" ></mat-icon></td>
+                    <td class="px-2 text-sm border text-center w-0" (click)="abrirModal(item,'A')"><mat-icon
+                            svgIcon="heroicons_outline:pencil-alt"></mat-icon></td>
                     <td class="px-2 text-sm border py-1 text-center">{{ item.tipoPqrs}}</td>
                     <td class="px-2 text-sm border text-center">{{ item.legal}}</td>
                     <td class="px-2 text-sm border text-center">{{ item.diasSolucion}}</td>
                     <td class="px-2 text-sm border text-center w-0">
-                        <div
-                        [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
-                        <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
-                            {{ item.estado}} </span>
-                    </div>
+                        <div [ngClass]="item.estado=='Inactivo'?'bg-pink-300':'bg-green-300'">
+                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700 rounded-sm w-0">
+                                {{ item.estado}} </span>
+                        </div>
                 </tr>
             </tbody>
         </table>

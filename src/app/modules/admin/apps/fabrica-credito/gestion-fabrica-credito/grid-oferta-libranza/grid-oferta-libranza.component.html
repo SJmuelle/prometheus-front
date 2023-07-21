@@ -164,7 +164,7 @@
                     <ng-container *ngIf="oferta.idTipoOferta==item.idTipoOferta">
                         <fuse-card
                             class="shadow flex-col max-w-sm md:max-w-none p-6 sm:py-12 sm:px-10 ring-2 ring-primary overflow-visible">
-                            <div class="absolute inset-x-0 -top-4 flex items-center justify-center">
+                            <div class="absolute inset-x-0 -top-4 flex items-center justify-center" *ngIf="!permisoEditar">
                                 <div *ngIf="oferta.seleccionada == 'S'"
                                     class="flex items-center h-8 px-8 rounded-full font-medium text-center leading-none bg-green-600 text-on-primary">
                                     SELECCIONADO
@@ -193,7 +193,7 @@
                                     Plazo: <b> {{ oferta.plazo }} meses </b>
                                 </div>
                             </div>
-                            <div class="inset-x-0 -top-4 flex items-center justify-center">
+                            <div class="inset-x-0 -top-4 flex items-center justify-center" *ngIf="!permisoEditar">
                                 <button [disabled]="oferta.seleccionada == 'S'" class="fuse-mat-button-large mt-10"
                                     mat-flat-button [color]="'primary'" (click)="SelectOferta(oferta)">
                                     Seleccionar
@@ -238,6 +238,17 @@
                                                     <b>{{ oferta.tasa | number }}%</b>
                                                 </div>
                                             </div>
+                                            <div class="flex">
+                                                <mat-icon class="icon-size-5 text-green-600"
+                                                    [svgIcon]="'heroicons_solid:check'">
+                                                </mat-icon>
+                                                <div class="ml-2 leading-5">
+                                                    Cartera a pagar real:
+                                                    <b>${{
+                                                        oferta.carteraAPagarSeleccionadas | number
+                                                        }}</b>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex items-center justify-content-center">
@@ -258,7 +269,7 @@
                                                     [svgIcon]="'heroicons_solid:check'">
                                                 </mat-icon>
                                                 <div class="ml-2 leading-5">
-                                                    Cartera a pagar:
+                                                    Cartera a pagar saneamiento:
                                                     <b>${{
                                                         oferta.carteraPagar | number
                                                         }}</b>

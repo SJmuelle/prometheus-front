@@ -5,7 +5,7 @@ import { AsignarSolicitudesRoutingModule } from './asignar-solicitudes-routing.m
 import { ListSolicitudesComponent } from './list-solicitudes/list-solicitudes.component';
 import { ReasignarVariosComponent } from './list-solicitudes/reasignar-varios/reasignar-varios.component';
 
-import { FuseAlertModule } from '@fuse/components/alert';
+// import { FuseAlertModule } from '@fuse/components/alert';
 import { Ng2SearchPipeModule } from "ng2-search-filter";
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asignar-varios.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -49,9 +50,9 @@ import { AsignarVariosComponent } from './list-solicitudes/asignar-varios/asigna
     MatDialogModule,
     MatExpansionModule,
     MatTooltipModule,
-    FuseAlertModule,
     Ng2SearchPipeModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    NgxPaginationModule
   ]
 })
 export class AsignarSolicitudesModule { }

@@ -1,0 +1,49 @@
+<h2 mat-dialog-title class="mb-3">Excepción</h2>
+<p class="font-semibold mb-0">{{data.nombre}}</p>
+<form [formGroup]="form">
+<div class="flex w-full py-2">
+     <section class="example-section">
+        <mat-checkbox class="example-margin" color="primary" formControlName="excepcion"></mat-checkbox>
+      </section>
+    <P class="mb-1">{{data.descripcion}}</P>
+</div>
+
+<mat-dialog-content *ngIf="data" class="py-2">
+    <div class="grid-cols-12 ">
+        <div class="col-span-12">
+
+                <div class="bg-white flex flex-col">
+
+                    <div class="md:flex">
+
+                        <mat-form-field class="w-full fuse-mat-dense">
+                            <textarea class="h-60" placeholder="Comentario" matInput [formControlName]="'excepcionText'"
+                                [readonly]="data.idComentario">
+                            </textarea>
+                            <mat-error *ngIf="form.controls.excepcionText.errors?.required">Este campo es
+                                requerido.</mat-error>
+                            <mat-error *ngIf="form.controls.excepcionText.errors?.maxlength">Caracteres máximos
+                                1000.</mat-error>
+                        </mat-form-field>
+
+
+                    </div>
+
+                </div>
+
+        </div>
+    </div>
+</mat-dialog-content>
+</form>
+<mat-dialog-actions>
+    <div class="flex flex-row items-center justify-end sm:justify-end w-full">
+        <ng-container *ngIf="!data.idComentario">
+            <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+                Guardar
+            </button>
+        </ng-container>
+        <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">
+            Cerrar
+        </button>
+    </div>
+</mat-dialog-actions>

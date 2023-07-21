@@ -26,42 +26,26 @@ export class AsignarVariosComponent implements OnInit {
   ngOnInit(): void {
     this.consultarAsesores();
     this.solicitudes = this.data.details
-    console.log(this.data)
   }
 
   guardarAnalista(){
     this.data.asesorNuevo=this.asignarForm.value.analista;
+    
     this.asigService.postAsesores(this.data).subscribe((res: any) => {
-      if (res) {
+        
         if (this.data.details.length > 1) {
           Swal.fire(
             '¡Correcto!',
             'Las solicitudes han sido asignadas al usuario '+this.data.asesorNuevo+' de forma exitosa.',
             'success'
-          )
+          ).then(() => this.dialogRef.close(true))
         } else {
             Swal.fire(
               '¡Correcto!',
               'La solicitud N° '+this.data.details[0].numeroSolicitud+' ha sido asignado al usuario '+this.data.asesorNuevo+' de forma exitosa.',
               'success'
-            )
+            ).then(() => this.dialogRef.close(true))
         }
-        this.dialogRef.close(true);
-      } else {
-        if (this.data.details.length > 1) {
-          Swal.fire(
-            'Error!',
-            'Las solicitudes no han podido ser asignadas, porfavor intente mas tarde.',
-            'error'
-          )
-        } else {
-          Swal.fire(
-            'Error!',
-            'La solicitud N° '+this.data.details[0].numeroSolicitud+' no pudo ser asignada, porfavor intente mas tarde.',
-            'error'
-          )
-        }
-      }
     })
   }
 

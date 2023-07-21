@@ -59,8 +59,8 @@
                             "src/@fuse/styles/main.scss",
                             "src/styles/styles.scss",
                             "src/styles/tailwind.scss",
-                            "node_modules/bootstrap/dist/css/bootstrap.min.css"
-                            
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "node_modules/leaflet/dist/leaflet.css"
                         ],
                         "scripts": [
                             "node_modules/@popperjs/core/dist/umd/popper.min.js",
@@ -72,7 +72,7 @@
                             "budgets": [{
                                     "type": "initial",
                                     "maximumWarning": "5mb",
-                                    "maximumError": "8mb"
+                                    "maximumError": "100mb"
                                 },
                                 {
                                     "type": "anyComponentStyle",

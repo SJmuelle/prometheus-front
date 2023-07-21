@@ -74,8 +74,6 @@ export class CausalespqrsComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log(result);
     });
   }
   compareObjects(o1: any, o2: any) {

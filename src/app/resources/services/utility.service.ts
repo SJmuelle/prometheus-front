@@ -20,31 +20,31 @@ import Swal from 'sweetalert2';
 })
 export class UtilityService {
     urlFinal: string = environment.apiUrl;
-    server: string = this.urlFinal+'api-fintra/api';
-    server2: string = this.urlFinal+'api-fintra/api/generic/qry/';
-    server3: string = this.urlFinal+'api-fintra/api/generic';
-    adjunto: string = this.urlFinal+'api-fintra/api/pqrs';
-    correo: string =  this.urlFinal+'apicredit';
+    server: string = this.urlFinal + 'api-fintra/api';
+    server2: string = this.urlFinal + 'api-fintra/api/generic/qry/';
+    server3: string = this.urlFinal + 'api-fintra/api/generic';
+    adjunto: string = this.urlFinal + 'api-fintra/api/pqrs';
+    correo: string = this.urlFinal + 'apicredit';
     notoken: string = 'notoken';
-    constructor(private _httpClient: HttpClient) {}
+    constructor(private _httpClient: HttpClient) { }
 
 
 
-  formatearNumero(value: any){
-    const valor: any = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ',');
-    return valor;
-  }
-  enviarNumero(value: string){
-    if(value==undefined){
-        return 0;
-    }
-    if (value == '0') {
-        return 0;
-    }else {
-        const valor = value.replace(/,/g, '');
+    formatearNumero(value: any) {
+        const valor: any = value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d)\.?)/g, ',');
         return valor;
     }
-  }
+    enviarNumero(value: string) {
+        if (value == undefined) {
+            return 0;
+        }
+        if (value == '0') {
+            return 0;
+        } else {
+            const valor = value.replace(/,/g, '');
+            return valor;
+        }
+    }
     //Funciones de sesion
     readToken() {
         let token: any;
@@ -292,7 +292,7 @@ export class UtilityService {
 
     //Funcion para el Manejo de errores
     handleError = (err: any): Observable<HttpEvent<any>> => {
-        // debugger;
+        // ;
         let errorMessage = 'No hay respuesta, favor intente nuevamente';
         let icon: string = 'question';
         // console.log("Algo se daño");
@@ -328,20 +328,20 @@ export class UtilityService {
                         }, 100);
                     }
                     if (
-                        err.error.msg !== undefined &&
+                        err?.error?.msg !== undefined &&
                         typeof err.error.msg == 'string'
                     ) {
-                        errorMessage = `${err.error.msg}`;
+                        errorMessage = `${err?.error?.msg}`;
                     }
                     break;
                 case 404:
-                    errorMessage = `${err.error.msg}`;
+                    errorMessage = `${err?.error?.msg}`;
                     break;
                 case 500:
-                    errorMessage = `${err.error.msg}`;
+                    errorMessage = `${err?.error?.msg}`;
                     break;
                 default:
-                    errorMessage = `${err.statusText.msg}`;
+                    errorMessage = `${err?.statusText?.msg}`;
                     break;
             }
         }
@@ -373,7 +373,7 @@ export class UtilityService {
 
     //Funcion para el Manejo de errores
     handleError2 = (err: any): Observable<HttpEvent<any>> => {
-        // debugger;
+        // ;
         let errorMessage =
             'No se envio el correo, favor notificar por otro medio';
         let icon: string = 'question';
@@ -409,7 +409,7 @@ export class UtilityService {
                             localStorage.setItem('closeSession', 'true');
                         }, 100);
                     }
-                    if(err.error.data.data){
+                    if (err.error.data.data) {
                         errorMessage = `${err.error.data.data}`;
                     } else if (
                         err.error.msg !== undefined &&

@@ -2,18 +2,24 @@
     <div class="flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent mb-3">
         <div class="flex flex-col">
             <div class="flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-6 px-6 md:px-8 border-b">
-                <div class="grow h-14">
+                <div class="grow h-14 my-2 flex flex-col">
                     <h3 class="mb-2 text-gray-900">Resumen del crédito</h3>
-                    <span class="font-semibold text-gray-500">Número solicitud: {{numeroSolicitud}}</span>
+                    <div class="flex gap-5">
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400 font-semibold">Número solicitud</span>
+                            <span class="text-black text-xl font-semibold leading-5">{{numeroSolicitud}}</span>
+                        </div>
+                    </div>
+                    <!-- <span class="font-semibold text-gray-500"> </span>
+                    <span class="font-semibold text-gray-500">: </span>
+                    <span class="font-semibold text-gray-500">: </span> -->
                 </div>
-                <app-fabrica-opciones></app-fabrica-opciones>
+                <app-fabrica-opciones [apiData]="apiData"></app-fabrica-opciones>
             </div>
         </div>
     </div>
 
     <div class="flex flex-wrap w-full max-w-screen-xl mx-auto ">
-
-
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 mx-3">
             <ng-container *ngFor="let item of datos;  index as i;">
@@ -33,20 +39,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-row flex-wrap mt-4 -mx-6">
+                    <div class="grid grid-cols-1 mt-4 -mx-6">
                         <div class="flex flex-col mx-3 my-2" *ngFor="let campo of item.campos;">
                             <div class="flex items-center">
-                                <div class="flex items-center justify-center w-14 h-14 rounded-r-3xl shadow-inner"
-                                    [ngClass]="campo.color">
+                                <div class="flex items-center max-w-3/12 justify-center w-auto px-4 h-full   rounded-r-3xl shadow-inner"
+                                    style="min-height: 60px;" [ngClass]="campo.color">
                                     <mat-icon class="text-current" [svgIcon]="campo.icono"></mat-icon>
                                 </div>
-                                <div class="flex-auto ml-4 leading-none">
+                                <div class="flex-auto ml-4 leading-none max-w-9/12">
                                     <div class="text-sm font-medium text-secondary">{{campo.label}} </div>
-                                    <div class="text-sm font-medium capitalize my-1">{{campo.label2}} </div>
-                                    <div class="text-sm font-medium text-secondary">{{campo.descripcion}}</div>
-                                    <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor2"></div>
-                                    <div class="text-sm font-medium capitalize " [innerHtml]="campo.valor"></div>
-                                    <div class="text-sm font-medium capitalize my-1" [innerHtml]="campo.valor3"></div>
+                                    <div class="text-sm font-medium" style="margin-top: 6px; line-height: 15px;">
+                                        {{campo.label2}} </div>
+                                    <div class="text-sm font-medium text-secondary" style="margin-top: 10px;">
+                                        {{campo.descripcion}}</div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor2"></div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor"></div>
+                                    <div class="text-sm font-medium " style="margin-top: 6px; line-height: 15px;"
+                                        [innerHtml]="campo.valor3"></div>
+                                    <div *ngIf="campo.valor4" class="text-sm font-medium "
+                                        style="margin-top: 6px; line-height: 15px;" [innerHtml]="campo.valor4"></div>
                                 </div>
                             </div>
                         </div>
@@ -85,9 +98,10 @@
                                     {{campo.valor}}
                                 </div>
                                 <div class="mt-1 text-sm font-medium text-center ">{{campo.label }}</div>
-                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora" *ngIf="campo.label=='Contador embargos'"
+                                <button class="icon-menu" mat-icon-button [matMenuTriggerFor]="MenuResumenCuentasMora"
+                                    *ngIf="campo.label=='Contador embargos'"
                                     aria-label="Example icon-button with a menu">
-                                    <mat-icon  svgIcon="heroicons_outline:information-circle"></mat-icon>
+                                    <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                                 </button>
                             </div>
                         </div>
@@ -96,91 +110,201 @@
             </ng-container>
 
             <!-- politicas -->
-            <div
-                class="col-span-2 row-span-2 flex flex-col flex-auto px-6 pt-6 pb-12 bg-card shadow rounded-2xl overflow-hidden relative">
-                <div class="flex flex-col sm:flex-row items-start justify-between">
-                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Políticas</div>
-
-                </div>
-                <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-                    <mat-icon class="icon-size-24 opacity-25 text-green-600"
-                        [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
-                </div>
-                <div class="flex flex-col mt-2 divide-y">
-                    <ng-container *ngFor="let item of dataPolicitasAdmin">
-                        <div class="flex flex-row items-center justify-between py-2 px-0.5">
-                            <div class="flex flex-col">
-                                <div>
-                                    <span class="font-medium">{{item.nombre}}</span>
-                                    <span class="ml-2 text-md text-secondary">{{item.tipo}}</span>
-                                </div>
-                                <div
-                                    class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
-                                    <div class="flex items-center">
-                                        <div class="text-md text-secondary">{{item.descripcion}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <span
-                                class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
-                                [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
-                                    class="leading-relaxed whitespace-nowrap">{{item.estadoAccion}}</span></span>
-                        </div>
-                    </ng-container>
-                </div>
-            </div>
-
-            <!-- agenda -->
-            <div class="col-span-2 relative overflow-hidden flex flex-col flex-auto p-6 bg-card rounded-2xl shadow">
-                <div class="flex items-center">
-                    <div class="flex flex-col">
-                        <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Resumen - Análisis
+            <div class="col-span-2">
+                <div
+                    class="col-span-2 row-span-2 flex flex-col items-center  flex-auto px-6 pt-6 pb-12 bg-card shadow rounded-2xl overflow-hidden relative">
+                    <!-- Recurring selector -->
+                    <div>
+                        <div class="flex items-center mb-4 p-0.5 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700"
+                            style="width: auto  ;">
+                            <button class="px-6" [ngClass]="{'bg-card pointer-events-none shadow': politicas,
+                                'bg-transparent': !politicas}" mat-flat-button (click)="politicas = true"
+                                disableRipple>
+                                Políticas
+                            </button>
+                            <button *ngIf="unidadNegocio === 1" class="px-6" [ngClass]="{'bg-card pointer-events-none shadow': !politicas,
+                                'bg-transparent': politicas}" mat-flat-button (click)="politicas = false"
+                                disableRipple>
+                                Filtros duros
+                            </button>
                         </div>
                     </div>
                     <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
-                        <mat-icon class="icon-size-24 opacity-25 text-blue-600"
-                            [svgIcon]="'heroicons_outline:chart-square-bar'">
-                        </mat-icon>
+                        <mat-icon class="icon-size-24 opacity-25 text-green-600"
+                            [svgIcon]="'heroicons_outline:check-circle'"></mat-icon>
                     </div>
-                </div>
-                <div class="my-8 space-y-8">
-                    <div class="flex flex-col" *ngFor="let item of dataResumenTrazabilidad">
-                        <div class="flex items-center">
-                            <div class="sm:flex items-center justify-center w-14 h-14 rounded hidden">
-                                <img src="assets/images/agendas/{{item.iconoAgenda}}" class="text-current">
-                            </div>
-                            <div class="flex-auto ml-4 leading-none">
-                                <div class="text-sm font-medium text-secondary grid grid-cols-1 sm:grid-cols-3 ">
-                                    <span class="mr-3 md:mr-0">
-                                        <mat-icon class="text-gray-600 icon-size-4" svgIcon="heroicons_outline:user">
-                                        </mat-icon> {{item.usuario}}
-                                    </span>
-                                    <span class="mr-3 md:mr-0">
-                                        <mat-icon class="text-gray-600 icon-size-4 md:ml-2"
-                                            svgIcon="heroicons_outline:calendar"></mat-icon> {{item.fecha}}
-                                    </span>
-                                    <span class="mr-3 md:mr-0">
-                                        <mat-icon class="text-gray-600 icon-size-4 md:ml-2"
-                                            svgIcon="heroicons_outline:clock">
-                                        </mat-icon> {{item.hora}}
-                                    </span>
-                                </div>
-                                <div class="mt-2 font-medium">{{item.nombreAgenda}}</div>
-                                <mat-progress-bar class="mt-3 rounded-full" [mode]="'determinate'" [value]="100">
-                                </mat-progress-bar>
-                            </div>
-                            <div class="flex items-end justify-end min-w-18 mt-auto ml-6">
-                                <div class="text-lg leading-none">100%</div>
-                                <mat-icon class="text-green-600 icon-size-4 ml-1" [svgIcon]="'heroicons_outline:check'">
-                                </mat-icon>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="flex flex-col justify-center items-center mt-2 w-full">
+                        <mat-tab-group *ngIf="politicas"
+                            class="flex w-full justify-items-center items-center moreWidth changeTabStyle">
+                            <mat-tab *ngFor="let grupoPoliticas of dataPolicitasAdmin | keyvalue: keyDescOrder">
+                                <ng-template matTabLabel>{{grupoPoliticas.key}}</ng-template>
+                                <ng-container *ngFor="let item of grupoPoliticas.value">
+                                    <div *ngIf="item.idPolitica !== 21"
+                                        class="flex flex-row items-center justify-between py-2 px-0.5">
+                                        <div class="flex flex-col">
+                                            <div>
+                                                <span class="font-medium">{{item.nombre}}</span>
+                                                <span class="ml-2 text-md text-secondary">{{item.tipo}}</span>
+                                            </div>
+                                            <div
+                                                class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
+                                                <div class="flex items-center">
+                                                    <div class="text-md text-secondary">{{item.descripcion}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-center items-center gap-1">
 
+                                            <span
+                                                class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
+                                                [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800': item.excepcion ? 'bg-yellowCustom'  : 'bg-red-200 text-red-800'"><span
+                                                    class="leading-relaxed whitespace-nowrap" matTooltipClass="text-sm"
+                                                    [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
+                                            <button *ngIf="item.excepcion" mat-icon-button
+                                                (click)="openDetalleExcepcion(item)" class="flex  items-center"
+                                                matTooltip="Ver detalle excepción">
+                                                <mat-icon svgIcon="heroicons_outline:eye"></mat-icon>
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                </ng-container>
+                            </mat-tab>
+                        </mat-tab-group>
+                        <mat-tab-group *ngIf="!politicas"
+                            class="flex w-full justify-items-center items-center moreWidth changeTabStyle">
+                            <mat-tab *ngFor="let grupoPoliticas of dataPolicitasAdmin | keyvalue: keyDescOrder">
+                                <ng-template matTabLabel>{{grupoPoliticas.key}}</ng-template>
+                                <ng-container *ngFor="let item of grupoPoliticas.value">
+                                    <div *ngIf="item.idPolitica === 21"
+                                        class="flex flex-row items-center justify-between py-2 px-0.5">
+                                        <div class="flex flex-col">
+                                            <div>
+                                                <span class="font-medium">{{item.nombre}}</span>
+                                                <span class="ml-2 text-md text-secondary">{{item.tipo}}</span>
+                                            </div>
+                                            <div
+                                                class="flex flex-col sm:flex-row sm:items-center mt-2 sm:mt-1 space-y-1 sm:space-y-0 sm:space-x-3">
+                                                <div class="flex items-center">
+                                                    <div class="text-md text-secondary">{{item.descripcion}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span
+                                            class="inline-flex items-center font-bold text-xs px-2.5 py-0.5 rounded-full tracking-wide uppercase  "
+                                            [ngClass]="item.estadoAccion=='CUMPLE'?'bg-green-200 text-green-800':'bg-red-200 text-red-800'"><span
+                                                class="leading-relaxed whitespace-nowrap" matTooltipClass="text-sm"
+                                                [matTooltip]="item.resultadoEvaluado ? 'Valor evaluado: ' + item.resultadoEvaluado : ''">{{item.estadoAccion}}</span></span>
+                                    </div>
+                                </ng-container>
+                                <div *ngIf="!hasFiltrosDuros(grupoPoliticas.value)"
+                                    class="flex justify-center flex-col items-center mt-4">
+                                    <img class="w-30" src="assets/images/animaciones/nodata.gif">
+                                    <span class="text-gray-500 font-semibold">No hay registros</span>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
                 </div>
             </div>
 
+            <!-- Cliente -->
+            <div class="col-span-2">
+                <div
+                    class=" row-span-2 flex flex-col  flex-auto px-6 pt-6 pb-12 bg-card shadow rounded-2xl overflow-hidden relative">
+                    <!-- Recurring selector -->
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-xl  tracking-tight leading-6 truncate text-gray-600 font-bold">Cliente
+                        </div>
+                        <p class="text-gray-400 text-sm font-bold"> Historial de negocios del cliente</p>
+                    </div>
+                    <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                        <mat-icon class="icon-size-24 opacity-25 text-green-600"
+                            [svgIcon]="'heroicons_outline:briefcase'"></mat-icon>
+                    </div>
+                    <div class="flex flex-col justify-center items-center mt-2  gap-4">
+                        <ng-container *ngFor="let item of datosGeneral;  index as i;">
+                            <div class="flex w-100 gap-7">
+                                <div
+                                    class="w-auto h-auto bg-blue-100  p-4 rounded-xl shadow-inner flex justify-center items-center">
+                                    <mat-icon class="icon-size-8  text-blue-800"
+                                        svgIcon="heroicons_outline:briefcase"></mat-icon>
+                                </div>
+                                <div class=" flex flex-col">
+                                    <span class="text-sm text-blue-600 font-bold leading-3">{{item.tipoCredito}}</span>
+                                    <span class="text-xs text-gray-400">{{item.codigoNegocio}} -
+                                        {{item.unidadNegocio}}</span>
+                                    <span class="text-gray-600 font-bold text-2xl leading-5 tracking-tight my-1">$
+                                        {{item.monto |
+                                        number}}</span>
+                                    <span class="text-sm text-gray-400 leading-tight border-b-2">{{'Tasa: ' + item.tasa
+                                        + '%
+                                        | ' + item.estadoNegocio + ' | Aprobado: ' + item.fechaAprobacion}}</span>
+                                    <span class="text-sm text-gray-500 font-bold leading-3">Segmento:
+                                        {{item.segmento}} </span>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div *ngIf="!datosGeneral.length" class="flex justify-center flex-col items-center mt-4">
+                            <img class="w-30" src="assets/images/animaciones/nodata.gif">
+                            <span class="text-gray-500 font-semibold">No hay registros</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- agenda -->
+            <div class="col-span-2">
+                <div class="col-span-2 relative overflow-hidden flex flex-col flex-auto p-6 bg-card rounded-2xl shadow">
+                    <div class="flex items-center">
+                        <div class="flex flex-col">
+                            <div class="mr-4 text-lg font-medium tracking-tight leading-6 truncate">Resumen - Análisis
+                            </div>
+                        </div>
+                        <div class="absolute bottom-0 right-0 w-24 h-24 -m-6">
+                            <mat-icon class="icon-size-24 opacity-25 text-blue-600"
+                                [svgIcon]="'heroicons_outline:chart-square-bar'">
+                            </mat-icon>
+                        </div>
+                    </div>
+                    <div class="my-8 space-y-8">
+                        <div class="flex flex-col" *ngFor="let item of dataResumenTrazabilidad">
+                            <div class="flex items-center">
+                                <div class="sm:flex items-center justify-center w-14 h-14 rounded hidden">
+                                    <img src="assets/images/agendas/{{item.iconoAgenda}}" class="text-current">
+                                </div>
+                                <div class="flex-auto ml-4 leading-none">
+                                    <div class="text-sm font-medium text-secondary grid grid-cols-1 sm:grid-cols-3 ">
+                                        <span class="mr-3 md:mr-0">
+                                            <mat-icon class="text-gray-600 icon-size-4"
+                                                svgIcon="heroicons_outline:user">
+                                            </mat-icon> {{item.usuario}}
+                                        </span>
+                                        <span class="mr-3 md:mr-0">
+                                            <mat-icon class="text-gray-600 icon-size-4 md:ml-2"
+                                                svgIcon="heroicons_outline:calendar"></mat-icon> {{item.fecha}}
+                                        </span>
+                                        <span class="mr-3 md:mr-0">
+                                            <mat-icon class="text-gray-600 icon-size-4 md:ml-2"
+                                                svgIcon="heroicons_outline:clock">
+                                            </mat-icon> {{item.hora}}
+                                        </span>
+                                    </div>
+                                    <div class="mt-2 font-medium">{{item.nombreAgenda}}</div>
+                                    <mat-progress-bar class="mt-3 rounded-full" [mode]="'determinate'" [value]="100">
+                                    </mat-progress-bar>
+                                </div>
+                                <div class="flex items-end justify-end min-w-18 mt-auto ml-6">
+                                    <div class="text-lg leading-none">100%</div>
+                                    <mat-icon class="text-green-600 icon-size-4 ml-1"
+                                        [svgIcon]="'heroicons_outline:check'">
+                                    </mat-icon>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

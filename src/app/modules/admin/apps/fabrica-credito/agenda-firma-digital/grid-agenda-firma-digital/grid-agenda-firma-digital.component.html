@@ -1,0 +1,477 @@
+<mat-drawer-container class="h-full h-screen overflow-auto w-full">
+
+  <mat-drawer mode="over" #drawer position="end" [(opened)]="opened">
+
+    <div class="w-120 min-w-120 pb-30 h-full bg-gray-100 flex overflow-y-auto p-4 flex-col">
+
+      <!-- <div class="items-end justify-end flex w-full h-10 mb-3">
+          <button mat-stroked-button (click)="opened=false">
+            <mat-icon svgIcon="close"></mat-icon>
+          </button>
+        </div> -->
+      <app-form-actualizar-info [mode]="mode" [dataDocuments]="dataDocuments" class=" pb-30"></app-form-actualizar-info>
+    </div>
+
+  </mat-drawer>
+
+  <mat-drawer-content>
+
+
+    <div class="flex flex-col flex-auto pb-30">
+
+
+      <div class="flex relative flex-wrap w-full mx-auto p-6 md:p-8 bg-white z-10">
+
+        <!-- Title and action buttons -->
+        <div class="flex items-center justify-between w-full">
+          <div class="flex items-center ml-6">
+            <div class="flex-0 w-16 h-16  overflow-hidden">
+              <img src="assets/images/agendas/Firmas.png" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 mx-3">
+              <div class="text-3xl font-semibold tracking-tight leading-8">Agenda firma digital de crédito
+              </div>
+              <div class="flex items-center">
+                <mat-icon svgIcon="heroicons_solid:bell"></mat-icon>
+                <div class="font-medium tracking-tight text-secondary">
+                  Debes estar pendiente que tu cliente realice la firma digital
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="flex items-center ml-6">
+            <!-- <button class="hidden sm:inline-flex ml-3" mat-flat-button [color]="'primary'">
+                                    <mat-icon class="icon-size-5" [svgIcon]="'heroicons_solid:save'"></mat-icon>
+                                    <span class="ml-2">Exportar</span>
+                                </button> -->
+
+            <!-- Actions menu (visible on xs) -->
+            <div class="sm:hidden">
+              <!-- <button
+                                    [matMenuTriggerFor]="actionsMenu"
+                                    mat-icon-button>
+                                    <mat-icon [svgIcon]="'heroicons_outline:dots-vertical'"></mat-icon>
+                                </button>
+                                <mat-menu #actionsMenu="matMenu">
+                                    <button mat-menu-item>Export</button>
+                                    <button mat-menu-item>Settings</button>
+                                </mat-menu> -->
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-8">
+
+        </div>
+
+
+
+      </div>
+
+      <div aria-haspopup="true" matripple=""
+        class=" z-10 marginAccordion mat-ripple mat-menu-trigger relative flex self-start pt-2 pb-1 pl-5 pr-4 cursor-pointer overflow-hidden rounded-t-xl  bg-default">
+        <div class="flex items-center">
+          <div class="overflow-hidden">
+            <div class="font-medium leading-6 truncate">Totales</div>
+          </div>
+          <div class="flex items-center justify-center pl-2" *ngIf="mostrarTotales" (click)="cambiarEstado(false)">
+            <mat-icon svgIcon="heroicons_solid:chevron-down"></mat-icon>
+          </div>
+
+          <div class=" items-center justify-center pl-2" *ngIf="!mostrarTotales" (click)="cambiarEstado(true)">
+            <mat-icon svgIcon="heroicons_solid:chevron-right"></mat-icon>
+          </div>
+
+
+
+
+
+
+
+          <ng-container *ngFor="let item of estados; let i = index">
+            <div class="sm:grid hidden mr-3  items-center justify-center pl-2" *ngIf="!mostrarTotales"
+              (click)="cambiarEstado(false)">
+              <mat-icon class="icon-size-4 " [ngStyle]="{'color': item.colorCheck}" [svgIcon]="'radio_button_checked'">
+              </mat-icon>
+              {{item.state }} {{ item.count}}
+            </div>
+          </ng-container>
+
+        </div>
+      </div>
+
+      <div class="flex flex-row gap-6 w-full  mt-3 px-5"
+        [ngClass]="mostrarTotales==false?'slide-out-top':'tilt-in-top-1'">
+        <!-- totales -->
+
+        <div class="w-full md:h-15 h-auto flex flex-row items-center gap-3 flex-wrap">
+
+          <div *ngFor="let item of estados;" (click)="selectFilter(item.state)" [class]=" ' text-gray-500'"
+            class="min-w-40 w-40 h-10 flex gap-1.5 flex-row items-center rounded-full cursor-pointer"
+            [ngClass]=" activeFilter.active === item.state? activeFilter.color : 'bg-gray-200' ">
+            <p class="w-7 h-7 ml-2 mb-0 bg-white font-semibold rounded-full flex items-center justify-center shadow-md">
+              {{item.count}}
+            </p>
+            <p [class]=" 'text-gray-500 mb-0'">{{item.state }}</p>
+          </div>
+        </div>
+
+
+
+
+
+
+        <!-- <ng-container *ngFor="let item of totales">
+            <div class="flex flex-col flex-auto p-3 bg-card shadow rounded-2xl overflow-hidden">
+              <div class="flex items-start justify-between">
+                <div class="text-lg font-medium tracking-tight leading-6 truncate">
+                  {{item.nombre_unidad_negocio}}
+                </div>
+              </div>
+              <div class="flex flex-col items-center ">
+                <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none" [ngStyle]="{'color': item.color}">
+                  {{item.cantidad_solicitud
+                  <10? '' +item.cantidad_solicitud:item.cantidad_solicitud}} </div>
+                    <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
+                      ${{item.total_solicitud | number:0}}
+                    </div>
+                </div>
+              </div>
+          </ng-container> -->
+      </div>
+
+      <div class="grid grid-cols-1 w-full px-5 pt-3">
+
+
+        <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full relative">
+          <mat-progress-bar *ngIf="this.filtrado === 'F' " class="barra" mode="determinate"
+            [value]="porcentaje"></mat-progress-bar>
+
+          <div class="flex items-center justify-between">
+            <div class="flex flex-row gap-3">
+              <!-- <div class="">
+                  <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+                    <mat-button-toggle class="rounded-none" (click)="filtrado='P'">Pendiente</mat-button-toggle>
+                    <mat-button-toggle class="rounded-none" (click)="filtrado='E'">Enviados</mat-button-toggle>
+                    <mat-button-toggle class="rounded-none" (click)="filtrado='F'">Firmados</mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div> -->
+              <div class="text-secondary font-medium"> <input
+                  class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120" type="text" autocomplete="off"
+                  name="filtrarTablaHG" [formControl]="filtrarTabla" placeholder="Filtrar..."></div>
+            </div>
+
+
+            <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
+              (change)="page=1">
+              <option value="10">10</option>
+              <option value="20"> 20</option>
+              <option value="30"> 30</option>
+            </select>
+
+          </div>
+          <div class="w-full  overflow-auto mt-2">
+
+
+
+
+            <table class="p-0 ">
+
+              <tbody class="bg-white">
+                <ng-container
+                  *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
+
+                  <ng-container *ngIf="item.etapaFirma===filtrado">
+                    <tr class="text-gray-700 border-t border-b ">
+                      <td rowspan="2" class="py-3 text-sm my-3">
+                        <div class="text-gray-700 grid-cols-1 grid min-w-20 place-items-center">
+
+                          <div class=" py-0 text-sm w-10">
+                            <button [matMenuTriggerFor]="menuOpciones" mat-icon-button matTooltip="Ver opciones">
+                              <mat-icon>format_list_bulleted</mat-icon></button>
+                          </div>
+
+                          <mat-menu #menuOpciones="matMenu">
+
+                            <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='P'" class="flex  items-center"
+                                matTooltip="Enviar correo decisión"
+                                (click)="generarNumeroPagare(item.unidadNegocioNegocio,item.numeroSolicitud,item.tipo)">
+                                <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Enviar correo decisión
+                              </button>
+
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='E'" class="flex  items-center"
+                                matTooltip="Actualizar estado evidente"
+                                (click)="UpdateEstadoEvidente(item.numeroSolicitud,item.identificacion)">
+                                <mat-icon [svgIcon]="'update'" class="mr-2"></mat-icon>Actualizar estado evidente
+                              </button>
+
+
+
+                              <!-- <button mat-menu-item *ngIf="item.etapaFirma=='F'" class="flex  items-center"
+                                matTooltip="Reenviar firma" [matMenuTriggerFor]="matMenuEnviarCorreo">
+                                <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
+                              </button> -->
+
+
+                              <button [matMenuTriggerFor]="matMenuEnviarCorreo" mat-menu-item
+                                *ngIf="item.etapaFirma!='P'" class="flex  items-center" matTooltip="Reenviar firma"
+                                >
+                                <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
+                              </button>
+
+
+
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.etapaFirma!='P'"
+                                matTooltip="Ver detalle evidente"
+                                (click)="obtenerIntentosEvidente(item.identificacion)">
+                                <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle evidente
+                              </button>
+
+
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='E' || item.etapaFirma=='P' "
+                                class="flex  items-center" matTooltip="Editar información"
+                                (click)="openDetail(item.numeroSolicitud)">
+                                <mat-icon svgIcon="heroicons_outline:pencil" class="mr-2"></mat-icon>Editar información
+                              </button>
+
+                              <button mat-menu-item *ngIf="item.etapaFirma=='F' " class="flex  items-center"
+                                matTooltip="Ver documentos" (click)="openViewDocument(item)">
+                                <mat-icon svgIcon="heroicons_outline:document-text" class="mr-2"></mat-icon>Ver
+                                documentos
+                              </button>
+
+
+
+                            </div>
+
+
+
+
+
+                          </mat-menu>
+
+                          <mat-menu #matMenuEnviarCorreo="matMenu">
+
+                            <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                              <button mat-menu-item class="flex  items-center"
+                                matTooltip="Enviar correo decisión Titular"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">Titular
+                              </button>
+
+                              <button mat-menu-item class="flex  items-center"  *ngIf="item.tipoDeudor!=''"
+                                matTooltip="Enviar correo decisión Deudor solidario"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor solidario
+                              </button>
+
+
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoCodeudor!=''"
+                                matTooltip="Enviar correo decisión Codeudor"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipodeudor)">Codeudor
+                              </button>
+
+                            </div>
+
+                          </mat-menu>
+
+                        </div>
+                      </td>
+                      <td class="px-2 pb-0 pt-1" rowspan="2">
+                        <div class="flex flex-column " rowspan="2">
+                          <div class="flex-0 w-12 overflow-hidden">
+                            <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
+                          </div>
+                        </div>
+                      </td>
+                      <td class="px-2 pb-0 pt-1">
+                        <div class="flex flex-column ">
+                          <small class="text-accent-600 text-xs">Solicitud:</small>
+                          <span class="text-md text-black font-medium"> {{
+                            item.numeroSolicitud}}</span>
+                        </div>
+                      </td>
+                      <td class="px-2 pb-0 pt-1">
+                        <div class="flex flex-column ">
+                          <small class="text-accent-600 text-xs">Identificación: </small>
+                          <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
+                        </div>
+                      </td>
+                      <td class="px-2 pb-0 pt-1">
+                        <div class="flex flex-column ">
+
+                          <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
+                          <span class="text-accent-600 text-sm">{{item.email }}</span>
+                        </div>
+                      </td>
+                      <td class="px-2 pb-0 pt-1">
+                        <div class="flex flex-column ">
+                          <small class="text-accent-600 text-xs">Monto: </small>
+                          <span class="text-lg text-black font-medium">
+                            ${{ item.monto | number:0}}
+                          </span>
+                        </div>
+                      </td>
+
+                      <ng-container *ngIf="!opened">
+                        <td class="px-2 pb-0 pt-1 text-end" colspan="2">
+                          <div class="flex w-full justify-end items-center">
+                            <div class="w-3 h-3 rounded-3xl bg-green-300"></div>
+                            <span class="px-2 py-1 font-semibold leading-tight text-gray-700  w-auto">
+                              {{ item.estadoFirma }}
+                            </span>
+                          </div>
+                        </td>
+                      </ng-container>
+                    </tr>
+                    <tr class="text-gray-700 border-t border-b ">
+                      <td class="px-2  pb-1 pt-1">
+                        <div class="flex flex-column ">
+
+                          <span class="text-xs text-black font-medium" matTooltipPosition="right" matTooltip="Agencia">
+                            <mat-icon class="icon-size-3" svgIcon="heroicons_outline:location-marker"></mat-icon>
+                            {{ item.agencia}}
+                          </span>
+                          <ng-container>
+                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                              matTooltip="Asesor Comercial">
+                              <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                              {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                            </span>
+                          </ng-container>
+                          <ng-container>
+                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                              matTooltip="Asesor fábrica">
+                              <mat-icon class="icon-size-3 text-blue-500" svgIcon="heroicons_solid:user"></mat-icon>
+                              {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
+                            </span>
+                          </ng-container>
+                          <ng-container *ngIf="item.unidadNegocioFabrica === 1">
+                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                              matTooltip="Asesor micro">
+                              <mat-icon class="icon-size-3 text-green-500" svgIcon="heroicons_solid:user"></mat-icon>
+                              {{ item.asesorMicro==''?'No registro':item.asesorMicro}}
+                            </span>
+                          </ng-container>
+                        </div>
+                      </td>
+                      <td class="px-2 pb-1 pt-1">
+                        <div class="flex w-24">
+                          <div class="flex flex-column ">
+                            <small class="text-accent-600 text-xs">
+                              Fecha solicitud
+                            </small>
+                            <span class="text-xs text-black font-medium">
+                              <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                              </mat-icon>
+
+                              {{ cambiarFecha(item.fechaEmision) }}
+                            </span>
+                            <span class="text-xs text-black font-medium">
+                              <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                              </mat-icon>
+                              {{ cambiarHora(item.fechaEmision) }}
+                            </span>
+                            <!-- <span class="text-xs text-black font-medium">
+                                <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}" class="icon-size-3"
+                                  svgIcon="mat_solid:radio_button_checked">
+                                </mat-icon>
+                                {{item.diasTotalesCredito}} horas
+                              </span> -->
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="px-2 pb-1 pt-1">
+                        <div class="flex w-24">
+                          <div class="flex flex-column ">
+                            <small class="text-accent-600 text-xs">
+                              Fecha Fábrica
+                            </small>
+                            <span class="text-xs text-black font-medium">
+                              <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                              </mat-icon>
+                              {{ cambiarFecha(item.fechaIngresoFabrica) }}
+                            </span>
+                            <span class="text-xs text-black font-medium">
+                              <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                              </mat-icon>
+                              {{ cambiarHora(item.fechaIngresoFabrica) }}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
+                      <ng-container *ngIf="!opened">
+                        <td class="px-2 pb-1 pt-1">
+                          <div class="flex justify-between">
+                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                              [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                              <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó evidente'}}</small>
+                              <span class="text-current">
+                                {{ item.intentosEvidente}}
+                              </span>
+                              <small class="text-xs">{{
+                                cambiarFecha(item.evidenteFecha)}}</small>
+                              <small class="text-xs" (click)="obtenerIntentosEvidente(item.numeroSolicitud)"></small>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="px-2 pb-1 pt-1">
+                          <div class="flex justify-between">
+                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                              [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                              <small class="text-xs">Firma interna pagaré </small>
+                              <span class="text-xs">
+                                {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
+                              </span>
+                              <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td class="px-2 pb-1 pt-1">
+                          <div class="flex justify-between">
+                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                              [ngClass]="item.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                              <small class="text-xs">Firma Thomas </small>
+                              <span class="text-xs">
+                                {{item.thomas?'Se realizó':'No se realizó'}}
+                              </span>
+                              <small class="text-xs">{{ cambiarFecha(item.thomasFecha)}}</small>
+                            </div>
+                          </div>
+                        </td>
+
+                      </ng-container>
+                    </tr>
+
+                  </ng-container>
+
+
+
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+          <div class="flex items-center mt-auto">
+            <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
+  </mat-drawer-content>
+
+</mat-drawer-container>

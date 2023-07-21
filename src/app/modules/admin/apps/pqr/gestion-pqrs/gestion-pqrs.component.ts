@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
+import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
+import { IoptionTable } from 'app/shared/componentes/table/table.component';
 import Swal from 'sweetalert2';
 import { PqrService } from '../pqr.service';
 import { AdjuntosComponent } from './adjuntos/adjuntos.component';
@@ -15,14 +17,14 @@ import { VerComentarioComponent } from './ver-comentario/ver-comentario.componen
 })
 export class GestionPQRSComponent implements OnInit {
     no_mostrar: boolean = true;
-    unicoges: any =[];
+    unicoges: any = [];
     pqrid: any;
     datos: any = {};
     procedimientoid: any;
-    comentarioid:number;
-    comentariotipoid:number;
-    envio:any;
-    motivo:any;
+    comentarioid: number;
+    comentariotipoid: number;
+    envio: any;
+    motivo: any;
     estado: string;
     UsuarioSaggics: string;
     tab: any;
@@ -54,9 +56,9 @@ export class GestionPQRSComponent implements OnInit {
     mostrarDescripcion: boolean = true;
     evidencia: any = [];
     descripcion: string = '';
-    edicion={
-        id:0,
-        detalle_pqrs:this.datos.detalle
+    edicion = {
+        id: 0,
+        detalle_pqrs: this.datos.detalle
     }
     quillModules: any = {
         toolbar: [
@@ -67,17 +69,35 @@ export class GestionPQRSComponent implements OnInit {
     };
     @ViewChild('editor') editor2;
     mensajeQuill: string;
-    archivo =[];
+    archivo = [];
     objAdjunto: any = {};
     confIdComen: boolean;
+    public dataOptionsTable: IoptionTable[] = [
+        { name: 'fecha', text: 'Fecha y hora', typeField: 'text' },
+        { name: 'email', text: 'Correo electronico', typeField: 'text' },
+        { name: 'descripcion', text: 'Detalle', typeField: 'text' },
+        { name: 'tipo', text: 'Tipo', typeField: 'text' },
+        {
+            name: 'estado', text: 'Estado', typeField: 'statusStyle', styleCondition: (data) => {
+                const { estado } = data
+                const color = {
+                    'Error al enviar el E-mail.': 'bg-red-200',
+                    'E-mail enviado.': 'bg-green-200'
+                }
+                return color[estado] || 'bg-yellow-200'
+            }
+        },
+
+    ]
 
     constructor(
         private _pqrService: PqrService,
         private _activatedRoute: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
-        private _authService: AuthService
-    ) {}
+        private _authService: AuthService,
+        private _filterTable: TableDataFilterService
+    ) { }
 
     ngOnInit(): void {
         this._activatedRoute.params.subscribe((param) => {
@@ -90,12 +110,12 @@ export class GestionPQRSComponent implements OnInit {
         let urlOrigenCliente = `/generic/qry/obtener-usuario-prometheus/${this.UsuarioSaggics}`;
         this._pqrService.getListadosUnico(urlOrigenCliente).subscribe((response: any) => {
             if (response) {
-                this.UsuarioSaggics=response.respuesta
+                this.UsuarioSaggics = response.respuesta
             }
         });
     }
 
-    vercomentario(id){
+    vercomentario(id) {
         const dialogRef = this.dialog.open(VerComentarioComponent, {
             width: '60%',
             height: '40%',
@@ -104,16 +124,20 @@ export class GestionPQRSComponent implements OnInit {
         dialogRef.afterClosed().toPromise();
     }
 
-    logChange($event) {
-        this.mensajeQuill=$event.text;
+    public search(): void {
+        this._filterTable.sendFilterData(this.filtrarTablaAlertas)
     }
 
-    agregarcomentario(){
+    logChange($event) {
+        this.mensajeQuill = $event.text;
+    }
+
+    agregarcomentario() {
         const dialogRef = this.dialog.open(AgregarComentarioComponent, {
             width: '60%',
-            data: {id: parseInt(this.pqrid), estado: this.datos.estado}
+            data: { id: parseInt(this.pqrid), estado: this.datos.estado }
         })
-        dialogRef.afterClosed().subscribe((result)=>{
+        dialogRef.afterClosed().subscribe((result) => {
             this.buscarDatos()
         })
     }
@@ -136,7 +160,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     insertadjunti() {
-        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any)=>{
+        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
             if (response.data.area !== 'SAC') {
                 Swal.fire(
                     '¡Información!',
@@ -147,7 +171,7 @@ export class GestionPQRSComponent implements OnInit {
             } else {
                 const dialogRef = this.dialog.open(AdjuntosComponent, {
                     width: '60%',
-                    data: {idPadre:parseInt(this.pqrid), idProcedimiento:this.procedimientoid},
+                    data: { idPadre: parseInt(this.pqrid), idProcedimiento: this.procedimientoid },
                 });
                 dialogRef.afterClosed().subscribe((result) => {
                     let dataModal = result;
@@ -170,27 +194,28 @@ export class GestionPQRSComponent implements OnInit {
                     let data = {
                         idPadre: this.pqrid,
                         idProcedimiento: this.procedimientoid,
-                        identificador:'pqrs',
-                        file:this.evidencia,
+                        identificador: 'pqrs',
+                        file: this.evidencia,
+                        idpqrs: this.pqrid,
                         user: ""
                     };
                     this._pqrService.postFile(url, data).subscribe((response: any) => {
                         if (response) {
                             this.buscarDatos()
                         }
-                    });   
+                    });
                 });
             }
         })
-        
+
     }
 
     crearJsonAdjuntos(): Array<JSON> {
-        return  this.evidencia;
+        return this.evidencia;
     }
 
-    editarDescripcion(){
-        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any)=>{
+    editarDescripcion() {
+        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
             if (response.data.area !== 'SAC') {
                 Swal.fire(
                     '¡Información!',
@@ -199,32 +224,32 @@ export class GestionPQRSComponent implements OnInit {
                 ).then();
                 return;
             } else {
-                if (this.mostrarEditor==false && this.mostrarDescripcion==true) {
-                    this.mostrarEditor=true;
-                    this.mostrarDescripcion=false;
+                if (this.mostrarEditor == false && this.mostrarDescripcion == true) {
+                    this.mostrarEditor = true;
+                    this.mostrarDescripcion = false;
                 }
             }
         })
-        
+
     }
 
-    guardarDescripcion(id, descripcion){
+    guardarDescripcion(id, descripcion) {
         let url = '/actualizar_pqr_descripcion';
-        this.edicion={
-            id:parseInt(id),
-            detalle_pqrs:descripcion
+        this.edicion = {
+            id: parseInt(id),
+            detalle_pqrs: descripcion
         }
-        this._pqrService.ActualizarDescripcion(url, this.edicion).subscribe((response:any)=>{
+        this._pqrService.ActualizarDescripcion(url, this.edicion).subscribe((response: any) => {
             Swal.fire(
-              '¡Exito!',
-              `Detalle actualizado correctamente.`,
-              'success'
+                '¡Exito!',
+                `Detalle actualizado correctamente.`,
+                'success'
             ).then();
 
-          })
-        if (this.mostrarEditor==true && this.mostrarDescripcion==false) {
-            this.mostrarEditor=false;
-            this.mostrarDescripcion=true;
+        })
+        if (this.mostrarEditor == true && this.mostrarDescripcion == false) {
+            this.mostrarEditor = false;
+            this.mostrarDescripcion = true;
         }
     }
 
@@ -236,7 +261,7 @@ export class GestionPQRSComponent implements OnInit {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         //datos ingreso
         let url = `informacion-pqrs/${this.pqrid}`;
         this._pqrService.getListados(url).subscribe((response: any) => {
@@ -274,7 +299,7 @@ export class GestionPQRSComponent implements OnInit {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this._pqrService.getListados(url).subscribe((response: any) => {
             Swal.close();
             if (response) {
@@ -285,7 +310,7 @@ export class GestionPQRSComponent implements OnInit {
         });
 
         let urlproc = `id_comentario_pqrs/${this.pqrid}`;
-        this._pqrService.getListados(urlproc).subscribe((response:any) =>{
+        this._pqrService.getListados(urlproc).subscribe((response: any) => {
             if (response) {
                 this.procedimientoid = response[0].id;
             }
@@ -310,18 +335,18 @@ export class GestionPQRSComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._pqrService.getListados(url).subscribe((data: any) => {
                     let unicos = [];
                     for (const iterator of data) {
-                        const resultado = unicos.find( u => u.id === iterator.id );
-                        if(resultado==undefined){
+                        const resultado = unicos.find(u => u.id === iterator.id);
+                        if (resultado == undefined) {
                             unicos.push(iterator)
                         }
                     }
                     this.listadoGestion = unicos.reverse();
                     Swal.close();
-                    if (unicos.length<=0) {
+                    if (unicos.length <= 0) {
                         Swal.fire({
                             icon: 'info',
                             title: '¡Información!',
@@ -338,7 +363,7 @@ export class GestionPQRSComponent implements OnInit {
                             this.motivo = elemento.detalle;
                             this.estado = elemento.estado;
                             let urlad = `adjunto-comentario/${this.comentarioid}`;
-                            this._pqrService.getListados(urlad).subscribe((response:any) =>{
+                            this._pqrService.getListados(urlad).subscribe((response: any) => {
                                 if (response.length > 0) {
                                     for (let index = 0; index < response.length; index++) {
                                         const element = response[index];
@@ -348,10 +373,10 @@ export class GestionPQRSComponent implements OnInit {
                             });
                         }
                     }
-                    
-                    
+
+
                 });
-                
+
                 break;
             case 3:
                 this.filtrarTablaAsignaciones = '';
@@ -364,7 +389,7 @@ export class GestionPQRSComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._pqrService.getListados(url).subscribe((data: any) => {
                     Swal.close();
                     this.listadoAsignaciones = data;
@@ -381,7 +406,7 @@ export class GestionPQRSComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._pqrService.getListados(url).subscribe((response: any) => {
                     Swal.close();
                     if (response) {
@@ -402,7 +427,7 @@ export class GestionPQRSComponent implements OnInit {
                     didOpen: () => {
                         Swal.showLoading();
                     },
-                }).then((result) => {});
+                }).then((result) => { });
                 this._pqrService.getListados(url).subscribe((data: any) => {
                     this.listadoNotificaciones = data;
                     Swal.close();
@@ -419,22 +444,22 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     cambiarEstado(item, estado) {
-        if (this.listadoAdjuntos.length>0) {
+        if (this.listadoAdjuntos.length > 0) {
             for (let index = 0; index < this.listadoAdjuntos.length; index++) {
                 this.objAdjunto = {
-                    idComentario:this.listadoAdjuntos[index].id_comentario,
-                    documento:this.listadoAdjuntos[index].documento,
-                    filepath:this.listadoAdjuntos[index].filepath,
-                    filename:this.listadoAdjuntos[index].filename,
-                    extension:this.listadoAdjuntos[index].extension,
-                    descripcion:this.listadoAdjuntos[index].descripcion
+                    idComentario: this.listadoAdjuntos[index].id_comentario,
+                    documento: this.listadoAdjuntos[index].documento,
+                    filepath: this.listadoAdjuntos[index].filepath,
+                    filename: this.listadoAdjuntos[index].filename,
+                    extension: this.listadoAdjuntos[index].extension,
+                    descripcion: this.listadoAdjuntos[index].descripcion
                 }
-                if (item.id==this.objAdjunto.idComentario) {
+                if (item.id == this.objAdjunto.idComentario) {
                     this.archivo.push(this.objAdjunto)
                 }
             }
         }
-        if (item.id_tipo_comentario==2) {
+        if (item.id_tipo_comentario == 2) {
             let url = '/pqrs-responder-solucion-cliente';
             let data = {
                 idComentario: parseInt(item.id),
@@ -446,14 +471,12 @@ export class GestionPQRSComponent implements OnInit {
 
             swalWithBootstrapButtons
                 .fire({
-                    text: `¿Está seguro que desea ${
-                        estado == true ? 'aprobar' : 'rechazar'
-                    } la solución?`,
+                    text: `¿Está seguro que desea ${estado == true ? 'aprobar' : 'rechazar'
+                        } la solución?`,
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: `Si, ${
-                        estado == true ? 'aprobar' : 'rechazar'
-                    } la solución`,
+                    confirmButtonText: `Si, ${estado == true ? 'aprobar' : 'rechazar'
+                        } la solución`,
                     cancelButtonText: 'No, cancelar',
                     reverseButtons: true,
                 })
@@ -511,14 +534,12 @@ export class GestionPQRSComponent implements OnInit {
 
             swalWithBootstrapButtons
                 .fire({
-                    text: `¿Está seguro que desea ${
-                        estado == true ? 'aprobar' : 'rechazar'
-                    } la solución?`,
+                    text: `¿Está seguro que desea ${estado == true ? 'aprobar' : 'rechazar'
+                        } la solución?`,
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: `Si, ${
-                        estado == true ? 'aprobar' : 'rechazar'
-                    } la solución`,
+                    confirmButtonText: `Si, ${estado == true ? 'aprobar' : 'rechazar'
+                        } la solución`,
                     cancelButtonText: 'No, cancelar',
                     reverseButtons: true,
                 })
@@ -569,7 +590,7 @@ export class GestionPQRSComponent implements OnInit {
     }
 
     guardar_data(item, data, url) {
-        if (item.id_tipo_comentario==2) {
+        if (item.id_tipo_comentario == 2) {
             Swal.fire({
                 title: 'Cargando',
                 html: 'Guardando información de PQRS',
@@ -577,7 +598,7 @@ export class GestionPQRSComponent implements OnInit {
                 didOpen: () => {
                     Swal.showLoading();
                 },
-            }).then((result) => {});
+            }).then((result) => { });
             this._pqrService.Create(url, data).subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -590,7 +611,7 @@ export class GestionPQRSComponent implements OnInit {
                             );
                             this.onTabChanged(2);
                             let url = `/sendmail/notificacion-crear-pqrs`;
-                            if (this.archivo[0].idComentario==0) {
+                            if (this.archivo.length < 1) {
                                 if (data.respuesta == true) {
                                     this._pqrService.enviaCorreos(
                                         url,
@@ -666,7 +687,7 @@ export class GestionPQRSComponent implements OnInit {
                 didOpen: () => {
                     Swal.showLoading();
                 },
-            }).then((result) => {});
+            }).then((result) => { });
             this._pqrService.Create(url, data).subscribe((response: any) => {
                 Swal.close();
                 if (response) {
@@ -715,8 +736,8 @@ export class GestionPQRSComponent implements OnInit {
 
     }
 
-    eliminarAdjunto(item){
-        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any)=>{
+    eliminarAdjunto(item) {
+        this._pqrService.permisoCreacion('tk/validar-permisos-gestion-pqrs').subscribe((response: any) => {
             if (response.data.area !== 'SAC') {
                 Swal.fire(
                     '¡Información!',
@@ -726,7 +747,7 @@ export class GestionPQRSComponent implements OnInit {
                 return;
             } else {
                 Swal.fire({
-                    title: '¿Desea eliminar ' +item.descripcion+ '?',
+                    title: '¿Desea eliminar ' + item.descripcion + '?',
                     showCancelButton: true,
                     confirmButtonText: 'Si',
                     cancelButtonText: `No`
@@ -734,9 +755,9 @@ export class GestionPQRSComponent implements OnInit {
                     if (resultado.isConfirmed) {
                         let url = '/update-adjunto';
                         let data = {
-                            id:item.idComentario
+                            id: item.idComentario
                         }
-                        this._pqrService.Create(url, data).subscribe((response:any)=>{
+                        this._pqrService.Create(url, data).subscribe((response: any) => {
                             if (response) {
                                 this.buscarDatos()
                             }
@@ -745,7 +766,7 @@ export class GestionPQRSComponent implements OnInit {
                 });
             }
         })
-        
+
     }
 
     verAdjunto(id) {
@@ -762,7 +783,7 @@ export class GestionPQRSComponent implements OnInit {
             didOpen: () => {
                 Swal.showLoading();
             },
-        }).then((result) => {});
+        }).then((result) => { });
         this._pqrService.postFile(url, data).subscribe((data: any) => {
             const downloadLink = document.createElement('a');
             document.body.appendChild(downloadLink);

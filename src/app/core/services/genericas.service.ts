@@ -20,6 +20,13 @@ export class GenericasService {
         const params: string = 'ESTADO-REFERENCIA';
         return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
     }
+
+    /**
+     * @description: Relacion comercial
+     */
+    public getRelacionComercial(): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.referenciaComercial}`);
+    }
     /**
      * @description: Obtiene listado
      */
@@ -205,6 +212,26 @@ export class GenericasService {
     }
 
     /**
+     * @description: Obtiene listado de tipos de referencia
+     */
+    public getTiposReferenciasXsolicitud(numeroSolicitud): Observable<any> {
+        // const params: string = 'TIPO-REFERENCIA';
+        return this._http.get(`${this._appSettings.referenciaCliente.url.tipoReferencia}/${numeroSolicitud}`);
+
+        // return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
+     * @description: Obtiene listado de tipos de referencia
+     */
+    public getTiposTercero(numeroSolicitud): Observable<any> {
+        // const params: string = 'TIPO-REFERENCIA';
+        return this._http.get(`${this._appSettings.referenciaCliente.url.tipoTercero}/${numeroSolicitud}`);
+
+        // return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+
+    /**
    * @description: Obtiene listado de tipos de referencia
    */
     public getTiposCompra(): Observable<any> {
@@ -230,6 +257,14 @@ export class GenericasService {
     }
 
     /**
+    * @description: Obtiene listado de tipos de Paretensco
+    */
+    public getSelectDinamico(data): Observable<any> {
+
+        return this._http.get(`${this._appSettings.genericas.url.base}/${data}`);
+    }
+
+    /**
 * @description: Obtiene listado de tipos de Paretensco
 */
     public getTipoVia(): Observable<any> {
@@ -246,4 +281,71 @@ export class GenericasService {
         }
         return this._http.post(this._appSettings.busquedaEntidadFinanciera.url.base, data);
     }
+
+    /**
+    * @description:
+    */
+    public postReCalcularSolicitudMicro(data: any): Observable<any> {
+
+        return this._http.post(this._appSettings.agendaReferenciacion.url.reCalcularSolicitudMicro, data);
+    }
+
+    /**
+  * @description: Obtiene unidades de negocio
+  */
+    public getUnidadesNegocio(): Observable<any> {
+        const params: string = 'UNIDAD-NEGOCIO';
+        return this._http.get(`${this._appSettings.genericas.url.base}/${params}`);
+    }
+    /**
+     * @description: Obtiene estados de creditos
+     */
+    public getEstadoCredito(): Observable<any> {
+        const params: string = 'estados-creditos';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}`);
+    }
+    /**
+     * @description: Obtiene los subestados
+     */
+    public postSubEstados(data: any): Observable<any> {
+        const params: string = 'subestados-creditos';
+        return this._http.get(`${this._appSettings.genericas.url.basetk}/${params}/${data}`);
+    }
+
+    /**
+     * @description: Obtiene numero de negocio
+     */
+    public getUnidadNegocio(numSolicitud: string): Observable<any> {
+        return this._http.get(`${this._appSettings.genericas.url.unidadNegocio}/${numSolicitud}`);
+    }
+    /**
+   * @description: Obtiene REPORTE RD
+   */
+    public getReporteRd(): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.info_rd}`);
+    }
+
+    /**
+     * 
+     * @returns obtiene lista select de lotes  
+     */
+    public getLotes(): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.listaLote}`);
+    }
+
+    /**
+    * 
+    * @returns ACTUALIZA LISTADO DE MERCADEO RD
+    */
+    public getDataLotes(idLote: string): Observable<any> {
+        return this._http.get(`${this._appSettings.rdStation.url.dataLotes}/${idLote}`);
+    }
+
+
+
+
+
+
+
+
 }

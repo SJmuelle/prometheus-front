@@ -1,0 +1,281 @@
+<ng-container *ngIf="mode==='Edit-info'">
+    <div class="flex justify-between my-2 ">
+        <div class="text-2xl font-bold ">Actualizar información</div>
+        <button mat-stroked-button (click)="cerrar()">
+            <mat-icon svgIcon="close"></mat-icon>
+        </button>
+    </div>
+
+    <form [formGroup]="form">
+        <div class="flex justify-between ">
+            <div class="text-xl font-bold ">Datos del titular</div>
+            <mat-icon (click)="mostrar=1" class="cursor-pointer"
+                [svgIcon]="mostrar==1?'heroicons_outline:chevron-up':'heroicons_outline:chevron-down'"></mat-icon>
+        </div>
+        <hr class="m-0 p-0">
+        <div class="animated-box mt-3" *ngIf="mostrar==1" @slideInTop>
+            <div class="my-2 animated-box-content">
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Identificación</mat-label>
+                        <input matInput type="text" readonly autocomplete="off" formControlName="identificacionTitular">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="primerNombreTitular">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo nombre</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="segundoNombreTitular">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer apellido</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="primerApellidoTitular">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo apellido</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="segundoApellidoTitular">
+                    </mat-form-field>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Fecha de nacimiento</mat-label>
+                        <input matInput type="date" autocomplete="off" formControlName="fechaNacimientoTitular">
+                    </mat-form-field>
+                    <mat-form-field class="w-100" appearance="fill">
+                        <mat-label>Fecha de expedición</mat-label>
+                        <input matInput type="date" autocomplete="off" formControlName="fechaExpedicionTitular">
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Celular</mat-label>
+                        <input matInput type="text" autocomplete="off" formControlName="celularTitular" prefix="+57 "
+                            mask="(000) 000 00 00">
+                    </mat-form-field>
+                </div>
+                <div class="w-full">
+                    <mat-form-field class="w-full" appearance="fill">
+                        <mat-label>Correo electrónico</mat-label>
+                        <input matInput type="email" autocomplete="off" formControlName="emailTitular">
+                        <!-- <mat-error *ngIf="form.get('emailTitular').hasError('required')">
+                        El correo es requerido
+                     </mat-error>
+                     <mat-error *ngIf="form.get('emailTitular').hasError('email')">
+                         El correo es invalido
+                     </mat-error> -->
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+
+        <ng-container *ngIf="form.value.identificacionCodeudor!=''">
+            <div class="flex justify-between ">
+                <div class="text-xl font-bold ">Datos del codeudor</div>
+                <mat-icon (click)="mostrar=2" class="cursor-pointer"
+                    [svgIcon]="mostrar==2?'heroicons_outline:chevron-up':'heroicons_outline:chevron-down'"></mat-icon>
+            </div>
+            <hr class="m-0 p-0">
+            <div class="animated-box mt-3" *ngIf="mostrar==2" @slideInTop>
+                <div class="my-2 animated-box-content">
+                    <div class="w-full">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Identificación</mat-label>
+                            <input matInput type="text" [readOnly]="false" autocomplete="off"
+                                formControlName="identificacionCodeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Primer nombre</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="primerNombreCodeudor">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Segundo nombre</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="segundoNombreCodeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Primer apellido</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="primerApellidoCodeudor">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Segundo apellido</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="segundoApellidoCodeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Fecha de nacimiento</mat-label>
+                            <input matInput type="date" autocomplete="off" formControlName="fechaNacimientoCodeudor">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Fecha de expecidión</mat-label>
+                            <input matInput type="date" autocomplete="off" formControlName="fechaExpedicionCodeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Celular</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="celularCodeudor"
+                                prefix="+57 " mask="(000) 000 00 00">
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="emailCodeudor">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <ng-container *ngIf="form.value.identificacionDeudor!=''">
+            <div class="flex justify-between ">
+                <div class="text-xl font-bold ">Datos del deudor</div>
+                <mat-icon (click)="mostrar=3" class="cursor-pointer"
+                    [svgIcon]="mostrar==3?'heroicons_outline:chevron-up':'heroicons_outline:chevron-down'"></mat-icon>
+            </div>
+            <hr class="m-0 p-0">
+            <div class="animated-box mt-3" *ngIf="mostrar==3" @slideInTop>
+                <div class="my-2 animated-box-content">
+                    <div class="w-full">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Identificación</mat-label>
+                            <input matInput type="text" [readOnly]="false" autocomplete="off"
+                                formControlName="identificacionDeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Primer nombre</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="primerNombreDeudor">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Segundo nombre</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="segundoNombreDeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Primer apellido</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="primerApellidoDeudor">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Segundo apellido</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="segundoApellidoDeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Fecha de nacimiento</mat-label>
+                            <input matInput type="date" autocomplete="off" formControlName="fechaNacimientoDeudor">
+                        </mat-form-field>
+                        <mat-form-field class="w-100" appearance="fill">
+                            <mat-label>Fecha de expedición</mat-label>
+                            <input matInput type="date" autocomplete="off" formControlName="fechaExpedicionDeudor">
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Celular</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="celularDeudor" prefix="+57 "
+                                mask="(000) 000 00 00">
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full">
+                        <mat-form-field class="w-full" appearance="fill">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input matInput type="text" autocomplete="off" formControlName="emailDeudor">
+                            <!-- <mat-error *ngIf="form.get('emailDeudor').hasError('required')">
+                           El correo es requerido
+                        </mat-error>
+                        <mat-error *ngIf="form.get('emailDeudor').hasError('email')">
+                            El correo es requerido
+                        </mat-error> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+
+        <div class="flex justify-end mt-5">
+            <button mat-raised-button color="primary" type="button" (click)="save()" [disabled]="form.invalid">
+                <mat-icon svgIcon="heroicons_solid:refresh"></mat-icon>
+                Actualizar información
+            </button>
+        </div>
+
+
+    </form>
+
+</ng-container>
+
+<ng-container *ngIf="mode==='View-document' ">
+    <div class="flex justify-between my-2 ">
+        <div class="text-2xl font-bold ">Ver documentos</div>
+        <button mat-stroked-button (click)="cerrar()">
+            <mat-icon svgIcon="close"></mat-icon>
+        </button>
+    </div>
+    <h4>Indique documento a visualizar</h4>
+    <mat-form-field class="w-full">
+        <mat-label>Seleccione un documento</mat-label>
+        <mat-select (selectionChange)="selectDocument($event)" [(ngModel)]="selectedDocument">
+            <mat-option *ngFor="let item of dataDocuments" [value]="item.idArchivoCargado">
+                {{item.nombreArchivo?.replaceAll("_"," ")?.toUpperCase()}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <ng-container *ngIf="datosDocumentosHistorico!==null">
+        <div class="flex flex-col flex-auto p-6 md:p-6">
+            <div class="flex flex-col items-start mt-1">
+                <div class="text-xl font-medium">{{datosDocumentosHistorico.nombreArchivo}}</div>
+            </div>
+            <div class="aspect-w-9 aspect-h-6 mt-1">
+                <div class="flex items-center justify-center border rounded-lg bg-gray-50 dark:bg-card">
+                    <!---->
+                    <ng-container *ngIf="datosDocumentosHistorico.extension === 'pdf'">
+                        <pdf-viewer [src]="datosDocumentosHistorico.base64" [render-text]="true" [original-size]="false"
+                            [show-all]="true" style="width: 98%; height: 98%">
+                        </pdf-viewer>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="flex flex-col items-start mt-2">
+                <ng-container *ngIf="datosDocumentosHistorico.extension === 'pdf'">
+                    <div class="mt-1 px-1.5 rounded text-sm font-semibold leading-5 text-white bg-red-600"> PDF
+                    </div>
+                </ng-container>
+
+            </div>
+            <!-- <div class="text-lg font-medium mt-3">Detalle</div>
+            <div class="flex flex-col mt-3 border-t border-b divide-y font-medium">
+                <div class="flex items-center justify-between py-1">
+                    <div class="text-secondary">Fecha de anulación</div>
+                    <div> {{ 'fecha' }}</div>
+                </div>
+            </div> -->
+            <div class="grid grid-cols-2 gap-4 w-full mt-5">
+                <button mat-flat-button="" (click)="getDownloadHistorico()" matTooltip="Descargar documento"
+                    class="mat-focus-indicator flex-auto mat-flat-button mat-button-base mat-primary">
+                    <span class="mat-button-wrapper"> Descargar </span>
+                </button>
+            </div>
+            <hr>
+        </div>
+    </ng-container>
+
+</ng-container>

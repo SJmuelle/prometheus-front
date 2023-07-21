@@ -231,7 +231,6 @@ export class PersonalConsumoPlexaComponent implements OnInit {
     this.fabricaCreditoService.getDatosFabricaAgendaReferenciacion(datosSolicitud).pipe(takeUntil(this.unSubscribe$))
       .subscribe(({ data }) => {
         Swal.close();
-        console.log(data);
         this.MostrarfabricaDatos = true;
         this.fabricaDatos = data
         this.form.patchValue(data);
@@ -399,8 +398,6 @@ export class PersonalConsumoPlexaComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.postFormularioFabrica(datosFormularios);
-        console.log(this.form.getRawValue());
-        console.log(datosFormularios);
       }
     });
 

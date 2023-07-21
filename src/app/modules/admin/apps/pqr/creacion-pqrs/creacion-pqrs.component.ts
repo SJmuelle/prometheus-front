@@ -41,6 +41,8 @@ export class CreacionPQRSComponent implements OnInit {
     listadoProcedimientoPQRS: any[];
     listadoResponsablePQRS: any[];
     listadoOrigenCliente: any[];
+    listadoMotivos: any[];
+    listadoSubMotivos: any[] = [];
     clienteExistente: boolean;
     filename: string;
     file: any;
@@ -58,7 +60,7 @@ export class CreacionPQRSComponent implements OnInit {
         public dialog: MatDialog,
         private router: Router,
         private _authService: AuthService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this._activatedRoute.params.subscribe((param) => {
@@ -211,14 +213,14 @@ export class CreacionPQRSComponent implements OnInit {
             .getListadosUnico(urlOrigenCliente)
             .subscribe((response: any) => {
                 if (response) {
-                   this.UsuarioSaggics=response.respuesta
+                    this.UsuarioSaggics = response.respuesta
                 } else {
                 }
             });
     }
 
     validaForm(tab) {
-        // debugger;
+        // ;
         switch (tab) {
             case 1:
                 if (
@@ -321,7 +323,7 @@ export class CreacionPQRSComponent implements OnInit {
         this._pqrService
             .getListados(urlinfoCliente)
             .subscribe((response: any) => {
-                // debugger;
+                // ;
                 if (response) {
                     Swal.fire(
                         '¡Advertencia!',
@@ -369,6 +371,9 @@ export class CreacionPQRSComponent implements OnInit {
                     } else {
                         this.datos.fechaParaSolucion = '';
                     }
+                    // this.getMotivos(tipo);
+                } else if (variable == 'listadoProcedimientoPQRS') {
+                    this.getMotivos(tipo);
                 }
             } else {
                 Swal.fire(
@@ -379,6 +384,23 @@ export class CreacionPQRSComponent implements OnInit {
                 this[variable] = [];
             }
         });
+    }
+
+    getMotivos(tipo) {
+        let url = `listado-motivos-causal/${tipo}`;
+        this._pqrService.getListados(url).subscribe((response: any) => {
+            this.listadoMotivos = response;
+        });
+    }
+
+    buscarSelectSubMotivo(id) {
+        let submotivo = this.listadoMotivos.find(motivo => motivo.id === Number(id));
+
+        Object.entries(submotivo).forEach(([key, value]) => {
+            if (key !== 'id' && key !== 'nombre' && value !== '') {
+                this.listadoSubMotivos.push(value);
+            }
+        })
     }
 
     guardar() {
@@ -393,11 +415,11 @@ export class CreacionPQRSComponent implements OnInit {
             } else {
                 let data = {
                     empresa: 'FINV',
-                    identificador:'pqrs',
+                    identificador: 'pqrs',
                     campanha: this.datos.campana == undefined ? '' : this.datos.campana,
                     origenPqrs: parseInt(this.datos.origen),
                     tipoCliente: parseInt(this.datos.tipo),
-                    codigoNegocio:this.datos.negocio == undefined ? '' : this.datos.negocio,
+                    codigoNegocio: this.datos.negocio == undefined ? '' : this.datos.negocio,
                     sucursal: this.datos.agencia == undefined ? '' : this.datos.agencia,
                     entidad: this.datos.entidad == undefined ? '' : this.datos.entidad,
                     idCliente: this.datos.identificacion,
@@ -414,14 +436,13 @@ export class CreacionPQRSComponent implements OnInit {
                     idPqrspadre: '',
                     fechaSolucion: this.datos.fechaParaSolucion,
                     primerContacto: this.datos.primerContacto,
-                    file: this.crearJsonAdjuntos(),
+                    file: [],
                     hijos: this.crearJsonHijas(),
                     user: this.UsuarioSaggics
                 };
                 let url = '/crear-pqrs';
 
                 this.crearJsonHijas();
-
                 Swal.fire({
                     title: 'Cargando',
                     html: 'Guardando información de PQRS',
@@ -435,35 +456,74 @@ export class CreacionPQRSComponent implements OnInit {
                             if (response) {
                                 if (response.status == 200) {
 
+                                    let urlproc = `id_comentario_pqrs/${response.data.pqrs}`;
+                                    this._pqrService.getListados(urlproc).subscribe((resid: any) => {
+                                        if (this.evidencia.length > 0) {
+                                            let data = {
+                                                idComentario: resid[0].id.toString(),
+                                                fuente: 'registro-pqrs',
+                                                identificador: 'pqrs' + response.data.pqrs,
+                                                idpqrs: response.data.pqrs,
+                                                file: this.evidencia
+                                            };
+                                            url = '/file/cargar-archivo-pqrs';
+                                            Swal.fire({
+                                                title: 'Cargando',
+                                                html: 'Guardando documento de PQRS',
+                                                timer: 500000,
+                                                didOpen: () => {
+                                                    Swal.showLoading();
+                                                },
+                                            }).then((result) => { });
+                                            this._pqrService.postFile(url, data).subscribe((response: any) => {
+                                                Swal.close();
+                                                if (response) {
+                                                    Swal.fire(
+                                                        '¡Información!',
+                                                        `Se guardó el registro con éxito`,
+                                                        'success'
+                                                    ).then((resultado) => { });
+                                                }
+                                            });
+                                        }
+                                    });
+
                                     let dato = {
-                                        id:response.data.pqrs,
-                                        tipo_solicitante:this.datos.solicitante,
-                                        segmento_actual:this.datos.segmento
+                                        id: response.data.pqrs,
+                                        tipo_solicitante: this.datos.solicitante,
+                                        segmento_actual: this.datos.segmento
                                     };
 
-                                    if (dato.tipo_solicitante!=undefined && dato.segmento_actual!=undefined) {
-                                        this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => {
-                                           
-                                        })
-                                    }else{
+                                    if (dato.tipo_solicitante != undefined && dato.segmento_actual != undefined) {
+                                        this._pqrService.Create('/actualizar_pqr_tipo', dato).subscribe((response: any) => { })
                                     }
 
                                     let datos = {
-                                        idPadre:response.data.pqrs,
-                                        user:""
+                                        idPadre: response.data.pqrs,
+                                        user: ""
                                     }
-                                    this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response:any)=>{
-                                        if (response) {
-                                            
-                                        }
-                                    })
+                                    this._pqrService.envioCorreo('/enviar-radicado-pqrs', datos).subscribe((response: any) => {
+                                        if (response) { }
+                                    });
+
+                                    let dataMotivo = {
+                                        id: response.data.pqrs,
+                                        motivo: this.datos.motivo != undefined ? Number(this.datos.motivo) : 0,
+                                        submotivo: this.datos.submotivo != undefined ? this.datos.submotivo : "N/A"
+                                    }
+                                    
+                                    // Guardar motivo y submotivo
+                                    url = `/tk/update-pqrs-motivo`;
+                                    this._pqrService.saveMotivoPQRS(url, dataMotivo).subscribe((response: any) => {
+                                        if (response) { }
+                                    });
                                     Swal.fire({
                                         title: 'Información',
                                         html: `Se ha creado correctamente la PQRS N° ${response.data.pqrs}.`,
                                         icon: 'success',
                                         showConfirmButton: true,
-                                    }).then((result) => {});
-                                    
+                                    }).then((result) => { });
+
                                     setTimeout(() => {
                                         if (this.EstadoSagicc == false) {
                                             let url = `pqr/list`;
@@ -488,7 +548,7 @@ export class CreacionPQRSComponent implements OnInit {
                             }
                         });
                     },
-                }).then((result) => {});
+                }).then((result) => { });
             }
         });
     }
@@ -520,6 +580,7 @@ export class CreacionPQRSComponent implements OnInit {
                     extension: nombre[1].toLowerCase(),
                     fuente: 'registro-pqrs',
                     identificador: 'pqrs' + ind,
+                    idpqrs: ind,
                     base64: element.file,
                     descripcion: element.descripcion,
                 };
@@ -581,7 +642,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     guardHijos(respuesta, dataPadre, url) {
-        //debugger;
+        //;
         this.causalesLegales.forEach((element) => {
             let dataHijos = {
                 empresa: 'FINV',
@@ -671,7 +732,7 @@ export class CreacionPQRSComponent implements OnInit {
     }
 
     mostrarDireccion() {
-        // debugger;
+        // ;
         const dialogRef = this.dialog.open(DirectionsComponent, {
             width: '60%',
             data: {
@@ -741,7 +802,7 @@ export class CreacionPQRSComponent implements OnInit {
         this.causalesLegales.forEach((element) => {
             dataHijos.push({
                 empresa: 'FINV',
-                identificador:'pqrs',
+                identificador: 'pqrs',
                 campanha:
                     this.datos.campana == undefined ? '' : this.datos.campana,
                 origenPqrs: parseInt(this.datos.origen),
@@ -768,7 +829,7 @@ export class CreacionPQRSComponent implements OnInit {
                         : this.datos.descripcion,
                 idPqrspadre: '',
                 fechaSolucion: element.fechaParaSolucion,
-                file: this.crearJsonAdjuntos(),
+                file: [],
                 primerContacto: false,
                 user: this.UsuarioSaggics,
             });
@@ -793,6 +854,6 @@ export class CreacionPQRSComponent implements OnInit {
         //         });
         //     }
         // });
-        return  this.evidencia;
+        return this.evidencia;
     }
 }

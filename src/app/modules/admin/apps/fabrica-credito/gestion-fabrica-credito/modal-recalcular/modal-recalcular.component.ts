@@ -17,7 +17,7 @@ export class ModalRecalcularComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.data)
+
   }
 
   decision() {

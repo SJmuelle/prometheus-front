@@ -9,15 +9,15 @@ import { UtilityService } from '../utility.service';
 })
 export class HojadevidaService {
 
-    private ruta=environment.apiUrl+'api-fintra/api/generic/qry/';
+    private ruta = environment.apiUrl + 'api-fintra/api/generic/qry/';
 
     constructor(
         private _httpClient: HttpClient,
         private _utility: UtilityService
-    ) {}
+    ) { }
 
     getNegocios(cc: number) {
-        // debugger
+        // 
         let url: string = `informacion-negocios-por-cliente/${cc}`;
         return this._utility.getQuery(url, true).pipe(
             map((res: any) => {

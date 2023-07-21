@@ -49,15 +49,12 @@ export class ModuloComponent implements OnInit, OnDestroy {
     // Get the icons
     this.icons$ = this._menuService.icons;
     // this.empresa$=this._menuService.empresas;
-    // console.log('his.empresa$')
 
-    // console.log(this.empresa$)
     // Subscribe to icons
     this._menuService.icons
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((icons) => {
         this.listado=icons.list
-        console.log(this.listado)
       });
       this._menuService.empresas
       .pipe(takeUntil(this._unsubscribeAll))
@@ -81,7 +78,6 @@ export class ModuloComponent implements OnInit, OnDestroy {
       }).then((result) => { });
       let url = "/agregar-modulo-sistema"
       this._menuService.posbasic(url, this.form.value).subscribe((response: any) => {
-        console.log(response)
         setTimeout(() => {
           Swal.close();
         }, 500);

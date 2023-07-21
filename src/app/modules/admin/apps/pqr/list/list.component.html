@@ -1,4 +1,4 @@
-<div class=" bg-white h-9/12 overflow-auto px-3 py-2 rounded-lg shadow w-100 m-4">
+<div class="bg-white h-screen px-3 py-2 rounded-lg shadow w-100">
     <div class="row justify-between">
         <div class="text-left col l12">
             <h2 class="mb-2 text-gray-900">Gestión de PQRS</h2>
@@ -6,29 +6,66 @@
     </div>
     <div class="row">
         <div class="bg-white col-lg-12 col-sm-12">
-            <div class="row items-center mb-3">
+            <div class=" mb-3 flex flex-row gap-3 flex-wrap justify-between">
                 <span class="leading-none col-lg-4 col-sm-12">
-                    <div class="leading-tight titulo_tabs">
-                        <button mat-button class="color_fintra text-white" (click)="exportAsXLSX()">Exportar</button>
+                    <div class="leading-tight titulo_tabs flex flex-row gap-3 flex-wrap">
+                        <div>
+                            <button mat-button class="bg-green-500 text-white" (click)="exportAsXLSX()">
+                                <div class="flex flex-row gap-1.5 w-full" matPrefix>
+                                    <div>
+                                        <mat-icon svgIcon="heroicons_outline:document-download"
+                                            class="text-white"></mat-icon>
+                                    </div>
+                                    <div class="margin-button">
+                                        Exportar
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-button class="bg-gray-400 text-white gap-2" (click)="filtrarFecha()">
+                                <div class="flex flex-row gap-1.5 w-full" matPrefix>
+                                    <div>
+                                        <mat-icon svgIcon="heroicons_outline:search-circle"
+                                            class="text-white"></mat-icon>
+                                    </div>
+                                    <div class="margin-button">
+                                        Búsqueda específica
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                        <div>
+                            <button mat-button class="permitir bloquear text-white" *ngIf="filRegistros!=maxRegistros"
+                                (click)="consulta()">Restablecer</button>
+                        </div>
                     </div>
                 </span>
-                <div class="leading-tight col-lg-8 col-sm-12 text-end">
-                    <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
+                <div class="border rounded-full h-10 w-full sm:w-56 flex flex-row items-center ">
+                    <input type="text" (keyup)="search()" autocomplete="off" placeholder="Filtrar... "
+                        name="filtrarTabla" [(ngModel)]="filtrarTabla" class="w-full pl-3">
+                </div>
+                <!-- <div class="leading-tight col-lg-8 col-sm-12 text-end"> -->
+                <!-- <input class="border rounded p-2 bg-gray-100" style="font-size: 10px; margin-right: 1em;"
                         type="text" autocomplete="off" name="filtrarTabla" [(ngModel)]="filtrarTabla"
                         placeholder="Filtrar...">
                     <select name="tamanoTabl" id="tamanoTabl" class="border rounded  bg-gray-100" (change)="page=1"
                         [(ngModel)]="tamanoTabl" style="font-size: 10px; color: #9aa8bc; padding: 7px;">
                         <option value="5"> 5</option>
-                        <option value="10"> 10</option>
-                        <!-- <option value="20"> 20</option> -->
-                    </select>
-                </div>
+                        <option value="10"> 10</option> -->
+                <!-- <option value="20"> 20</option> -->
+                <!-- </select> -->
+                <!-- </div> -->
             </div>
 
-            <div class="row">
+            <div>
+                <app-table [allDataRows]="listado" [dataOptionTable]="dataOptionsTable"></app-table>
+            </div>
+
+            <!-- <div class="row">
                 <div class="col-lg-12">
                     <div class="row">
-                        <div class="col-lg-12 ">
+                        <div class="col-lg-12 max-h-100 xl:max-h-140 overflow-auto">
                             <table class="w-full shadow p-1">
                                 <thead style="background-color: #F9FAFB;">
                                     <tr
@@ -38,6 +75,7 @@
                                         <th class="px-4 py-3 text-center w-0">Identificación</th>
                                         <th class="px-4 py-3 text-center">Nombre completo</th>
                                         <th class="px-4 py-3 text-center">Línea de negocio</th>
+                                        <th class="px-4 py-3 text-center">Código de negocio</th>
                                         <th class="px-4 py-3 text-center w-0">Tipo</th>
                                         <th class="px-4 py-3 text-center">Causal</th>
                                         <th class="px-4 py-3 text-center">Responsable</th>
@@ -48,6 +86,8 @@
                                         <th class="px-4 py-3 text-center">Solución</th>
                                         <th class="px-4 py-3 text-center w-0">N° rechazos</th>
                                         <th class="px-4 py-3 text-center w-0">Último rechazo</th>
+                                        <th class="px-4 py-3 text-center w-0">Usuario Creación</th>
+                                        <th class="px-4 py-3 text-center w-0">Fecha Creación</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
@@ -58,8 +98,12 @@
                                         </td>
                                         <td class="px-2 text-sm border py-1 text-center">{{ item.numeroPqrs }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.identificacion }}</td>
-                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{ item.apellidosCliente }}</td>
-                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}</td>
+                                        <td class="px-2 text-sm border text-left capitalize">{{ item.nombreCliente }} {{
+                                            item.apellidosCliente }}</td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.lineaNegocio }}
+                                        </td>
+                                        <td class="px-2 text-sm border text-center capitalize">{{ item.codigonegocio }}
+                                        </td>
                                         <td class="px-2 text-sm border text-center">{{ item.tipoPqrs }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.causalPqrs }}</td>
                                         <td class="px-1 text-sm border text-center">{{ item.responsable }}</td>
@@ -70,6 +114,8 @@
                                         <td class="px-2 text-sm border text-center">{{ item.solucionPqrs }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.numeroRechazados }}</td>
                                         <td class="px-2 text-sm border text-center">{{ item.fechaRechazo }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.usuario_creacion }}</td>
+                                        <td class="px-2 text-sm border text-center">{{ item.fecha_creacion }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -80,14 +126,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
-                    <!-- <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around">
+                <div class="col-lg-12"> -->
+            <!-- <fuse-card class="card p-3 shadow capitalize row mr-3 align-content-around">
                         <div class="w-3/12">
                             <img src="assets/images/animaciones/nodatos.gif">
                         </div>
                     </fuse-card> -->
-                </div>
-            </div>
+            <!-- </div>
+            </div> -->
         </div>
 
     </div>

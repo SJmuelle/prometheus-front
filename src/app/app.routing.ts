@@ -11,20 +11,24 @@ import { DashboardModule } from './modules/admin/apps/dashboard/dashboard.module
 import { FabricaCreditoModule } from "./modules/admin/apps/fabrica-credito/fabrica-credito.module";
 import { PagaduriaModule } from './modules/admin/apps/pagaduria/pagaduria.module';
 import { FechaCorridaModule } from './modules/admin/apps/fecha-corrida/fecha-corrida.module';
+import { ProcesosModule } from './modules/admin/apps/procesos/procesos.module';
+import { TransportadorasModule } from './modules/admin/apps/transportadoras/transportadoras.module';
+import { CuentasPorCobrarModule } from './modules/admin/apps/cuentas-por-cobrar/cuentas-por-cobrar.module';
+import { MercadeoModule } from './modules/admin/apps/mercadeo/mercadeo.module';
 
 // @formatter:off
 // tslint:disable:max-line-length
 export const appRoutes: Route[] = [
 
     // Redirect empty path to '/example'
-    {path: '', pathMatch : 'full', redirectTo: 'atencion-cliente'},
+    { path: '', pathMatch: 'full', redirectTo: 'atencion-cliente' },
 
     // Redirect signed in user to the '/example'
     //
     // After the user signs in, the sign in page will redirect the user to the 'signed-in-redirect'
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
-    {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'atencion-cliente'},
+    { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'atencion-cliente' },
 
     // Auth routes for guests
     {
@@ -38,12 +42,13 @@ export const appRoutes: Route[] = [
         children: [
             {
                 path: 'confirmation-required',
-                loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.module').then(m => m.AuthConfirmationRequiredModule)},
-            {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule)},
-            {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule)},
-            {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule)},
-            {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule)},
-            {path: 'sagicc', loadChildren: () => PqrModule}
+                loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.module').then(m => m.AuthConfirmationRequiredModule)
+            },
+            { path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.module').then(m => m.AuthForgotPasswordModule) },
+            { path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.module').then(m => m.AuthResetPasswordModule) },
+            { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.module').then(m => m.AuthSignInModule) },
+            { path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.module').then(m => m.AuthSignUpModule) },
+            { path: 'sagicc', loadChildren: () => PqrModule }
         ]
     },
 
@@ -57,37 +62,37 @@ export const appRoutes: Route[] = [
             layout: 'empty'
         },
         children: [
-            {path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule)},
-            {path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule)}
+            { path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.module').then(m => m.AuthSignOutModule) },
+            { path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.module').then(m => m.AuthUnlockSessionModule) }
         ]
     },
 
     // Landing routes
     {
         path: '',
-        component  : LayoutComponent,
+        component: LayoutComponent,
         data: {
             layout: 'empty'
         },
-        children   : [
-            {path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule)},
+        children: [
+            { path: 'home', loadChildren: () => import('app/modules/landing/home/home.module').then(m => m.LandingHomeModule) },
         ]
     },
-     // Landing routes
-    
-            {path: 'hv', loadChildren: () => import('app/modules/admin/apps/hojavida/hojavida.module').then(m => m.HojavidaModule)},
+    // Landing routes
+
+    { path: 'hv', loadChildren: () => import('app/modules/admin/apps/hojavida/hojavida.module').then(m => m.HojavidaModule) },
 
 
     // Admin routes
     {
-        path       : '',
+        path: '',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
-        component  : LayoutComponent,
-        resolve    : {
+        component: LayoutComponent,
+        resolve: {
             initialData: InitialDataResolver,
         },
-        children   : [
+        children: [
             {
                 path: 'dashboard',
                 loadChildren: () => DashboardModule
@@ -117,13 +122,36 @@ export const appRoutes: Route[] = [
                 loadChildren: () => FechaCorridaModule
             },
             {
-                path: 'activities', 
+                path: 'activities',
                 loadChildren: () => import('app/modules/admin/pages/activities/activities.module').then(m => m.ActivitiesModule),
             },
             {
                 path: 'pagaduria',
                 loadChildren: () => PagaduriaModule
-            }
+            },
+            {
+                path: 'transportadora',
+                loadChildren: () => TransportadorasModule
+            },
+            {
+                path: 'cuentas-por-cobrar',
+                loadChildren: () => CuentasPorCobrarModule
+            },
+            {
+                path: 'procesos',
+                loadChildren: () => ProcesosModule
+            },
+            {
+                path: 'mercadeo',
+                loadChildren: () => MercadeoModule
+            },
+
+            {
+                path: 'negociaciones/negociacioncartera',
+                loadChildren: () => import('./modules/admin/apps/negociaciones/negociaciones.module').then(m => m.NegociacionesModule)
+            },
+
+
             // {
             //     path: 'act',
             //     loadChildren: () => ActivitiesModule
@@ -137,7 +165,7 @@ export const appRoutes: Route[] = [
 
     // ]},
 
-    {path: '**', redirectTo: 'dashboard'}
+    { path: '**', redirectTo: 'dashboard' }
     // {path: '**', redirectTo: 'sign-in'},
     // {path: '*', redirectTo: 'sign-in'}
 ];

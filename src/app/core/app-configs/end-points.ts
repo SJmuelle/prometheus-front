@@ -1,4 +1,4 @@
-import {environment} from '../../../environments/environment';
+import {environment} from 'environments/environment';
 
 export class EndPoints {
     /**
@@ -13,6 +13,14 @@ export class EndPoints {
     static uri(url: string): string {
         return environment.apiUrl+'api-fintra/api' + url;
     }
+/**
+     * @description: Url para los endpoints de alfa fintra
+     */
+    static alfa(url: string): string {
+        return environment.alfaFintra+'api' + url;
+    }
+
+
     /**
      * @description: URL pagaduria
      */

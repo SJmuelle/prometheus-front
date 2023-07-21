@@ -26,7 +26,6 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
         private comentariosService: ComentariosService,
         private fabricaCreditoService: FabricaCreditoService,
     ) { 
-        console.log(this.data)
         this.getFabricaCreditoAgenda(this.data.numeroSolicitud)
     }
 
@@ -48,6 +47,8 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
       .subscribe(({ data }) => {
         Swal.close();
         this.datoFabrica = data;
+        console.log('datos fabrica', data);
+        
       })
   }
 
@@ -61,8 +62,7 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
     public onGuardar(): void {
         if (this.form.valid) {
             const data: any = this.form.getRawValue();
-            console.log(data);
-            let valida=this.datoFabrica.agenda!='GC'&&this.datoFabrica.agenda!='CM';
+            let valida=this.datoFabrica.agenda!='GC'&&this.datoFabrica.agenda!='CM' && this.datoFabrica.agenda != 'VD';
             let envioData = {
                 comentario: data.comentario,
                 numeroSolicitud: data.numeroSolicitud,
