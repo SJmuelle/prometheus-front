@@ -1,3 +1,4 @@
+import { NgSwitch } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,6 +6,8 @@ import { CarteraClientesService } from 'app/core/services/cartera-clientes.servi
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ModalDetailsCarteraClienteComponent } from '../modal-details-cartera-cliente/modal-details-cartera-cliente/modal-details-cartera-cliente.component';
 
 @Component({
@@ -26,40 +29,37 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       typeField: 'mat-menu',
       MenuFunctions: [
         {
-          nameFunction: 'Detalle cartera',
-          callback: (data) => {
-            this.prueba(data)
-          },
-          iconFuseTemplate: 'search',
-          children: false
-        },
-        {
           nameFunction: 'Visualizar',
           iconFuseTemplate: 'search',
           children: true,
           arrayChildren: {
             nameChildren: 'indexMatMenu1', values: [
               {
+                nameFunction: 'Detalle cartera',
+                callback: (data) => {
+                  this.openDialog('detalleCartera', data)
+                },
+                iconFuseTemplate: 'search',
+                children: false
+              },
+              {
                 nameFunction: 'Visualizar pagos',
                 callback: (data) => {
-                  console.log('Visualizar pagos', data)
-                  // this.prueba(3)
+                  this.openDialog('visualizarPagos', data)
                 },
                 iconFuseTemplate: 'search',
                 children: false
               }, {
                 nameFunction: 'Visualizar gestiones',
                 callback: (data) => {
-                  console.log('Visualizar gestiones', data)
-                  // this.prueba(3)
+                  this.openDialog('visualizarGestiones', data)
                 },
                 iconFuseTemplate: 'search',
                 children: false
               }, {
                 nameFunction: 'Visualizar Compromisos de pago',
                 callback: (data) => {
-                  console.log('Visualizar Compromisos de pago', data)
-                  // this.prueba(3)
+                  this.openDialog('visualizarCompromisosPago', data)
                 },
                 iconFuseTemplate: 'search',
                 children: false
@@ -69,7 +69,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         {
           nameFunction: 'Estado cuenta Geotech',
           callback: (data) => {
-            this.prueba(3)
+            this.openDialog('estadoCuentaGeotech', data)
           },
           iconFuseTemplate: 'search',
           children: false
@@ -77,7 +77,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         {
           nameFunction: 'Agregar gestiones',
           callback: (data) => {
-            this.prueba(3)
+            this.openDialog('agregarGestiones', data)
           },
           iconFuseTemplate: 'search',
           children: false
@@ -85,7 +85,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         {
           nameFunction: 'Editar información',
           callback: (data) => {
-            this.prueba(3)
+            this.openDialog('editarInformacion', data)
           },
           iconFuseTemplate: 'search',
           children: false
@@ -194,6 +194,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       typeField: 'text',
     },
   ]
+  private unsuscribe$: Subject<any> = new Subject<any>();
   constructor(
     private _carteraClienteServices: CarteraClientesService,
     private fb: FormBuilder,
@@ -205,16 +206,95 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
     this.formSearchBuilder();
   }
 
-  public prueba(data): void {
+  public openDialog(viewModal: string, dataRow: any): void {
+    this._sweetAlerService.startLoading({});
+
+    const { periodo, unidadNegocio } = this.formSearch.getRawValue();
+
+    switch (viewModal) {
+      case 'detalleCartera':
+        const detalleCartera = {
+          periodo: periodo,
+          unidadNegocio: unidadNegocio,
+          negocio: dataRow.negocio
+        }
+        this._carteraClienteServices.cargarClienteCartera(detalleCartera).pipe(takeUntil(this.unsuscribe$)).subscribe({
+          next: (res) => {
+            this._sweetAlerService.stopLoading();
+            const valuesData = res.data
+            this.loadingModal({ viewModal, valuesData });
+          },
+          error: (e) => {
+            this._sweetAlerService.alertError();
+
+          }
+        })
+        break;
+      case 'visualizarPagos':
+        const visualizarPagos = {
+          periodo,
+          negocio: dataRow.negocio
+        }
+        this._carteraClienteServices.verPagosClientes(visualizarPagos).pipe(takeUntil(this.unsuscribe$)).subscribe({
+          next: (res) => {
+            this._sweetAlerService.stopLoading();
+            const valuesData = res.data
+            this.loadingModal({ viewModal, valuesData });
+
+          },
+          error: (e) => {
+            this._sweetAlerService.alertError();
+          }
+        })
+
+        break
+      case 'visualizarGestiones':
+        const visualizarGestiones = dataRow.negocio
+        this._carteraClienteServices.verGestionesCliente(visualizarGestiones).pipe().subscribe({
+          next: (resp) => {
+            this._sweetAlerService.stopLoading();
+            const valuesData = resp.data
+            this.loadingModal({ viewModal, valuesData });
+          },
+          error: (e) => {
+            this._sweetAlerService.alertError();
+          }
+        })
+        break
+      case 'visualizarCompromisosPago':
+        break;
+      case 'estadoCuentaGeotech':
+        break;
+      case 'agregarGestiones':
+        break;
+      case 'editarInformacion':
+        break;
+      default:
+        break
+
+    }
+
+
+
+
+
+
+  }
+
+  public loadingModal({ viewModal, valuesData }): void {
+
     const dialogRef = this.dialog.open(ModalDetailsCarteraClienteComponent,
       {
         maxWidth: '90vw',
-        width: window.innerWidth < 600 ? '90%' : '60%',
-        data: data,
+
+        maxHeight: '80vh',
+        width: '80%',
+        data: { viewModal, valuesData },
         disableClose: false
-      });
+      })
     dialogRef.afterClosed().subscribe(result => {
     });
+
   }
 
   public loadsearch(): void {
