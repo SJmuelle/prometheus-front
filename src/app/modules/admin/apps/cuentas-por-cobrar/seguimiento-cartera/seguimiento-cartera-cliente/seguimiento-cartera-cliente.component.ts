@@ -152,26 +152,31 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       name: 'Valor saldo',
       text: 'Valor saldo',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'debidoCobrar',
       text: 'Debido cobrar',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'recaudosxCuota',
       text: 'Recaudo',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'cumplimiento',
       text: '% cumplimiento',
       typeField: 'text',
+      pipeName: 'percentage'
     },
     {
       name: 'valoraPagar',
       text: 'Valor a pagar',
       typeField: 'text',
+      pipeName: 'number'
     },
     {
       name: 'fechaultCompromiso',
@@ -250,11 +255,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         break
       case 'visualizarGestiones':
         const visualizarGestiones = dataRow.negocio
-        this._carteraClienteServices.verGestionesCliente(visualizarGestiones).pipe().subscribe({
+        this._carteraClienteServices.verGestionesCliente(visualizarGestiones).pipe(takeUntil(this.unsuscribe$)).subscribe({
           next: (resp) => {
-            this._sweetAlerService.stopLoading();
-            const valuesData = resp.data
-            this.loadingModal({ viewModal, valuesData });
+            if (!!resp.data.length) {
+              this._sweetAlerService.stopLoading();
+              const valuesData = resp.data
+              this.loadingModal({ viewModal, valuesData, });
+            } else {
+              this._sweetAlerService.alertInfo({});
+            }
           },
           error: (e) => {
             this._sweetAlerService.alertError();
@@ -262,14 +271,33 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         })
         break
       case 'visualizarCompromisosPago':
+        const visualizarCompromisosPago = dataRow.negocio
+        this._carteraClienteServices.verCompromisosPagos(visualizarCompromisosPago).pipe(takeUntil(this.unsuscribe$)).subscribe({
+          next: (resp) => {
+            this._sweetAlerService.stopLoading();
+            const valuesData = resp.data
+            this.loadingModal({ viewModal, valuesData, });
+          },
+          error: (e) => {
+            this._sweetAlerService.alertError();
+          }
+        })
+
         break;
       case 'estadoCuentaGeotech':
         break;
       case 'agregarGestiones':
+        setTimeout(() => {
+          this._sweetAlerService.stopLoading();
+          const valuesData = dataRow
+          this.loadingModal({ viewModal, valuesData, width: '30%' });
+        }, 400);
         break;
       case 'editarInformacion':
+        this._sweetAlerService.stopLoading();
         break;
       default:
+        this._sweetAlerService.stopLoading();
         break
 
     }
@@ -281,14 +309,12 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
 
   }
 
-  public loadingModal({ viewModal, valuesData }): void {
-
+  public loadingModal({ viewModal, valuesData, width = '80%' }): void {
     const dialogRef = this.dialog.open(ModalDetailsCarteraClienteComponent,
       {
         maxWidth: '90vw',
-
         maxHeight: '80vh',
-        width: '80%',
+        width,
         data: { viewModal, valuesData },
         disableClose: false
       })

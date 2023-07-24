@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, OnChanges, SimpleChanges, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatCheckboxDefaultOptions } from '@angular/material/checkbox';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatFooterRowDef, MatTable, MatTableDataSource } from '@angular/material/table';
 import { TableDataFilterService } from 'app/core/services/table-data-filter.service';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil, debounceTime } from 'rxjs/operators';
@@ -11,6 +11,7 @@ interface Ioptions {
   modeMobil?: boolean,
   multifunction?: boolean,
   function?: boolean
+  footer?: boolean
 
 }
 
@@ -72,7 +73,7 @@ export interface IoptionTable {
   /**
    * se utiliza en caso de querer formatear el texto
    */
-  pipeName?: 'date' | 'fullday' | 'currency' | 'number' | 'titleCase'
+  pipeName?: 'date' | 'fullday' | 'currency' | 'number' | 'titleCase' | 'percentage'
   /**
    * se llama si se quiere utilizar una funcion y se le envia la datarow
    */
@@ -103,12 +104,14 @@ export interface IoptionTable {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
-export class TableComponent implements OnInit, OnChanges, OnDestroy {
+export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatFooterRowDef, { static: true }) footerDef: MatFooterRowDef;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
   @Input() allDataRows: any[] = []
   @Input() dataOptionTable: IoptionTable[] = []
-  @Input() Options: Ioptions = { modeMobil: false, multifunction: false, function: false }
+  @Input() Options: Ioptions = { modeMobil: false, multifunction: false, function: false, footer: false, }
   @Input() Funtions: IFuntions[] = []
   @Output() dataRowSelect: EventEmitter<any> = new EventEmitter<any>();
   @Output() dataFunctionSelect: EventEmitter<any> = new EventEmitter<any>();
@@ -129,6 +132,15 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
 
   constructor(private _filterTable: TableDataFilterService, private paginatorIntl: MatPaginatorIntl,) { this.paginatorIntl.itemsPerPageLabel = 'Items por pagina : '; }
+  ngAfterViewInit(): void {
+    this.dataCopy = this.allDataRows;
+    this.dataSource = new MatTableDataSource(this.allDataRows);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.copyTableOptions = this.dataOptionTable
+
+  }
   ngOnDestroy(): void {
     this.unsuscribre$.next();
     this.unsuscribre$.complete();
@@ -150,6 +162,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
       }
     })]
     this.dataColumn = [...values]
+
 
 
 
@@ -178,6 +191,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
       }
     })]
     this.dataColumn = [...values]
+
+
     this.listenObservable();
     this.dataCopy = this.allDataRows;
     this.dataSource = new MatTableDataSource(this.allDataRows);
@@ -208,6 +223,10 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy {
 
 
 
+  }
+
+  public viewmode(): boolean {
+    return window.innerWidth <= 600 ? true : false
   }
 
   public configColumns(name, evento): void {

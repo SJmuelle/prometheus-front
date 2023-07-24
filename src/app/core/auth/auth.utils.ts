@@ -149,6 +149,7 @@ export class AuthUtils {
         // Split the token
         const parts = token?.split('.');
         if (parts.length !== 3) {
+            localStorage.clear();
             throw new Error('The inspected token doesn\'t appear to be a JWT. Check to make sure it has three parts and see https://jwt.io for more.');
         }
 
