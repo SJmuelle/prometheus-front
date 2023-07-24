@@ -417,9 +417,10 @@
                 </ng-container>
 
                 <ng-container matColumnDef="disclaimer">
-                    <td mat-footer-cell *matFooterCellDef colspan="21">
+                    <td mat-footer-cell *matFooterCellDef colspan="6">
                         Please note that the cost of items displayed are completely and totally made up.
                     </td>
+                    <td *ngfort item of arreglototales>{{valueTotal}}</td>
                 </ng-container>
 
 
