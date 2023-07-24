@@ -25,6 +25,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
   public datos: any[] = [];
   public page: number = 1;
   public tamanoTabl = new FormControl("10");
+  public page_number: number = 0
+  public page_size: number = 10
   public filtrarTabla = new FormControl('');
   public mostrarTotales: boolean = true;
   public totales: any[];
@@ -96,6 +98,8 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
           const count = this.datos.filter(value => value.etapaFirma?.toUpperCase() === item.state?.charAt(0)?.toUpperCase())
           item.count = count.length
         })
+        const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
+        this.datos = [...filter]
         this.mostrar = false;
       }
     });
@@ -449,8 +453,6 @@ export class GridAgendaFirmaDigitalComponent implements OnInit, OnDestroy {
       this.intervalVentaFima = setInterval(() => {
         this.getAgendaFirmaDigital();
         this.minuto = 0;
-        const filter = this.datacopy.filter((value) => value.etapaFirma?.toUpperCase() === this.filtrado?.toUpperCase())
-        this.datos = [...filter]
       }, 30000);
 
       this.intervalProgressBar = setInterval(() => {

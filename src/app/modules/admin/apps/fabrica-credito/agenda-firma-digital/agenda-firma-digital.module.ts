@@ -75,6 +75,7 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
     NgxExtendedPdfViewerModule,
     NgxMaskModule.forRoot(),
 
+
   ]
 })
 export class AgendaFirmaDigitalModule { }

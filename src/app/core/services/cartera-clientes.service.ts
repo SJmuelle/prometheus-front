@@ -38,6 +38,113 @@ export class CarteraClientesService {
     return this._http.post(this._appSettings.seguimientoCarteraClientes.url.buscarCliente, { ...data })
   }
 
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public cargarClienteCartera(data): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.post(this._appSettings.seguimientoCarteraClientes.url.cargarCliente, { ...data })
+  }
+
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public verPagosClientes(data): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.post(this._appSettings.seguimientoCarteraClientes.url.visualizarPagos, { ...data })
+  }
+
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public verGestionesCliente(data): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.visualizarGestiones}/${data}`)
+  }
+
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public verCompromisosPagos(data): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.visualizarCompromisos}/${data}`)
+  }
+
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public ListarTipoGestor(): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarTipoGestor}`)
+  }
+
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public listarTipoGestion(): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarTipoGestion}`)
+  }
+
+
+  /**
+  * 
+  * @returns listar periodos fotos de la cartera del cliente
+  */
+  public listarTipoContacto(): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarTipoContacto}`)
+  }
+
+  /**
+ * 
+ * @returns listar periodos fotos de la cartera del cliente
+ */
+  public listarMotivoNoPago(data): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarMotivoNoPago}/${data.select}/${data.id}`)
+  }
+
+  /**
+* 
+* @returns listar periodos fotos de la cartera del cliente
+*/
+  public listarEstadoCliente(id): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarEstadoCliente}/${id}`)
+  }
+
+  /**
+* 
+* @returns listar periodos fotos de la cartera del cliente
+*/
+  public listarProximaAccion(id): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarProximaAccion}/${id}`)
+  }
+
+
+  /**
+* 
+* @returns listar periodos fotos de la cartera del cliente
+*/
+  public listarResultadoGestion(id): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarResultadoGestion}/${id}`)
+  }
+
+
+
+  ///generic/qry/cartera-listar-proxima-accion-contacto/1
+
+  // api/generic/cartera-cargar-detalle-cliente
+
   // api-fintra/api/generic/cartera-buscar-cliente
 
 }

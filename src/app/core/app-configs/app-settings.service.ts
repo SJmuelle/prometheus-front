@@ -542,7 +542,19 @@ export class AppSettingsService {
         url: {
             listarUnidad: EndPoints.uri('/generic/qry/cartera-listar-unidad-negocio'),
             periodoFotos: EndPoints.uri('/generic/qry/cartera-listar-periodo-foto'),
-            buscarCliente: EndPoints.uri('/generic/cartera-buscar-cliente')
+            buscarCliente: EndPoints.uri('/generic/cartera-buscar-cliente'),
+            cargarCliente: EndPoints.uri('/generic/cartera-cargar-detalle-cliente'),
+            visualizarPagos: EndPoints.uri('/generic/cartera-visualizar-pagos-cliente'),
+            visualizarGestiones: EndPoints.uri('/generic/qry/cartera-visualizar-gestiones-cliente'),
+            visualizarCompromisos: EndPoints.uri('/generic/qry/cartera-visualizar-compromiso-pago-cliente'),
+            listarTipoGestor: EndPoints.uri('/generic/qry/cartera-listar-tipo-gestor'),
+            listarTipoGestion: EndPoints.uri('/generic/qry/cartera-listar-tipo-gestion'),
+            listarTipoContacto: EndPoints.uri('/generic/qry/cartera-listar-tipo-contacto'),
+            listarMotivoNoPago: EndPoints.uri('/generic/qry/cartera-listar-motivo-no-pago'),
+            listarEstadoCliente: EndPoints.uri('/generic/qry/cartera-listar-estado-cliente-contacto'),
+            listarProximaAccion: EndPoints.uri('/generic/qry/cartera-listar-proxima-accion-contacto'),
+            listarResultadoGestion: EndPoints.uri('/generic/qry/cartera-listar-resultado-gestion-contacto'),
+
 
         }
     };

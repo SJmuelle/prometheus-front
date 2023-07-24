@@ -38,8 +38,7 @@ import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatListModule } from '@angular/material/list';
-
-
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
 @NgModule({
@@ -75,7 +74,11 @@ import { MatListModule } from '@angular/material/list';
                 MatCheckboxModule,
                 NgxMaskModule.forRoot(),
                 // FabricaCreditoModule,
-                MatListModule
+                MatListModule,
+                NgxMatDatetimePickerModule,
+                NgxMatTimepickerModule,
+                NgxMatNativeDateModule
+
 
         ],
         exports: [
@@ -109,7 +112,12 @@ import { MatListModule } from '@angular/material/list';
                 MatProgressBarModule,
                 MatCheckboxModule,
                 OTPComponent,
-                MatListModule
+                MatListModule,
+                MatTooltipModule,
+                NgxMatDatetimePickerModule,
+                NgxMatTimepickerModule,
+                NgxMatNativeDateModule
+
         ],
         declarations: [
                 DirectionsBasicComponent,

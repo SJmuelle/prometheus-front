@@ -6,7 +6,7 @@
 
 
 
-        <div class="flex flex-col sm:hidden min-h-40  max-h-90 ">
+        <div *ngIf="viewmode()" class="flex flex-col sm:hidden min-h-40  max-h-90 ">
 
 
             <div class="">
@@ -224,9 +224,9 @@
 
         </div>
 
-        <div class="hidden sm:flex flex-col">
+        <div *ngIf="!viewmode()" class="hidden sm:flex flex-col">
 
-            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 ">
+            <table mat-table [dataSource]="this.dataSource" matSort class="border-1 border-gray-100 " tabindex="0">
 
                 <!-- <ng-container matColumnDef="action" *ngIf="Options.function">
                     <th mat-header-cell *matHeaderCellDef style="background: #E2E8F0;">Opciones</th>
@@ -255,7 +255,7 @@
 
                 <ng-container [matColumnDef]="dataOption.name" *ngFor="let dataOption of this.dataOptionTable">
 
-                    <th class=" sticky top-0" style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef
+                    <th class=" sticky top-0 " style="background: #E2E8F0;" mat-header-cell *matHeaderCellDef
                         mat-sort-header>
                         {{ dataOption.text }}
                     </th>
@@ -279,6 +279,9 @@
                                     dataOption.pipeName || "text" }}
                                 </span>
                             </td>
+
+
+
                         </ng-container>
 
 
@@ -337,7 +340,7 @@
                                         <button mat-menu-item
                                             *ngIf="value.children && value?.arrayChildren?.nameChildren==='indexMatMenu1'"
                                             [matMenuTriggerFor]="indexMatMenu1">
-                                            <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                                            <mat-icon>remove_red_eye</mat-icon>
                                             {{value.nameFunction}}</button>
 
                                         <button mat-menu-item
@@ -364,49 +367,30 @@
                                             {{value.nameFunction}}</button>
                                     </div>
                                 </mat-menu>
-
-
                                 <mat-menu #indexMatMenu1="matMenu">
                                     <!-- <div *ngFor="let value of dataOption.MenuFunctions">
-                                        
                                     </div> -->
-
                                     <button (click)="menu.callback(rowFunction)" *ngFor="let menu of dataFunctions"
                                         mat-menu-item> <mat-icon
                                             svgIcon="heroicons_outline:pencil"></mat-icon>{{menu.nameFunction}}</button>
-
-
                                 </mat-menu>
-
                                 <mat-menu #indexMatMenu2="matMenu">
                                     <!-- <div *ngFor="let value of dataOption.MenuFunctions">
-    
                                             <button mat-menu-item [matMenuTriggerFor]="fish">pescado</button>
                                         </div> -->
                                 </mat-menu>
-
-
-
-
                                 <mat-menu #indexMatMenu3="matMenu">
                                     <!-- <div *ngFor="let value of dataOption.MenuFunctions">
-
                                         <button mat-menu-item [matMenuTriggerFor]="fish">fruta</button>
                                     </div> -->
                                 </mat-menu>
-
                                 <mat-menu #indexMatMenu4="matMenu">
                                     <!-- <div *ngFor="let value of dataOption.MenuFunctions">
 
                                         <button mat-menu-item [matMenuTriggerFor]="fish">verdura</button>
                                     </div> -->
                                 </mat-menu>
-
-
-
-
                             </td>
-
 
 
                         </ng-container>
@@ -422,19 +406,41 @@
                                 </mat-checkbox>
                             </td>
                         </ng-container> -->
+
+
+
                     </ng-container>
+
 
 
 
                 </ng-container>
 
+                <ng-container matColumnDef="disclaimer">
+                    <td mat-footer-cell *matFooterCellDef colspan="6">
+                        Please note that the cost of items displayed are completely and totally made up.
+                    </td>
+                    <td *ngfort item of arreglototales>{{valueTotal}}</td>
+                </ng-container>
+
+
 
 
                 <tr mat-header-row *matHeaderRowDef="this.dataColumn"></tr>
                 <tr mat-row *matRowDef="let row; columns: this.dataColumn"></tr>
+                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns" class="">Hola</tr> -->
+
+                <ng-container *ngIf="Options.footer">
+                    <tr mat-footer-row *matFooterRowDef="['disclaimer']" class=""></tr>
+                </ng-container>
+
+                <!-- <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></mat-footer-row> -->
+
+                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr> -->
+
 
                 <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell text-center" colspan="20" *ngIf="!this.allDataRows.length">
+                    <td class="mat-cell text-center" colspan="21" *ngIf="!this.allDataRows.length">
                         <div class="flex items-center content-center justify-center mt-7 gap-3">
                             <mat-icon svgIcon="heroicons_outline:information-circle"></mat-icon>
                             <p class="text-5xl font-semibold tracking-tight">
@@ -458,6 +464,7 @@
                     </div>
                     <!-- </td> -->
                 </tr>
+
             </table>
         </div>
 
