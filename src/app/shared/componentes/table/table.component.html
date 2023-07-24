@@ -147,7 +147,7 @@
 
                         <mat-menu #indexMatMenu1="matMenu">
                             <!-- <div *ngFor="let value of dataOption.MenuFunctions">
-                                
+
                             </div> -->
 
                             <button (click)="menu.callback(value)" *ngFor="let menu of dataFunctions" mat-menu-item>
@@ -158,7 +158,7 @@
 
                         <!-- <mat-menu #indexMatMenu1="matMenu"> -->
                         <!-- <div *ngFor="let value of dataOption.MenuFunctions">
-                                
+
                             </div> -->
 
                         <!-- <button (click)="menu.callback(rowFunction)" *ngFor="let menu of dataFunctions"
@@ -417,10 +417,12 @@
                 </ng-container>
 
                 <ng-container matColumnDef="disclaimer">
-                    <td mat-footer-cell *matFooterCellDef colspan="6">
-                        Please note that the cost of items displayed are completely and totally made up.
-                    </td>
-                    <td *ngfort item of arreglototales>{{valueTotal}}</td>
+                    <ng-container *ngFor="let totalColum of arregloTotales">
+                        <td mat-footer-cell *matFooterCellDef [colspan]="totalColum.colSpan">
+                            {{totalColum.title}}
+                        </td>
+                    </ng-container>
+                    <!-- <td *ngfort item of arreglototales>{{valueTotal}}</td> -->
                 </ng-container>
 
 

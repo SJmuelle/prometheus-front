@@ -39,7 +39,7 @@ interface Ichildren {
 
 export type OptionTableArray = IoptionTable[]
 
-/** @description se muestras todos los registros de la lista 
+/** @description se muestras todos los registros de la lista
  * @param :  name: string,
       text: string,
       typeField: 'text' | 'function',
@@ -67,7 +67,7 @@ export interface IoptionTable {
    */
   disable?: boolean
   /**
-   * se especifica si es de tipo texto o llama una funcion 
+   * se especifica si es de tipo texto o llama una funcion
    */
   typeField: 'text' | 'function' | 'statusStyle' | 'mat-menu',
   /**
@@ -125,6 +125,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   public dataFunctions: any[] = []
   public openlist: boolean = false
   public optionColumns: any[] = []
+  public arregloTotales: any[] = []
   public copyTableOptions: any[] = []
   private susbcripcion$: Subscription = new Subscription();
   private unsuscribre$: Subject<void> = new Subject<void>();
@@ -175,6 +176,12 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     this.copyTableOptions = this.dataOptionTable
 
 
+
+    if(this.Options.footer){
+        this.addTotales()
+    }else{
+        console.log('no footer')
+    }
   }
 
   ngOnInit(): void {
@@ -222,7 +229,42 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
 
 
+  }
 
+  // organiza el footer para poner los totales
+  public addTotales(){
+    console.log('añadiendo totales', this.dataColumn);
+    let colSpan = 0;
+    let title = 'Total'
+    this.arregloTotales = [];
+
+    this.dataOptionTable.forEach((dataRow,i) => {
+        console.log('i',i,'row', dataRow);
+
+        if(dataRow.pipeName === 'number'){
+            colSpan++;
+            this.arregloTotales.push({
+                colSpan,
+                title
+            })
+            colSpan = 0
+        }else{
+            colSpan++;
+            const next = this.dataOptionTable[i + 1]
+            if(next?.pipeName === 'number'){
+                this.arregloTotales.push({
+                    colSpan,
+                    title
+                })
+                title = ''
+                colSpan = 0
+            }
+        }
+    });
+
+    console.log('totales array', this.arregloTotales);
+
+   // this.arregloTotales.push()
   }
 
   public viewmode(): boolean {
