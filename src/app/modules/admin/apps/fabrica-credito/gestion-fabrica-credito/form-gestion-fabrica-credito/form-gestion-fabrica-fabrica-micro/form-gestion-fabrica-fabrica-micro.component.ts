@@ -1003,7 +1003,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionVeredaNegocio: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            score: ['']
+            score: [''],
+
+            tipoCliente: ['']
         },
         );
     }
