@@ -100,52 +100,66 @@
 
             </div>
         </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 w-full min-w-0 mt-3 px-5"
-            [ngClass]="mostrarTotales==false?'slide-out-top':'tilt-in-top-1'">
-            <!-- totales -->
-            <ng-container *ngFor="let item of totales">
-                <div class="flex flex-col flex-auto p-3 bg-card shadow rounded-2xl overflow-hidden">
-                    <div class="flex items-start justify-between">
-                        <div class="text-lg font-medium tracking-tight leading-6 truncate">
-                            {{item.nombre_unidad_negocio}}
-                        </div>
-                    </div>
-                    <div class="flex flex-col items-center ">
-                        <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none"
-                            [ngStyle]="{'color': item.color}">
-                            {{item.cantidad_solicitud
-                            <10? '0' +item.cantidad_solicitud:item.cantidad_solicitud}} </div>
-                                <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
-                                    ${{item.total_solicitud | number:0}}
+        <div class="grid-cols-1 px-5 flex w-full justify-end mt-2">
+            <div class="flex gap-3">
+                <mat-icon (click)="previousTotalesSlider()" class="text-white p-2 arrowColor rounded-full icon-size-10 cursor-pointer" svgIcon="heroicons_outline:chevron-left"></mat-icon>
+                <mat-icon (click)="nextTotalesSlider()" class="text-white p-2 arrowColor rounded-full icon-size-10 cursor-pointer"  svgIcon="heroicons_outline:chevron-right"></mat-icon>
+            </div>
+        </div>
+        <div class="grid-cols-1   px-5">
+            <div class="flex w-full sm:grid-cols-2 md:grid-cols-5 min-w-0 gap-1 overflow-auto scrollbar-hide" id="totalesScroll"
+                [ngClass]="mostrarTotales==false?'slide-out-top':'tilt-in-top-1'">
+                <!-- totales -->
+                <ng-container *ngFor="let item of totales">
+                    <div class="flex flex-col flex-auto bg-card shadow rounded-2xl cardWidth my-3 mx-2">
+                        <div class="flex justify-between p-3 rounded-tr-2xl rounded-tl-2xl w-full"
+                            [style]="'background-color: ' + item.color">
+                            <div class="flex justify-start items-start flex-col flex-wrap">
+                                <div class="font-medium leading-6 rounded-full text-lg text-white tracking-tight truncate px-1 mr-2"
+                                    [style]="'background-color: ' + item.color">
+                                    {{item.nombre_unidad_negocio}}
                                 </div>
-                                <div class="text-md font-medium truncate">Devolución</div>
-                                <div class="text-3xl sm:text-3xl font-bold tracking-tight leading-none"
-                                    [ngStyle]="{'color': item.color}">
+                                <div class="text-6xl sm:text-6xl font-bold tracking-tight leading-none text-white ml-2">
+                                    {{item.cantidad_solicitud <10? '0'
+                                        +item.cantidad_solicitud:item.cantidad_solicitud}} </div>
+                                        <div class="text-md font-medium truncate text-white">
+                                            ${{item.total_solicitud | number:0}}
+                                        </div>
+                                </div>
+                                <div >
+                                    <div class="bg-white rounded-2xl p-1">
+                                        <img src="assets/icons/agendas/microCredito.svg" alt="agendaIcon">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2 px-4 justify-between py-2">
+
+                                <div class="text-xl sm:text-xl font-bold tracking-tight leading-none text-white rounded-2xl px-2 paddingCount"
+                                    [style]="'background-color: ' + item.color">
                                     {{item.cantidad_devolucion
                                     <10? '0' +item.cantidad_devolucion:item.cantidad_devolucion}} </div>
-                                        <div class="flex items-center justify-center w-full text-secondary mt-1">
-                                            <!-- <div class="ml-1.5 text-lg font-semibold">{{item.cantidad_devolucion}}</div> -->
-                                        </div>
-                                        <div
-                                            class="flex items-center justify-center w-full text-secondary title-secundary">
-                                            <div class="ml-1.5 text-lg font-semibold mt-1">${{item.total_devolucion|
+                                        <div class="text-md font-medium truncate" [ngStyle]="{'color': item.color}">
+                                            Devolución</div>
+                                        <div class="flex items-center justify-center  text-secondary ">
+                                            <div class="font-semibold text-sm" [ngStyle]="{'color': item.color}">
+                                                ${{item.total_devolucion|
                                                 number:0}}
                                             </div>
                                         </div>
                                 </div>
-                        </div>
-            </ng-container>
+                            </div>
+                </ng-container>
+            </div>
         </div>
-
         <div class="grid grid-cols-1 w-full px-5 pt-3">
             <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
                 <div class="flex items-center justify-between">
 
                     <div class="text-secondary font-medium"> <input
                             class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
-                            autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla" (keydown)="changePageToOne()"
-                            placeholder="Filtrar..."></div>
+                            autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
+                            (keydown)="changePageToOne()" placeholder="Filtrar..."></div>
 
                     <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
                         (change)="page=1">
@@ -232,7 +246,8 @@
                                     </td>
                                     <td *ngIf="item.creditoExcepcion" class="px-2 pb-0 pt-1">
                                         <div class="flex justify-center items-center">
-                                            <div class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest" >
+                                            <div
+                                                class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest">
                                                 Crédito con excepción
                                             </div>
                                         </div>

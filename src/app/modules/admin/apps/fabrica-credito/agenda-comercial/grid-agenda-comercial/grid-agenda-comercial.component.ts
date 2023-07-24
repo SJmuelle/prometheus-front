@@ -28,6 +28,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     public mostrarTotales: boolean = true;
     public totales: any[];
     public rolID: number;
+    private scrollSpeed: number = 200;
     constructor(
         private agendaComercialService: AgendaComercialService,
         private _matDialog: MatDialog,
@@ -229,4 +230,29 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         this.unsubscribe$.complete();
     }
 
+    nextTotalesSlider(){
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+        const currentScroll = slider.scrollLeft
+
+
+        console.log('slider', slider.scrollWidth, 'max', slider.scrollLeft)
+
+        slider.scroll({
+            left: currentScroll + this.scrollSpeed,
+            behavior: 'smooth'
+        })
+    }
+
+    previousTotalesSlider(){
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+        const currentScroll = slider.scrollLeft
+
+
+        console.log('slider', slider.scrollWidth, 'max', slider.scrollLeft)
+
+        slider.scroll({
+            left: currentScroll - this.scrollSpeed,
+            behavior: 'smooth'
+        })
+    }
 }
