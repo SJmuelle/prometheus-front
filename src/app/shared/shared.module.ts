@@ -38,6 +38,7 @@ import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatListModule } from '@angular/material/list';
+import { TotalesComponent } from './componentes/totales/totales.component';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -118,7 +119,8 @@ import { MatListModule } from '@angular/material/list';
                 TableComponent,
                 HeaderComponent,
                 NoDataComponent,
-                OTPComponent
+                OTPComponent,
+                TotalesComponent
         ],
 })
 export class SharedModule { }
