@@ -234,9 +234,6 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         var slider: HTMLElement = document.getElementById("totalesScroll");
         const currentScroll = slider.scrollLeft
 
-
-        console.log('slider', slider.scrollWidth, 'max', slider.scrollLeft)
-
         slider.scroll({
             left: currentScroll + this.scrollSpeed,
             behavior: 'smooth'
@@ -246,9 +243,6 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     previousTotalesSlider(){
         var slider: HTMLElement = document.getElementById("totalesScroll");
         const currentScroll = slider.scrollLeft
-
-
-        console.log('slider', slider.scrollWidth, 'max', slider.scrollLeft)
 
         slider.scroll({
             left: currentScroll - this.scrollSpeed,
