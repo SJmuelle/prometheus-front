@@ -454,7 +454,6 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             if (resp) {
                 this.dataInicial = resp.data
                 console.log('cargue inicial', this.dataInicial);
-
             }
         })
     }

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataModalComponent } from "./DataModalComponent";
+import { DataModalComponent } from './data-modal.component';
 
 describe('DataModalComponent', () => {
   let component: DataModalComponent;
