@@ -110,7 +110,8 @@ import { TotalesComponent } from './componentes/totales/totales.component';
                 MatProgressBarModule,
                 MatCheckboxModule,
                 OTPComponent,
-                MatListModule
+                MatListModule,
+                TotalesComponent
         ],
         declarations: [
                 DirectionsBasicComponent,
