@@ -10,7 +10,9 @@ export class TotalesComponent implements OnInit {
 
 
     private scrollSpeed: number = 200;
-    @Input() mostrarTotales: boolean;
+    mostrarTotales: boolean = true;
+    blockNext: boolean = false;
+    blockPrevios: boolean = true;
     @Input() totales: any[];
 
     constructor() { }
@@ -27,6 +29,9 @@ export class TotalesComponent implements OnInit {
             left: currentScroll + this.scrollSpeed,
             behavior: 'smooth'
         })
+
+        if(this.blockPrevios) this.blockPrevios = false;
+        this.limitNext(currentScroll + this.scrollSpeed)
     }
 
     previousTotalesSlider() {
@@ -37,5 +42,30 @@ export class TotalesComponent implements OnInit {
             left: currentScroll - this.scrollSpeed,
             behavior: 'smooth'
         })
+
+        this.blockPrevios = currentScroll - this.scrollSpeed < 0
+        if(this.blockNext) this.blockNext = false;
+    }
+
+      /**
+     *
+     * @param estado
+     */
+      public cambiarEstado(estado) {
+        this.mostrarTotales = estado;
+    }
+
+       /**
+     *
+     * retornar si ya se ha llegado al limite del next
+     */
+
+    limitNext(currentScroll: number){
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+
+        const width = slider.offsetWidth
+        const widthContainer = slider.scrollWidth
+
+        this.blockNext =  widthContainer <= (currentScroll + width)
     }
 }
