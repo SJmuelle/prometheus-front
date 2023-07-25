@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import {  Input} from '@angular/core';
 
 @Component({
@@ -15,9 +15,17 @@ export class TotalesComponent implements OnInit {
     blockPrevios: boolean = true;
     @Input() totales: any[];
 
-    constructor() { }
+    constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit(): void {
+    }
+
+    ngAfterViewInit(): void {
+        //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+        //Add 'implements AfterViewInit' to the class.
+        setTimeout(() => {
+            this.checkScrollWidth()
+        }, 1000);
     }
 
 
@@ -67,5 +75,25 @@ export class TotalesComponent implements OnInit {
         const widthContainer = slider.scrollWidth
 
         this.blockNext =  widthContainer <= (currentScroll + width)
+    }
+
+     /**
+     *
+     * Verifica si la la pantalla puede cargar todo el contenedor y deshabilita los botónes next y previous
+     */
+
+    checkScrollWidth(){
+        var slider: HTMLElement = document.getElementById("totalesScroll");
+
+        const width = slider.offsetWidth
+        const widthContainer = slider.scrollWidth
+
+        if(width >= widthContainer){
+            this.blockNext = true;
+            this.blockPrevios = true;
+
+            this.cd.detectChanges();
+        }
+
     }
 }
