@@ -8,16 +8,23 @@
         <div class="bg-white flex flex-col">
           <div class="flex">
             <mat-form-field class="w-full ml-2 fuse-mat-dense">
-              <mat-label>Entidad financiera</mat-label>
-              <input type="text" placeholder="" matInput [formControlName]="'entidad'" readonly>
+              <mat-label>{{ form?.controls['nit']?.value ? 'Entidad financiera' : 'Confirmar entidad financiera'}}</mat-label>
+              <input type="text" placeholder="" matInput [formControlName]="'entidad'"
+              [matAutocomplete]="entidades"
+              >
             </mat-form-field>
+            <mat-autocomplete #entidades="matAutocomplete">
+                <mat-option *ngFor="let option of entidadOptions" [value]="option.nombreEntidad">
+                  {{option.nombreEntidad}}
+                </mat-option>
+              </mat-autocomplete>
             <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="!form.value.nuevaEntidad">
               <mat-label>Nueva entidad financiera</mat-label>
               <input type="text" placeholder="" matInput [formControlName]="'nombreEntidadNueva'" autocomplete="off"
                 [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.nombre">
-                  {{option.nombre}}
+                <mat-option *ngFor="let option of entidadOptionsNueva" [value]="option.nombreEntidad">
+                  {{option.nombreEntidad}}
                 </mat-option>
               </mat-autocomplete>
               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
@@ -26,13 +33,13 @@
           <div class="flex">
             <mat-form-field class="w-full ml-2 fuse-mat-dense">
               <mat-label>Nit</mat-label>
-              <input type="text" placeholder="" matInput [formControlName]="'nitRegistro'" autocomplete="off">
-              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
+              <input type="text" placeholder="" matInput [formControlName]="'nit'" readonly autocomplete="off">
+              <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'" ></mat-icon>
 
             </mat-form-field>
             <mat-form-field class="w-full ml-2 fuse-mat-dense" *ngIf="!form.value.nuevaEntidad">
               <mat-label>Nuevo nit</mat-label>
-              <input type="text" placeholder="" matInput [formControlName]="'nitNuevo'" autocomplete="off">
+              <input type="text" placeholder="" matInput [formControlName]="'nitNuevo'" readonly autocomplete="off">
               <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
             </mat-form-field>
           </div>

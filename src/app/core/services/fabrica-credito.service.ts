@@ -185,4 +185,12 @@ export class FabricaCreditoService {
 
 
     }
+
+    public carteraValidarNitEntidad(datos): Observable<any>{
+        return this._http.post(this._appSettings.agendaCartera.url.validarNit, datos)
+    }
+
+    public carteraEntidadNombres(search): Observable<any>{
+        return this._http.post(this._appSettings.agendaCartera.url.entidadesNombres, search)
+    }
 }
