@@ -28,8 +28,8 @@ export class GridCarteraNegociacionComponent implements OnInit {
     sumaTotal: number;
     tipo: number;
     valorDisponible: number;
-    valorRestante: number; 
-    valorSolicitado: number; 
+    valorRestante: number;
+    valorSolicitado: number;
     verificacion: string;
   };
 
@@ -70,7 +70,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
 
   public cambioEstado(event, item) {
-    
+
     if (event == 'COM') {
       this.editarCartera(item, 'N');
       return;
@@ -158,7 +158,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
     let data = {
       numeroSolicitud: Number(this.numeroSolicitud),
     }
- 
+
     this._listadoCarteraService
       .validadorTotalLibranza(data)
       .subscribe((res) => {
