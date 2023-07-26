@@ -93,7 +93,7 @@
             <div class="md:flex">
               <mat-form-field class="w-full fuse-mat-dense">
                 <mat-label>{{data.evento=='NO EXITOSA'?'Motivo por lo cual no fue exitosa':'Comentario'}}
-                  ({{form.controls['comentarioNegociacion'].value.length}}/800)</mat-label>
+                  ({{form.controls['comentarioNegociacion']?.value?.length}}/800)</mat-label>
                 <textarea class="h-50" matInput [formControlName]="'comentarioNegociacion'"
                   [readonly]="data.idComentario">
                           </textarea>
@@ -114,7 +114,7 @@
 <mat-dialog-actions>
   <div class="flex flex-row items-center justify-end sm:justify-end w-full">
     <ng-container *ngIf="!data.idComentario">
-      <button mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
+      <button *ngIf="!trazabilidad" mat-raised-button color="primary" type="button" (click)="onGuardar()" [disabled]="form.invalid">
         Guardar
       </button>
     </ng-container>

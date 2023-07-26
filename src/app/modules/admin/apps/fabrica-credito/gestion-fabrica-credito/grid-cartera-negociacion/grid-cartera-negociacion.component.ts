@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { FormDialogCarteraComprarComponent } from '../form-dialog-cartera-comprar/form-dialog-cartera-comprar.component';
 import { FormDialogCarteraComponent } from '../form-dialog-cartera/form-dialog-cartera.component';
 import { FormDialogNegociacionComponent } from '../form-dialog-negociacion/form-dialog-negociacion.component';
+import { PermisosService } from 'app/core/services/permisos.service';
 
 @Component({
   selector: 'app-grid-cartera-negociacion',
@@ -21,6 +22,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
   public listadoCartera$: Observable<any>;
   public datoFabrica: any;
   public TotalSaldo: number=0;
+  public trazabilidad:boolean=false;
   public totales: {
     contadorAlDia: number;
     contadorGestiones: number;
@@ -37,6 +39,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
     private _dialog: MatDialog,
     private fabricaCreditoService: FabricaCreditoService,
     private _listadoCarteraService: ListadoCarteraService,
+    public _permisosService: PermisosService
   ) {
     this.getFabricaCreditoAgenda(this.numeroSolicitud, this.identificacion)
 
@@ -44,6 +47,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
   ngOnInit() {
     this.getListadoCartera(Number(this.numeroSolicitud));
+    this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
   }
 
 
@@ -169,7 +173,7 @@ export class GridCarteraNegociacionComponent implements OnInit {
 
   }
 
-  public cambioEstadoNegoiciacion(event, item) {
+  public cambioEstadoNegociacion(event, item) {
     if (event !== '') {
       const dialogRef = this._dialog.open(FormDialogNegociacionComponent, {
         minWidth: '30%',
