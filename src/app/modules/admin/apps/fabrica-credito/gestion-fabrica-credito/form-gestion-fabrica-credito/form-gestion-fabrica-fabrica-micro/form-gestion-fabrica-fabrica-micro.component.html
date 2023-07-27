@@ -46,7 +46,12 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Tipo de crédito</mat-label>
-                        <mat-select [value]="'seleccione'" [formControlName]="'tipoCredito'">
+                        <mat-select [value]="'seleccione'" (selectionChange)="this.validacionCampos(
+                            'Tipo de crédito',
+                            'Este campo modifica el motor de decisión y políticas SARC',
+                            'tipoCredito',
+                            'STRING'
+                        )" [formControlName]="'tipoCredito'">
                             <mat-option disabled [value]="'seleccione'">Seleccione
                             </mat-option>
                             <mat-option *ngFor="
@@ -82,36 +87,13 @@
                         </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
+                </div>
+                <div  class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3 md:mb-2 sm:mb-0">
                     <mat-form-field class="mat-form-field-disabled">
                         <mat-label>Valor solicitado</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
                             [formControlName]="'valorSolicitadoWeb'" [readonly]="true" />
                     </mat-form-field>
-                    <mat-form-field >
-                        <mat-label>Categoría de sisbén</mat-label>
-                        <mat-select formControlName="categoriaSisben">
-                            <mat-option *ngFor="let sisben of dataInicial?.categoriasSisben" [value]="sisben.codigo">
-                                {{sisben.nombre}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="form.controls.categoriaSisben.errors?.required">
-                            Este campo es requerido.
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field >
-                        <mat-label>Es mujer cabeza de hogar</mat-label>
-                        <mat-select formControlName="cabezaDeHogar">
-                            <mat-option disabled [value]="'seleccione'">Seleccione
-                            </mat-option>
-                            <mat-option value="S">SI</mat-option>
-                            <mat-option value="N">NO</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="form.controls.cabezaDeHogar.errors?.required">
-                            Este campo es requerido.
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
                         <mat-label>Monto crédito</mat-label>
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
@@ -151,6 +133,10 @@
                             No puede ser mayor a {{plazosCredito?.data[0].plazoMaximo}}
                         </mat-error>
                     </mat-form-field>
+                </div>
+
+                <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
+
                     <mat-form-field>
                         <mat-label>Aplica codeudor</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'aplicaCodeudor'">
@@ -160,9 +146,6 @@
                             <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
-                <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-
                     <mat-form-field>
                         <mat-label>Titular en micro</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'titularMicro'">
@@ -181,6 +164,10 @@
                             <mat-option value="N">NO APLICA </mat-option>
                         </mat-select>
                     </mat-form-field>
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
+
+
                     <mat-form-field>
                         <mat-label>Crédito titular en otras lineas</mat-label>
                         <mat-select [value]="'seleccione'" disabled [formControlName]="'creditoTitularLineas'">
@@ -476,6 +463,37 @@
                                 <input matInput type="text" [formControlName]="'nombreCompleto'" [readonly]="true" />
                             </mat-form-field>
                         </div>
+
+                        <div class="grid gap-3 md:grid-cols-2 sm:grid-cols-1">
+                            <mat-form-field >
+                                <mat-label>Categoría de sisbén</mat-label>
+                                <mat-select formControlName="categoriaSisben" (selectionChange)="this.validacionCampos(
+                                    'Categoría de sisbén',
+                                    'Este campo modifica el motor de decisión y políticas SARC',
+                                    'categoriaSisben',
+                                    'STRING'
+                                )">
+                                    <mat-option *ngFor="let sisben of dataInicial?.categoriasSisben" [value]="sisben.codigo">
+                                        {{sisben.nombre}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.categoriaSisben.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field >
+                                <mat-label>Es mujer cabeza de hogar</mat-label>
+                                <mat-select formControlName="cabezaDeHogar">
+                                    <mat-option disabled [value]="'seleccione'">Seleccione
+                                    </mat-option>
+                                    <mat-option value="S">SI</mat-option>
+                                    <mat-option value="N">NO</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="form.controls.cabezaDeHogar.errors?.required">
+                                    Este campo es requerido.
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                         <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información personal del
                             titular</span>
                         <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-4">
@@ -516,7 +534,7 @@
                                 ">
                                 <mat-form-field>
                                     <mat-label>Género</mat-label>
-                                    <mat-select [value]="'seleccione'" [formControlName]="'genero'">
+                                    <mat-select [value]="'seleccione'" [formControlName]="'genero'" [disabled]="form.get('tipoCredito').value === 'FM'">
                                         <mat-option disabled [value]="'seleccione'">Seleccione
                                         </mat-option>
                                         <mat-option *ngFor="
