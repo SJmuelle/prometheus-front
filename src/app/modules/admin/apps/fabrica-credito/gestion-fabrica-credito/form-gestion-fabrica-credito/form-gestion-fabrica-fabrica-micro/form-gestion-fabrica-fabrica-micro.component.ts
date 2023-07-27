@@ -747,9 +747,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
      * @description: Obtener limite de plazos por el valor de credito
      */
     private getPlazosCredito(valorCredito: number) {
-        this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
-            this.plazosCredito = rep
-        })
+        if(this.form.get('tipoCredito').value === 'FM'){
+            this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
+        }else{
+            this._formularioCreditoService.validationPlazoMicro({ valorCredito }).subscribe(rep => {
+                this.plazosCredito = rep
+            })
+        }
+
     }
 
     private getActividadEconomica(): void {
@@ -1005,8 +1010,9 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             clausulaAnticurrupcionClaracionAuto: [''],
             score: [''],
 
-            tipoCliente: [''],
-            categoriaSisben: ['', Validators.required]
+            descripcionTipoCliente: [''],
+            categoriaSisben: ['', Validators.required],
+            cabezaDeHogar: ['', Validators.required]
         },
         );
     }
@@ -1161,8 +1167,14 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
 
             this.salarioMinimo = data.salarioMinimo;
 
+            if(this.form.get('tipoCredito').value !== 'FM'){
+                console.log('no fintra mujer');
 
-            this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
+                this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(data.salarioMinimo), Validators.max(100000000)])
+            }else{
+                console.log('Fintra mujer');
+                this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo), Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
+            }
         })
     }
 
