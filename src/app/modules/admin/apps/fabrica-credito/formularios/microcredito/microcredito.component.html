@@ -148,7 +148,7 @@
                         </mat-form-field>
                         <mat-form-field class="w-full px-3 fuse-mat-dense">
                             <mat-label>Género</mat-label>
-                            <mat-select formControlName="genero">
+                            <mat-select formControlName="genero" [disabled]="datosBasicos.get('tipoCredito')?.value === 'FM'">
                                 <mat-option *ngFor="let genero of dataInicial?.generos" [value]="genero.codigo">
                                     {{genero.nombre}}
                                 </mat-option>
