@@ -39,7 +39,7 @@ interface Ichildren {
 
 export type OptionTableArray = IoptionTable[]
 
-/** @description se muestras todos los registros de la lista 
+/** @description se muestras todos los registros de la lista
  * @param :  name: string,
       text: string,
       typeField: 'text' | 'function',
@@ -75,7 +75,7 @@ export interface IoptionTable {
    */
   disable?: boolean
   /**
-   * se especifica si es de tipo texto o llama una funcion 
+   * se especifica si es de tipo texto o llama una funcion
    */
   typeField: 'text' | 'function' | 'statusStyle' | 'mat-menu',
   /**
@@ -133,6 +133,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   public dataFunctions: any[] = []
   public openlist: boolean = false
   public optionColumns: any[] = []
+  public arregloTotales: any[] = []
   public copyTableOptions: any[] = []
   private susbcripcion$: Subscription = new Subscription();
   private unsuscribre$: Subject<void> = new Subject<void>();
@@ -187,6 +188,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
     this.calculateFooterSum()
 
+
   }
 
   ngOnInit(): void {
@@ -240,6 +242,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   }
 
 
+
+
   public calculateFooterSum(): void {
 
     this.dataOptionTable.forEach((item) => {
@@ -259,6 +263,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
       suma += Number(elemento[clave] | 0);
     }
     return suma;
+
+
   }
 
   public viewmode(): boolean {

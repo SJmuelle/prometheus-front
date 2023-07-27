@@ -19,9 +19,9 @@ export class OTPComponent implements OnInit {
 
   @Input() numeroSolicitud: number;
   @Input() datosBasicos: FormGroup
-  
+
   @Output() otpValidado = new EventEmitter<boolean>();
-  
+
   contador: number = 180;
   actualizandoDatosOTP: boolean = false;
   otpNumber: string;
@@ -101,8 +101,7 @@ export class OTPComponent implements OnInit {
 
     this.otpNumber = num1 + num2 + num3 + num4 + num5 + num6;
 
-    console.log('otpNumber', this.otpNumber, 'length: ' + this.otpNumber.length);
-    
+
     if (this.otpNumber.length === 6 && !this.optValido) {
       const data = {
         numeroSolicitud: this.numeroSolicitud,
