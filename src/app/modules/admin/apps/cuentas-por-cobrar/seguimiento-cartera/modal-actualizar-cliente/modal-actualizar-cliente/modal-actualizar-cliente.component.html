@@ -1,0 +1,134 @@
+<ng-container>
+
+    <div class="w-full h-auto flex flex-col gap-4">
+
+        <!-- <app-header [infoTitulo]="infoTitulo"></app-header> -->
+        <div class="w-full border-2  rounded-2xl p-3 shadow-md">
+
+            <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4>
+        </div>
+
+
+        <form [formGroup]="formEditClient" (ngSubmit)="onSave()">
+
+
+            <div class="flex flex-col gap-2">
+
+                <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+
+                    <mat-form-field class="flex-grow fuse-mat-dense">
+                        <mat-label>Codigo</mat-label>
+                        <input type="text" matInput formControlName="codigoCliente">
+                    </mat-form-field>
+
+                    <mat-form-field class="flex-grow fuse-mat-dense">
+                        <mat-label>Nit ó cedula</mat-label>
+                        <input type="text" matInput formControlName="nitCliente">
+                    </mat-form-field>
+
+                </div>
+
+                <mat-form-field class="w-full col-span-2 fuse-mat-dense">
+                    <mat-label>Nombre cliente</mat-label>
+                    <input type="text" matInput formControlName="nombreCliente">
+                </mat-form-field>
+
+
+                <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+                    <mat-form-field class="flex-grow fuse-mat-dense mat-form-field-disabled">
+                        <mat-label>Dirección</mat-label>
+                        <input type="text" [readonly]="true" class="" matInput formControlName="direccionCliente">
+                        <button (click)="openDiag()" type="button" matSuffix mat-icon-button>
+                            <mat-icon style="color: #2196f3;">location_on</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense flex-grow">
+                        <mat-label>Barrio</mat-label>
+                        <input type="text" matInput formControlName="barrio">
+                    </mat-form-field>
+
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+                    <mat-form-field class="flex-grow fuse-mat-dense">
+                        <mat-label>Departamento</mat-label>
+
+                        <mat-select (selectionChange)="changeSelects($event)" [matTooltip]=""
+                            formControlName="departamento">
+                            <mat-option *ngFor="let item of dapartamentos"
+                                [value]="item.codigo">{{item.nombre}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense flex-grow">
+                        <mat-label>Ciudad</mat-label>
+
+                        <mat-select [matTooltip]="" formControlName="ciudad">
+                            <mat-option *ngFor="let item of ciudades" [value]="item.codigo">{{item.nombre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+
+
+                <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+                    <mat-form-field class="fuse-mat-dense flex-grow">
+                        <mat-label>Telefono</mat-label>
+                        <input mask="(000) 000 00 00" type="text" matInput formControlName="telefonoCliente">
+                    </mat-form-field>
+
+
+                    <mat-form-field class="fuse-mat-dense flex-grow">
+                        <mat-label>Celular 1</mat-label>
+                        <input mask="(000) 000 00 00" type="text" matInput formControlName="celularCliente">
+                    </mat-form-field>
+
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-2 w-full ">
+
+
+                    <mat-form-field class="fuse-mat-dense flex-grow">
+                        <mat-label>Celular 2</mat-label>
+                        <input mask="(000) 000 09 99" type="text" matInput formControlName="celular2Cliente">
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense flex-grow">
+                        <mat-label>Víctima de extorsíon</mat-label>
+
+
+                        <div class="flex-wrap flex flex-row gap-3 py-2 sm:py-0 sm:gap-0 sm:flex-nowrap">
+                            <mat-checkbox formControlName='extorsion' matPrefix>Cliente es víctima de
+                                extorsíon</mat-checkbox>
+                        </div>
+
+                        <input matInput readonly="true" class="w-0 max-w-0" style="display: none;">
+
+                    </mat-form-field>
+
+                </div>
+                <div class="w-full flex flex-col sm:flex-row justify-end gap-2">
+
+                    <button type="button" class="w-full sm:w-auto" mat-stroked-button
+                        (click)="closeModal()">Cerrar</button>
+
+                    <button type="submit" class="w-full sm:w-auto" color="primary" [disabled]="formEditClient.invalid"
+                        mat-raised-button class="w-full sm:w-auto">Guardar</button>
+                </div>
+
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+
+</ng-container>

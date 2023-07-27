@@ -1,0 +1,125 @@
+<ng-container>
+
+    <div *ngIf="data.tipoDeudor!==''">
+
+
+
+        <h3>Detalle evidente deudor</h3>
+        <div class="w-full flex flex-col sm:flex-row gap-3 justify-between mb-4 p-4">
+
+
+
+            <div class="flex justify-between">
+                <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                    [ngClass]="data.estadoEvidenteDeudor!=='FALSE'? 'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                    <small class="text-xs">{{data.estadoEvidenteDeudor!=='FALSE'? 'Se realizó evidente deudor':
+                        'No se realizó evidente deudor'}}</small>
+                    <span class="text-current">
+                        {{ data.intentosEvidenteDeudor}}
+                    </span>
+                    <!-- <small class="text-xs">{{''}}</small> -->
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="flex justify-between">
+                <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                    [ngClass]="data.estadoFirmaDeudor!=='FALSE'?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                    <small class="text-xs">Firma interna pagaré </small>
+                    <span class="text-xs">
+                        {{data.estadoFirmaDeudor!=='FALSE'?'Se realizó':'No se realizó'}}
+                    </span>
+                    <!-- <small class="text-xs">{{'' }}</small> -->
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="flex justify-between">
+                <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                    [ngClass]="data.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                    <small class="text-xs">Firma Thomas </small>
+                    <span class="text-xs">
+                        {{data.thomas?'Se realizó':'No se realizó'}}
+                    </span>
+                    <!-- <small class="text-xs">{{'' }}</small> -->
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+    </div>
+
+
+    <div *ngIf="data.tipoCodeudor!==''">
+
+        <h3>Detalle evidente codeudor</h3>
+
+        <div class="w-full flex flex-col sm:flex-row gap-3 justify-between mb-4 p-4">
+
+            <div class="flex justify-between">
+                <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                    [ngClass]="data.estadoEvidenteCodeudor!=='FALSE'?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                    <small class="text-xs">{{data.estadoEvidenteCodeudor!=='FALSE'?'Se realizó evidente codeudor':
+                        'No se realizó evidente codeudor'}}</small>
+                    <span class="text-current">
+                        {{ data.intentosEvidenteCodeudor}}
+                    </span>
+                    <!-- <small class="text-xs">{{''}}</small> -->
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="flex justify-between">
+                <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                    [ngClass]="data.estadoFirmaCodeudor!=='FALSE'?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                    <small class="text-xs">Firma interna pagaré </small>
+                    <span class="text-xs">
+                        {{data.estadoFirmaCodeudor!=='FALSE'?'Se realizó':'No se realizó'}}
+                    </span>
+                    <!-- <small class="text-xs">{{'' }}</small> -->
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="flex justify-between">
+                <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                    [ngClass]="data.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                    <small class="text-xs">Firma Thomas </small>
+                    <span class="text-xs">
+                        {{data.thomas?'Se realizó':'No se realizó'}}
+                    </span>
+                    <!-- <small class="text-xs">{{'' }}</small> -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</ng-container>

@@ -107,9 +107,9 @@
         <div class="w-full md:h-15 h-auto flex flex-row items-center gap-3 flex-wrap">
 
           <div *ngFor="let item of estados;" (click)="selectFilter(item.state)" [class]=" ' text-gray-500'"
-            class="min-w-40 w-40 h-10 flex gap-1.5 flex-row items-center rounded-full cursor-pointer"
+            class="min-w-40 w-40 h-12 flex gap-1.5 flex-row items-center rounded-full cursor-pointer"
             [ngClass]=" activeFilter.active === item.state? activeFilter.color : 'bg-gray-200' ">
-            <p class="w-7 h-7 ml-2 mb-0 bg-white font-semibold rounded-full flex items-center justify-center shadow-md">
+            <p class="w-9 h-9 ml-2 mb-0 bg-white font-semibold rounded-full flex items-center justify-center shadow-md">
               {{item.count}}
             </p>
             <p [class]=" 'text-gray-500 mb-0'">{{item.state }}</p>
@@ -204,9 +204,11 @@
 
 
 
-                              <button mat-menu-item *ngIf="item.etapaFirma=='E'" class="flex  items-center"
-                                matTooltip="Actualizar estado evidente"
-                                (click)="UpdateEstadoEvidente(item.numeroSolicitud,item.identificacion)">
+
+                              <!-- //modificar valor a dos 2 -->
+                              <button [matMenuTriggerFor]="matMenuEstadoEvidente" mat-menu-item
+                                *ngIf="item.etapaFirma=='E' && item.intentosEvidente >=0 " class="flex  items-center"
+                                matTooltip="Actualizar estado evidente">
                                 <mat-icon [svgIcon]="'update'" class="mr-2"></mat-icon>Actualizar estado evidente
                               </button>
 
@@ -219,18 +221,18 @@
 
 
                               <button [matMenuTriggerFor]="matMenuEnviarCorreo" mat-menu-item
-                                *ngIf="item.etapaFirma!='P'" class="flex  items-center" matTooltip="Reenviar firma"
-                                >
+                                *ngIf="item.etapaFirma!='P'" class="flex  items-center" matTooltip="Reenviar firma">
                                 <mat-icon [svgIcon]="'send'" class="mr-2"></mat-icon>Reenviar firma
                               </button>
 
 
 
-                              <button mat-menu-item class="flex  items-center" *ngIf="item.etapaFirma!='P'"
-                                matTooltip="Ver detalle evidente"
-                                (click)="obtenerIntentosEvidente(item.identificacion)">
+                              <button *ngIf="item.etapaFirma!=='P' " mat-menu-item
+                                [matMenuTriggerFor]="matMenuDetalleEvidente" class="flex  items-center"
+                                matTooltip="Ver detalle evidente">
                                 <mat-icon svgIcon="heroicons_outline:eye" class="mr-2"></mat-icon>Ver detalle evidente
                               </button>
+
 
 
 
@@ -247,12 +249,67 @@
                               </button>
 
 
+                              <button (click)="viewEvidente(item)" mat-menu-item
+                                *ngIf="item.etapaFirma!=='P' && (item.tipoDeudor!=='' || item.tipoCodeudor!=='') "
+                                class="flex  items-center" matTooltip="Ver detalle">
+                                <mat-icon class="mr-2">history</mat-icon>Ver detalle flujo
+                              </button>
+
+
 
                             </div>
 
 
 
 
+
+                          </mat-menu>
+
+                          <mat-menu #matMenuDetalleEvidente="matMenu">
+
+                            <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                              <button mat-menu-item class="flex  items-center" matTooltip="Ver estado evidente Titular"
+                                (click)="obtenerIntentosEvidente(item)">Titular
+                              </button>
+
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoCodeudor!=''"
+                                matTooltip="Ver estado evidente codeudor"
+                                (click)="obtenerIntentosEvidente(item, item.tipoCodeudor)">Codeudor
+                              </button>
+
+
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoDeudor!=''"
+                                matTooltip="Ver estado evidente deudor solidario"
+                                (click)="obtenerIntentosEvidente(item, item.tipoDeudor)">Deudor solidario
+                              </button>
+
+                            </div>
+
+                          </mat-menu>
+
+
+                          <mat-menu #matMenuEstadoEvidente="matMenu">
+
+                            <div class="w-auto flex flex-col gap-1 items-start p-2">
+
+                              <button mat-menu-item class="flex  items-center"
+                                matTooltip="Actualizar estado evidente Titular"
+                                (click)="UpdateEstadoEvidente(item)">Titular
+                              </button>
+
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoCodeudor!=''"
+                                matTooltip="Actualizar estado evidente codeudor"
+                                (click)="UpdateEstadoEvidente(item, item.tipoCodeudor)">Codeudor
+                              </button>
+
+
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoDeudor!=''"
+                                matTooltip="Actualizar estado evidente Deudor solidario"
+                                (click)="UpdateEstadoEvidente(item, item.tipoDeudor)">Deudor solidario
+                              </button>
+
+                            </div>
 
                           </mat-menu>
 
@@ -265,15 +322,15 @@
                                 (click)="updateReenviarFirma(item.numeroSolicitud,item.tipo)">Titular
                               </button>
 
-                              <button mat-menu-item class="flex  items-center"  *ngIf="item.tipoDeudor!=''"
-                                matTooltip="Enviar correo decisión Deudor solidario"
-                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipocodeudor)">Deudor solidario
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoCodeudor!=''"
+                                matTooltip="Enviar correo decisión codeudor"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipoCodeudor)">Codeudor
                               </button>
 
 
-                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoCodeudor!=''"
-                                matTooltip="Enviar correo decisión Codeudor"
-                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipodeudor)">Codeudor
+                              <button mat-menu-item class="flex  items-center" *ngIf="item.tipoDeudor!=''"
+                                matTooltip="Enviar correo decisión deudor solidario"
+                                (click)="updateReenviarFirma(item.numeroSolicitud,item.tipoDeudor)">Deudor solidario
                               </button>
 
                             </div>
@@ -319,7 +376,7 @@
                       </td>
 
                       <ng-container *ngIf="!opened">
-                        <td class="px-2 pb-0 pt-1 text-end" colspan="2">
+                        <td class="px-2 pb-0 pt-1 text-end" colspan="3">
                           <div class="flex w-full justify-end items-center">
                             <div class="w-3 h-3 rounded-3xl bg-green-300"></div>
                             <span class="px-2 py-1 font-semibold leading-tight text-gray-700  w-auto">
@@ -330,6 +387,7 @@
                       </ng-container>
                     </tr>
                     <tr class="text-gray-700 border-t border-b ">
+
                       <td class="px-2  pb-1 pt-1">
                         <div class="flex flex-column ">
 
@@ -406,50 +464,131 @@
                           </div>
                         </div>
                       </td>
-                      <ng-container *ngIf="!opened">
-                        <td class="px-2 pb-1 pt-1">
-                          <div class="flex justify-between">
-                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
-                              [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                              <small class="text-xs">{{item.evidente?'Se realizó evidente':'No se realizó evidente'}}</small>
-                              <span class="text-current">
-                                {{ item.intentosEvidente}}
-                              </span>
-                              <small class="text-xs">{{
-                                cambiarFecha(item.evidenteFecha)}}</small>
-                              <small class="text-xs" (click)="obtenerIntentosEvidente(item.numeroSolicitud)"></small>
-                            </div>
-                          </div>
-                        </td>
 
-                        <td class="px-2 pb-1 pt-1">
-                          <div class="flex justify-between">
-                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
-                              [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                              <small class="text-xs">Firma interna pagaré </small>
-                              <span class="text-xs">
-                                {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
-                              </span>
-                              <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
-                            </div>
-                          </div>
-                        </td>
 
-                        <td class="px-2 pb-1 pt-1">
-                          <div class="flex justify-between">
-                            <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
-                              [ngClass]="item.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
-                              <small class="text-xs">Firma Thomas </small>
-                              <span class="text-xs">
-                                {{item.thomas?'Se realizó':'No se realizó'}}
-                              </span>
-                              <small class="text-xs">{{ cambiarFecha(item.thomasFecha)}}</small>
-                            </div>
-                          </div>
-                        </td>
+                      <td *ngIf="!opened" class="flex flex-row justify-between items-center">
 
-                      </ng-container>
+
+
+
+
+
+
+
+
+
+                      <td class="px-2 pb-1 pt-1">
+
+                        <div class="flex justify-between">
+                          <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                            [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                            <small class="text-xs">{{item.evidente?'Se realizó evidente':
+                              'No se realizó evidente'}}</small>
+                            <span class="text-current">
+                              {{ item.intentosEvidente}}
+                            </span>
+                            <small class="text-xs">{{
+                              cambiarFecha(item.evidenteFecha)}}</small>
+                            <small class="text-xs" (click)="obtenerIntentosEvidente(item.numeroSolicitud)"></small>
+                          </div>
+                        </div>
+                      </td>
+
+
+
+
+                      <td *ngIf="item.idUnidadNegocio!==32" class="px-2 pb-1 pt-1">
+
+                        <div class="flex justify-between">
+                          <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                            [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                            <small class="text-xs">Firma interna pagaré </small>
+                            <span class="text-xs">
+                              {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
+                            </span>
+                            <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
+                          </div>
+                        </div>
+                      </td>
+
+
+
+                      <td class="px-2 pb-1 pt-1">
+
+                        <div class="flex justify-between">
+                          <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                            [ngClass]="item.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                            <small class="text-xs">Firma Thomas </small>
+                            <span class="text-xs">
+                              {{item.thomas?'Se realizó':'No se realizó'}}
+                            </span>
+                            <small class="text-xs">{{ cambiarFecha(item.thomasFecha)}}</small>
+                          </div>
+                        </div>
+                      </td>
+
+
+
+
+
+
+                      <!-- 
+                      <td class="px-2 pb-1 pt-1">
+
+                        <div class="flex justify-between">
+                          <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                            [ngClass]="item.evidente?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                            <small class="text-xs">{{item.estadoEvidenteDeudor? '1' : '2'}}</small>
+                            <span class="text-current">
+                              {{ item.intentosEvidente}}
+                            </span>
+                            <small class="text-xs">{{
+                              cambiarFecha(item.evidenteFecha)}}</small>
+                            <small class="text-xs" (click)="obtenerIntentosEvidente(item.numeroSolicitud)"></small>
+                          </div>
+                        </div>
+                      </td> -->
+
+
+
+
+
+                      <!-- <td *ngIf="item.idUnidadNegocio!==32" class="px-2 pb-1 pt-1">
+                        <div class="flex justify-between">
+                          <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                            [ngClass]="item.firmaInternaPagare?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                            <small class="text-xs">Firma interna pagaré </small>
+                            <span class="text-xs">
+                              {{item.firmaInternaPagare?'Se realizó':'No se realizó'}}
+                            </span>
+                            <small class="text-xs">{{ cambiarFecha(item.fechaFirmaInternaPagare)}}</small>
+                          </div>
+                        </div>
+                      </td>
+
+
+
+                      <td class="px-2 pb-1 pt-1">
+                        <div class="flex justify-between">
+                          <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                            [ngClass]="item.thomas?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                            <small class="text-xs">Firma Thomas </small>
+                            <span class="text-xs">
+                              {{item.thomas?'Se realizó':'No se realizó'}}
+                            </span>
+                            <small class="text-xs">{{ cambiarFecha(item.thomasFecha)}}</small>
+                          </div>
+                        </div>
+                      </td>  -->
+
                     </tr>
+
+
+
+
+
+
+
 
                   </ng-container>
 

@@ -1,10 +1,10 @@
-<div class="flex flex-col w-screen h-screen">
+<div class="flex flex-col w-full h-screen overflow-y-scroll">
 
-    <div class="w-full flex flex-col">
+    <div class="w-full flex flex-col z-0">
         <app-header [infoTitulo]="infoTitulo"></app-header>
     </div>
 
-    <div class="p-4 w-full h-full gap-4 flex flex-col overflow-y-scroll">
+    <div class="p-4 w-full h-full gap-4 flex flex-col  z-10">
 
         <mat-accordion class="w-full h-auto gap-4 flex flex-col">
 
@@ -29,16 +29,16 @@
                             <mat-form-field class="fuse-mat-dense w-full sm:w-56">
                                 <mat-label class="font-semibold text-md">Unidades de negocio</mat-label>
                                 <mat-select formControlName="unidadNegocio">
-                                    <mat-option>Seleccione una unidad</mat-option>
+                                    <!-- <mat-option>Seleccione una unidad</mat-option> -->
                                     <mat-option *ngFor="let item of unidadesNegocio"
                                         [value]="item.id">{{item.descripcion}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field class="fuse-mat-dense w-full sm:w-56">
+                            <mat-form-field class="fuse-mat-dense w-full sm:w-36">
                                 <mat-label class="font-semibold text-md">Periodos fotos</mat-label>
                                 <mat-select formControlName="periodo">
-                                    <mat-option>Seleccione un periodo</mat-option>
+                                    <!-- <mat-option>Seleccione un periodo</mat-option> -->
                                     <mat-option *ngFor="let item of periodosFotos"
                                         [value]="item.id">{{item.descripcion}}</mat-option>
                                 </mat-select>
@@ -57,7 +57,7 @@
                                 <input matInput readonly="true" class="w-0 max-w-0">
                             </mat-form-field>
 
-                            <mat-form-field class="fuse-mat-dense w-full sm:w-72">
+                            <mat-form-field class="fuse-mat-dense w-full sm:w-44">
                                 <mat-label class="font-semibold text-md">Numero de documento</mat-label>
                                 <mat-icon matPrefix>search</mat-icon>
                                 <input matInput type="text" autocomplete="off" formControlName="identificacion">

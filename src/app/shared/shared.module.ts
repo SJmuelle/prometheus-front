@@ -41,6 +41,11 @@ import { MatListModule } from '@angular/material/list';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
 
+
+
+
+
+
 @NgModule({
         imports: [
                 CommonModule,
@@ -80,6 +85,12 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateMod
                 NgxMatNativeDateModule
 
 
+
+
+
+
+
+
         ],
         exports: [
                 CommonModule,
@@ -116,7 +127,14 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateMod
                 MatTooltipModule,
                 NgxMatDatetimePickerModule,
                 NgxMatTimepickerModule,
-                NgxMatNativeDateModule
+                NgxMatNativeDateModule,
+
+
+
+
+
+
+
 
         ],
         declarations: [

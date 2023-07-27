@@ -3,11 +3,21 @@
     <div class="w-full h-auto flex flex-col gap-4">
         <div class="w-full border-2  rounded-2xl p-3 shadow-md">
 
-            <h4 class="border-l-8 border-green-400 h-15 pl-4">{{tittleModal}}</h4>
+            <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4>
         </div>
+        <div *ngIf="tittleModal==='Visualizar pagos'" class="flex flex-row justify-start">
+            <button mat-raised-button color="primary" (click)="verDetallePago()">Ver detalle de pago</button>
+        </div>
+
         <div>
-            <app-table [dataOptionTable]="dataOptions" [allDataRows]="dataRows" [Options]="{footer:true}"></app-table>
+            <app-table [dataOptionTable]="dataOptions" [allDataRows]="dataRows" [Options]="{footer}"></app-table>
         </div>
+
+        <div class="w-full flex flex-row justify-end">
+
+            <button type="button" class="w-full sm:w-auto" mat-stroked-button (click)="closeModal()">Cerrar</button>
+        </div>
+
     </div>
 
 </ng-container>
@@ -15,20 +25,13 @@
 <ng-container *ngIf="tittleModal==='Agregar gestiones'">
     <div class="w-full h-auto flex flex-col gap-4">
         <div class="w-full border-2  rounded-2xl p-3 shadow-md">
-
-            <h4 class="border-l-8 border-green-400 h-15 pl-4">{{tittleModal}}</h4>
+            <h4 class="border-l-8 border-green-400 h-8 pl-4">{{tittleModal}}</h4>
         </div>
-
         <div class="border rounded-2xl shadow-md p-4">
-
-
             <form [formGroup]="formAgregarGestiones" (ngSubmit)="onSave()">
                 <div class="flex flex-col  gap-2 ">
-
-
-                    <div class="flex flex-col sm:flex-row w-full gap-2 flex-wrap">
-
-                        <mat-form-field class="fuse-mat-dense mt-0 sm:mt-0 sm:w-3/5 w-full">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-2">
+                        <mat-form-field class="fuse-mat-dense mt-0 sm:mt-0 ">
                             <mat-label>Cliente</mat-label>
                             <input matInput type="text" formControlName="Cliente">
                         </mat-form-field>
@@ -38,22 +41,18 @@
                             <input matInput type="text" formControlName="Negocio">
                         </mat-form-field>
                     </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-2 ">
 
-
-                    <div class="flex flex-col sm:flex-row w-full gap-2 flex-wrap">
-
-
-                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 sm:w-3/5 w-full">
+                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
                             <mat-label>Tipo de gestor</mat-label>
-
                             <mat-select [matTooltip]="" formControlName="Tipodegestor">
                                 <mat-option *ngFor="let item of tipoGestor"
                                     [value]="item.id">{{item.descripcion}}</mat-option>
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow">
-                            <mat-label>Tipo de gestion</mat-label>
+                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
+                            <mat-label>Tipo de gestión</mat-label>
                             <mat-select [matTooltip]="" formControlName="Tipodegestion">
                                 <mat-option *ngFor="let item of tipoGestion"
                                     [value]="item.id">{{item.descripcion}}</mat-option>
@@ -85,9 +84,9 @@
 
                     </div>
 
-                    <div class="flex flex-col sm:flex-row w-full gap-2 flex-wrap">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 w-full gap-2">
 
-                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 sm:w-3/5 w-full">
+                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
                             <mat-label>Motivo no pago</mat-label>
 
                             <mat-select [matTooltip]="" formControlName="Motivonopago">
@@ -96,7 +95,7 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow">
+                        <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
                             <mat-label>Estado cliente</mat-label>
 
                             <mat-select [matTooltip]="" formControlName="Estadocliente">
@@ -107,26 +106,18 @@
                         </mat-form-field>
 
                     </div>
-
-
-
-
-
                 </div>
 
                 <div class="grid grid-cols-1">
 
                     <mat-form-field class="fuse-mat-dense -mt-5 sm:-mt-2">
                         <mat-label>Observaciones</mat-label>
-
                         <textarea matInput formControlName="Observaciones" cols="1" rows="2"></textarea>
                     </mat-form-field>
 
                 </div>
 
                 <div class="grid grid-cols-1 gap-2">
-
-
 
                     <mat-form-field class="fuse-mat-dense -mt-5 sm:-mt-2">
                         <mat-label>Proxima acción</mat-label>
@@ -140,13 +131,14 @@
 
                 </div>
 
-                <div *ngIf="formAgregarGestiones.controls['Resultadogestión'].value===64"
-                    class="grid grid-cols-1 sm:grid-cols-2  gap-2">
+                <div *ngIf="formAgregarGestiones.controls['Resultadogestión'].value==='62'"
+                    class="grid grid-cols-1 sm:grid-cols-3  gap-2">
 
                     <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 ">
                         <mat-label>Valor a pagar</mat-label>
 
-                        <input matInput type="text" formControlName="valorPagar">
+                        <input mask="separator.0" thousandSeparator="." matInput type="text"
+                            formControlName="valorPagar">
                     </mat-form-field>
 
                     <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
@@ -159,15 +151,61 @@
 
                     </mat-form-field>
 
+                    <mat-form-field class="fuse-mat-dense w-auto -mt-7 sm:-mt-2">
+                        <mat-label class="font-semibold text-md">Domicilio</mat-label>
+                        <div class="flex-wrap flex flex-row gap-3 py-2 sm:py-0 sm:gap-0 sm:flex-nowrap">
+                            <mat-checkbox (change)="resetDocimiclio()" formControlName='domicilio'
+                                matPrefix>Domicilio</mat-checkbox>
+                        </div>
+
+                        <input matInput readonly="true" class="w-0 max-w-0" style="display: none;">
+                    </mat-form-field>
+
                 </div>
 
+                <div *ngIf="formAgregarGestiones.controls['domicilio'].value && formAgregarGestiones.controls['Resultadogestión'].value==='62'"
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+
+                    <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow">
+                        <mat-label>Departamento</mat-label>
+
+                        <mat-select (selectionChange)="changeSelects($event,'departamento')" [matTooltip]=""
+                            formControlName="departamento">
+                            <mat-option *ngFor="let item of departamentos"
+                                [value]="item.codigo">{{item.nombre}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow">
+                        <mat-label>Ciudad</mat-label>
+
+                        <mat-select [matTooltip]="" formControlName="ciudad">
+                            <mat-option *ngFor="let item of ciudades" [value]="item.codigo">{{item.nombre}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2">
+                        <mat-label>Barrio</mat-label>
+                        <input matInput type="text" formControlName="barrio">
 
 
-                <div class="flex flex-col sm:flex-row gap-2 -mt-5 sm:-mt-1 items-center ring-0">
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense -mt-7 sm:-mt-2 flex-grow ">
+                        <mat-label>Dirección</mat-label>
+
+                        <input type="text" matInput formControlName="direccion">
+                    </mat-form-field>
+
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 -mt-5 sm:-mt-1 items-center ring-0">
 
 
                     <mat-form-field class="fuse-mat-dense  w-full sm:flex-grow">
-                        <mat-label>Fecha y Hora</mat-label>
+                        <mat-label>Fecha y Hora proxima gestión</mat-label>
                         <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date"
                             formControlName="Fecha">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -177,22 +215,25 @@
                         </ngx-mat-datetime-picker>
                     </mat-form-field>
 
+                    <div class="flex flex-col sm:flex-row justify-end w-full gap-2">
 
+                        <button type="button" class="mt-1 w-full sm:w-auto" mat-stroked-button
+                            (click)="closeModal()">Cerrar</button>
 
-
-
-                    <button class="mt-1 w-full sm:w-auto" mat-raised-button color="primary">Guardar</button>
-
-
+                        <button type="submit" [disabled]="formAgregarGestiones.invalid" class="mt-1 w-full sm:w-auto"
+                            mat-raised-button color="primary">Guardar</button>
+                    </div>
 
                 </div>
+
+
+
 
                 <!-- <div>
                     <pre>
                         {{formAgregarGestiones.value | json}}
                     </pre>
 
-                    <pre>{{formAgregarGestiones.controls['Fecha'].value | date:'short'}}</pre>
                 </div> -->
 
                 <!-- 
@@ -219,27 +260,12 @@
                         </button>
                     </div>
                 </mat-dialog-actions> -->
-
-
-
-
-
-
-
-
-
-
             </form>
-
         </div>
-
-
-
     </div>
 
-
-
-
-
+    <!-- <pre>
+        {{formAgregarGestiones.value | json}}
+    </pre> -->
 
 </ng-container>

@@ -413,15 +413,21 @@
 
 
 
-
-                </ng-container>
-
-                <ng-container matColumnDef="disclaimer">
-                    <td mat-footer-cell *matFooterCellDef colspan="6">
-                        Please note that the cost of items displayed are completely and totally made up.
+                    <td mat-footer-cell *matFooterCellDef class="bg-gray-100 font-semibold">
+                        <span *ngIf="dataOption.valueFooter!=='' &&  dataOption.valueFooter!=='Totales'"
+                            class="pl-4">{{dataOption.valueFooter |
+                            dataTable:'number'}}</span>
+                        <span *ngIf="dataOption.valueFooter!=='' && dataOption.valueFooter==='Totales'"
+                            class="pl-4">{{dataOption.valueFooter}}</span>
                     </td>
-                    <td *ngfort item of arreglototales>{{valueTotal}}</td>
+
+
+
+
+
                 </ng-container>
+
+
 
 
 
@@ -430,14 +436,16 @@
                 <tr mat-row *matRowDef="let row; columns: this.dataColumn"></tr>
                 <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns" class="">Hola</tr> -->
 
-                <ng-container *ngIf="Options.footer">
+                <!-- <ng-container *ngIf="Options.footer">
                     <tr mat-footer-row *matFooterRowDef="['disclaimer']" class=""></tr>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></mat-footer-row> -->
 
                 <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr> -->
 
+                <tr mat-footer-row *matFooterRowDef="this.dataColumn" [ngClass]="Options.footer? '' : 'hidden' "
+                    class=""></tr>
 
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell text-center" colspan="21" *ngIf="!this.allDataRows.length">
@@ -473,7 +481,7 @@
     <div class="relative">
         <mat-paginator (page)="pageEvent($event)" class="border-t border-b rounded-t-none rounded-xl"
             style="background-color: #E2E8F0;" [length]="allDataRows.length" itemsPerPageLabel="Items por pagina"
-            [pageSize]="5" [pageSizeOptions]="[5,10]">
+            [pageSize]="5" [pageSizeOptions]="[3,5]">
         </mat-paginator>
 
         <button #matMenuTrigger [matMenuTriggerFor]="optionsMenu" mat-icon-button

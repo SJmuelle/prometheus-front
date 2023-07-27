@@ -53,6 +53,7 @@ export class Sweetalert2Service {
 
     Swal.fire({
       allowOutsideClick: true,
+      backdrop: true,
       title: 'Correcto!',
       text: "Solicitud realizada correctamente",
       icon: 'success',
@@ -69,6 +70,7 @@ export class Sweetalert2Service {
 
     Swal.fire({
       allowOutsideClick: true,
+      backdrop: true,
       title: 'Error!',
       text: "Su solicitud no pudo ser procesada, por favor intente nuevamente",
       icon: 'error',

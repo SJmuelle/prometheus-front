@@ -1,21 +1,23 @@
 import { NgSwitch } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { CarteraClientesService } from 'app/core/services/cartera-clientes.service';
 import { Sweetalert2Service } from 'app/core/services/sweetalert2.service';
 import { IinfoTitulo } from 'app/shared/componentes/header/header.component';
 import { IoptionTable } from 'app/shared/componentes/table/table.component';
+import { values } from 'lodash';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ModalActualizarClienteComponent } from '../modal-actualizar-cliente/modal-actualizar-cliente/modal-actualizar-cliente.component';
 import { ModalDetailsCarteraClienteComponent } from '../modal-details-cartera-cliente/modal-details-cartera-cliente/modal-details-cartera-cliente.component';
-
+import moment from 'moment'
 @Component({
   selector: 'app-seguimiento-cartera-cliente',
   templateUrl: './seguimiento-cartera-cliente.component.html',
   styleUrls: ['./seguimiento-cartera-cliente.component.scss']
 })
-export class SeguimientoCarteraClienteComponent implements OnInit {
+export class SeguimientoCarteraClienteComponent implements OnInit, OnDestroy {
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
   public dataRows: any[] = []
   public formSearch: FormGroup;
@@ -66,14 +68,14 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
               }]
           }
         },
-        {
-          nameFunction: 'Estado cuenta Geotech',
-          callback: (data) => {
-            this.openDialog('estadoCuentaGeotech', data)
-          },
-          iconFuseTemplate: 'search',
-          children: false
-        },
+        // {
+        //   nameFunction: 'Estado cuenta Geotech',
+        //   callback: (data) => {
+        //     this.openDialog('estadoCuentaGeotech', data)
+        //   },
+        //   iconFuseTemplate: 'search',
+        //   children: false
+        // },
         {
           nameFunction: 'Agregar gestiones',
           callback: (data) => {
@@ -100,12 +102,12 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
     },
     {
       name: 'nombreCliente',
-      text: 'Nombre cliente',
+      text: 'Cliente',
       typeField: 'text',
     },
     {
       name: 'direccion',
-      text: 'Direccion',
+      text: 'Dirección',
       typeField: 'text',
     },
     {
@@ -195,7 +197,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
     },
     {
       name: 'agente',
-      text: 'Negociacion',
+      text: 'Negociación',
       typeField: 'text',
     },
   ]
@@ -205,6 +207,12 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
     private fb: FormBuilder,
     private _sweetAlerService: Sweetalert2Service,
     private dialog: MatDialog) { }
+
+
+  ngOnDestroy(): void {
+    this.unsuscribe$.next(null);
+    this.unsuscribe$.complete();
+  }
 
   ngOnInit(): void {
     this.loadsearch()
@@ -236,6 +244,14 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         })
         break;
       case 'visualizarPagos':
+        const data = {
+          ...dataRow,
+          periodo
+        }
+        this._carteraClienteServices.dataCliente$.next(data)
+
+
+
         const visualizarPagos = {
           periodo,
           negocio: dataRow.negocio
@@ -285,16 +301,32 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
 
         break;
       case 'estadoCuentaGeotech':
+        this._sweetAlerService.stopLoading();
         break;
       case 'agregarGestiones':
         setTimeout(() => {
           this._sweetAlerService.stopLoading();
           const valuesData = dataRow
-          this.loadingModal({ viewModal, valuesData, width: '30%' });
+          const width = '50%'
+          this.loadingModal({ viewModal, valuesData, width });
         }, 400);
         break;
       case 'editarInformacion':
-        this._sweetAlerService.stopLoading();
+        setTimeout(() => {
+          const { cedula, negocio } = dataRow
+          this._carteraClienteServices.verInformacionCliente(cedula).pipe(takeUntil(this.unsuscribe$)).subscribe({
+            next: (resp) => {
+              this._sweetAlerService.stopLoading();
+              const valuesData = { ...resp?.data, cedula, negocio }
+              const width = '50%'
+              this.modalUpdateClient({ viewModal, valuesData, width });
+            },
+            error: (e) => {
+              this._sweetAlerService.alertError();
+            }
+          })
+
+        }, 400);
         break;
       default:
         this._sweetAlerService.stopLoading();
@@ -318,13 +350,25 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
         data: { viewModal, valuesData },
         disableClose: false
       })
-    dialogRef.afterClosed().subscribe(result => {
-    });
+
+
+  }
+
+  public modalUpdateClient({ viewModal, valuesData, width = '80%' }): void {
+    const dialogRef = this.dialog.open(ModalActualizarClienteComponent,
+      {
+        maxWidth: '90vw',
+        maxHeight: '80vh',
+        width,
+        data: { viewModal, valuesData },
+        disableClose: false
+      })
+
 
   }
 
   public loadsearch(): void {
-    this._carteraClienteServices.listarUnidadNEgocio().subscribe({
+    this._carteraClienteServices.listarUnidadNEgocio().pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         this.unidadesNegocio = resp?.data || []
 
@@ -334,10 +378,10 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
       }
     })
 
-    this._carteraClienteServices.listarPeriodosFotos().subscribe({
+    this._carteraClienteServices.listarPeriodosFotos().pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         this.periodosFotos = resp?.data || []
-
+        this.formSearch.controls['periodo'].setValue(resp?.data[0].id)
       },
       error: (e) => {
         console.log(e)
@@ -355,13 +399,15 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
 
     const { periodo, unidadNegocio, identificacion, ...values } = this.formSearch.getRawValue();
 
+
+
     const data = {
       periodo,
       unidadNegocio,
       identificacion,
       details: [
-        { estadoCartera: values.alDia ? 'Al dia' : '' },
-        { estadoCartera: values.porVencer ? 'A vencer' : '' },
+        { estadoCartera: values.alDia ? 'Al Dia' : '' },
+        { estadoCartera: values.porVencer ? 'A Vencer' : '' },
         { estadoCartera: values.vencido ? 'Vencido' : '' }
       ]
     }
@@ -371,7 +417,7 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
     // this.dataRows = [{ cedula: '104736' }, { cedula: '104755' }, { cedula: '104766' }]
     // this.openSearch = false
 
-    this._carteraClienteServices.buscarClienteCartera(data).subscribe({
+    this._carteraClienteServices.buscarClienteCartera(data).pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         if (!resp.data.length) {
           this._sweetAlerService.alertInfo({});
@@ -394,10 +440,11 @@ export class SeguimientoCarteraClienteComponent implements OnInit {
   }
 
   private formSearchBuilder(): void {
+    const pattern = `^[0-9]+$`
     this.formSearch = this.fb.group({
-      periodo: ['202307', [Validators.required]],
-      unidadNegocio: ['1', [Validators.required]],
-      identificacion: ['1099991583', [Validators.required]],
+      periodo: [, [Validators.required]],
+      unidadNegocio: [''],
+      identificacion: [, [Validators.required, Validators.pattern(pattern)]],
       alDia: [false],
       porVencer: [true],
       vencido: [true]

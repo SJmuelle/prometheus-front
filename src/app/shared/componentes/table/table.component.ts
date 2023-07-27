@@ -63,6 +63,14 @@ export interface IoptionTable {
    */
   view?: boolean
   /**
+   * propiedad para sumar en el footer
+   */
+  footerSum?: boolean
+  /**
+  * propiedad para sumar en el footer
+  */
+  valueFooter?: number | string
+  /**
    * propiedad generada automaticamente
    */
   disable?: boolean
@@ -153,7 +161,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     const values: string[] = [...this.dataOptionTable.map((item) => {
       item.view = true
       item.disable = false
-
+      item.footerSum = item.footerSum || false
+      item.valueFooter = ''
       if (item.typeField !== 'text') {
         item.disable = true
       }
@@ -174,6 +183,9 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
     this.copyTableOptions = this.dataOptionTable
 
+    this.dataOptionTable[0].valueFooter = 'Totales'
+
+    this.calculateFooterSum()
 
   }
 
@@ -182,7 +194,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     const values: string[] = [...this.dataOptionTable.map((item) => {
       item.view = true
       item.disable = false
-
+      item.footerSum = item.footerSum || false
+      item.valueFooter = ''
       if (item.typeField !== 'text') {
         item.disable = true
       }
@@ -217,12 +230,35 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
     this.dataFunctions = [...valuesmenus]
 
+    this.dataOptionTable[0].valueFooter = 'Totales'
+
+    this.calculateFooterSum()
 
 
 
 
+  }
 
 
+  public calculateFooterSum(): void {
+
+    this.dataOptionTable.forEach((item) => {
+
+      const key = item.name
+      if (item.footerSum === true) {
+        item.valueFooter = this.sumValues(this.allDataRows, key)
+      }
+    })
+
+  }
+
+
+  public sumValues(arreglo, clave) {
+    let suma = 0;
+    for (const elemento of arreglo) {
+      suma += Number(elemento[clave] | 0);
+    }
+    return suma;
   }
 
   public viewmode(): boolean {
