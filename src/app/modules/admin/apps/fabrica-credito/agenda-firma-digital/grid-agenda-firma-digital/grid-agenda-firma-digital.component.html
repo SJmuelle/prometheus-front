@@ -236,7 +236,7 @@
 
 
 
-                              <button mat-menu-item *ngIf="item.etapaFirma=='E' || item.etapaFirma=='P' "
+                              <button mat-menu-item *ngIf="item.etapaFirma=='E' || item.etapaFirma=='P' || item.etapaFirma=='F'"
                                 class="flex  items-center" matTooltip="Editar información"
                                 (click)="openDetail(item.numeroSolicitud)">
                                 <mat-icon svgIcon="heroicons_outline:pencil" class="mr-2"></mat-icon>Editar información
@@ -532,7 +532,7 @@
 
 
 
-                      <!-- 
+                      <!--
                       <td class="px-2 pb-1 pt-1">
 
                         <div class="flex justify-between">
