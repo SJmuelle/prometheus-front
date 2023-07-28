@@ -6,7 +6,8 @@ import { ListadoCarteraService } from 'app/core/services/listadoCartera.service'
 import { UtilityService } from 'app/resources/services/utility.service';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of,  } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 
@@ -86,12 +87,12 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             this.form.controls.codigoEstado.setValue(this.data.item.codigoEstado);
             // this.form.controls.nombreEntidadNueva.setValue(true)
 
-            // this.form.get('entidad').valueChanges.subscribe(entidad => {
-            //     this.getEntidadesObservable(entidad);
-            // })
+             this.form.get('entidad').valueChanges.subscribe(entidad => {
+                 this.getEntidadesObservable(entidad);
+             })
 
             this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
-                this.getEntidadesObservable(entidad);
+                this.getEntidadesObservableNueva(entidad);
             })
         }
     }
@@ -218,6 +219,9 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 Swal.showLoading();
             },
         }).then((result) => { });
+        console.log('data a guardar' , data);
+        debugger
+
         this._listadoCarteraService
             .guardarGestionCompra(data)
             .subscribe((res) => {
@@ -279,6 +283,8 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 entidad
             }).subscribe(({ data }) => {
                 this.entidadOptions = data
+                console.log('data', data);
+
                 this.getNitApi()
             })
         }
@@ -310,6 +316,19 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             this.form.get('nit').setValue(this.entidadOptions[0].nitEntidad)
         }
     }
+
+    confirmarNit(entidad: string, nit: string): Observable<boolean> {
+        return this._fabricaService.carteraEntidadNombres({ entidad }).pipe(
+          takeUntil(this.unsubscribe$),
+          map(({ data }) => {
+            if (data.length === 1) {
+              return nit === data[0].nitEntidad && entidad === data[0].nombreEntidad;
+            }
+            return false;
+          }),
+          catchError(() => of(false))
+        );
+      }
 
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();
