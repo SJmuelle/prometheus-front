@@ -22,6 +22,7 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
     public unsubscribe$: Subject<any> = new Subject();
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = []
     public page: number = 1;
     public tamanoTabl = new FormControl("10");
     public filtrarTabla = new FormControl('');
@@ -58,6 +59,8 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
 
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
+
                 this.mostrar = false;
 
             } else {
@@ -248,5 +251,9 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
             left: currentScroll - this.scrollSpeed,
             behavior: 'smooth'
         })
+    }
+
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
     }
 }

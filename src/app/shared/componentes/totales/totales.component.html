@@ -63,7 +63,7 @@
             </div>
             <!-- totales -->
             <ng-container *ngFor="let item of totales">
-                <div class="flex flex-col flex-auto bg-card shadow rounded-2xl cardWidth my-3 mx-2">
+                <div (click)="filter(item.unidad); item.seleccionado=true" class="flex flex-col flex-auto bg-card rounded-2xl cardWidth my-3 mx-2 cursor-pointer" [style]="{'box-shadow': item.seleccionado ? '0px 0px 10px 0px ' + item.color : ''}">
                     <div class="flex justify-between p-3 rounded-tr-2xl rounded-tl-2xl w-full"
                         [style]="'background-color: ' + item.color_2">
                         <div class="flex justify-start items-start flex-col flex-wrap">

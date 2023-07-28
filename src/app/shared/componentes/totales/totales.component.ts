@@ -1,4 +1,4 @@
-import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef, Output,EventEmitter } from '@angular/core';
 import {  Input} from '@angular/core';
 
 @Component({
@@ -9,11 +9,14 @@ import {  Input} from '@angular/core';
 export class TotalesComponent implements OnInit {
 
 
-    private scrollSpeed: number = 200;
+    private scrollSpeed: number = 280;
+    private scrollGap: number = 50;
     mostrarTotales: boolean = true;
     blockNext: boolean = false;
     blockPrevios: boolean = true;
     @Input() totales: any[];
+    @Input() dataTable: any[];
+    @Output() dataFilter = new EventEmitter();
 
     constructor(private cd: ChangeDetectorRef) { }
 
@@ -27,7 +30,6 @@ export class TotalesComponent implements OnInit {
         //Add 'implements AfterViewInit' to the class.
         setTimeout(() => {
             this.checkScrollWidth()
-            console.log('totales', this.totales);
         }, 1000);
     }
 
@@ -36,25 +38,37 @@ export class TotalesComponent implements OnInit {
         var slider: HTMLElement = document.getElementById("totalesScroll");
         const currentScroll = slider.scrollLeft
 
+        const width = slider.offsetWidth
+        const widthContainer = slider.scrollWidth
+        const nextEventClose =  widthContainer <= (currentScroll + width + (this.scrollSpeed * 2) + this.scrollGap)
+
+        const move = nextEventClose ? widthContainer : currentScroll + this.scrollSpeed
+
         slider.scroll({
-            left: currentScroll + this.scrollSpeed,
+            left: move,
             behavior: 'smooth'
         })
 
         if(this.blockPrevios) this.blockPrevios = false;
-        this.limitNext(currentScroll + this.scrollSpeed)
+        this.limitNext(move)
     }
 
     previousTotalesSlider() {
         var slider: HTMLElement = document.getElementById("totalesScroll");
         const currentScroll = slider.scrollLeft
 
+        const width = slider.offsetWidth
+        const nextEventClose = (currentScroll  - (this.scrollSpeed * 2) - this.scrollGap) <= 0
+
+        const move = nextEventClose ? 0 : currentScroll - this.scrollSpeed
+
+
         slider.scroll({
-            left: currentScroll - this.scrollSpeed,
+            left: move,
             behavior: 'smooth'
         })
 
-        this.blockPrevios = currentScroll - this.scrollSpeed < 0
+        this.blockPrevios = move <= 0
         if(this.blockNext) this.blockNext = false;
     }
 
@@ -79,6 +93,50 @@ export class TotalesComponent implements OnInit {
 
         this.blockNext =  widthContainer <= (currentScroll + width)
     }
+
+    filter(unidad){
+        this.quitarHovers();
+
+        const arrayUnidades = this.convertirCadenaAArray(unidad) // {}
+
+       const datosFiltrados = this.dataTable.filter(item => {
+        let guardar: boolean = false
+
+        arrayUnidades.forEach(unidadNegocio => {
+            if(unidadNegocio === item.unidadNegocioFabrica){
+                guardar = true
+                return
+            }
+        });
+        return guardar
+       })
+
+
+
+       this.dataFilter.emit(datosFiltrados)
+    }
+
+    quitarHovers(){
+        this.totales.forEach(total => {
+            total.seleccionado = false;
+        })
+    }
+
+     convertirCadenaAArray(cadena) {
+        // Eliminamos los caracteres de llaves al inicio y final de la cadena
+        const cadenaLimpia = cadena.replace(/[{}]/g, '');
+
+        // Separamos los números usando ',' como delimitador
+        const numerosStr = cadenaLimpia.split(',');
+
+        // Convertimos los números de tipo string a tipo number
+        const numeros = numerosStr.map(num => parseInt(num, 10));
+
+        return numeros;
+      }
+
+
+
 
      /**
      *

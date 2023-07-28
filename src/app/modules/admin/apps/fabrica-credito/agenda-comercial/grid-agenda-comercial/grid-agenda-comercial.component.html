@@ -69,7 +69,7 @@
 
             </div>
         </div>
-        <app-totales   [totales]="totales"> </app-totales>
+        <app-totales   [totales]="totales" [dataTable]="datosAux"  (dataFilter)="filtrarTablaTotalesEvent($event)"> </app-totales>
         <div class="grid grid-cols-1 w-full px-5 pt-3">
             <div class="flex flex-col flex-auto p-6 bg-card rounded-2xl shadow w-full">
                 <div class="flex items-center justify-between">
