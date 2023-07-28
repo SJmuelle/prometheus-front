@@ -94,6 +94,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
                 this.getEntidadesObservableNueva(entidad);
             })
+
         }
     }
 
@@ -161,7 +162,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 saldoReal: saldoRealFormato,
                 estadoCuenta: estadoCuenta.toUpperCase(),
                 entidad: entidad.toUpperCase(),
-                nombreEntidadNueva: this.form.value.nuevaEntidad ? entidad : nombreEntidadNueva.toUpperCase(),
+                nombreEntidadNueva: nombreEntidadNueva,
                 nitNuevo: this.form.value.nuevaEntidad ? this.form.value.nit : nitNuevo,
                 ...data
             }
@@ -220,22 +221,31 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             },
         }).then((result) => { });
         console.log('data a guardar' , data);
-        debugger
+        this.confirmarNit(data.nombreEntidadNueva, data.nit).pipe(takeUntil(this.unsubscribe$)).subscribe(guardar => {
+            console.log('guardar', guardar);
+            if(guardar){
+                this._listadoCarteraService
+                .guardarGestionCompra(data)
+                .subscribe((res) => {
+                    Swal.close();
+                    if (res.data.resultado == 'OK') {
+                        let msg = res.data.msg == 'OK' ? 'Registro guardado con éxito' : res.data.msg;
+                        Swal.fire('Completado', res.data.msg, 'success');
+                        setTimeout(() => {
+                            this.onCerrar();
+                        }, 1000);
+                    } else {
+                        Swal.fire('Error', res.data.resultado, 'error');
+                    }
+                });
+            }else{
+                Swal.fire('Error', 'El nit no concuerda con la entidad financiera', 'error');
+            }
 
-        this._listadoCarteraService
-            .guardarGestionCompra(data)
-            .subscribe((res) => {
-                Swal.close();
-                if (res.data.resultado == 'OK') {
-                    let msg = res.data.msg == 'OK' ? 'Registro guardado con éxito' : res.data.msg;
-                    Swal.fire('Completado', res.data.msg, 'success');
-                    setTimeout(() => {
-                        this.onCerrar();
-                    }, 1000);
-                } else {
-                    Swal.fire('Error', res.data.resultado, 'error');
-                }
-            });
+        })
+
+
+
 
     }
 
@@ -252,7 +262,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             saldoActual: [''],
             saldoReal: ['', Validators.required],
             saldoMora: [''],
-            nit: [''],
+            nit: ['', Validators.required],
             nitNuevo: [''],
             idObligacion: [''],
             agregadaManualmente: true,
@@ -284,8 +294,6 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             }).subscribe(({ data }) => {
                 this.entidadOptions = data
                 console.log('data', data);
-
-                this.getNitApi()
             })
         }
     }
@@ -296,24 +304,16 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 entidad
             }).subscribe(({ data }) => {
                 this.entidadOptionsNueva = data
-                this.getNitApiNueva()
+                this.getNitApi()
             })
         }
     }
 
-    getNitApiNueva(){
+    getNitApi(){
         console.log('length', this.entidadOptionsNueva.length);
 
         if(this.entidadOptionsNueva.length === 1){
-            this.form.get('nitNuevo').setValue(this.entidadOptionsNueva[0].nitEntidad)
-        }
-    }
-
-    getNitApi(){
-        console.log('length', this.entidadOptions.length);
-
-        if(this.entidadOptions.length === 1){
-            this.form.get('nit').setValue(this.entidadOptions[0].nitEntidad)
+            this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)
         }
     }
 
