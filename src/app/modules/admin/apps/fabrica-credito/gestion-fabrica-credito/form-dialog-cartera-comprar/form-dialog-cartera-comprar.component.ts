@@ -54,8 +54,8 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
 
         this.getEntidadBancaria();
         this.getTipoCuentaBancaria();
-        this.form.get('nombreEntidadNueva').valueChanges.subscribe(value => this.colocarNit(value));
-        this.form.get('nombreEntidadNueva').valueChanges.subscribe(value => this.postBusquedaEntidadFinanciera(value));
+        this.form.get('entidadGiro').valueChanges.subscribe(value => this.colocarNit(value));
+        this.form.get('entidadGiro').valueChanges.subscribe(value => this.postBusquedaEntidadFinanciera(value));
         this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
         this.form.controls.identificacion.setValue(this.data.identificacion.toString());
 
@@ -64,7 +64,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
         this.tipo = this.data.tipo;
         this.postBusquedaEntidadFinanciera('');
         this.getEstadoCuenta(this.data.tipo != 'D' ? "AL DIA" : "EN MORA");
-        this.filteredOptions = this.form.controls.nombreEntidadNueva.valueChanges.pipe(
+        this.filteredOptions = this.form.controls.entidadGiro.valueChanges.pipe(
             startWith(''),
             map(value => this._filter(value || '')),
         );
@@ -77,7 +77,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 this.form.controls.nit.setValue(this.data.item.nit);
             }
             this.form.controls.entidad.setValue(this.data.item.entidad);
-            this.form.controls.nombreEntidadNueva.setValue(this.data.item.entidad)
+            this.form.controls.entidadGiro.setValue(this.data.item.entidad)
             this.getEntidadesObservable(this.form.controls.entidad.value);
             this.form.controls.numeroCuenta.setValue(this.data.item.numeroCuenta);
             this.form.controls.maximaMora.setValue(this.data.item.maximaMora);
@@ -91,7 +91,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                  this.getEntidadesObservable(entidad);
              })
 
-            this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
+            this.form.get('entidadGiro').valueChanges.subscribe(entidad => {
                 this.getEntidadesObservableNueva(entidad);
             })
 
@@ -144,7 +144,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
     public onGuardar(): void {
         if (this.form.valid) {
             const datos: any = this.form.getRawValue();
-            const { nitNuevo, saldoActual, estadoCuenta, entidad, nombreEntidadNueva, saldoReal, ...data } = datos;
+            const { nitNuevo, saldoActual, estadoCuenta, entidad, entidadGiro, saldoReal, ...data } = datos;
             const saldoRealFormato = Number(this.utility.enviarNumero(this.form.value.saldoReal));
             const saldoActualFormato = this.utility.enviarNumero(this.form.value.saldoActual);
             const saldoMoraFormato = this.utility.enviarNumero(this.form.value.saldoMora);
@@ -162,7 +162,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
                 saldoReal: saldoRealFormato,
                 estadoCuenta: estadoCuenta.toUpperCase(),
                 entidad: entidad.toUpperCase(),
-                nombreEntidadNueva: nombreEntidadNueva,
+                entidadGiro: entidadGiro,
                 nitNuevo: this.form.value.nuevaEntidad ? this.form.value.nit : nitNuevo,
                 ...data
             }
@@ -268,7 +268,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             agregadaManualmente: true,
             codigoEstado: [''],
             alDia: Boolean,
-            nombreEntidadNueva: [''],
+            entidadGiro: [''],
             nuevaEntidad: true,
             gestionCartera: 'COM'
 
