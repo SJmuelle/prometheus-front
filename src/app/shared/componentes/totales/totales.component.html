@@ -65,9 +65,9 @@
             <ng-container *ngFor="let item of totales">
                 <div class="flex flex-col flex-auto bg-card shadow rounded-2xl cardWidth my-3 mx-2">
                     <div class="flex justify-between p-3 rounded-tr-2xl rounded-tl-2xl w-full"
-                        [style]="'background-color: ' + item.color">
+                        [style]="'background-color: ' + item.color_2">
                         <div class="flex justify-start items-start flex-col flex-wrap">
-                            <div class="font-medium leading-6 rounded-full text-lg text-white tracking-tight truncate px-1 mr-2"
+                            <div class="font-medium leading-6 rounded-md text-md text-white tracking-tight truncate px-1 mr-2"
                                 [style]="'background-color: ' + item.color">
                                 {{ item.nombre_unidad_negocio }}
                             </div>
@@ -80,8 +80,8 @@
                                     </div>
                             </div>
                             <div>
-                                <div class="bg-white rounded-2xl p-1">
-                                    <img src="assets/icons/agendas/microCredito.svg" alt="agendaIcon" />
+                                <div class="bg-white rounded-md p-1 flex justify-center items-center iconSizeCs">
+                                    <img [src]="item.icono" alt="agendaIcon" />
                                 </div>
                             </div>
                         </div>

@@ -18,6 +18,8 @@ export class TotalesComponent implements OnInit {
     constructor(private cd: ChangeDetectorRef) { }
 
     ngOnInit(): void {
+
+
     }
 
     ngAfterViewInit(): void {
@@ -25,6 +27,7 @@ export class TotalesComponent implements OnInit {
         //Add 'implements AfterViewInit' to the class.
         setTimeout(() => {
             this.checkScrollWidth()
+            console.log('totales', this.totales);
         }, 1000);
     }
 
