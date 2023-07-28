@@ -53,21 +53,13 @@
               </mat-form-field>
             </ng-container>
           </div>
-          <div class="flex justify-between items-center w-100">
-            <p>¿Pagada en esta entidad?</p>
-            <div class="toggle-button-cover">
-              <div class="button-cover">
-                <div class="button r" id="button-1">
-                  <input type="checkbox" class="checkbox" formControlName="nuevaEntidad">
-                  <div class="knobs"></div>
-                  <div class="layer"></div>
-                </div>
-              </div>
-            </div>
+          <div class="border-2 ml-2"></div>
+          <div class="my-3 px-2 font-semibold">
+            Confirmación de entidad a pagar
           </div>
           <div class="flex">
             <mat-form-field class="w-full ml-2 fuse-mat-dense">
-                <mat-label>entidad financiera a girar</mat-label>
+                <mat-label>Entidad financiera</mat-label>
                 <input type="text" placeholder="" matInput [formControlName]="'nombreEntidadNueva'" autocomplete="off"
                   [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
@@ -76,7 +68,7 @@
                   </mat-option>
                 </mat-autocomplete>
                 <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
-              </mat-form-field>
+            </mat-form-field>
 
             <mat-form-field class="w-full ml-2 fuse-mat-dense">
               <mat-label>Nit</mat-label>

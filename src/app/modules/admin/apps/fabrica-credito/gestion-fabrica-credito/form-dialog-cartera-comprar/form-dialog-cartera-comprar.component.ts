@@ -73,9 +73,10 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
         if (this.data.item != null) {
             this.nuevo = true;
             if (this.data.item.nit) {
-                this.form.controls.entidad.setValue(this.data.item.entidad);
                 this.form.controls.nit.setValue(this.data.item.nit);
             }
+            this.form.controls.entidad.setValue(this.data.item.entidad);
+            this.form.controls.nombreEntidadNueva.setValue(this.data.item.entidad)
             this.getEntidadesObservable(this.form.controls.entidad.value);
             this.form.controls.numeroCuenta.setValue(this.data.item.numeroCuenta);
             this.form.controls.maximaMora.setValue(this.data.item.maximaMora);
@@ -85,12 +86,12 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             this.form.controls.codigoEstado.setValue(this.data.item.codigoEstado);
             // this.form.controls.nombreEntidadNueva.setValue(true)
 
-            this.form.get('entidad').valueChanges.subscribe(entidad => {
-                this.getEntidadesObservable(entidad);
-            })
+            // this.form.get('entidad').valueChanges.subscribe(entidad => {
+            //     this.getEntidadesObservable(entidad);
+            // })
 
             this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
-                this.getEntidadesObservableNueva(entidad);
+                this.getEntidadesObservable(entidad);
             })
         }
     }
