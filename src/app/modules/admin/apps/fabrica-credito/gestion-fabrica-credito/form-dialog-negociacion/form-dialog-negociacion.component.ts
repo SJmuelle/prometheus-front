@@ -171,6 +171,8 @@ export class FormDialogNegociacionComponent implements OnInit {
         valorRealCartera: ['', [Validators.required]],
         porcentajeConsultores: [50],
         comentarioNegociacion: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(800)]],
+        nombreEntidadNueva: [''],
+        nit: ['']
       });
     } else {
       this.form = this.fb.group({
