@@ -86,11 +86,20 @@
                                         Resumen</button>
                                 </mat-menu>
                             </td>
-                            <td class="px-2 pb-0 pt-1 maxWidthUnidadNegocio">
-                                <div class="flex justify-center items-center">
-                                    <div
-                                        class="bg-gray-700 flex unidadWidth font-semibold font-sans items-center justify-center px-2 rounded-md text-center text-white tracking-widest">
-                                        {{item.undadNegocio}}
+                            <td class="px-2 pb-0 pt-1 ">
+                                <div class="grid grid-cols-12 gap-2">
+                                    <div class="col-span-6 flex justify-center items-center">
+                                        <div
+                                        [matTooltip]="item.undadNegocio"
+                                        class="iconMarca bg-gray-700 flex icon-size-6  text-xs font-semibold font-sans items-center justify-center px-2 rounded-md text-center text-white tracking-widest">
+                                        {{'UN'}}
+                                        </div>
+                                    </div>
+                                    <div  class="col-span-6 flex justify-center items-center">
+                                        <div matTooltip="Crédito con excepción"
+                                        class="iconMarca bg-yellowCustom flex icon-size-6 rounded-md font-bold font-sans items-center justify-center py-1 text-center text-white text-xs tracking-widest">
+                                        CE
+                                        </div>
                                     </div>
                                 </div>
                             </td>
@@ -109,8 +118,14 @@
                             </td>
                             <td class="px-2 pb-0 pt-1 ">
                                 <div class="flex flex-column ">
-                                    <small class="text-accent-600 text-xs font-bold">Cliente: </small>
+                                    <small class="text-accent-600 text-xs font-bold max-w-10">Cliente: </small>
                                     <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1 ">
+                                <div class="flex flex-column ">
+                                    <small class="text-accent-600 text-xs font-bold">Fecha solicitud: </small>
+                                    <span class="text-md text-black font-medium">{{ cambiarFecha(item.fechaEmision)}}</span>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1">
@@ -121,31 +136,45 @@
                                     </span>
                                 </div>
                             </td>
-                            <td class="px-2 pb-0 pt-1">
-                                <div class="flex flex-column ">
-                                    <small class="text-accent-600 text-xs font-bold">Asesor</small>
-                                    <span class="text-md text-black font-medium">
-                                        {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No
-                                        registro':item.asesorMicro : item.asesorCredito == '' ? 'No
-                                        registro':item.asesorCredito}}
-                                    </span>
-                                </div>
-                            </td>
-                            <td class="px-2 pb-0 pt-1">
-                                <div class="flex justify-center items-center">
-                                    <div
-                                        class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest">
-                                        Crédito con excepción
+                            <td class="px-2 pb-0 pt-1 ">
+                                <div class="flex flex-column py-3">
+                                    <div class="flex items-center" matTooltip="Agencia">
+                                        <mat-icon class="icon-size-3"
+                                                svgIcon="heroicons_outline:location-marker"></mat-icon>
+                                        <span class="text-md text-black font-medium">{{ item.agencia}}</span>
+                                    </div>
+                                    <div class="flex  items-center" matTooltip="Asesor">
+                                        <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                        <span class="text-md text-black font-medium">
+                                            {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No registro':item.asesorMicro : item.asesorCredito == '' ? 'No registro':item.asesorCredito }}
+                                        </span>
                                     </div>
                                 </div>
                             </td>
-                            <div class="absolute right-0 top-0">
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column ">
+
+                                </div>
+                            </td>
+                            <!-- *ngIf="item.creditoExcepcion" -->
+                           <!-- <div  class="absolute top-0 left-5">
+                                <div class="flex justify-center items-center">
+                                    <div
+                                        class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-b-md text-center text-white text-xs tracking-widest">
+                                        Crédito con excepción
+                                    </div>
+                                </div>
+                            </div> -->
+                            <div class="absolute centerAbsolute">
                                 <button class="icon-size-8 flex justify-center items-center rounded-full" mat-menu-item
                                     (click)="!!item.verDetalles = !item.verDetalles">
                                     <mat-icon svgIcon="heroicons_outline:eye" class="mr-0"></mat-icon>
                                 </button>
 
                             </div>
+                            <td *ngIf="item.creditoExcepcion">
+                                <div  class="w-30"></div>
+                            </td>
                         </tr>
                         <tr *ngIf="item.verDetalles" class="text-gray-700 border-t border-b ">
                             <td colspan="100%" class=" pb-1 pt-1">
