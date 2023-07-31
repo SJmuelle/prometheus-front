@@ -39,6 +39,9 @@ import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { MatListModule } from '@angular/material/list';
 import { TotalesComponent } from './componentes/totales/totales.component';
+import { TablaComponent } from './componentes/agendas/tabla/tabla.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
@@ -72,11 +75,14 @@ import { TotalesComponent } from './componentes/totales/totales.component';
                 MatExpansionModule,
                 MatMenuModule,
                 MatProgressBarModule,
+                Ng2SearchPipeModule,
                 // FabricaCreditoModule,
                 MatCheckboxModule,
                 NgxMaskModule.forRoot(),
                 // FabricaCreditoModule,
-                MatListModule
+                MatListModule,
+                MatPaginatorModule,
+                NgxPaginationModule,
 
         ],
         exports: [
@@ -111,7 +117,8 @@ import { TotalesComponent } from './componentes/totales/totales.component';
                 MatCheckboxModule,
                 OTPComponent,
                 MatListModule,
-                TotalesComponent
+                TotalesComponent,
+                TablaComponent
         ],
         declarations: [
                 DirectionsBasicComponent,
@@ -121,7 +128,8 @@ import { TotalesComponent } from './componentes/totales/totales.component';
                 HeaderComponent,
                 NoDataComponent,
                 OTPComponent,
-                TotalesComponent
+                TotalesComponent,
+                TablaComponent
         ],
 })
 export class SharedModule { }

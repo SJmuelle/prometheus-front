@@ -38,7 +38,6 @@ import { SharedModule } from 'app/shared/shared.module';
     MatDividerModule,
     MatIconModule,
     MatButtonModule,
-    Ng2SearchPipeModule,
     ReactiveFormsModule,
     MatPaginatorModule,
     NgxPaginationModule,
