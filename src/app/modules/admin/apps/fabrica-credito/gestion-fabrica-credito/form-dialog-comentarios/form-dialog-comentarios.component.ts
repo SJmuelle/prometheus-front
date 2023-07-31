@@ -25,20 +25,20 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private comentariosService: ComentariosService,
         private fabricaCreditoService: FabricaCreditoService,
-    ) { 
+    ) {
         this.getFabricaCreditoAgenda(this.data.numeroSolicitud)
     }
 
     ngOnInit(): void {
         this.crearFormulario();
         this.getTipoComentario();
-      
+
         this.form.controls.numeroSolicitud.setValue(Number(this.data.numeroSolicitud));
         if (this.data.idComentario) {
             this.form.controls.comentario.setValue(this.data.comentario);
         }
     }
-    
+
   /**
  * @description: Obtiene la data para cargar al formulario
  */
@@ -47,8 +47,6 @@ export class FormDialogComentariosComponent implements OnInit, OnDestroy {
       .subscribe(({ data }) => {
         Swal.close();
         this.datoFabrica = data;
-        console.log('datos fabrica', data);
-        
       })
   }
 

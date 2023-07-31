@@ -30,7 +30,6 @@ export class ModalExcepcionCreditoComponent implements OnInit {
     // console.log('datos politica', this.data)
     this.form.controls.excepcionText.setValue(this.data.comentarioExcepcion)
     this.form.patchValue(this.data);
-    console.log('data', this.data);
 
   }
 

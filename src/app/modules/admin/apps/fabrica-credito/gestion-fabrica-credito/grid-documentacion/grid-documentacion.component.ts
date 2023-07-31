@@ -197,7 +197,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                 const extension: string = fileToRead.type.split('/')[1];
                 const fechaHoy = Date.now();
 
-                // casos de uso 
+                // casos de uso
                 if (item.idArchivo === 303 || item.idArchivo === 615 || item.idArchivo === 327) {
                     this.cedulaCrearPDF(files, item)
                 } else if (files.length > 1) {
@@ -245,7 +245,7 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
             reader.readAsDataURL(file);
 
             reader.onload = function (progressEvent) {
-                //add to Map here 
+                //add to Map here
                 resolve({ renderResult: reader.result, ext, file });
             }
 
@@ -313,7 +313,6 @@ export class GridDocumentacionComponent implements OnInit, OnDestroy {
                             break;
                         default:
                             error = true;
-                            console.log('entrando a no img', file.ext === 'JPEG');
 
                             await this.drawImgToPDF(
                                 pag,

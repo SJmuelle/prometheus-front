@@ -141,7 +141,6 @@ export class HistoricoPoliticasComponent implements OnInit {
   }
 
   onGetAgendaHistoricoPoliticas(item){
-    console.log('agenda' , item);
     const { numeroSolicitud, identificacion } = item;
         this.router.navigate(['/credit-factory/historico-politicas/politicas-agendas', numeroSolicitud, identificacion]);
   }

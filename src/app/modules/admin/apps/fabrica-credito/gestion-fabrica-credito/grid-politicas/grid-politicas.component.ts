@@ -45,7 +45,6 @@ export class GridPoliticasComponent implements OnInit {
                 }
                 this.politicas[element.tipoTercero].push(element)
             });
-            console.log('politicas', this.politicas);
 
         });
     }
@@ -130,7 +129,6 @@ export class GridPoliticasComponent implements OnInit {
 
                 Swal.fire({ title: 'Cargando', html: 'Evaluando motor de decisión (Políticas)', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
                 this._politicasService.correrMotorlExcepcionPolitica(data).subscribe(rep => {
-                    console.log('respuesta', rep);
                     if (rep['data'].resultado === 'OK') {
                         Swal.fire('Guardado con éxito', 'Ha sido recalculado con éxito.', 'success').then(() => {
                             window.location.reload()
