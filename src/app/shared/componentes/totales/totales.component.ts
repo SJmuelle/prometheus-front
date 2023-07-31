@@ -111,8 +111,6 @@ export class TotalesComponent implements OnInit {
         return guardar
        })
 
-
-
        this.dataFilter.emit(datosFiltrados)
     }
 

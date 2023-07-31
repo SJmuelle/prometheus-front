@@ -21,6 +21,7 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
     public tamanoTabl = new FormControl("10");
     public mostrar: boolean = true;
     public datos: any[] = [];
+    public datosAux: any[] = [];
     public mostrarTotales: boolean = true;
     public totales: any[];
     public headerColums: string[] = ['numeroSolicitud', 'identificacion', 'nombreCompleto', 'monto', 'agencia','asesor'];
@@ -54,6 +55,7 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
         ).subscribe((res) => {
             if (res.status === 200) {
                 this.datos = res.data;
+                this.datosAux = res.data;
                 this.mostrar = false;
                 Swal.close();
             } else {
@@ -84,13 +86,20 @@ export class GridAgendaCompletacionComponent implements OnInit, OnDestroy {
         moment.locale('es');
         return moment(date).format('MMMM D YYYY')
     }
-    
+
     cambiarHora(date){
         moment.locale('es');
         return moment(date).format('hh:mm A')
     }
 
-    
+    filtrarTablaTotalesEvent(datos){
+        this.datos = datos;
+    }
+
+    actualizarTabla($event){
+        // this.getAgendaComercial();
+        // this.agendaComercialService.refrescarListado$.next({ estado: true });
+    }
 
     ngOnDestroy(): void {
         this.unsubscribe$.unsubscribe();

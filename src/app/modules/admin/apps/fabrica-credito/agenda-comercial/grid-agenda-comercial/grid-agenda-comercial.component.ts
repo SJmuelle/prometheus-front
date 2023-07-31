@@ -253,6 +253,11 @@ export class GridAgendaComercialComponent implements OnInit, OnDestroy {
         })
     }
 
+    actualizarTabla($event){
+        this.getAgendaComercial();
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
+    }
+
     filtrarTablaTotalesEvent(datos){
         this.datos = datos;
     }

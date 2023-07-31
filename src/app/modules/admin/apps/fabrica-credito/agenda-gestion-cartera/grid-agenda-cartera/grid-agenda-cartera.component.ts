@@ -11,180 +11,190 @@ import { FormDialogDevolverFabricaComponent } from '../../agenda-comercial/form-
 import { FormDialogReprogramarComponent } from '../../agenda-referenciacion/form-dialog-reprogramar/form-dialog-reprogramar.component';
 
 @Component({
-  selector: 'app-grid-agenda-cartera',
-  templateUrl: './grid-agenda-cartera.component.html',
-  styleUrls: ['./grid-agenda-cartera.component.scss']
+    selector: 'app-grid-agenda-cartera',
+    templateUrl: './grid-agenda-cartera.component.html',
+    styleUrls: ['./grid-agenda-cartera.component.scss']
 })
 export class GridAgendaCarteraComponent implements OnInit, OnDestroy {
-  public unsubscribe$: Subject<any> = new Subject();
-  public mostrar: boolean = true;
-  public datos: any[] = [];
-  public page: number = 1;
-  public tamanoTabl = new FormControl("10");
-  public filtrarTabla = new FormControl('');
-  public mostrarTotales: boolean = true;
-  public totales: any[];
-  constructor(
-    private agendaComercialService: AgendaComercialService,
-    // private agendaCarteraService: AgendaCarteraService,
-    private _matDialog: MatDialog,
-    private router: Router
-  ) { }
+    public unsubscribe$: Subject<any> = new Subject();
+    public mostrar: boolean = true;
+    public datos: any[] = [];
+    public datosAux: any[] = [];
+    public page: number = 1;
+    public tamanoTabl = new FormControl("10");
+    public filtrarTabla = new FormControl('');
+    public mostrarTotales: boolean = true;
+    public totales: any[];
+    constructor(
+        private agendaComercialService: AgendaComercialService,
+        // private agendaCarteraService: AgendaCarteraService,
+        private _matDialog: MatDialog,
+        private router: Router
+    ) { }
 
-  ngOnInit(): void {
-    this.cambiarEstado(true);
-    this.getAgenda();
-    this.getTotalesAgendaCartera();
-  }
-
-
-
-
-  /**
-     * @description: Obtiene el listado de agenda de completacion
-    */
-  private getAgenda(): void {
-    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getAgendaCartera().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe((res) => {
-      Swal.close();
-      if (res.status === 200) {
-        this.datos = res.data;
-        this.mostrar = false;
-
-      } else {
-      }
-    });
-  }
-
-  /**
-   * @description: Guarda la reprogramacion
-   */
-  public onReprogramar(data): void {
-    const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
-      width: '30%',
-      data: {
-        numeroSolicitud: data.numeroSolicitud
-      },
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-      if (res) {
+    ngOnInit(): void {
+        this.cambiarEstado(true);
         this.getAgenda();
-        this.agendaComercialService.refrescarListado$.next({ estado: true });
-        //  this.onCerrar();
-      }
-    });
-  }
+        this.getTotalesAgendaCartera();
+    }
 
-  /**
-   * @description: abre la agenda
-   */
-  public onGetAgenda(data: any): void {
-    //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
-    const { numeroSolicitud, identificacion } = data;
-    this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
-  }
 
-  /**
+
+
+    /**
+       * @description: Obtiene el listado de agenda de completacion
+      */
+    private getAgenda(): void {
+        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.agendaComercialService.getAgendaCartera().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe((res) => {
+            Swal.close();
+            if (res.status === 200) {
+                this.datos = res.data;
+                this.datosAux = res.data;
+                this.mostrar = false;
+
+            } else {
+            }
+        });
+    }
+
+    /**
+     * @description: Guarda la reprogramacion
+     */
+    public onReprogramar(data): void {
+        const dialogRef = this._matDialog.open(FormDialogReprogramarComponent, {
+            width: '30%',
+            data: {
+                numeroSolicitud: data.numeroSolicitud
+            },
+            disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe((res) => {
+            if (res) {
+                this.getAgenda();
+                this.agendaComercialService.refrescarListado$.next({ estado: true });
+                //  this.onCerrar();
+            }
+        });
+    }
+
+    /**
+     * @description: abre la agenda
+     */
+    public onGetAgenda(data: any): void {
+        //this.agendaCompletacionService.seleccionAgenda.next({selected: data, show: true});
+        const { numeroSolicitud, identificacion } = data;
+        this.router.navigate(['/credit-factory/credit-management', numeroSolicitud, identificacion]);
+    }
+
+    /**
+     * @description: Guarda el comentario para devolvee
+     */
+    public onComentario(data): void {
+        //
+        const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
+            width: '30%',
+            data: {
+                numeroSolicitud: data.numeroSolicitud,
+                tipo: 'C'
+            },
+            disableClose: true
+        });
+
+        dialogRef.afterClosed().subscribe((res) => {
+
+            this.getAgenda();
+            this.agendaComercialService.refrescarListado$.next({ estado: true });
+
+        });
+    }
+
+    /**
    * @description: Guarda el comentario para devolvee
    */
-  public onComentario(data): void {
-    //  
-    const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
-      width: '30%',
-      data: {
-        numeroSolicitud: data.numeroSolicitud,
-        tipo: 'C'
-      },
-      disableClose: true
-    });
+    public onComentarioRechazar(data): void {
+        //
+        const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
+            width: '30%',
+            data: {
+                numeroSolicitud: data.numeroSolicitud,
+                tipo: 'R'
+            },
+            disableClose: true
+        });
 
-    dialogRef.afterClosed().subscribe((res) => {
+        dialogRef.afterClosed().subscribe((res) => {
 
-      this.getAgenda();
-      this.agendaComercialService.refrescarListado$.next({ estado: true });
+            this.getAgenda();
+            this.agendaComercialService.refrescarListado$.next({ estado: true });
 
-    });
-  }
-
-  /**
- * @description: Guarda el comentario para devolvee
- */
-  public onComentarioRechazar(data): void {
-    //  
-    const dialogRef = this._matDialog.open(FormDialogDevolverFabricaComponent, {
-      width: '30%',
-      data: {
-        numeroSolicitud: data.numeroSolicitud,
-        tipo: 'R'
-      },
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe((res) => {
-
-      this.getAgenda();
-      this.agendaComercialService.refrescarListado$.next({ estado: true });
-
-    });
-  }
-  /**
-   * @description: Obtiene el listado de agenda de Cartera
-   */
-  private getTotalesAgendaCartera(): void {
-    Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
-    this.agendaComercialService.getTotalesAgendaCartera().pipe(
-      takeUntil(this.unsubscribe$)
-    ).subscribe((res) => {
-      if (res.status === 200) {
-        this.totales = res.data;
-        Swal.close();
-      } else {
-        Swal.close();
-        this.totales = []
-      }
-    });
-  }
-  /**
-   * 
-   * @param date 
-   * @returns 
-   */
-  cambiarFecha(date) {
-    if (date) {
-      moment.locale('es');
-      return moment(date).format('MMMM D YYYY')
+        });
     }
-    return 'No registra';
-  }
-  /**
-   * 
-   * @param date 
-   * @returns 
-   */
-  cambiarHora(date) {
-    if (date) {
-      moment.locale('es');
-      return moment(date).format('hh:mm A')
+    /**
+     * @description: Obtiene el listado de agenda de Cartera
+     */
+    private getTotalesAgendaCartera(): void {
+        Swal.fire({ title: 'Cargando', html: 'Buscando información...', timer: 500000, didOpen: () => { Swal.showLoading() }, }).then((result) => { });
+        this.agendaComercialService.getTotalesAgendaCartera().pipe(
+            takeUntil(this.unsubscribe$)
+        ).subscribe((res) => {
+            if (res.status === 200) {
+                this.totales = res.data;
+                Swal.close();
+            } else {
+                Swal.close();
+                this.totales = []
+            }
+        });
     }
-    return 'No registra';
-  }
+    /**
+     *
+     * @param date
+     * @returns
+     */
+    cambiarFecha(date) {
+        if (date) {
+            moment.locale('es');
+            return moment(date).format('MMMM D YYYY')
+        }
+        return 'No registra';
+    }
+    /**
+     *
+     * @param date
+     * @returns
+     */
+    cambiarHora(date) {
+        if (date) {
+            moment.locale('es');
+            return moment(date).format('hh:mm A')
+        }
+        return 'No registra';
+    }
 
-  /**
-   * 
-   * @param estado 
-   */
-  public cambiarEstado(estado) {
-    this.mostrarTotales = estado;
-  }
+    /**
+     *
+     * @param estado
+     */
+    public cambiarEstado(estado) {
+        this.mostrarTotales = estado;
+    }
 
+    actualizarTabla($event) {
+        this.getAgenda();
+        this.agendaComercialService.refrescarListado$.next({ estado: true });
+    }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.unsubscribe();
-  }
+    filtrarTablaTotalesEvent(datos) {
+        this.datos = datos;
+    }
+
+    ngOnDestroy(): void {
+        this.unsubscribe$.unsubscribe();
+    }
 
 }
 

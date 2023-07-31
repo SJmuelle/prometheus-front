@@ -71,6 +71,6 @@
         </div>
         <app-totales   [totales]="totales" [dataTable]="datosAux"  (dataFilter)="filtrarTablaTotalesEvent($event)"> </app-totales>
 
-        <app-tabla *ngIf="datos" [datos]="datos"></app-tabla>
+        <app-tabla *ngIf="datos" [datos]="datos" (actualizarTabla)="actualizarTabla($event)"></app-tabla>
 
 </div>

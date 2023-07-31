@@ -4,8 +4,8 @@
 
             <div class="text-secondary font-medium"> <input
                     class="border rounded p-2 bg-gray-100 mr-4 text-xs w-full sm:w-120 capitalize" type="text"
-                    autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla"
-                    (keydown)="changePageToOne()" placeholder="Filtrar..."></div>
+                    autocomplete="off" name="filtrarTablaHG" [formControl]="filtrarTabla" (keydown)="changePageToOne()"
+                    placeholder="Filtrar..."></div>
 
             <select class="border rounded  bg-gray-100 text-xs p-2 text-gray-400" [formControl]="tamanoTabl"
                 (change)="page=1">
@@ -22,12 +22,11 @@
                     <ng-container
                         *ngFor="let item of datos | filter:filtrarTabla.value | paginate: { itemsPerPage: tamanoTabl.value, currentPage: page }">
 
-                        <tr class="text-gray-700 border-t border-b ">
-                            <td rowspan="2" class="py-3 text-sm my-3">
-                                <div class="text-gray-700 grid-cols-2 grid min-w-20">
+                        <tr class="text-gray-700 border-t border-b relative">
+                            <td rowspan="1" class="py-3 text-sm my-3">
+                                <!-- <div class="text-gray-700 grid-cols-2 grid min-w-20">
                                     <div class="py-0 text-sm w-10">
-                                        <button mat-icon-button matTooltip="Gestionar"
-                                            (click)="onGetAgenda(item)">
+                                        <button mat-icon-button matTooltip="Gestionar" (click)="onGetAgenda(item)">
                                             <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
                                         </button>
                                     </div>
@@ -35,8 +34,7 @@
                                         <div class="py-0 text-sm w-10">
                                             <button mat-icon-button matTooltip="Rechazar"
                                                 (click)="onComentarioRechazar(item)">
-                                                <mat-icon
-                                                    [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
+                                                <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
                                             </button>
                                         </div>
                                     </ng-container>
@@ -49,48 +47,91 @@
                                         </div>
                                     </ng-container>
                                     <div class="py-0 text-sm ">
-                                        <button mat-icon-button matTooltip="Reprogramar"
-                                            (click)="onReprogramar(item)">
+                                        <button mat-icon-button matTooltip="Reprogramar" (click)="onReprogramar(item)">
                                             <mat-icon svgIcon="mat_outline:timer"></mat-icon>
                                         </button>
                                     </div>
+                                </div> -->
+                                <div class="flex justify-center items-center">
+                                    <button [matMenuTriggerFor]="menuOption" class="" mat-icon-button>
+                                        <mat-icon>format_list_bulleted</mat-icon></button>
                                 </div>
+                                <mat-menu #menuOption="matMenu" class="p-2 flex flex-col">
+                                    <!-- value.arrayChildren.nameChildren -->
+                                    <button mat-menu-item (click)="onGetAgenda(item)">
+                                        <mat-icon [svgIcon]="'mat_outline:task'"></mat-icon>
+                                        Gestionar</button>
+
+                                    <button *ngIf="item.clienteDesistio === 'S'" mat-menu-item
+                                        (click)="onComentarioRechazar(item)">
+                                        <mat-icon [svgIcon]="'heroicons_outline:document-remove'"></mat-icon>
+                                        Rechazar</button>
+
+                                    <button *ngIf="item.unidadNegocioFabrica ===32" (click)="onComentario(item)"
+                                        mat-menu-item (click)="onGetAgenda(item)">
+                                        <mat-icon svgIcon="heroicons_outline:clipboard-copy"></mat-icon>
+                                        Devolver a Fabrica</button>
+
+                                    <button *ngIf="item.idAgenda === 'GC' || item.idAgenda === 'CM' || item.idAgenda === 'RE' || item.idAgenda === 'CC'" mat-menu-item (click)="onReprogramar(item)">
+                                        <mat-icon svgIcon="mat_outline:timer"></mat-icon>
+                                        Reprogramar</button>
+
+                                    <button *ngIf="item.idAgenda === 'RE'" mat-menu-item
+                                        (click)="onGetGridRefrenciacion(item)">
+                                        <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
+                                        Información de referencia</button>
+
+                                    <button *ngIf="item.idAgenda === 'DE' || item.idAgenda === 'FO'" mat-menu-item (click)="goResumen(item)">
+                                        <mat-icon svgIcon="manage_search"></mat-icon>
+                                        Resumen</button>
+                                </mat-menu>
                             </td>
-                            <td class="px-2 pb-0 pt-1" rowspan="2">
-                                <div class="flex flex-column " rowspan="2">
-                                    <div class="flex-0 w-12 overflow-hidden">
-                                        <img [src]="item.urlIconoUnidad" class="w-full h-full object-cover">
+                            <td class="px-2 pb-0 pt-1 maxWidthUnidadNegocio">
+                                <div class="flex justify-center items-center">
+                                    <div
+                                        class="bg-gray-700 flex unidadWidth font-semibold font-sans items-center justify-center px-2 rounded-md text-center text-white tracking-widest">
+                                        {{item.undadNegocio}}
                                     </div>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1">
                                 <div class="flex flex-column ">
-                                    <small class="text-accent-600 text-xs">Solicitud:</small>
+                                    <small class="text-accent-600 text-xs font-bold">Solicitud:</small>
                                     <span class="text-md text-black font-medium"> {{
                                         item.numeroSolicitud}}</span>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1">
                                 <div class="flex flex-column ">
-                                    <small class="text-accent-600 text-xs">Identificación: </small>
+                                    <small class="text-accent-600 text-xs font-bold">Identificación: </small>
                                     <span class="text-md text-black font-medium"> {{item.identificacion}}</span>
                                 </div>
                             </td>
-                            <td class="px-2 pb-0 pt-1" colspan="3">
+                            <td class="px-2 pb-0 pt-1 ">
                                 <div class="flex flex-column ">
-                                    <small class="text-accent-600 text-xs">Cliente: </small>
+                                    <small class="text-accent-600 text-xs font-bold">Cliente: </small>
                                     <span class="text-md text-black font-medium">{{item.nombreCompleto}}</span>
                                 </div>
                             </td>
                             <td class="px-2 pb-0 pt-1">
                                 <div class="flex flex-column ">
-                                    <small class="text-accent-600 text-xs">Monto: </small>
-                                    <span class="text-lg text-black font-medium">
+                                    <small class="text-accent-600 text-xs font-bold">Monto: </small>
+                                    <span class="text-md text-black font-medium">
                                         ${{ item.monto | number:0}}
                                     </span>
                                 </div>
                             </td>
-                            <td *ngIf="item.creditoExcepcion" class="px-2 pb-0 pt-1">
+                            <td class="px-2 pb-0 pt-1">
+                                <div class="flex flex-column ">
+                                    <small class="text-accent-600 text-xs font-bold">Asesor</small>
+                                    <span class="text-md text-black font-medium">
+                                        {{ item.unidadNegocioFabrica === 1 ? item.asesorMicro==''?'No
+                                        registro':item.asesorMicro : item.asesorCredito == '' ? 'No
+                                        registro':item.asesorCredito}}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="px-2 pb-0 pt-1">
                                 <div class="flex justify-center items-center">
                                     <div
                                         class="bg-yellowCustom flex font-bold font-sans items-center justify-center px-2 py-1 rounded-md text-center text-white text-xs tracking-widest">
@@ -98,45 +139,168 @@
                                     </div>
                                 </div>
                             </td>
+                            <div class="absolute right-0 top-0">
+                                <button class="icon-size-8 flex justify-center items-center rounded-full" mat-menu-item
+                                    (click)="!!item.verDetalles = !item.verDetalles">
+                                    <mat-icon svgIcon="heroicons_outline:eye" class="mr-0"></mat-icon>
+                                </button>
 
+                            </div>
                         </tr>
-                        <tr class="text-gray-700 border-t border-b ">
-                            <td class="px-2  pb-1 pt-1">
-                                <div class="flex flex-column ">
+                        <tr *ngIf="item.verDetalles" class="text-gray-700 border-t border-b ">
+                            <td colspan="100%" class=" pb-1 pt-1">
+                                <div class="flex gap-10 py-2 justify-center w-full items-center bg-gray-100">
+                                    <div class="flex flex-column ">
 
-                                    <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                        matTooltip="Agencia">
-                                        <mat-icon class="icon-size-3"
-                                            svgIcon="heroicons_outline:location-marker"></mat-icon>
-                                        {{ item.agencia}}
-                                    </span>
-                                    <ng-container>
                                         <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                            matTooltip="Asesor Comercial">
+                                            matTooltip="Agencia">
                                             <mat-icon class="icon-size-3"
-                                                svgIcon="heroicons_solid:user"></mat-icon>
-                                            {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                                svgIcon="heroicons_outline:location-marker"></mat-icon>
+                                            {{ item.agencia}}
                                         </span>
-                                    </ng-container>
-                                    <ng-container>
-                                        <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                            matTooltip="Asesor fábrica">
-                                            <mat-icon class="icon-size-3 text-blue-500"
-                                                svgIcon="heroicons_solid:user"></mat-icon>
-                                            {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
-                                        </span>
-                                    </ng-container>
-                                    <ng-container *ngIf="item.unidadNegocioFabrica === 1">
-                                        <span class="text-xs text-black font-medium" matTooltipPosition="right"
-                                            matTooltip="Asesor micro">
-                                            <mat-icon class="icon-size-3 text-green-500"
-                                                svgIcon="heroicons_solid:user"></mat-icon>
-                                            {{ item.asesorMicro==''?'No registro':item.asesorMicro}}
-                                        </span>
-                                    </ng-container>
+                                        <ng-container>
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor Comercial">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorComercial==''?'No registra':item.asesorComercial}}
+                                            </span>
+                                        </ng-container>
+                                        <ng-container>
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor fábrica">
+                                                <mat-icon class="icon-size-3 text-blue-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorCredito==''?'No registra':item.asesorCredito}}
+                                            </span>
+                                        </ng-container>
+                                        <ng-container *ngIf="item.unidadNegocioFabrica === 1">
+                                            <span class="text-xs text-black font-medium" matTooltipPosition="right"
+                                                matTooltip="Asesor micro">
+                                                <mat-icon class="icon-size-3 text-green-500"
+                                                    svgIcon="heroicons_solid:user"></mat-icon>
+                                                {{ item.asesorMicro==''?'No registro':item.asesorMicro}}
+                                            </span>
+                                        </ng-container>
+                                    </div>
+                                    <div class="flex w-24">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">
+                                                Fecha solicitud
+                                            </small>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                </mat-icon>
+
+                                                {{ cambiarFecha(item.fechaEmision) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                </mat-icon>
+                                                {{ cambiarHora(item.fechaEmision) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon [ngStyle]="{'color': item.diasTotalesCreditoColor}"
+                                                    class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                </mat-icon>
+                                                {{item.diasTotalesCredito}} horas
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex w-24">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">
+                                                Fecha Fábrica
+                                            </small>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.fechaIngresoFabrica) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                </mat-icon>
+                                                {{ cambiarHora(item.fechaIngresoFabrica) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"
+                                                    class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                </mat-icon>
+                                                {{item.diasEnFabrica}} horas
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex w-24">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">
+                                                Fecha agenda
+                                            </small>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.fechaIngresoAgendaActual) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                </mat-icon>
+                                                {{ cambiarHora(item.fechaIngresoAgendaActual) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
+                                                    class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                                </mat-icon>
+                                                {{item.diasEnAgendaActual}} horas
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="flex w-24">
+                                        <div class="flex flex-column ">
+                                            <small class="text-accent-600 text-xs">
+                                                Reprogramación
+                                            </small>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                </mat-icon>
+                                                {{ cambiarFecha(item.fechaReprogramacion) }}
+                                            </span>
+                                            <span class="text-xs text-black font-medium">
+                                                <mat-icon class="icon-size-3" svgIcon="mat_outline:access_time">
+                                                </mat-icon>
+                                                {{ cambiarHora(item.fechaReprogramacion) }}
+                                            </span>
+
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                                            [ngClass]="item.numeroIntentos<=2?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                            <small class="text-xs">Nº Intentos</small>
+                                            <span class="text-current">
+                                                {{ item.numeroIntentos}}
+                                            </span>
+                                            <small class="text-xs">{{
+                                                cambiarFecha(item.fechaUltimaReprogramacion)}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <div class="flex-column flex items-center justify-center px-2 h-14 rounded  "
+                                            [ngClass]="item.cantidadDevolucion<=0?'bg-green-100 text-green-800 ':'bg-red-100 text-red-800 '">
+                                            <small class="text-xs">Devolución</small>
+                                            <span class="text-current">
+                                                {{ item.cantidadDevolucion}}
+                                            </span>
+                                            <small class="text-xs">{{ cambiarFecha(item.fechaDevolucion)}}</small>
+                                        </div>
+                                        <button mat-icon-button matTooltip="ver devolución"
+                                            *ngIf="item.cantidadDevolucion>0"
+                                            (click)="item.mostrarDevolucion=item.mostrarDevolucion=='v'?'f':'v'">
+                                            <mat-icon
+                                                [svgIcon]="item.mostrarDevolucion=='v'?'heroicons_solid:chevron-up':'heroicons_solid:chevron-down'">
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
-                            <td class="px-2 pb-1 pt-1">
+                            <!-- <td class="px-2 pb-1 pt-1">
                                 <div class="flex w-24">
                                     <div class="flex flex-column ">
                                         <small class="text-accent-600 text-xs">
@@ -179,8 +343,8 @@
                                             {{ cambiarHora(item.fechaIngresoFabrica) }}
                                         </span>
                                         <span class="text-xs text-black font-medium">
-                                            <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}"
-                                                class="icon-size-3" svgIcon="mat_solid:radio_button_checked">
+                                            <mat-icon [ngStyle]="{'color': item.diasEnFabricaColor}" class="icon-size-3"
+                                                svgIcon="mat_solid:radio_button_checked">
                                             </mat-icon>
                                             {{item.diasEnFabrica}} horas
                                         </span>
@@ -263,13 +427,12 @@
                                         </mat-icon>
                                     </button>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         <tr *ngIf="item.mostrarDevolucion=='v'">
                             <td class="p-3 bg-hover" colspan="10">
                                 <div class="flex justify-between">
-                                    <div
-                                        class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
+                                    <div class="relative flex border-t w-100 first:border-0 bg-white  text-md mr-10">
                                         <!-- Item content -->
                                         <div
                                             class="flex flex-col  justify-start w-full py-6 pr-4 pl-5 border-l-4 border-transparent">
@@ -289,8 +452,7 @@
                                                 </div>
 
                                                 <!-- Date -->
-                                                <div
-                                                    class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                <div class="ml-auto text-xs text-right whitespace-nowrap text-hint">
                                                     {{ cambiarFecha(item.fechaDevolucion) }}
                                                 </div>
                                             </div>
@@ -332,8 +494,7 @@
                                                 </div>
 
                                                 <!-- Date -->
-                                                <div
-                                                    class="ml-auto text-xs text-right whitespace-nowrap text-hint">
+                                                <div class="ml-auto text-xs text-right whitespace-nowrap text-hint">
                                                     {{ cambiarFecha(item.fechaReintegroDevolucion) }}
                                                 </div>
                                             </div>
