@@ -10,6 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
 import { PermisosService } from 'app/core/services/permisos.service';
+import { FabricaCreditoService } from 'app/core/services/fabrica-credito.service';
 // import { format} from 'date-fns'
 @Component({
   selector: 'app-form-dialog-negociacion',
@@ -25,6 +26,8 @@ export class FormDialogNegociacionComponent implements OnInit {
   manana: any;
   public trazabilidad:boolean=false;
 
+  entidadOptionsNueva: any[] = [];
+
   constructor(
     private fb: FormBuilder,
     private _dialog: MatDialogRef<FormDialogComentariosComponent>,
@@ -32,7 +35,8 @@ export class FormDialogNegociacionComponent implements OnInit {
     public utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private comentariosService: ComentariosService,
-    private _permisosService: PermisosService
+    private _permisosService: PermisosService,
+    private _fabricaService: FabricaCreditoService
   ) { }
 
   ngOnInit(): void {
@@ -52,6 +56,7 @@ export class FormDialogNegociacionComponent implements OnInit {
     this.form.controls.valorRealCartera.setValue(this.data.item.Detalle.valorRealCartera)
     this.form.controls.comentarioNegociacion.setValue(this.data.item.Detalle.comentarioNegociacion)
     this.form.controls.fechaLimitePago.setValue(this.data.item.Detalle.fechaLimitePago)
+
 
     this.calcularDescuento();
     this.trazabilidad = this._permisosService.permisoPorModuleTrazabilidad()
@@ -183,7 +188,13 @@ export class FormDialogNegociacionComponent implements OnInit {
         fechaLimitePago: ['', [Validators.required]],
         valorRealCartera: ['', [Validators.required]],
         comentarioNegociacion: [''],
+        nombreEntidadNueva: ['', Validators.required],
+        nit: ['',Validators.required]
       });
+
+      this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
+        this.getEntidadesObservableNueva(entidad);
+    })
     }
 
   }
@@ -204,6 +215,8 @@ export class FormDialogNegociacionComponent implements OnInit {
           this.onCerrar();
           Swal.close();
         }, 1000);
+      }, err => {
+        Swal.fire('Error', err.error.msg, 'error')
       });
   }
 
@@ -214,7 +227,24 @@ export class FormDialogNegociacionComponent implements OnInit {
     return (this.form.controls.comentarioNegociacion.errors?.minlength);
   }
 
+  getEntidadesObservableNueva(entidad: string) {
+    if(entidad.length > 0){
+        this._fabricaService.carteraEntidadNombres({
+            entidad
+        }).subscribe(({ data }) => {
+            this.entidadOptionsNueva = data
+            this.getNitApi()
+        })
+    }
+}
 
+getNitApi(){
+    console.log('length', this.entidadOptionsNueva.length);
+
+    if(this.entidadOptionsNueva.length === 1){
+        this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)
+    }
+}
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
