@@ -115,7 +115,7 @@ export class GridCarteraComponent implements OnInit {
           // Swal.fire('Completado', 'A', 'success');
           this.getListadoCartera(Number(this.numeroSolicitud));
         } else {
-          Swal.fire('Error', res.data.resultado, 'error');
+          Swal.fire('Error', res.data.respuesta, 'error');
         }
       });
 
@@ -195,7 +195,7 @@ export class GridCarteraComponent implements OnInit {
     });
   }
 
-  public cambioEstadoNegoiciacion(event, item) {
+  public cambioEstadoNegociacion(event, item) {
     if (event !== '') {
       const dialogRef = this._dialog.open(FormDialogNegociacionComponent, {
         minWidth: '30%',

@@ -85,13 +85,13 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             this.form.controls.estadoCuenta.setValue(this.data.item.estadoCuenta);
             this.form.controls.idObligacion.setValue(Number(this.data.item.id.toString()));
             this.form.controls.codigoEstado.setValue(this.data.item.codigoEstado);
-            // this.form.controls.nombreEntidadNueva.setValue(true)
+            this.form.controls.nombreEntidadNueva.setValue(this.data.item.nombreEntidadNueva ? this.data.item.nombreEntidadNueva: this.data.item.entidad)
 
              this.form.get('entidad').valueChanges.subscribe(entidad => {
                  this.getEntidadesObservable(entidad);
              })
 
-            this.form.get('entidadGiro').valueChanges.subscribe(entidad => {
+            this.form.get('nombreEntidadNueva').valueChanges.subscribe(entidad => {
                 this.getEntidadesObservableNueva(entidad);
             })
 
@@ -270,6 +270,7 @@ export class FormDialogCarteraComprarComponent implements OnInit, OnDestroy {
             alDia: Boolean,
             entidadGiro: [''],
             nuevaEntidad: true,
+            nombreEntidadNueva: ['', Validators.required],
             gestionCartera: 'COM'
 
 

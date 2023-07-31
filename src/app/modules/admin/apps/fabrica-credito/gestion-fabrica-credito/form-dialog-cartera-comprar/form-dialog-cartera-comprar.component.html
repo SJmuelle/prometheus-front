@@ -10,7 +10,7 @@
             <mat-form-field class="w-full ml-2 fuse-mat-dense">
               <mat-label>Entidad financiera</mat-label>
               <input type="text" placeholder="" matInput [formControlName]="'entidad'"
-              [matAutocomplete]="entidades"
+              [matAutocomplete]="entidades" readonly
               >
             </mat-form-field>
             <mat-autocomplete #entidades="matAutocomplete">
