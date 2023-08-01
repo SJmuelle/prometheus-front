@@ -26,7 +26,7 @@ interface IMenuFunctions {
   nameFunction: string,
   callback?: Function,
   iconFuseTemplate?: string
-  iconAngularMateriañ?: string
+  iconAngularMaterial?: string
   children: boolean
   arrayChildren?: Ichildren
 }
@@ -78,6 +78,10 @@ export interface IoptionTable {
    * se especifica si es de tipo texto o llama una funcion
    */
   typeField: 'text' | 'function' | 'statusStyle' | 'mat-menu',
+  /**
+   * se utiliza en caso de querer formatear el texto
+   */
+  classTailwind?: string
   /**
    * se utiliza en caso de querer formatear el texto
    */
@@ -135,21 +139,22 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   public optionColumns: any[] = []
   public arregloTotales: any[] = []
   public copyTableOptions: any[] = []
+  public footerSpan: any = { arrayFooter: [], span: '0' }
   private susbcripcion$: Subscription = new Subscription();
   private unsuscribre$: Subject<void> = new Subject<void>();
 
 
 
-  constructor(private _filterTable: TableDataFilterService, private paginatorIntl: MatPaginatorIntl,) { this.paginatorIntl.itemsPerPageLabel = 'Items por pagina : '; }
+  constructor(private _filterTable: TableDataFilterService, private paginatorIntl: MatPaginatorIntl,) { this.paginatorIntl.itemsPerPageLabel = 'Items por página : '; }
+
   ngAfterViewInit(): void {
     this.dataCopy = this.allDataRows;
     this.dataSource = new MatTableDataSource(this.allDataRows);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    this.copyTableOptions = this.dataOptionTable
-
   }
+
   ngOnDestroy(): void {
     this.unsuscribre$.next();
     this.unsuscribre$.complete();
@@ -160,18 +165,28 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
   ngOnChanges(changes: SimpleChanges): void {
 
     const values: string[] = [...this.dataOptionTable.map((item) => {
-      item.view = true
+      if (item.view === undefined) {
+        item.view = true
+      }
+
+      // console.log(item.view)
       item.disable = false
       item.footerSum = item.footerSum || false
       item.valueFooter = ''
-      if (item.typeField !== 'text') {
+      if (item.typeField !== 'text' || item.footerSum) {
         item.disable = true
       }
-      if (item.view) {
-        return item.name
-      }
+      if (item.view) { return item.name }
+
     })]
-    this.dataColumn = [...values]
+
+    const noUndefined: string[] = []
+    values.forEach((item) => {
+      if (item !== undefined) { noUndefined.push(item) }
+    })
+
+    this.dataColumn = [...noUndefined]
+    // console.log(this.dataColumn)
 
 
 
@@ -187,25 +202,61 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     this.dataOptionTable[0].valueFooter = 'Totales'
 
     this.calculateFooterSum()
+    this.calculateFooter();
 
+
+  }
+
+  public calculateFooter(): any {
+    const [firstValue] = this.dataColumn
+    const arrayFooter = [firstValue]
+
+
+    this.dataOptionTable.forEach((item, index) => {
+      // console.log(item?.footerSum)
+      if (item?.footerSum) {
+        arrayFooter.push(item.name)
+      }
+    })
+
+    const [fistvalues, secondValues] = arrayFooter
+    const span = this.dataColumn.indexOf(secondValues)
+
+    const data = {
+      arrayFooter,
+      span: span?.toString()
+    }
+    this.footerSpan = { ...data }
 
   }
 
   ngOnInit(): void {
     // this.dataColumn = [...this.dataOptionTable.map(({ name }) => name)]
     const values: string[] = [...this.dataOptionTable.map((item) => {
-      item.view = true
+      // item.view = item?.view || true
+
+      if (item.view === undefined) {
+        item.view = true
+      }
+
+      // console.log(item.view)
       item.disable = false
       item.footerSum = item.footerSum || false
       item.valueFooter = ''
-      if (item.typeField !== 'text') {
+      if (item.typeField !== 'text' || item.footerSum) {
         item.disable = true
       }
-      if (item.view) {
-        return item.name
-      }
+      if (item.view) { return item.name }
+
     })]
-    this.dataColumn = [...values]
+
+    const noUndefined: string[] = []
+    values.forEach((item) => {
+      if (item !== undefined) { noUndefined.push(item) }
+    })
+
+    // console.log(values)
+    this.dataColumn = [...noUndefined]
 
 
     this.listenObservable();
@@ -235,7 +286,7 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     this.dataOptionTable[0].valueFooter = 'Totales'
 
     this.calculateFooterSum()
-
+    this.calculateFooter();
 
 
 
@@ -273,6 +324,8 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
 
   public configColumns(name, evento): void {
 
+    // console.log(name, evento)
+
 
     const values: string[] = [...this.dataOptionTable.map((item) => {
       if (item.view) {
@@ -282,25 +335,20 @@ export class TableComponent implements OnInit, OnChanges, OnDestroy, AfterViewIn
     const arregloFiltrado: string[] = values.filter((elemento: string | undefined) => elemento !== undefined);
     this.dataColumn = [...arregloFiltrado]
 
+    const { length } = this.footerSpan.arrayFooter
 
-    // console.log(this.dataOptionTable)
+    this.footerSpan.span = this.dataColumn.length - (length - 1)
+
+
   }
 
-  public getMatMenu(value: string): string {
-    console.log(value)
-    return 'indexMatMenu1'
-  }
+
 
   public actionSelectRow(row): void {
     // console.log(row);
 
   }
 
-
-
-  public action(row): void {
-    this.Funtions[0].callback();
-  }
 
   pageEvent(event): void {
     this.page_size = event.pageSize

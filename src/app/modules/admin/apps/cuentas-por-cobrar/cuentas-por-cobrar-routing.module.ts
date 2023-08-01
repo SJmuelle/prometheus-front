@@ -9,9 +9,12 @@ const routes: Routes = [{
 },
 {
   path: 'seguimiento-cartera',
-  loadChildren: () => SeguimientoCarteraModule
+  loadChildren: () => import('./seguimiento-cartera/seguimiento-cartera.module').then((m) => m.SeguimientoCarteraModule)
 },
-
+{
+  path: '',
+  redirectTo: 'seguimiento-cartera'
+},
 ];
 
 @NgModule({

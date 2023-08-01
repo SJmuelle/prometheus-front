@@ -21,7 +21,12 @@ export class DataTablePipe implements PipeTransform {
     number: (value: any) => value ? `$ ${new Intl.NumberFormat('es-ES', {
       style: 'decimal',
       minimumFractionDigits: 0, maximumFractionDigits: 0,
-    }).format(Math.trunc(value))}` : '$ -',
+    }).format(Math.trunc(value))}` : '$ 0',
+
+    document: (value: any) => value ? `${new Intl.NumberFormat('es-ES', {
+      style: 'decimal',
+      minimumFractionDigits: 0, maximumFractionDigits: 0,
+    }).format(Math.trunc(value))}` : '0',
 
     percentage: (value: any = '---') => `${value}%`,
 

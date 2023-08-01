@@ -48,54 +48,54 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
 
   public detalleCartera: IoptionTable[] = [
     { name: 'negocio', text: 'Negocio', typeField: 'text', },
-    { name: 'cedula', text: 'Cedula', typeField: 'text' },
-    { name: 'nombreCliente', text: 'Cliente', typeField: 'text' },
+    { name: 'cedula', text: 'Cedula', typeField: 'text', view: false },
+    { name: 'nombreCliente', text: 'Cliente', typeField: 'text', view: false },
     { name: 'cuota', text: 'Cuota', typeField: 'text' },
     { name: 'fechaVencimiento', text: 'Fecha vencimiento', typeField: 'text' },
     { name: 'diasVencidoHoy', text: 'Dias de vencimiento hoy', typeField: 'text' },
     { name: 'vencimientoMayor', text: 'Vencimiento mayor', typeField: 'text' },
     { name: 'diasVencidos', text: 'Dias vencidos', typeField: 'text' },
     { name: 'status', text: 'Estado', typeField: 'text' },
-    { name: 'valorAsignado', text: 'Valor asignado', typeField: 'text', pipeName: 'number', footerSum: true },
-    { name: 'debidoCobrar', text: 'Debido cobrar', typeField: 'text', pipeName: 'number', footerSum: true },
-    { name: 'interesMora', text: 'Interes de mora', typeField: 'text', pipeName: 'number', footerSum: true },
-    { name: 'gastoCobranza', text: 'Gasto cobranza', typeField: 'text', pipeName: 'number', footerSum: true },
-    { name: 'totalesParciales', text: 'Total parciales', typeField: 'text', pipeName: 'number', footerSum: true },
+    { name: 'valorAsignado', text: 'Valor asignado', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
+    { name: 'debidoCobrar', text: 'Debido cobrar', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
+    { name: 'interesMora', text: 'Interes de mora', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
+    { name: 'gastoCobranza', text: 'Gasto cobranza', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
+    { name: 'totalesParciales', text: 'Total parciales', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
   ]
 
   public visualizarPagos: IoptionTable[] = [
     { name: 'negocio', text: 'Negocio', typeField: 'text' },
-    { name: 'cedula', text: 'Cedula', typeField: 'text' },
-    { name: 'nombreCliente', text: 'Cliente', typeField: 'text' },
+    { name: 'cedula', text: 'Cédula', typeField: 'text', view: false },
+    { name: 'nombreCliente', text: 'Cliente', typeField: 'text', view: false },
     { name: 'descripcionIngreso', text: 'Descripción', typeField: 'text' },
-    { name: 'valorIngreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', },
     { name: 'ingreso', text: 'Ingreso', typeField: 'text' },
     { name: 'cuota', text: 'Cuota', typeField: 'text' },
     { name: 'fechaIngreso', text: 'Fecha ingreso', typeField: 'text', pipeName: 'date' },
     { name: 'fechaConsignacion', text: 'Fecha consignación', typeField: 'text', pipeName: 'date' },
+    { name: 'branchCode', text: 'Código banco', typeField: 'text' },
     { name: 'bankAccountNo', text: 'Cuenta banco', typeField: 'text' },
-    { name: 'branchCode', text: 'Codigo banco', typeField: 'text' },
+    { name: 'valorIngreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
   ]
 
   public visualizarGestiones: IoptionTable[] = [
     { name: 'observacion', text: 'Observación', typeField: 'text' },
-    { name: 'tipoGestion', text: 'Tipo de Gestión', typeField: 'text' },
-    { name: 'resultadoGestion', text: 'Resultado Gestión', typeField: 'text' },
-    { name: 'proAccion', text: 'Proxima Acción', typeField: 'text' },
-    { name: 'fechaProxGestion', text: 'Fecha Proxima Acción', typeField: 'text', },
-    { name: 'fechaCreacion', text: 'Fecha Creación', typeField: 'text', pipeName: 'date' },
-    { name: 'usuarioCreacion', text: 'Usuario Creador', typeField: 'text' },
+    { name: 'tipoGestion', text: 'Tipo de gestión', typeField: 'text' },
+    { name: 'resultadoGestion', text: 'Resultado gestión', typeField: 'text' },
+    { name: 'proAccion', text: 'Próxima acción', typeField: 'text' },
+    { name: 'fechaProxGestion', text: 'Fecha próxima acción', typeField: 'text', },
+    { name: 'fechaCreacion', text: 'Fecha creación', typeField: 'text', },
+    { name: 'usuarioCreacion', text: 'Usuario creador', typeField: 'text' },
   ]
 
   public visualizarCompromisosPago: IoptionTable[] = [
     { name: 'observacion', text: 'Observación', typeField: 'text' },
-    { name: 'valoraPagar', text: 'Valor a pagar', typeField: 'text', pipeName: 'number' },
-    { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text', pipeName: 'date' },
+    { name: 'fechaaPagar', text: 'Fecha a pagar', typeField: 'text' },
     { name: 'direccion', text: 'Dirección', typeField: 'text' },
     { name: 'barrio', text: 'Barrio', typeField: 'text' },
     { name: 'ciudad', text: 'Ciudad', typeField: 'text' },
-    { name: 'fechaCreacion', text: 'Fecha creación', typeField: 'text', pipeName: 'date' },
-    { name: 'usuarioCreacion', text: 'Usuario creador', typeField: 'text' },
+    { name: 'fechaCreacion', text: 'Fecha creación', typeField: 'text', },
+    { name: 'usuarioCreacion', text: 'Usuario creador', typeField: 'text', classTailwind: 'whitespace-pre' },
+    { name: 'valoraPagar', text: 'Valor a pagar', typeField: 'text', pipeName: 'number', classTailwind: 'whitespace-pre text-end', footerSum: true },
 
   ]
 
@@ -413,7 +413,7 @@ export class ModalDetailsCarteraClienteComponent implements OnInit, AfterViewIni
     this._carteraClienteService.verDetallePagoCliente(detallePagos).pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (resp) => {
         const data = {
-          viewModal: 'Detalle Pagos',
+          viewModal: 'Detalle de pagos',
           valuesData: resp?.data || [],
           width: '60%'
         }

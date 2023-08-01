@@ -16,17 +16,17 @@ export class ModalSubDetalleClienteComponent implements OnInit, OnDestroy {
   public tittleModal: string = '';
   public dataClient: any = null
   public dataOptionTable: IoptionTable[] = [
-    { name: 'negocio', text: 'Negocio', typeField: 'text' },
-    { name: 'cedula', text: 'Cedula', typeField: 'text' },
-    { name: 'nombre_cliente', text: 'Cliente', typeField: 'text' },
-    { name: 'descripcion_ingreso', text: 'Descripción', typeField: 'text' },
     { name: 'ingreso', text: 'Ingreso', typeField: 'text' },
-    { name: 'valor_ingreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', footerSum: true },
+    { name: 'cedula', text: 'Cédula', typeField: 'text', view: false },
+    { name: 'nombre_cliente', text: 'Cliente', typeField: 'text', view: false },
+    { name: 'cuota', text: 'Cuota', typeField: 'text' },
+    { name: 'branch_code', text: 'Código banco', typeField: 'text' },
+    { name: 'bank_account_no', text: 'Cuenta banco', typeField: 'text' },
     { name: 'fecha_ingreso', text: 'Fecha ingreso', typeField: 'text', pipeName: 'date' },
     { name: 'fecha_consignacion', text: 'Fecha consignación', typeField: 'text', pipeName: 'date' },
-    { name: 'cuota', text: 'Cuota', typeField: 'text' },
-    { name: 'branch_code', text: 'Codigo banco', typeField: 'text' },
-    { name: 'bank_account_no', text: 'Cuenta banco', typeField: 'text' },
+    { name: 'descripcion_ingreso', text: 'Descripción', typeField: 'text' },
+    { name: 'negocio', text: 'Negocio', typeField: 'text' },
+    { name: 'valor_ingreso', text: 'Valor ingreso', typeField: 'text', pipeName: 'number', footerSum: true, classTailwind: 'text-end' },
 
   ]
   public formDireccion: FormGroup = new FormGroup({});
@@ -91,8 +91,8 @@ export class ModalSubDetalleClienteComponent implements OnInit, OnDestroy {
     const valorTwoNumeroVia = this.formDireccion.controls['valorNumero2'].value || '';
     const complementto = this.formDireccion.controls['complemento'].value || '';
     const direccion = `${viaPrincipal} ${valorViaPrincipal} ${numeroVia} ${valorOneNumeroVia} ${valorTwoNumeroVia} ${complementto}`
-    this.formDireccion.controls['direccion'].setValue(direccion)
-    return direccion
+    this.formDireccion.controls['direccion'].setValue(direccion?.trim())
+    return direccion?.trim()
   }
 
   public onsaveDireccion(): void {
@@ -123,6 +123,7 @@ export class ModalSubDetalleClienteComponent implements OnInit, OnDestroy {
     this.suscription$ = this._carteraServices.dataCliente$.pipe(takeUntil(this.unsuscribe$)).subscribe({
       next: (data) => {
         this.dataClient = data
+        // console.log('data cliente', this.dataClient);
         this.allDataRow = this.data?.valuesData || []
 
       },

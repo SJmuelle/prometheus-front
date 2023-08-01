@@ -40,7 +40,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { MatListModule } from '@angular/material/list';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -82,7 +82,8 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateMod
                 MatListModule,
                 NgxMatDatetimePickerModule,
                 NgxMatTimepickerModule,
-                NgxMatNativeDateModule
+                NgxMatNativeDateModule,
+                MatAutocompleteModule
 
 
 
@@ -128,6 +129,7 @@ import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateMod
                 NgxMatDatetimePickerModule,
                 NgxMatTimepickerModule,
                 NgxMatNativeDateModule,
+                MatAutocompleteModule
 
 
 

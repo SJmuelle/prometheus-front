@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AppSettingsService } from '../app-configs/app-settings.service';
 
 const values: any = {
@@ -14,7 +14,7 @@ export class CarteraClientesService {
 
   public dataCliente$: BehaviorSubject<any> = new BehaviorSubject(values)
   public direccionCliente$: BehaviorSubject<string> = new BehaviorSubject('')
-
+  public reloadData$: Subject<any[]> = new Subject();
 
   constructor(private _http: HttpClient, private _appSettings: AppSettingsService) { }
 
@@ -211,7 +211,34 @@ export class CarteraClientesService {
     return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarNomenclaturas}`)
   }
 
+  /**
+* 
+* @returns listar periodos fotos de la cartera del cliente
+*/
+  public listarBarrios(ciudad: string): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.get(`${this._appSettings.seguimientoCarteraClientes.url.listarBarrios}/${ciudad}`)
+  }
 
+  /**
+* 
+* @returns listar periodos fotos de la cartera del cliente
+*/
+  public buscarClienteHistorico(data: any): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.post(`${this._appSettings.seguimientoCarteraClientes.url.buscarClienteHistorico}`, { ...data })
+  }
+
+  /**
+* 
+* @returns listar periodos fotos de la cartera del cliente
+*/
+  public verDetalleCarteraHistorico(data: any): Observable<any> {
+    // api-fintra/api/generic/qry/cartera-listar-unidad-negocio
+    return this._http.post(`${this._appSettings.seguimientoCarteraClientes.url.verDetalleCarteraHistorico}`, { ...data })
+  }
+
+  //generic/cartera-cargar-detalle-cliente-historico
   //generic/qry/nomenclarturas
   //generic/cartera-actualizar-info-cliente
 

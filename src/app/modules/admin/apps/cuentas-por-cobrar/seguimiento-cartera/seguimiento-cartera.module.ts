@@ -8,6 +8,7 @@ import { ModalDetailsCarteraClienteComponent } from './modal-details-cartera-cli
 import { ModalActualizarClienteComponent } from './modal-actualizar-cliente/modal-actualizar-cliente/modal-actualizar-cliente.component';
 import { ModalSubDetalleClienteComponent } from './modal-sub-detalle-cliente/modal-sub-detalle-cliente/modal-sub-detalle-cliente.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { AplicarPagosCarteraClienteComponent } from './seguimiento-cartera-cliente/aplicar-pagos-cartera-cliente/aplicar-pagos-cartera-cliente/aplicar-pagos-cartera-cliente.component';
 
 
 
@@ -20,7 +21,8 @@ import { NgxMaskModule } from 'ngx-mask';
     SeguimientoCarteraClienteComponent,
     ModalDetailsCarteraClienteComponent,
     ModalActualizarClienteComponent,
-    ModalSubDetalleClienteComponent
+    ModalSubDetalleClienteComponent,
+    AplicarPagosCarteraClienteComponent
   ],
   imports: [
     CommonModule,

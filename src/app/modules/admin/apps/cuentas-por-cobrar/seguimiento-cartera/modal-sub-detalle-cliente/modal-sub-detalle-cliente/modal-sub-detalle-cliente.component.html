@@ -2,10 +2,11 @@
 
     <div *ngIf="tittleModal!=='Seleccionar Dirección'" class="w-full h-auto flex flex-col gap-4">
         <div class="w-full border-2  rounded-2xl p-3 shadow-md">
-            <div class="border-l-8 border-green-400 h-15">
+            <div class="border-l-8 border-green-400 min-h-15">
 
                 <h4 class="  pl-4">{{tittleModal}}</h4>
-                <h5 class="  pl-4">{{dataClient?.nombreCliente | dataTable:'titleCase'}}</h5>
+                <h5 class="  pl-4">{{ dataClient?.nombreCliente | dataTable: 'upperCase' }} - CC {{ dataClient?.cedula
+                    | dataTable:'document'}}</h5>
 
             </div>
 

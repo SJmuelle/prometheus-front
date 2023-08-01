@@ -18,6 +18,7 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
   public formEditClient: FormGroup = new FormGroup({});
   public dapartamentos: any[] = [];
   public ciudades: any[] = []
+  public barrios: any[] = []
   private unsuscribe$: Subject<any> = new Subject<any>();
   private suscription$: Subscription;
   public infoTitulo: IinfoTitulo = { titulo: 'Seguimiento cartera clientes', subtitulo: 'Realiza los seguimientos a la cartera de los clientes' }
@@ -38,6 +39,7 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log('edit', this.data)
     this.initForm()
 
     const tittle = {
@@ -86,10 +88,40 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
       error: (e) => { this._sweetAlertService.alertError() }
     })
 
+    this._carteraClienteService.listarBarrios(this.data.valuesData.ciudad).pipe(takeUntil(this.unsuscribe$)).subscribe({
+      next: (resp) => {
+        this.barrios = resp?.data || []
+      },
+      error: (e) => {
+        this._sweetAlertService.alertError();
+      }
+    })
+
   }
 
   public closeModal(): void {
     this._dialogRef.close();
+  }
+
+  public filteredOptions(): any[] {
+    const filter = this.formEditClient.controls['barrio'].value?.toLowerCase() || '';
+    return this.barrios.filter((item) => item.barrio?.toLowerCase().includes(filter))
+  }
+
+  public resetBarrio(): void {
+    this.formEditClient.controls['barrio'].setValue(null);
+    const { ciudad } = this.formEditClient.value
+    console.log('ciudad', ciudad);
+    this._carteraClienteService.listarBarrios(ciudad).pipe(takeUntil(this.unsuscribe$)).subscribe({
+      next: (resp) => {
+        this.barrios = resp?.data || []
+      },
+      error: (e) => {
+        this._sweetAlertService.alertError();
+      }
+    })
+
+    this.formEditClient.controls['barrio'].markAsUntouched();
   }
 
   public onSave(): void {
@@ -107,7 +139,7 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
 
       this._carteraClienteService.guardarInformacionCliente(data).pipe(takeUntil(this.unsuscribe$)).subscribe({
         next: (res) => {
-          this._sweetAlertService.alertSuccess();
+          this._carteraClienteService.reloadData$.next();
           this._dialogRef.close();
         },
         error: (e) => {
@@ -135,6 +167,9 @@ export class ModalActualizarClienteComponent implements OnInit, OnDestroy {
       },
       error: (e) => { this._sweetAlertService.alertError() }
     })
+
+    this.resetBarrio();
+
   }
 
   public openDiag(): void {

@@ -561,6 +561,10 @@ export class AppSettingsService {
             guardarInformacionCliente: EndPoints.uri('/generic/cartera-actualizar-info-cliente'),
             verDetallePagoCliente: EndPoints.uri('/generic/cartera-visualizar-pagos-detalle-cliente'),
             listarNomenclaturas: EndPoints.uri('/generic/qry/nomenclarturas'),
+            listarBarrios: EndPoints.uri('/generic/qry/listar-barrios'),
+            buscarClienteHistorico: EndPoints.uri('/generic/cartera-buscar-cliente-historico'),
+            verDetalleCarteraHistorico: EndPoints.uri('/generic/cartera-cargar-detalle-cliente-historico')
+
         }
     };
 }
