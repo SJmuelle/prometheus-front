@@ -5,8 +5,9 @@ import { ComentariosService } from 'app/core/services/comentarios.service';
 import { ListadoCarteraService } from 'app/core/services/listadoCartera.service';
 import { UtilityService } from 'app/resources/services/utility.service';
 import moment from 'moment';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable, of,  } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { FormDialogComentariosComponent } from '../form-dialog-comentarios/form-dialog-comentarios.component';
 import { PermisosService } from 'app/core/services/permisos.service';
@@ -203,23 +204,31 @@ export class FormDialogNegociacionComponent implements OnInit {
 
   private postGuardado(data: any): void {
     Swal.fire({ title: 'Cargando', html: 'Guardando información', timer: 500000, didOpen: () => { Swal.showLoading(); }, }).then((result) => { });
-    this._listadoCarteraService.gestionCartera(data).pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => {
+    this.confirmarNit(data.nombreEntidadNueva, data.nit).pipe(takeUntil(this.unsubscribe$)).subscribe(guardar => {
+        console.log('data', this.data);
 
-        Swal.fire('Completado', 'Se guardo con éxito el resultado de la negociación', 'success').then((resultado) => {
-          if (resultado) {
-            this.onCerrar();
-            Swal.close();
-          }
-        });
-        ;
-        setTimeout(() => {
-          this.onCerrar();
-          Swal.close();
-        }, 1000);
-      }, err => {
-        Swal.fire('Error', err.error.msg, 'error')
-      });
+        if(guardar || this.data.evento === 'NO EXITOSA'){
+            this._listadoCarteraService.gestionCartera(data).pipe(takeUntil(this.unsubscribe$))
+            .subscribe(() => {
+              Swal.fire('Completado', 'Se guardo con éxito el resultado de la negociación', 'success').then((resultado) => {
+                if (resultado) {
+                  this.onCerrar();
+                  Swal.close();
+                }
+              });
+              ;
+              setTimeout(() => {
+                this.onCerrar();
+                Swal.close();
+              }, 1000);
+            }, err => {
+              Swal.fire('Error', err.error.msg, 'error')
+            });
+        }else{
+            Swal.fire('Error', 'El nit no concuerda con la entidad financiera', 'error');
+        }
+    })
+
   }
 
   get requeridoComentario(): any {
@@ -247,6 +256,19 @@ getNitApi(){
         this.form.get('nit').setValue(this.entidadOptionsNueva[0].nitEntidad)
     }
 }
+
+confirmarNit(entidad: string, nit: string): Observable<boolean> {
+    return this._fabricaService.carteraEntidadNombres({ entidad }).pipe(
+      takeUntil(this.unsubscribe$),
+      map(({ data }) => {
+        if (data.length === 1) {
+          return nit === data[0].nitEntidad && entidad === data[0].nombreEntidad;
+        }
+        return false;
+      }),
+      catchError(() => of(false))
+    );
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.unsubscribe();
