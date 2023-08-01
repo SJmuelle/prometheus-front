@@ -32,6 +32,7 @@ import { MatListModule } from '@angular/material/list';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgxExtendedPdfViewerModule } from "ngx-extended-pdf-viewer";
 import { PdfViewerModule } from "ng2-pdf-viewer";
+import { ModalDetalleFirmaDigitalComponent } from './modal-detalle-firma-digital/modal-detalle-firma-digital/modal-detalle-firma-digital.component';
 
 
 
@@ -40,7 +41,8 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
   declarations: [
     GridAgendaFirmaDigitalComponent,
     FormActualizarInfoComponent,
-    TablaEvidenteComponent
+    TablaEvidenteComponent,
+    ModalDetalleFirmaDigitalComponent
   ],
   imports: [
     AgendaFirmaDigitalRoutingModule,
@@ -74,6 +76,7 @@ import { PdfViewerModule } from "ng2-pdf-viewer";
     PdfViewerModule,
     NgxExtendedPdfViewerModule,
     NgxMaskModule.forRoot(),
+
 
   ]
 })

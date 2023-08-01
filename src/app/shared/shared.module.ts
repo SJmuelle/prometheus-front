@@ -37,9 +37,14 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NoDataComponent } from './componentes/no-data/no-data.component'
 import { OTPComponent } from './componentes/otp/otp.component';
 import { NgxMaskModule } from 'ngx-mask';
-
-
+import { MatListModule } from '@angular/material/list';
+import { NgxMatDatetimePickerModule, NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 // import { FabricaCreditoModule } from 'app/modules/admin/apps/fabrica-credito/fabrica-credito.module';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+
+
+
 
 @NgModule({
         imports: [
@@ -73,7 +78,19 @@ import { NgxMaskModule } from 'ngx-mask';
                 // FabricaCreditoModule,
                 MatCheckboxModule,
                 NgxMaskModule.forRoot(),
-                // FabricaCreditoModule
+                // FabricaCreditoModule,
+                MatListModule,
+                NgxMatDatetimePickerModule,
+                NgxMatTimepickerModule,
+                NgxMatNativeDateModule,
+                MatAutocompleteModule
+
+
+
+
+
+
+
 
         ],
         exports: [
@@ -106,7 +123,21 @@ import { NgxMaskModule } from 'ngx-mask';
                 HeaderComponent,
                 MatProgressBarModule,
                 MatCheckboxModule,
-                OTPComponent
+                OTPComponent,
+                MatListModule,
+                MatTooltipModule,
+                NgxMatDatetimePickerModule,
+                NgxMatTimepickerModule,
+                NgxMatNativeDateModule,
+                MatAutocompleteModule
+
+
+
+
+
+
+
+
         ],
         declarations: [
                 DirectionsBasicComponent,

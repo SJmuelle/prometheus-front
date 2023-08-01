@@ -39,10 +39,29 @@
                     </div>
                 </div>
                 <span class="bg-gray-200 p-1.5 rounded-1 text-dark font-bold mt-4 mb-3">Información del crédito</span>
-                <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
-                    <mat-form-field class="mat-form-field-disabled">
-                        <mat-label>Tipo de crédito</mat-label>
+                <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3 md:mb-2 sm:mb-0">
+                     <mat-form-field class="mat-form-field-disabled">
+                        <mat-label>Tipo de cliente</mat-label>
                         <input matInput type="text" disabled [formControlName]="'tipoCredito'" [readonly]="true" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Tipo de crédito</mat-label>
+                        <mat-select [value]="'seleccione'" [formControlName]="'tipoCredito'">
+                            <mat-option disabled [value]="'seleccione'">Seleccione
+                            </mat-option>
+                            <mat-option *ngFor="
+                                    let item of dataInicial?.tiposCreditosSelect
+                                " [value]="item.codigo">
+                                {{ item.nombre }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="
+                                        form.controls.tipoCredito.errors
+                                            ?.required
+                                    ">
+                            Este campo es requerido.
+                        </mat-error>
+                        <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Destino del crédito</mat-label>
@@ -68,6 +87,17 @@
                         <input matInput type="text" mask="separator.0" thousandSeparator="."
                             [formControlName]="'valorSolicitadoWeb'" [readonly]="true" />
                     </mat-form-field>
+                    <mat-form-field >
+                        <mat-label>Categoría de sisbén</mat-label>
+                        <mat-select formControlName="categoriaSisben">
+                            <mat-option *ngFor="let sisben of dataInicial?.categoriasSisben" [value]="sisben.codigo">
+                                {{sisben.nombre}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.controls.categoriaSisben.errors?.required">
+                            Este campo es requerido.
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="grid gap-3 sm:grid-cols-2 grid-cols-1 md:grid-cols-3">
                     <mat-form-field>
@@ -78,10 +108,10 @@
                             Este campo es requerido.
                         </mat-error>
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.min">
-                            Monto mínimo de {{salarioMinimo}}
+                            Monto mínimo de {{form.controls.valorSolicitado.errors?.min.min}}
                         </mat-error>
                         <mat-error *ngIf="form.controls.valorSolicitado.errors?.max">
-                            Monto máximo de 100.000.000
+                            Monto máximo de {{form.controls.valorSolicitado.errors?.max.max}}
                         </mat-error>
                         <mat-icon class="icon-size-5" matSuffix [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </mat-form-field>

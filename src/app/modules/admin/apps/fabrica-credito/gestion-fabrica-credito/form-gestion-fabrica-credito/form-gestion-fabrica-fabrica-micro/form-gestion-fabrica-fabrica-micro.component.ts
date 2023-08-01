@@ -240,6 +240,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
         this._formularioCreditoService.cargueInicial(data).pipe(takeUntil(this.unSubscribe$)).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
+                console.log('data inicial', this.dataInicial)
                 this.antiBucle = resp.data
                 this.subscribeInput();
             }
@@ -865,7 +866,7 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             aplicaDeudorSolidario: [''],
             creditoTitularLineas: [''],
             fechaIngresoFabrica: [''],
-            tipoCredito: [''],
+            tipoCredito: ['', Validators.required],
             emision: [''],
             tipoDocumento: [''],
             identificacion: [''],
@@ -1002,7 +1003,10 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             descripcionVeredaNegocio: [''],
             autoricacionDatosPersonalClaracionAuto: [''],
             clausulaAnticurrupcionClaracionAuto: [''],
-            score: ['']
+            score: [''],
+
+            tipoCliente: [''],
+            categoriaSisben: ['', Validators.required]
         },
         );
     }
@@ -1465,7 +1469,17 @@ export class FormGestionFabricaFabricaMicroComponent implements OnInit, OnDestro
             }
         })
 
+        // fintra mujer
+        this.form.get('tipoCredito').valueChanges.subscribe((e: string) => {
+            if(e === 'FM'){
+                this.form.get('valorSolicitado').setValidators([Validators.required,
+                    Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo),
+                    Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
+            }else{
+                this.form.get('valorSolicitado').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
+            }
 
+        })
 
     }
 

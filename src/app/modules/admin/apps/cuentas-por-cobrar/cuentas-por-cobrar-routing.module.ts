@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RecaudosModule } from './recaudos/recaudos.module';
+import { SeguimientoCarteraModule } from './seguimiento-cartera/seguimiento-cartera.module';
 
 const routes: Routes = [{
   path: 'recaudos',
@@ -9,9 +10,11 @@ const routes: Routes = [{
 {
   path: 'seguimiento-cartera',
   loadChildren: () => import('./seguimiento-cartera/seguimiento-cartera.module').then((m) => m.SeguimientoCarteraModule)
-}
-
-
+},
+{
+  path: '',
+  redirectTo: 'seguimiento-cartera'
+},
 ];
 
 @NgModule({

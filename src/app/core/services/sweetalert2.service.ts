@@ -38,8 +38,8 @@ export class Sweetalert2Service {
       cancelButtonText: 'Cancelar',
       customClass: {
         actions: 'flex-row-reverse gap-2',
-        cancelButton: 'rounded-full w-26 bg-gray-500',
-        confirmButton: 'rounded-full w-26 '
+        cancelButton: 'rounded-full w-26 bg-gray-500 ring-0',
+        confirmButton: 'rounded-full w-26 ring-0'
       }
     }).then((result: any) => {
       if (result.isConfirmed) {
@@ -53,12 +53,13 @@ export class Sweetalert2Service {
 
     Swal.fire({
       allowOutsideClick: true,
+      backdrop: true,
       title: 'Correcto!',
       text: "Solicitud realizada correctamente",
       icon: 'success',
       confirmButtonColor: '#3085d6',
       customClass: {
-        confirmButton: 'rounded-full w-20 bg-blue-400 '
+        confirmButton: 'rounded-full w-20 bg-blue-400 ring-0'
       }
     })
   }
@@ -69,11 +70,12 @@ export class Sweetalert2Service {
 
     Swal.fire({
       allowOutsideClick: true,
+      backdrop: true,
       title: 'Error!',
       text: "Su solicitud no pudo ser procesada, por favor intente nuevamente",
       icon: 'error',
       customClass: {
-        confirmButton: 'rounded-full w-20 bg-gray-400 '
+        confirmButton: 'rounded-full w-20 bg-gray-400 ring-0'
       }
     })
   }
@@ -81,10 +83,11 @@ export class Sweetalert2Service {
   public alertInfo({ info = 'Lo sentimos, no se encontraron registros en la consulta' }): void {
     Swal.fire({
       allowOutsideClick: true,
+      backdrop: true,
       text: info,
       icon: 'info',
       customClass: {
-        confirmButton: 'rounded-full w-20 bg-gray-400'
+        confirmButton: 'rounded-full w-20 bg-gray-400 ring-0'
       }
     })
   }

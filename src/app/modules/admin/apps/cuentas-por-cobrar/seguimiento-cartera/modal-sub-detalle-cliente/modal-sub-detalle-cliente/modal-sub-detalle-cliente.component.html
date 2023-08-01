@@ -1,0 +1,137 @@
+<ng-container>
+
+    <div *ngIf="tittleModal!=='Seleccionar Dirección'" class="w-full h-auto flex flex-col gap-4">
+        <div class="w-full border-2  rounded-2xl p-3 shadow-md">
+            <div class="border-l-8 border-green-400 min-h-15">
+
+                <h4 class="  pl-4">{{tittleModal}}</h4>
+                <h5 class="  pl-4">{{ dataClient?.nombreCliente | dataTable: 'upperCase' }} - CC {{ dataClient?.cedula
+                    | dataTable:'document'}}</h5>
+
+            </div>
+
+        </div>
+
+        <div>
+            <app-table [allDataRows]="allDataRow" [dataOptionTable]="dataOptionTable"
+                [Options]="{footer:true}"></app-table>
+        </div>
+
+        <div class="flex flex-col sm:flex-row w-full justify-end">
+            <button mat-stroked-button type="button" class="w-full sm:w-auto" (click)="closeModal()">Cerrar</button>
+        </div>
+
+    </div>
+
+
+    <div *ngIf="tittleModal==='Seleccionar Dirección'" class="w-full h-auto flex flex-col gap-4">
+
+        <div class="w-full border-2  rounded-2xl p-3 shadow-md mb-4">
+            <div class="border-l-8 border-green-400 h-15">
+                <h4 class="  pl-4">{{tittleModal}}</h4>
+            </div>
+
+        </div>
+
+        <form [formGroup]="formDireccion" (ngSubmit)="onsaveDireccion()">
+            <div class="flex flex-col gap-2 w-full">
+
+
+
+
+                <div class="flex flex-col sm:flex-row gap-2">
+
+                    <mat-form-field class=" w-full fuse-mat-dense sm:w-2/4 sm:-mt-4 -mt-7">
+                        <mat-label>Via principal</mat-label>
+                        <mat-select (selectionChange)="changeSelects($event)" [matTooltip]=""
+                            formControlName="viaPrincipal">
+                            <mat-option *ngFor="let item of viaPrincipal"
+                                [value]="item.nombre">{{item.nombre}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense sm:-mt-4 -mt-7" style="flex-grow: 1;">
+                        <mat-label>Numero</mat-label>
+                        <input type="text" matInput formControlName="valorViaPrincipal">
+
+                    </mat-form-field>
+
+
+
+
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-2 w-full">
+
+                    <mat-form-field class="w-full fuse-mat-dense sm:w-2/4 sm:-mt-4 -mt-7">
+                        <mat-label>Numero</mat-label>
+                        <mat-select [matTooltip]="" formControlName="numero">
+                            <mat-option *ngFor="let item of numeroVia"
+                                [value]="item.nombre">{{item.nombre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="flex flex-row gap-2 items-center flex-grow">
+
+                        <mat-form-field class="fuse-mat-dense flex-grow sm:-mt-4 -mt-7">
+                            <mat-label></mat-label>
+                            <input type="text" matInput formControlName="valorNumero1">
+
+                        </mat-form-field>
+
+                        <span class="-mt-4">-</span>
+
+                        <mat-form-field class="fuse-mat-dense flex-grow sm:-mt-4 -mt-7">
+                            <mat-label></mat-label>
+                            <input type="text" matInput formControlName="valorNumero2">
+
+                        </mat-form-field>
+
+
+
+                    </div>
+
+
+
+
+                </div>
+
+
+                <div class="flex flex-col gap-2 w-full">
+
+                    <mat-form-field class="fuse-mat-dense sm:-mt-4 -mt-7 flex-grow">
+                        <mat-label>Complemento</mat-label>
+                        <input type="text" matInput formControlName="complemento">
+
+                    </mat-form-field>
+
+                    <mat-form-field class="fuse-mat-dense sm:-mt-4 -mt-7 flex-grow mat-form-field-disabled">
+                        <mat-label>Dirección</mat-label>
+                        <input [value]="direccionCompleta()" [readonly]="true" type="text" matInput>
+
+                    </mat-form-field>
+
+
+                </div>
+
+
+                <div class="flex flex-col sm:flex-row justify-end gap-2">
+
+                    <button mat-stroked-button type="button" class="w-full sm:w-auto"
+                        (click)="closeModal()">Cerrar</button>
+
+                    <button [disabled]="formDireccion.invalid" class="w-full sm:w-auto" mat-raised-button
+                        color="primary" type="submit">Guardar</button>
+
+                </div>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+
+</ng-container>

@@ -231,3 +231,15 @@ mat-form-field.dltMB .mat-form-field-wrapper {
     margin-bottom: 0 !important;
     margin-top: 0 !important;
 }
+
+.time-container {
+    .ngx-mat-timepicker {
+        .mat-focus-indicator {
+            width: 40px !important;
+            height: 40px !important;
+            min-width: 40px !important;
+            min-height: 40px !important;
+        }
+    }
+
+}

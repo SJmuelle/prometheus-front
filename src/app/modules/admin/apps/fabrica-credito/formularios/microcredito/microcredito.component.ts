@@ -84,10 +84,13 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             fechaNacimiento: ['', [Validators.required, this.validatedDate.bind(this), this.validateMayorEdad.bind(this)]],
             nivelEstudio: ['', [Validators.required]],
             estrato: ['', [Validators.required]],
+
+            genero: ['', Validators.required],
+            tipoCredito: ['', Validators.required],
+            categoriaSisben: ['', Validators.required]
         })
 
         this.datosNegocio = this.fb.group({
-            genero: [''], // no se usa
             tipoActividad: ['', [Validators.required]],
             camaraComercio: ['', [Validators.required]],
             tipoLocal: ['', [Validators.required]],
@@ -108,6 +111,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
             autorizacionCentrales: [true],
             clausulaVeracidad: [true],
             terminosCondiciones: [true],
+
             numeroOTP: [''],
         })
 
@@ -116,7 +120,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         })
 
         this.form = this.fb.group({
-        
+
             numeroOTP: [''],
             numOTP1: [''],
             numOTP2: [''],
@@ -163,7 +167,23 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
 
         this.datosDelCredito.get('valorCredito')?.valueChanges.subscribe((valor: string) => {
 
-            this.getPlazosCredito(!!valor ? valor : '0')
+            if(this.datosBasicos.get('tipoCredito').value === 'FM'){
+                this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
+            }else{
+                this.getPlazosCredito(!!valor ? valor : '0')
+            }
+        })
+
+
+        this.datosBasicos.get('tipoCredito')?.valueChanges.subscribe((valor: string) => {
+            if(valor === 'FM'){
+                this.datosBasicos.controls['genero'].setValue('F')
+                this.plazosCredito = {data: [{plazoMinimo: this.dataInicial.parametriaFintraMujer.plazoMinimo, plazoMaximo: this.dataInicial.parametriaFintraMujer.plazoMaximo}]}
+                this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(this.dataInicial.parametriaFintraMujer.montoMinimo), Validators.max(this.dataInicial.parametriaFintraMujer.montoMaximo)])
+            }else{
+                this.getPlazosCredito(!!valor ? valor : '0')
+                this.datosDelCredito.get('valorCredito').setValidators([Validators.required, Validators.min(this.salarioMinimo), Validators.max(100000000)])
+            }
         })
 
         setTimeout(() => {
@@ -433,7 +453,7 @@ export class MicrocreditoComponent implements OnInit, OnDestroy {
         this._formularioCreditoService.cargueInicial(data).subscribe((resp: any) => {
             if (resp) {
                 this.dataInicial = resp.data
-
+                console.log('cargue inicial', this.dataInicial);
             }
         })
     }
