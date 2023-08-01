@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { UtilityService } from './utility.service';
 import { AppSettingsService } from '../app-configs/app-settings.service';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -10,16 +12,17 @@ export class FormularioCreditoService {
 
     constructor(
         private _utilityService: UtilityService,
-        private _appSettings: AppSettingsService
+        private _appSettings: AppSettingsService,
+        private _http: HttpClient
     ) { }
 
 
-    getLatitudLongitud(data){
+    getLatitudLongitud(data) {
         return this._utilityService.postQuery(this._appSettings.formulario.url.latitudLongitud, data)
             .pipe(map((res: any) => {
                 return res;
             }));
-    }    
+    }
 
     validatarOTP(data) {
         return this._utilityService.postQuery(this._appSettings.formulario.url.validarOTP, data)
@@ -114,4 +117,10 @@ export class FormularioCreditoService {
                 return res;
             }));
     }
+
+    public downloadDocument(id: string): Observable<any[]> {
+        return this._http.get<any[]>(`${this._appSettings.decision.url.baseArchivo}/${id}`)
+    }
+
+
 }

@@ -41,11 +41,7 @@
                         <ng-container *ngIf="form.value.causal=='82'">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mr-2">
 
-                                <mat-form-field>
-                                    <mat-label>Valor cuota</mat-label>
-                                    <input matInput autocomplete="off" [formControlName]="'valorCuota'">
-                                    <span matPrefix>$&nbsp;</span>
-                                </mat-form-field>
+
 
                                 <mat-form-field class="w-full fuse-mat-dense col-span-2">
                                     <mat-label>Cargo</mat-label>
@@ -54,6 +50,15 @@
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
+
+                                <mat-form-field class="fuse-mat-dense">
+                                    <mat-label>Valor cuota</mat-label>
+                                    <input matInput [mask]="'separator.0'" [thousandSeparator]="'.'" autocomplete="off"
+                                        [formControlName]="'valorCuota'">
+                                    <span matPrefix>$&nbsp;</span>
+                                </mat-form-field>
+
+
                                 <ng-container *ngIf="tipoContrato$ | async as tipo">
                                     <mat-form-field class="w-full fuse-mat-dense">
                                         <mat-label>Tipo contrato</mat-label>
@@ -97,7 +102,7 @@
                                         Este campo es requerido.
                                     </mat-error>
                                 </mat-form-field>
-                                <mat-form-field>
+                                <mat-form-field class="fuse-mat-dense">
                                     <mat-label>Fecha vinculación</mat-label>
                                     <input matInput [matDatepicker]="picker1" [formControlName]="'fechaVinculacion'">
 
@@ -152,7 +157,7 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <div class="flex flex-row items-center justify-end sm:justify-end w-full">
-        <button mat-raised-button color="primary" type="button" [disabled]="form.invalid" (click)="onGuardar()">
+        <button mat-raised-button color="primary" type="button" (click)="onGuardar()">
             Guardar
         </button>
         <button mat-raised-button class="mr-2 bg-gray-400 text-white" type="button" (click)="onCerrar()">

@@ -330,7 +330,9 @@ export class AppSettingsService {
             baseCausalAnulacion: EndPoints.uri('/generic/cau-anulacion'),
             validaCampos: EndPoints.uri('/credito/validar-campos-solicitud'),
             guardado: EndPoints.uri('/credito/cre-decision'),
-            getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda')
+            getAgendasFabrica: EndPoints.uri('/generic/qry/obtener-siguiente-estado-agenda'),
+            baseArchivo: EndPoints.uriPaga('api-fintra/api/archivos/volante-nomina')
+
         }
     };
     /**

@@ -84,12 +84,16 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
   public onGuardar(): void {
     if (this.form.valid) {
       const data: any = { ...this.form.getRawValue() };
+      const valorCuota = Number(this.form.controls.valorCuota.value)
       data.numeroSolicitud = Number(this.form.controls.numeroSolicitud.value);
       data.cupo = Number(this.utility.enviarNumero(this.form.controls.cupo.value));
       data.descuentos = Number(this.form.controls.descuentos.value);
       data.comisiones = Number(this.form.controls.comisiones.value);
       data.salario = Number(this.form.controls.salario.value);
       data.causal = Number(this.form.controls.causal.value);
+
+      data.valorCuota = data.causal === 82 ? data.valorCuota = valorCuota : data.valorCuota = 0
+
       Swal.fire({
         title: 'Guardar información',
         text: '¿Está seguro de guardar información?',
@@ -229,7 +233,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
           this.form.controls['comisiones'].updateValueAndValidity();
 
           break;
-        case 18:
+        case 82:
           this.form.controls['cargo'].setValue("");
           this.form.controls['cargo'].setValidators(Validators.required);
           this.form.controls['cargo'].updateValueAndValidity();
@@ -273,6 +277,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     const { cartaLaboral, condicionesCredito } = this.form.getRawValue();
     const cartaLaboralTouched = this.form.controls['cartaLaboral'].touched;
     const condicionesCreditoTouched = this.form.controls['condicionesCredito'].touched
+    // console.log('cartaLaboral', cartaLaboral, 'condicionesCredito', condicionesCredito, 'condicionesCreditoTouched', condicionesCreditoTouched, 'cartaLaboralTouched', cartaLaboralTouched);
     if ((!cartaLaboral || !condicionesCredito) && (cartaLaboralTouched || condicionesCreditoTouched)) {
       return true
     } else {
@@ -283,7 +288,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
 
   public validarForm(): void {
     const formcontrols = ['cartaLaboral', 'condicionesCredito']
-    console.log(this.form.controls['concepto'].value)
+    // console.log(this.form.controls['concepto'].value)
     if (this.form.controls['concepto'].value === 'A') {
       formcontrols.forEach((controlsValue) => {
         this.form.controls[controlsValue]?.setValue(false);
@@ -476,6 +481,7 @@ export class ModalDecisionCreditoComponent implements OnInit, OnDestroy {
     }
     this.decisionService.dataCreditoRechazo(info).subscribe((res) => {
       this.form.patchValue(res.data);
+      // console.log('res data', res.data)
     });
   }
 

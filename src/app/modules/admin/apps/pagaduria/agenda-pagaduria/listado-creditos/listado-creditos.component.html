@@ -24,7 +24,8 @@
 
             </div>
         </div>
-        <mat-tab-group class="flex w-full justify-items-center max-w-full scrollMatTabGroup changeTabStyle -mt-10 z-20" (selectedTabChange)="tabChanged($event)">
+        <mat-tab-group class="flex w-full justify-items-center max-w-full scrollMatTabGroup changeTabStyle -mt-10 z-20"
+            (selectedTabChange)="tabChanged($event)">
             <mat-tab label="PENDIENTE" id="P">
 
 
@@ -112,7 +113,7 @@
                                     </td>
                                 </tr>
                                 <tr class="text-gray-700 border-t border-b ">
-                                
+
                                     <td class="px-2 pb-1 pt-1">
                                         <div class="flex">
                                             <div class="flex flex-column ">
@@ -168,7 +169,8 @@
                                     </td>
 
 
-                                    <td class="px-2 pb-1 pt-1" colspan="2">
+                                    <td class="px-2 pb-1 pt-1"
+                                        [attr.colspan]="item.estadoPagaduria!=='PENDIENTE'? '1' : '2'">
                                         <div class="flex w-24">
                                             <div class="flex flex-column ">
                                                 <small class="text-accent-600 text-xs">
@@ -193,6 +195,45 @@
                                             </div>
                                         </div>
                                     </td>
+
+
+                                    <td class="px-2 pb-1 pt-1" colspan="1" *ngIf="item.estadoPagaduria!=='PENDIENTE' ">
+                                        <div class="flex w-24">
+                                            <div class="flex flex-column ">
+                                                <small class="text-accent-600 text-xs">
+                                                    {{ item.estadoPagaduria==='RECHAZADO'? 'Usuario rechazo' :
+                                                    'Usuario aprobación' }}
+                                                </small>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon class="icon-size-3">account_circle
+                                                    </mat-icon>
+                                                    {{ item.estadoPagaduria==='RECHAZADO'? item.usuarioRechazoPagaduria
+                                                    : item.usuarioAprobacionPagaduria }}
+                                                </span>
+                                                <span class="text-accent-600 text-xs">
+
+                                                    {{ item.estadoPagaduria==='RECHAZADO'? 'Fecha rechazo pagaduría' :
+                                                    'Fecha aprobación pagaduría'}}
+                                                </span>
+                                                <span class="text-xs text-black font-medium">
+                                                    <mat-icon [ngStyle]="{'color': item.diasEnAgendaActualColor}"
+                                                        class="icon-size-3" svgIcon="heroicons_outline:calendar">
+                                                    </mat-icon>
+                                                    {{ item.estadoPagaduria==='RECHAZADO'? item.fechaRechazoPagaduria :
+                                                    item.fechaAprobacionPagaduria }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+
+
+
+
+
+
+
 
 
                                     <td class="px-2 pb-1 pt-1">
